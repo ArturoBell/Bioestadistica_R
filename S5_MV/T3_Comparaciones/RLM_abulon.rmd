@@ -1,0 +1,54 @@
+---
+title: "Regresión Lineal Múltiple"
+author: "Arturo Bell Enríquez García"
+output:
+  html_document:
+    toc: yes
+    df_print: paged
+  html_notebook:
+    toc: yes
+---
+
+En esta tarea OPCIONAL, el objetivo es predecir la edad de individuos de abulón a partir de mediciones corporales de los mismos utilizando algún modelo lineal. Puedes también utilizar algún modelo no lineal, si es de tu interés. 
+
+Los datos para entrenar los modelos se encuentran [aquí](https://storage.googleapis.com/download.tensorflow.org/data/abalone_train.csv). Las columnas corresponden a:
+- Longitud del organismo,
+- Diámetro del organismo,
+- Altura del organismo,
+- Peso entero,
+- Peso sin concha,
+- Peso de las vísceras,
+- Peso de la cáscara,
+- Edad (años)
+
+Los puntos a tener en cuenta son:
+
+1) Identificar si es necesario hacer algún procesamiento a los datos y, de ser así, aplicarlo.
+2) ¿Es necesario, prudente y válido incluir todas las variables en el modelo?
+3) A partir del punto anterior, construir el/los modelos de regresión. ¿Es necesario utilizar un modelo penalizado/regularizado?
+4) Evaluar si los modelos están sobre o sub ajustados.
+5) Analizar los gráficos diagnósticos de la regresión (recuerda que todos son construidos a partir de los residuales y los valores a predecir) y evaluar la bondad de ajuste de los modelos y evaluar su calidad (e.g., ¿Son los residuales normales y homocedásticos?).
+6) Una vez mejorado el modelo lo más posible (i.e., escalando los valores, eliminando variables o generando nuevas (e.g. ACP)), crea un nuevo modelo con TODAS las observaciones.
+7) Predice los valores de edad de los [datos de prueba](https://storage.googleapis.com/download.tensorflow.org/data/abalone_test.csv). ¿Cuál es el valor de MSE y $R^2$ alcanzado por el modelo?
+8) Tomando en cuenta estos resultados, ¿el modelo ajustado final se encuentra bien ajustado, sobreajustado o infraajustado?
+
+## Datos:
+
+El código de las siguientes celdas permite descargar los datos directamente a R desde una URL:
+
+### Entrenamiento
+```{r}
+download <- RCurl::getURL("https://storage.googleapis.com/download.tensorflow.org/data/abalone_train.csv")
+train <- read.csv(text = download, header = F)
+colnames(train) <- c("Long", "Diam", "Alt", "PesoEnt", "PesoDesc", "PesoVisc", "PesoCasc", "Edad")
+head(train)
+```
+### Prueba
+```{r}
+download <- RCurl::getURL("https://storage.googleapis.com/download.tensorflow.org/data/abalone_test.csv")
+test <- read.csv(text = download, header = F)
+colnames(test) <- c("Long", "Diam", "Alt", "PesoEnt", "PesoDesc", "PesoVisc", "PesoCasc", "Edad")
+head(test)
+```
+
+## Procedimiento:
