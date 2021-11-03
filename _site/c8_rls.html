@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Arturo Bell Enríquez García" />
+
+
+<title>Correlación y Regresión Lineal Simple</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadística con R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Clases
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Biología como Ciencia de Datos</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c1_Intro_R.html">Introducción a R</a>
+        </li>
+        <li>
+          <a href="c2_ggplot2.html">ggplot2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Herramientas Básicas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c3_probabilidad.html">Probabilidad</a>
+        </li>
+        <li>
+          <a href="c4_muestreo.html">Teoría del Muestreo</a>
+        </li>
+        <li>
+          <a href="c5_descriptiva.html">Estadística Descriptiva</a>
+        </li>
+        <li>
+          <a href="c6_ph0.html">Pruebas de hipótesis</a>
+        </li>
+        <li>
+          <a href="c7_param.html">Técnicas Paramétricas</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Relaciones Lineales</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c8_rls.html">Modelo Lineal Simple</a>
+        </li>
+        <li>
+          <a href="c9_glm.html">Modelos Lineales Generalizados</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="c10_no_par.html">Técnicas No Paramétricas</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Técnicas Multivariadas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c11_intro_mv.html">Introducción</a>
+        </li>
+        <li>
+          <a href="c12_no_sup.html">No supervisadas</a>
+        </li>
+        <li>
+          <a href="c13_comps_mv.html">Comparaciones Multivariadas</a>
+        </li>
+        <li>
+          <a href="c14_clasificacion.html">Clasificaciones</a>
+        </li>
+        <li>
+          <a href="c15_regs_mv.html">Regresiones Múltiples</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Correlación y Regresión Lineal Simple</h1>
+<h4 class="author">Arturo Bell Enríquez García</h4>
+
+</div>
+
+
+<div id="instalación-de-librerías" class="section level2">
+<h2>Instalación de librerías</h2>
+<pre class="r"><code>if(!require(gap)) install.packages(&quot;gap&quot;, dependencies = T)</code></pre>
+<pre><code>## Loading required package: gap</code></pre>
+<pre><code>## gap version 1.2.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;gap&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     logit</code></pre>
+</div>
+<div id="funciones-personalizadas" class="section level2">
+<h2>Funciones personalizadas</h2>
+<pre class="r"><code># Tema personalizado
+blank_theme &lt;- function(){
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.background = element_blank(),
+        axis.line = element_blank(),
+        aspect.ratio = 1/1.61,
+        axis.ticks = element_blank(),
+        text = element_text(colour = &quot;gray50&quot;),
+        legend.position = &quot;none&quot;
+        )
+}
+
+# Función para graficar la relación entre dos variables; i.e., 
+# una forma elegante de llamarle a un gráfico de dispersión con valores por defecto...
+rel.plot &lt;- function(data, aest, 
+                     medidas = TRUE, 
+                     corre = NA, covar = NA, 
+                     eq = &quot;&quot;, ...){
+  # Construcción del gráfico sin anotaciones
+  plot &lt;- ggplot(data = data, aest) + 
+          labs(title = &quot;Relación entre dos variables&quot;,
+               caption = paste(&quot;Datos simulados: &quot;, eq)) +
+          geom_point(color = &quot;deepskyblue4&quot;, alpha = 0.5, size = 2) +
+          expand_limits(y = c(5, -3)) +
+          blank_theme()
+  # Si medidas es TRUE, agregar las medidas al gráfico
+  if(isTRUE(medidas)){plot &lt;- plot + annotate(&quot;text&quot;, x = 15, y = -2,
+                                 label = paste(&quot;Cor. = &quot;, round(corre, 2), 
+                                 &quot;\n Cov. = &quot;, round(covar,2)),
+                                 color = &quot;gray50&quot;)}
+  return(plot)
+}</code></pre>
+</div>
+<div id="covarianza-vs.-correlación" class="section level2">
+<h2>Covarianza vs. Correlación</h2>
+<p>Generemos un par de variables donde la segunda sea una función lineal de la primera:</p>
+<pre class="r"><code>df1 &lt;- data.frame(v1 = -20:20)
+df1[&quot;v2&quot;] &lt;- (10+2*df1$v1)
+df1</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["v1"],"name":[1],"type":["int"],"align":["right"]},{"label":["v2"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-20","2":"-30"},{"1":"-19","2":"-28"},{"1":"-18","2":"-26"},{"1":"-17","2":"-24"},{"1":"-16","2":"-22"},{"1":"-15","2":"-20"},{"1":"-14","2":"-18"},{"1":"-13","2":"-16"},{"1":"-12","2":"-14"},{"1":"-11","2":"-12"},{"1":"-10","2":"-10"},{"1":"-9","2":"-8"},{"1":"-8","2":"-6"},{"1":"-7","2":"-4"},{"1":"-6","2":"-2"},{"1":"-5","2":"0"},{"1":"-4","2":"2"},{"1":"-3","2":"4"},{"1":"-2","2":"6"},{"1":"-1","2":"8"},{"1":"0","2":"10"},{"1":"1","2":"12"},{"1":"2","2":"14"},{"1":"3","2":"16"},{"1":"4","2":"18"},{"1":"5","2":"20"},{"1":"6","2":"22"},{"1":"7","2":"24"},{"1":"8","2":"26"},{"1":"9","2":"28"},{"1":"10","2":"30"},{"1":"11","2":"32"},{"1":"12","2":"34"},{"1":"13","2":"36"},{"1":"14","2":"38"},{"1":"15","2":"40"},{"1":"16","2":"42"},{"1":"17","2":"44"},{"1":"18","2":"46"},{"1":"19","2":"48"},{"1":"20","2":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Obtengamos la covarianza:</p>
+<pre class="r"><code>covar &lt;- cov(df1$v1, df1$v2)
+covar</code></pre>
+<pre><code>## [1] 287</code></pre>
+<p>Ahora calculemos el índice de correlación</p>
+<pre class="r"><code>corre &lt;- cor(df1$v1, df1$v2)
+corre</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>Por último, grafiquemos los resultados e incluyamos el valor de ambas medidas:</p>
+<pre class="r"><code>library(ggplot2)
+lin.plot1 &lt;- rel.plot(data = df1, aest = aes(v1, v2),
+                      eq = &quot;v2 = 10 + 2*v1&quot;,
+                      covar = covar, corre = corre)
+
+lin.plot1</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Ambos resultados nos dicen que existe una relación directamente proporcional entre ambas variables (conforme incrementa una incrementa la otra); sin embargo, debido a que la correlación se encuentra contenida entre [-1,1] podemos comprobar que es una relación LINEAL perfecta. Debido a esta diferencia en interpretabilidad normalmente trabajaremos con el índice de correlación, pero es importante recordar que estamos trabajando con un análisis paramétrico que supone una relación del tipo <span class="math inline">\(Y = \beta_0 + \beta_1\cdot X + \epsilon\)</span> y que por tanto puede NO ser una forma adecuada para describir los datos, veamos un ejemplo:</p>
+<pre class="r"><code>df1[&quot;v3&quot;] &lt;- (-df1$v1^2)
+
+pot.plot &lt;- rel.plot(data = df1, aest = aes(v1, v3),
+                     eq = &quot;v3 = -v1^2&quot;,
+                     covar = cov(df1$v2, df1$v3),
+                     corre = cor(df1$v2, df1$v3)
+                     )
+pot.plot</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Otro ejemplo:</p>
+<pre class="r"><code>df1[&quot;v4&quot;] &lt;- sin(df1$v1)
+
+sin.plot &lt;- rel.plot(data = df1, aest = aes(v1, v4),
+                     eq = &quot;v4 = sin(v1)&quot;,
+                     covar = cov(df1$v1, df1$v4),
+                     corre = cor(df1$v1, df1$v4))
+sin.plot</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div id="correlación-de-pearson-vs.-correlación-de-spearman" class="section level3">
+<h3>Correlación de Pearson vs. Correlación de Spearman</h3>
+<p>A diferencia de la correlación de Pearson la correlación de Spearman nos permite calcular la correlación entre variables ordinales o continuas, siempre y cuando la relación sea monótona:</p>
+<pre class="r"><code>df2 &lt;- data.frame(v1 = df1$v1[df1$v1 &gt; 0], 
+                  v2 = df1$v1[df1$v1 &gt; 0]^2,
+                  mono = &quot;monótona&quot;)
+
+df2 &lt;- rbind(df2, data.frame(v1= df1$v1, 
+                             v2 = df1$v3, 
+                             mono = &quot;no monótona&quot;))
+
+mono.plot &lt;- rel.plot(data = df2, aest = aes(v1, v2),
+                      eq = &quot;v2 = 10 + 2*v1 | v2 = -v1^2&quot;,
+                      medidas = FALSE) + 
+             facet_wrap(~mono, nrow = 2, scales = &quot;free_y&quot;) +
+             theme(aspect.ratio = 1/1.61)
+
+mono.plot</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Utilicemos el primer caso para calcular las correlaciones de Pearson y Spearman y ver las diferencias</p>
+<pre class="r"><code>paste(&quot;Pearson = &quot;,
+      round((cor(df2$v1[df2$mono == &quot;monótona&quot;],
+                 df2$v2[df2$mono == &quot;monótona&quot;], 
+                 method = &quot;pearson&quot;)), 2)
+      )</code></pre>
+<pre><code>## [1] &quot;Pearson =  0.97&quot;</code></pre>
+<pre class="r"><code>paste(&quot;Spearman = &quot;,
+      round((cor(df2$v1[df2$mono == &quot;monótona&quot;],
+                 df2$v2[df2$mono == &quot;monótona&quot;], 
+                 method = &quot;spearman&quot;)), 2)
+      )</code></pre>
+<pre><code>## [1] &quot;Spearman =  1&quot;</code></pre>
+</div>
+</div>
+<div id="regresión-lineal-simple" class="section level2">
+<h2>Regresión Lineal Simple</h2>
+<p>Un modelo de regresión es un modelo predictivo de <strong>aprendizaje automatizado</strong> en el cual, a partir de los datos disponibles al momento, podemos intentar predecir resultados futuros (extrapolación) o resultados con los que no contamos (interpolación); es decir, resultados que el modelo no haya visto. Si las predicciones son adecuadas, el modelo nos puede servir para describir la naturaleza de la relación de ambas variables, al menos en términos matemáticos/numéricos. En esta sesión revisaremos algunos criterios para evaluar la bondad de ajuste de nuestro modelo (lit. qué tan bueno es), aunque nos limitaremos, por el momento, a hablar únicamente en términos de nuestros datos. Cuando lleguemos a la sección de multivariado hablaremos sobre el problema de la memorización/sobre-ajuste y una forma más objetiva de evaluar nuestros modelos.</p>
+<p>El modelo de Regresión más sencillo es la regresión lineal simple, en la cual describimos la relación entre dos variables continuas utilizando la ecuación de la recta. Es decir, asumimos una relación del tipo <span class="math inline">\(y = \beta_0 \pm \beta_1*x + \epsilon\)</span>, en el cual <span class="math inline">\(\beta_0\)</span> representa la ordenada al origen (x = 0) y <span class="math inline">\(\beta_1\)</span> la pendiente de la recta o, en otras palabras, cuántas unidades nos movemos en el eje y por cada unidad en el eje x. Recordemos que la <strong>función de pérdida</strong> para este análisis es la distancia cuadrática entre valores observados y predichos; es decir, el método de <strong>mínimos cuadrados</strong>.</p>
+<p>Para ejemplificarlo, carguemos los datos contenidos en <code>example_data.csv</code>:</p>
+<pre class="r"><code>df.reg1 &lt;- read.csv(&quot;data/example_data.csv&quot;)
+data.reg1 &lt;- rel.plot(data = df.reg1, aest = aes(v1, v2), 
+                      medidas = T,
+                      corre = cor(df.reg1$v1, df.reg1$v2),
+                      covar = cov(df.reg1$v1, df.reg1$v2))
+data.reg1</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<div id="ajuste-y-bondad-de-ajuste" class="section level3">
+<h3>Ajuste y Bondad de ajuste</h3>
+<p>Ajustemos el modelo de mínimos cuadrados a los datos y veamos los resultados de la regresión. Observemos que en los resultados se incluyen 3 pruebas de hipótesis: una prueba de t para cada parámetro y una prueba de ANOVA (que ignoraremos por el momento). De estas priebas es posible concluir que los parámetros son diferentes de un modelo nulo; es decir, de un modelo en el que <span class="math inline">\(\beta_0 = 0; \beta_1 = 0\)</span>. El valor de <span class="math inline">\(R^2\)</span> sugiere que el modelo únicamente explica alrededor del 70% de la varianza de los datos, lo cual sugiere que el modelo no está capturando aproximadamente una tercera parte de la información contenida en ellos. Finalmente, el valor de RSE dividido entre el valor promedio de la variable predicha nos da la tasa de error del modelo. El RSE también nos indica en cuántas unidades se desvía la predicción de los datos observados, que en este caso son 3.095.</p>
+<pre class="r"><code>reg1 &lt;- lm(v2~v1, data = df.reg1)
+summary(reg1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = v2 ~ v1, data = df.reg1)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.8956 -1.9924 -0.5525  1.5351 15.3006 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -3.72654    0.73213   -5.09 1.81e-06 ***
+## v1           1.17765    0.08141   14.47  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.095 on 95 degrees of freedom
+## Multiple R-squared:  0.6878, Adjusted R-squared:  0.6845 
+## F-statistic: 209.3 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>sum_res &lt;- summary(reg1)
+paste(&quot;Tasa de error = &quot;, as.character(round(sum_res$sigma/mean(df.reg1$v2), 2)*100), &quot;%&quot;)</code></pre>
+<pre><code>## [1] &quot;Tasa de error =  53 %&quot;</code></pre>
+<p>Ahora grafiquemos la recta ajustada. Para ello primero extraeremos los valores ajustados y después los utilizaremos para construir la linea recta</p>
+<pre class="r"><code>df.reg1[&quot;ajustados&quot;] &lt;-reg1$fitted.values
+
+lin.plot2 &lt;- data.reg1 + 
+             geom_line(data = df.reg1, 
+                       aes(x = v1, y = ajustados),
+                       colour = rgb(118,78,144, maxColorValue = 255),
+                       size = 1) +
+             labs(subtitle = paste(&quot;Modelo ajustado: v2 = &quot;, 
+                                   round(reg1$coefficients[1],2), 
+                                   &quot; + &quot;,
+                                   round(reg1$coefficients[2],2),
+                                   &quot;*v1 + e&quot;))
+             
+lin.plot2</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="intervalos-de-confianza-para-los-parámetros-y-la-regresión" class="section level3">
+<h3>Intervalos de confianza para los parámetros y la regresión</h3>
+<p>Ahora podemos calcular y graficar los intervalos de confianza para la predicción de la regresión:</p>
+<pre class="r"><code>confint.reg1 &lt;- confint(reg1)
+confint.reg1</code></pre>
+<pre><code>##                 2.5 %    97.5 %
+## (Intercept) -5.179989 -2.273085
+## v1           1.016035  1.339263</code></pre>
+<pre class="r"><code>df.reg1[&quot;inf.int&quot;] &lt;- confint.reg1[1,1] + confint.reg1[2,1]*df.reg1$v1 
+df.reg1[&quot;sup.int&quot;] &lt;- confint.reg1[1,2] + confint.reg1[2,2]*df.reg1$v1
+
+lin.plot3 &lt;- lin.plot2 + 
+             geom_ribbon(data = df.reg1, aes(ymin = inf.int, ymax = sup.int), 
+                         fill = &quot;gray70&quot;,
+                         alpha = 0.3) +
+             labs(caption = &quot;Datos simulados. El área gris representa los intervalos de confianza al 95% \n
+                             de la estimación de ambos parámetros&quot;)
+lin.plot3</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>conf.plot.reg1 &lt;- data.reg1 + geom_smooth(method = lm, 
+                                          colour = rgb(118,78,144, maxColorValue = 255)) +
+                  labs(caption = &quot;Datos simulados. El área gris representa el intervalo de confianza de la regresión al 95%&quot;,
+                       subtitle = paste(&quot;Modelo ajustado: v2 = &quot;, 
+                                   round(reg1$coefficients[1],2), 
+                                   &quot; + &quot;,
+                                   round(reg1$coefficients[2],2),
+                                   &quot;*v1 + e&quot;))
+conf.plot.reg1</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+<div id="gráficos-diagnósticos-de-la-regresión" class="section level3">
+<h3>Gráficos diagnósticos de la regresión</h3>
+<p>Ahora evaluemos gráficamente la calidad del modelo ajustado.</p>
+<p>####Gráfico cuantil-cuantil Es posible observar que los datos presentan una gran cantidad de desviaciones con respecto a una distribución normal:</p>
+<pre class="r"><code>w &lt;- shapiro.test(df.reg1$v2)
+
+qqplot1 &lt;- ggplot(data = df.reg1, aes(sample = v2)) + 
+           geom_qq(colour = &quot;deepskyblue4&quot;, size = 3, alpha = 0.5) + 
+           geom_qq_line(colour = rgb(118,78,144, maxColorValue = 255), size = 1) + 
+           annotate(&quot;text&quot;, x = 1, y = 0, 
+                    label = paste(&quot;W = &quot;, round(w[[&quot;statistic&quot;]],2), &quot;; p &quot;, 
+                                  ifelse(w[[&quot;p.value&quot;]] &lt; 0.001,
+                                         &quot;&lt; 0.001&quot;,
+                                         round(w[[&quot;p.value&quot;]],2))),
+                    colour = &quot;gray 50&quot;
+                    ) +
+           blank_theme() +
+           labs(title = &quot;Gráfico QQ&quot;,
+                x = &quot;Cuantiles teóricos para la muestra&quot;,
+                y = &quot;Datos observados&quot;)
+qqplot1</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<pre class="r"><code>w1 &lt;- shapiro.test(rstandard(reg1))
+qqplot2 &lt;- ggplot(reg1) + stat_qq(aes(sample = .stdresid), colour = &quot;deepskyblue4&quot;, size = 3, alpha = 0.5) + 
+           geom_abline(colour =  rgb(118,78,144, maxColorValue = 255), size = 1) + 
+           labs(x = &quot;Cuantiles teóricos&quot;,
+                y = &quot;Residuales estandarizados&quot;,
+                title = &quot;Gráfico QQ&quot;,
+                subtitle = paste(&quot;W = &quot;, round(w1[[&quot;statistic&quot;]],2), &quot;; p &quot;, 
+                                  ifelse(w1[[&quot;p.value&quot;]] &lt; 0.001,
+                                         &quot;&lt; 0.001&quot;,
+                                         round(w[[&quot;p.value&quot;]],2)))) +
+           blank_theme()
+qqplot2</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div id="gráfico-de-escala-locación" class="section level4">
+<h4>Gráfico de Escala-Locación</h4>
+<p>En este gráfico es posible observar que los datos no están distribuídos de manera homogénea; es decir, no son datos heterocedásticos</p>
+<pre class="r"><code>scale.loc.plot &lt;- ggplot(reg1, aes(.fitted, sqrt(abs(.stdresid)))) + 
+                  geom_point(na.rm=TRUE, colour = &quot;deepskyblue4&quot;, size = 3, alpha = 0.5) + 
+                  stat_smooth(method=&quot;loess&quot;, na.rm = TRUE, colour = rgb(118,78,144, maxColorValue = 255)) +
+                  labs(x = &quot;Valores ajustados&quot;,
+                       y = expression(sqrt(&quot;|Residuales estandarizados|&quot;)),
+                       title = &quot;Escala-Locación&quot;
+                       ) +
+                  blank_theme()
+                  
+scale.loc.plot</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="gráfico-de-residuales" class="section level4">
+<h4>Gráfico de Residuales</h4>
+<p>Es posible observar que existe una cantidad importande de datos extremos (fuera de <span class="math inline">\(\pm\)</span> 2 desviaciones estándar)</p>
+<pre class="r"><code>df.reg1[&quot;std.resids&quot;] &lt;- rstandard(reg1)
+resid.plot &lt;- ggplot(data = df.reg1, aes(x = ajustados, y = std.resids, colour = std.resids)) + 
+              geom_point(size = 3, alpha = 0.5) +
+              stat_smooth(method = &quot;loess&quot;, colour = rgb(118,78,144, maxColorValue = 255)) + 
+              geom_hline(yintercept = 0, col = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+              labs(title = &quot;Gráfico de Residuales&quot;,
+                   x = &quot;Valores ajustados&quot;,
+                   y = &quot;Residuales estandarizados&quot;) +
+              blank_theme() +
+              scale_color_gradient2(low = &quot;firebrick&quot;, 
+                                    midpoint = 0, 
+                                    mid = &quot;deepskyblue4&quot;, 
+                                    high = &quot;firebrick&quot;,
+                                    breaks = c(-2, 0, 2),
+                                    limits = c(-2, 2),
+                                    oob = scales::squish)
+resid.plot</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>resid.plot2 &lt;- ggplot(reg1, aes(x = .fitted, y = .stdresid, colour = .stdresid)) + 
+               geom_point(size = 3, alpha = 0.5) +
+               geom_hline(yintercept = 0, col = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+               geom_smooth(method = &quot;loess&quot;, colour = rgb(118,78,144, maxColorValue = 255)) +
+               labs(title = &quot;Gráfico de Residuales&quot;,
+                   x = &quot;Valores ajustados&quot;,
+                   y = &quot;Residuales estandarizados&quot;) +
+               blank_theme() +
+               scale_color_gradient2(low = &quot;firebrick&quot;, 
+                                     midpoint = 0, 
+                                     mid = &quot;deepskyblue4&quot;, 
+                                     high = &quot;firebrick&quot;,
+                                     breaks = c(-2, 0, 2),
+                                     limits = c(-2, 2),
+                                     oob = scales::squish)
+resid.plot2</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<pre class="r"><code>shapiro.test(df.reg1$std.resids)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  df.reg1$std.resids
+## W = 0.89933, p-value = 1.797e-06</code></pre>
+</div>
+</div>
+</div>
+<div id="ajuste-por-máxima-verosimilitud" class="section level2">
+<h2>Ajuste por máxima verosimilitud</h2>
+<p>Recordemos que al realizar el ajuste por máxima verosimilitud estamos encontrando los valores de los parámetros que MAXIMICEN la probabilidad de haber encontrado los datos (verosimilitud); es decir, es método probabilístico. En el caso de la RLS, nuestro modelo encuentra la máxima expectativa de y (forma elegante de llamarle a la media), siguiendo una distribución normal. En la clase de GLM Roberto explicará cómo ajustar modelos lineales en los que el error NO se modela bajo una distribución normal y los criterios para su formación.</p>
+<p>A diferencia de la implementación de una regresión por mínimos cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan intuitivo. El primer paso es establecer manualmente nuestra función de verosimilitud, ajustando una distribución normal a los residuales:</p>
+<pre class="r"><code>data &lt;- df.reg1[c(&quot;v1&quot;, &quot;v2&quot;)]
+LL &lt;- function(b0, b1, mu, sigma){
+  # Encontrar los residuales. Modelo a ajustar
+  R = data$v2 - data$v1 * b1 - b0
+  
+  # Calcular la verosimilitud. Residuales con distribución normal.
+  
+  R = suppressWarnings(dnorm(R, mu, sigma))
+  
+  # Sumar el logaritmo de las verosimilitudes para todos los puntos de datos.
+  -sum(log(R))
+}</code></pre>
+<p>Ahora ajustamos el modelo que acabamos de crear, utilizando la función <code>mle(fun, start = list())</code> (maximum likelihood estimation), donde <code>fun</code> es la función a ajustar y <code>start</code> son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:</p>
+<pre class="r"><code>library(stats4)
+mle.fit &lt;- mle(LL, start = list(b0 = 1, b1 = 1, sigma = 1), 
+               fixed = list(mu = 0), 
+               nobs = length(data$v2))
+
+summary(mle.fit)</code></pre>
+<pre><code>## Maximum likelihood estimation
+## 
+## Call:
+## mle(minuslogl = LL, start = list(b0 = 1, b1 = 1, sigma = 1), 
+##     fixed = list(mu = 0), nobs = length(data$v2))
+## 
+## Coefficients:
+##        Estimate Std. Error
+## b0    -3.726537 0.72453828
+## b1     1.177649 0.08056368
+## sigma  3.063056 0.21991454
+## 
+## -2 log L: 492.4402</code></pre>
+<p>Si nos interesa comparar el ajuste entre modelos podemos utilizar el RMSE. Para ello primero generaremos los valores predichos (ajustados) por el modelo y después los contrastaremos contra los datos originales</p>
+<pre class="r"><code>library(Metrics)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Metrics&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:pROC&#39;:
+## 
+##     auc</code></pre>
+<pre><code>## The following objects are masked from &#39;package:caret&#39;:
+## 
+##     precision, recall</code></pre>
+<pre><code>## The following object is masked from &#39;package:FSA&#39;:
+## 
+##     se</code></pre>
+<pre><code>## The following object is masked from &#39;package:rcompanion&#39;:
+## 
+##     accuracy</code></pre>
+<pre class="r"><code>data[&quot;v2adj&quot;] &lt;- coef(mle.fit)[&quot;b0&quot;] + coef(mle.fit)[&quot;b1&quot;]*data$v1
+rmse(data$v2adj, data$v2)</code></pre>
+<pre><code>## [1] 3.063056</code></pre>
+<p>Veamos ahora los resultados de la RLS por mínimos cuadrados:</p>
+<pre class="r"><code>data[&quot;v2adjols&quot;] &lt;- coef(reg1)[&quot;(Intercept)&quot;] + coef(reg1)[&quot;v1&quot;]*data$v1
+coef(reg1)</code></pre>
+<pre><code>## (Intercept)          v1 
+##   -3.726537    1.177649</code></pre>
+<pre class="r"><code>rmse(data$v2adjols, data$v2)</code></pre>
+<pre><code>## [1] 3.063056</code></pre>
+<p>Tanto los coeficientes como los valores de RMSE ¡son iguales! ¿Razón? Un modelo lineal ajustado por máxima verosimilitud utilizando un término de residuales con un error normalmente distribuido es equivalente a un modelo ajustado por mínimos cuadrados. Veamos qué pasa si ajustamos los residuales utilizando otra distribución, seleccionada “a ojo” (solo para fines del ejemplo) por la “forma” de la distribución de los datos:</p>
+<pre class="r"><code>density &lt;- ggplot(data = data, aes(x = v2)) + 
+           geom_density(colour = &quot;deepskyblue4&quot;, fill = &quot;deepskyblue4&quot;, alpha = 0.5) + 
+           blank_theme() +
+           labs(y = element_blank(),
+                title = &quot;Gráfico de densidad de la variable a predecir&quot;) +
+           scale_y_continuous(breaks = NULL)
+density</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-27-1.png" width="672" /> Esta distribución “se parece” a una distribución gamma.</p>
+<pre class="r"><code>LLg &lt;- function(b0, b1, shape, rate){
+  # Encontrar los residuales. Modelo a ajustar (lineal)
+  R = data$v2 - data$v1 * b1 - b0
+  
+  # Calcular la verosimilitud. Residuales con distribución gamma
+  
+  R = suppressWarnings(dgamma(R, shape = shape, rate = rate))
+  
+  # Sumar el logaritmo de las verosimilitudes para todos los puntos de datos.
+  -sum(R, log = TRUE)
+}
+
+mleg.fit &lt;- mle(LLg, 
+                start = list(b0 = 1, b1 = 1,
+                             shape = 1, rate = 1),
+                nobs = length(data$v2))
+summary(mleg.fit)</code></pre>
+<pre><code>## Warning in sqrt(diag(object@vcov)): NaNs produced</code></pre>
+<pre><code>## Maximum likelihood estimation
+## 
+## Call:
+## mle(minuslogl = LLg, start = list(b0 = 1, b1 = 1, shape = 1, 
+##     rate = 1), nobs = length(data$v2))
+## 
+## Coefficients:
+##         Estimate  Std. Error
+## b0    3.02693623 0.001123079
+## b1    0.03918585 0.001123853
+## shape 0.86971294         NaN
+## rate  1.08598904 0.577224471
+## 
+## -2 log L: -28.91377</code></pre>
+<p>Para comparar el ajuste con respecto al caso anterior podemos utilizar el Criterio de Información de Akaike. Vemos que, tomando en cuenta este criterio, el segundo modelo se encuentra mucho mejor ajustado que el primero (valor mínimo de AIC):</p>
+<pre class="r"><code>aics &lt;- AIC(mle.fit, mleg.fit)
+aics[&quot;Delta&quot;] &lt;- abs(abs(aics$AIC) - abs(min(aics$AIC)))
+aics</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Delta"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"498.44022","3":"477.5265","_rn_":"mle.fit"},{"1":"4","2":"-20.91377","3":"0.0000","_rn_":"mleg.fit"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Tarea opcional: Generar un gráfico con ambas líneas de ajuste y los intervalos de confianza para la recta.</p>
+</div>
+<div id="datos-biológicos-morfometrías" class="section level2">
+<h2>Datos biológicos: Morfometrías</h2>
+<p>En este ejemplo analizaremos datos de morfometerías</p>
+<pre class="r"><code>df_haem &lt;- read.csv(&quot;data/Haem.csv&quot;)
+ggplot(data = df_haem, aes(x = LT, y = AM)) + 
+  geom_point(color = &quot;dodgerblue4&quot;) + 
+  blank_theme() +
+  geom_smooth(method = &quot;lm&quot;, colour = rgb(118,78,144, maxColorValue = 255)) +
+  labs(title = &quot;Relación Altura Máxima ~ Longitud Total&quot;,
+       x = element_blank(),
+       y = element_blank(),
+       caption = &quot;datos: Haem.csv&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<pre class="r"><code>reg_haem &lt;- lm(AM~LT, data = df_haem)
+summary(reg_haem)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = AM ~ LT, data = df_haem)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.8016 -0.2692 -0.0249  0.2655  2.7445 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 0.379258   0.160430   2.364   0.0188 *  
+## LT          0.273059   0.006202  44.027   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4422 on 281 degrees of freedom
+## Multiple R-squared:  0.8734, Adjusted R-squared:  0.8729 
+## F-statistic:  1938 on 1 and 281 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>qqplot2 &lt;- ggplot(reg_haem) + stat_qq(aes(sample = .stdresid), colour = &quot;deepskyblue4&quot;, size = 3, alpha = 0.5) + 
+           geom_abline(colour =  rgb(118,78,144, maxColorValue = 255), size = 1) + 
+           labs(x = &quot;Cuantiles teóricos&quot;,
+                y = &quot;Residuales estandarizados&quot;,
+                title = &quot;Gráfico QQ&quot;) +
+           blank_theme()
+qqplot2</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<pre class="r"><code>scale.loc.plot &lt;- ggplot(reg_haem, aes(.fitted, sqrt(abs(.stdresid)))) + 
+                  geom_point(na.rm = TRUE, colour = &quot;deepskyblue4&quot;, size = 3, alpha = 0.5) + 
+                  stat_smooth(method=&quot;loess&quot;, na.rm = TRUE, colour = rgb(118,78,144, maxColorValue = 255)) +
+                  labs(x = &quot;Valores ajustados&quot;,
+                       y = expression(sqrt(&quot;|Residuales estandarizados|&quot;)),
+                       title = &quot;Escala-Locación&quot;
+                       ) +
+                  blank_theme()
+                  
+scale.loc.plot</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<pre class="r"><code>resid.plot2 &lt;- ggplot(reg_haem, aes(x = .fitted, y = .stdresid, colour = .stdresid)) + 
+               geom_point(size = 3, alpha = 0.5) +
+               geom_hline(yintercept = 0, col = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+               geom_smooth(method = &quot;loess&quot;, colour = rgb(118,78,144, maxColorValue = 255)) +
+               labs(title = &quot;Gráfico de Residuales&quot;,
+                   x = &quot;Valores ajustados&quot;,
+                   y = &quot;Residuales estandarizados&quot;) +
+               blank_theme() +
+               scale_color_gradient2(low = &quot;firebrick&quot;, 
+                                     midpoint = 0, 
+                                     mid = &quot;deepskyblue4&quot;, 
+                                     high = &quot;firebrick&quot;,
+                                     breaks = c(-2, 0, 2),
+                                     limits = c(-2, 2),
+                                     oob = scales::squish)
+resid.plot2</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<pre class="r"><code>library(brms)</code></pre>
+<pre><code>## Loading required package: Rcpp</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;lme4&#39;:
+##   method                          from
+##   cooks.distance.influence.merMod car 
+##   influence.merMod                car 
+##   dfbeta.influence.merMod         car 
+##   dfbetas.influence.merMod        car</code></pre>
+<pre><code>## Loading &#39;brms&#39; package (version 2.14.4). Useful instructions
+## can be found by typing help(&#39;brms&#39;). A more detailed introduction
+## to the package is available through vignette(&#39;brms_overview&#39;).</code></pre>
+<pre><code>## 
+## Attaching package: &#39;brms&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:gap&#39;:
+## 
+##     cs</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     ar</code></pre>
+<pre class="r"><code>LLt &lt;- function(b0, b1, df, sigma){
+  # Encontrar los residuales. Modelo a ajustar (lineal)
+  R = df_haem$AM - df_haem$LT * b1 - b0
+  
+  # Calcular la verosimilitud. Residuales con distribución t de student
+  
+  R = suppressWarnings(brms::dstudent_t(R, df = df, mu = 0, sigma = sigma))
+  
+  # Sumar el logaritmo de las verosimilitudes para todos los puntos de datos.
+  -sum(R, log = TRUE)
+}
+
+mlet_fit &lt;- mle(LLt, 
+                start = list(b0 = 0, b1 = 0, df = 2, sigma = 10),
+                nobs = length(df_haem$AM),
+                lower = c(b0 = -20, b1 = -12, df = 1, sigma = 0.01),
+                upper = c(b0 = 20, b1 = 12, df = 30, sigma = 10))
+
+summary(mlet_fit)</code></pre>
+<pre><code>## Warning in sqrt(diag(object@vcov)): NaNs produced</code></pre>
+<pre><code>## Maximum likelihood estimation
+## 
+## Call:
+## mle(minuslogl = LLt, start = list(b0 = 0, b1 = 0, df = 2, sigma = 10), 
+##     nobs = length(df_haem$AM), lower = c(b0 = -20, b1 = -12, 
+##         df = 1, sigma = 0.01), upper = c(b0 = 20, b1 = 12, df = 30, 
+##         sigma = 10))
+## 
+## Coefficients:
+##         Estimate   Std. Error
+## b0    0.03138976 0.0007736521
+## b1    0.28139558 0.0000956608
+## df    7.54037566 1.9191746025
+## sigma 0.01000000          NaN
+## 
+## -2 log L: -768.4337</code></pre>
+<pre class="r"><code>coef(reg_haem)</code></pre>
+<pre><code>## (Intercept)          LT 
+##   0.3792585   0.2730588</code></pre>
+<pre class="r"><code>aics &lt;- AIC(mlet_fit, reg_haem)
+aics[&quot;Delta&quot;] &lt;- abs(abs(aics$AIC) - abs(min(aics$AIC)))
+aics</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Delta"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"-760.4337","3":"0.0000","_rn_":"mlet_fit"},{"1":"3","2":"345.2813","3":"415.1524","_rn_":"reg_haem"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="bonus-librería-performance" class="section level2">
+<h2>Bonus: Librería <code>performance</code></h2>
+<p>Podemos generar los gráficos diagnósticos de distintos modelos utilizando una sola línea de código. Veamos el caso del primer modelo lineal que elaboramos:</p>
+<pre class="r"><code>if (!require(performance)) {install.packages(c(&quot;performance&quot;, &quot;qqplotr&quot;), dependencies = T)}</code></pre>
+<pre><code>## Loading required package: performance</code></pre>
+<pre><code>## 
+## Attaching package: &#39;performance&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:brms&#39;:
+## 
+##     pp_check</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Metrics&#39;:
+## 
+##     mae, mse, rmse</code></pre>
+<pre class="r"><code>check_model(reg1)</code></pre>
+<pre><code>## Loading required namespace: qqplotr</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-39-1.png" width="921.6" /> Ahora sobre los datos <code>Haem.csv</code>:</p>
+<pre class="r"><code>check_model(reg_haem)</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-40-1.png" width="921.6" /></p>
+</div>
+<div id="comparación-de-regresiones" class="section level2">
+<h2>Comparación de regresiones</h2>
+<p>Supongamos ahora que la base de datos 1 en realidad consta de dos “grupos”. Una preguna razonable sería el saber si podemos agruparlos para realizar una RLS, y esto lo podemos resolver fácilmente con la prueba de Chow (1960). Primero, partamos los datos por aproximadamente la mitad:</p>
+<pre class="r"><code>df.reg2 &lt;- df.reg1[,1:2]
+df.reg2[&quot;grupo&quot;] &lt;- c(rep(&quot;A&quot;, 48), rep(&quot;B&quot;, 49))</code></pre>
+<p>Ahora apliquemos la prueba de Chow, utilizando la función <code>chow.test(y1, x1, y2, x2)</code>:</p>
+<pre class="r"><code>library(gap)
+comp.reg &lt;- chow.test(y1 = df.reg2$v2[df.reg2$grupo == &quot;A&quot;],
+                      x1 = df.reg2$v1[df.reg2$grupo == &quot;A&quot;],
+                      y2 = df.reg2$v2[df.reg2$grupo == &quot;B&quot;],
+                      x2 = df.reg2$v1[df.reg2$grupo == &quot;B&quot;])
+print(comp.reg)</code></pre>
+<pre><code>##      F value        d.f.1        d.f.2      P value 
+## 1.154458e+01 2.000000e+00 9.300000e+01 3.323879e-05</code></pre>
+<p>Veamos las regresiones gráficamente::</p>
+<pre class="r"><code>ggplot(data = df.reg2, aes(x = v1, y = v2, colour = grupo, shape = grupo)) +
+geom_point(alpha = 0.5, size = 3) +
+geom_smooth(method = lm) +
+blank_theme() +
+labs(title = &quot;Regresión lineal con dos grupos&quot;,
+     subtitle = paste(&quot;F (&quot;, comp.reg[&quot;d.f.1&quot;], &quot;, &quot;, comp.reg[&quot;d.f.2&quot;], &quot;) = &quot;, 
+                      round(comp.reg[&quot;F value&quot;],2), &quot;, &quot;, &quot;p = &quot;, ifelse(comp.reg[&quot;P value&quot;] &lt; 0.001,
+                                                                         &quot; &lt; 0.001&quot;,
+                                                                         paste(&quot; = &quot;, comp.reg[&quot;P value&quot;]))),
+     caption = &quot;Datos simulados&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="c8_rls_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="ejercicio" class="section level2">
+<h2>Ejercicio</h2>
+<p>Aplicar la prueba de Chow a la base de datos <code>Haem.csv</code>, considerando los dos grupos en la columna <code>Loc</code>.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

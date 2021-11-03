@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="M. en C. Arturo Bell Enríquez García" />
+
+
+<title>Pruebas de hipótesis</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadística con R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Clases
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Biología como Ciencia de Datos</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c1_Intro_R.html">Introducción a R</a>
+        </li>
+        <li>
+          <a href="c2_ggplot2.html">ggplot2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Herramientas Básicas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c3_probabilidad.html">Probabilidad</a>
+        </li>
+        <li>
+          <a href="c4_muestreo.html">Teoría del Muestreo</a>
+        </li>
+        <li>
+          <a href="c5_descriptiva.html">Estadística Descriptiva</a>
+        </li>
+        <li>
+          <a href="c6_ph0.html">Pruebas de hipótesis</a>
+        </li>
+        <li>
+          <a href="c7_param.html">Técnicas Paramétricas</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Relaciones Lineales</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c8_rls.html">Modelo Lineal Simple</a>
+        </li>
+        <li>
+          <a href="c9_glm.html">Modelos Lineales Generalizados</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="c10_no_par.html">Técnicas No Paramétricas</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Técnicas Multivariadas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c11_intro_mv.html">Introducción</a>
+        </li>
+        <li>
+          <a href="c12_no_sup.html">No supervisadas</a>
+        </li>
+        <li>
+          <a href="c13_comps_mv.html">Comparaciones Multivariadas</a>
+        </li>
+        <li>
+          <a href="c14_clasificacion.html">Clasificaciones</a>
+        </li>
+        <li>
+          <a href="c15_regs_mv.html">Regresiones Múltiples</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Pruebas de hipótesis</h1>
+<h4 class="author">M. en C. Arturo Bell Enríquez García</h4>
+
+</div>
+
+
+<div id="creación-y-acomodo-de-los-datos" class="section level2">
+<h2>Creación y acomodo de los datos</h2>
+<div id="datos-simulados" class="section level3">
+<h3>Datos simulados:</h3>
+<pre class="r"><code>A &lt;- rnorm(10, 10, 0.1)
+B &lt;- rnorm(10, 11, 0.1)</code></pre>
+</div>
+<div id="formación-del-objeto-para-análisis" class="section level3">
+<h3>Formación del objeto para análisis:</h3>
+<p>Si solamente formamos un data.frame, este no estará codificado, por lo que será necesario hacer cierta manipulación de los datos</p>
+<pre class="r"><code>data.frame(A, B)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["A"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["B"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"9.870645","2":"11.06439"},{"1":"10.114712","2":"10.93175"},{"1":"10.149283","2":"11.02086"},{"1":"10.092966","2":"11.13358"},{"1":"9.942428","2":"11.12786"},{"1":"9.996218","2":"11.04234"},{"1":"9.908732","2":"10.88192"},{"1":"9.880169","2":"10.89031"},{"1":"9.912761","2":"11.06707"},{"1":"9.946081","2":"11.05719"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>¿Cómo pasarías a la forma codificada (larga)?</p>
+<p>Una alternativa es esta:</p>
+<pre class="r"><code>df1 &lt;- data.frame(grupo = &quot;A&quot;, v1 = A)
+df1 &lt;- rbind(df1, data.frame(grupo = &quot;B&quot;, v1 = B))
+df1</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["v1"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"9.870645"},{"1":"A","2":"10.114712"},{"1":"A","2":"10.149283"},{"1":"A","2":"10.092966"},{"1":"A","2":"9.942428"},{"1":"A","2":"9.996218"},{"1":"A","2":"9.908732"},{"1":"A","2":"9.880169"},{"1":"A","2":"9.912761"},{"1":"A","2":"9.946081"},{"1":"B","2":"11.064392"},{"1":"B","2":"10.931753"},{"1":"B","2":"11.020858"},{"1":"B","2":"11.133583"},{"1":"B","2":"11.127862"},{"1":"B","2":"11.042341"},{"1":"B","2":"10.881918"},{"1":"B","2":"10.890308"},{"1":"B","2":"11.067072"},{"1":"B","2":"11.057188"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Algunas otras opciones son:</p>
+<pre class="r"><code># Código
+
+# Matrices SOLO pueden contener datos de un tipo (si hay caracteres, los números también se transformarán a caractér)
+#mat &lt;- matrix(rep(1, 10), rep(2, 10), A, B, ncol = 2) # Error
+
+#----------------------
+mat &lt;- matrix(c(rep(1, length(A)), rep(2,  length(B)), A, B), ncol = 2)
+
+mat &lt;- as.data.frame(mat)
+mat$V1 &lt;- as.character(mat$V1)
+mat$V1[mat$V1 == &quot;1&quot;] &lt;- &quot;A&quot;
+mat$V1[mat$V2 == &quot;2&quot;] &lt;- &quot;B&quot;
+#-----------------------
+# Variante
+mat &lt;- matrix(c(rep(1, length(A)), rep(2,  length(B)), A, B), ncol = 2)
+
+mat &lt;- as.data.frame(mat)
+mat$V1 &lt;- as.character(mat$V1)
+mat$V1 &lt;- ifelse(mat$V1 == &quot;1&quot;, &quot;A&quot;, &quot;B&quot;)
+#-------------------------
+# Variante:
+mat &lt;- matrix(c(rep(1, length(A)), rep(2,  length(B)), A, B), ncol = 2)
+mat &lt;- as.data.frame(mat)
+mat$V1 &lt;- LETTERS[mat$V1]
+mat</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V1"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V2"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"9.870645"},{"1":"A","2":"10.114712"},{"1":"A","2":"10.149283"},{"1":"A","2":"10.092966"},{"1":"A","2":"9.942428"},{"1":"A","2":"9.996218"},{"1":"A","2":"9.908732"},{"1":"A","2":"9.880169"},{"1":"A","2":"9.912761"},{"1":"A","2":"9.946081"},{"1":"B","2":"11.064392"},{"1":"B","2":"10.931753"},{"1":"B","2":"11.020858"},{"1":"B","2":"11.133583"},{"1":"B","2":"11.127862"},{"1":"B","2":"11.042341"},{"1":"B","2":"10.881918"},{"1":"B","2":"10.890308"},{"1":"B","2":"11.067072"},{"1":"B","2":"11.057188"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="estimación-de-los-intervalos-de-confianza" class="section level2">
+<h2>Estimación de los intervalos de confianza</h2>
+<p>Estimar las medias de cada grupo</p>
+<pre class="r"><code>#Medias
+mean(A)</code></pre>
+<pre><code>## [1] 9.981399</code></pre>
+<pre class="r"><code>mean(B)</code></pre>
+<pre><code>## [1] 11.02173</code></pre>
+<pre class="r"><code>mean(mat$V1[mat$V1 == &quot;A&quot;]) # Error, poner atención a la columna que se está seleccionando</code></pre>
+<pre><code>## Warning in mean.default(mat$V1[mat$V1 == &quot;A&quot;]): argument is not numeric or
+## logical: returning NA</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>mean(mat$V2[mat$V1 == &quot;A&quot;])</code></pre>
+<pre><code>## [1] 9.981399</code></pre>
+<pre class="r"><code>mean(mat$V2[mat$V1 == &quot;B&quot;])</code></pre>
+<pre><code>## [1] 11.02173</code></pre>
+<p>Estimar los intervalos de confianza</p>
+<pre class="r"><code>rcompanion::groupwiseMean(v1~grupo, data = df1 , conf = 0.95)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"10","3":"9.98","4":"0.95","5":"9.91","6":"10.1"},{"1":"B","2":"10","3":"11.00","4":"0.95","5":"11.00","6":"11.1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>rcompanion::groupwiseMean(V2~V1, data = mat , conf = 0.95)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"10","2":"9.98","3":"0.95","4":"9.91","5":"10.1"},{"1":"10","2":"11.00","3":"0.95","4":"11.00","5":"11.1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="prueba-de-t-para-muestras-independientes" class="section level2">
+<h2>Prueba de T para muestras independientes</h2>
+<pre class="r"><code>library(ggplot2)
+n &lt;- 100000
+v1 &lt;- data.frame(var = rnorm(n))
+sds &lt;- data.frame(xf = c(3, 1.96, 1))
+
+sds[&quot;AUC&quot;] &lt;- NA
+
+for (i in seq_along(sds$xf)) {
+  sds$AUC[i] &lt;- as.character(round(1 - length(v1$var[(v1$var &lt; -sds$xf[i]) | (v1$var &gt; sds$xf[i])])/n, 2))
+}
+
+sds</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["xf"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AUC"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"3.00","2":"1"},{"1":"1.96","2":"0.95"},{"1":"1.00","2":"0.68"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>uni.norm &lt;- ggplot() + 
+            geom_rect(data = sds, aes(xmin = -xf, xmax = xf, 
+                                      ymin = 0, ymax = Inf, 
+                                      fill = AUC),  alpha = 0.3) +
+            geom_density(data = v1, aes(var),
+                         kernel = &quot;gaussian&quot;, 
+                         colour = &quot;deepskyblue4&quot;, fill = &quot;deepskyblue4&quot;, 
+                         alpha = 0.6) +
+            labs(x = &quot;Z&quot;,
+                 y = element_blank(),
+                 title = &quot;Gráfico de densidad de una distribución normal unitaria&quot;,
+                 subtitle = expression(paste(&quot;n = 100000; &quot;, mu, &quot; = 0; &quot;, sigma, &quot; = 1&quot;)),
+                 caption = &quot;Datos simulados&quot;) +
+            theme(panel.grid.minor = element_blank(),
+                  panel.grid.major = element_blank(),
+                  panel.background = element_blank(),
+                  axis.line = element_blank(),
+                  aspect.ratio = 1/1.61,
+                  axis.ticks = element_blank(),
+                  text = element_text(family = &quot;Montserrat&quot;, colour = &quot;gray50&quot;)
+                  ) +
+            scale_y_continuous(breaks = NULL) +
+            scale_x_continuous(breaks = c(-sds$xf, sds$xf))
+            
+uni.norm</code></pre>
+<p><img src="c6_ph0_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>t = valor del estadístico de prueba, indica la posición en el eje X en el gráfico de la distribución p-value = Es la proporción de la distribución fuera del área del valor crítico; es decir, 1-AUC hasta ese valor crítico. df = grados de libertad de la muestra. Representan el número de observaciones independientes; es decir, “retiramos la media”. Ejemplo: 10, 11, 12. La media es 11; por lo tanto, la cantidad de observaciones independientes de la media es 2.</p>
+<pre class="r"><code>t.test(V2~V1, data = mat, var.equal = T, paired = F)</code></pre>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  V2 by V1
+## t = -24.069, df = 18, p-value = 3.855e-15
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -1.1311375 -0.9495187
+## sample estimates:
+## mean in group A mean in group B 
+##        9.981399       11.021728</code></pre>
+<p>Podemos también presentar los resultados de manera gráfica. Para ello necesitaremos guardar los resultados de nuestra prueba t.test en un objeto y extraer la información de ahí. ¿Cómo verificamos cuál es el tipo de objeto?</p>
+<pre class="r"><code>ttest &lt;- t.test(V2 ~ V1, data = mat, var.equal = T, paired = F)
+typeof(ttest)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<p>El objeto es una lista NOMBRADA, por lo que podemos acceder a su contenido utilizando el operador de [[]] (posición numérica o “nombre”) o el operador $. Guardemos el valor de p en un nuevo objeto para incluirlo en la gráfica:</p>
+<pre class="r"><code>p_val &lt;- ttest$p.value
+p_val</code></pre>
+<pre><code>## [1] 3.85482e-15</code></pre>
+<p>Construyamos y grafiquemos los intervalos de confianza para la media de cada grupo (95%):</p>
+<pre class="r"><code>ICs &lt;- rcompanion::groupwiseMean(v1~grupo, data = df1, conf = 0.95)
+
+error.plot &lt;- ggplot(data = ICs, aes(x = grupo, y = Mean)) +
+              geom_point(color = &quot;deepskyblue4&quot;) + 
+              geom_errorbar(aes(ymin = Trad.lower, ymax = Trad.upper), color = &quot;deepskyblue4&quot;) +
+              theme(panel.grid.minor = element_blank(),
+                    panel.grid.major = element_blank(),
+                    panel.background = element_blank(),
+                    axis.line = element_blank(),
+                    aspect.ratio = 1/1.61,
+                    axis.ticks = element_blank(),
+                    text = element_text(colour = &quot;gray50&quot;),
+                    legend.position = &quot;none&quot;) +
+              labs(x = &quot;Grupo&quot;,
+                   y = &quot;x&quot;,
+                   title = &quot;¿Diferencias significativas?&quot;,
+                   subtitle =&quot;Medias e intervalos de confianza para una variable aleatoria&quot;,
+                   caption =  paste(&quot;t(v = &quot;, ttest$parameter, &quot;, 0.05) = &quot;, round(ttest[[&quot;statistic&quot;]] ,2), &quot;; &quot;, ifelse(p_val &lt; 0.0001, &quot;p &lt; 0.0001&quot;, paste(&quot;p = &quot;, p_val))))
+              
+error.plot</code></pre>
+<p><img src="c6_ph0_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="prueba-t-para-datos-dependientes" class="section level2">
+<h2>Prueba t para datos dependientes</h2>
+<p>Carguemos los datos, que en este caso están contenidos en un archivo de excel.</p>
+<pre class="r"><code>dependientes &lt;- openxlsx::read.xlsx(&quot;data/datos_t.xlsx&quot;, sheet = 2)
+dependientes</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Antes"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Después"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"60","2":"90","_rn_":"1"},{"1":"65","2":"99","_rn_":"2"},{"1":"72","2":"78","_rn_":"3"},{"1":"66","2":"77","_rn_":"4"},{"1":"65","2":"80","_rn_":"5"},{"1":"68","2":"75","_rn_":"6"},{"1":"66","2":"80","_rn_":"7"},{"1":"80","2":"99","_rn_":"8"},{"1":"78","2":"98","_rn_":"9"},{"1":"60","2":"80","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Notar que está en formato compacto (no codificado), por lo tanto hay que transformarla:</p>
+<pre class="r"><code>dependientes.m &lt;- reshape2::melt(dependientes, value.name = &quot;LT&quot;, na.rm = T, variable.name = &quot;periodo&quot;)</code></pre>
+<pre><code>## No id variables; using all as measure variables</code></pre>
+<pre class="r"><code>dependientes.m</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["periodo"],"name":[1],"type":["fct"],"align":["left"]},{"label":["LT"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Antes","2":"60","_rn_":"1"},{"1":"Antes","2":"65","_rn_":"2"},{"1":"Antes","2":"72","_rn_":"3"},{"1":"Antes","2":"66","_rn_":"4"},{"1":"Antes","2":"65","_rn_":"5"},{"1":"Antes","2":"68","_rn_":"6"},{"1":"Antes","2":"66","_rn_":"7"},{"1":"Antes","2":"80","_rn_":"8"},{"1":"Antes","2":"78","_rn_":"9"},{"1":"Antes","2":"60","_rn_":"10"},{"1":"Después","2":"90","_rn_":"11"},{"1":"Después","2":"99","_rn_":"12"},{"1":"Después","2":"78","_rn_":"13"},{"1":"Después","2":"77","_rn_":"14"},{"1":"Después","2":"80","_rn_":"15"},{"1":"Después","2":"75","_rn_":"16"},{"1":"Después","2":"80","_rn_":"17"},{"1":"Después","2":"99","_rn_":"18"},{"1":"Después","2":"98","_rn_":"19"},{"1":"Después","2":"80","_rn_":"20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Prueba</p>
+<pre class="r"><code>t.test(LT~periodo, data = dependientes.m, paired = T)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  LT by periodo
+## t = -6.1115, df = 9, p-value = 0.0001768
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -24.11459 -11.08541
+## sample estimates:
+## mean of the differences 
+##                   -17.6</code></pre>
+</div>
+<div id="ejercicio" class="section level1">
+<h1>Ejercicio</h1>
+<p>Realizar la prueba t con los datos de la hoja 1 del archivo, la cual contiene datos de dos muestras independientes. La tarea consiste en cargar los datos, realizar la prueba y presentar un gráfico en el que se reporten los resultados.</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

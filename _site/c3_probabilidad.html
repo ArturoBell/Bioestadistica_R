@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Arturo Bell Enríquez García" />
+
+
+<title>S1,T5: Probabilidad</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bioestadística con R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Clases
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Biología como Ciencia de Datos</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c1_Intro_R.html">Introducción a R</a>
+        </li>
+        <li>
+          <a href="c2_ggplot2.html">ggplot2</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Herramientas Básicas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c3_probabilidad.html">Probabilidad</a>
+        </li>
+        <li>
+          <a href="c4_muestreo.html">Teoría del Muestreo</a>
+        </li>
+        <li>
+          <a href="c5_descriptiva.html">Estadística Descriptiva</a>
+        </li>
+        <li>
+          <a href="c6_ph0.html">Pruebas de hipótesis</a>
+        </li>
+        <li>
+          <a href="c7_param.html">Técnicas Paramétricas</a>
+        </li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Relaciones Lineales</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c8_rls.html">Modelo Lineal Simple</a>
+        </li>
+        <li>
+          <a href="c9_glm.html">Modelos Lineales Generalizados</a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a href="c10_no_par.html">Técnicas No Paramétricas</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Técnicas Multivariadas</a>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="c11_intro_mv.html">Introducción</a>
+        </li>
+        <li>
+          <a href="c12_no_sup.html">No supervisadas</a>
+        </li>
+        <li>
+          <a href="c13_comps_mv.html">Comparaciones Multivariadas</a>
+        </li>
+        <li>
+          <a href="c14_clasificacion.html">Clasificaciones</a>
+        </li>
+        <li>
+          <a href="c15_regs_mv.html">Regresiones Múltiples</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">S1,T5: Probabilidad</h1>
+<h4 class="author">Arturo Bell Enríquez García</h4>
+
+</div>
+
+
+<p><strong><a href="https://youtu.be/OJbGK6Q_Psg">VIDEO</a></strong></p>
+<div id="frecuencia-a-largo-plazo" class="section level2">
+<h2>Frecuencia a largo plazo</h2>
+<p>Supongamos que queremos conocer la frecuencia relativa a largo plazo de obtener “cara” (H) al lanzar una moneda. La intuición nos dice que deberá de ser 0.5, pero pretendamos que no es tan obvio. Todo lo que sabemos es que existe algún proceso subyacente que genera “H” o “T” (cruz) cuando obtememos una muestra. Este proceso tiene un parámetro <span class="math inline">\(\theta\)</span>, cuyo valor es <span class="math inline">\(\theta = 0.5\)</span>. Si es todo lo que conocemos, podemos <strong>aproximar</strong> la probabilidad de H realizando el experimento N veces. Para ello primero realicemos 500 experimentos y calculemos la proporción acumulada hasta el i-esimo experimento:</p>
+<pre class="r"><code>volado &lt;- function(N){
+  # N es el número de lanzamientos o experimentos que realizaremos
+  
+  # Después realizaremos los muestreos:
+  sec &lt;- sample(x       = c(0, 1),
+                prob    = c(.5 ,.5),
+                size    = N,
+                replace = TRUE)
+  # Calculamos la suma acumulativa. Si solo obtenemos 1s el resultado final será 500, si solo obtenemos 0s el resultado final será 0.
+  r &lt;- cumsum(sec)
+  
+  # Generamos un identificador para cada muestreo 
+  n &lt;- 1:N
+  # Calculamos la proporción H:T acumulada a cada muestreo
+  prop.acum &lt;- r/n
+  # Generamos el data.frame con los resultados
+  resultados &lt;- data.frame(n, prop.acum) 
+  
+  return(list(N, sec, prop.acum, resultados))
+}</code></pre>
+<pre class="r"><code>res.list &lt;- volado(N = 500)
+N &lt;- res.list[[1]]
+sec &lt;- res.list[[2]]
+prop.acum &lt;- res.list[[3]]
+resultados &lt;- res.list[[4]]</code></pre>
+<p>Podríamos ver los resultados numéricamente; sin embargo, una mejor aproximación para comprender el cambio en las proporciones es utilizar un gráfico de líneas:</p>
+<pre class="r"><code>library(ggplot2)
+prop.plot &lt;- ggplot(data = resultados, aes(x = n, y = prop.acum)) +
+             geom_line(colour = &quot;deepskyblue4&quot;, linetype = &quot;solid&quot;, size = 0.7) +
+             geom_point(colour = &quot;deepskyblue4&quot;, alpha = 0.1, fill = NA, 
+                        shape = &quot;circle&quot;, stroke = 1, size = 4) +
+             labs(x = &quot;# de experimento&quot;,
+                  y = element_blank(),
+                  title = &quot;Aproximación de P(H) con 500 experimentos&quot;,
+                  subtitle = &quot;Proporción H:T acumulativa&quot;,
+                  caption = &quot;Datos simulados&quot;) +
+             theme(panel.grid.minor = element_blank(),
+                   panel.grid.major = element_blank(),
+                   panel.background = element_blank(),
+                   axis.line = element_blank(),
+                   aspect.ratio = 1/1.61,
+                   axis.ticks = element_blank(),
+                   text = element_text(colour = &quot;gray50&quot;)
+                   ) +
+             scale_y_continuous(breaks = c(0.0,0.5,1),
+                                labels = c(&quot;T&quot;, &quot;0.5&quot;, &quot;H&quot;)) +
+             scale_x_continuous(n.breaks = 5) +
+             geom_hline(yintercept = 1, colour = rgb(118,78,144, maxColorValue = 255),
+                        alpha = 0.9, linetype = &quot;dashed&quot;) +
+             geom_hline(yintercept = 0.5, colour = &quot;lightslategray&quot;,
+                        alpha = 0.9, linetype = &quot;dashed&quot;) +
+             geom_hline(yintercept = 0, colour = rgb(106,16,166, maxColorValue = 255),
+                        alpha = 0.9, linetype = &quot;dashed&quot;) +
+             annotate(&quot;text&quot;, x = 450, y = 0.75, 
+                      label = paste(&quot;Final = &quot;, round(prop.acum[N],2)),
+                      colour = &quot;gray50&quot;) +
+             annotate(&quot;text&quot;, x = 65, y = 0.25,
+                      label = paste(&quot;Tiros: &quot;, 
+                                    paste(c(&quot;T&quot;,&quot;H&quot;)[sec[1:10]+1], 
+                                                     collapse = &quot;&quot;), &quot;...&quot;), colour = &quot;gray50&quot;)
+
+prop.plot</code></pre>
+<p><img src="c3_probabilidad_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="distribución-de-probabilidades" class="section level2">
+<h2>Distribución de probabilidades</h2>
+<p>Veamos ahora la distribución de probabilidades de la proporción H:T o, en otras palabras, la distribución de probabilidades de la probabilidad de que obtengamos H. Para hacer esto debemos de tener algunas consideraciones, la principal es que la información “cruda” no nos funciona para este propósito, tenemos que procesarla y ponerla en términos de frecuencias:</p>
+<pre class="r"><code># Primero generamos los intervalos que nos interesan:
+amplitud &lt;- 0.1
+intervaln &lt;- seq(0, 1, amplitud) # Una secuencia de 0 a 1, cada &quot;amplitud&quot;
+
+# Ahora calculamos las frecuencias para cada intervalo:
+
+freq.table &lt;- transform(table(cut(resultados$prop.acum, intervaln)))
+
+# Cambiemos el nombre de las columnas
+colnames(freq.table) &lt;- c(&quot;Intervalo&quot;, &quot;Frecuencia&quot;)
+
+# Generamos una nueva columna que contenga únicamente los límites utilizando la función sapply, 
+# Creamos primero una función personalizada:
+
+intervals &lt;- function(x){
+  if(!require(&quot;stringr&quot;)) install.packages(&quot;stringr&quot;, dependencies = T) # En caso de que no esté instalada la librería stringr, R la instalará
+  
+  ifelse(nchar(as.character(x))&gt;7, # Si el número de caracteres es mayor a 7:
+         str_replace(substr(x, 2, 8), &quot;,&quot;, &quot;:&quot;), # Extrae los caracteres 2:8 y reemplaza las &quot;,&quot; con &quot;:&quot;
+         str_replace(substr(x, 2, 6), &quot;,&quot;, &quot;:&quot;)) # Si no, extrae solamente los caracteres 2:8 y reemplaza las &quot;,&quot; con &quot;:&quot;
+}
+# Aplicamos la función personalizada y generamos una columna nueva:
+freq.table[&quot;Lims&quot;] &lt;- sapply(freq.table$Intervalo, intervals)
+
+# Transformamos los 0s en NAs para que no sean considerados al graficar
+freq.table$Frecuencia[freq.table$Frecuencia == 0] &lt;- NA
+
+freq.table</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Intervalo"],"name":[1],"type":["fct"],"align":["left"]},{"label":["Frecuencia"],"name":[2],"type":["int"],"align":["right"]},{"label":["Lims"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"(0,0.1]","2":"NA","3":"0:0.1"},{"1":"(0.1,0.2]","2":"1","3":"0.1:0.2"},{"1":"(0.2,0.3]","2":"18","3":"0.2:0.3"},{"1":"(0.3,0.4]","2":"20","3":"0.3:0.4"},{"1":"(0.4,0.5]","2":"460","3":"0.4:0.5"},{"1":"(0.5,0.6]","2":"NA","3":"0.5:0.6"},{"1":"(0.6,0.7]","2":"NA","3":"0.6:0.7"},{"1":"(0.7,0.8]","2":"NA","3":"0.7:0.8"},{"1":"(0.8,0.9]","2":"NA","3":"0.8:0.9"},{"1":"(0.9,1]","2":"NA","3":"0.9:1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo (NOTA: Las advertencias no son errores, son solo por los NAs que incluimos anteriormente):</p>
+<pre class="r"><code>freq.plot &lt;- ggplot(data = freq.table, aes(x = Lims, y = Frecuencia)) + 
+             geom_bar(stat = &quot;identity&quot;, colour = NA, fill = &quot;deepskyblue4&quot;, alpha = 0.5) +
+             geom_text(aes(label = Frecuencia),
+                       stat = &quot;identity&quot;,
+                       nudge_y = 15, colour = &quot;gray50&quot;) +
+             labs(x = &quot;Intervalos&quot;,
+                  y = element_blank(),
+                  title = &quot;Distribución de frecuencias de lanzamientos de monedas&quot;,
+                  subtitle = paste(N, &quot; lanzamientos&quot;),
+                  caption = &quot;Datos simulados&quot;) +
+             theme(panel.grid.minor = element_blank(),
+                   panel.grid.major = element_blank(),
+                   panel.background = element_blank(),
+                   axis.line = element_blank(),
+                   aspect.ratio = 1/1.61,
+                   axis.ticks = element_blank(),
+                   text = element_text(colour = &quot;gray50&quot;)
+                   ) +
+             scale_y_continuous(breaks = NULL)
+freq.plot</code></pre>
+<pre><code>## Warning: Removed 6 rows containing missing values (position_stack).</code></pre>
+<pre><code>## Warning: Removed 6 rows containing missing values (geom_text).</code></pre>
+<p><img src="c3_probabilidad_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Ahora que tenemos clara la definición de probabilidad, y tomando en consideración el gráfico anterior, pasaremos a hablar de <strong>Distribuciones de probabilidad</strong>.</p>
+<p>Para hacer más eficiente el trabajo en clase, en la siguiente celda únicamente estoy “envolviendo” el código de las celdas anteriores en funciones:</p>
+<pre class="r"><code># Función para el cálculo de las distribuciones de frecuencias
+tabla.frec &lt;- function(df, var.col, inter = 0.1, min = 0, max = 1, ...){
+  # df es el data.frame que contiene los resultados de nuestros experimentos
+  # var.col es una cadena de caracter que contiene el nombre de la columna con la variable de interés
+  # inter indica la amplitud de los intervalos, por defecto = 0.1
+  # min indica el valor mínimo de nuestra variable
+  # max indica el valor máximo de nuestra variable
+  
+  # Primero generamos los intervalos que nos interesan:
+  intervaln &lt;- seq(min-inter, max+inter, inter) # Una secuencia de 0 a 1, cada &quot;inter&quot;
+  
+  # Ahora calculamos las frecuencias para cada intervalo:
+  # Nota: Se puede realizar con la función hist; fue decisión personal hacerlo de este modo
+  
+  freq.table &lt;- transform(table(cut(as.matrix(df[var.col]), intervaln)))
+  
+  # Cambiemos el nombre de las columnas
+  colnames(freq.table) &lt;- c(&quot;Intervalo&quot;, &quot;Frecuencia&quot;)
+  
+  # Generamos una nueva columna que contenga únicamente los límites utilizando la función sapply, 
+  # Creamos primero una función personalizada:
+  
+  intervals &lt;- function(x){
+    if(!require(&quot;stringr&quot;)) install.packages(&quot;stringr&quot;, dependencies = T) # En caso de que no esté instalada la librería stringr, R la instalará
+    
+    str_replace(str_extract(x,&quot;(?&lt;=\\().+?(?=\\])&quot;), &quot;,&quot;, &quot;:&quot;)
+    
+  }
+  # Aplicamos la función personalizada y generamos una columna nueva:
+  freq.table[&quot;Lims&quot;] &lt;- sapply(freq.table$Intervalo, intervals)
+  
+  # Transformamos los 0s en NAs para que no sean considerados al graficar
+  #freq.table$Frecuencia[freq.table$Frecuencia == 0] &lt;- NA
+  
+  return(freq.table)
+}
+
+frec.graf &lt;- function(df, lims.col = 3, freq.col = 2){
+  # df es el data.frame con nuestra tabla de frecuencias
+  # lims.col es el número de la columna que contiene los intervalos (valores de x)
+  # freq.col es el número de la columna que contiene el número de frecuencias
+  N = sum(df[,freq.col])
+  freq.plot &lt;- ggplot(data = df, aes(x = df[,lims.col], y = df[,freq.col])) + 
+             geom_bar(stat = &quot;identity&quot;, colour = NA, fill = &quot;deepskyblue4&quot;, alpha = 0.5) +
+             geom_text(aes(label = df[,freq.col]),
+                       stat = &quot;identity&quot;,
+                       nudge_y = 20, colour = &quot;gray50&quot;) +
+             labs(x = &quot;Intervalos&quot;,
+                  y = element_blank(),
+                  title = &quot;Distribución de frecuencias de lanzamientos de monedas&quot;,
+                  subtitle = paste(&quot;Experimentos: &quot;,N),
+                  caption = &quot;Datos simulados&quot;) +
+             theme(panel.grid.minor = element_blank(),
+                   panel.grid.major = element_blank(),
+                   panel.background = element_blank(),
+                   axis.line = element_blank(),
+                   aspect.ratio = 1/1.61,
+                   axis.ticks = element_blank(),
+                   text = element_text(colour = &quot;gray50&quot;)
+                   ) +
+             scale_y_continuous(breaks = NULL)
+  return(freq.plot)
+}</code></pre>
+<p>Analicemos la distribución de una variable continua distribuída normalmente, primero cada 5 unidades:</p>
+<pre class="r"><code>norm.var &lt;- data.frame(var = rnorm(10000, mean = 67, sd = 7))
+norm.res.5 &lt;- tabla.frec(norm.var, var.col = &quot;var&quot;, inter = 5, min = min(norm.var), max = max(norm.var))
+frec.graf(norm.res.5)</code></pre>
+<p><img src="c3_probabilidad_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Ahora veámosla con una amplitud de 1:</p>
+<pre class="r"><code>norm.res.1 &lt;- tabla.frec(norm.var, var.col = &quot;var&quot;, inter = 1, min = min(norm.var), max = max(norm.var))
+frec.graf(norm.res.1)</code></pre>
+<p><img src="c3_probabilidad_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>En este punto, incluso desde la gráfica anterior, el gráfico se comenzó a cargar de demasiada información. Esto era de esperarse, tomando en cuenta que en cada ocasión achicamos los intervalos. Para hacerlos infinitesimalmente pequeños podemos utilizar un tipo de gráfico que se conoce como KDE, basado en la técnica “Kernel Density Estimation” que, en pocas palabras, nos permite mostrar la función de densidad de un conjunto de datos:</p>
+<pre class="r"><code>prom.norm.var &lt;- mean(norm.var$var)
+de.plot &lt;- ggplot(data = norm.var, aes(var)) + 
+           geom_density(kernel = &quot;gaussian&quot;, colour = &quot;deepskyblue4&quot;, fill = &quot;deepskyblue4&quot;, alpha = 0.5) +
+           labs(x = &quot;Altura&quot;,
+                y = element_blank(),
+                title = &quot;Gráfico de densidad de alturas en pulgadas&quot;,
+                subtitle = paste(&quot;Experimentos: &quot;,length(norm.var$var), &quot;; Media real = 67&quot;),
+                caption = &quot;Datos simulados&quot;) +
+           theme(panel.grid.minor = element_blank(),
+                 panel.grid.major = element_blank(),
+                 panel.background = element_blank(),
+                 axis.line = element_blank(),
+                 aspect.ratio = 1/1.61,
+                 axis.ticks = element_blank(),
+                 text = element_text(colour = &quot;gray50&quot;)
+                 ) +
+           scale_y_continuous(breaks = NULL) +
+           geom_vline(xintercept = prom.norm.var, colour = rgb(118,78,144, maxColorValue = 255)) +
+           annotate(&quot;text&quot;, x = prom.norm.var, y = 0.06, label = paste(&quot;Media = &quot;, round(prom.norm.var, 1)))
+de.plot</code></pre>
+<p><img src="c3_probabilidad_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Podemos ver también la importancia de la representatividad con una animación. Primero generemos un data.frame que contenga todos los estados que nos interesan, en este caso desde 10 muestras hasta 1010, en incrementos de 10 muestras:</p>
+<pre class="r"><code>for (i in seq(10,1010,10)) {
+  ifelse(i == 10,
+         norm.var2 &lt;- data.frame(var = norm.var$var[1:i], iter = i, promedio = mean(norm.var$var[1:i])),
+         norm.var2 &lt;- rbind(norm.var2, data.frame(var = norm.var$var[1:i], iter = i, promedio = mean(norm.var$var[1:i])))
+         )
+}</code></pre>
+<p>Ahora utilicemos la librería <code>gganimate</code> para generar la animación de nuestro interés. OJO: Esta animación no se mostrará en la libreta, sino en el visor de RStudio OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado puede tomar desde unos cuantos segundos hasta varios minutos o, incluso, más de una hora. Este ejemplo es el segundo caso. NO correr al menos de que tengas bastante tiempo disponible o una computadora con bastante fuerza bruta.</p>
+<pre class="r"><code># library(gganimate)
+# de.plot &lt;- ggplot(data = norm.var2, aes(var)) +
+#           geom_density(kernel = &quot;gaussian&quot;, colour = &quot;deepskyblue4&quot;, fill = &quot;deepskyblue4&quot;, alpha = 0.5) +
+#           labs(x = &quot;Altura&quot;,
+#                y = element_blank(),
+#                title = &quot;Gráfico de densidad de alturas (pulgadas)&quot;,
+#                subtitle = paste(&quot;Experimentos: &quot;,length(norm.var$var), &quot;; Media real = 67&quot;),
+#                caption = &quot;Datos simulados&quot;) +
+#           theme(panel.grid.minor = element_blank(),
+#                 panel.grid.major = element_blank(),
+#                 panel.background = element_blank(),
+#                 axis.line = element_blank(),
+#                 aspect.ratio = 1/1.61,
+#                 axis.ticks = element_blank(),
+#                 text = element_text(colour = &quot;gray50&quot;)
+#                 ) +
+#           scale_y_continuous(breaks = NULL) +
+#           geom_vline(xintercept = norm.var2$promedio, colour = rgb(118,78,144, maxColorValue = 255)) +
+#           annotate(&quot;text&quot;, x = norm.var2$promedio, y = 0.06, label = paste(&quot;Media = &quot;, round(norm.var2$promedio, 2))) +
+#           transition_states(iter) + labs(subtitle = paste(&quot;Experimentos: {closest_state}; Media real = 67&quot;))
+# de.plot</code></pre>
+</div>
+<div id="intervalos-de-confianza" class="section level2">
+<h2>Intervalos de confianza</h2>
+<p>Existen distintas formas de calcular los intervalos de confianza para una media en R. Uno de ellos es utilizando la función <code>t.test</code>, el cual utiliza la distribución T-Student para el cálculo. De su salida vemos que nos da el valor del estadístico de prueba (valor crítico), los grados de libertad y un valor de p. Estos elementos los ignoraremos por el momento. Lo que sí nos interesa es la información que aparece por debajo; es decir, los límites de los intervalos de confianza y el valor de la media.</p>
+<pre class="r"><code>t.test(norm.var$var, conf.level = 0.95)</code></pre>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  norm.var$var
+## t = 962.68, df = 9999, p-value &lt; 2.2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  66.76864 67.04110
+## sample estimates:
+## mean of x 
+##  66.90487</code></pre>
+<p>Otra forma de calcularlos es utilizando la librería <code>Rmisc</code>:</p>
+<pre class="r"><code>#install.packages(&quot;Rmisc&quot;, dependencies = T)
+library(Rmisc)</code></pre>
+<pre><code>## Loading required package: plyr</code></pre>
+<p>Una vez instalada y cargada, podemos utilizar la función <code>CI(x, ci = a)</code>, donde <code>x</code> es el vector que contiene los datos y <code>a</code> representa el nivel de “confianza” de la estimación. Utilicemos los mismos datos de altura que generamos hace unos momentos:</p>
+<pre class="r"><code>CI(norm.var$var, ci = 0.95)</code></pre>
+<pre><code>##    upper     mean    lower 
+## 67.04110 66.90487 66.76864</code></pre>
+<p>Como vemos, la función calcula los intervalos de confianza utilizando la distribución T. Esto se debe a que es el modo más común de realizar la estimación de intervalos para variables continuas. ¿La razón? Eso es tema para una clase posterior, en la que explicaré las características que hacen que la distribución T sea uno de los principales “caballitos de batalla” en la estadística.</p>
+<p>Una última opción es utilizar la librería <code>Rcompanion</code>, la cual tiene un método de la estimación de intervalos basado en “remuestreos” Bootstrap. Al igual que en el resto de librerías, habrá que instalarla:</p>
+<pre class="r"><code>#install.packages(&quot;Rcompanion&quot;, dependencies = T)
+library(rcompanion)</code></pre>
+<p>Una de las funciones que podemos utilizar es <code>groupwiseMean(formula, data, conf, R)</code>, donde <code>formula</code> indica al mismo tiempo las columnas de la variable continua y la variable de agrupamiento, tal que: <code>var ~ grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> que indica la amplitud de los intervalos y finalmente <code>R</code> que indica el número de replicas bootstrap a realizar. Partiendo de lo anterior:</p>
+<pre class="r"><code>groupwiseMean(var~1, data = norm.var, conf = 0.95, R = 500)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"10000","3":"66.9","4":"0.95","5":"66.8","6":"67"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Vemos que la salida es un poco más compleja; sin embargo, lo más relevante es que los intervalos son sumamente cercanos a los que calculamos anteriormente. ¿Esto quiere decir que no tiene caso realizar las réplicas bootstrap? No, simplemente que sus beneficios los veremos aplicándolas a la situación para la que fueron pensadas; es decir, distribuciones sesgadas y no normales a diferencia de la variable que analizamos aquí.</p>
+<p>Recursos recomendados para esta sección: <a href="https://rcompanion.org/handbook/C_03.html">Rcompanion</a> y <a href="http://www.biostathandbook.com/confidence.html">Handbook of Biological Statistics</a></p>
+</div>
+<div id="ejercicio" class="section level2">
+<h2>Ejercicio</h2>
+<p>Para la tarea de esta semana cargarás el archivo <code>Datos1.csv</code> con el código aquí incluído y, de manera similar a como se vio durante la clase, realizarás la estimación de la media, la desviación estándar y los intervalos de confianza (utilizando cualquiera de las formas aquí vistas) para diferentes tamaños de muestra (ojo a la función <code>sample()</code>). El objetivo es ver cómo cambian tanto la estimación puntual como la amplitud de los intervalos al incrementar el tamaño de muestra.</p>
+<p>Parte <strong>OPCIONAL</strong>:Si quieres desafiarte un poco más, considera alguna de las variables Dieta o Periodo como un grupos dentro de la población y realiza las estimaciones con esa consideración. Puedes también intentar presentar los resultados de manera gráfica (agrupados o no). Una alternativa es usar un gráfico KDE y mostrar los límites como líneas verticales, otra alternativa es un gráfico similar al que se presentó en clase, con el número de muestras en el eje x y un gráfico con líneas de error para el eje y. Este apartado OPCIONAL no tiene una “respuesta correcta”, así que puedes experimentar y presentar (o no) los resultados de la manera en que tú consideres se resuelven los objetivos.</p>
+<pre class="r"><code>df &lt;- read.table(file.choose(), header = F, skip = 1, sep = &quot;,&quot;)
+colnames(df) &lt;- c(&quot;Dieta&quot;, &quot;Periodo&quot;, &quot;Rep&quot;, &quot;LT&quot;, &quot;PT&quot;)
+head(df)</code></pre>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
