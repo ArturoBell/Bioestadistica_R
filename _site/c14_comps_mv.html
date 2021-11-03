@@ -457,7 +457,7 @@ error.rate &lt;- ggplot(data = error, aes(m, P_alpha)) +
                    )
 
 error.rate</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Ahora apliquemos la corrección de Bonferroni, dada por <span class="math inline">\(\alpha/m\)</span>, de modo que la ecuación anterior queda formulada como: <span class="math inline">\(1-(1-\alpha/m)^m\)</span></p>
 <pre class="r"><code>error[&quot;P_bonf&quot;] &lt;- 1 - (1-(0.05/error$m))^error$m
 
@@ -481,7 +481,7 @@ error.corr &lt;- ggplot(data = error, aes(m, P_bonf)) +
                    )
 
 error.corr</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>set.seed(45)
 n &lt;- 1000
 robs &lt;- data.frame(z = rnorm(n))
@@ -517,7 +517,7 @@ robs.plot &lt;- ggplot(data = robs, aes(z)) +
                       )
 
 robs.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>set.seed(45)
 n &lt;- 1000
 a.corr &lt;- (0.05/n)/2
@@ -555,7 +555,7 @@ rcor.plot &lt;- ggplot(data = robs, aes(z)) +
                       )
 
 rcor.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="anova-sheirer-ray-hare" class="section level2">
 <h2>ANOVA Sheirer-Ray-Hare</h2>
@@ -696,7 +696,7 @@ summary(res.mili)</code></pre>
                    y = element_blank(),
                    caption = &quot;Datos: milipedos.csv&quot;)
 inter.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-14-1.png" width="672" /> La variable Especie sola</p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-14-1.png" width="672" /> La variable Especie sola</p>
 <pre class="r"><code>espec.plot &lt;- ggplot(data = mili, aes(x = Especie, y = Ala, color = Especie)) + 
               geom_violin() + geom_boxplot(width = 0.1) + 
               blank_theme() +
@@ -706,7 +706,7 @@ inter.plot</code></pre>
                    y = element_blank(),
                    caption = &quot;Datos: milipedos.csv&quot;)
 espec.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-15-1.png" width="672" /> La variable sexo sola</p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-15-1.png" width="672" /> La variable sexo sola</p>
 <pre class="r"><code>sexos.plot &lt;- ggplot(data = mili, aes(x = Sexo, y = Ala, color = Sexo)) + 
               geom_violin() + geom_boxplot(width = 0.1) + 
               blank_theme() +
@@ -716,7 +716,7 @@ espec.plot</code></pre>
                    y = element_blank(),
                    caption = &quot;Datos: milipedos.csv&quot;)
 sexos.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div id="ejercicio" class="section level3">
 <h3>Ejercicio</h3>
 <p>Realizar un ANOVA Scheirer-Ray-Hare con la base de datos strawberry (<a href="https://doi.org/10.1094/pd-89-1195">Horst <em>et al.</em> 2005</a>). Una base de datos multivariada con medidas de peso, % de Botrytis, % de otras epecies fúngicas y una evaluación de Phomopsis en las hojas para 4 tratamientos con 3 réplicas cada uno.</p>
@@ -1053,7 +1053,7 @@ petalw.plot &lt;- ggplot(data = iris, aes(x = Species, y = Petal.Width, colour =
                     y = element_blank())
 
 grid.arrange(sepall.plot, sepalw.plot, petall.plot, petalw.plot)</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>O veamos un gráfico de coordenadas paralelas, el cual nos permite analizar las mediciones de cada variable de cada individuo en un mismo gráfico:</p>
 <pre class="r"><code>library(GGally)
 coord.plot &lt;- ggparcoord(iris, 
@@ -1070,7 +1070,7 @@ coord.plot &lt;- ggparcoord(iris,
                     x = element_blank(),
                     caption = &quot;Datos: Iris&quot;)
 coord.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 </div>
 <div id="análisis-permutacional-multivariado-de-la-varianza" class="section level2">
 <h2>Análisis Permutacional Multivariado de la Varianza:</h2>
@@ -1097,7 +1097,7 @@ dist &lt;- data.frame(f = unname(replicate(2000, diff(by(y, sample(tr, length(tr
                     x = element_blank(),
                     y = element_blank())
 permut.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>Apliquemos entonces la prueba. Para ello lo primero será calcular la matriz de distancias (de no pasar una matriz de distancias a la prueba hará por default la disimilaridad de Bray-Curtis)</p>
 <pre class="r"><code>dist.mat &lt;- vegdist(iris[,1:4], method = &quot;euclidean&quot;) # Matriz de distancias
 grps &lt;- iris[,5] # Es un data.frame que contiene los distintos niveles de agrupamiento, anidados o no</code></pre>
@@ -1111,7 +1111,7 @@ grps &lt;- iris[,5] # Es un data.frame que contiene los distintos niveles de agr
 </div>
 <p>Veamos la dispersión multivariada</p>
 <pre class="r"><code>plot(betadisper(dist.mat, grps), hull = F, ellipse = T)</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>Podemos utilizar también un Escalamiento Multi-Dimensional No Paramétrico. Esta técnica es similar al PCA en el sentido de que proyecta un espacio altamente dimensional a un espacio con menos dimensiones (k), tratando de preservar las distancias entre cada punto. En pocas palabras, es una “hoja” o “lámina” de pocas dimensiones dentro de un espacio altamente dimensional.</p>
 <pre class="r"><code>iris.mds &lt;- metaMDS(dist.mat, distance = &quot;euclidean&quot;, k = 2, trace = F)
 mds.dims &lt;- data.frame(NMDS1 = iris.mds$points[,1], NMDS2 = iris.mds$points[,2])
@@ -1138,7 +1138,7 @@ arrow.p &lt;-subset(arrow, P &lt;= 0.05)</code></pre>
                          )
 
 mds.plot</code></pre>
-<p><img src="c13_comps_mv_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<p><img src="c14_comps_mv_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 </div>
 </div>
 

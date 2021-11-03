@@ -483,12 +483,12 @@ cov.mat</code></pre>
 <pre class="r"><code>library(corrplot)</code></pre>
 <pre><code>## corrplot 0.84 loaded</code></pre>
 <pre class="r"><code>corrplot(cor.mat, method = &quot;ellipse&quot;, type = &quot;upper&quot;)</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Ahora utilicemos una función que, en un solo paso, computará la matriz de correlación, realizará una prueba de significancia para cada una y además nos presentará la matriz de manera gráfica:</p>
 <pre class="r"><code>source(&quot;http://www.sthda.com/upload/rquery_cormat.r&quot;) # Descarga la función desde esa url y la carga en memoria
 mydata &lt;- mtcars[, c(1,3,4,5,6,7)] # Para fines prácticos se extrae un subconjunto de las columnas
 rquery.cormat(mydata) # Se aplica la función</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre><code>## $r
 ##         hp  disp    wt  qsec  mpg drat
 ## hp       1                            
@@ -535,7 +535,7 @@ rquery.cormat(mydata) # Se aplica la función</code></pre>
 ## 
 ##     legend</code></pre>
 <pre class="r"><code>chart.Correlation(mydata, histogram = T, pch = 19)</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Un comentario final al respecto de estas matrices es que, además de ser la base de las técnicas multivariadas, nos permiten evaluar la asociación entre nuestras variables sin comprometer un modelo predictivo, a la vez que nos permitirán hacer un filtrado de nuestras variables para evitar autocorrelaciones o incluir variables poco informativas, aunque de esto hablaremos más adelante.</p>
 </div>
 <div id="normalidad-multivariada" class="section level2">
@@ -577,7 +577,7 @@ mardia.test</code></pre>
 <p>Si observamos con atención los valores de p, veremos que hay algunos que se encuentran cercanos al umbral de 0.05 por lo que un análisis a partir de los cuantiles de la distribución puede ser una alternativa más informativa. Para ello podemos utilizar la prueba de Henze-Zirkler. Esta prueba considera una hipótesis compuesta, en la cual <em>la distribución de X es una distribución normal no degenerada</em>, cuyos resultados son consistentes contra cualquier distribución alternativa no normal (por ello compuesta). La representación está dada en términos de <span class="math inline">\(L^2\)</span> (Distancia de Mahalanobis, más adelante hablaremos sobre medidas de distancia). Al ser una prueba de bondad de ajuste (observado vs. esperado), el estadístico de prueba sigue una distribución <span class="math inline">\(\chi^2\)</span> (<a href="http://bit.ly/Henze_Zirkler">Henze y Zirkler 2007</a>).</p>
 <p>Aplicandola con <code>mvn()</code> vemos que también sugiere una falta de normalidad, lo cual podemos comprobar al ver el gráfico Cuantil-Cuantil</p>
 <pre class="r"><code>hz.test &lt;- mvn(mydata, mvnTest = &quot;hz&quot;, multivariatePlot = &quot;qq&quot;)$multivariateNormality</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>hz.test</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -627,7 +627,7 @@ blank_theme &lt;- function(){
 }</code></pre>
 <pre class="r"><code>qqjiplot &lt;- ji2.plot(mydata) + blank_theme()
 qqjiplot</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 <div id="prueba-de-royston" class="section level3">
 <h3>Prueba de Royston</h3>
@@ -681,7 +681,7 @@ disp.mv</code></pre>
 </div>
 <p>Ahora veamos las dispersiones gráficamente:</p>
 <pre class="r"><code>plot(disp.mv, ellipse = T, hull = F) # Análisis gráfico</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-14-1.png" width="672" /> Al analizar el gráfico vemos que las dispersiones son similares; sin embargo, pareciera que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, en tonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (<code>TukeyHSD</code>). Los resultados sugieren que las dispersiones con un <span class="math inline">\(\alpha = 0.05\)</span> son similares, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.</p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-14-1.png" width="672" /> Al analizar el gráfico vemos que las dispersiones son similares; sin embargo, pareciera que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, en tonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (<code>TukeyHSD</code>). Los resultados sugieren que las dispersiones con un <span class="math inline">\(\alpha = 0.05\)</span> son similares, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.</p>
 <pre class="r"><code>mod.HSD &lt;- TukeyHSD(disp.mv)
 mod.HSD &lt;- data.frame(mod.HSD$group, comp = dimnames(mod.HSD$group)[[1]])
 mod.HSD</code></pre>
@@ -728,7 +728,7 @@ mod.HSD</code></pre>
                        nudge_y = max(mod.HSD$upr)+0.005, colour = &quot;gray50&quot;)
             
 hsd.plot</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 </div>
 <div id="implicaciones-analíticas-de-la-multidimensionalidad" class="section level2">
 <h2>Implicaciones analíticas de la multidimensionalidad</h2>
@@ -757,14 +757,14 @@ kdeplots &lt;- function(data, aes){
 
 kde.plots &lt;- kdeplots(df, aes(datos, color = transf))
 kde.plots</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <div id="estandarización" class="section level3">
 <h3>Estandarización</h3>
 <p>Veamos el efecto de estandarizar los datos; es decir, utilizar la distribución Z. El resultado es la misma distribución, aunque los datos ahora se encuentran escalados en el intervalo [-3,3] indicando a cuantas SD de la media se encuentra cada punto.</p>
 <pre class="r"><code>df2 &lt;- rbind(df, data.frame(datos = (df$datos-mean(df$datos))/sd(df$datos), transf = &quot;Z&quot;))
 kde.plots &lt;- kdeplots(df2, aes(datos, color = transf)) + facet_wrap(~transf, scales = &quot;free&quot;)
 kde.plots</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="transformación-logarítmica" class="section level3">
 <h3>Transformación logarítmica:</h3>
@@ -772,7 +772,7 @@ kde.plots</code></pre>
 <pre class="r"><code>df2 &lt;- rbind(df2, data.frame(datos = log(df$datos), transf = &quot;log(x)&quot;))
 kde.plots &lt;- kdeplots(df2, aes(datos, color = transf)) + facet_wrap(~transf, scales = &quot;free&quot;)
 kde.plots</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 </div>
 <div id="raíz-cuadrada" class="section level3">
 <h3>Raíz cuadrada</h3>
@@ -780,7 +780,7 @@ kde.plots</code></pre>
 <pre class="r"><code>df2 &lt;- rbind(df2, data.frame(datos = sqrt(df$datos), transf = &quot;sqrt(x)&quot;))
 kde.plots &lt;- kdeplots(df2, aes(datos, color = transf)) + facet_wrap(~transf, scales = &quot;free&quot;)
 kde.plots</code></pre>
-<p><img src="c11_intro_mv_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 </div>
 

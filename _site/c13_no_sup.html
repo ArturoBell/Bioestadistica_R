@@ -461,7 +461,7 @@ hc.av &lt;- hclust(dist.mat, method =&quot;average&quot;)</code></pre>
 library(ggdendro, quietly = T)
 
 ggdendrogram(hc.av, labels = T)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-4-1.png" width="672" /> Podemos personalizar el dendrograma utilizando la función <code>set(object, what, value)</code> de la librería <code>dendextend</code>:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-4-1.png" width="672" /> Podemos personalizar el dendrograma utilizando la función <code>set(object, what, value)</code> de la librería <code>dendextend</code>:</p>
 <pre class="r"><code>library(dendextend)</code></pre>
 <pre><code>## Registered S3 method overwritten by &#39;dendextend&#39;:
 ##   method     from 
@@ -516,7 +516,7 @@ dend &lt;- set(dend, &quot;labels_col&quot;,
 
 # Graficador base de R:
 plot(dend)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-5-1.png" width="672" /> Por homogeneidad con el resto del curso, grafiquémoslo utilizando <code>ggplot2</code>:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-5-1.png" width="672" /> Por homogeneidad con el resto del curso, grafiquémoslo utilizando <code>ggplot2</code>:</p>
 <pre class="r"><code>ggd1 &lt;- as.ggdend(dend)
 ggd1.plot &lt;- ggplot(ggd1, offset_labels = -1, theme = blank_theme()) + 
              ylim(-2.4, max(get_branches_heights(dend))) +
@@ -528,7 +528,7 @@ ggd1.plot &lt;- ggplot(ggd1, offset_labels = -1, theme = blank_theme()) +
                   caption = &quot;Datos de bit.ly/clust_medium&quot;)
 
 ggd1.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-6-1.png" width="672" /> ## Ejercicio Mv Habiendo comprendido cómo funciona el análisis de agrupamientos, apliquémoslo a una base de datos multivariada (<code>cluster.txt</code>), la cual consiste en mediciones de variables ambientales en distintos sitios de muestreo y el objetivo es agrupar aquellos que tengan características similares. En el resumen podemos ver que hay diferencias muy importantes en las escalas de las variables, por lo cual será necesario escalar los datos.</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-6-1.png" width="672" /> ## Ejercicio Mv Habiendo comprendido cómo funciona el análisis de agrupamientos, apliquémoslo a una base de datos multivariada (<code>cluster.txt</code>), la cual consiste en mediciones de variables ambientales en distintos sitios de muestreo y el objetivo es agrupar aquellos que tengan características similares. En el resumen podemos ver que hay diferencias muy importantes en las escalas de las variables, por lo cual será necesario escalar los datos.</p>
 <pre class="r"><code>clust.df &lt;- read.table(&quot;data/cluster.txt&quot;, header = T, row.names = 1) # ¡OJO con row.names!
 summary(clust.df)</code></pre>
 <pre><code>##       Temp            NH4             NO3              OD             Prof    
@@ -609,7 +609,7 @@ ggd1.plot &lt;- ggplot(ggd1, offset_labels = -1, theme = blank_theme()) +
                   caption = &quot;Datos: clust.txt&quot;)
 
 ggd1.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-10-1.png" width="672" /> Los agrupamientos con esa combinación de distancia y método de agrupamiento no son claros, veamos qué pasa si consideramos la distancia euclidiana:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-10-1.png" width="672" /> Los agrupamientos con esa combinación de distancia y método de agrupamiento no son claros, veamos qué pasa si consideramos la distancia euclidiana:</p>
 <pre class="r"><code>dist.mv2 &lt;- vegdist(clust.scale, method = &quot;euclidean&quot;)
 hc.mv2 &lt;- hclust(dist.mv2, method =&quot;ward.D2&quot;)
 
@@ -635,7 +635,7 @@ ggd2.plot &lt;- ggplot(ggd2, offset_labels = -1, theme = blank_theme()) +
                   caption = &quot;Datos: clust.txt&quot;)
 
 ggd2.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-11-1.png" width="672" /> ¿Y la distancia Manhattan? Las agrupaciones resultantes son similares; sin embargo, las medidas de distancia son muy diferentes. Utilicemos el caso anterior para evaluar las agrupaciones.</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-11-1.png" width="672" /> ¿Y la distancia Manhattan? Las agrupaciones resultantes son similares; sin embargo, las medidas de distancia son muy diferentes. Utilicemos el caso anterior para evaluar las agrupaciones.</p>
 <pre class="r"><code>dist.mv3 &lt;- vegdist(clust.scale, method = &quot;manhattan&quot;)
 hc.mv3 &lt;- hclust(dist.mv3, method =&quot;ward.D2&quot;)
 
@@ -661,16 +661,16 @@ ggd3.plot &lt;- ggplot(ggd3, offset_labels = -1, theme = blank_theme()) +
                   caption = &quot;Datos: clust.txt&quot;)
 
 ggd3.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-12-1.png" width="672" /> ### Evaluación de los agrupamientos Para calcular los índices que estiman el número óptimo de agrupaciones utilizaremos la función <code>NbClust</code> de la librería con el mismo nombre.</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-12-1.png" width="672" /> ### Evaluación de los agrupamientos Para calcular los índices que estiman el número óptimo de agrupaciones utilizaremos la función <code>NbClust</code> de la librería con el mismo nombre.</p>
 <pre class="r"><code>library(NbClust)
 res &lt;- NbClust(clust.scale, diss = NULL, distance = &quot;euclidean&quot;, method = &quot;ward.D2&quot;, index = &quot;all&quot;, max.nc = 8)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
 ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
 ##                 significant increase of the value of the measure i.e the significant peak in Hubert
 ##                 index second differences plot. 
 ## </code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
 <pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
 ##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
 ##                 second differences plot) that corresponds to a significant increase of the value of
@@ -725,11 +725,11 @@ ggd2.plot &lt;- ggplot(ggd2, offset_labels = -1, theme = blank_theme()) +
                   caption = &quot;Datos: clust.txt&quot;)
 
 ggd2.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p><strong>Guardado de figuras!!!</strong></p>
 <pre class="r"><code>#cairo_pdf(&quot;dendrogram.pdf&quot;, width = 8, height = 8)
 ggd2.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <pre class="r"><code>#dev.off()</code></pre>
 <p>¿Cómo lo interpretamos? Hay que revisar la base de datos para evitar caer en interpretaciones incorrectas y analizar qué características conforman cada grupo.</p>
 </div>
@@ -906,10 +906,10 @@ cors</code></pre>
 <p>Ahora veamos los resultados de manera gráfica. Primero las variables:</p>
 <pre class="r"><code>fviz_pca_var(res.pca, col.var = &quot;coord&quot;,
                        gradient.cols = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;))</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-19-1.png" width="672" /> ¿Qué variables son las más importantes? Otra forma de ver estos resultados es utilizando la librería corrplot:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-19-1.png" width="672" /> ¿Qué variables son las más importantes? Otra forma de ver estos resultados es utilizando la librería corrplot:</p>
 <pre class="r"><code>library(corrplot)
 corrplot(var$coord, is.corr = T)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-20-1.png" width="672" /> Podemos extraer las 4 variables más importantes para un componente dado:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-20-1.png" width="672" /> Podemos extraer las 4 variables más importantes para un componente dado:</p>
 <pre class="r"><code>sort(cors[,1], decreasing = T)[1:4]</code></pre>
 <pre><code>##  mandib  arriba   hocic X1erarc 
 ##    0.83    0.79    0.78    0.76</code></pre>
@@ -923,13 +923,13 @@ corrplot(var$coord, is.corr = T)</code></pre>
              palette = c(&quot;#00AFBB&quot;, &quot;#E7B800&quot;, &quot;#FC4E07&quot;), # Colores a utilizar
              addEllipses = TRUE, # Elipses de concentración
              legend.title = &quot;Especies&quot;)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-22-1.png" width="672" /> Y podemos también hacer un gráfico conjunto, aunque dada la alta dimensionalidad de esta base de datos, los resultados serán poco interpretables.</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-22-1.png" width="672" /> Y podemos también hacer un gráfico conjunto, aunque dada la alta dimensionalidad de esta base de datos, los resultados serán poco interpretables.</p>
 <pre class="r"><code>fviz_pca_biplot(res.pca, 
                 col.ind = x1n$especie, palette = &quot;jco&quot;, 
                 addEllipses = TRUE, label = &quot;var&quot;,
                 col.var = &quot;black&quot;, repel = TRUE,
                 legend.title = &quot;Especies&quot;) </code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-23-1.png" width="672" /> ## Evaluación de los Componentes Principales Veamos ahora las varianzas explicadas acumuladas para cada componente:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-23-1.png" width="672" /> ## Evaluación de los Componentes Principales Veamos ahora las varianzas explicadas acumuladas para cada componente:</p>
 <pre class="r"><code>eig.val &lt;- get_eigenvalue(res.pca)
 eig.val</code></pre>
 <pre><code>##        eigenvalue variance.percent cumulative.variance.percent
@@ -966,12 +966,12 @@ eig.val</code></pre>
 ## Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 <p>De todos los resultados anteriores vemos que las primeras dos dimensiones capturan menos del 50% de la varianza total de los datos; por tanto, es conveniente analizar cuántos componentes principales son los óptimos. Una alternativa es realizar el análisis gráfico de la varianza. En este gráfico buscamos un punto de inflexión, el cual indicaría el límite de los PCs representativos.</p>
 <pre class="r"><code>fviz_eig(res.pca, addlabels = T)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-25-1.png" width="672" /> En este gráfico yo consideraría el primer punto de inflexión en el tercer componente principal, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos los CP cuyas varianzas explicadas sean superiores al valor medio. El segundo modelo es un modelo de repartición de recursos desarrollado en el campo de la ecología: El modelo Broken-Stick (McArthur 1957). En este modelo, el recurso compartido es la varianza total, entonces consideraremos aquellos CPs que contengan una varianza explicada superior a la esperada según el modelo.</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-25-1.png" width="672" /> En este gráfico yo consideraría el primer punto de inflexión en el tercer componente principal, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos los CP cuyas varianzas explicadas sean superiores al valor medio. El segundo modelo es un modelo de repartición de recursos desarrollado en el campo de la ecología: El modelo Broken-Stick (McArthur 1957). En este modelo, el recurso compartido es la varianza total, entonces consideraremos aquellos CPs que contengan una varianza explicada superior a la esperada según el modelo.</p>
 <pre class="r"><code>#Kaisser-Guttman y Broken Stick
 ev &lt;- as.data.frame(eig.val)$eigenvalue
 names(ev) &lt;- paste(&quot;CP&quot;,seq_along(ev), &quot;&quot;)
 evplot(ev)</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-26-1.png" width="672" /> Bajo el criterio de Kaiser-Guttman consideraríamos 8 CPs, mientras que en el modelo de Broken-Stick consideraríamos únicamente 4. De cualquier modo, ambos criterios sugieren un número mayor al que yo consideré en el gráfico de la varianza.</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-26-1.png" width="672" /> Bajo el criterio de Kaiser-Guttman consideraríamos 8 CPs, mientras que en el modelo de Broken-Stick consideraríamos únicamente 4. De cualquier modo, ambos criterios sugieren un número mayor al que yo consideré en el gráfico de la varianza.</p>
 </div>
 <div id="escalamiento-multidimensional-no-métrico-nmds" class="section level1">
 <h1>Escalamiento Multidimensional No Métrico (NMDS)</h1>
@@ -981,41 +981,44 @@ evplot(ev)</code></pre>
 dist.nmds &lt;- dist.mv2
 mds &lt;- metaMDS(dist.nmds, distance = &quot;euclidean&quot;, k = 2, trace = T)</code></pre>
 <pre><code>## Run 0 stress 0.1033851 
-## Run 1 stress 0.1188198 
-## Run 2 stress 0.1033851 
-## ... Procrustes: rmse 1.491623e-05  max resid 4.085596e-05 
+## Run 1 stress 0.1033851 
+## ... New best solution
+## ... Procrustes: rmse 1.136921e-05  max resid 3.57339e-05 
 ## ... Similar to previous best
+## Run 2 stress 0.2172249 
 ## Run 3 stress 0.1188198 
-## Run 4 stress 0.1188198 
-## Run 5 stress 0.1188198 
+## Run 4 stress 0.1033851 
+## ... Procrustes: rmse 2.382431e-05  max resid 7.590827e-05 
+## ... Similar to previous best
+## Run 5 stress 0.2139947 
 ## Run 6 stress 0.1188198 
-## Run 7 stress 0.2027265 
-## Run 8 stress 0.1033851 
-## ... New best solution
-## ... Procrustes: rmse 8.402924e-07  max resid 2.479534e-06 
+## Run 7 stress 0.1033851 
+## ... Procrustes: rmse 1.833334e-05  max resid 5.396508e-05 
 ## ... Similar to previous best
+## Run 8 stress 0.1925188 
 ## Run 9 stress 0.1188198 
-## Run 10 stress 0.1893902 
-## Run 11 stress 0.1890348 
-## Run 12 stress 0.1033851 
-## ... Procrustes: rmse 7.949436e-05  max resid 0.0002522203 
+## Run 10 stress 0.2101933 
+## Run 11 stress 0.1033851 
+## ... Procrustes: rmse 3.494316e-05  max resid 0.0001105532 
 ## ... Similar to previous best
-## Run 13 stress 0.1925188 
+## Run 12 stress 0.1188198 
+## Run 13 stress 0.1033851 
+## ... Procrustes: rmse 1.239071e-05  max resid 3.964143e-05 
+## ... Similar to previous best
 ## Run 14 stress 0.1033851 
-## ... Procrustes: rmse 1.653371e-05  max resid 5.18324e-05 
+## ... Procrustes: rmse 5.53595e-05  max resid 0.0001733028 
 ## ... Similar to previous best
-## Run 15 stress 0.2645422 
-## Run 16 stress 0.1188198 
-## Run 17 stress 0.2139952 
-## Run 18 stress 0.1033851 
-## ... Procrustes: rmse 1.597669e-05  max resid 5.047582e-05 
+## Run 15 stress 0.1033851 
+## ... Procrustes: rmse 8.089436e-06  max resid 2.043126e-05 
 ## ... Similar to previous best
+## Run 16 stress 0.2184157 
+## Run 17 stress 0.1188198 
+## Run 18 stress 0.1642917 
 ## Run 19 stress 0.1033851 
-## ... New best solution
-## ... Procrustes: rmse 1.428278e-05  max resid 4.500299e-05 
+## ... Procrustes: rmse 2.57819e-05  max resid 8.209034e-05 
 ## ... Similar to previous best
 ## Run 20 stress 0.1033851 
-## ... Procrustes: rmse 2.220537e-05  max resid 4.508625e-05 
+## ... Procrustes: rmse 3.637487e-05  max resid 0.0001155571 
 ## ... Similar to previous best
 ## *** Solution reached</code></pre>
 <pre class="r"><code>mds.dims &lt;- data.frame(NMDS1 = mds$points[,1], NMDS2 = mds$points[,2])
@@ -1035,7 +1038,7 @@ arrow.p &lt;- arrow.p[order(arrow.p$R, decreasing = T), ]
 head(arrow.p)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293686","2":"0.5587018","3":"0.9128760","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471169","2":"-0.3208889","3":"0.8744927","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293815","2":"-0.5586826","3":"0.7176477","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517436","2":"-0.3068942","3":"0.6989959","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045969","2":"0.4262680","3":"0.6989171","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862154","2":"-0.6179526","3":"0.6977788","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293704","2":"0.5586991","3":"0.9128751","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471184","2":"-0.3208844","3":"0.8744909","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293834","2":"-0.5586799","3":"0.7176478","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517435","2":"-0.3068946","3":"0.6989941","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045941","2":"0.4262741","3":"0.6989203","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862183","2":"-0.6179488","3":"0.6977740","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>library(ggrepel)
@@ -1056,9 +1059,9 @@ mds.plot &lt;- ggplot(mds.plot.data, aes(NMDS1, NMDS2)) +
             #             )
 
 mds.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-29-1.png" width="672" /> Ahora comparemos con el dendrograma:</p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-29-1.png" width="672" /> Ahora comparemos con el dendrograma:</p>
 <pre class="r"><code>ggd2.plot</code></pre>
-<p><img src="c12_no_sup_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+<p><img src="c13_no_sup_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>Tarea opcional: Aplicar un ACP a esta misma base de datos. 1. ¿Los datos deben de centrarse y estandarizarse? 2. Realiza el ACP. ¿Cuántos CPs considerarías? 3. ¿Cuál es la varianza explicada entre los dos primeros componentes principales? 4. ¿Cuáles son las variables más imporantes para esos dos componentes? 5. ¿Hay diferencias en la ordenación con respecto a los otros dos métodos? 6. Realizar las tres técnicas con las medidas ambientales, incluyendo SST y comparar con estos resultados.</p>
 </div>
 

@@ -637,14 +637,14 @@ corr</code></pre>
 ## area      0.40189142 -0.2095533890
 ## Intesti   0.12858271 -0.5474213085</code></pre>
 <pre class="r"><code>corrplot::corrplot(corr, is.corr = T)</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Creemos un gráfico de densidad bivariado para conocer la distribución de los grupos en el nuevo espacio:</p>
 <pre class="r"><code>territ_plot &lt;- ggplot(data = adj_vals, aes(x = LD1, y = LD2, colour = especie)) +
                geom_density_2d(show.legend = T, alpha = 0.5) +
                geom_point() +
                theme_bw()
 territ_plot</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 <div id="diagnóstico-del-modelo-de-funciones-discriminantes" class="section level3">
 <h3>Diagnóstico del modelo de funciones discriminantes:</h3>
@@ -793,7 +793,7 @@ clas.plot &lt;- dec.probs + geom_point(data = mesh_test, aes(x = LD1, y = LD2, s
 
 # Imprimimos el gráfico
 clas.plot</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <pre class="r"><code>mesh_test[mesh_test$mark == &quot;Mal clasificado&quot;,]</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -813,7 +813,7 @@ clas.plot</code></pre>
 ##   predict.rda vegan
 ##   print.rda   vegan
 ##   plot.rda    vegan</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 </div>
 <div id="curva-roc-y-valor-auc." class="section level4">
@@ -873,7 +873,7 @@ roc_cons &lt;- multiclass.roc(test_sp_num, pred_clase_num)</code></pre>
 colors &lt;- c(&quot;brown3&quot;, &quot;chartreuse4&quot;, &quot;deepskyblue4&quot;)
 #cairo_pdf(&quot;ROC_LDA.pdf&quot;, height = 12.9, width = 7 )
 plot_rocs(test_sp_num, roc_cons, colors, theme_bw(), test_t)</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-20-1.png" width="576" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-20-1.png" width="576" /></p>
 <pre class="r"><code>#dev.off()</code></pre>
 </div>
 </div>
@@ -1063,7 +1063,7 @@ head(sim_logdata)</code></pre>
   do.call(&#39;grid.arrange&#39;, c(partials, nrow = 2))
 }</code></pre>
 <pre class="r"><code>plot_partials(sim_logdata, preds_probs, &quot;probs&quot;, &quot;P_vers&quot;, &quot;versicolor&quot;)</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-30-1.png" width="1152" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-30-1.png" width="1152" /></p>
 </div>
 <div id="roc-y-auc" class="section level4">
 <h4>ROC y AUC</h4>
@@ -1083,7 +1083,7 @@ roc_logit &lt;- roc(test_sp_num, pred_clase_num)</code></pre>
                 caption = &quot;Datos de prueba&quot;) +
             geom_abline(intercept = 0, slope = 1, color = &quot;gray50&quot;, size = 1, linetype = &quot;dashed&quot;) # Línea de referencia (Azar)
 roc_plot</code></pre>
-<p><img src="c14_clasificacion_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 </div>
 </div>
 </div>
