@@ -11,7 +11,7 @@
 
 
 
-<title>Bioestadística con R y RStudio</title>
+<title>No Paramétrico y No Lineal</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,9 +29,16 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -55,6 +62,11 @@ if (window.hljs) {
 
 
 
+<style type="text/css">
+#rmd-source-code {
+  display: none;
+}
+</style>
 
 
 
@@ -215,7 +227,73 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
 
 
 
@@ -225,6 +303,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -333,32 +421,30 @@ $(document).ready(function () {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
 
 
-<h1 class="title toc-ignore">Bioestadística con R y RStudio</h1>
+
+<h1 class="title toc-ignore">No Paramétrico y No Lineal</h1>
 
 </div>
 
 
-<div id="bienvenido-al-curso" class="section level2">
-<h2>¡Bienvenido al curso!</h2>
-<p>Bienvenido a la página con el material del curso Bioestadística Aplicada con R y RStudio, ofrecido por Dr. Plancton. En esta página encontrarás el código revisado en el curso, presentado en una manera que facilita su lectura y cuyo objetivo es simplemente proveer una versión más amable visualmente que la interfaz de RStudio. Todo el código que verás aquí son las versiones compiladas de las libretas vistas en el curso. La única diferencia es que vas a encontrar un <code>"data/..."</code> dentro de las funciones para cargar los datos. Esto no tiene nada de extraño, simplemente fue para ayudarnos en la construcción de este sitio.</p>
-</div>
 <div id="objetivo-de-aprendizaje" class="section level2">
 <h2>Objetivo de aprendizaje</h2>
-<p>El objetivo de este curso es que seas capaz</p>
-</div>
-<div id="discord" class="section level2">
-<h2>Discord</h2>
-<p>Si bien es cierto que puedes utilizar y acceder a todo el material del curso desde esta página, te recomendamos encarecidamente unirte al servidor de discord utilizando tu enlace <strong>único</strong> (enviado a tu correo al registrarte), pues ahí podrás interactuar no solamente con otros compañeros, sino también con los profesores. Un último comentario, NO es necesario que instales el cliente de Discord en tu computadora o dispositivo móvil.</p>
-</div>
-<div id="r-y-rstudio" class="section level2">
-<h2>R y RStudio</h2>
-<p>Para poder aplicar el código que se presenta vas a necesitar instalar <a href="https://www.r-project.org/">R</a> y <a href="https://www.rstudio.com/">RStudio</a>. El proceso de instalación es, regularmente, sencillo. Simplemente descarga el instalador de la versión más reciente de R para tu sistema operativo, sigue los pasos en el instalador y luego instala RStudio (la versión gratuita).</p>
+<p>En esta sección del curso te adentrarás en las caras “opuestas” a las técnicas que has revisado hasta ahora; es decir, explorarás casos en los cuales no puedes o debes de aplicar una prueba paramétrica, así como casos en los cuales no asumirás que tus variables siguen una relación lineal.</p>
 </div>
 
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTm8gUGFyYW3DqXRyaWNvIHkgTm8gTGluZWFsIgpvdXRwdXQ6CiAgICBodG1sX2RvY3VtZW50OgogICAgICBkZl9wcmludDogcGFnZWQKICAgICAgdGhlbWU6IGNvc21vCiAgICAgIHRvYzogVFJVRQogICAgICB0b2NfZmxvYXQ6IFRSVUUKICAgICAgY29kZV9kb3dubG9hZDogVFJVRQotLS0KCiMjIE9iamV0aXZvIGRlIGFwcmVuZGl6YWplCgpFbiBlc3RhIHNlY2Npw7NuIGRlbCBjdXJzbyB0ZSBhZGVudHJhcsOhcyBlbiBsYXMgY2FyYXMgIm9wdWVzdGFzIiBhIGxhcyB0w6ljbmljYXMgcXVlIGhhcyByZXZpc2FkbyBoYXN0YSBhaG9yYTsgZXMgZGVjaXIsIGV4cGxvcmFyw6FzIGNhc29zIGVuIGxvcyBjdWFsZXMgbm8gcHVlZGVzIG8gZGViZXMgZGUgYXBsaWNhciB1bmEgcHJ1ZWJhIHBhcmFtw6l0cmljYSwgYXPDrSBjb21vIGNhc29zIGVuIGxvcyBjdWFsZXMgbm8gYXN1bWlyw6FzIHF1ZSB0dXMgdmFyaWFibGVzIHNpZ3VlbiB1bmEgcmVsYWNpw7NuIGxpbmVhbC4=</div>
 
 
+</div>
+</div>
 
 </div>
 
@@ -390,7 +476,41 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("noparnolin.Rmd");
+});
+</script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
