@@ -332,7 +332,7 @@ div.tocify {
       <ul class="nav navbar-nav">
         <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Clases
+    Temas
      
     <span class="caret"></span>
   </a>
@@ -1008,44 +1008,48 @@ dist.nmds &lt;- dist.mv2
 mds &lt;- metaMDS(dist.nmds, distance = &quot;euclidean&quot;, k = 2, trace = T)</code></pre>
 <pre><code>## Run 0 stress 0.1033851 
 ## Run 1 stress 0.1033851 
-## ... Procrustes: rmse 2.396454e-05  max resid 7.55208e-05 
+## ... Procrustes: rmse 9.508762e-07  max resid 2.29136e-06 
 ## ... Similar to previous best
-## Run 2 stress 0.1033851 
-## ... Procrustes: rmse 2.197282e-05  max resid 6.868146e-05 
-## ... Similar to previous best
-## Run 3 stress 0.1033851 
-## ... Procrustes: rmse 3.007457e-05  max resid 9.507641e-05 
-## ... Similar to previous best
-## Run 4 stress 0.1033851 
+## Run 2 stress 0.21713 
+## Run 3 stress 0.1188198 
+## Run 4 stress 0.215051 
+## Run 5 stress 0.1033851 
 ## ... New best solution
-## ... Procrustes: rmse 1.050529e-05  max resid 3.275413e-05 
+## ... Procrustes: rmse 2.500179e-06  max resid 6.901289e-06 
 ## ... Similar to previous best
-## Run 5 stress 0.1188198 
-## Run 6 stress 0.2087851 
-## Run 7 stress 0.1708132 
+## Run 6 stress 0.1940923 
+## Run 7 stress 0.1033851 
+## ... Procrustes: rmse 4.132426e-05  max resid 0.0001311986 
+## ... Similar to previous best
 ## Run 8 stress 0.1033851 
-## ... Procrustes: rmse 9.933454e-06  max resid 3.152533e-05 
+## ... Procrustes: rmse 5.199007e-05  max resid 0.0001651674 
 ## ... Similar to previous best
 ## Run 9 stress 0.1033851 
-## ... Procrustes: rmse 4.803892e-06  max resid 1.369037e-05 
+## ... Procrustes: rmse 0.0001150873  max resid 0.0003646165 
 ## ... Similar to previous best
 ## Run 10 stress 0.1033851 
-## ... Procrustes: rmse 0.000114661  max resid 0.0003646897 
+## ... Procrustes: rmse 3.794629e-05  max resid 0.0001207278 
 ## ... Similar to previous best
-## Run 11 stress 0.1188198 
-## Run 12 stress 0.1964504 
+## Run 11 stress 0.2220695 
+## Run 12 stress 0.1708132 
 ## Run 13 stress 0.1033851 
-## ... Procrustes: rmse 1.56656e-05  max resid 4.979269e-05 
+## ... Procrustes: rmse 6.174464e-05  max resid 0.0001961474 
 ## ... Similar to previous best
 ## Run 14 stress 0.1033851 
-## ... Procrustes: rmse 8.58495e-06  max resid 2.069022e-05 
+## ... Procrustes: rmse 4.102501e-05  max resid 0.0001303452 
 ## ... Similar to previous best
-## Run 15 stress 0.1188198 
-## Run 16 stress 0.1708133 
-## Run 17 stress 0.1188198 
-## Run 18 stress 0.1188198 
-## Run 19 stress 0.1188198 
-## Run 20 stress 0.2068559 
+## Run 15 stress 0.1033851 
+## ... Procrustes: rmse 3.24209e-05  max resid 0.0001015617 
+## ... Similar to previous best
+## Run 16 stress 0.1188198 
+## Run 17 stress 0.1033851 
+## ... Procrustes: rmse 1.910139e-05  max resid 6.063844e-05 
+## ... Similar to previous best
+## Run 18 stress 0.1642917 
+## Run 19 stress 0.1033851 
+## ... Procrustes: rmse 3.566628e-05  max resid 0.0001132719 
+## ... Similar to previous best
+## Run 20 stress 0.1964504 
 ## *** Solution reached</code></pre>
 <pre class="r"><code>mds.dims &lt;- data.frame(NMDS1 = mds$points[,1], NMDS2 = mds$points[,2])
 
@@ -1064,7 +1068,7 @@ arrow.p &lt;- arrow.p[order(arrow.p$R, decreasing = T), ]
 head(arrow.p)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293723","2":"0.5586963","3":"0.9128748","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471196","2":"-0.3208808","3":"0.8744902","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293860","2":"-0.5586760","3":"0.7176464","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517439","2":"-0.3068932","3":"0.6989946","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045922","2":"0.4262780","3":"0.6989206","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862169","2":"-0.6179506","3":"0.6977723","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293831","2":"0.5586804","3":"0.9128717","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471273","2":"-0.3208581","3":"0.8744842","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293991","2":"-0.5586565","3":"0.7176439","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517452","2":"-0.3068894","3":"0.6989911","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045792","2":"0.4263055","3":"0.6989298","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862208","2":"-0.6179457","3":"0.6977524","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>library(ggrepel)
