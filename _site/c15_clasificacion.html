@@ -525,16 +525,8 @@ summary(x1)</code></pre>
 <h2>División, centrado y estandarizado de datos</h2>
 <p>Al tratarse de un modelo de aprendizaje automatizado es importante que realicemos nuestra división entrenamiento/prueba para evaluar el ajuste del modelo de clasificación:</p>
 <pre class="r"><code>library(caTools)
-library(caret)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;caret&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:vegan&#39;:
-## 
-##     tolerance</code></pre>
-<pre><code>## The following objects are masked from &#39;package:DescTools&#39;:
-## 
-##     MAE, RMSE</code></pre>
-<pre class="r"><code>set.seed(1111)
+library(caret)
+set.seed(1111)
 sample &lt;- sample.split(x1n$especie, SplitRatio = .75)
 train &lt;- subset(x1n, sample == TRUE)
 test &lt;- subset(x1n, sample == FALSE)</code></pre>
@@ -834,31 +826,20 @@ clas.plot</code></pre>
 </div>
 <p>Podemos también mostrar un gráfico de partición, en el cual se muestra la clasificación según cada variable. Utilizamos la base iris debido a la altísima dimensionalidad de los datos del ejercicio</p>
 <pre class="r"><code>klaR::partimat(Species~., data = iris, method = &quot;lda&quot;)</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;klaR&#39;:
-##   method      from 
-##   predict.rda vegan
-##   print.rda   vegan
-##   plot.rda    vegan</code></pre>
 <p><img src="c15_clasificacion_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 </div>
 </div>
 <div id="curva-roc-y-valor-auc." class="section level4">
 <h4>Curva ROC y valor AUC.</h4>
 <p>Primero obtengamos la curva ROC y el valor de AUC multi-clase.</p>
-<pre class="r"><code>library(pROC)</code></pre>
-<pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;pROC&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     cov, smooth, var</code></pre>
-<pre class="r"><code>library(gridExtra)
+<pre class="r"><code>library(pROC)
+library(gridExtra)
 
 test_sp_num &lt;- as.numeric(as.factor(test_t$especie))
 pred_clase_num &lt;- as.numeric(as.factor(pred.clase))
 roc_cons &lt;- multiclass.roc(test_sp_num, pred_clase_num)</code></pre>
-<pre><code>## Setting direction: controls &lt; cases</code></pre>
 <pre><code>## Setting direction: controls &lt; cases
+## Setting direction: controls &lt; cases
 ## Setting direction: controls &lt; cases</code></pre>
 <p>Ahora creemos una función personalizada para utilizar un ciclo for para graficar las curvas ROC</p>
 <pre class="r"><code>plot_rocs &lt;- function(classes, multi_roc, colors, theme, test_t){

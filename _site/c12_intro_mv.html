@@ -506,9 +506,8 @@ cov.mat</code></pre>
 ## gear -0.21268223  0.2060233  0.79405876  1.0000000  0.27407284
 ## carb -0.65624923 -0.5696071  0.05753435  0.2740728  1.00000000</code></pre>
 <p>Veámos la matriz de correlaciones gráficamente:</p>
-<pre class="r"><code>library(corrplot)</code></pre>
-<pre><code>## corrplot 0.84 loaded</code></pre>
-<pre class="r"><code>corrplot(cor.mat, method = &quot;ellipse&quot;, type = &quot;upper&quot;)</code></pre>
+<pre class="r"><code>library(corrplot)
+corrplot(cor.mat, method = &quot;ellipse&quot;, type = &quot;upper&quot;)</code></pre>
 <p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Ahora utilicemos una función que, en un solo paso, computará la matriz de correlación, realizará una prueba de significancia para cada una y además nos presentará la matriz de manera gráfica:</p>
 <pre class="r"><code>source(&quot;http://www.sthda.com/upload/rquery_cormat.r&quot;) # Descarga la función desde esa url y la carga en memoria
@@ -544,23 +543,8 @@ rquery.cormat(mydata) # Se aplica la función</code></pre>
 ## attr(,&quot;legend&quot;)
 ## [1] 0 &#39; &#39; 0.3 &#39;.&#39; 0.6 &#39;,&#39; 0.8 &#39;+&#39; 0.9 &#39;*&#39; 0.95 &#39;B&#39; 1</code></pre>
 <p>Otra alternativa es utilizar la función <code>chart.Correlation(data, histogram)</code> de la librería <code>PerformanceAnalytics</code>, en la cual se muestran todos resultados en una misma gráfica:</p>
-<pre class="r"><code>library(PerformanceAnalytics)</code></pre>
-<pre><code>## Loading required package: xts</code></pre>
-<pre><code>## Loading required package: zoo</code></pre>
-<pre><code>## 
-## Attaching package: &#39;zoo&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     as.Date, as.Date.numeric</code></pre>
-<pre><code>## 
-## Attaching package: &#39;PerformanceAnalytics&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:moments&#39;:
-## 
-##     kurtosis, skewness</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     legend</code></pre>
-<pre class="r"><code>chart.Correlation(mydata, histogram = T, pch = 19)</code></pre>
+<pre class="r"><code>library(PerformanceAnalytics)
+chart.Correlation(mydata, histogram = T, pch = 19)</code></pre>
 <p><img src="c12_intro_mv_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Un comentario final al respecto de estas matrices es que, además de ser la base de las técnicas multivariadas, nos permiten evaluar la asociación entre nuestras variables sin comprometer un modelo predictivo, a la vez que nos permitirán hacer un filtrado de nuestras variables para evitar autocorrelaciones o incluir variables poco informativas, aunque de esto hablaremos más adelante.</p>
 </div>
@@ -576,12 +560,8 @@ rquery.cormat(mydata) # Se aplica la función</code></pre>
 </ol>
 <p>Donde <span class="math inline">\(\mu\)</span> representa el vector de medias de cada variable y <span class="math inline">\(\Sigma\)</span> la matriz de covarianzas.</p>
 <p>Al realizar esta prueba vemos que la distribución Mv observada tiene una curtosis adecuada, aunque se encuentra fuertemente sesgada. Si analizamos los datos univariados vemos que en apariencia 2/6 variables presentan normalidad univariada.</p>
-<pre class="r"><code>library(MVN)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;GGally&#39;:
-##   method from   
-##   +.gg   ggplot2</code></pre>
-<pre><code>## sROC 0.1-2 loaded</code></pre>
-<pre class="r"><code>mvntest &lt;- mvn(mydata, mvnTest = &quot;mardia&quot;)
+<pre class="r"><code>library(MVN)
+mvntest &lt;- mvn(mydata, mvnTest = &quot;mardia&quot;)
 mardia.test &lt;- mvntest$multivariateNormality
 unitest &lt;- mvntest$univariateNormality
 
@@ -672,11 +652,8 @@ royston.test</code></pre>
 <h2>Igualdad de dispersiones multivariadas</h2>
 <p>Conforme vayamos avanzando en el curso veremos que, entre los supuestos de algunas pruebas, vamos a encontrar el de “igualdad de dispersiones multivariadas”; <em>i.e.</em>, igualdad de matrices de covarianza. Una alternativa es utilizar la prueba de <a href="http://bit.ly/Homo_mvdisp">Anderson (2006)</a>, la cual es un análogo multivariado a la prueba de Levene para la homogeneidad de varianzas. La prueba de hipótesis está basada en distancias no euclidianas entre los grupos (<em>i.e.</em>, no utiliza el teorema de Pitágoras :( ). Un dato curioso es que este método también se ha utilizado para evaluar la diversidad <span class="math inline">\(\beta\)</span> de una comunidad.</p>
 <p>Para su implementación en R utilizaremos la función <code>betadisper</code> de la librería <code>vegan</code>. Al ser un método basado en distancias, primero habrá que transformar los datos a una matriz de distancias utilizando alguna de las funciones <code>dist</code>, <code>betadiver</code> o <code>vegdist</code>. Necesitamos, además, establecer los grupos a utilizar.</p>
-<pre class="r"><code>library(vegan)</code></pre>
-<pre><code>## Loading required package: permute</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.5-7</code></pre>
-<pre class="r"><code>dist.mat &lt;- vegdist(mydata, method = &quot;bray&quot;, type = c(&quot;median&quot;))
+<pre class="r"><code>library(vegan)
+dist.mat &lt;- vegdist(mydata, method = &quot;bray&quot;, type = c(&quot;median&quot;))
 groups &lt;- as.character(mtcars$cyl)
 #dist.mat # Por fines prácticos no se muestra, ya que calcula una distancia entre cada par de instancias o grupos, resultando en matrices sumamente grandes</code></pre>
 <p>Ahora utilizaremos la función <code>betadisper</code> para comprobar la homogeneidad de dispersiones entre los distintos cilindros. Esta prueba únicamente genera el espacio multivariado para realizar la prueba, realizando un ACP para reducir la dimensionalidad de la base de datos y estimar las distancias a la mediana de cada uno de los grupos establecidos.</p>

@@ -609,10 +609,8 @@ X_test_s &lt;- predict(preProc, X_test)</code></pre>
 <div id="regularización-l2-regresión-ridge" class="section level2">
 <h2>Regularización L2: Regresión Ridge</h2>
 <p>Apliquemos la regresión al set de entrenamiento. Debido a que el valor de penalización (<span class="math inline">\(\alpha\)</span> en la clase, <span class="math inline">\(\lambda\)</span> en glmnet) es “arbitrario”, podemos utilizar validación cruzada para encontrar el valor que mejor se ajuste a nuestros datos. La validación cruzada consiste en hacer k particiones entrenamiento-prueba de los datos, ajustar un modelo para cada k para cada valor del parámetro que sea de nuestro interés, promediar el valor de error de cada iteración y quedarnos con el valor del parámetro que haya logrado el menor valor de nuestra medida de error. En la librería <code>glmnet</code> esto se hace con la función <code>cv.glmnet</code>, la cual recibe como argumentos una matriz de variables independientes, un vector con variables dependientes, un valor de alpha que será 0 para regresión Ridge, 1 para Lasso y algún intermedio para red elástica (no la veremos en el curso) y el tipo de medida de error, en este caso MSE.</p>
-<pre class="r"><code>library(glmnet)</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
-<pre><code>## Loaded glmnet 4.0-2</code></pre>
-<pre class="r"><code>cv.ridge &lt;- cv.glmnet(as.matrix(X_train_s), y_train, alpha = 0, type.measure = &quot;mse&quot;)
+<pre class="r"><code>library(glmnet)
+cv.ridge &lt;- cv.glmnet(as.matrix(X_train_s), y_train, alpha = 0, type.measure = &quot;mse&quot;)
 lambdamin &lt;- cv.ridge$lambda.min #Contiene el valor de lambda que otorga el menor valor de error
 lambdamin</code></pre>
 <pre><code>## [1] 127.2735</code></pre>

@@ -643,14 +643,8 @@ bartlett.test(Ala~Sexo, data = mili)</code></pre>
 ## data:  Ala by Especie
 ## Bartlett&#39;s K-squared = 1.0294, df = 2, p-value = 0.5977</code></pre>
 <pre class="r"><code># Verificamos con la prueba de Levene
-library(car)</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre><code>## 
-## Attaching package: &#39;car&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:DescTools&#39;:
-## 
-##     Recode</code></pre>
-<pre class="r"><code>leveneTest(Ala~Sexo, data = mili)</code></pre>
+library(car)
+leveneTest(Ala~Sexo, data = mili)</code></pre>
 <pre><code>## Warning in leveneTest.default(y = y, group = group, ...): group coerced to
 ## factor.</code></pre>
 <div data-pagedtable="false">
@@ -668,15 +662,9 @@ library(car)</code></pre>
 </div>
 <p>Realicemos la prueba Scheirer-Ray-Hare:</p>
 <pre class="r"><code>library(rcompanion)
-library(FSA)</code></pre>
-<pre><code>## ## FSA v0.8.31. See citation(&#39;FSA&#39;) if used in publication.
-## ## Run fishR() for related website and fishR(&#39;IFAR&#39;) for related book.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;FSA&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:car&#39;:
-## 
-##     bootCase</code></pre>
-<pre class="r"><code>scheirerRayHare(Ala ~ Especie + Sexo, data = mili)</code></pre>
+library(FSA)
+
+scheirerRayHare(Ala ~ Especie + Sexo, data = mili)</code></pre>
 <pre><code>## 
 ## DV:  Ala 
 ## Observations:  24 
@@ -920,9 +908,8 @@ virginica &lt;- subset(iris, (Species == &quot;virginica&quot;))[,1:4]
 
 versi.virg &lt;- subset(iris, (Species == &quot;versicolor&quot;) | (Species == &quot;virginica&quot;))</code></pre>
 <p>Aplicamos la prueba:</p>
-<pre class="r"><code>library(Hotelling)</code></pre>
-<pre><code>## Loading required package: corpcor</code></pre>
-<pre class="r"><code>hot.t2 &lt;- hotelling.test(x = virginica, y = versicolor)
+<pre class="r"><code>library(Hotelling)
+hot.t2 &lt;- hotelling.test(x = virginica, y = versicolor)
 hot.t2</code></pre>
 <pre><code>## Test stat:  86.148 
 ## Numerator df:  4 

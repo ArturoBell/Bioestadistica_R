@@ -488,35 +488,8 @@ library(ggdendro, quietly = T)
 
 ggdendrogram(hc.av, labels = T)</code></pre>
 <p><img src="c13_no_sup_files/figure-html/unnamed-chunk-4-1.png" width="672" /> Podemos personalizar el dendrograma utilizando la función <code>set(object, what, value)</code> de la librería <code>dendextend</code>:</p>
-<pre class="r"><code>library(dendextend)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;dendextend&#39;:
-##   method     from 
-##   rev.hclust vegan</code></pre>
-<pre><code>## 
-## ---------------------
-## Welcome to dendextend version 1.14.0
-## Type citation(&#39;dendextend&#39;) for how to cite the package.
-## 
-## Type browseVignettes(package = &#39;dendextend&#39;) for the package vignette.
-## The github page is: https://github.com/talgalili/dendextend/
-## 
-## Suggestions and bug-reports can be submitted at: https://github.com/talgalili/dendextend/issues
-## Or contact: &lt;tal.galili@gmail.com&gt;
-## 
-##  To suppress this message use:  suppressPackageStartupMessages(library(dendextend))
-## ---------------------</code></pre>
-<pre><code>## 
-## Attaching package: &#39;dendextend&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggdendro&#39;:
-## 
-##     theme_dendro</code></pre>
-<pre><code>## The following object is masked from &#39;package:permute&#39;:
-## 
-##     shuffle</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     cutree</code></pre>
-<pre class="r"><code># Primero transformemos nuestro objeto a un dendrograma:
+<pre class="r"><code>library(dendextend)
+# Primero transformemos nuestro objeto a un dendrograma:
 dend &lt;- as.dendrogram(hc.av)
 
 # Cambiemos el color a las ramas:
@@ -762,9 +735,8 @@ ggd2.plot</code></pre>
 <div id="análisis-de-componentes-principales" class="section level1">
 <h1>Análisis de Componentes Principales</h1>
 <p>Por fin llegó la hora de hablar del Análisis de Componentes Principales. Vimos que esta técnica nos permite aproximar nuestros datos multivariados utilizando nuevas variables llamadas Componentes Principales, las cuales son ortogonales (independientes) entre sí. Apliquemos el Análisis de componentes principales a una base de datos con una gran cantidad de variables:</p>
-<pre class="r"><code>library(factoextra)</code></pre>
-<pre><code>## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</code></pre>
-<pre class="r"><code>library(FactoMineR)
+<pre class="r"><code>library(factoextra)
+library(FactoMineR)
 #Base de datos completa
   
 x1n &lt;- read.table(&#39;data/Medidas.txt&#39;, header = TRUE)
@@ -1008,48 +980,51 @@ dist.nmds &lt;- dist.mv2
 mds &lt;- metaMDS(dist.nmds, distance = &quot;euclidean&quot;, k = 2, trace = T)</code></pre>
 <pre><code>## Run 0 stress 0.1033851 
 ## Run 1 stress 0.1033851 
-## ... Procrustes: rmse 9.508762e-07  max resid 2.29136e-06 
+## ... Procrustes: rmse 1.978742e-05  max resid 5.90848e-05 
 ## ... Similar to previous best
-## Run 2 stress 0.21713 
-## Run 3 stress 0.1188198 
-## Run 4 stress 0.215051 
-## Run 5 stress 0.1033851 
-## ... New best solution
-## ... Procrustes: rmse 2.500179e-06  max resid 6.901289e-06 
+## Run 2 stress 0.1033851 
+## ... Procrustes: rmse 0.0001034217  max resid 0.0003289743 
 ## ... Similar to previous best
-## Run 6 stress 0.1940923 
+## Run 3 stress 0.1033851 
+## ... Procrustes: rmse 2.031462e-05  max resid 6.432062e-05 
+## ... Similar to previous best
+## Run 4 stress 0.1188198 
+## Run 5 stress 0.1642917 
+## Run 6 stress 0.1033852 
+## ... Procrustes: rmse 0.000156549  max resid 0.0004971714 
+## ... Similar to previous best
 ## Run 7 stress 0.1033851 
-## ... Procrustes: rmse 4.132426e-05  max resid 0.0001311986 
+## ... New best solution
+## ... Procrustes: rmse 1.531413e-05  max resid 4.788813e-05 
 ## ... Similar to previous best
 ## Run 8 stress 0.1033851 
-## ... Procrustes: rmse 5.199007e-05  max resid 0.0001651674 
+## ... Procrustes: rmse 2.991831e-05  max resid 8.992686e-05 
 ## ... Similar to previous best
 ## Run 9 stress 0.1033851 
-## ... Procrustes: rmse 0.0001150873  max resid 0.0003646165 
+## ... Procrustes: rmse 3.015689e-05  max resid 9.541441e-05 
 ## ... Similar to previous best
 ## Run 10 stress 0.1033851 
-## ... Procrustes: rmse 3.794629e-05  max resid 0.0001207278 
+## ... Procrustes: rmse 5.621113e-05  max resid 0.0001683602 
 ## ... Similar to previous best
-## Run 11 stress 0.2220695 
-## Run 12 stress 0.1708132 
-## Run 13 stress 0.1033851 
-## ... Procrustes: rmse 6.174464e-05  max resid 0.0001961474 
+## Run 11 stress 0.1188198 
+## Run 12 stress 0.1033851 
+## ... New best solution
+## ... Procrustes: rmse 8.814424e-06  max resid 2.799945e-05 
 ## ... Similar to previous best
-## Run 14 stress 0.1033851 
-## ... Procrustes: rmse 4.102501e-05  max resid 0.0001303452 
-## ... Similar to previous best
+## Run 13 stress 0.1188198 
+## Run 14 stress 0.1188198 
 ## Run 15 stress 0.1033851 
-## ... Procrustes: rmse 3.24209e-05  max resid 0.0001015617 
+## ... Procrustes: rmse 1.720723e-05  max resid 5.253055e-05 
 ## ... Similar to previous best
-## Run 16 stress 0.1188198 
-## Run 17 stress 0.1033851 
-## ... Procrustes: rmse 1.910139e-05  max resid 6.063844e-05 
+## Run 16 stress 0.1708132 
+## Run 17 stress 0.1188198 
+## Run 18 stress 0.1033851 
+## ... Procrustes: rmse 1.352609e-05  max resid 4.290582e-05 
 ## ... Similar to previous best
-## Run 18 stress 0.1642917 
-## Run 19 stress 0.1033851 
-## ... Procrustes: rmse 3.566628e-05  max resid 0.0001132719 
+## Run 19 stress 0.2047354 
+## Run 20 stress 0.1033851 
+## ... Procrustes: rmse 1.263777e-05  max resid 3.973764e-05 
 ## ... Similar to previous best
-## Run 20 stress 0.1964504 
 ## *** Solution reached</code></pre>
 <pre class="r"><code>mds.dims &lt;- data.frame(NMDS1 = mds$points[,1], NMDS2 = mds$points[,2])
 
@@ -1068,7 +1043,7 @@ arrow.p &lt;- arrow.p[order(arrow.p$R, decreasing = T), ]
 head(arrow.p)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293831","2":"0.5586804","3":"0.9128717","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471273","2":"-0.3208581","3":"0.8744842","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293991","2":"-0.5586565","3":"0.7176439","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517452","2":"-0.3068894","3":"0.6989911","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045792","2":"0.4263055","3":"0.6989298","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862208","2":"-0.6179457","3":"0.6977524","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293750","2":"0.5586923","3":"0.9128740","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471213","2":"-0.3208757","3":"0.8744891","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293891","2":"-0.5586714","3":"0.7176466","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517439","2":"-0.3068933","3":"0.6989926","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045884","2":"0.4262861","3":"0.6989239","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862194","2":"-0.6179475","3":"0.6977652","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>library(ggrepel)

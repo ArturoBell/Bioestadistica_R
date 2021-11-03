@@ -441,13 +441,6 @@ div.tocify {
 <div id="instalación-de-librerías" class="section level2">
 <h2>Instalación de librerías</h2>
 <pre class="r"><code>if(!require(gap)) install.packages(&quot;gap&quot;, dependencies = T)</code></pre>
-<pre><code>## Loading required package: gap</code></pre>
-<pre><code>## gap version 1.2.2</code></pre>
-<pre><code>## 
-## Attaching package: &#39;gap&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:car&#39;:
-## 
-##     logit</code></pre>
 </div>
 <div id="funciones-personalizadas" class="section level2">
 <h2>Funciones personalizadas</h2>
@@ -788,31 +781,37 @@ summary(mle.fit)</code></pre>
 ## 
 ## -2 log L: 492.4402</code></pre>
 <p>Si nos interesa comparar el ajuste entre modelos podemos utilizar el RMSE. Para ello primero generaremos los valores predichos (ajustados) por el modelo y después los contrastaremos contra los datos originales</p>
-<pre class="r"><code>library(Metrics)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Metrics&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:pROC&#39;:
-## 
-##     auc</code></pre>
-<pre><code>## The following objects are masked from &#39;package:caret&#39;:
-## 
-##     precision, recall</code></pre>
-<pre><code>## The following object is masked from &#39;package:FSA&#39;:
-## 
-##     se</code></pre>
-<pre><code>## The following object is masked from &#39;package:rcompanion&#39;:
-## 
-##     accuracy</code></pre>
-<pre class="r"><code>data[&quot;v2adj&quot;] &lt;- coef(mle.fit)[&quot;b0&quot;] + coef(mle.fit)[&quot;b1&quot;]*data$v1
+<pre class="r"><code>library(Metrics)
+data[&quot;v2adj&quot;] &lt;- coef(mle.fit)[&quot;b0&quot;] + coef(mle.fit)[&quot;b1&quot;]*data$v1
 rmse(data$v2adj, data$v2)</code></pre>
-<pre><code>## [1] 3.063056</code></pre>
+<pre><code>## Warning in get_residuals.default(model, verbose = verbose, type = &quot;response&quot;, :
+## Can&#39;t extract residuals from model.</code></pre>
+<pre><code>## Warning: Response residuals not available to calculate mean square error. (R)MSE is
+##   probably not reliable.</code></pre>
+<pre><code>## Warning in if (normalized) {: the condition has length &gt; 1 and only the first
+## element will be used</code></pre>
+<pre><code>## Warning in max(resp, na.rm = TRUE): no non-missing arguments to max; returning -
+## Inf</code></pre>
+<pre><code>## Warning in min(resp, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## [1] NA</code></pre>
 <p>Veamos ahora los resultados de la RLS por mínimos cuadrados:</p>
 <pre class="r"><code>data[&quot;v2adjols&quot;] &lt;- coef(reg1)[&quot;(Intercept)&quot;] + coef(reg1)[&quot;v1&quot;]*data$v1
 coef(reg1)</code></pre>
 <pre><code>## (Intercept)          v1 
 ##   -3.726537    1.177649</code></pre>
 <pre class="r"><code>rmse(data$v2adjols, data$v2)</code></pre>
-<pre><code>## [1] 3.063056</code></pre>
+<pre><code>## Warning in get_residuals.default(model, verbose = verbose, type = &quot;response&quot;, :
+## Can&#39;t extract residuals from model.</code></pre>
+<pre><code>## Warning: Response residuals not available to calculate mean square error. (R)MSE is
+##   probably not reliable.</code></pre>
+<pre><code>## Warning in if (normalized) {: the condition has length &gt; 1 and only the first
+## element will be used</code></pre>
+<pre><code>## Warning in max(resp, na.rm = TRUE): no non-missing arguments to max; returning -
+## Inf</code></pre>
+<pre><code>## Warning in min(resp, na.rm = TRUE): no non-missing arguments to min; returning
+## Inf</code></pre>
+<pre><code>## [1] NA</code></pre>
 <p>Tanto los coeficientes como los valores de RMSE ¡son iguales! ¿Razón? Un modelo lineal ajustado por máxima verosimilitud utilizando un término de residuales con un error normalmente distribuido es equivalente a un modelo ajustado por mínimos cuadrados. Veamos qué pasa si ajustamos los residuales utilizando otra distribución, seleccionada “a ojo” (solo para fines del ejemplo) por la “forma” de la distribución de los datos:</p>
 <pre class="r"><code>density &lt;- ggplot(data = data, aes(x = v2)) + 
            geom_density(colour = &quot;deepskyblue4&quot;, fill = &quot;deepskyblue4&quot;, alpha = 0.5) + 
@@ -938,24 +937,6 @@ resid.plot2</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="c8_rls_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <pre class="r"><code>library(brms)</code></pre>
-<pre><code>## Loading required package: Rcpp</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;lme4&#39;:
-##   method                          from
-##   cooks.distance.influence.merMod car 
-##   influence.merMod                car 
-##   dfbeta.influence.merMod         car 
-##   dfbetas.influence.merMod        car</code></pre>
-<pre><code>## Loading &#39;brms&#39; package (version 2.14.4). Useful instructions
-## can be found by typing help(&#39;brms&#39;). A more detailed introduction
-## to the package is available through vignette(&#39;brms_overview&#39;).</code></pre>
-<pre><code>## 
-## Attaching package: &#39;brms&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:gap&#39;:
-## 
-##     cs</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     ar</code></pre>
 <pre class="r"><code>LLt &lt;- function(b0, b1, df, sigma){
   # Encontrar los residuales. Modelo a ajustar (lineal)
   R = df_haem$AM - df_haem$LT * b1 - b0
@@ -1007,18 +988,8 @@ aics</code></pre>
 <div id="bonus-librería-performance" class="section level2">
 <h2>Bonus: Librería <code>performance</code></h2>
 <p>Podemos generar los gráficos diagnósticos de distintos modelos utilizando una sola línea de código. Veamos el caso del primer modelo lineal que elaboramos:</p>
-<pre class="r"><code>if (!require(performance)) {install.packages(c(&quot;performance&quot;, &quot;qqplotr&quot;), dependencies = T)}</code></pre>
-<pre><code>## Loading required package: performance</code></pre>
-<pre><code>## 
-## Attaching package: &#39;performance&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:brms&#39;:
-## 
-##     pp_check</code></pre>
-<pre><code>## The following objects are masked from &#39;package:Metrics&#39;:
-## 
-##     mae, mse, rmse</code></pre>
-<pre class="r"><code>check_model(reg1)</code></pre>
-<pre><code>## Loading required namespace: qqplotr</code></pre>
+<pre class="r"><code>if (!require(performance)) {install.packages(c(&quot;performance&quot;, &quot;qqplotr&quot;), dependencies = T)}
+check_model(reg1)</code></pre>
 <p><img src="c8_rls_files/figure-html/unnamed-chunk-39-1.png" width="921.6" /> Ahora sobre los datos <code>Haem.csv</code>:</p>
 <pre class="r"><code>check_model(reg_haem)</code></pre>
 <p><img src="c8_rls_files/figure-html/unnamed-chunk-40-1.png" width="921.6" /></p>
