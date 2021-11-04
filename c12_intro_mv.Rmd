@@ -5,6 +5,7 @@ output:
   distill::distill_article:
     toc: true
     toc_float: true
+    code_download: true
 ---
 
 ```{r setup, include = FALSE}
@@ -43,6 +44,7 @@ corrplot(cor.mat, method = "ellipse", type = "upper")
 ```
 
 Ahora utilicemos una función que, en un solo paso, computará la matriz de correlación, realizará una prueba de significancia para cada una y además nos presentará la matriz de manera gráfica:
+
 ```{r}
 # Descarga la función desde esa url y la carga en memoria
 source("http://www.sthda.com/upload/rquery_cormat.r")
@@ -192,16 +194,20 @@ disp.mv
 ```
 
 Si realizamos la prueba de hipótesis vemos que, al parecer, las dispersiones multiviariadas son similares entre los 3 grupos.
+
 ```{r}
 # Prueba de hipótesis
 anova(disp.mv)
 ```
+
 Ahora veamos las dispersiones gráficamente:
+
 ```{r}
 # Análisis gráfico
 plot(disp.mv, ellipse = T, hull = F)
 ```
 Al analizar el gráfico vemos que las dispersiones son similares; sin embargo, pareciera que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, en tonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (`TukeyHSD`). Los resultados sugieren que las dispersiones con un $\alpha = 0.05$ son similares, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.
+
 ```{r}
 mod.HSD <- TukeyHSD(disp.mv)
 mod.HSD <- data.frame(mod.HSD$group, comp = dimnames(mod.HSD$group)[[1]])

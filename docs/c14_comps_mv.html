@@ -107,7 +107,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Hipótesis Múltiples y Multivariadas"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["M. en C. Arturo Bell Enríquez García"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Hipótesis Múltiples y Multivariadas"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["M. en C. Arturo Bell Enríquez García"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_float","code_download"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2349,7 +2349,7 @@ Carguemos los datos
  $ Sexo   : chr  &quot;Machos&quot; &quot;Machos&quot; &quot;Machos&quot; &quot;Machos&quot; ...
  $ Ala    : num  21.5 19.6 20.9 22.8 14.8 15.6 13.5 16.4 14.5 17.4 ...</code></pre>
 </div>
-Realicemos la prueba de normalidad para cada nivel de cada variable:
+<p>Realicemos la prueba de normalidad para cada nivel de cada variable:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>norm.mili</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>grupo <span class='op'>=</span> <span class='cn'>NA</span>, n <span class='op'>=</span> <span class='cn'>NA</span>, W <span class='op'>=</span> <span class='cn'>NA</span>, p <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
@@ -2394,11 +2394,10 @@ Realicemos la prueba de normalidad para cada nivel de cada variable:
 4   Machos 12 0.97 0.94
 5  Hembras 12 0.97 0.86</code></pre>
 </div>
-Comprobemos la homocedasticidad:
+<p>Comprobemos la homogeneidad de varianzas. Dado que los datos se ajustaron a una distribución normal, podemos utilizar una prueba de Bartlett:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Dado que los datos se ajustaron a una distribución normal podemos utilizar la prueba de Bartlett</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/bartlett.test.html'>bartlett.test</a></span><span class='op'>(</span><span class='va'>Ala</span><span class='op'>~</span><span class='va'>Sexo</span>, data <span class='op'>=</span> <span class='va'>mili</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/bartlett.test.html'>bartlett.test</a></span><span class='op'>(</span><span class='va'>Ala</span><span class='op'>~</span><span class='va'>Sexo</span>, data <span class='op'>=</span> <span class='va'>mili</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>
@@ -2416,10 +2415,10 @@ Bartlett&#39;s K-squared = 2.8086, df = 1, p-value = 0.09376</code></pre>
 data:  Ala by Especie
 Bartlett&#39;s K-squared = 1.0294, df = 2, p-value = 0.5977</code></pre>
 </div>
+<p>Con la prueba de Levene:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Verificamos con la prueba de Levene</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-forge.r-project.org/projects/car/'>car</a></span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-forge.r-project.org/projects/car/'>car</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/pkg/car/man/leveneTest.html'>leveneTest</a></span><span class='op'>(</span><span class='va'>Ala</span><span class='op'>~</span><span class='va'>Sexo</span>, data <span class='op'>=</span> <span class='va'>mili</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2438,7 +2437,7 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 group  2  1.6819 0.2101
       21               </code></pre>
 </div>
-Realicemos la prueba Scheirer-Ray-Hare:
+<p>Realicemos la prueba Scheirer-Ray-Hare:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://rcompanion.org/'>rcompanion</a></span><span class='op'>)</span>
@@ -2533,7 +2532,7 @@ Especie3-Especie2  1.7000 -0.1545304  3.5545304 0.0756330927</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sexos.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mili</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Sexo</span>, y <span class='op'>=</span> <span class='va'>Ala</span>, color <span class='op'>=</span> <span class='va'>Sexo</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
               <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_violin.html'>geom_violin</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span>width <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span> <span class='op'>+</span> 
               <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Iinteracción de la [Ala] (mg/100 ml) en milípedos"</span>,
+              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"[Ala] (mg/100 ml) en milípedos"</span>,
                    subtitle <span class='op'>=</span> <span class='st'>"Especie"</span>,
                    x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
                    y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
@@ -2711,7 +2710,7 @@ $virginica
 1 Royston 8.141444 0.06776605 YES</code></pre>
 </div>
 <h3 id="igualdad-de-dispersión-multivariada">Igualdad de dispersión multivariada</h3>
-Al aplicar la prueba global vemos que al parecer no hay diferencias importantes en las dispersiones multivariadas
+<p>Al aplicar la prueba global vemos que al parecer no hay diferencias importantes en las dispersiones multivariadas:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://cran.r-project.org'>vegan</a></span><span class='op'>)</span>
@@ -2750,7 +2749,7 @@ Residuals 147 19.8941 0.13533
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-La prueba post-hoc confirma los resultados
+<p>La prueba post-hoc confirma los resultados:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mod.HSD</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/TukeyHSD.html'>TukeyHSD</a></span><span class='op'>(</span><span class='va'>disp.mv</span><span class='op'>)</span>
@@ -2779,7 +2778,7 @@ virginica-versicolor virginica-versicolor</code></pre>
 </code></pre>
 </div>
 </div>
-Aplicamos la prueba:
+<p>Aplicamos la prueba:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://www.stat.auckland.ac.nz/showperson?firstname=James&surname=Curran'>Hotelling</a></span><span class='op'>)</span>
@@ -3056,7 +3055,7 @@ virginica-versicolor  0.204  0.04314472  0.3648553 0.0087802</code></pre>
 </code></pre>
 </div>
 </div>
-Ahora podemos aplicar el PERMANOVA. De los resultados podemos observar que la principal división entre especies está dada por la longitud del sépalo, seguida por el ancho. Las cuatro variables explican el 100% del espacio multivariado (<span class="math inline">\(R^2\)</span> de los residuales = 0). “[…] diferencias significativas en la longitud del sépalo (F(1, 143) = 5.1*10^18; p &lt; 0.001)”
+<p>Ahora podemos aplicar el PERMANOVA. De los resultados podemos observar que la principal división entre especies está dada por la longitud del sépalo, seguida por el ancho. Las cuatro variables explican el 100% del espacio multivariado (<span class="math inline">\(R^2\)</span> de los residuales = 0). Una forma compacta de reportar estos resultados sería: “[…] diferencias significativas en la longitud del sépalo (<span class="math inline">\(F_{1, 143}\)</span> = <span class="math inline">\(5.1*10^18\)</span>; p &lt; 0.001)”</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/adonis.html'>adonis2</a></span><span class='op'>(</span><span class='va'>dist.mat</span><span class='op'>~</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>*</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span><span class='op'>+</span>
@@ -3082,7 +3081,7 @@ Total                              149   681.37 1.00000
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-Veamos la dispersión multivariada
+<p>Veamos la dispersión multivariada:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/betadisper.html'>betadisper</a></span><span class='op'>(</span><span class='va'>dist.mat</span>, <span class='va'>grps</span><span class='op'>)</span>, hull <span class='op'>=</span> <span class='cn'>F</span>, ellipse <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
@@ -3099,7 +3098,7 @@ Veamos la dispersión multivariada
 
 <span class='va'>mds.plot.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>mds.dims</span>, <span class='va'>iris</span><span class='op'>)</span>
 
-<span class='co'># Extraemos las correlaciones de cada factor con cada dimensión reducida (flechas)</span>
+<span class='co'># Correlaciones de cada factor con cada dimensión reducida (flechas)</span>
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/vegan/man/envfit.html'>envfit</a></span><span class='op'>(</span><span class='va'>iris.mds</span>, <span class='va'>iris</span><span class='op'>)</span>
 <span class='va'>arrow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>$</span><span class='va'>arrows</span>,
                     R <span class='op'>=</span> <span class='va'>fit</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>$</span><span class='va'>r</span>, P <span class='op'>=</span> <span class='va'>fit</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>$</span><span class='va'>pvals</span><span class='op'>)</span>
@@ -3115,7 +3114,8 @@ Veamos la dispersión multivariada
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mds.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mds.plot.data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>NMDS1</span>, <span class='va'>NMDS2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span>, alpha <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>+</span>
             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/stat_ellipse.html'>stat_ellipse</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span>,
-                         type <span class='op'>=</span> <span class='st'>"t"</span>, size <span class='op'>=</span> <span class='fl'>1</span>, geom <span class='op'>=</span> <span class='st'>"polygon"</span>, alpha <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>+</span> 
+                         type <span class='op'>=</span> <span class='st'>"t"</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
+                         geom <span class='op'>=</span> <span class='st'>"polygon"</span>, alpha <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>+</span> 
             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Escalamiento Multidimensional no métrico (NMDS)"</span>,
                  subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>'Estrés ='</span>,<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>iris.mds</span><span class='op'>$</span><span class='va'>stress</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,
                  caption <span class='op'>=</span> <span class='st'>"Datos: Iris"</span><span class='op'>)</span> <span class='op'>+</span>

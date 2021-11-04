@@ -6,6 +6,7 @@ output:
   distill::distill_article:
     toc: true
     toc_float: true
+    code_download: true
 ---
 
 ```{r setup, include = FALSE}
@@ -243,7 +244,11 @@ Analicemos la distribución de una variable continua distribuída normalmente, p
 
 ```{r}
 norm.var <- data.frame(var = rnorm(10000, mean = 67, sd = 7))
-norm.res.5 <- tabla.frec(norm.var, var.col = "var", inter = 5, min = min(norm.var), max = max(norm.var))
+norm.res.5 <- tabla.frec(norm.var,
+                         var.col = "var",
+                         inter = 5,
+                         min = min(norm.var),
+                         max = max(norm.var))
 frec.graf(norm.res.5)
 ```
 

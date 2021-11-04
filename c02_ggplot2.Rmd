@@ -5,6 +5,7 @@ output:
   distill::distill_article:
     toc: true
     toc_float: true
+    code_download: true
 ---
 
 ```{r setup, include = FALSE}
@@ -235,18 +236,21 @@ final.plot
 
 ## Extras
 
-Modificar los colores de los puntos. Podemos utilizar la función `randomColor(n)` de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria
+Modificar los colores de los puntos. Podemos utilizar la función `randomColor(n)` de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria:
+
 ```{r}
 aleat <- randomcoloR::randomColor(7)
 final.plot + scale_color_manual(name = "Clase", values = aleat)
 ```
 
 Podemos también especificar una paleta predefinida, utilizando la capa `scale_color_brewer()`:
+
 ```{r}
 final.plot + scale_color_brewer(type = "seq", palette = "Paired")
 ```
 
 Otra opción es directamente pasar un vector con los nombres de los colores que sean de nuestro interés:
+
 ```{r}
 color_names <- c("red", "blue", "yellow", "black",
                  "dodgerblue", "pink", "gray")

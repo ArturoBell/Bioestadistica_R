@@ -5,6 +5,7 @@ output:
   distill::distill_article:
     toc: true
     toc_float: true
+    code_download: true
 ---
 
 ```{r setup, include = FALSE}
@@ -107,6 +108,7 @@ El estadístico de prueba es el estadístico U, el cual será el valor mínimo d
 
 Para aplicarla en R utilizaremos la función `wilcox.test(formula)`, pero primero exploremos nuestros datos.
 Nuestra variable de interés es la variable LT, por lo que realizaremos la evaluación de la normalidad, tanto de manera cuantitativa (prueba de Shapiro-Wilks, sesgo y curtosis), como de manera gráfica (Gráficos de densidad). Generemos una función que nos permita reunir estos datos en una sola tabla de manera rápida:
+
 ```{r}
 norms <- data.frame(Dieta = NA, w = NA, p = NA, k = NA, s = NA)
 

@@ -5,6 +5,7 @@ output:
   distill::distill_article:
     toc: true
     toc_float: true
+    code_download: true
 ---
 
 ```{r setup, include = FALSE}
@@ -342,6 +343,7 @@ cors
 ```
 
 Ahora veamos los resultados de manera gráfica. Primero las variables:
+
 ```{r}
 fviz_pca_var(res.pca, col.var = "coord",
                        gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))

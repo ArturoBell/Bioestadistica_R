@@ -5,6 +5,7 @@ output:
   distill::distill_article:
     toc: true
     toc_float: true
+    code_download: true
 ---
 
 ```{r setup, include = FALSE}
@@ -212,7 +213,8 @@ dependientes.m <- reshape2::melt(dependientes, value.name = "LT",
 dependientes.m
 ```
 
-Prueba:
+Aplicamos la prueba:
+
 ```{r}
 t.test(LT~periodo, data = dependientes.m, paired = T)
 ```

@@ -107,7 +107,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Bases de ggplot2 y la aplicación de los principios de visualización"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["M. en C. Arturo Bell Enríquez García"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","output"]}},"value":[{"type":"character","attributes":{},"value":["Bases de ggplot2 y la aplicación de los principios de visualización"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["M. en C. Arturo Bell Enríquez García"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_float","code_download"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2377,7 +2377,7 @@ Temas
 <p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
 <h2 id="extras">Extras</h2>
-Modificar los colores de los puntos. Podemos utilizar la función <code>randomColor(n)</code> de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria
+<p>Modificar los colores de los puntos. Podemos utilizar la función <code>randomColor(n)</code> de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>aleat</span> <span class='op'>&lt;-</span> <span class='fu'>randomcoloR</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/randomcoloR/man/randomColor.html'>randomColor</a></span><span class='op'>(</span><span class='fl'>7</span><span class='op'>)</span>
@@ -2386,7 +2386,7 @@ Modificar los colores de los puntos. Podemos utilizar la función <code>randomCo
 </div>
 <p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
 </div>
-Podemos también especificar una paleta predefinida, utilizando la capa <code>scale_color_brewer()</code>:
+<p>Podemos también especificar una paleta predefinida, utilizando la capa <code>scale_color_brewer()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final.plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_brewer.html'>scale_color_brewer</a></span><span class='op'>(</span>type <span class='op'>=</span> <span class='st'>"seq"</span>, palette <span class='op'>=</span> <span class='st'>"Paired"</span><span class='op'>)</span>
@@ -2394,7 +2394,7 @@ Podemos también especificar una paleta predefinida, utilizando la capa <code>sc
 </div>
 <p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
 </div>
-Otra opción es directamente pasar un vector con los nombres de los colores que sean de nuestro interés:
+<p>Otra opción es directamente pasar un vector con los nombres de los colores que sean de nuestro interés:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>color_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"red"</span>, <span class='st'>"blue"</span>, <span class='st'>"yellow"</span>, <span class='st'>"black"</span>,
