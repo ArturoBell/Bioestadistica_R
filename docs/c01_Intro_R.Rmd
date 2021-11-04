@@ -1,0 +1,208 @@
+---
+title: "Bases de R"
+subtitle: "Variables y sus tipos + funciones"
+author: "M. en C. Arturo Bell Enríquez García"
+output: 
+  distill::distill_article:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(R.options = list(width = 80))
+```
+
+**[VIDEO](https://youtu.be/f6IIbBLjx3g)**
+
+En R todo es un objeto; sin embargo, las formas de crearlos, llamarlos y accesarlos varían según sus tipos:
+
+# Variables
+Declaramos una variable utilizando el símbolo de asignación (**<-**). Para imprimir el resultado en pantalla llamamos a la variable o utilizamos la función `print(var)`:
+
+```{r}
+var <- 1:5
+print(var)
+```
+
+## Tipos de variables
+Existen dos tipos de variables, los cuales a su vez se subdividen en otros tipos. Para conocer el tipo de una variable utilizamos la función `typeof(var)`, mientras que las funciones `is.*()` nos permiten probar si una variable es de un tipo en específico (*e.g*`is.character(var)`).
+
+### Datos
+Las variables que contienen un solo elemento se conocen como **datos**:
+1. **Character**: Cadena de caracteres, indicadas por comillas dobles o sencillas:
+
+```{r}
+char <- "a"
+typeof(char)
+```
+
+2. **Integer**: Números enteros, indicados por la letra "L" después del número:
+
+```{r}
+integer <- 5L
+typeof(integer)
+```
+
+3. **Double**: Fracciones, también conocidos como *floating points*:
+
+```{r}
+dbl <- 7/5
+typeof(dbl)
+```
+
+4. **Logical**: Valor lógico o booleano. Solo puede tomar dos valores: `TRUE` o `FALSE` o sus abreviaturas `T` o `F`
+
+```{r}
+bool <- is.double(dbl)
+print(paste('valor: ', bool))
+print(paste('tipo: ', typeof(bool)))
+```
+
+5. **Complex**: Números complejos, con una parte real y una imaginaria:
+
+```{r}
+comp.n <- 8+3i
+typeof(comp.n)
+```
+
+### Estructuras/arreglos
+Las estructuras son colecciones de valores, cada una con sus propiedades y sus métodos de acceso a los valores que las conforman (indexación):
+
+#### Vector: 
+La estructura más básica. Una colección **unidimensional** de elementos. Las funciones para crearlos son: `c()`, la cual *combina* una serie de elementos en un vector (mismo tipo) o una lista (diferentes tipos); `vector(mode, length)`: genera un vector "vacío" con longitud (número de elementos) `length` y tipo de datos `'mode'`.
+
+```{r}
+vect.1 <- c(1:5)
+vect.2 <- vector(mode = 'double', length = 5)
+print(vect.1)
+print(vect.2)
+```
+
+Para indexar un vector utilizamos: `var[i]`, donde `i` representa la posición del (los) elemento(s) de interés:
+
+```{r}
+print(vect.1[4])
+print(vect.1[2:3])
+```
+  
+#### Matrix: 
+
+Una estructura bidimensional (columnas/renglones). Se generan utilizando la función `matrix(data, nrow, ncol, byrow)`, donde `data` representa la colección de objetos que formarán la matriz, `nrow` y `ncol` el número de renglones y columnas, respectivamente, y `byrow` si se llenará por renglones (`FALSE`) o por columnas (`TRUE`, por defecto)
+
+```{r}
+mat.1 <- matrix(c(T, F, F, T), nrow = 2, ncol = 2)
+mat.1
+```
+
+Para indexar una matriz utilizaremos también corchetes; sin embargo, indicaremos el par renglón,columna donde se ubica el elemento:
+
+```{r}
+print(mat.1[1,1])
+print(mat.1[2,1])
+```
+
+Si quisieramos indexar toda una dimensión (renglón o columna), utilizaríamos el mismo método, dejando en blanco la dimensión contraria; es decir, si nos interesa una columna, dejaremos en blanco el número de renglón y si nos interesa un renglón dejaremos en blanco el número de columna:
+
+```{r}
+print(mat.1[,2])
+print(mat.1[1,])
+```
+
+#### DataFrame:
+El DataFrame es la estructura con la que más comúnmente estaremos en contacto. Es una tabla completa que, a diferencia de la matriz, contiene nombres de columnas. Tiene dos particularidades que hay que considerar: 1) todos los elementos que forman a cada columna deberán ser del mismo tipo y 2) El número de renglones de todas las columnas debe de ser el mismo. Se crean utilizando la función `data.frame(col.name = data, ...)`:
+
+```{r}
+df.1 <- data.frame(col.a = c(0:5), 
+                   col.b = c(20:25), 
+                   col.c = c(15:20))
+# Nota: Si no se indica el nombre de las columnas este será asignado automáticamente
+df.1
+```
+
+Existen distintos modos de indexar un DataFrame. El primero de ellos `var$col.name`:
+
+```{r}
+df.1$col.a
+```
+
+Como vemos, este modo de indexación extrae la columna completa en forma de un vector, por lo que si queremos accesar un valor en particular solo habrá que utilizar ese método de indexación:
+
+```{r}
+df.1$col.b[4]
+```
+
+Finalmente, también podemos utilizar el método de indexación de matrices, recordando que se especifica el par renglón, columna:
+
+```{r}
+df.1[4,2]
+```
+
+#### List:
+Las listas son una colección de cualquier combinación de datos o estructuras, incluyendo otras listas:
+
+```{r}
+l.1 <- list(df.1, mat.1, vect.1)
+print(l.1)
+```
+
+En la salida de arriba vemos el método de indexación: `var[[i]][j,k]`, donde `i` representa el número de objeto en la lista y `j,k` el par renglón,columna (de aplicar). En el caso de DataFrames podemos seguir utilizando el operador `$` para utilizar los noombres de columnas:
+
+```{r}
+l.1[[1]]$col.a[6]
+```
+
+#### Factor:
+Representan variables categoricas. Contienen los valores de la variable así como los valores posibles que puede tomar (niveles). Se crean con la función `factor(x, levels, labels)`, donde x representa los valores de la variable, `levels` representa los posibles niveles y `labels` (opcional) representan etiquetas de cada nivel:
+
+```{r}
+fact.1 <- factor(x = c('a', 'b', 'c'), 
+                 levels = c('a', 'b', 'c', 'd', 'e'))
+fact.1
+```
+
+### Operadores lógicos
+Los operadores lógicos nos sirven para hacer comparaciones y obtener un resultado booleano (T o F). Los más comunes son:
+1. cond1**|**cond2: Condicional "O". T si se cumple **alguna** de las dos condiciones
+
+```{r}
+c <- 5L
+is.integer(c)|is.double(c)
+```
+
+2. cond1**&**cond2: Condicional "Y". T si se cumplen ambas condiciones
+
+```{r}
+is.integer(c)&(c>3)
+```
+
+3. **<, >**: Comparaciones, menor qué o mayor qué
+
+```{r}
+print(c<10)
+print(c>5)
+```
+
+4. **<=, >=**: Comparaciones, menor o igual qué; mayor o igual qué.
+5. **a!=b**: Desigualdad, T si a es diferente de b
+
+```{r}
+c!=5
+```
+
+### Funciones
+Las funciones representan una serie de métodos para obtener un resultado, para utilizarlas emplearemos la estructura `fun(arg1, arg2, ..., argn)`, donde `arg*`representa un **argumento**; es decir, un elemento "pasado" a la función para regular sus procesos. Al declarar las funciones son llamados **parámetros**. Para declarar una función generaremos una variable cuyo nombre será el nombre "llamable" de la función, a la cual asignaremos el cuerpo de la función utilizando `function(parámetros){cuerpo}`. Para ejemplificar, creemos una función para calcular la media aritmética de un vector `x`:
+
+```{r}
+media.arit <- function(x){
+  # Mejora: Trabajo con NAs
+  suma <- sum(x)
+  n <- length(x)
+  return(suma/n)
+}
+
+media.arit(c(1:5))
+```
+
+Debido a que un gran número de funciones son altamente regulables (cuentan con un gran número de parámetros), te recomiendo hacer uso extensivo de la ayuda (`?fun`) para que obtengas de primera mano el conocimiento sobre su objetivo, su salida y, en consecuencia, ayudarte a prevenir o solucionar errores.
+
+Con esto terminamos esta clase del curso y el primer tema de la primera sección del curso. Nos vemos en la siguiente.

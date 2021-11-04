@@ -1,0 +1,65 @@
+name: Bioestadistica con R y RStudio
+include: ["*.Rmd", ".csv"]
+description: |
+  Página de acompañamiento del curso de Bioestadística Aplicada con R y RStudio
+output_dir: "docs"
+navbar:
+  title: "Bioestadística con R"
+  logo:
+    image: logo.png
+    href: https://drplancton.com
+  right:
+    - text: "Acerca de"
+      href: about.html
+  left:
+    - text: "Temas"
+      menu:
+        - text: "S1 - Biología como Ciencia de Datos"
+          href: s1_biolcdatos.html
+          menu:
+            - text: "Introducción a R"
+              href: c1_Intro_r.html
+            - text: "Visualización"
+              href: c2_ggplot2.html
+        - text: "S2 - Herramientas Básicas"
+          href: s2_herrbasic.html
+          menu:
+            - text: "Probabilidad"
+              href: c3_probabilidad.html
+            - text: "Teoría del Muestreo"
+              href: c4_muestreo.html
+            - text: "Estadística Descriptiva"
+              href: c5_descriptiva.html
+            - text: "Pruebas de hipótesis"
+              href: c6_ph0.html
+            - text: "Técnicas Paramétricas"
+              href: c7_param.html
+        - text: "S3 - Relaciones Lineales"
+          href: s3_rel_lin.html
+          menu:
+          - text: "Modelo Lineal Simple"
+            href: c8_rls.html
+          - text: "Modelos Lineales Generalizados"
+            href: c9_glm.html
+        - text: "S4 - No Paramétrico y No Lineal"
+          href: s4_noparnolin.html
+          menu:
+            - text: "Técnicas No Paramétricas"
+              href: c10_no_par.html
+            - text: "Modelos No Lineales"
+              href: c11_no_lineal.html
+        - text: "S5 - Técnicas Multivariadas"
+          href: s5_mv.html
+          menu:
+            - text: "Introducción"
+              href: c11_intro_mv.html
+            - text: "No supervisadas"
+              href: c12_no_sup.html
+            - text: "Comparaciones Multivariadas"
+              href: c13_comps_mv.html
+            - text: "Clasificaciones"
+              href: c14_clasificacion.html
+            - text: "Regresiones Múltiples"
+              href: c15_regs_mv.html
+
+output: distill::distill_article
