@@ -2251,13 +2251,13 @@ Temas
 1    (0,0.1]         NA   0:0.1
 2  (0.1,0.2]         NA 0.1:0.2
 3  (0.2,0.3]         NA 0.2:0.3
-4  (0.3,0.4]         14 0.3:0.4
-5  (0.4,0.5]        485 0.4:0.5
-6  (0.5,0.6]         NA 0.5:0.6
-7  (0.6,0.7]         NA 0.6:0.7
-8  (0.7,0.8]         NA 0.7:0.8
+4  (0.3,0.4]         NA 0.3:0.4
+5  (0.4,0.5]        211 0.4:0.5
+6  (0.5,0.6]        263 0.5:0.6
+7  (0.6,0.7]         24 0.6:0.7
+8  (0.7,0.8]          1 0.7:0.8
 9  (0.8,0.9]         NA 0.8:0.9
-10   (0.9,1]         NA   0.9:1</code></pre>
+10   (0.9,1]          1   0.9:1</code></pre>
 </div>
 <p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo (NOTA: Las advertencias no son errores, son solo por los NAs que incluimos anteriormente):</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2485,13 +2485,13 @@ Temas
     One Sample t-test
 
 data:  norm.var$var
-t = 962.72, df = 9999, p-value &lt; 2.2e-16
+t = 957.75, df = 9999, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 66.97821 67.25152
+ 66.81376 67.08781
 sample estimates:
 mean of x 
- 67.11486 </code></pre>
+ 66.95078 </code></pre>
 </div>
 <p>Otra forma de calcularlos es utilizando la librería <code>Rmisc</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2508,7 +2508,7 @@ mean of x
 </code></pre>
 </div>
 <pre><code>   upper     mean    lower 
-67.25152 67.11486 66.97821 </code></pre>
+67.08781 66.95078 66.81376 </code></pre>
 </div>
 <p>Como vemos, la función calcula los intervalos de confianza utilizando la distribución T. Esto se debe a que es el modo más común de realizar la estimación de intervalos para variables continuas. ¿La razón? Eso es tema para una clase posterior, en la que explicaré las características que hacen que la distribución T sea uno de los principales “caballitos de batalla” en la estadística.</p>
 <p>Una última opción es utilizar la librería <code>Rcompanion</code>, la cual tiene un método de la estimación de intervalos basado en “remuestreos” Bootstrap. Al igual que en el resto de librerías, habrá que instalarla:</p>
@@ -2526,7 +2526,7 @@ mean of x
 </code></pre>
 </div>
 <pre><code>   .id     n Mean Conf.level Trad.lower Trad.upper
-1 &lt;NA&gt; 10000 67.1       0.95         67       67.3</code></pre>
+1 &lt;NA&gt; 10000   67       0.95       66.8       67.1</code></pre>
 </div>
 <p>Vemos que la salida es un poco más compleja; sin embargo, lo más relevante es que los intervalos son sumamente cercanos a los que calculamos anteriormente. ¿Esto quiere decir que no tiene caso realizar las réplicas bootstrap? No, simplemente que sus beneficios los veremos aplicándolas a la situación para la que fueron pensadas; es decir, distribuciones sesgadas y no normales a diferencia de la variable que analizamos aquí.</p>
 <p>Recursos recomendados para esta sección: <a href="https://rcompanion.org/handbook/C_03.html">Rcompanion</a> y <a href="http://www.biostathandbook.com/confidence.html">Handbook of Biological Statistics</a></p>
