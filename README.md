@@ -6,4 +6,4 @@ Este es el repositorio del curso, en el cuál están alojadas las versiones más
 
 ## Alumnos
 
-Puedes descargar el archivo .zip de todo el repositorio. Los archivos con los que trabajarás son `c\*\*\_TEMA.Rmd` y la carpeta `data`. El resto son solo archivos accesorios necesarios para la renderización del sitio de acompañamiento.
+Puedes descargar el archivo .zip de todo el repositorio. Los archivos con los que trabajarás son `cxx_tema.Rmd` y la carpeta `data`. El resto son solo archivos accesorios necesarios para la renderización del sitio de acompañamiento.
