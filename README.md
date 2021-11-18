@@ -1,4 +1,4 @@
-![https://drplancton.com/wp-content/uploads/2020/12/LOGO-DR-PLANCTON_1-768x243.png]
+![](https://drplancton.com/wp-content/uploads/2020/12/LOGO-DR-PLANCTON_1-768x243.png)
 
 # Curso Bioestadística Aplicada con R y RStudio
 
