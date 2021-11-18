@@ -2,7 +2,7 @@
 
 # Curso Bioestadística Aplicada con R y RStudio
 
-Este es el repositorio del curso, en el cuál están alojadas las versiones más recientes del código y los archivos HTML correspondientes al sitio web. Aquí siempre encontrarás la versión más reciente del material.
+Este es el repositorio del curso, en el cuál están alojadas las versiones más recientes del código y los archivos HTML correspondientes al [sitio web](https://arturobell.github.io/Bioestadistica_R/). Debido a que el sitio web se renderiza a partir de este repositorio, ambos siempre estarán sincronizadas con la versión más reciente del material.
 
 ## Alumnos
 
