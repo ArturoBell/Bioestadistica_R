@@ -1,6 +1,6 @@
 ---
 title: "Teoría del Muestreo"
-author: "Biol. Mar. Roberto Iván Velásquez Polanco"
+author: "Biól. Mar. Roberto Iván Velásquez Polanco"
 output: 
   distill::distill_article:
     toc: true
@@ -12,5 +12,212 @@ output:
 knitr::opts_chunk$set(R.options = list(width = 80))
 ```
 
+Crearemos un conjunto de datos provenientes de una distribución normal media 0 y desviación estandar 1
 
-Inserta aquí el cuerpo de tu clase. En mis demás libretas puedes darte una idea de los elementos que puedes utlizar para mejorar su visualización.
+```{r}
+Datos_normales<-rnorm(10,mean=0,sd=1)
+
+Datos_normales
+
+hist(Datos_normales)
+```
+
+Repetimos el proceso hora con más datos "cien mil"
+
+```{r}
+Datos_normales2<-rnorm(100000,mean=50,sd=7)
+
+hist(Datos_normales2)
+
+str(Datos_normales2)
+
+```
+
+Calculamos valores de tendencia central y de dispersión
+
+```{r}
+promedio1<- mean(Datos_normales2)
+
+promedio1 
+
+desvest1<- sd (Datos_normales2)
+
+desvest1
+```
+Comparamos el promedio y la desviación con los parámetros iniciales
+
+DISTRIBUCIÓN BINOMIAL
+Ahora, un ejmémplo con datos aleatorios con distribución binomial
+cantidad de datos, número de ensayos (cero o más), probabilidad
+
+```{r}
+Aletas<-rbinom(1000,5,0.7)
+Aletas
+hist(Aletas)
+```
+
+Generar distribuciones de datos
+sample toma una muestra del tamaño especificado de los elementos de x usando con o sin reemplazo.
+
+
+```{r}
+x <- 1:100
+
+sample(x, replace = TRUE)
+```
+
+```{r}
+sample(x, 10, replace = TRUE)
+```
+
+```{r}
+sample(x, 10, replace = TRUE)
+```
+
+```{r}
+sample(x, 10, replace = TRUE)
+```
+
+Con "sample" y mani salado y garapiñado
+
+```{r}
+mani<-c("S","G")
+
+muestreo_de_mani<-sample(mani,10,replace=T)
+
+muestreo_de_mani
+```
+
+Con sample y la cantidad de SNPs (polimorfismos de un solo nucleótido) por paciente
+
+```{r}
+SNPs<-c(1,2,3,4,5,5,5,5)
+SNPs.de.pacientes<-sample(SNPs,20,replace=TRUE)
+SNPs.de.pacientes
+hist(SNPs.de.pacientes)
+```
+
+Ahora tomando una muestra sin reemplazo de la base de datos Crecimiento. Es importante importar los datos del archivo Crecimiento desde nuestra carpeta de trabajo
+
+```{r}
+library(dplyr)
+Crecimiento <- readxl::read_excel("data/Crecimiento.xlsx")
+muestra_crecimiento<- Crecimiento %>%
+                        sample_n(size=5,replace=FALSE)
+
+head(muestra_crecimiento)
+```
+
+Ahora genere datos con runif (random-uniform)
+
+```{r}
+paracitos<-runif(n=1000,min=0,max=1)
+paracitos
+hist(paracitos)
+
+paracitos2<-runif(n=20000,min=0,max=1)
+paracitos2
+hist(paracitos2)
+```
+
+Distribuciones de las medias de los muestreos
+
+Primero, generamos 200 valores de puntajes, correspondientes a 10 muestreos con 20 observaciones cada uno [con media=0 y de=1]
+
+
+```{r}
+puntaje<-rnorm(10*20,0,1)
+puntaje
+```
+
+Creamos un vector, indicando cada uno de los 10 muestreos 
+genera datos de 1 al 10, veinte veces
+
+```{r}
+muestreos<-rep(1:10,each=20) 
+muestreos
+```
+
+Luego, creamos un dataframe que combina las observaciones con el muestreo
+
+```{r}
+df_muestreos<-data.frame(muestreos,puntaje)
+df_muestreos
+```
+
+Hacemos un histograma para cada muestreo por separado (utilizando el paquete ggplot2
+
+```{r}
+library(ggplot2)
+ggplot(data = df_muestreos, aes(x=puntaje)) + geom_histogram() + facet_wrap(~muestreos) + theme_classic()
+```
+
+Parece que hay variacion entre los diferentes muestreos. Eso se llama, "error aleatorio de muestreo".
+Ahora, sacamos la media de cada muestreo con el paquete dplyr
+
+```{r}
+library(dplyr)
+medias.muestreo<-df_muestreos %>%
+  group_by(muestreos) %>%
+  summarise(media=mean(puntaje))
+medias.muestreo
+```
+
+Juntas, estas medias deben estimar la media de la distribucion de la poblacion (0).
+
+```{r}
+mean(medias.muestreo$media)
+hist(medias.muestreo$media)
+```
+
+Quedó cerca, pero no es 0 exactamente.
+
+¿Esto parece una distribucion normal?, y si jugamos un poco con el tamaño de los intervalos de clase?
+
+```{r}
+hist(medias.muestreo$media,breaks=10)
+hist(medias.muestreo$media,breaks=30)
+```
+
+Entonces, una distribucion de medias construida con solamente 10 muestreos de 20 observaciones nos ofrece una representacion de poblacion un poco...triste.
+
+Se puede aprovechar el poder de la computadora y R para simular 1000 muestreos en lugar de 10.
+
+Primero, crearemos otro dataframe con mas muestreos
+
+```{r}
+puntaje2<-rnorm(1000*20,0,1)
+muestreo2<-rep(1:1000,each=20)
+df2<-data.frame(muestreo2,puntaje2)
+df2[1:25,]
+
+```
+
+Luego, sacamos las medias de cada muestreo
+
+```{r}
+medias.muestreo2<-df2 %>%
+  group_by(muestreo2) %>%
+  summarise(media=mean(puntaje2))
+medias.muestreo2[1:10,]
+```
+
+Y finalmente, crearemos un histograma y las medias para describir la distribucion de las medias de los 1000 muestreos.
+
+```{r}
+mean(medias.muestreo2$media)
+```
+
+Probablemente, el valor es mas cercano a 0 comparado con la distribucion de arriba con solamente 10 muestreos
+
+```{r}
+hist(medias.muestreo2$media)
+```
+
+Y con mas intervalos de clase?
+
+```{r}
+hist(medias.muestreo2$media,breaks=30)
+```
+
+Se mantiene como una distribucion normal, con una media cerca de 0

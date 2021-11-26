@@ -2110,8 +2110,646 @@ Temas
 </div>
 
 <div class="d-article">
-<p>Inserta aquí el cuerpo de tu clase. En mis demás libretas puedes darte una idea de los elementos que puedes utlizar para mejorar su visualización.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#primera-estrategia">PRIMERA ESTRATEGIA</a>
+<ul>
+<li><a href="#segunda-estrategia">SEGUNDA ESTRATEGIA</a></li>
+<li><a href="#tercera-estrategia">TERCERA ESTRATEGIA</a></li>
+</ul></li>
+<li><a href="#algunos-típos-de-gráficas">ALGUNOS TÍPOS DE GRÁFICAS</a>
+<ul>
+<li><a href="#barras">BARRAS</a></li>
+<li><a href="#cajas-y-bigotes">CAJAS Y BIGOTES</a></li>
+<li><a href="#medidas-de-tendencia-central-y-dispersión">MEDIDAS DE TENDENCIA CENTRAL Y DISPERSIÓN</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<p>Para comenzar con el análisis de datos, la materia prima son los datos bien organizados. En R existen diferentes maneras de tener acceso a ellos.</p>
+<h2 id="primera-estrategia">PRIMERA ESTRATEGIA</h2>
+<p>Generar tu base de datos desde R, dato por dato, vector por vector, matriz por matriz, objeto por objeto:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datos.x</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>12</span>,<span class='fl'>15</span>,<span class='fl'>18</span>,<span class='fl'>21</span>,<span class='fl'>24</span><span class='op'>)</span>
+<span class='va'>datos.x</span>
+</code></pre>
+</div>
+<pre><code> [1]  1  3  5  7  9 12 15 18 21 24</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datos.y</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>15</span>,<span class='fl'>20</span>,<span class='fl'>25</span>,<span class='fl'>30</span>,<span class='fl'>35</span>,<span class='fl'>40</span>,<span class='fl'>45</span>,<span class='fl'>50</span>,<span class='fl'>55</span><span class='op'>)</span>
+<span class='va'>datos.y</span>
+</code></pre>
+</div>
+<pre><code> [1]  5 15 20 25 30 35 40 45 50 55</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>matriz1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='va'>datos.x</span>,<span class='va'>datos.y</span><span class='op'>)</span>
+<span class='va'>matriz1</span>
+</code></pre>
+</div>
+<pre><code>     [,1] [,2]
+[1,]    1   12
+[2,]    3   15
+[3,]    5   18
+[4,]    7   21
+[5,]    9   24</code></pre>
+</div>
+<p>Con “seq()” para generar un vector de los numeros de 1 a 100:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>uno.a.cien</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>100</span>,<span class='fl'>1</span><span class='op'>)</span> <span class='co'>#Los numeros de 1 a 100, con intervalos de 1</span>
+<span class='va'>uno.a.cien</span>
+</code></pre>
+</div>
+<pre><code>  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+ [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+ [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+ [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+ [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+ [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
+</div>
+<p>Con “rep()” para repetir numeros:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>reps1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>5</span><span class='op'>)</span> <span class='co'>#5 repeticiones del numero 10</span>
+<span class='va'>reps1</span>
+</code></pre>
+</div>
+<pre><code>[1] 10 10 10 10 10</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>reps2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>25</span><span class='op'>)</span> <span class='co'># 25 repeticiones del número 2</span>
+<span class='va'>reps2</span>
+</code></pre>
+</div>
+<pre><code> [1] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecx</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># concatenamos 2 vectores</span>
+<span class='va'>vecx</span>
+</code></pre>
+</div>
+<pre><code> [1] 10 10 10 10 10  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
+[26]  2  2  2  2  2</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecy</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>14</span>,<span class='fl'>5</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>7</span>,<span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>vecy</span>
+</code></pre>
+</div>
+<pre><code> [1] 14 14 14 14 14  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7
+[26]  7  7  7  7  7</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecz</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Mexico"</span>,<span class='fl'>15</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Costa Rica"</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>vecz</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;    
+ [6] &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;    
+[11] &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;     &quot;Mexico&quot;    
+[16] &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot;
+[21] &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot;
+[26] &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot; &quot;Costa Rica&quot;</code></pre>
+</div>
+<p>Creamos una matríz con los tres vectores; 30 filas y 3 columnas</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>matriz2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>vecx</span>, <span class='va'>vecy</span>, <span class='va'>vecz</span><span class='op'>)</span>,   
+                    nrow <span class='op'>=</span> <span class='fl'>30</span>,
+                    ncol <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+<span class='va'>matriz2</span>
+</code></pre>
+</div>
+<pre><code>      [,1] [,2] [,3]        
+ [1,] &quot;10&quot; &quot;14&quot; &quot;Mexico&quot;    
+ [2,] &quot;10&quot; &quot;14&quot; &quot;Mexico&quot;    
+ [3,] &quot;10&quot; &quot;14&quot; &quot;Mexico&quot;    
+ [4,] &quot;10&quot; &quot;14&quot; &quot;Mexico&quot;    
+ [5,] &quot;10&quot; &quot;14&quot; &quot;Mexico&quot;    
+ [6,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+ [7,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+ [8,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+ [9,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[10,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[11,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[12,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[13,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[14,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[15,] &quot;2&quot;  &quot;7&quot;  &quot;Mexico&quot;    
+[16,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[17,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[18,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[19,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[20,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[21,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[22,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[23,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[24,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[25,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[26,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[27,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[28,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[29,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;
+[30,] &quot;2&quot;  &quot;7&quot;  &quot;Costa Rica&quot;</code></pre>
+</div>
+<p>Otra manera de visualizar los datos es con la función “View ()”</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>matriz2</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Crearemos un dataframe</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datos_u</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>meses <span class='op'>=</span> <span class='va'>month.name</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, numeros<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, logico<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>datos_u</span>
+</code></pre>
+</div>
+<pre><code>     meses numeros logico
+1  January       1  FALSE
+2 February       2   TRUE
+3    March       3  FALSE
+4    April       4  FALSE
+5      May       5  FALSE</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>datos_u</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"MESES"</span>,<span class='st'>"NUMEROS"</span>, <span class='st'>"LOGICO"</span><span class='op'>)</span>       <span class='co'>#PARA CAMBIAR EL NOMBRE DE LAS COLUMNAS</span>
+
+<span class='va'>datos_u</span>
+</code></pre>
+</div>
+<pre><code>     MESES NUMEROS LOGICO
+1  January       1  FALSE
+2 February       2   TRUE
+3    March       3  FALSE
+4    April       4  FALSE
+5      May       5  FALSE</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>datos_u</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Un ejemplo más de data frame, ahora con pacientes</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pacientes</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"juan"</span>, <span class='st'>"pedro"</span>, <span class='st'>"armando"</span>, <span class='st'>"eliel"</span>,<span class='st'>"oscar"</span>, <span class='st'>"roberto"</span>,<span class='st'>"carlos"</span><span class='op'>)</span>
+<span class='va'>pacientes</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;juan&quot;    &quot;pedro&quot;   &quot;armando&quot; &quot;eliel&quot;   &quot;oscar&quot;   &quot;roberto&quot; &quot;carlos&quot; </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bilirrubina</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>,<span class='fl'>0.3</span>,<span class='fl'>0.4</span>,<span class='fl'>0.4</span>,<span class='fl'>0.4</span>,<span class='fl'>0.5</span>,<span class='fl'>0.8</span><span class='op'>)</span>
+<span class='va'>bilirrubina</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.1 0.3 0.4 0.4 0.4 0.5 0.8</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Datoslab</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>pacientes</span>,<span class='va'>bilirrubina</span><span class='op'>)</span>
+<span class='va'>Datoslab</span>
+</code></pre>
+</div>
+<pre><code>  pacientes bilirrubina
+1      juan         0.1
+2     pedro         0.3
+3   armando         0.4
+4     eliel         0.4
+5     oscar         0.4
+6   roberto         0.5
+7    carlos         0.8</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>Datoslab</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="segunda-estrategia">SEGUNDA ESTRATEGIA</h3>
+<p>Utilizar datos contenidos dentro de algún paquete previamente cargado en R, esto ya lo hemos realizado anteriormente con el maestro Arturo. En este caso, utilizaremos la base de datos <code>mpg</code> incluída en el paquete <code>ggplot2</code>. El primer paso es, conocer la información que contiene. Para ello guardaremos la base en un objeto que llamaremos <code>df1</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'>ggplot2</span><span class='fu'>::</span><span class='va'><a href='https://ggplot2.tidyverse.org/reference/mpg.html'>mpg</a></span>
+</code></pre>
+</div>
+</div>
+Para visualizar los datos contenidos en el objeto df1 utilizaremos la función “View ()”, nos abrirá una nueva pestaña con la tabla de datos.
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+Datos de iris<br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>iris</span>
+</code></pre>
+</div>
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1            5.1         3.5          1.4         0.2     setosa
+2            4.9         3.0          1.4         0.2     setosa
+3            4.7         3.2          1.3         0.2     setosa
+4            4.6         3.1          1.5         0.2     setosa
+5            5.0         3.6          1.4         0.2     setosa
+6            5.4         3.9          1.7         0.4     setosa
+7            4.6         3.4          1.4         0.3     setosa
+8            5.0         3.4          1.5         0.2     setosa
+9            4.4         2.9          1.4         0.2     setosa
+10           4.9         3.1          1.5         0.1     setosa
+11           5.4         3.7          1.5         0.2     setosa
+12           4.8         3.4          1.6         0.2     setosa
+13           4.8         3.0          1.4         0.1     setosa
+14           4.3         3.0          1.1         0.1     setosa
+15           5.8         4.0          1.2         0.2     setosa
+16           5.7         4.4          1.5         0.4     setosa
+17           5.4         3.9          1.3         0.4     setosa
+18           5.1         3.5          1.4         0.3     setosa
+19           5.7         3.8          1.7         0.3     setosa
+20           5.1         3.8          1.5         0.3     setosa
+21           5.4         3.4          1.7         0.2     setosa
+22           5.1         3.7          1.5         0.4     setosa
+23           4.6         3.6          1.0         0.2     setosa
+24           5.1         3.3          1.7         0.5     setosa
+25           4.8         3.4          1.9         0.2     setosa
+26           5.0         3.0          1.6         0.2     setosa
+27           5.0         3.4          1.6         0.4     setosa
+28           5.2         3.5          1.5         0.2     setosa
+29           5.2         3.4          1.4         0.2     setosa
+30           4.7         3.2          1.6         0.2     setosa
+31           4.8         3.1          1.6         0.2     setosa
+32           5.4         3.4          1.5         0.4     setosa
+33           5.2         4.1          1.5         0.1     setosa
+34           5.5         4.2          1.4         0.2     setosa
+35           4.9         3.1          1.5         0.2     setosa
+36           5.0         3.2          1.2         0.2     setosa
+37           5.5         3.5          1.3         0.2     setosa
+38           4.9         3.6          1.4         0.1     setosa
+39           4.4         3.0          1.3         0.2     setosa
+40           5.1         3.4          1.5         0.2     setosa
+41           5.0         3.5          1.3         0.3     setosa
+42           4.5         2.3          1.3         0.3     setosa
+43           4.4         3.2          1.3         0.2     setosa
+44           5.0         3.5          1.6         0.6     setosa
+45           5.1         3.8          1.9         0.4     setosa
+46           4.8         3.0          1.4         0.3     setosa
+47           5.1         3.8          1.6         0.2     setosa
+48           4.6         3.2          1.4         0.2     setosa
+49           5.3         3.7          1.5         0.2     setosa
+50           5.0         3.3          1.4         0.2     setosa
+51           7.0         3.2          4.7         1.4 versicolor
+52           6.4         3.2          4.5         1.5 versicolor
+53           6.9         3.1          4.9         1.5 versicolor
+54           5.5         2.3          4.0         1.3 versicolor
+55           6.5         2.8          4.6         1.5 versicolor
+56           5.7         2.8          4.5         1.3 versicolor
+57           6.3         3.3          4.7         1.6 versicolor
+58           4.9         2.4          3.3         1.0 versicolor
+59           6.6         2.9          4.6         1.3 versicolor
+60           5.2         2.7          3.9         1.4 versicolor
+61           5.0         2.0          3.5         1.0 versicolor
+62           5.9         3.0          4.2         1.5 versicolor
+63           6.0         2.2          4.0         1.0 versicolor
+64           6.1         2.9          4.7         1.4 versicolor
+65           5.6         2.9          3.6         1.3 versicolor
+66           6.7         3.1          4.4         1.4 versicolor
+67           5.6         3.0          4.5         1.5 versicolor
+68           5.8         2.7          4.1         1.0 versicolor
+69           6.2         2.2          4.5         1.5 versicolor
+70           5.6         2.5          3.9         1.1 versicolor
+71           5.9         3.2          4.8         1.8 versicolor
+72           6.1         2.8          4.0         1.3 versicolor
+73           6.3         2.5          4.9         1.5 versicolor
+74           6.1         2.8          4.7         1.2 versicolor
+75           6.4         2.9          4.3         1.3 versicolor
+76           6.6         3.0          4.4         1.4 versicolor
+77           6.8         2.8          4.8         1.4 versicolor
+78           6.7         3.0          5.0         1.7 versicolor
+79           6.0         2.9          4.5         1.5 versicolor
+80           5.7         2.6          3.5         1.0 versicolor
+81           5.5         2.4          3.8         1.1 versicolor
+82           5.5         2.4          3.7         1.0 versicolor
+83           5.8         2.7          3.9         1.2 versicolor
+84           6.0         2.7          5.1         1.6 versicolor
+85           5.4         3.0          4.5         1.5 versicolor
+86           6.0         3.4          4.5         1.6 versicolor
+87           6.7         3.1          4.7         1.5 versicolor
+88           6.3         2.3          4.4         1.3 versicolor
+89           5.6         3.0          4.1         1.3 versicolor
+90           5.5         2.5          4.0         1.3 versicolor
+91           5.5         2.6          4.4         1.2 versicolor
+92           6.1         3.0          4.6         1.4 versicolor
+93           5.8         2.6          4.0         1.2 versicolor
+94           5.0         2.3          3.3         1.0 versicolor
+95           5.6         2.7          4.2         1.3 versicolor
+96           5.7         3.0          4.2         1.2 versicolor
+97           5.7         2.9          4.2         1.3 versicolor
+98           6.2         2.9          4.3         1.3 versicolor
+99           5.1         2.5          3.0         1.1 versicolor
+100          5.7         2.8          4.1         1.3 versicolor
+101          6.3         3.3          6.0         2.5  virginica
+102          5.8         2.7          5.1         1.9  virginica
+103          7.1         3.0          5.9         2.1  virginica
+104          6.3         2.9          5.6         1.8  virginica
+105          6.5         3.0          5.8         2.2  virginica
+106          7.6         3.0          6.6         2.1  virginica
+107          4.9         2.5          4.5         1.7  virginica
+108          7.3         2.9          6.3         1.8  virginica
+109          6.7         2.5          5.8         1.8  virginica
+110          7.2         3.6          6.1         2.5  virginica
+111          6.5         3.2          5.1         2.0  virginica
+112          6.4         2.7          5.3         1.9  virginica
+113          6.8         3.0          5.5         2.1  virginica
+114          5.7         2.5          5.0         2.0  virginica
+115          5.8         2.8          5.1         2.4  virginica
+116          6.4         3.2          5.3         2.3  virginica
+117          6.5         3.0          5.5         1.8  virginica
+118          7.7         3.8          6.7         2.2  virginica
+119          7.7         2.6          6.9         2.3  virginica
+120          6.0         2.2          5.0         1.5  virginica
+121          6.9         3.2          5.7         2.3  virginica
+122          5.6         2.8          4.9         2.0  virginica
+123          7.7         2.8          6.7         2.0  virginica
+124          6.3         2.7          4.9         1.8  virginica
+125          6.7         3.3          5.7         2.1  virginica
+126          7.2         3.2          6.0         1.8  virginica
+127          6.2         2.8          4.8         1.8  virginica
+128          6.1         3.0          4.9         1.8  virginica
+129          6.4         2.8          5.6         2.1  virginica
+130          7.2         3.0          5.8         1.6  virginica
+131          7.4         2.8          6.1         1.9  virginica
+132          7.9         3.8          6.4         2.0  virginica
+133          6.4         2.8          5.6         2.2  virginica
+134          6.3         2.8          5.1         1.5  virginica
+135          6.1         2.6          5.6         1.4  virginica
+136          7.7         3.0          6.1         2.3  virginica
+137          6.3         3.4          5.6         2.4  virginica
+138          6.4         3.1          5.5         1.8  virginica
+139          6.0         3.0          4.8         1.8  virginica
+140          6.9         3.1          5.4         2.1  virginica
+141          6.7         3.1          5.6         2.4  virginica
+142          6.9         3.1          5.1         2.3  virginica
+143          5.8         2.7          5.1         1.9  virginica
+144          6.8         3.2          5.9         2.3  virginica
+145          6.7         3.3          5.7         2.5  virginica
+146          6.7         3.0          5.2         2.3  virginica
+147          6.3         2.5          5.0         1.9  virginica
+148          6.5         3.0          5.2         2.0  virginica
+149          6.2         3.4          5.4         2.3  virginica
+150          5.9         3.0          5.1         1.8  virginica</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="tercera-estrategia">TERCERA ESTRATEGIA</h3>
+<p>Utilizar una base de datos contenida en un archivo de Excel. Para esto, es importante colocar previamente el archivo de excel en nuestra carpeta de trabajo “carpeta base” o directorio de trabajo. Le indicamos a R que lea el archivo de tipo excel, utilizando el paquete lector “ºxl” y además que genere un objeto llamado igual que nuestro archivo excel “tempdata” contenido en la carpeta base. Esto se realiza con el siguiente código:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
+<span class='va'>tempdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"data/tempdata.xlsx"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Para visualizar nuestros datos utilizamos la función “View ()”</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>tempdata</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Otra manera de hacer lo mismo es importar los datos es dando clic en el botón “Import Datasets”, del cual desplegará un menú y daremos clic en “From Excel…”, con el botón browse podemos buscar nuestro archivo Excel y seleccionarlo, hacemos clic en open y abrirá una ventana, podrás cambiar el nombre del archivo en el espacio “Name:” y elegir la hoja de cálculo de tu archivo excel en donde están contenidos tus datos en el espacio “Sheet:”. Por último da clic en import y te abrirá en una pestaña nueva tus datos de excel importados a R. De manera simultanea se habrá creado un objeto con el nombre de tu archivo.</p>
+<h2 id="algunos-típos-de-gráficas">ALGUNOS TÍPOS DE GRÁFICAS</h2>
+<h3 id="barras">BARRAS</h3>
+<p>con datos digitados dirctamente en R</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span><span class='op'>(</span><span class='va'>Datoslab</span><span class='op'>$</span><span class='va'>bilirrubina</span><span class='op'>~</span><span class='va'>Datoslab</span><span class='op'>$</span><span class='va'>pacientes</span>,    
+        main   <span class='op'>=</span> <span class='st'>"Grafica de barras"</span>,
+        xlab   <span class='op'>=</span> <span class='st'>"Pacientes"</span>,
+        ylab   <span class='op'>=</span> <span class='st'>"Bilirrubina"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<p>HISTOGRAMA DE FRECUENCIAS Utilizamos los datos importados desde un archivo de Excel</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>tempdata</span><span class='op'>$</span><span class='va'>temperatura</span>,
+     main   <span class='op'>=</span> <span class='st'>"Histograma_1"</span>,
+     xlab   <span class='op'>=</span> <span class='st'>"Temperatura (°C)"</span>,
+     ylab   <span class='op'>=</span> <span class='st'>"Frecuencia"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<p>Crear histograma de frecuencia de la longitud de los pétalos usamos la famosisima base “iris”</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Petal.Length</span>,
+     breaks <span class='op'>=</span> <span class='st'>"scott"</span>,  <span class='co'># método</span>
+     main   <span class='op'>=</span> <span class='st'>"Histograma_2"</span>,
+     xlab   <span class='op'>=</span> <span class='st'>"Longitud del pétalo(cm)"</span>,
+     ylab   <span class='op'>=</span> <span class='st'>"Frecuencia"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<h3 id="cajas-y-bigotes">CAJAS Y BIGOTES</h3>
+<p>Con datos extraidos del archivo Excel</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>tempdata</span><span class='op'>$</span><span class='va'>temperatura</span><span class='op'>~</span><span class='va'>tempdata</span><span class='op'>$</span><span class='va'>grupo</span>, 
+        main   <span class='op'>=</span> <span class='st'>"Boxplot_1"</span>,
+        xlab   <span class='op'>=</span> <span class='st'>"Grupo"</span>,
+        ylab   <span class='op'>=</span> <span class='st'>"Temperatura (°C)"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<p>Otra boxplot Con nuevos datos de, pacientes, bilirribina y sexo</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pacientes2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Juana"</span>, <span class='st'>"Pedro"</span>, <span class='st'>"Armando"</span>, <span class='st'>"Isabel"</span>,<span class='st'>"Oscar"</span>, <span class='st'>"Roberto"</span>,<span class='st'>"Carla"</span><span class='op'>)</span>
+<span class='va'>pacientes2</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Juana&quot;   &quot;Pedro&quot;   &quot;Armando&quot; &quot;Isabel&quot;  &quot;Oscar&quot;   &quot;Roberto&quot; &quot;Carla&quot;  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sexo</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mujer"</span>, <span class='st'>"hombre"</span>, <span class='st'>"hombre"</span>,<span class='st'>"mujer"</span>,<span class='st'>"hombre"</span>,<span class='st'>"hombre"</span>,<span class='st'>"mujer"</span><span class='op'>)</span>    <span class='co'>#agregamos la variable sexo</span>
+<span class='va'>sexo</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;mujer&quot;  &quot;hombre&quot; &quot;hombre&quot; &quot;mujer&quot;  &quot;hombre&quot; &quot;hombre&quot; &quot;mujer&quot; </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bilirrubina2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.1</span>,<span class='fl'>0.3</span>,<span class='fl'>0.4</span>,<span class='fl'>0.4</span>,<span class='fl'>0.4</span>,<span class='fl'>0.5</span>,<span class='fl'>0.8</span><span class='op'>)</span>
+<span class='va'>bilirrubina2</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.1 0.3 0.4 0.4 0.4 0.5 0.8</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Datoslab2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>pacientes2</span>,<span class='va'>bilirrubina2</span>,<span class='va'>sexo</span><span class='op'>)</span>
+
+<span class='va'>Datoslab2</span>
+</code></pre>
+</div>
+<pre><code>  pacientes2 bilirrubina2   sexo
+1      Juana          0.1  mujer
+2      Pedro          0.3 hombre
+3    Armando          0.4 hombre
+4     Isabel          0.4  mujer
+5      Oscar          0.4 hombre
+6    Roberto          0.5 hombre
+7      Carla          0.8  mujer</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span> <span class='op'>(</span><span class='va'>Datoslab2</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>Datoslab2</span><span class='op'>$</span><span class='va'>bilirrubina2</span>,
+        ylab<span class='op'>=</span><span class='st'>"bilirrubina"</span>,
+        main<span class='op'>=</span><span class='st'>"Boxplot_2"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="c05_descriptiva_files/figure-html5/unnamed-chunk-19-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>Datoslab2</span><span class='op'>$</span><span class='va'>bilirrubina2</span><span class='op'>~</span><span class='va'>Datoslab2</span><span class='op'>$</span><span class='va'>sexo</span>,
+        xlab<span class='op'>=</span><span class='st'>"Sexo"</span>,
+        ylab<span class='op'>=</span><span class='st'>"bilirrubina"</span>,
+        main<span class='op'>=</span><span class='st'>"Boxplot_3"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-19-2.png" width="624" /></p>
+</div>
+<p>Gráfica de dispersión con un subconjunto de datos de iris (filtrando los datos de setosa)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#activa el paquete "dplyr"</span>
+
+<span class='va'>Datos_setosa</span><span class='op'>&lt;-</span><span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"setosa"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>#View(Datos_setosa)</span>
+
+<span class='va'>disp_pet</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>Datos_setosa</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Petal.Width</span> , y <span class='op'>=</span> <span class='va'>Petal.Length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>disp_pet</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+</div>
+<p>Hacemos bella nuestra gráfica</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>plot_edit</span> <span class='op'>&lt;-</span> <span class='va'>disp_pet</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>'Ancho del pétalo (cm)'</span>,
+                      y <span class='op'>=</span> <span class='st'>'Alto del pétalo (cm)'</span>,
+                      title <span class='op'>=</span> <span class='st'>'Relación entre ancho y alto de pétalos'</span>,
+                      subtitle <span class='op'>=</span> <span class='st'>'Setosa'</span>,
+                      caption <span class='op'>=</span> <span class='st'>'Datos: iris'</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>plot_edit</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+</div>
+<p>Más práctica con nuevos datos de excel, desde el archivo JAWS_DATOS</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
+<span class='va'>JAWS_DATOS</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readxl.tidyverse.org/reference/read_excel.html'>read_excel</a></span><span class='op'>(</span><span class='st'>"data/JAWS_DATOS.xlsx"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>JAWS_DATOS</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Graficamos los datos</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>plot_jaws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>JAWS_DATOS</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>age</span>, y <span class='op'>=</span> <span class='va'>bone</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>'Edad (años)'</span>,
+                  y <span class='op'>=</span> <span class='st'>'Longitud vertebral (cm)'</span>,
+                  title <span class='op'>=</span> <span class='st'>'Relación entre edad y la longitud vertebral'</span>,
+                  subtitle <span class='op'>=</span> <span class='st'>'C. falciformis'</span>,
+                  caption <span class='op'>=</span> <span class='st'>'JAWS_DATOS'</span><span class='op'>)</span> <span class='op'>+</span> 
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_classic</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>plot_jaws</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
+</div>
+<h3 id="medidas-de-tendencia-central-y-dispersión">MEDIDAS DE TENDENCIA CENTRAL Y DISPERSIÓN</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Media_v1</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>2</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>Media_v1</span>
+</code></pre>
+</div>
+<pre><code>[1] 5.4</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Mediana_v2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>6</span>,<span class='fl'>7</span>,<span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>Mediana_v2</span>
+</code></pre>
+</div>
+<pre><code>[1] 4.5</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#install.packages("modeest") </span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paulponcet/modeest'>modeest</a></span><span class='op'>)</span>
+<span class='va'>v3</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>5</span>,<span class='fl'>6</span>,<span class='fl'>7</span>,<span class='fl'>8</span>,<span class='fl'>9</span><span class='op'>)</span>
+<span class='va'>v3</span>
+</code></pre>
+</div>
+<pre><code> [1] 1 2 3 4 5 5 5 5 5 5 6 7 8 9</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>moda_v3</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/modeest/man/mlv.html'>mlv</a></span><span class='op'>(</span><span class='va'>v3</span>, method <span class='op'>=</span> <span class='st'>"mfv"</span><span class='op'>)</span> <span class='co'>#método discreto</span>
+<span class='va'>moda_v3</span>
+</code></pre>
+</div>
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#install.packages("dplyr")  </span>
+<span class='co'>#library(dplyr)</span>
+
+<span class='va'>tabla_iris</span><span class='op'>&lt;-</span><span class='va'>iris</span> <span class='op'>%&gt;%</span>   
+            <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+            <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>medias <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span> <span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>, medianas <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,
+            maximos<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>, minimos <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,   
+            DesvEst <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/View.html'>View</a></span><span class='op'>(</span><span class='va'>tabla_iris</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>tempdata</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    grupo            temperatura   
+ Length:14          Min.   :37.10  
+ Class :character   1st Qu.:37.33  
+ Mode  :character   Median :37.85  
+                    Mean   :38.06  
+                    3rd Qu.:38.35  
+                    Max.   :40.10  </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>JAWS_DATOS</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>      age             bone       
+ Min.   : 0.00   Min.   :  0.00  
+ 1st Qu.:11.35   1st Qu.: 85.13  
+ Median :24.72   Median :103.85  
+ Mean   :24.80   Mean   : 93.98  
+ 3rd Qu.:37.05   3rd Qu.:115.75  
+ Max.   :50.60   Max.   :142.00  </code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

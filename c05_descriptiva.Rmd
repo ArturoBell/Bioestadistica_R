@@ -12,5 +12,307 @@ output:
 knitr::opts_chunk$set(R.options = list(width = 80))
 ```
 
+Para comenzar con el análisis de datos, la materia prima son los datos bien organizados. En R existen diferentes maneras de tener acceso a ellos. 
 
-Inserta aquí el cuerpo de tu clase. En mis demás libretas puedes darte una idea de los elementos que puedes utlizar para mejorar su visualización.
+## PRIMERA ESTRATEGIA
+
+Generar tu base de datos desde R, dato por dato, vector por vector, matriz por matriz, objeto por objeto:
+
+```{r}
+datos.x<- c(1,3,5,7,9,12,15,18,21,24)
+datos.x
+datos.y<-c(5,15,20,25,30,35,40,45,50,55)
+datos.y
+```
+
+```{r}
+matriz1<-matrix(datos.x,datos.y)
+matriz1
+```
+
+Con "seq()" para generar un vector de los numeros de 1 a 100: 
+
+```{r}
+uno.a.cien<-seq(1,100,1) #Los numeros de 1 a 100, con intervalos de 1
+uno.a.cien
+```
+
+Con "rep()" para repetir numeros:
+
+```{r}
+reps1<-rep(10,5) #5 repeticiones del numero 10
+reps1
+reps2<-rep(2,25) # 25 repeticiones del número 2
+reps2
+```
+
+```{r}
+vecx<-c(rep(10, 5),rep(2,25)) # concatenamos 2 vectores
+vecx
+
+vecy<-c(rep(14,5),rep(7,25))
+vecy
+
+vecz<-c(rep("Mexico",15), rep("Costa Rica",15))
+vecz
+```
+
+Creamos una matríz con los  tres vectores; 30 filas y 3 columnas
+
+```{r}
+matriz2 <- matrix(c(vecx, vecy, vecz),   
+                    nrow = 30,
+                    ncol = 3)
+matriz2
+```
+
+Otra manera de visualizar los datos es con la función "View ()" 
+
+```{r}
+View(matriz2)
+```
+
+Crearemos un dataframe
+
+```{r}
+datos_u <- data.frame(meses = month.name[1:5], numeros=1:5, logico=c(FALSE, TRUE, FALSE, FALSE, FALSE))
+
+datos_u
+                                                     
+colnames(datos_u) <- c("MESES","NUMEROS", "LOGICO")       #PARA CAMBIAR EL NOMBRE DE LAS COLUMNAS
+
+datos_u
+
+View(datos_u)
+```
+
+
+Un ejemplo más de data frame, ahora con pacientes
+
+```{r}
+
+pacientes<-c("juan", "pedro", "armando", "eliel","oscar", "roberto","carlos")
+pacientes
+
+bilirrubina<-c(0.1,0.3,0.4,0.4,0.4,0.5,0.8)
+bilirrubina
+
+Datoslab<-data.frame(pacientes,bilirrubina)
+Datoslab
+
+View(Datoslab)
+
+```
+   
+### SEGUNDA ESTRATEGIA
+
+Utilizar datos contenidos dentro de algún paquete previamente cargado en R, esto ya lo hemos realizado anteriormente con el maestro Arturo. En este caso, utilizaremos la base de datos `mpg` incluída en el paquete `ggplot2`. El primer paso es, conocer la información que contiene. Para ello guardaremos la base en un objeto que llamaremos `df1`:
+
+```{r}
+library(ggplot2)
+df1 <- ggplot2::mpg
+```
+
+Para visualizar los datos contenidos en el objeto df1 utilizaremos la función "View ()", nos abrirá una nueva pestaña con la tabla de datos. 
+```{r}
+View(df1)
+```
+
+Datos de iris      
+```{r}
+iris
+View(iris)
+
+```
+             
+                     
+### TERCERA ESTRATEGIA
+                                 
+Utilizar una base de datos contenida en un archivo de Excel. Para esto, es importante colocar previamente el archivo de excel en nuestra carpeta de trabajo "carpeta base" o directorio de trabajo. Le indicamos a R que lea el archivo de tipo excel, utilizando el paquete lector "ºxl" y además que genere un objeto llamado igual que nuestro archivo excel "tempdata" contenido en la carpeta base. Esto se realiza  con el siguiente código:
+
+```{r}
+library(readxl)
+tempdata <- read_excel("data/tempdata.xlsx")
+```
+
+Para visualizar nuestros datos utilizamos la función "View ()"
+
+```{r}
+View(tempdata)
+```
+
+Otra manera de hacer lo mismo es importar los datos es dando clic en el botón "Import Datasets", del cual desplegará un menú y daremos clic en "From Excel...", con el botón browse podemos buscar nuestro archivo Excel y seleccionarlo, hacemos clic en open y abrirá una ventana, podrás cambiar el nombre del archivo en el espacio "Name: " y elegir la hoja de cálculo de tu archivo excel en donde están contenidos tus datos en el espacio "Sheet: ". Por último da clic en import y te abrirá en una pestaña nueva tus datos de excel importados a R. De manera simultanea se habrá creado un objeto con el nombre de tu archivo.
+
+
+## ALGUNOS TÍPOS DE GRÁFICAS
+                                   
+### BARRAS 
+con datos digitados dirctamente en R
+
+```{r}
+barplot(Datoslab$bilirrubina~Datoslab$pacientes,    
+        main   = "Grafica de barras",
+        xlab   = "Pacientes",
+        ylab   = "Bilirrubina")
+```
+
+HISTOGRAMA DE FRECUENCIAS
+Utilizamos los datos importados desde un archivo de Excel
+
+```{r}
+hist(tempdata$temperatura,
+     main   = "Histograma_1",
+     xlab   = "Temperatura (°C)",
+     ylab   = "Frecuencia")
+```
+
+Crear histograma de frecuencia de la longitud de los pétalos usamos la famosisima base "iris"
+
+```{r}
+hist(iris$Petal.Length,
+     breaks = "scott",  # método
+     main   = "Histograma_2",
+     xlab   = "Longitud del pétalo(cm)",
+     ylab   = "Frecuencia")
+
+```
+
+### CAJAS Y BIGOTES
+
+Con datos extraidos del archivo Excel
+
+```{r}
+boxplot(tempdata$temperatura~tempdata$grupo, 
+        main   = "Boxplot_1",
+        xlab   = "Grupo",
+        ylab   = "Temperatura (°C)")
+```
+
+Otra boxplot
+Con nuevos datos de, pacientes, bilirribina y sexo
+
+```{r}
+pacientes2<-c("Juana", "Pedro", "Armando", "Isabel","Oscar", "Roberto","Carla")
+pacientes2
+
+sexo<-c("mujer", "hombre", "hombre","mujer","hombre","hombre","mujer")    #agregamos la variable sexo
+sexo
+
+bilirrubina2<-c(0.1,0.3,0.4,0.4,0.4,0.5,0.8)
+bilirrubina2
+
+Datoslab2<-data.frame(pacientes2,bilirrubina2,sexo)
+
+Datoslab2
+
+View (Datoslab2)
+
+boxplot(Datoslab2$bilirrubina2,
+        ylab="bilirrubina",
+        main="Boxplot_2")
+
+boxplot(Datoslab2$bilirrubina2~Datoslab2$sexo,
+        xlab="Sexo",
+        ylab="bilirrubina",
+        main="Boxplot_3")
+```
+
+Gráfica de dispersión con un subconjunto de datos de iris (filtrando los datos de setosa)
+
+```{r}
+
+#activa el paquete "dplyr"
+
+Datos_setosa<-iris %>% filter(Species %in% c("setosa"))
+
+#View(Datos_setosa)
+
+disp_pet<- ggplot(data = Datos_setosa, aes(x = Petal.Width , y = Petal.Length)) + geom_point()
+
+disp_pet
+```
+
+Hacemos bella nuestra gráfica
+
+```{r}
+plot_edit <- disp_pet + labs(x = 'Ancho del pétalo (cm)',
+                      y = 'Alto del pétalo (cm)',
+                      title = 'Relación entre ancho y alto de pétalos',
+                      subtitle = 'Setosa',
+                      caption = 'Datos: iris') + theme_classic()
+plot_edit
+```
+
+Más práctica con nuevos datos de excel, desde el archivo JAWS_DATOS
+
+```{r}
+library(readxl)
+JAWS_DATOS <- read_excel("data/JAWS_DATOS.xlsx")
+
+View(JAWS_DATOS)
+```
+
+Graficamos los datos 
+
+```{r}
+plot_jaws <- ggplot(data = JAWS_DATOS, aes(x = age, y = bone)) +
+             geom_point() +
+             labs(x = 'Edad (años)',
+                  y = 'Longitud vertebral (cm)',
+                  title = 'Relación entre edad y la longitud vertebral',
+                  subtitle = 'C. falciformis',
+                  caption = 'JAWS_DATOS') + 
+             theme_classic()
+
+plot_jaws
+```
+
+                        
+### MEDIDAS DE TENDENCIA CENTRAL Y DISPERSIÓN
+                         
+                             
+```{r}
+Media_v1<- mean(c(3,7,9,2,6))
+Media_v1
+
+Mediana_v2<-median(c(1,3,5,4,3,6,7,9))
+Mediana_v2
+```
+
+
+```{r}
+#install.packages("modeest") 
+library(modeest)
+v3<-c(1,2,3,4,5,5,5,5,5,5,6,7,8,9)
+v3
+
+moda_v3<- mlv(v3, method = "mfv") #método discreto
+moda_v3
+```
+                             
+```{r}
+
+#install.packages("dplyr")  
+#library(dplyr)
+
+tabla_iris<-iris %>%   
+            group_by(Species) %>%
+            summarise(medias = mean (Petal.Length), medianas = median(Petal.Length),
+            maximos=max(Petal.Length), minimos = min(Petal.Length),   
+            DesvEst = sd(Petal.Length))
+
+View(tabla_iris)
+
+```
+
+```{r}
+summary(tempdata)
+```
+
+```{r}
+summary(JAWS_DATOS)
+```
+
+
+
+

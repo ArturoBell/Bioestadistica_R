@@ -312,7 +312,7 @@ for (i in seq(10,1010,10)) {
 
 Ahora utilicemos la librería `gganimate` para generar la animación de nuestro interés. 
 OJO: Esta animación no se mostrará en la libreta, sino en el visor de RStudio
-OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado puede tomar desde unos cuantos segundos hasta varios minutos o, incluso, más de una hora. Este ejemplo es el segundo caso. NO correr al menos de que tengas bastante tiempo disponible o una computadora con bastante fuerza bruta.
+OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado puede tomar desde unos cuantos segundos hasta varios minutos o, incluso, más de una hora. Este ejemplo es el segundo caso. NO correr al menos de que tengas bastante tiempo disponible o una computadora con bastante fuerza bruta en mononúcleo.
 
 ```{r}
 # library(gganimate)
@@ -339,12 +339,13 @@ OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado
 #           annotate("text", x = norm.var2$promedio, y = 0.06,
 #                    label = paste("Media = ", round(norm.var2$promedio, 2))) +
 #           transition_states(iter) +
-#           labs(subtitle = 
+#           labs(subtitle =
 #                paste("Experimentos: {closest_state}; Media real = 67"))
 # de.plot
 ```
 
 ## Intervalos de confianza
+
 Existen distintas formas de calcular los intervalos de confianza para una media en R. Uno de ellos es utilizando la función `t.test`, el cual utiliza la distribución T-Student para el cálculo. De su salida vemos que nos da el valor del estadístico de prueba (valor crítico), los grados de libertad y un valor de p. Estos elementos los ignoraremos por el momento. Lo que sí nos interesa es la información que aparece por debajo; es decir, los límites de los intervalos de confianza y el valor de la media.
 
 ```{r}
@@ -384,19 +385,20 @@ Vemos que la salida es un poco más compleja; sin embargo, lo más relevante es 
 Recursos recomendados para esta sección: [Rcompanion](https://rcompanion.org/handbook/C_03.html) y [Handbook of Biological Statistics](http://www.biostathandbook.com/confidence.html)
 
 ## Ejercicio
+
 Para la tarea de esta semana cargarás el archivo `Datos1.csv` con el código aquí incluído y, de manera similar a como se vio durante la clase, realizarás la estimación de la media, la desviación estándar y los intervalos de confianza (utilizando cualquiera de las formas aquí vistas) para diferentes tamaños de muestra (ojo a la función `sample()`). El objetivo es ver cómo cambian tanto la estimación puntual como la amplitud de los intervalos al incrementar el tamaño de muestra.
 
 Parte **OPCIONAL**:Si quieres desafiarte un poco más, considera alguna de las variables Dieta o Periodo como un grupos dentro de la población y realiza las estimaciones con esa consideración. Puedes también intentar presentar los resultados de manera gráfica (agrupados o no). Una alternativa es usar un gráfico KDE y mostrar los límites como líneas verticales, otra alternativa es un gráfico similar al que se presentó en clase, con el número de muestras en el eje x y un gráfico con líneas de error para el eje y. Este apartado OPCIONAL no tiene una "respuesta correcta", así que puedes experimentar y presentar (o no) los resultados de la manera en que tú consideres se resuelven los objetivos.
 
 ```{r, eval=FALSE}
 df <- read.table(file.choose(), header = F, skip = 1, sep = ",")
-colnames(df) <- c("Dieta", "Periodo", "Rep", "LT", "PT")
+colnames(df) <- c("Dieta", "Periodo", "Rep", "LT", "PT", "id")
 head(df)
 ```
 
 ```{r, echo = FALSE}
 df <- read.table("data/Datos1.csv", header = F, skip = 1, sep = ",")
-colnames(df) <- c("Dieta", "Periodo", "Rep", "LT", "PT")
+colnames(df) <- c("Dieta", "Periodo", "Rep", "LT", "PT", "id")
 rmarkdown::paged_table(head(df))
 ```
 

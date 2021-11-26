@@ -2125,7 +2125,12 @@ Temas
 <ul>
 <li><a href="#gráfico-final">Gráfico final</a></li>
 </ul></li>
-<li><a href="#extras">Extras</a></li>
+<li><a href="#extras">Extras</a>
+<ul>
+<li><a href="#colores-de-puntos">Colores de puntos</a></li>
+<li><a href="#tamaño-de-los-puntos">Tamaño de los puntos</a></li>
+<li><a href="#tipografías-y-exportación-de-gráficos">Tipografías y Exportación de gráficos</a></li>
+</ul></li>
 </ul>
 </nav>
 </div>
@@ -2342,7 +2347,7 @@ Temas
                     <span class='co'>#Eliminamos las marcas de los ejes</span>
                     axis.ticks <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
                     <span class='co'>#Cambiamos el tipo de letra</span>
-                    text <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='st'>'Montserrat'</span>,
+                    text <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_text</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='st'>'Times'</span>,
                                         colour <span class='op'>=</span> <span class='st'>'gray50'</span><span class='op'>)</span>
                     <span class='op'>)</span> <span class='op'>+</span> 
               <span class='co'># Reducimos las divisiones del eje ex a 4 valores</span>
@@ -2380,6 +2385,7 @@ Temas
 <p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
 <h2 id="extras">Extras</h2>
+<h3 id="colores-de-puntos">Colores de puntos</h3>
 <p>Modificar los colores de los puntos. Podemos utilizar la función <code>randomColor(n)</code> de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2407,6 +2413,7 @@ Temas
 </div>
 <p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
+<h3 id="tamaño-de-los-puntos">Tamaño de los puntos</h3>
 <p>Para modificar el tamaño de los puntos solamente hay que agregar el argumento <code>size</code> a la capa <code>geom_point</code>, en el cuál indicaremos qué tamaños tomarán los puntos. Puede ser un solo valor:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2422,6 +2429,44 @@ Temas
 </code></pre>
 </div>
 <p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<h3 id="tipografías-y-exportación-de-gráficos">Tipografías y Exportación de gráficos</h3>
+<p>El manejo de las tipografías en R es un poco especial, por ello usualmente recomiendo generar el gráfico en R, exportarlo como PDF (<code>cairo_pdf("filename.pdf", width, height, family)</code>) y agregar las cursivas donde sea necesario; sin embargo, un paquete que puede resultar especialmente útil es <code>ggtext</code>. Este añade un nuevo “elemento” de texto que recibe formato Markdown (<code>element_markdown()</code>); es decir, podemos agregar <em>itálicas</em> o <strong>negritas</strong>. Para poder utilizarlo, sin embargo, es necesario modificar ligeramente nuestros datos de antemano. Para facilitarnos las cosas agregaremos una nueva columna a <code>df1</code> que contenga las clases en <em>itálicas</em> y extraeremos los valores únicos (algo más eficiente sería hacerlo al revés, pero es más lógico de esta manera):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df1</span><span class='op'>$</span><span class='va'>clase</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"*"</span>,<span class='va'>df1</span><span class='op'>$</span><span class='va'>class</span>,<span class='st'>"*"</span><span class='op'>)</span>
+<span class='va'>clases</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>clase</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Finalmente lo agregaremos a la gráfica. ¡OJO! Es necesario modificar el tema para que entienda el formato markdown:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://wilkelab.org/ggtext/'>ggtext</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"ggtext"</span>, dependencies <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span><span class='op'>}</span>
+
+<span class='va'>final.plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Clase"</span>,labels <span class='op'>=</span> <span class='va'>clases</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.text <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+</div>
+<p>Con este elemento podemos modificar también fracciones de cualquier texto de nuestra gráfica, por ejemplo carretera en negritas:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final.plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='st'>"Consumo en **carretera**"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.subtitle <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+</div>
+<p>Mezclando ambas modificaciones:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final.plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Clase"</span>,labels <span class='op'>=</span> <span class='va'>clases</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='st'>"Consumo en **carretera**"</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>plot.subtitle <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span>,
+                   legend.text <span class='op'>=</span> <span class='fu'>ggtext</span><span class='fu'>::</span><span class='fu'><a href='https://wilkelab.org/ggtext/reference/element_markdown.html'>element_markdown</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c02_ggplot2_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

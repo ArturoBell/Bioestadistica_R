@@ -2255,12 +2255,12 @@ Temas
 2  (0.1,0.2]         NA 0.1:0.2
 3  (0.2,0.3]         NA 0.2:0.3
 4  (0.3,0.4]         NA 0.3:0.4
-5  (0.4,0.5]        149 0.4:0.5
-6  (0.5,0.6]        347 0.5:0.6
-7  (0.6,0.7]         NA 0.6:0.7
-8  (0.7,0.8]          1 0.7:0.8
+5  (0.4,0.5]         49 0.4:0.5
+6  (0.5,0.6]        440 0.5:0.6
+7  (0.6,0.7]          8 0.6:0.7
+8  (0.7,0.8]          2 0.7:0.8
 9  (0.8,0.9]         NA 0.8:0.9
-10   (0.9,1]          3   0.9:1</code></pre>
+10   (0.9,1]         NA   0.9:1</code></pre>
 </div>
 <p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo (NOTA: Las advertencias no son errores, son solo por los NAs que incluimos anteriormente):</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2444,7 +2444,7 @@ Temas
 </code></pre>
 </div>
 </div>
-<p>Ahora utilicemos la librería <code>gganimate</code> para generar la animación de nuestro interés. OJO: Esta animación no se mostrará en la libreta, sino en el visor de RStudio OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado puede tomar desde unos cuantos segundos hasta varios minutos o, incluso, más de una hora. Este ejemplo es el segundo caso. NO correr al menos de que tengas bastante tiempo disponible o una computadora con bastante fuerza bruta.</p>
+<p>Ahora utilicemos la librería <code>gganimate</code> para generar la animación de nuestro interés. OJO: Esta animación no se mostrará en la libreta, sino en el visor de RStudio OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado puede tomar desde unos cuantos segundos hasta varios minutos o, incluso, más de una hora. Este ejemplo es el segundo caso. NO correr al menos de que tengas bastante tiempo disponible o una computadora con bastante fuerza bruta en mononúcleo.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># library(gganimate)</span>
@@ -2471,7 +2471,7 @@ Temas
 <span class='co'>#           annotate("text", x = norm.var2$promedio, y = 0.06,</span>
 <span class='co'>#                    label = paste("Media = ", round(norm.var2$promedio, 2))) +</span>
 <span class='co'>#           transition_states(iter) +</span>
-<span class='co'>#           labs(subtitle = </span>
+<span class='co'>#           labs(subtitle =</span>
 <span class='co'>#                paste("Experimentos: {closest_state}; Media real = 67"))</span>
 <span class='co'># de.plot</span>
 </code></pre>
@@ -2488,13 +2488,13 @@ Temas
     One Sample t-test
 
 data:  norm.var$var
-t = 949.98, df = 9999, p-value &lt; 2.2e-16
+t = 951.76, df = 9999, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 66.77031 67.04643
+ 66.82294 67.09876
 sample estimates:
 mean of x 
- 66.90837 </code></pre>
+ 66.96085 </code></pre>
 </div>
 <p>Otra forma de calcularlos es utilizando la librería <code>Rmisc</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2511,7 +2511,7 @@ mean of x
 </code></pre>
 </div>
 <pre><code>   upper     mean    lower 
-67.04643 66.90837 66.77031 </code></pre>
+67.09876 66.96085 66.82294 </code></pre>
 </div>
 <p>Como vemos, la función calcula los intervalos de confianza utilizando la distribución T. Esto se debe a que es el modo más común de realizar la estimación de intervalos para variables continuas. ¿La razón? Eso es tema para una clase posterior, en la que explicaré las características que hacen que la distribución T sea uno de los principales “caballitos de batalla” en la estadística.</p>
 <p>Una última opción es utilizar la librería <code>Rcompanion</code>, la cual tiene un método de la estimación de intervalos basado en “remuestreos” Bootstrap. Al igual que en el resto de librerías, habrá que instalarla:</p>
@@ -2529,7 +2529,7 @@ mean of x
 </code></pre>
 </div>
 <pre><code>   .id     n Mean Conf.level Trad.lower Trad.upper
-1 &lt;NA&gt; 10000 66.9       0.95       66.8         67</code></pre>
+1 &lt;NA&gt; 10000   67       0.95       66.8       67.1</code></pre>
 </div>
 <p>Vemos que la salida es un poco más compleja; sin embargo, lo más relevante es que los intervalos son sumamente cercanos a los que calculamos anteriormente. ¿Esto quiere decir que no tiene caso realizar las réplicas bootstrap? No, simplemente que sus beneficios los veremos aplicándolas a la situación para la que fueron pensadas; es decir, distribuciones sesgadas y no normales a diferencia de la variable que analizamos aquí.</p>
 <p>Recursos recomendados para esta sección: <a href="https://rcompanion.org/handbook/C_03.html">Rcompanion</a> y <a href="http://www.biostathandbook.com/confidence.html">Handbook of Biological Statistics</a></p>
@@ -2539,7 +2539,7 @@ mean of x
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.choose.html'>file.choose</a></span><span class='op'>(</span><span class='op'>)</span>, header <span class='op'>=</span> <span class='cn'>F</span>, skip <span class='op'>=</span> <span class='fl'>1</span>, sep <span class='op'>=</span> <span class='st'>","</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Dieta"</span>, <span class='st'>"Periodo"</span>, <span class='st'>"Rep"</span>, <span class='st'>"LT"</span>, <span class='st'>"PT"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Dieta"</span>, <span class='st'>"Periodo"</span>, <span class='st'>"Rep"</span>, <span class='st'>"LT"</span>, <span class='st'>"PT"</span>, <span class='st'>"id"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2547,7 +2547,7 @@ mean of x
 <div class="layout-chunk" data-layout="l-body">
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Periodo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Rep"],"name":[3],"type":["chr"],"align":["left"]},{"label":["LT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["PT"],"name":[5],"type":["dbl"],"align":["right"]},{"label":[null],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"A","2":"I","3":"A","4":"0.883","5":"0.50","6":"1","_rn_":"1"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","6":"2","_rn_":"2"},{"1":"A","2":"I","3":"A","4":"1.018","5":"0.58","6":"3","_rn_":"3"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","6":"4","_rn_":"4"},{"1":"A","2":"I","3":"A","4":"1.200","5":"0.68","6":"5","_rn_":"5"},{"1":"A","2":"I","3":"A","4":"0.891","5":"0.51","6":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Periodo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Rep"],"name":[3],"type":["chr"],"align":["left"]},{"label":["LT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["PT"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["id"],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"A","2":"I","3":"A","4":"0.883","5":"0.50","6":"1","_rn_":"1"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","6":"2","_rn_":"2"},{"1":"A","2":"I","3":"A","4":"1.018","5":"0.58","6":"3","_rn_":"3"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","6":"4","_rn_":"4"},{"1":"A","2":"I","3":"A","4":"1.200","5":"0.68","6":"5","_rn_":"5"},{"1":"A","2":"I","3":"A","4":"0.891","5":"0.51","6":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>

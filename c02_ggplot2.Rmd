@@ -199,7 +199,7 @@ final.plot <- ggplot(data = df1, aes(x = displ, y = hwy,
                     #Eliminamos las marcas de los ejes
                     axis.ticks = element_blank(),
                     #Cambiamos el tipo de letra
-                    text = element_text(family = 'Montserrat',
+                    text = element_text(family = 'Times',
                                         colour = 'gray50')
                     ) + 
               # Reducimos las divisiones del eje ex a 4 valores
@@ -236,6 +236,8 @@ final.plot
 
 ## Extras
 
+### Colores de puntos
+
 Modificar los colores de los puntos. Podemos utilizar la función `randomColor(n)` de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria:
 
 ```{r}
@@ -257,6 +259,9 @@ color_names <- c("red", "blue", "yellow", "black",
 final.plot + scale_color_manual(name = "Clase", values = color_names)
 ```
 
+
+### Tamaño de los puntos
+
 Para modificar el tamaño de los puntos solamente hay que agregar el argumento `size` a la capa `geom_point`, en el cuál indicaremos qué tamaños tomarán los puntos. Puede ser un solo valor:
 
 ```{r}
@@ -267,5 +272,37 @@ O también a partir de una columna de la base de datos (dividida entre 5 para no
 
 ```{r}
 final.plot + geom_point(size = df1$hwy/5)
+```
+
+### Tipografías y Exportación de gráficos
+
+El manejo de las tipografías en R es un poco especial, por ello usualmente recomiendo generar el gráfico en R, exportarlo como PDF (`cairo_pdf("filename.pdf", width, height, family)`) y agregar las cursivas donde sea necesario; sin embargo, un paquete que puede resultar especialmente útil es `ggtext`. Este añade un nuevo "elemento" de texto que recibe formato Markdown (`element_markdown()`); es decir, podemos agregar *itálicas* o **negritas**. Para poder utilizarlo, sin embargo, es necesario modificar ligeramente nuestros datos de antemano. Para facilitarnos las cosas agregaremos una nueva columna a `df1` que contenga las clases en *itálicas* y extraeremos los valores únicos (algo más eficiente sería hacerlo al revés, pero es más lógico de esta manera):
+
+```{r}
+df1$clase <- paste0("*",df1$class,"*")
+clases <- unique(df1$clase)
+```
+
+Finalmente lo agregaremos a la gráfica. ¡OJO! Es necesario modificar el tema para que entienda el formato markdown:
+
+```{r}
+if(!require(ggtext)) {install.packages("ggtext", dependencies = T)}
+
+final.plot + scale_color_discrete(name = "Clase",labels = clases) + theme(legend.text = ggtext::element_markdown())
+```
+
+Con este elemento podemos modificar también fracciones de cualquier texto de nuestra gráfica, por ejemplo carretera en negritas:
+
+```{r}
+final.plot + labs(subtitle = "Consumo en **carretera**") + theme(plot.subtitle = ggtext::element_markdown())
+```
+
+Mezclando ambas modificaciones:
+
+```{r}
+final.plot + scale_color_discrete(name = "Clase",labels = clases) +
+             labs(subtitle = "Consumo en **carretera**") +
+             theme(plot.subtitle = ggtext::element_markdown(),
+                   legend.text = ggtext::element_markdown())
 ```
 

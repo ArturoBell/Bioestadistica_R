@@ -88,6 +88,7 @@ unitest
 ```
 
 ### Prueba de Henze-Zirkler
+
 Si observamos con atención los valores de p, veremos que hay algunos que se encuentran cercanos al umbral de 0.05 por lo que un análisis a partir de los cuantiles de la distribución puede ser una alternativa más informativa. Para ello podemos utilizar la prueba de Henze-Zirkler. Esta prueba considera una hipótesis compuesta, en la cual *la distribución de X es una distribución normal no degenerada*, cuyos resultados son consistentes contra cualquier distribución alternativa no normal (por ello compuesta). La representación está dada en términos de $L^2$ (Distancia de Mahalanobis, más adelante hablaremos sobre medidas de distancia). Al ser una prueba de bondad de ajuste (observado vs. esperado), el estadístico de prueba sigue una distribución $\chi^2$ ([Henze y Zirkler 2007](http://bit.ly/Henze_Zirkler)).
 
 Aplicandola con `mvn()` vemos que también sugiere una falta de normalidad, lo cual podemos comprobar al ver el gráfico Cuantil-Cuantil
@@ -159,6 +160,7 @@ qqjiplot
 ```
 
 ### Prueba de Royston
+
 Esta prueba es una extensión multivariada de la prueba por excelencia para la normalidad univariada: la prueba de Shapiro-Wilk's. Originalmente propuesta en 1983, aunque fue corregida/ampliada por el mismo autor en 1992 ([Royston vs. otras](http://bit.ly/Royston_otros)). Funciona mejor para muestras pequeñas, aunque no se recomienda emplearla con menos de 3 observaciones o con más de 2000.
 
 Su implementación sigue la misma línea que los casos anteriores. Si analizamos el valor de p, veremos que se encuentra en el límite de la significancia a un $\alpha = 0.05$; sin embargo, si consideramos también el gráfico QQ que elaboramos anteriormente, no podemos asumir que esas desviaciones sean despreciables.
@@ -169,6 +171,7 @@ royston.test
 ```
 
 ## Igualdad de dispersiones multivariadas
+
 Conforme vayamos avanzando en el curso veremos que, entre los supuestos de algunas pruebas, vamos a encontrar el de "igualdad de dispersiones multivariadas"; *i.e.*, igualdad de matrices de covarianza. Una alternativa es utilizar la prueba de [Anderson (2006)](http://bit.ly/Homo_mvdisp), la cual es un análogo multivariado a la prueba de Levene para la homogeneidad de varianzas. La prueba de hipótesis está basada en distancias no euclidianas entre los grupos (*i.e.*, no utiliza el teorema de Pitágoras :( ). Un dato curioso es que este método también se ha utilizado para evaluar la diversidad $\beta$ de una comunidad.
 
 Para su implementación en R utilizaremos la función `betadisper` de la librería `vegan`. Al ser un método basado en distancias, primero habrá que transformar los datos a una matriz de distancias utilizando alguna de las funciones `dist`, `betadiver` o `vegdist`. Necesitamos, además, establecer los grupos a utilizar.
@@ -186,6 +189,7 @@ groups <- as.character(mtcars$cyl)
 ```
 
 Ahora utilizaremos la función `betadisper` para comprobar la homogeneidad de dispersiones entre los distintos cilindros. Esta prueba únicamente genera el espacio multivariado para realizar la prueba, realizando un ACP para reducir la dimensionalidad de la base de datos y estimar las distancias a la mediana de cada uno de los grupos establecidos.
+
 ```{r}
 # Realizar el procedimiento
 disp.mv <- betadisper(dist.mat,
@@ -206,6 +210,7 @@ Ahora veamos las dispersiones gráficamente:
 # Análisis gráfico
 plot(disp.mv, ellipse = T, hull = F)
 ```
+
 Al analizar el gráfico vemos que las dispersiones son similares; sin embargo, pareciera que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, en tonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (`TukeyHSD`). Los resultados sugieren que las dispersiones con un $\alpha = 0.05$ son similares, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.
 
 ```{r}
@@ -305,6 +310,7 @@ kde.plots
 ```
 
 ### Estandarización
+
 Veamos el efecto de estandarizar los datos; es decir, utilizar la distribución Z. El resultado es la misma distribución, aunque los datos ahora se encuentran escalados en el intervalo [-3,3] indicando a cuantas SD de la media se encuentra cada punto.
 
 ```{r}
@@ -317,6 +323,7 @@ kde.plots
 
 
 ### Transformación logarítmica:
+
 Posiblemente la transformación más conocida, utilizada y, en consecuencia, abusada.Se realiza aplicando la ecuación $X_{log} = log_n(X)$. (OJO: si hay ceros será $X_{log} = log_n(X+1)$, ya que el logaritmo de 0 no existe). Veamos qué le pasa a la distribución al aplicarla. La distribución cambió notablemente, ahora se encuentra mucho más cerca de una forma de campana. ¿Cuándo aplicarla? Cuando querramos forzar nuestros datos a una distribución normal para cumplir con los supuestos de alguna prueba paramétrica, linealizar los datos y, equivocadamente, ponerlos en la misma escala que otra variable. Con excepción del último caso, cualquiera de las formas está matemáticamente justificada, solo hay que tener en consideración que los datos no son los originales y que pueden no representar adecuadamente nuestro muestreo. Otro caso en el cual es válido utilizarlo es si queremos ver cuál es cuando tenemos distintos factores y nuestra variable de respuesta es el resultado de su interacción (producto) tal que $Y = a \times b \times c \times d\times ... \times z$ (efecto multiplicativo y no aditivo), ya que el resultado es una distribución con forma log-normal que no es posible capturar con los datos originales. Su re-transformación es $n^{X_{log}}$. Salvo en el último caso, recomiendo contrastar los resultados con una prueba no paramétrica utilizando los datos originales y ver cuáles son las diferencias.
 
 ```{r}
@@ -327,6 +334,7 @@ kde.plots
 ```
 
 ### Raíz cuadrada
+
 Otra transformación muy empleada, consiste en en obtener la raíz cuadrada de cada uno de los datos ($\sqrt{X}$, OJO: si hay valores negativos no se puede utilizar, hay que pasarlos a valores absolutos o añadir una constante para volverlos positivos). Veamos su efecto en la distribución. En este caso el cambio en la forma no es tan agresivo, y la consecuencia es únicamente que las diferencias entre los valores más altos y los más pequeños se redujo. Su re-transformación es: $\sqrt{x}^2$. Su uso más común es con datos de conteo (abundancias, bacterias en una caja petri, etc.)
 
 ```{r}
