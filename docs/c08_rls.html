@@ -2208,7 +2208,7 @@ Temas
 <p>Obtengamos la covarianza:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>covar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>covar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
 <span class='va'>covar</span>
 </code></pre>
 </div>
@@ -2243,7 +2243,7 @@ Temas
 
 <span class='va'>pot.plot</span> <span class='op'>&lt;-</span> <span class='fu'>rel.plot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df1</span>, aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>v1</span>, <span class='va'>v3</span><span class='op'>)</span>,
                      eq <span class='op'>=</span> <span class='st'>"v3 = -v1^2"</span>,
-                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v3</span><span class='op'>)</span>,
+                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v3</span><span class='op'>)</span>,
                      corre <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v3</span><span class='op'>)</span>
                      <span class='op'>)</span>
 <span class='va'>pot.plot</span>
@@ -2258,7 +2258,7 @@ Temas
 
 <span class='va'>sin.plot</span> <span class='op'>&lt;-</span> <span class='fu'>rel.plot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df1</span>, aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>v1</span>, <span class='va'>v4</span><span class='op'>)</span>,
                      eq <span class='op'>=</span> <span class='st'>"v4 = sin(v1)"</span>,
-                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v4</span><span class='op'>)</span>,
+                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v4</span><span class='op'>)</span>,
                      corre <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>sin.plot</span>
 </code></pre>
@@ -2319,7 +2319,7 @@ Temas
 <span class='va'>data.reg1</span> <span class='op'>&lt;-</span> <span class='fu'>rel.plot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df.reg1</span>, aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>v1</span>, <span class='va'>v2</span><span class='op'>)</span>, 
                       medidas <span class='op'>=</span> <span class='cn'>T</span>,
                       corre <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>,
-                      covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span><span class='op'>)</span>
+                      covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>data.reg1</span>
 </code></pre>
 </div>
@@ -2625,7 +2625,7 @@ sigma  3.063056 0.21991454
 <span class='fu'><a href='https://rdrr.io/pkg/Metrics/man/rmse.html'>rmse</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>v2adj</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 3.063056</code></pre>
+<pre><code>[1] NA</code></pre>
 </div>
 <p>Veamos ahora los resultados de la RLS por mínimos cuadrados:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2640,7 +2640,7 @@ sigma  3.063056 0.21991454
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/Metrics/man/rmse.html'>rmse</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>v2adjols</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 3.063056</code></pre>
+<pre><code>[1] NA</code></pre>
 </div>
 <p>Tanto los coeficientes como los valores de RMSE ¡son iguales! ¿Razón? Un modelo lineal ajustado por máxima verosimilitud utilizando un término de residuales con un error normalmente distribuido es equivalente a un modelo ajustado por mínimos cuadrados. Veamos qué pasa si ajustamos los residuales utilizando otra distribución, seleccionada “a ojo” (solo para fines del ejemplo) por la “forma” de la distribución de los datos:</p>
 <div class="layout-chunk" data-layout="l-body">

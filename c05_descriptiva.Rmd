@@ -66,10 +66,10 @@ matriz2 <- matrix(c(vecx, vecy, vecz),
 matriz2
 ```
 
-Otra manera de visualizar los datos es con la función "View ()" 
+Otra manera de visualizar los datos es con la función "# View()" 
 
 ```{r}
-View(matriz2)
+# View(matriz2)
 ```
 
 Crearemos un dataframe
@@ -83,7 +83,7 @@ colnames(datos_u) <- c("MESES","NUMEROS", "LOGICO")       #PARA CAMBIAR EL NOMBR
 
 datos_u
 
-View(datos_u)
+# View(datos_u)
 ```
 
 
@@ -100,7 +100,7 @@ bilirrubina
 Datoslab<-data.frame(pacientes,bilirrubina)
 Datoslab
 
-View(Datoslab)
+# View(Datoslab)
 
 ```
    
@@ -113,15 +113,17 @@ library(ggplot2)
 df1 <- ggplot2::mpg
 ```
 
-Para visualizar los datos contenidos en el objeto df1 utilizaremos la función "View ()", nos abrirá una nueva pestaña con la tabla de datos. 
+Para visualizar los datos contenidos en el objeto df1 utilizaremos la función "View()", nos abrirá una nueva pestaña con la tabla de datos.
+
 ```{r}
-View(df1)
+# View(df1)
 ```
 
-Datos de iris      
+Datos de iris
+
 ```{r}
 iris
-View(iris)
+# View(iris)
 
 ```
              
@@ -135,10 +137,10 @@ library(readxl)
 tempdata <- read_excel("data/tempdata.xlsx")
 ```
 
-Para visualizar nuestros datos utilizamos la función "View ()"
+Para visualizar nuestros datos utilizamos la función "View()"
 
 ```{r}
-View(tempdata)
+# View(tempdata)
 ```
 
 Otra manera de hacer lo mismo es importar los datos es dando clic en el botón "Import Datasets", del cual desplegará un menú y daremos clic en "From Excel...", con el botón browse podemos buscar nuestro archivo Excel y seleccionarlo, hacemos clic en open y abrirá una ventana, podrás cambiar el nombre del archivo en el espacio "Name: " y elegir la hoja de cálculo de tu archivo excel en donde están contenidos tus datos en el espacio "Sheet: ". Por último da clic en import y te abrirá en una pestaña nueva tus datos de excel importados a R. De manera simultanea se habrá creado un objeto con el nombre de tu archivo.
@@ -205,7 +207,7 @@ Datoslab2<-data.frame(pacientes2,bilirrubina2,sexo)
 
 Datoslab2
 
-View (Datoslab2)
+# View(Datoslab2)
 
 boxplot(Datoslab2$bilirrubina2,
         ylab="bilirrubina",
@@ -249,7 +251,7 @@ Más práctica con nuevos datos de excel, desde el archivo JAWS_DATOS
 library(readxl)
 JAWS_DATOS <- read_excel("data/JAWS_DATOS.xlsx")
 
-View(JAWS_DATOS)
+# View(JAWS_DATOS)
 ```
 
 Graficamos los datos 
@@ -301,7 +303,7 @@ tabla_iris<-iris %>%
             maximos=max(Petal.Length), minimos = min(Petal.Length),   
             DesvEst = sd(Petal.Length))
 
-View(tabla_iris)
+# View(tabla_iris)
 
 ```
 

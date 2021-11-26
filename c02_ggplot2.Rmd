@@ -288,13 +288,15 @@ Finalmente lo agregaremos a la gráfica. ¡OJO! Es necesario modificar el tema p
 ```{r}
 if(!require(ggtext)) {install.packages("ggtext", dependencies = T)}
 
-final.plot + scale_color_discrete(name = "Clase",labels = clases) + theme(legend.text = ggtext::element_markdown())
+final.plot + scale_color_discrete(name = "Clase",labels = clases) +
+             theme(legend.text = ggtext::element_markdown())
 ```
 
 Con este elemento podemos modificar también fracciones de cualquier texto de nuestra gráfica, por ejemplo carretera en negritas:
 
 ```{r}
-final.plot + labs(subtitle = "Consumo en **carretera**") + theme(plot.subtitle = ggtext::element_markdown())
+final.plot + labs(subtitle = "Consumo en **carretera**") +
+             theme(plot.subtitle = ggtext::element_markdown())
 ```
 
 Mezclando ambas modificaciones:
