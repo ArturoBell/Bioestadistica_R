@@ -16,19 +16,21 @@ knitr::opts_chunk$set(R.options = list(width = 80))
 **[VIDEO](https://youtu.be/z1XswZD_f_Q)**
 
 ## Creación y acomodo de los datos
-### Datos simulados:
+### Datos simulados
 
 ```{r}
 A <- rnorm(10, 10, 0.1)
 B <- rnorm(10, 11, 0.1)
 ```
 
-### Formación del objeto para análisis:
+### Formación del objeto para análisis
+
 Si solamente formamos un data.frame, este no estará codificado, por lo que será necesario hacer cierta manipulación de los datos
 
 ```{r}
 data.frame(A, B)
 ```
+
 ¿Cómo pasarías a la forma codificada (larga)?
 
 Una alternativa es esta:

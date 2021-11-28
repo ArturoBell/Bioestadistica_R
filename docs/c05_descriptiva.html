@@ -2161,7 +2161,8 @@ Temas
 <p>Con “seq()” para generar un vector de los numeros de 1 a 100:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>uno.a.cien</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>100</span>,<span class='fl'>1</span><span class='op'>)</span> <span class='co'>#Los numeros de 1 a 100, con intervalos de 1</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Los numeros de 1 a 100, con intervalos de 1</span>
+<span class='va'>uno.a.cien</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>100</span>,<span class='fl'>1</span><span class='op'>)</span> 
 <span class='va'>uno.a.cien</span>
 </code></pre>
 </div>
@@ -2175,13 +2176,15 @@ Temas
 <p>Con “rep()” para repetir numeros:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>reps1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>5</span><span class='op'>)</span> <span class='co'>#5 repeticiones del numero 10</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># 5 repeticiones del numero 10</span>
+<span class='va'>reps1</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>5</span><span class='op'>)</span>
 <span class='va'>reps1</span>
 </code></pre>
 </div>
 <pre><code>[1] 10 10 10 10 10</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>reps2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>25</span><span class='op'>)</span> <span class='co'># 25 repeticiones del número 2</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># 25 repeticiones del número 2</span>
+<span class='va'>reps2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>25</span><span class='op'>)</span>
 <span class='va'>reps2</span>
 </code></pre>
 </div>
@@ -2189,21 +2192,22 @@ Temas
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecx</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># concatenamos 2 vectores</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># concatenamos 2 vectores</span>
+<span class='va'>vecx</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>5</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>vecx</span>
 </code></pre>
 </div>
 <pre><code> [1] 10 10 10 10 10  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
 [26]  2  2  2  2  2</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecy</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>14</span>,<span class='fl'>5</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>7</span>,<span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>14</span>,<span class='fl'>5</span><span class='op'>)</span>,<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>7</span>,<span class='fl'>25</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>vecy</span>
 </code></pre>
 </div>
 <pre><code> [1] 14 14 14 14 14  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7  7
 [26]  7  7  7  7  7</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecz</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Mexico"</span>,<span class='fl'>15</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Costa Rica"</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vecz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Mexico"</span>,<span class='fl'>15</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"Costa Rica"</span>,<span class='fl'>15</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>vecz</span>
 </code></pre>
 </div>
@@ -2265,7 +2269,9 @@ Temas
 <p>Crearemos un dataframe</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datos_u</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>meses <span class='op'>=</span> <span class='va'>month.name</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, numeros<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, logico<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datos_u</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>meses <span class='op'>=</span> <span class='va'>month.name</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>,
+                      numeros <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>,
+                      logico <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='cn'>TRUE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span>, <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>datos_u</span>
 </code></pre>
@@ -2277,7 +2283,8 @@ Temas
 4    April       4  FALSE
 5      May       5  FALSE</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>datos_u</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"MESES"</span>,<span class='st'>"NUMEROS"</span>, <span class='st'>"LOGICO"</span><span class='op'>)</span>       <span class='co'>#PARA CAMBIAR EL NOMBRE DE LAS COLUMNAS</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># PARA CAMBIAR EL NOMBRE DE LAS COLUMNAS  </span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>datos_u</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"MESES"</span>,<span class='st'>"NUMEROS"</span>, <span class='st'>"LOGICO"</span><span class='op'>)</span>
 
 <span class='va'>datos_u</span>
 </code></pre>
@@ -2296,7 +2303,8 @@ Temas
 <p>Un ejemplo más de data frame, ahora con pacientes</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pacientes</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"juan"</span>, <span class='st'>"pedro"</span>, <span class='st'>"armando"</span>, <span class='st'>"eliel"</span>,<span class='st'>"oscar"</span>, <span class='st'>"roberto"</span>,<span class='st'>"carlos"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pacientes</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"juan"</span>, <span class='st'>"pedro"</span>, <span class='st'>"armando"</span>, <span class='st'>"eliel"</span>,
+             <span class='st'>"oscar"</span>, <span class='st'>"roberto"</span>,<span class='st'>"carlos"</span><span class='op'>)</span>
 <span class='va'>pacientes</span>
 </code></pre>
 </div>
@@ -2571,13 +2579,16 @@ Temas
 <p>Otra boxplot Con nuevos datos de, pacientes, bilirribina y sexo</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pacientes2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Juana"</span>, <span class='st'>"Pedro"</span>, <span class='st'>"Armando"</span>, <span class='st'>"Isabel"</span>,<span class='st'>"Oscar"</span>, <span class='st'>"Roberto"</span>,<span class='st'>"Carla"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pacientes2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Juana"</span>, <span class='st'>"Pedro"</span>, <span class='st'>"Armando"</span>,
+              <span class='st'>"Isabel"</span>,<span class='st'>"Oscar"</span>, <span class='st'>"Roberto"</span>,<span class='st'>"Carla"</span><span class='op'>)</span>
 <span class='va'>pacientes2</span>
 </code></pre>
 </div>
 <pre><code>[1] &quot;Juana&quot;   &quot;Pedro&quot;   &quot;Armando&quot; &quot;Isabel&quot;  &quot;Oscar&quot;   &quot;Roberto&quot; &quot;Carla&quot;  </code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sexo</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mujer"</span>, <span class='st'>"hombre"</span>, <span class='st'>"hombre"</span>,<span class='st'>"mujer"</span>,<span class='st'>"hombre"</span>,<span class='st'>"hombre"</span>,<span class='st'>"mujer"</span><span class='op'>)</span>    <span class='co'>#agregamos la variable sexo</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Agregamos la variable sexo</span>
+<span class='va'>sexo</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mujer"</span>, <span class='st'>"hombre"</span>, <span class='st'>"hombre"</span>,<span class='st'>"mujer"</span>,
+        <span class='st'>"hombre"</span>,<span class='st'>"hombre"</span>,<span class='st'>"mujer"</span><span class='op'>)</span>    
 <span class='va'>sexo</span>
 </code></pre>
 </div>
@@ -2589,7 +2600,9 @@ Temas
 </div>
 <pre><code>[1] 0.1 0.3 0.4 0.4 0.4 0.5 0.8</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Datoslab2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>pacientes2</span>,<span class='va'>bilirrubina2</span>,<span class='va'>sexo</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Datoslab2</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>pacientes2</span>,
+                      <span class='va'>bilirrubina2</span>,
+                      <span class='va'>sexo</span><span class='op'>)</span>
 
 <span class='va'>Datoslab2</span>
 </code></pre>
@@ -2629,7 +2642,9 @@ Temas
 
 <span class='co'>#View(Datos_setosa)</span>
 
-<span class='va'>disp_pet</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>Datos_setosa</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Petal.Width</span> , y <span class='op'>=</span> <span class='va'>Petal.Length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>disp_pet</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>Datos_setosa</span>,
+                  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Petal.Width</span> , y <span class='op'>=</span> <span class='va'>Petal.Length</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='va'>disp_pet</span>
 </code></pre>
@@ -2714,8 +2729,10 @@ Temas
 
 <span class='va'>tabla_iris</span><span class='op'>&lt;-</span><span class='va'>iris</span> <span class='op'>%&gt;%</span>   
             <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-            <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>medias <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span> <span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>, medianas <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,
-            maximos<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>, minimos <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,   
+            <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>medias <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span> <span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,
+                      medianas <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,
+            maximos<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,
+            minimos <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span>,   
             DesvEst <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>Petal.Length</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># View(tabla_iris)</span>

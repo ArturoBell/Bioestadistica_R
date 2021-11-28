@@ -15,7 +15,7 @@ knitr::opts_chunk$set(R.options = list(width = 80))
 Crearemos un conjunto de datos provenientes de una distribución normal media 0 y desviación estandar 1
 
 ```{r}
-Datos_normales<-rnorm(10,mean=0,sd=1)
+Datos_normales<-rnorm(10, mean = 0, sd = 1)
 
 Datos_normales
 
@@ -25,7 +25,7 @@ hist(Datos_normales)
 Repetimos el proceso hora con más datos "cien mil"
 
 ```{r}
-Datos_normales2<-rnorm(100000,mean=50,sd=7)
+Datos_normales2 <- rnorm(100000, mean = 50, sd = 7)
 
 hist(Datos_normales2)
 
@@ -51,7 +51,7 @@ Ahora, un ejmémplo con datos aleatorios con distribución binomial
 cantidad de datos, número de ensayos (cero o más), probabilidad
 
 ```{r}
-Aletas<-rbinom(1000,5,0.7)
+Aletas <- rbinom(1000, 5, 0.7)
 Aletas
 hist(Aletas)
 ```
@@ -149,7 +149,9 @@ Hacemos un histograma para cada muestreo por separado (utilizando el paquete ggp
 
 ```{r}
 library(ggplot2)
-ggplot(data = df_muestreos, aes(x=puntaje)) + geom_histogram() + facet_wrap(~muestreos) + theme_classic()
+ggplot(data = df_muestreos, aes(x=puntaje)) +
+  geom_histogram() + facet_wrap(~muestreos) +
+  theme_classic()
 ```
 
 Parece que hay variacion entre los diferentes muestreos. Eso se llama, "error aleatorio de muestreo".

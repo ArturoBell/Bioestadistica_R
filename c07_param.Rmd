@@ -417,7 +417,9 @@ Veamos las densidades acumuladas:
 ```{r, layout= "l-body-outset"}
 # Generamos una cdf normal teórica:
 cdf <- data.frame(norm = rnorm(1000,
-                               mean = mean(dc$DC), sd = sd(dc$DC)))
+                               mean = mean(dc$DC),
+                               sd = sd(dc$DC)))
+
 # Graficamos una vs. la otra:
 cdfplot <- ggplot(data = dc, aes(DC)) +
            stat_ecdf(geom = "step",
@@ -820,7 +822,8 @@ estima2 %>% group_by(treatment, tiempo) %>% shapiro_test(estima)
 Aparentemente hubo desviaciones de la normalidad en el t1 para el grupo control. Podemos corroborarlo con un gráfico QQ. Aparentemente es culpa de de algunos puntos ligeramente fuera del resto de la tendencia ubicados en el centro. Recordemos que el ANOVA es robusto a ciertas violaciones de la normalidad, y en este caso no parecen ser especialmente serias. Sigamos con el análisis.
 
 ```{r, fig.height= 7, fig.width=7/1.6}
-ggpubr::ggqqplot(estima2, "estima", ggtheme = theme_bw()) + facet_grid(tiempo~treatment, labeller = "label_both")
+ggpubr::ggqqplot(estima2, "estima", ggtheme = theme_bw()) +
+  facet_grid(tiempo~treatment, labeller = "label_both")
 ```
 
 ##### Aplicación del ANOVA
