@@ -2078,7 +2078,7 @@ Temas
 <div class="nav-dropdown-content">
 <a href="s1_biolcdatos.html">S1 - Biología como Ciencia de Datos</a>
 <a href="s2_herrbasic.html">S2 - Herramientas Básicas</a>
-<a href="s3_rel_lin.html">S3 - Relaciones Lineales</a>
+<a href="c08_rls.html">S3 - Modelo Lineal Simple</a>
 <a href="s4_noparnolin.html">S4 - No Paramétrico y No Lineal</a>
 <a href="s5_mv.html">S5 - Técnicas Multivariadas</a>
 </div>
@@ -2116,23 +2116,38 @@ Temas
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#instalación-de-librerías">Instalación de librerías</a></li>
-<li><a href="#funciones-personalizadas">Funciones personalizadas</a></li>
+<li><a href="#instalación-de-librerías">Instalación de
+librerías</a></li>
+<li><a href="#funciones-personalizadas">Funciones
+personalizadas</a></li>
 <li><a href="#covarianza-vs.-correlación">Covarianza vs. Correlación</a>
 <ul>
-<li><a href="#correlación-de-pearson-vs.-correlación-de-spearman">Correlación de Pearson vs. Correlación de Spearman</a></li>
+<li><a
+href="#correlación-de-pearson-vs.-correlación-de-spearman">Correlación
+de Pearson vs. Correlación de Spearman</a></li>
 </ul></li>
 <li><a href="#regresión-lineal-simple">Regresión Lineal Simple</a>
 <ul>
-<li><a href="#ajuste-y-bondad-de-ajuste">Ajuste y Bondad de ajuste</a></li>
-<li><a href="#intervalos-de-confianza-para-los-parámetros-y-la-regresión">Intervalos de confianza para los parámetros y la regresión</a></li>
-<li><a href="#gráficos-diagnósticos-de-la-regresión">Gráficos diagnósticos de la regresión</a></li>
+<li><a href="#ajuste-y-bondad-de-ajuste">Ajuste y Bondad de
+ajuste</a></li>
+<li><a
+href="#intervalos-de-confianza-para-los-parámetros-y-la-regresión">Intervalos
+de confianza para los parámetros y la regresión</a></li>
+<li><a href="#gráficos-diagnósticos-de-la-regresión">Gráficos
+diagnósticos de la regresión</a></li>
 </ul></li>
-<li><a href="#ajuste-por-máxima-verosimilitud">Ajuste por máxima verosimilitud</a></li>
-<li><a href="#datos-biológicos-morfometrías">Datos biológicos: Morfometrías</a></li>
-<li><a href="#bonus-librería-performance">Bonus: Librería <code>performance</code></a></li>
-<li><a href="#comparación-de-regresiones">Comparación de regresiones</a></li>
+<li><a href="#ajuste-por-máxima-verosimilitud">Ajuste por máxima
+verosimilitud</a>
+<ul>
 <li><a href="#ejercicio">Ejercicio</a></li>
+</ul></li>
+<li><a href="#datos-biológicos-morfometrías">Datos biológicos:
+Morfometrías</a></li>
+<li><a href="#bonus-librería-performance">Bonus: Librería
+<code>performance</code></a></li>
+<li><a href="#comparación-de-regresiones">Comparación de
+regresiones</a></li>
+<li><a href="#ejercicio-1">Ejercicio</a></li>
 </ul>
 </nav>
 </div>
@@ -2189,7 +2204,8 @@ Temas
 </div>
 </div>
 <h2 id="covarianza-vs.-correlación">Covarianza vs. Correlación</h2>
-<p>Generemos un par de variables donde la segunda sea una función lineal de la primera:</p>
+<p>Generemos un par de variables donde la segunda sea una función lineal
+de la primera:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>v1 <span class='op'>=</span> <span class='op'>-</span><span class='fl'>20</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>)</span>
@@ -2208,7 +2224,7 @@ Temas
 <p>Obtengamos la covarianza:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>covar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>covar</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
 <span class='va'>covar</span>
 </code></pre>
 </div>
@@ -2223,7 +2239,8 @@ Temas
 </div>
 <pre><code>[1] 1</code></pre>
 </div>
-<p>Por último, grafiquemos los resultados e incluyamos el valor de ambas medidas:</p>
+<p>Por último, grafiquemos los resultados e incluyamos el valor de ambas
+medidas:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -2236,14 +2253,23 @@ Temas
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<p>Ambos resultados nos dicen que existe una relación directamente proporcional entre ambas variables (conforme incrementa una incrementa la otra); sin embargo, debido a que la correlación se encuentra contenida entre [-1,1] podemos comprobar que es una relación LINEAL perfecta. Debido a esta diferencia en interpretabilidad normalmente trabajaremos con el índice de correlación, pero es importante recordar que estamos trabajando con un análisis paramétrico que supone una relación del tipo <span class="math inline">\(Y = \beta_0 + \beta_1\cdot X + \epsilon\)</span> y que por tanto puede NO ser una forma adecuada para describir los datos, veamos un ejemplo:</p>
+<p>Ambos resultados nos dicen que existe una relación directamente
+proporcional entre ambas variables (conforme incrementa una incrementa
+la otra); sin embargo, debido a que la correlación se encuentra
+contenida entre [-1,1] podemos comprobar que es una relación LINEAL
+perfecta. Debido a esta diferencia en interpretabilidad normalmente
+trabajaremos con el índice de correlación, pero es importante recordar
+que estamos trabajando con un análisis paramétrico que supone una
+relación del tipo <span class="math inline">\(Y = \beta_0 + \beta_1\cdot
+X + \epsilon\)</span> y que por tanto puede NO ser una forma adecuada
+para describir los datos, veamos un ejemplo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df1</span><span class='op'>[</span><span class='st'>"v3"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>-</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
 
 <span class='va'>pot.plot</span> <span class='op'>&lt;-</span> <span class='fu'>rel.plot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df1</span>, aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>v1</span>, <span class='va'>v3</span><span class='op'>)</span>,
                      eq <span class='op'>=</span> <span class='st'>"v3 = -v1^2"</span>,
-                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v3</span><span class='op'>)</span>,
+                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v3</span><span class='op'>)</span>,
                      corre <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v2</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v3</span><span class='op'>)</span>
                      <span class='op'>)</span>
 <span class='va'>pot.plot</span>
@@ -2258,15 +2284,18 @@ Temas
 
 <span class='va'>sin.plot</span> <span class='op'>&lt;-</span> <span class='fu'>rel.plot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df1</span>, aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>v1</span>, <span class='va'>v4</span><span class='op'>)</span>,
                      eq <span class='op'>=</span> <span class='st'>"v4 = sin(v1)"</span>,
-                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v4</span><span class='op'>)</span>,
+                     covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v4</span><span class='op'>)</span>,
                      corre <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df1</span><span class='op'>$</span><span class='va'>v4</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>sin.plot</span>
 </code></pre>
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
 </div>
-<h3 id="correlación-de-pearson-vs.-correlación-de-spearman">Correlación de Pearson vs. Correlación de Spearman</h3>
-<p>A diferencia de la correlación de Pearson la correlación de Spearman nos permite calcular la correlación entre variables ordinales o continuas, siempre y cuando la relación sea monótona:</p>
+<h3 id="correlación-de-pearson-vs.-correlación-de-spearman">Correlación
+de Pearson vs. Correlación de Spearman</h3>
+<p>A diferencia de la correlación de Pearson la correlación de Spearman
+nos permite calcular la correlación entre variables ordinales o
+continuas, siempre y cuando la relación sea monótona:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>v1 <span class='op'>=</span> <span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span><span class='op'>[</span><span class='va'>df1</span><span class='op'>$</span><span class='va'>v1</span> <span class='op'>&gt;</span> <span class='fl'>0</span><span class='op'>]</span>, 
@@ -2288,7 +2317,8 @@ Temas
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
 </div>
-<p>Utilicemos el primer caso para calcular las correlaciones de Pearson y Spearman y ver las diferencias:</p>
+<p>Utilicemos el primer caso para calcular las correlaciones de Pearson
+y Spearman y ver las diferencias:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Pearson = "</span>,
@@ -2310,23 +2340,60 @@ Temas
 <pre><code>[1] &quot;Spearman =  1&quot;</code></pre>
 </div>
 <h2 id="regresión-lineal-simple">Regresión Lineal Simple</h2>
-<p>Un modelo de regresión es un modelo predictivo de <strong>aprendizaje automatizado</strong> en el cual, a partir de los datos disponibles al momento, podemos intentar predecir resultados futuros (extrapolación) o resultados con los que no contamos (interpolación); es decir, resultados que el modelo no haya visto. Si las predicciones son adecuadas, el modelo nos puede servir para describir la naturaleza de la relación de ambas variables, al menos en términos matemáticos/numéricos. En esta sesión revisaremos algunos criterios para evaluar la bondad de ajuste de nuestro modelo (lit. qué tan bueno es), aunque nos limitaremos, por el momento, a hablar únicamente en términos de nuestros datos. Cuando lleguemos a la sección de multivariado hablaremos sobre el problema de la memorización/sobre-ajuste y una forma más objetiva de evaluar nuestros modelos.</p>
-<p>El modelo de Regresión más sencillo es la regresión lineal simple, en la cual describimos la relación entre dos variables continuas utilizando la ecuación de la recta. Es decir, asumimos una relación del tipo <span class="math inline">\(y = \beta_0 \pm \beta_1*x + \epsilon\)</span>, en el cual <span class="math inline">\(\beta_0\)</span> representa la ordenada al origen (x = 0) y <span class="math inline">\(\beta_1\)</span> la pendiente de la recta o, en otras palabras, cuántas unidades nos movemos en el eje y por cada unidad en el eje x. Recordemos que la <strong>función de pérdida</strong> para este análisis es la distancia cuadrática entre valores observados y predichos; es decir, el método de <strong>mínimos cuadrados</strong>.</p>
-<p>Para ejemplificarlo, carguemos los datos contenidos en <code>example_data.csv</code>:</p>
+<p>Un modelo de regresión es un modelo predictivo de <strong>aprendizaje
+automatizado</strong> en el cual, a partir de los datos disponibles al
+momento, podemos intentar predecir resultados futuros (extrapolación) o
+resultados con los que no contamos (interpolación); es decir, resultados
+que el modelo no haya visto. Si las predicciones son adecuadas, el
+modelo nos puede servir para describir la naturaleza de la relación de
+ambas variables, al menos en términos matemáticos/numéricos. En esta
+sesión revisaremos algunos criterios para evaluar la bondad de ajuste de
+nuestro modelo (lit. qué tan bueno es), aunque nos limitaremos, por el
+momento, a hablar únicamente en términos de nuestros datos. Cuando
+lleguemos a la sección de multivariado hablaremos sobre el problema de
+la memorización/sobre-ajuste y una forma más objetiva de evaluar
+nuestros modelos.</p>
+<p>El modelo de Regresión más sencillo es la regresión lineal simple, en
+la cual describimos la relación entre dos variables continuas utilizando
+la ecuación de la recta. Es decir, asumimos una relación del tipo <span
+class="math inline">\(y = \beta_0 \pm \beta_1*x + \epsilon\)</span>, en
+el cual <span class="math inline">\(\beta_0\)</span> representa la
+ordenada al origen (x = 0) y <span
+class="math inline">\(\beta_1\)</span> la pendiente de la recta o, en
+otras palabras, cuántas unidades nos movemos en el eje y por cada unidad
+en el eje x. Recordemos que la <strong>función de pérdida</strong> para
+este análisis es la distancia cuadrática entre valores observados y
+predichos; es decir, el método de <strong>mínimos
+cuadrados</strong>.</p>
+<p>Para ejemplificarlo, carguemos los datos contenidos en
+<code>example_data.csv</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df.reg1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/example_data.csv"</span><span class='op'>)</span>
 <span class='va'>data.reg1</span> <span class='op'>&lt;-</span> <span class='fu'>rel.plot</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df.reg1</span>, aest <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>v1</span>, <span class='va'>v2</span><span class='op'>)</span>, 
                       medidas <span class='op'>=</span> <span class='cn'>T</span>,
                       corre <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>,
-                      covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span><span class='op'>)</span>
+                      covar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v1</span>, <span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>data.reg1</span>
 </code></pre>
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
 <h3 id="ajuste-y-bondad-de-ajuste">Ajuste y Bondad de ajuste</h3>
-<p>Ajustemos el modelo de mínimos cuadrados a los datos y veamos los resultados de la regresión. Observemos que en los resultados se incluyen 3 pruebas de hipótesis: una prueba de t para cada parámetro y una prueba de ANOVA (que ignoraremos por el momento). De estas priebas es posible concluir que los parámetros son diferentes de un modelo nulo; es decir, de un modelo en el que <span class="math inline">\(\beta_0 = 0; \beta_1 = 0\)</span>. El valor de <span class="math inline">\(R^2\)</span> sugiere que el modelo únicamente explica alrededor del 70% de la varianza de los datos, lo cual sugiere que el modelo no está capturando aproximadamente una tercera parte de la información contenida en ellos. Finalmente, el valor de RSE dividido entre el valor promedio de la variable predicha nos da la tasa de error del modelo. El RSE también nos indica en cuántas unidades se desvía la predicción de los datos observados, que en este caso son 3.095.</p>
+<p>Ajustemos el modelo de mínimos cuadrados a los datos y veamos los
+resultados de la regresión. Observemos que en los resultados se incluyen
+3 pruebas de hipótesis: una prueba de t para cada parámetro y una prueba
+de ANOVA (que ignoraremos por el momento). De estas priebas es posible
+concluir que los parámetros son diferentes de un modelo nulo; es decir,
+de un modelo en el que <span class="math inline">\(\beta_0 = 0; \beta_1
+= 0\)</span>. El valor de <span class="math inline">\(R^2\)</span>
+sugiere que el modelo únicamente explica alrededor del 70% de la
+varianza de los datos, lo cual sugiere que el modelo no está capturando
+aproximadamente una tercera parte de la información contenida en ellos.
+Finalmente, el valor de RSE dividido entre el valor promedio de la
+variable predicha nos da la tasa de error del modelo. El RSE también nos
+indica en cuántas unidades se desvía la predicción de los datos
+observados, que en este caso son 3.095.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>reg1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>v2</span><span class='op'>~</span><span class='va'>v1</span>, data <span class='op'>=</span> <span class='va'>df.reg1</span><span class='op'>)</span>
@@ -2360,7 +2427,9 @@ F-statistic: 209.3 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <pre><code>[1] &quot;Tasa de error =  53 %&quot;</code></pre>
 </div>
-<p>Ahora grafiquemos la recta ajustada. Para ello primero extraeremos los valores ajustados y después los utilizaremos para construir la linea recta:</p>
+<p>Ahora grafiquemos la recta ajustada. Para ello primero extraeremos
+los valores ajustados y después los utilizaremos para construir la linea
+recta:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df.reg1</span><span class='op'>[</span><span class='st'>"ajustados"</span><span class='op'>]</span> <span class='op'>&lt;-</span><span class='va'>reg1</span><span class='op'>$</span><span class='va'>fitted.values</span>
@@ -2381,8 +2450,11 @@ F-statistic: 209.3 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
 </div>
-<h3 id="intervalos-de-confianza-para-los-parámetros-y-la-regresión">Intervalos de confianza para los parámetros y la regresión</h3>
-<p>Ahora podemos calcular y graficar los intervalos de confianza para la predicción de la regresión:</p>
+<h3
+id="intervalos-de-confianza-para-los-parámetros-y-la-regresión">Intervalos
+de confianza para los parámetros y la regresión</h3>
+<p>Ahora podemos calcular y graficar los intervalos de confianza para la
+predicción de la regresión:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>confint.reg1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>reg1</span><span class='op'>)</span>
@@ -2409,6 +2481,7 @@ v1           1.016035  1.339263</code></pre>
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
 </div>
+<p>Para la regresión:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>conf.plot.reg1</span> <span class='op'>&lt;-</span> <span class='va'>data.reg1</span> <span class='op'>+</span> 
@@ -2426,9 +2499,12 @@ v1           1.016035  1.339263</code></pre>
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
 </div>
-<h3 id="gráficos-diagnósticos-de-la-regresión">Gráficos diagnósticos de la regresión</h3>
+<h3 id="gráficos-diagnósticos-de-la-regresión">Gráficos diagnósticos de
+la regresión</h3>
 <p>Ahora evaluemos gráficamente la calidad del modelo ajustado.</p>
-<p>####Gráfico cuantil-cuantil Es posible observar que los datos presentan una gran cantidad de desviaciones con respecto a una distribución normal:</p>
+<p>####Gráfico cuantil-cuantil</p>
+<p>Es posible observar que los datos presentan una gran cantidad de
+desviaciones con respecto a una distribución normal:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/shapiro.test.html'>shapiro.test</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
@@ -2481,7 +2557,9 @@ v1           1.016035  1.339263</code></pre>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
 </div>
 <h4 id="gráfico-de-escala-locación">Gráfico de Escala-Locación</h4>
-<p>En este gráfico es posible observar que los datos no están distribuídos de manera homogénea; es decir, no son datos heterocedásticos:</p>
+<p>En este gráfico es posible observar que los datos no están
+distribuídos de manera homogénea; es decir, no son datos
+heterocedásticos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>scale.loc.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>reg1</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>.fitted</span>, <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>.stdresid</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2504,7 +2582,9 @@ v1           1.016035  1.339263</code></pre>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
 </div>
 <h4 id="gráfico-de-residuales">Gráfico de Residuales</h4>
-<p>Es posible observar que existe una cantidad importande de datos extremos (fuera de <span class="math inline">\(\pm\)</span> 2 desviaciones estándar):</p>
+<p>Es posible observar que existe una cantidad importande de datos
+extremos (fuera de <span class="math inline">\(\pm\)</span> 2
+desviaciones estándar):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df.reg1</span><span class='op'>[</span><span class='st'>"std.resids"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>reg1</span><span class='op'>)</span>
@@ -2571,9 +2651,20 @@ v1           1.016035  1.339263</code></pre>
 data:  df.reg1$std.resids
 W = 0.89933, p-value = 1.797e-06</code></pre>
 </div>
-<h2 id="ajuste-por-máxima-verosimilitud">Ajuste por máxima verosimilitud</h2>
-<p>Recordemos que al realizar el ajuste por máxima verosimilitud estamos encontrando los valores de los parámetros que MAXIMICEN la probabilidad de haber encontrado los datos (verosimilitud); es decir, es método probabilístico. En el caso de la RLS, nuestro modelo encuentra la máxima expectativa de y (forma elegante de llamarle a la media), siguiendo una distribución normal. En la clase de GLM Roberto explicará cómo ajustar modelos lineales en los que el error NO se modela bajo una distribución normal y los criterios para su formación.</p>
-<p>A diferencia de la implementación de una regresión por mínimos cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan intuitivo. El primer paso es establecer manualmente nuestra función de verosimilitud, ajustando una distribución normal a los residuales:</p>
+<h2 id="ajuste-por-máxima-verosimilitud">Ajuste por máxima
+verosimilitud</h2>
+<p>Recordemos que al realizar el ajuste por máxima verosimilitud estamos
+encontrando los valores de los parámetros que MAXIMICEN la probabilidad
+de haber encontrado los datos (verosimilitud); es decir, es método
+probabilístico. En el caso de la RLS, nuestro modelo encuentra la máxima
+expectativa de y (forma elegante de llamarle a la media), siguiendo una
+distribución normal. En la clase de GLM Roberto explicará cómo ajustar
+modelos lineales en los que el error NO se modela bajo una distribución
+normal y los criterios para su formación.</p>
+<p>A diferencia de la implementación de una regresión por mínimos
+cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan
+intuitivo. El primer paso es establecer manualmente nuestra función de
+verosimilitud, ajustando una distribución normal a los residuales:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>df.reg1</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"v1"</span>, <span class='st'>"v2"</span><span class='op'>)</span><span class='op'>]</span>
@@ -2592,7 +2683,12 @@ W = 0.89933, p-value = 1.797e-06</code></pre>
 </code></pre>
 </div>
 </div>
-<p>Ahora ajustamos el modelo que acabamos de crear, utilizando la función <code>mle(fun, start = list())</code> (maximum likelihood estimation), donde <code>fun</code> es la función a ajustar y <code>start</code> son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:</p>
+<p>Ahora ajustamos el modelo que acabamos de crear, utilizando la
+función <code>mle(fun, start = list())</code> (maximum likelihood
+estimation), donde <code>fun</code> es la función a ajustar y
+<code>start</code> son los valores iniciales de los parámetros. En este
+paso lo que estamos haciendo es estimar los dos parámetros (media y
+desviación estándar) que mejor describen los datos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>stats4</span><span class='op'>)</span>
@@ -2617,7 +2713,10 @@ sigma  3.063056 0.21991454
 
 -2 log L: 492.4402 </code></pre>
 </div>
-<p>Si nos interesa comparar el ajuste entre modelos podemos utilizar el RMSE. Para ello primero generaremos los valores predichos (ajustados) por el modelo y después los contrastaremos contra los datos originales:</p>
+<p>Si nos interesa comparar el ajuste entre modelos podemos utilizar el
+RMSE. Para ello primero generaremos los valores predichos (ajustados)
+por el modelo y después los contrastaremos contra los datos
+originales:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mfrasco/Metrics'>Metrics</a></span><span class='op'>)</span>
@@ -2625,7 +2724,7 @@ sigma  3.063056 0.21991454
 <span class='fu'><a href='https://rdrr.io/pkg/Metrics/man/rmse.html'>rmse</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>v2adj</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 3.063056</code></pre>
+<pre><code>[1] NA</code></pre>
 </div>
 <p>Veamos ahora los resultados de la RLS por mínimos cuadrados:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2640,9 +2739,14 @@ sigma  3.063056 0.21991454
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/Metrics/man/rmse.html'>rmse</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>$</span><span class='va'>v2adjols</span>, <span class='va'>data</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 3.063056</code></pre>
+<pre><code>[1] NA</code></pre>
 </div>
-<p>Tanto los coeficientes como los valores de RMSE ¡son iguales! ¿Razón? Un modelo lineal ajustado por máxima verosimilitud utilizando un término de residuales con un error normalmente distribuido es equivalente a un modelo ajustado por mínimos cuadrados. Veamos qué pasa si ajustamos los residuales utilizando otra distribución, seleccionada “a ojo” (solo para fines del ejemplo) por la “forma” de la distribución de los datos:</p>
+<p>Tanto los coeficientes como los valores de RMSE ¡son iguales! ¿Razón?
+Un modelo lineal ajustado por máxima verosimilitud utilizando un término
+de residuales con un error normalmente distribuido es equivalente a un
+modelo ajustado por mínimos cuadrados. Veamos qué pasa si ajustamos los
+residuales utilizando otra distribución, seleccionada “a ojo” (solo para
+fines del ejemplo) por la “forma” de la distribución de los datos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>density</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>v2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2695,7 +2799,10 @@ rate  1.08598904 0.577224471
 
 -2 log L: -28.91377 </code></pre>
 </div>
-<p>Para comparar el ajuste con respecto al caso anterior podemos utilizar el Criterio de Información de Akaike. Vemos que, tomando en cuenta este criterio, el segundo modelo se encuentra mucho mejor ajustado que el primero (valor mínimo de AIC):</p>
+<p>Para comparar el ajuste con respecto al caso anterior podemos
+utilizar el Criterio de Información de Akaike. Vemos que, tomando en
+cuenta este criterio, el segundo modelo se encuentra mucho mejor
+ajustado que el primero (valor mínimo de AIC):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>aics</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>AIC</a></span><span class='op'>(</span><span class='va'>mle.fit</span>, <span class='va'>mleg.fit</span><span class='op'>)</span>
@@ -2707,8 +2814,13 @@ rate  1.08598904 0.577224471
 mle.fit   3 498.44022 477.5265
 mleg.fit  4 -20.91377   0.0000</code></pre>
 </div>
-<p>Tarea opcional: Generar un gráfico con ambas líneas de ajuste y los intervalos de confianza para la recta.</p>
-<h2 id="datos-biológicos-morfometrías">Datos biológicos: Morfometrías</h2>
+<h3 id="ejercicio">Ejercicio</h3>
+<p>Fija los parámetros que dieron <code>NA</code> como resulado de su
+error estándar en el valor de la estimación y genera un gráfico con
+ambas líneas de ajuste y los intervalos de confianza para los parámetros
+de la regresión (pista: utiliza la función <code>confint()</code>).</p>
+<h2 id="datos-biológicos-morfometrías">Datos biológicos:
+Morfometrías</h2>
 <p>En este ejemplo analizaremos datos de morfometerías</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2886,8 +2998,11 @@ sigma 0.01000000          NaN
 mlet_fit  4 -760.4337   0.0000
 reg_haem  3  345.2813 415.1524</code></pre>
 </div>
-<h2 id="bonus-librería-performance">Bonus: Librería <code>performance</code></h2>
-<p>Podemos generar los gráficos diagnósticos de distintos modelos utilizando una sola línea de código. Veamos el caso del primer modelo lineal que elaboramos:</p>
+<h2 id="bonus-librería-performance">Bonus: Librería
+<code>performance</code></h2>
+<p>Podemos generar los gráficos diagnósticos de distintos modelos
+utilizando una sola línea de código. Veamos el caso del primer modelo
+lineal que elaboramos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>if</span> <span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/performance/'>performance</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"performance"</span>,
@@ -2896,7 +3011,7 @@ reg_haem  3  345.2813 415.1524</code></pre>
 <span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>reg1</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-41-1.png" width="921.6" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-41-1.png" width="384" /></p>
 </div>
 <p>Ahora sobre los datos <code>Haem.csv</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2904,10 +3019,14 @@ reg_haem  3  345.2813 415.1524</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>reg_haem</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-42-1.png" width="921.6" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-42-1.png" width="384" /></p>
 </div>
 <h2 id="comparación-de-regresiones">Comparación de regresiones</h2>
-<p>Supongamos ahora que la base de datos 1 en realidad consta de dos “grupos”. Una preguna razonable sería el saber si podemos agruparlos para realizar una RLS, y esto lo podemos resolver fácilmente con la prueba de Chow (1960). Primero, partamos los datos por aproximadamente la mitad:</p>
+<p>Supongamos ahora que la base de datos 1 en realidad consta de dos
+“grupos”. Una preguna razonable sería el saber si podemos agruparlos
+para realizar una RLS, y esto lo podemos resolver fácilmente con la
+prueba de Chow (1960). Primero, partamos los datos por aproximadamente
+la mitad:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df.reg2</span> <span class='op'>&lt;-</span> <span class='va'>df.reg1</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
@@ -2915,7 +3034,8 @@ reg_haem  3  345.2813 415.1524</code></pre>
 </code></pre>
 </div>
 </div>
-<p>Ahora apliquemos la prueba de Chow, utilizando la función <code>chow.test(y1, x1, y2, x2)</code>:</p>
+<p>Ahora apliquemos la prueba de Chow, utilizando la función
+<code>chow.test(y1, x1, y2, x2)</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jinghuazhao/R'>gap</a></span><span class='op'>)</span>
@@ -2950,9 +3070,11 @@ reg_haem  3  345.2813 415.1524</code></pre>
 </div>
 <p><img src="c08_rls_files/figure-html5/unnamed-chunk-45-1.png" width="624" /></p>
 </div>
-<h2 id="ejercicio">Ejercicio</h2>
-<p>Aplicar la prueba de Chow a la base de datos <code>Haem.csv</code>, considerando los dos grupos en la columna <code>Loc</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h2 id="ejercicio-1">Ejercicio</h2>
+<p>Aplicar la prueba de Chow a la base de datos <code>Haem.csv</code>,
+considerando los dos grupos en la columna <code>Loc</code>.</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2977,8 +3099,11 @@ reg_haem  3  345.2813 415.1524</code></pre>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr. Plancton</a>.</p>
-<p>Software licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, v2.0</a>.</p>
+<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr.
+Plancton</a>.</p>
+<p>Software licensed under the <a
+href="https://www.apache.org/licenses/LICENSE-2.0">Apache License,
+v2.0</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

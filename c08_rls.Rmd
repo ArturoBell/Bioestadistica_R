@@ -19,6 +19,7 @@ knitr::opts_chunk$set(R.options = list(width = 80))
 ```{r}
 if(!require(gap)) install.packages("gap", dependencies = T)
 ```
+
 ```{r, echo = FALSE}
 library(rmarkdown)
 ```
@@ -238,6 +239,7 @@ lin.plot3 <- lin.plot2 +
              labs(caption = "Datos simulados")
 lin.plot3
 ```
+Para la regresión:
 
 ```{r}
 conf.plot.reg1 <- data.reg1 + 
@@ -258,6 +260,7 @@ conf.plot.reg1
 Ahora evaluemos gráficamente la calidad del modelo ajustado.
 
 ####Gráfico cuantil-cuantil
+
 Es posible observar que los datos presentan una gran cantidad de desviaciones con respecto a una distribución normal:
 
 ```{r}
@@ -471,6 +474,7 @@ mleg.fit <- mle(LLg,
                 nobs = length(data$v2))
 summary(mleg.fit)
 ```
+
 Para comparar el ajuste con respecto al caso anterior podemos utilizar el Criterio de Información de Akaike. Vemos que, tomando en cuenta este criterio, el segundo modelo se encuentra mucho mejor ajustado que el primero (valor mínimo de AIC):
 
 ```{r}
@@ -479,9 +483,12 @@ aics["Delta"] <- abs(abs(aics$AIC) - abs(min(aics$AIC)))
 aics
 ```
 
-Tarea opcional: Generar un gráfico con ambas líneas de ajuste y los intervalos de confianza para la recta.
+### Ejercicio
+
+Fija los parámetros que dieron `NA` como resulado de su error estándar en el valor de la estimación y genera un gráfico con ambas líneas de ajuste y los intervalos de confianza para los parámetros de la regresión (pista: utiliza la función `confint()`).
 
 ## Datos biológicos: Morfometrías
+
 En este ejemplo analizaremos datos de morfometerías
 
 ```{r}
@@ -598,18 +605,20 @@ aics <- AIC(mlet_fit, reg_haem)
 aics["Delta"] <- abs(abs(aics$AIC) - abs(min(aics$AIC)))
 aics
 ```
+
 ## Bonus: Librería `performance`
 Podemos generar los gráficos diagnósticos de distintos modelos utilizando una sola línea de código. Veamos el caso del primer modelo lineal que elaboramos:
 
-```{r, fig.width=9.6, fig.height=9, warning=FALSE}
+```{r, fig.width=4, fig.height=4, warning=FALSE}
 if (!require(performance)) {install.packages(c("performance",
                                                "qqplotr"),
                                              dependencies = T)}
 check_model(reg1)
 ```
+
 Ahora sobre los datos `Haem.csv`:
 
-```{r,fig.width=9.6, fig.height=9}
+```{r,fig.width=4, fig.height=4}
 check_model(reg_haem)
 ```
 

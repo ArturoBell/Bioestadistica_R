@@ -106,7 +106,8 @@ sds["AUC"] <- NA
 for (i in seq_along(sds$xf)) {
   sds$AUC[i] <-
     as.character(round(1 -length(v1$var[(v1$var < -sds$xf[i]) |
-                                          (v1$var > sds$xf[i])])/n, 2))
+                                        (v1$var > sds$xf[i])]) /n,
+                       2))
 }
 
 sds
@@ -210,7 +211,7 @@ dependientes
 Notar que está en formato compacto (no codificado), por lo tanto hay que transformarla:
 
 ```{r}
-dependientes.m <- reshape2::melt(dependientes, value.name = "LT",
+dependientes.m <- reshape2::melt(dependientes, value.name = "FC",
                                  na.rm = T, variable.name = "periodo")
 dependientes.m
 ```
@@ -218,7 +219,7 @@ dependientes.m
 Aplicamos la prueba:
 
 ```{r}
-t.test(LT~periodo, data = dependientes.m, paired = T)
+t.test(FC~periodo, data = dependientes.m, paired = T, alternative = "less")
 ```
 
 # Ejercicio

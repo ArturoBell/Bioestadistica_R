@@ -2076,7 +2076,7 @@ Temas
 <div class="nav-dropdown-content">
 <a href="s1_biolcdatos.html">S1 - Biología como Ciencia de Datos</a>
 <a href="s2_herrbasic.html">S2 - Herramientas Básicas</a>
-<a href="s3_rel_lin.html">S3 - Relaciones Lineales</a>
+<a href="c08_rls.html">S3 - Modelo Lineal Simple</a>
 <a href="s4_noparnolin.html">S4 - No Paramétrico y No Lineal</a>
 <a href="s5_mv.html">S5 - Técnicas Multivariadas</a>
 </div>
@@ -2123,14 +2123,18 @@ Temas
 <ul>
 <li><a href="#barras">BARRAS</a></li>
 <li><a href="#cajas-y-bigotes">CAJAS Y BIGOTES</a></li>
-<li><a href="#medidas-de-tendencia-central-y-dispersión">MEDIDAS DE TENDENCIA CENTRAL Y DISPERSIÓN</a></li>
+<li><a href="#medidas-de-tendencia-central-y-dispersión">MEDIDAS DE
+TENDENCIA CENTRAL Y DISPERSIÓN</a></li>
 </ul></li>
 </ul>
 </nav>
 </div>
-<p>Para comenzar con el análisis de datos, la materia prima son los datos bien organizados. En R existen diferentes maneras de tener acceso a ellos.</p>
+<p>Para comenzar con el análisis de datos, la materia prima son los
+datos bien organizados. En R existen diferentes maneras de tener acceso
+a ellos.</p>
 <h2 id="primera-estrategia">PRIMERA ESTRATEGIA</h2>
-<p>Generar tu base de datos desde R, dato por dato, vector por vector, matriz por matriz, objeto por objeto:</p>
+<p>Generar tu base de datos desde R, dato por dato, vector por vector,
+matriz por matriz, objeto por objeto:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datos.x</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>3</span>,<span class='fl'>5</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>12</span>,<span class='fl'>15</span>,<span class='fl'>18</span>,<span class='fl'>21</span>,<span class='fl'>24</span><span class='op'>)</span>
@@ -2334,7 +2338,12 @@ Temas
 </div>
 </div>
 <h3 id="segunda-estrategia">SEGUNDA ESTRATEGIA</h3>
-<p>Utilizar datos contenidos dentro de algún paquete previamente cargado en R, esto ya lo hemos realizado anteriormente con el maestro Arturo. En este caso, utilizaremos la base de datos <code>mpg</code> incluída en el paquete <code>ggplot2</code>. El primer paso es, conocer la información que contiene. Para ello guardaremos la base en un objeto que llamaremos <code>df1</code>:</p>
+<p>Utilizar datos contenidos dentro de algún paquete previamente cargado
+en R, esto ya lo hemos realizado anteriormente con el maestro Arturo. En
+este caso, utilizaremos la base de datos <code>mpg</code> incluída en el
+paquete <code>ggplot2</code>. El primer paso es, conocer la información
+que contiene. Para ello guardaremos la base en un objeto que llamaremos
+<code>df1</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -2342,7 +2351,9 @@ Temas
 </code></pre>
 </div>
 </div>
-<p>Para visualizar los datos contenidos en el objeto df1 utilizaremos la función “View()”, nos abrirá una nueva pestaña con la tabla de datos.</p>
+<p>Para visualizar los datos contenidos en el objeto df1 utilizaremos la
+función “View()”, nos abrirá una nueva pestaña con la tabla de
+datos.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># View(df1)</span>
@@ -2512,7 +2523,13 @@ Temas
 </div>
 </div>
 <h3 id="tercera-estrategia">TERCERA ESTRATEGIA</h3>
-<p>Utilizar una base de datos contenida en un archivo de Excel. Para esto, es importante colocar previamente el archivo de excel en nuestra carpeta de trabajo “carpeta base” o directorio de trabajo. Le indicamos a R que lea el archivo de tipo excel, utilizando el paquete lector “ºxl” y además que genere un objeto llamado igual que nuestro archivo excel “tempdata” contenido en la carpeta base. Esto se realiza con el siguiente código:</p>
+<p>Utilizar una base de datos contenida en un archivo de Excel. Para
+esto, es importante colocar previamente el archivo de excel en nuestra
+carpeta de trabajo “carpeta base” o directorio de trabajo. Le indicamos
+a R que lea el archivo de tipo excel, utilizando el paquete lector “ºxl”
+y además que genere un objeto llamado igual que nuestro archivo excel
+“tempdata” contenido en la carpeta base. Esto se realiza con el
+siguiente código:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
@@ -2527,7 +2544,15 @@ Temas
 </code></pre>
 </div>
 </div>
-<p>Otra manera de hacer lo mismo es importar los datos es dando clic en el botón “Import Datasets”, del cual desplegará un menú y daremos clic en “From Excel…”, con el botón browse podemos buscar nuestro archivo Excel y seleccionarlo, hacemos clic en open y abrirá una ventana, podrás cambiar el nombre del archivo en el espacio “Name:” y elegir la hoja de cálculo de tu archivo excel en donde están contenidos tus datos en el espacio “Sheet:”. Por último da clic en import y te abrirá en una pestaña nueva tus datos de excel importados a R. De manera simultanea se habrá creado un objeto con el nombre de tu archivo.</p>
+<p>Otra manera de hacer lo mismo es importar los datos es dando clic en
+el botón “Import Datasets”, del cual desplegará un menú y daremos clic
+en “From Excel…”, con el botón browse podemos buscar nuestro archivo
+Excel y seleccionarlo, hacemos clic en open y abrirá una ventana, podrás
+cambiar el nombre del archivo en el espacio “Name:” y elegir la hoja de
+cálculo de tu archivo excel en donde están contenidos tus datos en el
+espacio “Sheet:”. Por último da clic en import y te abrirá en una
+pestaña nueva tus datos de excel importados a R. De manera simultanea se
+habrá creado un objeto con el nombre de tu archivo.</p>
 <h2 id="algunos-típos-de-gráficas">ALGUNOS TÍPOS DE GRÁFICAS</h2>
 <h3 id="barras">BARRAS</h3>
 <p>con datos digitados dirctamente en R</p>
@@ -2541,7 +2566,8 @@ Temas
 </div>
 <p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
 </div>
-<p>HISTOGRAMA DE FRECUENCIAS Utilizamos los datos importados desde un archivo de Excel</p>
+<p>HISTOGRAMA DE FRECUENCIAS Utilizamos los datos importados desde un
+archivo de Excel</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>tempdata</span><span class='op'>$</span><span class='va'>temperatura</span>,
@@ -2552,7 +2578,8 @@ Temas
 </div>
 <p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
-<p>Crear histograma de frecuencia de la longitud de los pétalos usamos la famosisima base “iris”</p>
+<p>Crear histograma de frecuencia de la longitud de los pétalos usamos
+la famosisima base “iris”</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Petal.Length</span>,
@@ -2633,7 +2660,8 @@ Temas
 </div>
 <p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-19-2.png" width="624" /></p>
 </div>
-<p>Gráfica de dispersión con un subconjunto de datos de iris (filtrando los datos de setosa)</p>
+<p>Gráfica de dispersión con un subconjunto de datos de iris (filtrando
+los datos de setosa)</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#activa el paquete "dplyr"</span>
@@ -2664,7 +2692,8 @@ Temas
 </div>
 <p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
 </div>
-<p>Más práctica con nuevos datos de excel, desde el archivo JAWS_DATOS</p>
+<p>Más práctica con nuevos datos de excel, desde el archivo
+JAWS_DATOS</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readxl.tidyverse.org'>readxl</a></span><span class='op'>)</span>
@@ -2691,7 +2720,8 @@ Temas
 </div>
 <p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
 </div>
-<h3 id="medidas-de-tendencia-central-y-dispersión">MEDIDAS DE TENDENCIA CENTRAL Y DISPERSIÓN</h3>
+<h3 id="medidas-de-tendencia-central-y-dispersión">MEDIDAS DE TENDENCIA
+CENTRAL Y DISPERSIÓN</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>Media_v1</span><span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>,<span class='fl'>7</span>,<span class='fl'>9</span>,<span class='fl'>2</span>,<span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
@@ -2765,7 +2795,8 @@ Temas
  3rd Qu.:37.05   3rd Qu.:115.75  
  Max.   :50.60   Max.   :142.00  </code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2781,8 +2812,11 @@ Temas
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr. Plancton</a>.</p>
-<p>Software licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, v2.0</a>.</p>
+<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr.
+Plancton</a>.</p>
+<p>Software licensed under the <a
+href="https://www.apache.org/licenses/LICENSE-2.0">Apache License,
+v2.0</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

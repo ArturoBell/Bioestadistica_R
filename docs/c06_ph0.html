@@ -2076,7 +2076,7 @@ Temas
 <div class="nav-dropdown-content">
 <a href="s1_biolcdatos.html">S1 - Biología como Ciencia de Datos</a>
 <a href="s2_herrbasic.html">S2 - Herramientas Básicas</a>
-<a href="s3_rel_lin.html">S3 - Relaciones Lineales</a>
+<a href="c08_rls.html">S3 - Modelo Lineal Simple</a>
 <a href="s4_noparnolin.html">S4 - No Paramétrico y No Lineal</a>
 <a href="s5_mv.html">S5 - Técnicas Multivariadas</a>
 </div>
@@ -2114,20 +2114,26 @@ Temas
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#creación-y-acomodo-de-los-datos">Creación y acomodo de los datos</a>
+<li><a href="#creación-y-acomodo-de-los-datos">Creación y acomodo de los
+datos</a>
 <ul>
 <li><a href="#datos-simulados">Datos simulados</a></li>
-<li><a href="#formación-del-objeto-para-análisis">Formación del objeto para análisis</a></li>
+<li><a href="#formación-del-objeto-para-análisis">Formación del objeto
+para análisis</a></li>
 </ul></li>
-<li><a href="#estimación-de-los-intervalos-de-confianza">Estimación de los intervalos de confianza</a></li>
-<li><a href="#prueba-de-t-para-muestras-independientes">Prueba de T para muestras independientes</a></li>
-<li><a href="#prueba-t-para-datos-dependientes">Prueba t para datos dependientes</a></li>
+<li><a href="#estimación-de-los-intervalos-de-confianza">Estimación de
+los intervalos de confianza</a></li>
+<li><a href="#prueba-de-t-para-muestras-independientes">Prueba de T para
+muestras independientes</a></li>
+<li><a href="#prueba-t-para-datos-dependientes">Prueba t para datos
+dependientes</a></li>
 <li><a href="#ejercicio">Ejercicio</a></li>
 </ul>
 </nav>
 </div>
 <p><strong><a href="https://youtu.be/z1XswZD_f_Q">VIDEO</a></strong></p>
-<h2 id="creación-y-acomodo-de-los-datos">Creación y acomodo de los datos</h2>
+<h2 id="creación-y-acomodo-de-los-datos">Creación y acomodo de los
+datos</h2>
 <h3 id="datos-simulados">Datos simulados</h3>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2136,24 +2142,26 @@ Temas
 </code></pre>
 </div>
 </div>
-<h3 id="formación-del-objeto-para-análisis">Formación del objeto para análisis</h3>
-<p>Si solamente formamos un data.frame, este no estará codificado, por lo que será necesario hacer cierta manipulación de los datos</p>
+<h3 id="formación-del-objeto-para-análisis">Formación del objeto para
+análisis</h3>
+<p>Si solamente formamos un data.frame, este no estará codificado, por
+lo que será necesario hacer cierta manipulación de los datos</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>A</span>, <span class='va'>B</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>           A        B
-1  10.111199 10.86664
-2   9.907498 11.03026
-3   9.905113 10.96397
-4   9.770018 11.07812
-5  10.010600 11.02851
-6  10.001996 11.02904
-7   9.941541 10.78448
-8  10.025636 11.00751
-9   9.934329 11.01214
-10  9.944266 10.89000</code></pre>
+1   9.948904 11.02371
+2   9.949399 11.11710
+3   9.956888 10.89060
+4   9.993392 10.88699
+5  10.009371 11.12244
+6  10.121041 11.06381
+7   9.933113 10.92167
+8   9.963824 11.04202
+9   9.964469 11.03747
+10  9.967938 10.99800</code></pre>
 </div>
 <p>¿Cómo pasarías a la forma codificada (larga)?</p>
 <p>Una alternativa es esta:</p>
@@ -2165,26 +2173,26 @@ Temas
 </code></pre>
 </div>
 <pre><code>   grupo        v1
-1      A 10.111199
-2      A  9.907498
-3      A  9.905113
-4      A  9.770018
-5      A 10.010600
-6      A 10.001996
-7      A  9.941541
-8      A 10.025636
-9      A  9.934329
-10     A  9.944266
-11     B 10.866645
-12     B 11.030264
-13     B 10.963968
-14     B 11.078116
-15     B 11.028508
-16     B 11.029044
-17     B 10.784485
-18     B 11.007514
-19     B 11.012138
-20     B 10.889995</code></pre>
+1      A  9.948904
+2      A  9.949399
+3      A  9.956888
+4      A  9.993392
+5      A 10.009371
+6      A 10.121041
+7      A  9.933113
+8      A  9.963824
+9      A  9.964469
+10     A  9.967938
+11     B 11.023711
+12     B 11.117102
+13     B 10.890601
+14     B 10.886988
+15     B 11.122444
+16     B 11.063814
+17     B 10.921673
+18     B 11.042017
+19     B 11.037466
+20     B 10.998000</code></pre>
 </div>
 <p>Algunas otras opciones son:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2218,28 +2226,29 @@ Temas
 </code></pre>
 </div>
 <pre><code>   V1        V2
-1   A 10.111199
-2   A  9.907498
-3   A  9.905113
-4   A  9.770018
-5   A 10.010600
-6   A 10.001996
-7   A  9.941541
-8   A 10.025636
-9   A  9.934329
-10  A  9.944266
-11  B 10.866645
-12  B 11.030264
-13  B 10.963968
-14  B 11.078116
-15  B 11.028508
-16  B 11.029044
-17  B 10.784485
-18  B 11.007514
-19  B 11.012138
-20  B 10.889995</code></pre>
+1   A  9.948904
+2   A  9.949399
+3   A  9.956888
+4   A  9.993392
+5   A 10.009371
+6   A 10.121041
+7   A  9.933113
+8   A  9.963824
+9   A  9.964469
+10  A  9.967938
+11  B 11.023711
+12  B 11.117102
+13  B 10.890601
+14  B 10.886988
+15  B 11.122444
+16  B 11.063814
+17  B 10.921673
+18  B 11.042017
+19  B 11.037466
+20  B 10.998000</code></pre>
 </div>
-<h2 id="estimación-de-los-intervalos-de-confianza">Estimación de los intervalos de confianza</h2>
+<h2 id="estimación-de-los-intervalos-de-confianza">Estimación de los
+intervalos de confianza</h2>
 <p>Estimar las medias de cada grupo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2247,12 +2256,12 @@ Temas
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 9.95522</code></pre>
+<pre><code>[1] 9.980834</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 10.96907</code></pre>
+<pre><code>[1] 11.01038</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Error, poner atención a la columna que se está seleccionando</span>
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span><span class='op'>[</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>==</span> <span class='st'>"A"</span><span class='op'>]</span><span class='op'>)</span>
@@ -2263,12 +2272,12 @@ Temas
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V2</span><span class='op'>[</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>==</span> <span class='st'>"A"</span><span class='op'>]</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 9.95522</code></pre>
+<pre><code>[1] 9.980834</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V2</span><span class='op'>[</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>==</span> <span class='st'>"B"</span><span class='op'>]</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 10.96907</code></pre>
+<pre><code>[1] 11.01038</code></pre>
 </div>
 <p>Estimar los intervalos de confianza:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2277,17 +2286,18 @@ Temas
 </code></pre>
 </div>
 <pre><code>  grupo  n  Mean Conf.level Trad.lower Trad.upper
-1     A 10  9.96       0.95       9.89         10
-2     B 10 11.00       0.95      10.90         11</code></pre>
+1     A 10  9.98       0.95       9.94       10.0
+2     B 10 11.00       0.95      10.90       11.1</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>rcompanion</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rcompanion/man/groupwiseMean.html'>groupwiseMean</a></span><span class='op'>(</span><span class='va'>V2</span><span class='op'>~</span><span class='va'>V1</span>, data <span class='op'>=</span> <span class='va'>mat</span> , conf <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>   n  Mean Conf.level Trad.lower Trad.upper
-1 10  9.96       0.95       9.89         10
-2 10 11.00       0.95      10.90         11</code></pre>
+1 10  9.98       0.95       9.94       10.0
+2 10 11.00       0.95      10.90       11.1</code></pre>
 </div>
-<h2 id="prueba-de-t-para-muestras-independientes">Prueba de T para muestras independientes</h2>
+<h2 id="prueba-de-t-para-muestras-independientes">Prueba de T para
+muestras independientes</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -2300,7 +2310,8 @@ Temas
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>sds</span><span class='op'>$</span><span class='va'>xf</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>sds</span><span class='op'>$</span><span class='va'>AUC</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span>
     <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>v1</span><span class='op'>$</span><span class='va'>var</span><span class='op'>[</span><span class='op'>(</span><span class='va'>v1</span><span class='op'>$</span><span class='va'>var</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='va'>sds</span><span class='op'>$</span><span class='va'>xf</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>|</span>
-                                          <span class='op'>(</span><span class='va'>v1</span><span class='op'>$</span><span class='va'>var</span> <span class='op'>&gt;</span> <span class='va'>sds</span><span class='op'>$</span><span class='va'>xf</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>/</span><span class='va'>n</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
+                                        <span class='op'>(</span><span class='va'>v1</span><span class='op'>$</span><span class='va'>var</span> <span class='op'>&gt;</span> <span class='va'>sds</span><span class='op'>$</span><span class='va'>xf</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>/</span><span class='va'>n</span>,
+                       <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='va'>sds</span>
@@ -2345,7 +2356,13 @@ Temas
 </div>
 <p><img src="c06_ph0_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
 </div>
-<p>t = valor del estadístico de prueba, indica la posición en el eje X en el gráfico de la distribución p-value = Es la proporción de la distribución fuera del área del valor crítico; es decir, 1-AUC hasta ese valor crítico. df = grados de libertad de la muestra. Representan el número de observaciones independientes; es decir, “retiramos la media”. Ejemplo: 10, 11, 12. La media es 11; por lo tanto, la cantidad de observaciones independientes de la media es 2.</p>
+<p>t = valor del estadístico de prueba, indica la posición en el eje X
+en el gráfico de la distribución p-value = Es la proporción de la
+distribución fuera del área del valor crítico; es decir, 1-AUC hasta ese
+valor crítico. df = grados de libertad de la muestra. Representan el
+número de observaciones independientes; es decir, “retiramos la media”.
+Ejemplo: 10, 11, 12. La media es 11; por lo tanto, la cantidad de
+observaciones independientes de la media es 2.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>V2</span><span class='op'>~</span><span class='va'>V1</span>, data <span class='op'>=</span> <span class='va'>mat</span>, var.equal <span class='op'>=</span> <span class='cn'>T</span>, paired <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
@@ -2355,15 +2372,18 @@ Temas
     Two Sample t-test
 
 data:  V2 by V1
-t = -24.726, df = 18, p-value = 2.405e-15
+t = -32.11, df = 18, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.0999926 -0.9277033
+ -1.0969092 -0.9621863
 sample estimates:
 mean in group A mean in group B 
-        9.95522        10.96907 </code></pre>
+       9.980834       11.010382 </code></pre>
 </div>
-<p>Podemos también presentar los resultados de manera gráfica. Para ello necesitaremos guardar los resultados de nuestra prueba t.test en un objeto y extraer la información de ahí. ¿Cómo verificamos cuál es el tipo de objeto?</p>
+<p>Podemos también presentar los resultados de manera gráfica. Para ello
+necesitaremos guardar los resultados de nuestra prueba t.test en un
+objeto y extraer la información de ahí. ¿Cómo verificamos cuál es el
+tipo de objeto?</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ttest</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>V2</span> <span class='op'>~</span> <span class='va'>V1</span>, data <span class='op'>=</span> <span class='va'>mat</span>, var.equal <span class='op'>=</span> <span class='cn'>T</span>, paired <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
@@ -2372,16 +2392,20 @@ mean in group A mean in group B
 </div>
 <pre><code>[1] &quot;list&quot;</code></pre>
 </div>
-<p>El objeto es una lista NOMBRADA, por lo que podemos acceder a su contenido utilizando el operador de [[]] (posición numérica o “nombre”) o el operador $. Guardemos el valor de p en un nuevo objeto para incluirlo en la gráfica:</p>
+<p>El objeto es una lista NOMBRADA, por lo que podemos acceder a su
+contenido utilizando el operador de [[]] (posición numérica o “nombre”)
+o el operador $. Guardemos el valor de p en un nuevo objeto para
+incluirlo en la gráfica:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p_val</span> <span class='op'>&lt;-</span> <span class='va'>ttest</span><span class='op'>$</span><span class='va'>p.value</span>
 <span class='va'>p_val</span>
 </code></pre>
 </div>
-<pre><code>[1] 2.405442e-15</code></pre>
+<pre><code>[1] 2.409089e-17</code></pre>
 </div>
-<p>Construyamos y grafiquemos los intervalos de confianza para la media de cada grupo (95%):</p>
+<p>Construyamos y grafiquemos los intervalos de confianza para la media
+de cada grupo (95%):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ICs</span> <span class='op'>&lt;-</span> <span class='fu'>rcompanion</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rcompanion/man/groupwiseMean.html'>groupwiseMean</a></span><span class='op'>(</span><span class='va'>v1</span><span class='op'>~</span><span class='va'>grupo</span>, data <span class='op'>=</span> <span class='va'>df1</span>, conf <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
@@ -2416,8 +2440,10 @@ mean in group A mean in group B
 </div>
 <p><img src="c06_ph0_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
 </div>
-<h2 id="prueba-t-para-datos-dependientes">Prueba t para datos dependientes</h2>
-<p>Carguemos los datos, que en este caso están contenidos en un archivo de excel:</p>
+<h2 id="prueba-t-para-datos-dependientes">Prueba t para datos
+dependientes</h2>
+<p>Carguemos los datos, que en este caso están contenidos en un archivo
+de excel:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dependientes</span> <span class='op'>&lt;-</span> <span class='fu'>openxlsx</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/openxlsx/man/read.xlsx.html'>read.xlsx</a></span><span class='op'>(</span><span class='st'>"data/datos_t.xlsx"</span>, sheet <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
@@ -2436,15 +2462,16 @@ mean in group A mean in group B
 9     78      98
 10    60      80</code></pre>
 </div>
-<p>Notar que está en formato compacto (no codificado), por lo tanto hay que transformarla:</p>
+<p>Notar que está en formato compacto (no codificado), por lo tanto hay
+que transformarla:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dependientes.m</span> <span class='op'>&lt;-</span> <span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>dependientes</span>, value.name <span class='op'>=</span> <span class='st'>"LT"</span>,
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dependientes.m</span> <span class='op'>&lt;-</span> <span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>dependientes</span>, value.name <span class='op'>=</span> <span class='st'>"FC"</span>,
                                  na.rm <span class='op'>=</span> <span class='cn'>T</span>, variable.name <span class='op'>=</span> <span class='st'>"periodo"</span><span class='op'>)</span>
 <span class='va'>dependientes.m</span>
 </code></pre>
 </div>
-<pre><code>   periodo LT
+<pre><code>   periodo FC
 1    Antes 60
 2    Antes 65
 3    Antes 72
@@ -2469,24 +2496,28 @@ mean in group A mean in group B
 <p>Aplicamos la prueba:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>LT</span><span class='op'>~</span><span class='va'>periodo</span>, data <span class='op'>=</span> <span class='va'>dependientes.m</span>, paired <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>FC</span><span class='op'>~</span><span class='va'>periodo</span>, data <span class='op'>=</span> <span class='va'>dependientes.m</span>, paired <span class='op'>=</span> <span class='cn'>T</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>
     Paired t-test
 
-data:  LT by periodo
-t = -6.1115, df = 9, p-value = 0.0001768
-alternative hypothesis: true difference in means is not equal to 0
+data:  FC by periodo
+t = -6.1115, df = 9, p-value = 8.838e-05
+alternative hypothesis: true difference in means is less than 0
 95 percent confidence interval:
- -24.11459 -11.08541
+      -Inf -12.32097
 sample estimates:
 mean of the differences 
                   -17.6 </code></pre>
 </div>
 <h1 id="ejercicio">Ejercicio</h1>
-<p>Realizar la prueba t con los datos de la hoja 1 del archivo, la cual contiene datos de dos muestras independientes. La tarea consiste en cargar los datos, realizar la prueba y presentar un gráfico en el que se reporten los resultados.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Realizar la prueba t con los datos de la hoja 1 del archivo, la cual
+contiene datos de dos muestras independientes. La tarea consiste en
+cargar los datos, realizar la prueba y presentar un gráfico en el que se
+reporten los resultados.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2502,8 +2533,11 @@ mean of the differences
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr. Plancton</a>.</p>
-<p>Software licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, v2.0</a>.</p>
+<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr.
+Plancton</a>.</p>
+<p>Software licensed under the <a
+href="https://www.apache.org/licenses/LICENSE-2.0">Apache License,
+v2.0</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 

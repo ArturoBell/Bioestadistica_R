@@ -423,7 +423,7 @@ cdf <- data.frame(norm = rnorm(1000,
 # Graficamos una vs. la otra:
 cdfplot <- ggplot(data = dc, aes(DC)) +
            stat_ecdf(geom = "step",
-                     colour = rgb(118,78,144,
+                     colour = rgb(118, 78, 144,
                                   maxColorValue = 255),
                      alpha = 1) +
            stat_ecdf(data = cdf, aes(norm),

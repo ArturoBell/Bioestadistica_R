@@ -2081,7 +2081,7 @@ Temas
 <div class="nav-dropdown-content">
 <a href="s1_biolcdatos.html">S1 - Biología como Ciencia de Datos</a>
 <a href="s2_herrbasic.html">S2 - Herramientas Básicas</a>
-<a href="s3_rel_lin.html">S3 - Relaciones Lineales</a>
+<a href="c08_rls.html">S3 - Modelo Lineal Simple</a>
 <a href="s4_noparnolin.html">S4 - No Paramétrico y No Lineal</a>
 <a href="s5_mv.html">S5 - Técnicas Multivariadas</a>
 </div>
@@ -2119,8 +2119,10 @@ Temas
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#frecuencia-a-largo-plazo">Frecuencia a largo plazo</a></li>
-<li><a href="#distribución-de-probabilidades">Distribución de probabilidades</a></li>
+<li><a href="#frecuencia-a-largo-plazo">Frecuencia a largo
+plazo</a></li>
+<li><a href="#distribución-de-probabilidades">Distribución de
+probabilidades</a></li>
 <li><a href="#intervalos-de-confianza">Intervalos de confianza</a></li>
 <li><a href="#ejercicio">Ejercicio</a></li>
 </ul>
@@ -2128,7 +2130,17 @@ Temas
 </div>
 <p><strong><a href="https://youtu.be/OJbGK6Q_Psg">VIDEO</a></strong></p>
 <h2 id="frecuencia-a-largo-plazo">Frecuencia a largo plazo</h2>
-<p>Supongamos que queremos conocer la frecuencia relativa a largo plazo de obtener “cara” (H) al lanzar una moneda. La intuición nos dice que deberá de ser 0.5, pero pretendamos que no es tan obvio. Todo lo que sabemos es que existe algún proceso subyacente que genera “H” o “T” (cruz) cuando obtememos una muestra. Este proceso tiene un parámetro <span class="math inline">\(\theta\)</span>, cuyo valor es <span class="math inline">\(\theta = 0.5\)</span>. Si es todo lo que conocemos, podemos <strong>aproximar</strong> la probabilidad de H realizando el experimento N veces. Para ello primero realicemos 500 experimentos y calculemos la proporción acumulada hasta el i-esimo experimento:</p>
+<p>Supongamos que queremos conocer la frecuencia relativa a largo plazo
+de obtener “cara” (H) al lanzar una moneda. La intuición nos dice que
+deberá de ser 0.5, pero pretendamos que no es tan obvio. Todo lo que
+sabemos es que existe algún proceso subyacente que genera “H” o “T”
+(cruz) cuando obtememos una muestra. Este proceso tiene un parámetro
+<span class="math inline">\(\theta\)</span>, cuyo valor es <span
+class="math inline">\(\theta = 0.5\)</span>. Si es todo lo que
+conocemos, podemos <strong>aproximar</strong> la probabilidad de H
+realizando el experimento N veces. Para ello primero realicemos 500
+experimentos y calculemos la proporción acumulada hasta el i-esimo
+experimento:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>volado</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span>
@@ -2166,7 +2178,9 @@ Temas
 </code></pre>
 </div>
 </div>
-<p>Podríamos ver los resultados numéricamente; sin embargo, una mejor aproximación para comprender el cambio en las proporciones es utilizar un gráfico de líneas:</p>
+<p>Podríamos ver los resultados numéricamente; sin embargo, una mejor
+aproximación para comprender el cambio en las proporciones es utilizar
+un gráfico de líneas:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
@@ -2213,8 +2227,14 @@ Temas
 </div>
 <p><img src="c03_probabilidad_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
 </div>
-<h2 id="distribución-de-probabilidades">Distribución de probabilidades</h2>
-<p>Veamos ahora la distribución de probabilidades de la proporción H:T o, en otras palabras, la distribución de probabilidades de la probabilidad de que obtengamos H. Para hacer esto debemos de tener algunas consideraciones, la principal es que la información “cruda” no nos funciona para este propósito, tenemos que procesarla y ponerla en términos de frecuencias:</p>
+<h2 id="distribución-de-probabilidades">Distribución de
+probabilidades</h2>
+<p>Veamos ahora la distribución de probabilidades de la proporción H:T
+o, en otras palabras, la distribución de probabilidades de la
+probabilidad de que obtengamos H. Para hacer esto debemos de tener
+algunas consideraciones, la principal es que la información “cruda” no
+nos funciona para este propósito, tenemos que procesarla y ponerla en
+términos de frecuencias:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Primero generamos los intervalos que nos interesan:</span>
@@ -2253,16 +2273,18 @@ Temas
 <pre><code>   Intervalo Frecuencia    Lims
 1    (0,0.1]         NA   0:0.1
 2  (0.1,0.2]         NA 0.1:0.2
-3  (0.2,0.3]          1 0.2:0.3
-4  (0.3,0.4]         10 0.3:0.4
-5  (0.4,0.5]        478 0.4:0.5
-6  (0.5,0.6]          9 0.5:0.6
-7  (0.6,0.7]         NA 0.6:0.7
+3  (0.2,0.3]         NA 0.2:0.3
+4  (0.3,0.4]          2 0.3:0.4
+5  (0.4,0.5]          4 0.4:0.5
+6  (0.5,0.6]        475 0.5:0.6
+7  (0.6,0.7]         18 0.6:0.7
 8  (0.7,0.8]         NA 0.7:0.8
 9  (0.8,0.9]         NA 0.8:0.9
-10   (0.9,1]         NA   0.9:1</code></pre>
+10   (0.9,1]          1   0.9:1</code></pre>
 </div>
-<p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo (NOTA: Las advertencias no son errores, son solo por los NAs que incluimos anteriormente):</p>
+<p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo
+(NOTA: Las advertencias no son errores, son solo por los NAs que
+incluimos anteriormente):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>freq.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>freq.table</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Lims</span>, y <span class='op'>=</span> <span class='va'>Frecuencia</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2291,8 +2313,12 @@ Temas
 </div>
 <p><img src="c03_probabilidad_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
 </div>
-<p>Ahora que tenemos clara la definición de probabilidad, y tomando en consideración el gráfico anterior, pasaremos a hablar de <strong>Distribuciones de probabilidad</strong>.</p>
-<p>Para hacer más eficiente el trabajo en clase, en la siguiente celda únicamente estoy “envolviendo” el código de las celdas anteriores en funciones:</p>
+<p>Ahora que tenemos clara la definición de probabilidad, y tomando en
+consideración el gráfico anterior, pasaremos a hablar de
+<strong>Distribuciones de probabilidad</strong>.</p>
+<p>Para hacer más eficiente el trabajo en clase, en la siguiente celda
+únicamente estoy “envolviendo” el código de las celdas anteriores en
+funciones:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Función para el cálculo de las distribuciones de frecuencias</span>
@@ -2368,7 +2394,8 @@ Temas
 </code></pre>
 </div>
 </div>
-<p>Analicemos la distribución de una variable continua distribuída normalmente, primero cada 5 unidades:</p>
+<p>Analicemos la distribución de una variable continua distribuída
+normalmente, primero cada 5 unidades:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>norm.var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>var <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span>, mean <span class='op'>=</span> <span class='fl'>67</span>, sd <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
@@ -2392,7 +2419,13 @@ Temas
 </div>
 <p><img src="c03_probabilidad_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<p>En este punto, incluso desde la gráfica anterior, el gráfico se comenzó a cargar de demasiada información. Esto era de esperarse, tomando en cuenta que en cada ocasión achicamos los intervalos. Para hacerlos infinitesimalmente pequeños podemos utilizar un tipo de gráfico que se conoce como KDE, basado en la técnica “Kernel Density Estimation” que, en pocas palabras, nos permite mostrar la función de densidad de un conjunto de datos:</p>
+<p>En este punto, incluso desde la gráfica anterior, el gráfico se
+comenzó a cargar de demasiada información. Esto era de esperarse,
+tomando en cuenta que en cada ocasión achicamos los intervalos. Para
+hacerlos infinitesimalmente pequeños podemos utilizar un tipo de gráfico
+que se conoce como KDE, basado en la técnica “Kernel Density Estimation”
+que, en pocas palabras, nos permite mostrar la función de densidad de un
+conjunto de datos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>prom.norm.var</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>norm.var</span><span class='op'>$</span><span class='va'>var</span><span class='op'>)</span>
@@ -2425,7 +2458,10 @@ Temas
 </div>
 <p><img src="c03_probabilidad_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
 </div>
-<p>Podemos ver también la importancia de la representatividad con una animación. Primero generemos un data.frame que contenga todos los estados que nos interesan, en este caso desde 10 muestras hasta 1010, en incrementos de 10 muestras:</p>
+<p>Podemos ver también la importancia de la representatividad con una
+animación. Primero generemos un data.frame que contenga todos los
+estados que nos interesan, en este caso desde 10 muestras hasta 1010, en
+incrementos de 10 muestras:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>1010</span>,<span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
@@ -2444,7 +2480,14 @@ Temas
 </code></pre>
 </div>
 </div>
-<p>Ahora utilicemos la librería <code>gganimate</code> para generar la animación de nuestro interés. OJO: Esta animación no se mostrará en la libreta, sino en el visor de RStudio OJO 2: Dependiendo de la complejidad de la animación, el proceso de renderizado puede tomar desde unos cuantos segundos hasta varios minutos o, incluso, más de una hora. Este ejemplo es el segundo caso. NO correr al menos de que tengas bastante tiempo disponible o una computadora con bastante fuerza bruta en mononúcleo.</p>
+<p>Ahora utilicemos la librería <code>gganimate</code> para generar la
+animación de nuestro interés. OJO: Esta animación no se mostrará en la
+libreta, sino en el visor de RStudio OJO 2: Dependiendo de la
+complejidad de la animación, el proceso de renderizado puede tomar desde
+unos cuantos segundos hasta varios minutos o, incluso, más de una hora.
+Este ejemplo es el segundo caso. NO correr al menos de que tengas
+bastante tiempo disponible o una computadora con bastante fuerza bruta
+en mononúcleo.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># library(gganimate)</span>
@@ -2478,7 +2521,14 @@ Temas
 </div>
 </div>
 <h2 id="intervalos-de-confianza">Intervalos de confianza</h2>
-<p>Existen distintas formas de calcular los intervalos de confianza para una media en R. Uno de ellos es utilizando la función <code>t.test</code>, el cual utiliza la distribución T-Student para el cálculo. De su salida vemos que nos da el valor del estadístico de prueba (valor crítico), los grados de libertad y un valor de p. Estos elementos los ignoraremos por el momento. Lo que sí nos interesa es la información que aparece por debajo; es decir, los límites de los intervalos de confianza y el valor de la media.</p>
+<p>Existen distintas formas de calcular los intervalos de confianza para
+una media en R. Uno de ellos es utilizando la función
+<code>t.test</code>, el cual utiliza la distribución T-Student para el
+cálculo. De su salida vemos que nos da el valor del estadístico de
+prueba (valor crítico), los grados de libertad y un valor de p. Estos
+elementos los ignoraremos por el momento. Lo que sí nos interesa es la
+información que aparece por debajo; es decir, los límites de los
+intervalos de confianza y el valor de la media.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/t.test.html'>t.test</a></span><span class='op'>(</span><span class='va'>norm.var</span><span class='op'>$</span><span class='va'>var</span>, conf.level <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
@@ -2488,15 +2538,16 @@ Temas
     One Sample t-test
 
 data:  norm.var$var
-t = 950.36, df = 9999, p-value &lt; 2.2e-16
+t = 963.15, df = 9999, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 66.81180 67.08798
+ 66.76802 67.04035
 sample estimates:
 mean of x 
- 66.94989 </code></pre>
+ 66.90419 </code></pre>
 </div>
-<p>Otra forma de calcularlos es utilizando la librería <code>Rmisc</code>:</p>
+<p>Otra forma de calcularlos es utilizando la librería
+<code>Rmisc</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#install.packages("Rmisc", dependencies = T)</span>
@@ -2504,17 +2555,29 @@ mean of x
 </code></pre>
 </div>
 </div>
-<p>Una vez instalada y cargada, podemos utilizar la función <code>CI(x, ci = a)</code>, donde <code>x</code> es el vector que contiene los datos y <code>a</code> representa el nivel de “confianza” de la estimación. Utilicemos los mismos datos de altura que generamos hace unos momentos:</p>
+<p>Una vez instalada y cargada, podemos utilizar la función <code>CI(x,
+ci = a)</code>, donde <code>x</code> es el vector que contiene los datos
+y <code>a</code> representa el nivel de “confianza” de la estimación.
+Utilicemos los mismos datos de altura que generamos hace unos
+momentos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/Rmisc/man/CI.html'>CI</a></span><span class='op'>(</span><span class='va'>norm.var</span><span class='op'>$</span><span class='va'>var</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>   upper     mean    lower 
-67.08798 66.94989 66.81180 </code></pre>
+67.04035 66.90419 66.76802 </code></pre>
 </div>
-<p>Como vemos, la función calcula los intervalos de confianza utilizando la distribución T. Esto se debe a que es el modo más común de realizar la estimación de intervalos para variables continuas. ¿La razón? Eso es tema para una clase posterior, en la que explicaré las características que hacen que la distribución T sea uno de los principales “caballitos de batalla” en la estadística.</p>
-<p>Una última opción es utilizar la librería <code>Rcompanion</code>, la cual tiene un método de la estimación de intervalos basado en “remuestreos” Bootstrap. Al igual que en el resto de librerías, habrá que instalarla:</p>
+<p>Como vemos, la función calcula los intervalos de confianza utilizando
+la distribución T. Esto se debe a que es el modo más común de realizar
+la estimación de intervalos para variables continuas. ¿La razón? Eso es
+tema para una clase posterior, en la que explicaré las características
+que hacen que la distribución T sea uno de los principales “caballitos
+de batalla” en la estadística.</p>
+<p>Una última opción es utilizar la librería <code>Rcompanion</code>, la
+cual tiene un método de la estimación de intervalos basado en
+“remuestreos” Bootstrap. Al igual que en el resto de librerías, habrá
+que instalarla:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#install.packages("Rcompanion", dependencies = T)</span>
@@ -2522,20 +2585,53 @@ mean of x
 </code></pre>
 </div>
 </div>
-<p>Una de las funciones que podemos utilizar es <code>groupwiseMean(formula, data, conf, R)</code>, donde <code>formula</code> indica al mismo tiempo las columnas de la variable continua y la variable de agrupamiento, tal que: <code>var ~ grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> que indica la amplitud de los intervalos y finalmente <code>R</code> que indica el número de replicas bootstrap a realizar. Partiendo de lo anterior:</p>
+<p>Una de las funciones que podemos utilizar es
+<code>groupwiseMean(formula, data, conf, R)</code>, donde
+<code>formula</code> indica al mismo tiempo las columnas de la variable
+continua y la variable de agrupamiento, tal que: <code>var ~
+grupo</code>; <code>data</code> indica el <code>data.frame</code> que
+contiene la información, <code>conf</code> que indica la amplitud de los
+intervalos y finalmente <code>R</code> que indica el número de replicas
+bootstrap a realizar. Partiendo de lo anterior:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/rcompanion/man/groupwiseMean.html'>groupwiseMean</a></span><span class='op'>(</span><span class='va'>var</span><span class='op'>~</span><span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>norm.var</span>, conf <span class='op'>=</span> <span class='fl'>0.95</span>, R <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>   .id     n Mean Conf.level Trad.lower Trad.upper
-1 &lt;NA&gt; 10000 66.9       0.95       66.8       67.1</code></pre>
+1 &lt;NA&gt; 10000 66.9       0.95       66.8         67</code></pre>
 </div>
-<p>Vemos que la salida es un poco más compleja; sin embargo, lo más relevante es que los intervalos son sumamente cercanos a los que calculamos anteriormente. ¿Esto quiere decir que no tiene caso realizar las réplicas bootstrap? No, simplemente que sus beneficios los veremos aplicándolas a la situación para la que fueron pensadas; es decir, distribuciones sesgadas y no normales a diferencia de la variable que analizamos aquí.</p>
-<p>Recursos recomendados para esta sección: <a href="https://rcompanion.org/handbook/C_03.html">Rcompanion</a> y <a href="http://www.biostathandbook.com/confidence.html">Handbook of Biological Statistics</a></p>
+<p>Vemos que la salida es un poco más compleja; sin embargo, lo más
+relevante es que los intervalos son sumamente cercanos a los que
+calculamos anteriormente. ¿Esto quiere decir que no tiene caso realizar
+las réplicas bootstrap? No, simplemente que sus beneficios los veremos
+aplicándolas a la situación para la que fueron pensadas; es decir,
+distribuciones sesgadas y no normales a diferencia de la variable que
+analizamos aquí.</p>
+<p>Recursos recomendados para esta sección: <a
+href="https://rcompanion.org/handbook/C_03.html">Rcompanion</a> y <a
+href="http://www.biostathandbook.com/confidence.html">Handbook of
+Biological Statistics</a></p>
 <h2 id="ejercicio">Ejercicio</h2>
-<p>Para la tarea de esta semana cargarás el archivo <code>Datos1.csv</code> con el código aquí incluído y, de manera similar a como se vio durante la clase, realizarás la estimación de la media, la desviación estándar y los intervalos de confianza (utilizando cualquiera de las formas aquí vistas) para diferentes tamaños de muestra (ojo a la función <code>sample()</code>). El objetivo es ver cómo cambian tanto la estimación puntual como la amplitud de los intervalos al incrementar el tamaño de muestra.</p>
-<p>Parte <strong>OPCIONAL</strong>:Si quieres desafiarte un poco más, considera alguna de las variables Dieta o Periodo como un grupos dentro de la población y realiza las estimaciones con esa consideración. Puedes también intentar presentar los resultados de manera gráfica (agrupados o no). Una alternativa es usar un gráfico KDE y mostrar los límites como líneas verticales, otra alternativa es un gráfico similar al que se presentó en clase, con el número de muestras en el eje x y un gráfico con líneas de error para el eje y. Este apartado OPCIONAL no tiene una “respuesta correcta”, así que puedes experimentar y presentar (o no) los resultados de la manera en que tú consideres se resuelven los objetivos.</p>
+<p>Para la tarea de esta semana cargarás el archivo
+<code>Datos1.csv</code> con el código aquí incluído y, de manera similar
+a como se vio durante la clase, realizarás la estimación de la media, la
+desviación estándar y los intervalos de confianza (utilizando cualquiera
+de las formas aquí vistas) para diferentes tamaños de muestra (ojo a la
+función <code>sample()</code>). El objetivo es ver cómo cambian tanto la
+estimación puntual como la amplitud de los intervalos al incrementar el
+tamaño de muestra.</p>
+<p>Parte <strong>OPCIONAL</strong>:Si quieres desafiarte un poco más,
+considera alguna de las variables Dieta o Periodo como un grupos dentro
+de la población y realiza las estimaciones con esa consideración. Puedes
+también intentar presentar los resultados de manera gráfica (agrupados o
+no). Una alternativa es usar un gráfico KDE y mostrar los límites como
+líneas verticales, otra alternativa es un gráfico similar al que se
+presentó en clase, con el número de muestras en el eje x y un gráfico
+con líneas de error para el eje y. Este apartado OPCIONAL no tiene una
+“respuesta correcta”, así que puedes experimentar y presentar (o no) los
+resultados de la manera en que tú consideres se resuelven los
+objetivos.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.table</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.choose.html'>file.choose</a></span><span class='op'>(</span><span class='op'>)</span>, header <span class='op'>=</span> <span class='cn'>F</span>, skip <span class='op'>=</span> <span class='fl'>1</span>, sep <span class='op'>=</span> <span class='st'>","</span><span class='op'>)</span>
@@ -2551,7 +2647,8 @@ mean of x
   </script>
 </div>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2576,8 +2673,11 @@ mean of x
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr. Plancton</a>.</p>
-<p>Software licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License, v2.0</a>.</p>
+<p>© Copyright 2021 <a href="https://www.drplancton.com">Dr.
+Plancton</a>.</p>
+<p>Software licensed under the <a
+href="https://www.apache.org/licenses/LICENSE-2.0">Apache License,
+v2.0</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
 
