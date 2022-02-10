@@ -2152,16 +2152,16 @@ lo que será necesario hacer cierta manipulación de los datos</p>
 </code></pre>
 </div>
 <pre><code>           A        B
-1   9.899238 11.07740
-2  10.023052 10.96721
-3   9.894991 10.96606
-4  10.012089 11.05213
-5  10.018126 11.07837
-6  10.168865 11.10398
-7   9.939478 11.00554
-8   9.937925 11.03789
-9  10.150609 10.84225
-10 10.171198 11.09703</code></pre>
+1  10.091598 11.15032
+2   9.965052 11.07575
+3  10.049167 11.12902
+4   9.990239 10.74950
+5  10.169970 11.01169
+6  10.038462 11.18028
+7   9.847660 10.83301
+8   9.911770 11.03302
+9   9.932429 11.01874
+10  9.933916 11.04097</code></pre>
 </div>
 <p>¿Cómo pasarías a la forma codificada (larga)?</p>
 <p>Una alternativa es esta:</p>
@@ -2173,26 +2173,26 @@ lo que será necesario hacer cierta manipulación de los datos</p>
 </code></pre>
 </div>
 <pre><code>   grupo        v1
-1      A  9.899238
-2      A 10.023052
-3      A  9.894991
-4      A 10.012089
-5      A 10.018126
-6      A 10.168865
-7      A  9.939478
-8      A  9.937925
-9      A 10.150609
-10     A 10.171198
-11     B 11.077404
-12     B 10.967212
-13     B 10.966057
-14     B 11.052132
-15     B 11.078369
-16     B 11.103982
-17     B 11.005542
-18     B 11.037887
-19     B 10.842246
-20     B 11.097032</code></pre>
+1      A 10.091598
+2      A  9.965052
+3      A 10.049167
+4      A  9.990239
+5      A 10.169970
+6      A 10.038462
+7      A  9.847660
+8      A  9.911770
+9      A  9.932429
+10     A  9.933916
+11     B 11.150320
+12     B 11.075747
+13     B 11.129024
+14     B 10.749496
+15     B 11.011691
+16     B 11.180281
+17     B 10.833008
+18     B 11.033024
+19     B 11.018745
+20     B 11.040965</code></pre>
 </div>
 <p>Algunas otras opciones son:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2226,26 +2226,26 @@ lo que será necesario hacer cierta manipulación de los datos</p>
 </code></pre>
 </div>
 <pre><code>   V1        V2
-1   A  9.899238
-2   A 10.023052
-3   A  9.894991
-4   A 10.012089
-5   A 10.018126
-6   A 10.168865
-7   A  9.939478
-8   A  9.937925
-9   A 10.150609
-10  A 10.171198
-11  B 11.077404
-12  B 10.967212
-13  B 10.966057
-14  B 11.052132
-15  B 11.078369
-16  B 11.103982
-17  B 11.005542
-18  B 11.037887
-19  B 10.842246
-20  B 11.097032</code></pre>
+1   A 10.091598
+2   A  9.965052
+3   A 10.049167
+4   A  9.990239
+5   A 10.169970
+6   A 10.038462
+7   A  9.847660
+8   A  9.911770
+9   A  9.932429
+10  A  9.933916
+11  B 11.150320
+12  B 11.075747
+13  B 11.129024
+14  B 10.749496
+15  B 11.011691
+16  B 11.180281
+17  B 10.833008
+18  B 11.033024
+19  B 11.018745
+20  B 11.040965</code></pre>
 </div>
 <h2 id="estimación-de-los-intervalos-de-confianza">Estimación de los
 intervalos de confianza</h2>
@@ -2256,12 +2256,12 @@ intervalos de confianza</h2>
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>A</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 10.02156</code></pre>
+<pre><code>[1] 9.993026</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>B</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 11.02279</code></pre>
+<pre><code>[1] 11.02223</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Error, poner atención a la columna que se está seleccionando</span>
 <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span><span class='op'>[</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>==</span> <span class='st'>"A"</span><span class='op'>]</span><span class='op'>)</span>
@@ -2272,12 +2272,12 @@ intervalos de confianza</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V2</span><span class='op'>[</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>==</span> <span class='st'>"A"</span><span class='op'>]</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 10.02156</code></pre>
+<pre><code>[1] 9.993026</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V2</span><span class='op'>[</span><span class='va'>mat</span><span class='op'>$</span><span class='va'>V1</span> <span class='op'>==</span> <span class='st'>"B"</span><span class='op'>]</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 11.02279</code></pre>
+<pre><code>[1] 11.02223</code></pre>
 </div>
 <p>Estimar los intervalos de confianza:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2285,16 +2285,16 @@ intervalos de confianza</h2>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>rcompanion</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rcompanion/man/groupwiseMean.html'>groupwiseMean</a></span><span class='op'>(</span><span class='va'>v1</span><span class='op'>~</span><span class='va'>grupo</span>, data <span class='op'>=</span> <span class='va'>df1</span> , conf <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>  grupo  n Mean Conf.level Trad.lower Trad.upper
-1     A 10   10       0.95       9.94       10.1
-2     B 10   11       0.95      11.00       11.1</code></pre>
+<pre><code>  grupo  n  Mean Conf.level Trad.lower Trad.upper
+1     A 10  9.99       0.95       9.92       10.1
+2     B 10 11.00       0.95      10.90       11.1</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>rcompanion</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rcompanion/man/groupwiseMean.html'>groupwiseMean</a></span><span class='op'>(</span><span class='va'>V2</span><span class='op'>~</span><span class='va'>V1</span>, data <span class='op'>=</span> <span class='va'>mat</span> , conf <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>   n Mean Conf.level Trad.lower Trad.upper
-1 10   10       0.95       9.94       10.1
-2 10   11       0.95      11.00       11.1</code></pre>
+<pre><code>   n  Mean Conf.level Trad.lower Trad.upper
+1 10  9.99       0.95       9.92       10.1
+2 10 11.00       0.95      10.90       11.1</code></pre>
 </div>
 <h2 id="prueba-de-t-para-muestras-independientes">Prueba de T para
 muestras independientes</h2>
@@ -2372,13 +2372,13 @@ observaciones independientes de la media es 2.</p>
     Two Sample t-test
 
 data:  V2 by V1
-t = -23.453, df = 18, p-value = 6.062e-15
+t = -19.592, df = 18, p-value = 1.375e-13
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.0909198 -0.9115383
+ -1.1395700 -0.9188376
 sample estimates:
 mean in group A mean in group B 
-       10.02156        11.02279 </code></pre>
+       9.993026       11.022230 </code></pre>
 </div>
 <p>Podemos también presentar los resultados de manera gráfica. Para ello
 necesitaremos guardar los resultados de nuestra prueba t.test en un
@@ -2402,7 +2402,7 @@ incluirlo en la gráfica:</p>
 <span class='va'>p_val</span>
 </code></pre>
 </div>
-<pre><code>[1] 6.062176e-15</code></pre>
+<pre><code>[1] 1.374633e-13</code></pre>
 </div>
 <p>Construyamos y grafiquemos los intervalos de confianza para la media
 de cada grupo (95%):</p>

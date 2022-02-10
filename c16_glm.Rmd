@@ -380,8 +380,22 @@ ggplot(data = fish, aes(x = child, y = count, color = factor(camper))) +
   labs(title = "GLM Binomial negativo",
        x = "Número de hijos",
        y = "Peces capturados") +
-  #scale_color_discrete(name = "Camper", labels = c("NO", "SI")) +
-  scale_y_continuous(limits = c(0, 50))
+  scale_color_discrete(name = "Camper", labels = c("NO", "SI")) +
+  scale_y_continuous(limits = c(0, 12))
+```
+
+O utilizando `visreg`:
+
+```{r}
+
+partial_plots <- visreg::visreg(bineg, scale = "response", ylab = "Capturas", gg = TRUE)
+
+for (plt in partial_plots) {
+  plot(plt + blank_theme() +
+         scale_y_continuous(limits = c(0, 12)) +
+         scale_x_discrete(limits = c(0, max(plt$data$x))) +
+         labs(x = plt$labels$x))
+}
 ```
 
 Y ahora podemos hablar de la selección de modelos.
@@ -474,7 +488,7 @@ for (plt in partial_plots) {
 Esto ya lo conocíamos, pero ¿cómo interpretamos los coeficientes? Antes de pasar a eso, es necesario que pongamos atención al argumento `scale` de `visreg`, el cual indicamos como `response`. Esto lo que hizo fue poner nuestra salida en lo que nos interesa: la probabilidad de pertenencia a una especie, dadas las medidas de cada variable. Veamos qué pasa si retiramos ese argumento:
 
 ```{r}
-partial_plots <- visreg::visreg(logit_reg, ylab = "P(Especie)", gg = TRUE)
+partial_plots <- visreg::visreg(logit_reg, ylab = "log-odds(Especie)", gg = TRUE)
 
 for (plt in partial_plots) {
   plot(plt + blank_theme())
@@ -552,3 +566,9 @@ caret::varImp(logit_mult)
 ```
 
 Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los únicos. Si te interesa modelar el tiempo entre eventos puedes utilizar un modelo Gamma, puedes cambiar la relación entre la media y la varianza de la regresión para conteos utilizando un modelo Quasi-Poisson en vez de un modelo con distribución binomial negativa (ver lecturas recomendadas), entre otros.
+
+## Despedida
+
+Con esto llegamos al final del curso. Espero que el contenido haya sido de tu agrado, que te hayas llevado algo y, sobre todo, que lo aprendido te sea útil. En este momento cuentas con bases sólidas para adentrarte más en cualquiera de los temas aquí vistos, e incluso incursionar en otros temas. Una recomendación personal es revisar un paradigma de inferencia diferente: la Inferencia Bayesiana. Si te agradó mi manera de explicar, te recomiendo ampliamente que esperes mi curso "Introducción a la Inferencia Bayesiana", que estará disponible también aquí en Dr. Plancton en los próximos meses. Te recomiendo también adentrarte más en el área del aprendizaje automatizado, pues es un mundo enorme con un potencial enorme de aplicación a problemas biológicos. Si te interesaría un curso más enfocado a eso, házmelo saber y es posible organizarlo con algunos miembros del equipo de Dr. Plancton. Recuerda que siempre puedes contactarme en el servidor de Discord, y que siempre tendrás acceso a las actualizaciones que se hagan al curso.
+
+Te deseo lo mejor, hoy y siempre.
