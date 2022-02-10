@@ -2134,6 +2134,12 @@ de ceros y sobre dispersión: Regresión Binomial Negativa Inflada en
 Cero</a></li>
 <li><a href="#interpretación">Interpretación</a></li>
 </ul></li>
+<li><a href="#selección-de-modelos">Selección de modelos</a>
+<ul>
+<li><a href="#criterio-de-información-de-akaike">Criterio de Información
+de Akaike</a></li>
+</ul></li>
+<li><a href="#regresiones-para-clases">Regresiones para clases</a></li>
 </ul>
 </nav>
 </div>
@@ -2165,9 +2171,11 @@ Cero</a></li>
 </div>
 </div>
 <h2 id="problemas-familiares">Problemas familiares</h2>
-<p>En la sesión <a href="">anterior</a> mencionamos cómo utilizar
-combinaciones lineales de variables para predecir una variable continua,
-pero también recordarás que en la sesión de <a
+<p>En la sesión <a
+href="https://arturobell.github.io/Bioestadistica_R/c15_regs_mv.html">anterior</a>
+mencionamos cómo utilizar combinaciones lineales de variables para
+predecir una variable continua, pero también recordarás que en la sesión
+de <a
 href="https://arturobell.github.io/Bioestadistica_R/c08_rls.html">RLS</a>
 hablamos de modificar el supuesto de la distribución de nuestros errores
 para obtener una mejor estimación, lo cual conforma una parte
@@ -2194,6 +2202,9 @@ conjunto de modelos candidatos.</li>
 <li><strong>Regresiones para clases</strong>: Regresión logística
 binomial y softmax.</li>
 </ul>
+<p><strong>OJO: Por practicidad obviaré la división datos de
+entrenamiento-prueba; sin embargo, es algo que SIEMPRE se debe de tener
+en cuenta</strong></p>
 <h2 id="regresiones-robustas">Regresiones robustas</h2>
 <p>La idea de una regresión robusta la revisamos en la sesión de <a
 href="https://arturobell.github.io/Bioestadistica_R/c08_rls.html">RLS</a>;
@@ -2435,12 +2446,12 @@ Huber.</li>
 una función de identidad; es decir, ninguna modificación para pasar de
 nuestros datos a la distribución del error.</li>
 </ol>
-<p>¿Cuál aplicar? Si el resultado es el mismo, puedes escoger una u
+<p>¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u
 otra, solo ten en cuenta que la implementación por máxima verosimilitud
-de un modelo t de Student puede tener muchos bemoles al momento de
-optimizarse, además de que su salida es incompatible con algunas otras
-funciones, incluyendo el cálculo de los intervalos de confianza (para
-los coeficientes de la regresión Huber puedes utilizar la función
+de un modelo <em>t</em> de Student puede tener muchos bemoles al momento
+de optimizarse, además de que su salida es incompatible con algunas
+otras funciones, incluyendo el cálculo de los intervalos de confianza
+(para los coeficientes de la regresión Huber puedes utilizar la función
 <code>confint.default(rr.huber)</code>).</p>
 <h2 id="funciones-de-enlace">Funciones de enlace</h2>
 <p>Este es un buen momento para hablar de un tema que a veces causa
@@ -2939,17 +2950,125 @@ el enlace) para poder interpretarlos.</strong></p>
 
 <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>fish</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>child</span>, y <span class='op'>=</span> <span class='va'>count</span>, color <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>camper</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>pred</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"GLM Binomial negativo"</span>,
+       x <span class='op'>=</span> <span class='st'>"Número de hijos"</span>,
+       y <span class='op'>=</span> <span class='st'>"Peces capturados"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Camper"</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NO"</span>, <span class='st'>"SI"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c16_glm_files/figure-html5/unnamed-chunk-25-1.png" width="624" /></p>
 </div>
-<p>Y ahora es un buen momento para hablar de la comparación de
-modelos.</p>
+<p>Y ahora podemos hablar de la selección de modelos.</p>
+<h2 id="selección-de-modelos">Selección de modelos</h2>
+<p>El tener varios varios modelos candidatos no es algo extraño,
+entonces es necesario tener algún tipo de criterio que nos permita
+comparar entre ellos. Una aproximación es la que hemos utilizado hasta
+el momento; es decir, utilizar el Criterio de Información de Akaike
+(AIC) y seleccionar el menor. ¿Qué es el AIC y con qué se come?</p>
+<h3 id="criterio-de-información-de-akaike">Criterio de Información de
+Akaike</h3>
+<p>El AIC es un criterio basado en teoría de la información,
+particularmente en la <strong>divergencia Kullback-Leibler</strong>. Ese
+detalle matemático va más allá del alcance de este curso; sin embargo,
+podemos entender que está basado en la verosimilitud de un modelo dado;
+es decir, qué tan verosímil es que ese modelo haya generado los datos.
+Un detalle es que, como hemos visto en sesiones anteriores, el “ajuste”
+de un modelo es directamente proporcional a su complejidad (al menos
+vs. los datos de entrenamiento). Es, entonces, necesario penalizar de
+alguna manera el número de parámetros en el modelo, para no comernos un
+“gol” con un modelo excesivamente complejo. Puesto en una ecuación, el
+AIC queda de la siguiente manera:</p>
+<p><span class="math display">\[
+AIC = -2ln(L) + 2k
+\]</span></p>
+<p>Donde <span class="math inline">\(L\)</span> es la verosimilitud del
+modelo y <span class="math inline">\(k\)</span> el número de parámetros.
+Si nuestro modelo tiene un gran número de parámetros, el valor de AIC se
+hará más grande, mientras que si tiene un menor número se hará más
+pequeño. ¿Qué nos dice un AIC en sí mismo? NADA, absolutamente nada. Si
+yo te digo que un modelo que construí tiene un AIC de 800 no puedes
+saber si es bueno o malo, pues no hay una referencia. <strong>El AIC es
+útil solamente como medida relativa</strong>; es decir, solo cuando
+estemos comparando dos o más valores de AIC. Esto nos lleva a hablar
+sobre algunas consideraciones que debemos de tener al utilizar el
+AIC:</p>
+<ol type="1">
+<li>Valores más bajos indican modelos más parsimoniosos.</li>
+<li>Es una medida <strong>relativa</strong> de la parsimonia de un
+modelo, por lo que solo tiene sentido cuando comparamos AIC para
+hipótesis (modelos) alternativos.</li>
+<li>Podemos comparar modelos no anidados. De hecho, podríamos comparar
+un modelo lineal con uno no lineal.</li>
+<li>Las comparaciones son válidas <strong>SOLO</strong> para modelos
+ajustados con los mismos valores de respuesta; <em>i.e.</em>, mismos
+valores de <span class="math inline">\(y\)</span>.</li>
+<li>Comparar muchos modelos con AIC es una mala idea, pues caemos en el
+mismo problema de las comparaciones múltiples, donde podemos encontrar
+por azar un modelo con el valor más bajo de AIC, cuando en realidad no
+es el modelo más apropiado.</li>
+<li>Para variar, cuando tratamos con tamaños de muestra pequeños (n/k
+&lt; 40) el AIC pierde confiabilidad, por lo que hay que aplicar una
+corrección:</li>
+</ol>
+<ul>
+<li><span class="math inline">\(AIC_c = AIC +
+\frac{2k(k+1)}{n-k-1}\)</span></li>
+<li>Dado que conforme incrementa n, el <span
+class="math inline">\(AIC_c\)</span> se aproxima al <span
+class="math inline">\(AIC\)</span>, es una buena idea utilizar <span
+class="math inline">\(AIC_c\)</span>.</li>
+</ul>
+<ol start="6" type="1">
+<li>Podemos encontrar múltiples modelos que tengan AICs similares, esto
+solo sugiere que estas hipótesis alternativas tienen soportes similares.
+¿Qué tanto es tantito? Esa respuesta es un poco más compleja, y requiere
+que presentemos el <span class="math inline">\(\Delta{AIC}\)</span></li>
+</ol>
+<ul>
+<li><span class="math inline">\(\Delta AIC = AIC_i - AIC_{min}\)</span>;
+es decir, la diferencia de cada AIC respecto al valor mínimo de AIC
+entre los modelos candidatos. Esta transformación forza al “mejor”
+modelo a tener un <span class="math inline">\(\Delta AIC = 0\)</span>, y
+representa la pérdida de información si utilizamos un modelo candidato
+<span class="math inline">\(m_i\)</span> en vez de <span
+class="math inline">\(m_min\)</span>.</li>
+<li>Modelos con un <span class="math inline">\(\Delta_i \leq 2\)</span>
+tienen soporte substancial (evidencia),</li>
+<li>Modelos con un <span class="math inline">\(4 \leq \Delta_i \leq
+7\)</span> tienen considerablemente menos soporte y</li>
+<li>Modelos con <span class="math inline">\(\Delta_i &gt; 10\)</span> no
+tienen, escencialmente, soporte.</li>
+</ul>
+<p>Recuperemos nuestra comparación anterior, calculemos los <span
+class="math inline">\(AIC_c\)</span> y calculemos los <span
+class="math inline">\(\Delta_i\)</span>. Como mencionábamos antes, los
+modelos con distribuciones binomial negativas son los que tienen el
+mayor soporte, mientras que los Poisson carecen de cualquier soporte
+(dados estos datos y modelos candidatos). También podemos ver que pesa
+más la sobredispersión que el exceso de ceros, pues el modelo inflado en
+cero es marginalmente mejor que aquel no inflado.</p>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>AICs</span> <span class='op'>&lt;-</span> <span class='fu'>MuMIn</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/MuMIn/man/AICc.html'>AICc</a></span><span class='op'>(</span><span class='va'>poiss</span>, <span class='va'>zi_poiss</span>, <span class='va'>bineg</span>, <span class='va'>zi_bineg</span><span class='op'>)</span>
+<span class='va'>AICs</span><span class='op'>$</span><span class='va'>Delta</span> <span class='op'>&lt;-</span> <span class='va'>AICs</span><span class='op'>$</span><span class='va'>AIC</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>AICs</span><span class='op'>$</span><span class='va'>AIC</span><span class='op'>)</span>
+<span class='va'>AICs</span>
+</code></pre>
 </div>
-<div class="sourceCode" id="cb17"><pre
+<pre><code>         df      AICc       Delta
+poiss     3 2723.2834 1839.007840
+zi_poiss  6 2062.5446 1178.269082
+bineg     4  887.5839    3.308338
+zi_bineg  7  884.2755    0.000000</code></pre>
+</div>
+<h2 id="regresiones-para-clases">Regresiones para clases</h2>
+<p>En la sesión de <a
+href="https://arturobell.github.io/Bioestadistica_R/c14_clasificacion.html">clasificación</a>
+hablamos sobre los problemas de clasificación, y aplicamos la regresión
+logística; sin embargo, no entramos en detalles completos. Aprovechemos,
+entonces, el tiempo para hacerlo ahora.</p>
+<div class="sourceCode" id="cb18"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

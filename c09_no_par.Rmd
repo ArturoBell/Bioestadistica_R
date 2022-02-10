@@ -150,7 +150,9 @@ Imaginemos que nos interesa conocer si los organismos alimentados con la dieta B
 u.data <- subset(df, Dieta != "A")
 wilcox.test(LT~Dieta, data = u.data)
 ```
+
 Este resultado corresponde bastante bien con lo visto en los gráficos de densidad en el sentido de falta de diferencias, aunque podemos representarlo utilizando un gráfico de violín que es más adecuado para propósitos de comparación:
+
 ```{r}
 u.mann.plot <- ggplot(data = u.data, aes(x = Dieta, y = LT, fill = Dieta)) + 
                geom_violin(trim = T, alpha = 0.7) + 
@@ -235,7 +237,7 @@ En este sentido, la Prueba por Rangos de Friedman nos permite analizar a la vez 
 
 Ok, una vez que realizamos esos cálculos ya evaluamos las diferencias entre los grupos tomando en consideración a los bloques, pero ¿qué tan similares son estos bloques? o en otras palabras, ¿qué tan de acuerdo estuvieron los votantes?. Para ello podemos utilizar el Coeficiente de acuerdo de Kendall (W), el cuál está en términos del error cuadrático de la asignación de rangos dentro de cada bloque y el número de bloques y grupos. W indica la magnitud del acuerdo, donde 0 representa total desacuerdo y 1 total acuerdo. Existen algunas otras alternativas que valdría la pena que buscaras y analizaras, como estas de aquí.
 
-Ahora vayamos a R y apliquemos estas técnicas a nuestros datos por bloques. Para ello necesitaremos cambiar el formato de la base de datos de una base de datos tabular a una base de datos codificada utilizando la función `melt(data, id.vars, variable.name, value.name)`
+Ahora vayamos a R y apliquemos estas técnicas a nuestros datos por bloques. Para ello necesitaremos cambiar el formato de la base de datos de una base de datos tabular a una base de datos codificada utilizando la función `melt()`:
 
 ```{r}
 bloques.molten <- reshape2::melt(bloques, id.vars = "Pez",
@@ -243,7 +245,7 @@ bloques.molten <- reshape2::melt(bloques, id.vars = "Pez",
 bloques.molten
 ```
 
-Ahora podemos aplicar la prueba de Friedman utilizando la función `friedman.test(a ~ b|c)`, donde a representa la variable de medición, b los grupos y c los bloques.
+Ahora podemos aplicar la prueba de Friedman utilizando la función `friedman.test(a ~ b|c)`, donde `a` representa la variable de medición, `b` los grupos y `c` los bloques.
 
 ```{r}
 friedman.test(Act~Secc|Pez, data = bloques.molten)
@@ -273,8 +275,10 @@ De estos resultados podríamos concluir que no hubo diferencias entre la activid
 ```{r}
 #if(!require(DescTools)) install.packages("DescTools", dependencies = T)
 library(DescTools)
-KendallW(bloques, correct = T, test = T) #Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques
+#Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques
+KendallW(bloques, correct = T, test = T)
 ```
+
 Y comprobémoslo gráficamente (**ojo**, para graficar estamos utilizando la base codificada)
 
 ```{r}
@@ -323,6 +327,7 @@ DescTools::DunnTest(LT~factor(Dieta), data = subset(df, Periodo == "F"))
 ```
 
 Corroboremos esto de manera gráfica:
+
 ```{r}
 kruskal.plot <- ggplot(data = subset(df, Periodo == "F"), 
                        aes(x = Dieta, y = LT, fill = Dieta)) +

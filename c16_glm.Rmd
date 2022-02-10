@@ -18,6 +18,10 @@ knitr::opts_chunk$set(R.options = list(width = 80))
 library(ggplot2)
 library(stats4)
 library(brms)
+library(visreg)
+library(pscl)
+library(MASS)
+library(MuMIn)
 ```
 
 ## Funciones personalizadas
@@ -40,7 +44,7 @@ blank_theme <- function(){
 
 ## Problemas familiares
 
-En la sesión [anterior]() mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en la sesión de [RLS](https://arturobell.github.io/Bioestadistica_R/c08_rls.html) hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual conforma una parte fundamental de los **modelos lineales generalizados** (GLMs). Bueno, hoy aterrizaremos esa última idea: **La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra *familia* de distribuciones, enlazada a nuestros datos con alguna función**.
+En la sesión [anterior](https://arturobell.github.io/Bioestadistica_R/c15_regs_mv.html) mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en la sesión de [RLS](https://arturobell.github.io/Bioestadistica_R/c08_rls.html) hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual conforma una parte fundamental de los **modelos lineales generalizados** (GLMs). Bueno, hoy aterrizaremos esa última idea: **La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra *familia* de distribuciones, enlazada a nuestros datos con alguna función**.
 
 La modificación puede ser tan "simple" (al menos en términos de intuición) como relajar el supuesto de normalidad, pero podemos también utilizar otras distribuciones que nos permitan modelar otro tipo de información. En la sesión de hoy revisaremos:
 
@@ -48,8 +52,10 @@ La modificación puede ser tan "simple" (al menos en términos de intuición) co
 - **Funciones de enlace** y enlace inverso.
 - **Regresiones para conteos**: Poisson, Binomial Negativa y sus variantes infladas en zeros.
 - **Aproximación multi-modelo para la selección de modelos**; *i.e.*, cómo seleccionar el mejor de un conjunto de modelos candidatos.
-- **Regresiones para clases**: Regresión logística binomial y softmax.
+- **Regresiones para clases**: Regresión logística binomial y multinomial.
 
+
+**OJO: Por practicidad obviaré la división datos de entrenamiento-prueba; sin embargo, es algo que SIEMPRE se debe de tener en cuenta**
 
 ## Regresiones robustas
 
@@ -97,7 +103,7 @@ ggplot(data = ansc_iii,
   labs(title = "RLS con supuesto de normalidad")
 ```
 
-No se ve mal; sin embargo es claro que el punto extremo está influenciando la estimación.Podemos aplicar algún criterio de detección de valores extremos (o deformar nuestros datos) para cumplir con el supuesto de normalidad; sin embargo, más que *parchar* nuestros datos, es preferible modificar nuestro modelo. Cambiemos entonces a una regresión con una verosimilitud *t* de Student:
+No se ve mal; sin embargo, es claro que el punto extremo está influenciando la estimación.Podemos aplicar algún criterio de detección de valores extremos (o deformar nuestros datos) para cumplir con el supuesto de normalidad; sin embargo, **más que parchar nuestros datos, es preferible modificar nuestro modelo**. Cambiemos entonces a una regresión con una verosimilitud *t* de Student:
 
 ```{r}
 LLt <- function(b0, b1, df, sigma){
@@ -180,7 +186,7 @@ Como era de esperarse, los resultados son los mismos que los de la regresión t 
 2. Una familia para el error, que no modificamos en la regresión Huber.
 3. Una función de enlace (o enlace inverso), que en ambos casos sería una función de identidad; es decir, ninguna modificación para pasar de nuestros datos a la distribución del error.
 
-¿Cuál aplicar? Si el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo t de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
+¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
 
 ## Funciones de enlace
 
@@ -223,7 +229,8 @@ $$
 Para aplicarlo resolvamos un problema en el cuál trataremos de **predecir** el número de peces capturados en un lago por un pescador, considerando el número de hijos y si llevan o no un camper:
 
 ```{r}
-fish <- read.csv("https://stats.idre.ucla.edu/stat/data/fish.csv")[,c("child", "camper", "count")]
+csvurl <- "https://stats.idre.ucla.edu/stat/data/fish.csv"
+fish <- read.csv(csvurl)[,c("child", "camper", "count")]
 head(fish)
 ```
 Exploremos nuestros datos. Al tratarse de una variable categórica podemos, sin ningún problema, utilizar un gráfico de frecuencias:
@@ -240,7 +247,7 @@ ggplot(aes(x = count), data = fish) +
 ¿Qué otro gráfico utilizarías? Por otra parte, habrás notado un par de cosas: a) hay una gran cantidad de ceros y b) tenemos algunos puntos "extremos"; *i.e.*, algunos pescadores que tuvieron demasiada suerte y que capturaron demasiados peces en comparación con el resto. Este tipo de distribuciones no son extrañas en la naturaleza, y tienen un par de bemoles de los cuales hablaremos después. Por lo pronto, construyamos nuestro GLM. Para ello utilizaremos la función `glm` de R base, cuyo uso es sumamente similar al de la función `lm`, salvo que indicaremos la familia como un argumento adicional:
 
 ```{r}
-poiss <- glm(count~child+camper, data = fish, family = "poisson")
+poiss <- glm(count~., data = fish, family = "poisson")
 summary(poiss)
 ```
 
@@ -253,11 +260,10 @@ with(poiss, cbind(res.deviance = deviance,
                              lower.tail = F)))
 ```
 
-
 Tenemos un valor de p sumamente pequeño, lo cual sugiere que el modelo no se encuentra bien ajustado. ¿Alguna idea de por qué? Como te imaginarás, tiene que ver con la distribución de nuestros datos, eso que mencionamos sobre muchos ceros y algunos pescadores con mucha suerte. De hecho, cada una de estas características es un problema en sí mismo, así que abordemoslos uno por uno. Una pregunta que puedes estarte haciendo es ¿y la función de enlace? Va implícita en la familia. En este caso, es una función de enlace logarítmica, que es el equivalente a la función de enlace inverso que revisamos antes.
 
 ```{r}
-str(poisson())
+str(poisson()[1:5])
 ```
 
 ### Exceso de ceros: Regresión Poisson Inflada en Cero
@@ -291,19 +297,19 @@ bineg <- MASS::glm.nb(count~., data = fish, trace = F)
 summary(bineg)
 ```
 
-Notarás que esta salida es prácticamente la misma que la que tuvimos en nuestro GLM Poisson, salvo que ahora nos da el valor del parámetro de sobredispersión. ¿Cómo se si, en efecto, mis datos están sobre-dispersos? Para eso podemos utilizar una prueba de razón de verosimilitud, en la cual compararemos la verosimilitud de ambos modelos (binomial negativa y Poisson) y veremos si se ajustan a la misma distribución; es decir, la prueba de razón de verosimilitud es una prueba de bondad de ajuste, con distribución $\chi^2$. ¿Qué es lo que estamos comparando? Si el parámetro adicional ayuda a que el ajuste del modelo mejore significativamente. Para aplicarla podemos utilizar la función `odTest(mod_bn)` de la librería `pscl`:
+Notarás que esta salida es prácticamente la misma que la que tuvimos en nuestro GLM Poisson, salvo que ahora nos da el valor del parámetro de sobredispersión. Te estarás preguntando: ¿Cómo sé si, en efecto, mis datos están sobre-dispersos? Para eso podemos utilizar una prueba de razón de verosimilitud, en la cual compararemos la verosimilitud de ambos modelos (binomial negativa y Poisson) y veremos si se ajustan a la misma distribución; es decir, la prueba de razón de verosimilitud es una prueba de bondad de ajuste, con distribución $\chi^2$. ¿Qué es lo que estamos comparando? Si el parámetro adicional ayuda a que el ajuste del modelo mejore significativamente. Para aplicarla podemos utilizar la función `odTest(mod_bn)` de la librería `pscl`:
 
 ```{r}
 pscl::odTest(bineg)
 ```
 
-A ojo de buen cubero era más que evidente que nuestros datos estaban sobre dispersos, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es "si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?" Y la respuesta es, en efecto:
+A ojo de buen cubero era más que evidente que nuestros datos estaban sobre dispersos, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es "si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?" Y la respuesta es, por supuesto:
 
 ```{r}
 AIC(poiss, zi_poiss, bineg)
 ```
 
-Y los resultados son, como debe de ser, consistentes. Llegados a este punto podrías preguntarme: "Ok, Arturo, ya corregimos para el exceso de ceros y para la sobre dispersión, pero lo hicimos de manera independiente. ¿Hay alguna manera de hacer ambas cosas al mismo tiempo?" Y la respuesta es, en efecto, y es justo lo siguiente que vamos a revisar.
+Y los resultados son, como debe de ser, consistentes. Llegados a este punto podrías preguntarme: "Ok, Arturo, ya corregimos para el exceso de ceros y para la sobre dispersión, pero lo hicimos de manera independiente. ¿Hay alguna manera de hacer ambas cosas al mismo tiempo?" En efecto, y es justo lo siguiente que vamos a revisar.
 
 ### Exceso de ceros y sobre dispersión: Regresión Binomial Negativa Inflada en Cero
 
@@ -345,8 +351,8 @@ Esto quiere decir que los coeficientes no son aditivos, sino multiplicativos:
 1. Intercepto: $e^\alpha$, valor de $\theta$ cuando $x = 0$. Si este parámetro es o no de interés depende totalmente del problema.
 2. Pendiente(s): $e^\beta$.
   - Si $\beta = 0$, entonces $e^\beta = 1$; es decir, no hay un efecto del predictor.
-  - Si $\beta > 0$, entonces $e^\beta > 1$; es decir, el predictor incrementa el valor de $\theta$ a una tasa de $e^\beta$ por cada incremento unitario en $x$
-  - Si $\beta < 0$, entonces $e^\beta < 1$; es decir, el predictor disminuye el valor de $\theta$ a una tasa de $e^\beta$ por cada incremento unitario en $x$.
+  - Si $\beta > 0$, entonces $e^\beta > 1$; es decir, el predictor incrementa el valor de $\theta$ a una **tasa** de $e^\beta$ por cada incremento unitario en $x$
+  - Si $\beta < 0$, entonces $e^\beta < 1$; es decir, el predictor disminuye el valor de $\theta$ a una **tasa** de $e^\beta$ por cada incremento unitario en $x$.
 
 Recuperemos los coeficientes de nuestra regresión binomial negativa inflada en cero y exponenciémoslos:
 
@@ -361,7 +367,7 @@ Pongamos atención solo a aquellos coeficientes con `count_`, pues son los que r
   - Child: El promedio de peces capturados disminuye 0.4 veces por cada hijo adicional.
   - Camper: Si el pescador tiene un camper, el promedio de peces capturados incrementa 2.2 veces.
   
-**Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario re-convertir (eliminar el enlace) para poder interpretarlos.**
+**Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario aplicar el enlace para poder interpretarlos.**
 
 Gráficamente:
 
@@ -370,36 +376,179 @@ fish$pred <- predict(zi_bineg, type = "response")
 
 ggplot(data = fish, aes(x = child, y = count, color = factor(camper))) +
   geom_point() +
-  geom_line(aes(y = pred))
+  geom_line(aes(y = pred)) +
+  labs(title = "GLM Binomial negativo",
+       x = "Número de hijos",
+       y = "Peces capturados") +
+  #scale_color_discrete(name = "Camper", labels = c("NO", "SI")) +
+  scale_y_continuous(limits = c(0, 50))
 ```
 
-  
+Y ahora podemos hablar de la selección de modelos.
 
-Y ahora es un buen momento para hablar de la comparación de modelos.
+## Selección de modelos
+
+El tener varios varios modelos candidatos no es algo extraño, entonces es necesario tener algún tipo de criterio que nos permita comparar entre ellos. Una aproximación es la que hemos utilizado hasta el momento; es decir, utilizar el Criterio de Información de Akaike (AIC) y seleccionar el menor. ¿Qué es el AIC y con qué se come?
+
+### Criterio de Información de Akaike
+
+El AIC es un criterio basado en **teoría de la información**, particularmente en la **divergencia Kullback-Leibler**. Ese detalle matemático va más allá del alcance de este curso; sin embargo, podemos entender que está basado en la verosimilitud de un modelo dado; es decir, qué tan verosímil es que ese modelo haya generado los datos. Un detalle es que, como hemos visto en sesiones anteriores, el "ajuste" de un modelo es directamente proporcional a su complejidad (al menos vs. los datos de entrenamiento). Es, entonces, necesario penalizar de alguna manera el número de parámetros en el modelo, para no comernos un "gol" con un modelo excesivamente complejo. Puesto en una ecuación, el AIC queda de la siguiente manera:
+
+$$
+AIC = -2ln(L) + 2k
+$$
+
+Donde $L$ es la verosimilitud del modelo y $k$ el número de parámetros. Si nuestro modelo tiene un gran número de parámetros, el valor de AIC se hará más grande, mientras que, si tiene un menor número, se hará más pequeño. ¿Qué nos dice un AIC en sí mismo? NADA, absolutamente nada. Si yo te digo que un modelo tiene un AIC de 800 no puedes saber si es bueno o malo, pues no hay una referencia. Esto nos lleva a hablar sobre algunas consideraciones que debemos de tener al utilizar el AIC:
+
+1. Valores más bajos indican modelos más parsimoniosos.
+2. Es una **medida relativa** de la parsimonia de un modelo, por lo que solo tiene sentido cuando comparamos AIC para hipótesis (modelos) alternativas.
+3. Podemos comparar modelos no anidados. De hecho, podríamos comparar un modelo lineal con uno no lineal.
+4. Las comparaciones son válidas **SOLO** para modelos ajustados con los mismos valores de respuesta; *i.e.*, mismos valores de $y$.
+5. Comparar muchos modelos con AIC es una mala idea, pues caemos en el mismo problema de las comparaciones múltiples, donde podemos encontrar por azar un modelo con el valor más bajo de AIC, cuando en realidad no es el modelo más apropiado.
+6. Para variar, cuando tratamos con tamaños de muestra pequeños (n/k < 40) el AIC pierde confiabilidad, por lo que hay que aplicar una corrección: 
+  - $AIC_c = AIC + \frac{2k(k+1)}{n-k-1}$
+  - Dado que conforme incrementa n, el $AIC_c$ se aproxima al $AIC$, es una buena idea utilizar $AIC_c$.
+6. Podemos encontrar múltiples modelos que tengan AICs similares, esto solo sugiere que estas hipótesis alternativas tienen soportes similares. ¿Qué tanto es tantito? Esa respuesta es un poco más compleja, y requiere que presentemos el $\Delta{AIC}$
+  - $\Delta AIC = AIC_i - AIC_{min}$; es decir, la diferencia de cada AIC respecto al valor mínimo de AIC entre los modelos candidatos. Esta transformación forza al "mejor" modelo a tener un $\Delta AIC = 0$, y representa la pérdida de información si utilizamos un modelo candidato $m_i$ en vez de $m_min$.
+  - Modelos con un $\Delta_i \leq 2$ tienen soporte substancial (evidencia),
+  - Modelos con un $4 \leq \Delta_i \leq 7$ tienen considerablemente menos soporte y
+  - Modelos con $\Delta_i > 10$ carecen, escencialmente, de soporte.
+  
+Recuperemos nuestra comparación anterior, calculemos los $AIC_c$ (con la función `AICc` de la librería `MuMIn`) y calculemos los $\Delta_i$. Como mencionábamos antes, los modelos con distribuciones binomial negativas son los que tienen el mayor soporte, mientras que los Poisson carecen de cualquier soporte (dados estos datos y modelos candidatos). También podemos ver que pesa más la sobredispersión que el exceso de ceros, pues el modelo inflado en cero es marginalmente mejor que aquel no inflado.
 
 ```{r}
+AICs <- MuMIn::AICc(poiss, zi_poiss, bineg, zi_bineg)
+AICs$Delta <- AICs$AIC - min(AICs$AIC)
+AICs
+```
 
+## Regresiones para clases
+
+En la sesión de [clasificación](https://arturobell.github.io/Bioestadistica_R/c14_clasificacion.html) hablamos sobre los problemas de clasificación, y aplicamos una **regresión logística**; sin embargo, no entramos en detalles. Aprovechemos, entonces, para revisar un poco más a profundidad la intuición detrás de ella.
+
+### Regresión logística binaria
+
+Cuando la revisamos anteriormente, definimos a la regresión logística como un modelo de RL al cual aplicaríamos una función logística, lo que nos permite restringir nuestra salida al intervalo $[0,1]$ y, por lo tanto, predecir la probabilidad de pertenencia a una clase dada. Esa definición es correcta para resumir lo más posible la técnica; sin embargo, los detalles son un poco más complejos.
+
+La regresión logística forma parte de los GLMs; por lo tanto, consta de un predictor lineal, una familia de distribución del error y una función de enlace. La familia de distribución del error es **binomial**; es decir, está en términos de la **probabilidad de éxitos** vs. la probabilidad de fracasos. Es por esto que la regresión logística tradicional solo nos permite clasificar entre dos clases. Esto ya lo sabíamos, simplemente lo estamos formalizando, lo que tiene un poco más de detalles es la función de enlace: la **función logística**:
+
+$$
+logit(z) = \frac{1}{1 + e^{-z}}
+$$
+
+Esta función tiene la peculiaridad de que, independientemente de los valores de $z$ (el predictor lineal), el resultado siempre estará contenido entre 0 y 1, el cual es, convenientemente, el mismo que el dominio del parámetro $p$ de la distribución binomial (la probabilidad de éxito). Expresado matemáticamente:
+
+$$
+\theta = logit(\alpha + \beta x)\\
+y = Binom(\theta)
+$$
+
+Apliquemos entonces una regresión logística para clasificar entre `versicolor` y `virginica` de la base `iris`, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:
+
+```{r}
+iris_dat <- iris
+iris_dat <- subset(iris, Species == "versicolor" | Species == "virginica")
 ```
 
 
+Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y que puedes también puedes entrenar los glm utilizando la función `caret::train()`. Por practicidad, hagámoslo directamente.
 
+```{r}
+logit_reg <- glm(Species~., data = iris_dat, family = "binomial")
+summary(logit_reg)
+```
 
+Y obtengámos los gráficos parciales, utilizando la función `visreg(mod, scale = "response", ylab = "P(Especie), gg = TRUE)`, donde `mod` es el modelo aujustado:
 
+```{r}
+partial_plots <- visreg::visreg(logit_reg, scale = "response", ylab = "P(Especie)", gg = TRUE)
 
+for (plt in partial_plots) {
+  plot(plt +
+         scale_y_continuous(n.breaks = 3,
+                            labels = c("versicolor", 0.5, "virginica")) +
+         blank_theme())
+}
+```
 
+Esto ya lo conocíamos, pero ¿cómo interpretamos los coeficientes? Antes de pasar a eso, es necesario que pongamos atención al argumento `scale` de `visreg`, el cual indicamos como `response`. Esto lo que hizo fue poner nuestra salida en lo que nos interesa: la probabilidad de pertenencia a una especie, dadas las medidas de cada variable. Veamos qué pasa si retiramos ese argumento:
 
+```{r}
+partial_plots <- visreg::visreg(logit_reg, ylab = "P(Especie)", gg = TRUE)
 
+for (plt in partial_plots) {
+  plot(plt + blank_theme())
+}
+```
 
+Ahora nuestros gráficos están en la escala de nuestro modelo lineal; es decir, con `response` estamos introduciendo la función de enlace y graficando el GLM completo; sin embargo, esto no está presente en los coeficientes "crudos" arrojados por la función GLM, por lo que toca aplicar el álgebra correspondiente:
 
+El modelo básico es:
 
+$$
+\theta = logistic(\alpha + \beta x)
+$$
 
+El inverso de la función logística es la función **logit**, dada por:
 
+$$
+logit(z) = log \left( \frac{z}{1-z} \right)
+$$
 
+Por lo que si tomamos la primera ecuación y aplicamos la función logit a ambos términos, obtenemos esta ecuación:
 
+$$
+logit(\theta) = \alpha + \beta x
+$$
 
+O, de manera equivalente:
 
+$$
+log \left( \frac{\theta}{1-\theta} \right) = \alpha + \beta x
+$$
 
+Ahora, recordemos que $\theta$ en nuestro modelo es $p(y = 1)$ (la probabilidad de "éxito", o de ser `virginica`):
 
+$$
+log \left(\frac{p(y = 1)}{1 - p(y = 1)} \right) = \alpha + \beta x
+$$
 
+La cantidad $\frac{p(y = 1)}{1 - p(y = 1)}$ se conoce como los *odds*, que representan la probabilidad de éxito sobre la probabilidad de fracaso. Mientras que la probabilidad de obtener 2 al lanzar un dado es de 1/6, los *odds* para el mismo evento son $\frac{1/6}{5/6} \approx 0.2$, o un éxito a cinco fracasos. En una regresión logística, $\beta$ representa el incremento en *log-odds* por incremento unitario en $x$, no en la probabilidad de pertenencia a una clase, aunque la relación entre *odds* y probabilidad es monótona; es decir, conforme incrementa una, la otra también.
 
+### Regresión logística multinomial
 
+Al igual que en el caso anterior, simplemente extenderemosaquellos detalles que no se aterrizaron por completo, particularmente el utilizar una red neuronal como análogo a una regresión logística multinomial. Como acabamos de ver, una regresión logística binaria nos permite predecir la probabilidad de éxito; *i.e.*, de pertenecer a una sola clase. ¿Cómo lo extendemos a más de dos clases? Podemos construir modelos una clase vs. las demás, podemos utilizar una regresión **softmax**, o podemos utilizar una red neuronal. Una red neuronal está formada por capas, las cuales están conectadas entre sí tal cual neuronas:
+
+![NN](https://miro.medium.com/max/585/1*lk7bbg9gbYKpDYSHABaDOg.png)
+
+Tenemos una capa de entrada, correspondiente a nuestros valores, seguida de una o más capas ocultas, compuestas por neuronas (perceptrones) que tienen funciones de activación, las cuales están conectadas por constantes multiplicadoras (pesos o *weights*) a las cuales se les añade una constante (sesgo o *bias*), cuyo resultado, finalmente, se envía a la capa de salida $y$ (nuestras clases objetivo), resultando en la siguiente forma:
+
+$$
+y = f(bias + \sum(weight*input))
+$$
+Gráficamente:
+
+![Neurona](https://miro.medium.com/max/346/1*dyeq4DKbXlNqPN6mnfN0vw.png)
+¿Suena familiar? Con solo una capa oculta y una función ($f$) de identidad tendríamos un modelo lineal cualquiera, solo que se ajusta mediante descenso estocástico de gradiente (fuera de esta discusión) en vez de mínimos cuadrados o máxima verosimilitud. Si esa función $f$ la hacemos una función sigmoide (logística), tenemos entonces una regresión logística para más de dos clases. En un sentido estricto, esta aproximación no es un GLM (no tenemos una familia de distribución del error), pero se puede considerar una generalización a más de dos clases. Algo importante a tener en cuenta es que al ajustar este modelo, R toma una clase como referencia, para la cual no otorga los coeficientes. En este caso, es setosa.
+
+```{r}
+logit_mult <- caret::train(form = Species~.,
+                          data = iris,
+                          method = "multinom",
+                          trace = F)
+summary(logit_mult)
+```
+
+¿Es un problema? Sí y no. Usualmente nos interesa solo saber qué variables son más importantes para la clasificación; es decir, qué variables son más "diferentes" entre nuestras clases, para lo cual podemos utilizar la función `VarImp`:
+
+```{r}
+caret::varImp(logit_mult, scale = F)
+```
+
+Esta importancia de variables está dada por la suma de absolutos de los coeficientes para una variable (ver lecturas recomendadas para más detalles). Una manera más fácil de interpretarlos es utilizando los valores escalados con respecto al valor máximo:
+
+```{r}
+caret::varImp(logit_mult)
+```
+
+Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los únicos. Si te interesa modelar el tiempo entre eventos puedes utilizar un modelo Gamma, puedes cambiar la relación entre la media y la varianza de la regresión para conteos utilizando un modelo Quasi-Poisson en vez de un modelo con distribución binomial negativa (ver lecturas recomendadas), entre otros.
