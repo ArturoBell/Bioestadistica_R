@@ -2391,10 +2391,10 @@ data:  LT by Dieta
 W = 1408, p-value = 0.223
 alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
-Este resultado corresponde bastante bien con lo visto en los gráficos de
-densidad en el sentido de falta de diferencias, aunque podemos
+<p>Este resultado corresponde bastante bien con lo visto en los gráficos
+de densidad en el sentido de falta de diferencias, aunque podemos
 representarlo utilizando un gráfico de violín que es más adecuado para
-propósitos de comparación:
+propósitos de comparación:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>u.mann.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>u.data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Dieta</span>, y <span class='op'>=</span> <span class='va'>LT</span>, fill <span class='op'>=</span> <span class='va'>Dieta</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
@@ -2551,8 +2551,7 @@ valdría la pena que buscaras y analizaras, como estas de aquí.</p>
 <p>Ahora vayamos a R y apliquemos estas técnicas a nuestros datos por
 bloques. Para ello necesitaremos cambiar el formato de la base de datos
 de una base de datos tabular a una base de datos codificada utilizando
-la función <code>melt(data, id.vars, variable.name,
-value.name)</code></p>
+la función <code>melt()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bloques.molten</span> <span class='op'>&lt;-</span> <span class='fu'>reshape2</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span><span class='op'>(</span><span class='va'>bloques</span>, id.vars <span class='op'>=</span> <span class='st'>"Pez"</span>,
@@ -2599,8 +2598,9 @@ value.name)</code></p>
 36   9    D 105</code></pre>
 </div>
 <p>Ahora podemos aplicar la prueba de Friedman utilizando la función
-<code>friedman.test(a ~ b|c)</code>, donde a representa la variable de
-medición, b los grupos y c los bloques.</p>
+<code>friedman.test(a ~ b|c)</code>, donde <code>a</code> representa la
+variable de medición, <code>b</code> los grupos y <code>c</code> los
+bloques.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/friedman.test.html'>friedman.test</a></span><span class='op'>(</span><span class='va'>Act</span><span class='op'>~</span><span class='va'>Secc</span><span class='op'>|</span><span class='va'>Pez</span>, data <span class='op'>=</span> <span class='va'>bloques.molten</span><span class='op'>)</span>
@@ -2651,7 +2651,8 @@ Friedman no son confiables.</p>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#if(!require(DescTools)) install.packages("DescTools", dependencies = T)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://andrisignorell.github.io/DescTools/'>DescTools</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://andrisignorell.github.io/DescTools/reference/KendallW.html'>KendallW</a></span><span class='op'>(</span><span class='va'>bloques</span>, correct <span class='op'>=</span> <span class='cn'>T</span>, test <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='co'>#Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques</span>
+<span class='co'>#Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques</span>
+<span class='fu'><a href='https://andrisignorell.github.io/DescTools/reference/KendallW.html'>KendallW</a></span><span class='op'>(</span><span class='va'>bloques</span>, correct <span class='op'>=</span> <span class='cn'>T</span>, test <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>
@@ -2747,7 +2748,7 @@ C-B      -2.222222 0.6851
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-Corroboremos esto de manera gráfica:
+<p>Corroboremos esto de manera gráfica:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>kruskal.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>Periodo</span> <span class='op'>==</span> <span class='st'>"F"</span><span class='op'>)</span>, 

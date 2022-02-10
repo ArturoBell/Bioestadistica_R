@@ -2139,7 +2139,13 @@ Cero</a></li>
 <li><a href="#criterio-de-información-de-akaike">Criterio de Información
 de Akaike</a></li>
 </ul></li>
-<li><a href="#regresiones-para-clases">Regresiones para clases</a></li>
+<li><a href="#regresiones-para-clases">Regresiones para clases</a>
+<ul>
+<li><a href="#regresión-logística-binaria">Regresión logística
+binaria</a></li>
+<li><a href="#regresión-logística-multinomial">Regresión logística
+multinomial</a></li>
+</ul></li>
 </ul>
 </nav>
 </div>
@@ -2149,6 +2155,10 @@ de Akaike</a></li>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>stats4</span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/paul-buerkner/brms'>brms</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://pbreheny.github.io/visreg'>visreg</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://github.com/atahk/pscl'>pscl</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://www.stats.ox.ac.uk/pub/MASS4/'>MASS</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>MuMIn</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2200,7 +2210,7 @@ Negativa y sus variantes infladas en zeros.</li>
 modelos</strong>; <em>i.e.</em>, cómo seleccionar el mejor de un
 conjunto de modelos candidatos.</li>
 <li><strong>Regresiones para clases</strong>: Regresión logística
-binomial y softmax.</li>
+binomial y multinomial.</li>
 </ul>
 <p><strong>OJO: Por practicidad obviaré la división datos de
 entrenamiento-prueba; sin embargo, es algo que SIEMPRE se debe de tener
@@ -2291,12 +2301,13 @@ F-statistic: 17.97 on 1 and 9 DF,  p-value: 0.002176</code></pre>
 </div>
 <p><img src="c16_glm_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
 </div>
-<p>No se ve mal; sin embargo es claro que el punto extremo está
+<p>No se ve mal; sin embargo, es claro que el punto extremo está
 influenciando la estimación.Podemos aplicar algún criterio de detección
 de valores extremos (o deformar nuestros datos) para cumplir con el
-supuesto de normalidad; sin embargo, más que <em>parchar</em> nuestros
-datos, es preferible modificar nuestro modelo. Cambiemos entonces a una
-regresión con una verosimilitud <em>t</em> de Student:</p>
+supuesto de normalidad; sin embargo, <strong>más que parchar nuestros
+datos, es preferible modificar nuestro modelo</strong>. Cambiemos
+entonces a una regresión con una verosimilitud <em>t</em> de
+Student:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>LLt</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>b0</span>, <span class='va'>b1</span>, <span class='va'>df</span>, <span class='va'>sigma</span><span class='op'>)</span><span class='op'>{</span>
@@ -2524,7 +2535,8 @@ un pescador, considerando el número de hijos y si llevan o no un
 camper:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fish</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"https://stats.idre.ucla.edu/stat/data/fish.csv"</span><span class='op'>)</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"child"</span>, <span class='st'>"camper"</span>, <span class='st'>"count"</span><span class='op'>)</span><span class='op'>]</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>csvurl</span> <span class='op'>&lt;-</span> <span class='st'>"https://stats.idre.ucla.edu/stat/data/fish.csv"</span>
+<span class='va'>fish</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='va'>csvurl</span><span class='op'>)</span><span class='op'>[</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"child"</span>, <span class='st'>"camper"</span>, <span class='st'>"count"</span><span class='op'>)</span><span class='op'>]</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fish</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2562,13 +2574,13 @@ función <code>lm</code>, salvo que indicaremos la familia como un
 argumento adicional:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>poiss</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>count</span><span class='op'>~</span><span class='va'>child</span><span class='op'>+</span><span class='va'>camper</span>, data <span class='op'>=</span> <span class='va'>fish</span>, family <span class='op'>=</span> <span class='st'>"poisson"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>poiss</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>count</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>fish</span>, family <span class='op'>=</span> <span class='st'>"poisson"</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>poiss</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>
 Call:
-glm(formula = count ~ child + camper, family = &quot;poisson&quot;, data = fish)
+glm(formula = count ~ ., family = &quot;poisson&quot;, data = fish)
 
 Deviance Residuals: 
     Min       1Q   Median       3Q      Max  
@@ -2627,23 +2639,15 @@ una función de enlace logarítmica, que es el equivalente a la función de
 enlace inverso que revisamos antes.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/family.html'>poisson</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>List of 12
- $ family    : chr &quot;poisson&quot;
- $ link      : chr &quot;log&quot;
- $ linkfun   :function (mu)  
- $ linkinv   :function (eta)  
- $ variance  :function (mu)  
- $ dev.resids:function (y, mu, wt)  
- $ aic       :function (y, n, mu, wt, dev)  
- $ mu.eta    :function (eta)  
- $ initialize:  expression({  if (any(y &lt; 0))  stop(&quot;negative values not allowed for the &#39;Poisson&#39; family&quot;)  n &lt;- rep.int(1, nobs| __truncated__
- $ validmu   :function (mu)  
- $ valideta  :function (eta)  
- $ simulate  :function (object, nsim)  
- - attr(*, &quot;class&quot;)= chr &quot;family&quot;</code></pre>
+<pre><code>List of 5
+ $ family  : chr &quot;poisson&quot;
+ $ link    : chr &quot;log&quot;
+ $ linkfun :function (mu)  
+ $ linkinv :function (eta)  
+ $ variance:function (mu)  </code></pre>
 </div>
 <h3 id="exceso-de-ceros-regresión-poisson-inflada-en-cero">Exceso de
 ceros: Regresión Poisson Inflada en Cero</h3>
@@ -2770,11 +2774,11 @@ Number of Fisher Scoring iterations: 1
 </div>
 <p>Notarás que esta salida es prácticamente la misma que la que tuvimos
 en nuestro GLM Poisson, salvo que ahora nos da el valor del parámetro de
-sobredispersión. ¿Cómo se si, en efecto, mis datos están
-sobre-dispersos? Para eso podemos utilizar una prueba de razón de
-verosimilitud, en la cual compararemos la verosimilitud de ambos modelos
-(binomial negativa y Poisson) y veremos si se ajustan a la misma
-distribución; es decir, la prueba de razón de verosimilitud es una
+sobredispersión. Te estarás preguntando: ¿Cómo sé si, en efecto, mis
+datos están sobre-dispersos? Para eso podemos utilizar una prueba de
+razón de verosimilitud, en la cual compararemos la verosimilitud de
+ambos modelos (binomial negativa y Poisson) y veremos si se ajustan a la
+misma distribución; es decir, la prueba de razón de verosimilitud es una
 prueba de bondad de ajuste, con distribución <span
 class="math inline">\(\chi^2\)</span>. ¿Qué es lo que estamos
 comparando? Si el parámetro adicional ayuda a que el ajuste del modelo
@@ -2795,8 +2799,8 @@ Chi-Square Test Statistic =  1837.7652 p-value = &lt; 2.2e-16 </code></pre>
 <p>A ojo de buen cubero era más que evidente que nuestros datos estaban
 sobre dispersos, por lo que estos resultados no son sorprendentes. Algo
 que puedes pensar es “si estoy comparando qué modelo está mejor
-ajustado, ¿puedo entonces utilizar el AIC?” Y la respuesta es, en
-efecto:</p>
+ajustado, ¿puedo entonces utilizar el AIC?” Y la respuesta es, por
+supuesto:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>AIC</a></span><span class='op'>(</span><span class='va'>poiss</span>, <span class='va'>zi_poiss</span>, <span class='va'>bineg</span><span class='op'>)</span>
@@ -2811,8 +2815,7 @@ bineg     4  887.4206</code></pre>
 punto podrías preguntarme: “Ok, Arturo, ya corregimos para el exceso de
 ceros y para la sobre dispersión, pero lo hicimos de manera
 independiente. ¿Hay alguna manera de hacer ambas cosas al mismo tiempo?”
-Y la respuesta es, en efecto, y es justo lo siguiente que vamos a
-revisar.</p>
+En efecto, y es justo lo siguiente que vamos a revisar.</p>
 <h3
 id="exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero">Exceso
 de ceros y sobre dispersión: Regresión Binomial Negativa Inflada en
@@ -2908,13 +2911,15 @@ del predictor.</li>
 <li>Si <span class="math inline">\(\beta &gt; 0\)</span>, entonces <span
 class="math inline">\(e^\beta &gt; 1\)</span>; es decir, el predictor
 incrementa el valor de <span class="math inline">\(\theta\)</span> a una
-tasa de <span class="math inline">\(e^\beta\)</span> por cada incremento
-unitario en <span class="math inline">\(x\)</span></li>
+<strong>tasa</strong> de <span class="math inline">\(e^\beta\)</span>
+por cada incremento unitario en <span
+class="math inline">\(x\)</span></li>
 <li>Si <span class="math inline">\(\beta &lt; 0\)</span>, entonces <span
 class="math inline">\(e^\beta &lt; 1\)</span>; es decir, el predictor
 disminuye el valor de <span class="math inline">\(\theta\)</span> a una
-tasa de <span class="math inline">\(e^\beta\)</span> por cada incremento
-unitario en <span class="math inline">\(x\)</span>.</li>
+<strong>tasa</strong> de <span class="math inline">\(e^\beta\)</span>
+por cada incremento unitario en <span
+class="math inline">\(x\)</span>.</li>
 </ul>
 <p>Recuperemos los coeficientes de nuestra regresión binomial negativa
 inflada en cero y exponenciémoslos:</p>
@@ -2941,8 +2946,8 @@ hijo adicional.</li>
 capturados incrementa 2.2 veces.</li>
 </ul>
 <p><strong>Corolario: La interpretación depende totalmente de la función
-de enlace que utilicemos, y siempre es necesario re-convertir (eliminar
-el enlace) para poder interpretarlos.</strong></p>
+de enlace que utilicemos, y siempre es necesario aplicar el enlace para
+poder interpretarlos.</strong></p>
 <p>Gráficamente:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2954,7 +2959,7 @@ el enlace) para poder interpretarlos.</strong></p>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"GLM Binomial negativo"</span>,
        x <span class='op'>=</span> <span class='st'>"Número de hijos"</span>,
        y <span class='op'>=</span> <span class='st'>"Peces capturados"</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Camper"</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NO"</span>, <span class='st'>"SI"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='co'>#scale_color_discrete(name = "Camper", labels = c("NO", "SI")) +</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>50</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2969,36 +2974,34 @@ el momento; es decir, utilizar el Criterio de Información de Akaike
 (AIC) y seleccionar el menor. ¿Qué es el AIC y con qué se come?</p>
 <h3 id="criterio-de-información-de-akaike">Criterio de Información de
 Akaike</h3>
-<p>El AIC es un criterio basado en teoría de la información,
-particularmente en la <strong>divergencia Kullback-Leibler</strong>. Ese
-detalle matemático va más allá del alcance de este curso; sin embargo,
-podemos entender que está basado en la verosimilitud de un modelo dado;
-es decir, qué tan verosímil es que ese modelo haya generado los datos.
-Un detalle es que, como hemos visto en sesiones anteriores, el “ajuste”
-de un modelo es directamente proporcional a su complejidad (al menos
-vs. los datos de entrenamiento). Es, entonces, necesario penalizar de
-alguna manera el número de parámetros en el modelo, para no comernos un
-“gol” con un modelo excesivamente complejo. Puesto en una ecuación, el
-AIC queda de la siguiente manera:</p>
+<p>El AIC es un criterio basado en <strong>teoría de la
+información</strong>, particularmente en la <strong>divergencia
+Kullback-Leibler</strong>. Ese detalle matemático va más allá del
+alcance de este curso; sin embargo, podemos entender que está basado en
+la verosimilitud de un modelo dado; es decir, qué tan verosímil es que
+ese modelo haya generado los datos. Un detalle es que, como hemos visto
+en sesiones anteriores, el “ajuste” de un modelo es directamente
+proporcional a su complejidad (al menos vs. los datos de entrenamiento).
+Es, entonces, necesario penalizar de alguna manera el número de
+parámetros en el modelo, para no comernos un “gol” con un modelo
+excesivamente complejo. Puesto en una ecuación, el AIC queda de la
+siguiente manera:</p>
 <p><span class="math display">\[
 AIC = -2ln(L) + 2k
 \]</span></p>
 <p>Donde <span class="math inline">\(L\)</span> es la verosimilitud del
 modelo y <span class="math inline">\(k\)</span> el número de parámetros.
 Si nuestro modelo tiene un gran número de parámetros, el valor de AIC se
-hará más grande, mientras que si tiene un menor número se hará más
+hará más grande, mientras que, si tiene un menor número, se hará más
 pequeño. ¿Qué nos dice un AIC en sí mismo? NADA, absolutamente nada. Si
-yo te digo que un modelo que construí tiene un AIC de 800 no puedes
-saber si es bueno o malo, pues no hay una referencia. <strong>El AIC es
-útil solamente como medida relativa</strong>; es decir, solo cuando
-estemos comparando dos o más valores de AIC. Esto nos lleva a hablar
-sobre algunas consideraciones que debemos de tener al utilizar el
-AIC:</p>
+yo te digo que un modelo tiene un AIC de 800 no puedes saber si es bueno
+o malo, pues no hay una referencia. Esto nos lleva a hablar sobre
+algunas consideraciones que debemos de tener al utilizar el AIC:</p>
 <ol type="1">
 <li>Valores más bajos indican modelos más parsimoniosos.</li>
-<li>Es una medida <strong>relativa</strong> de la parsimonia de un
+<li>Es una <strong>medida relativa</strong> de la parsimonia de un
 modelo, por lo que solo tiene sentido cuando comparamos AIC para
-hipótesis (modelos) alternativos.</li>
+hipótesis (modelos) alternativas.</li>
 <li>Podemos comparar modelos no anidados. De hecho, podríamos comparar
 un modelo lineal con uno no lineal.</li>
 <li>Las comparaciones son válidas <strong>SOLO</strong> para modelos
@@ -3038,11 +3041,12 @@ class="math inline">\(m_min\)</span>.</li>
 tienen soporte substancial (evidencia),</li>
 <li>Modelos con un <span class="math inline">\(4 \leq \Delta_i \leq
 7\)</span> tienen considerablemente menos soporte y</li>
-<li>Modelos con <span class="math inline">\(\Delta_i &gt; 10\)</span> no
-tienen, escencialmente, soporte.</li>
+<li>Modelos con <span class="math inline">\(\Delta_i &gt; 10\)</span>
+carecen, escencialmente, de soporte.</li>
 </ul>
 <p>Recuperemos nuestra comparación anterior, calculemos los <span
-class="math inline">\(AIC_c\)</span> y calculemos los <span
+class="math inline">\(AIC_c\)</span> (con la función <code>AICc</code>
+de la librería <code>MuMIn</code>) y calculemos los <span
 class="math inline">\(\Delta_i\)</span>. Como mencionábamos antes, los
 modelos con distribuciones binomial negativas son los que tienen el
 mayor soporte, mientras que los Poisson carecen de cualquier soporte
@@ -3065,10 +3069,273 @@ zi_bineg  7  884.2755    0.000000</code></pre>
 <h2 id="regresiones-para-clases">Regresiones para clases</h2>
 <p>En la sesión de <a
 href="https://arturobell.github.io/Bioestadistica_R/c14_clasificacion.html">clasificación</a>
-hablamos sobre los problemas de clasificación, y aplicamos la regresión
-logística; sin embargo, no entramos en detalles completos. Aprovechemos,
-entonces, el tiempo para hacerlo ahora.</p>
-<div class="sourceCode" id="cb18"><pre
+hablamos sobre los problemas de clasificación, y aplicamos una
+<strong>regresión logística</strong>; sin embargo, no entramos en
+detalles. Aprovechemos, entonces, para revisar un poco más a profundidad
+la intuición detrás de ella.</p>
+<h3 id="regresión-logística-binaria">Regresión logística binaria</h3>
+<p>Cuando la revisamos anteriormente, definimos a la regresión logística
+como un modelo de RL al cual aplicaríamos una función logística, lo que
+nos permite restringir nuestra salida al intervalo <span
+class="math inline">\([0,1]\)</span> y, por lo tanto, predecir la
+probabilidad de pertenencia a una clase dada. Esa definición es correcta
+para resumir lo más posible la técnica; sin embargo, los detalles son un
+poco más complejos.</p>
+<p>La regresión logística forma parte de los GLMs; por lo tanto, consta
+de un predictor lineal, una familia de distribución del error y una
+función de enlace. La familia de distribución del error es
+<strong>binomial</strong>; es decir, está en términos de la
+<strong>probabilidad de éxitos</strong> vs. la probabilidad de fracasos.
+Es por esto que la regresión logística tradicional solo nos permite
+clasificar entre dos clases. Esto ya lo sabíamos, simplemente lo estamos
+formalizando, lo que tiene un poco más de detalles es la función de
+enlace: la <strong>función logística</strong>:</p>
+<p><span class="math display">\[
+logit(z) = \frac{1}{1 + e^{-z}}
+\]</span></p>
+<p>Esta función tiene la peculiaridad de que, independientemente de los
+valores de <span class="math inline">\(z\)</span> (el predictor lineal),
+el resultado siempre estará contenido entre 0 y 1, el cual es,
+convenientemente, el mismo que el dominio del parámetro <span
+class="math inline">\(p\)</span> de la distribución binomial (la
+probabilidad de éxito). Expresado matemáticamente:</p>
+<p><span class="math display">\[
+\theta = logit(\alpha + \beta x)\\
+y = Binom(\theta)
+\]</span></p>
+<p>Apliquemos entonces una regresión logística para clasificar entre
+<code>versicolor</code> y <code>virginica</code> de la base
+<code>iris</code>, solo para ilustrar cómo interpretar los coeficientes.
+Primero, filtremos los datos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>iris_dat</span> <span class='op'>&lt;-</span> <span class='va'>iris</span>
+<span class='va'>iris_dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"versicolor"</span> <span class='op'>|</span> <span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"virginica"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Ahora ajustemos el modelo. No te olvides de dividir en
+entrenamiento-prueba (o, mejor aún, realizar validación cruzada),
+considerar si es necesario escalar los datos, y que puedes también
+puedes entrenar los glm utilizando la función
+<code>caret::train()</code>. Por practicidad, hagámoslo
+directamente.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logit_reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris_dat</span>, family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>logit_reg</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Call:
+glm(formula = Species ~ ., family = &quot;binomial&quot;, data = iris_dat)
+
+Deviance Residuals: 
+     Min        1Q    Median        3Q       Max  
+-2.01105  -0.00541  -0.00001   0.00677   1.78065  
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept)   -42.638     25.707  -1.659   0.0972 .
+Sepal.Length   -2.465      2.394  -1.030   0.3032  
+Sepal.Width    -6.681      4.480  -1.491   0.1359  
+Petal.Length    9.429      4.737   1.991   0.0465 *
+Petal.Width    18.286      9.743   1.877   0.0605 .
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 138.629  on 99  degrees of freedom
+Residual deviance:  11.899  on 95  degrees of freedom
+AIC: 21.899
+
+Number of Fisher Scoring iterations: 10</code></pre>
+</div>
+<p>Y obtengámos los gráficos parciales, utilizando la función
+<code>visreg(mod, scale = "response", ylab = "P(Especie), gg =
+TRUE)</code>, donde <code>mod</code> es el modelo aujustado:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>partial_plots</span> <span class='op'>&lt;-</span> <span class='fu'>visreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/visreg/man/visreg.html'>visreg</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, scale <span class='op'>=</span> <span class='st'>"response"</span>, ylab <span class='op'>=</span> <span class='st'>"P(Especie)"</span>, gg <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>plt</span> <span class='kw'>in</span> <span class='va'>partial_plots</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='va'>plt</span> <span class='op'>+</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>,
+                            labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"versicolor"</span>, <span class='fl'>0.5</span>, <span class='st'>"virginica"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+         <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+<p><img src="c16_glm_files/figure-html5/unnamed-chunk-29-1.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-29-2.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-29-3.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-29-4.png" width="624" /></p>
+</div>
+<p>Esto ya lo conocíamos, pero ¿cómo interpretamos los coeficientes?
+Antes de pasar a eso, es necesario que pongamos atención al argumento
+<code>scale</code> de <code>visreg</code>, el cual indicamos como
+<code>response</code>. Esto lo que hizo fue poner nuestra salida en lo
+que nos interesa: la probabilidad de pertenencia a una especie, dadas
+las medidas de cada variable. Veamos qué pasa si retiramos ese
+argumento:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>partial_plots</span> <span class='op'>&lt;-</span> <span class='fu'>visreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/visreg/man/visreg.html'>visreg</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, ylab <span class='op'>=</span> <span class='st'>"P(Especie)"</span>, gg <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>plt</span> <span class='kw'>in</span> <span class='va'>partial_plots</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='va'>plt</span> <span class='op'>+</span> <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+<p><img src="c16_glm_files/figure-html5/unnamed-chunk-30-1.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-30-2.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-30-3.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-30-4.png" width="624" /></p>
+</div>
+<p>Ahora nuestros gráficos están en la escala de nuestro modelo lineal;
+es decir, con <code>response</code> estamos introduciendo la función de
+enlace y graficando el GLM completo; sin embargo, esto no está presente
+en los coeficientes “crudos” arrojados por la función GLM, por lo que
+toca aplicar el álgebra correspondiente:</p>
+<p>El modelo básico es:</p>
+<p><span class="math display">\[
+\theta = logistic(\alpha + \beta x)
+\]</span></p>
+<p>El inverso de la función logística es la función
+<strong>logit</strong>, dada por:</p>
+<p><span class="math display">\[
+logit(z) = log \left( \frac{z}{1-z} \right)
+\]</span></p>
+<p>Por lo que si tomamos la primera ecuación y aplicamos la función
+logit a ambos términos, obtenemos esta ecuación:</p>
+<p><span class="math display">\[
+logit(\theta) = \alpha + \beta x
+\]</span></p>
+<p>O, de manera equivalente:</p>
+<p><span class="math display">\[
+log \left( \frac{\theta}{1-\theta} \right) = \alpha + \beta x
+\]</span></p>
+<p>Ahora, recordemos que <span class="math inline">\(\theta\)</span> en
+nuestro modelo es <span class="math inline">\(p(y = 1)\)</span> (la
+probabilidad de “éxito”, o de ser <code>virginica</code>):</p>
+<p><span class="math display">\[
+log \left(\frac{p(y = 1)}{1 - p(y = 1)} \right) = \alpha + \beta x
+\]</span></p>
+<p>La cantidad <span class="math inline">\(\frac{p(y = 1)}{1 - p(y =
+1)}\)</span> se conoce como los <em>odds</em>, que representan la
+probabilidad de éxito sobre la probabilidad de fracaso. Mientras que la
+probabilidad de obtener 2 al lanzar un dado es de 1/6, los <em>odds</em>
+para el mismo evento son <span class="math inline">\(\frac{1/6}{5/6}
+\approx 0.2\)</span>, o un éxito a cinco fracasos. En una regresión
+logística, <span class="math inline">\(\beta\)</span> representa el
+incremento en <em>log-odds</em> por incremento unitario en <span
+class="math inline">\(x\)</span>, no en la probabilidad de pertenencia a
+una clase, aunque la relación entre <em>odds</em> y probabilidad es
+monótona; es decir, conforme incrementa una, la otra también.</p>
+<h3 id="regresión-logística-multinomial">Regresión logística
+multinomial</h3>
+<p>Al igual que en el caso anterior, simplemente extenderemosaquellos
+detalles que no se aterrizaron por completo, particularmente el utilizar
+una red neuronal como análogo a una regresión logística multinomial.
+Como acabamos de ver, una regresión logística binaria nos permite
+predecir la probabilidad de éxito; <em>i.e.</em>, de pertenecer a una
+sola clase. ¿Cómo lo extendemos a más de dos clases? Podemos construir
+modelos una clase vs. las demás, podemos utilizar una regresión
+<strong>softmax</strong>, o podemos utilizar una red neuronal. Una red
+neuronal está formada por capas, las cuales están conectadas entre sí
+tal cual neuronas:</p>
+<figure>
+<img src="https://miro.medium.com/max/585/1*lk7bbg9gbYKpDYSHABaDOg.png"
+alt="NN" />
+<figcaption aria-hidden="true">NN</figcaption>
+</figure>
+<p>Tenemos una capa de entrada, correspondiente a nuestros valores,
+seguida de una o más capas ocultas, compuestas por neuronas
+(perceptrones) que tienen funciones de activación, las cuales están
+conectadas por constantes multiplicadoras (pesos o <em>weights</em>) a
+las cuales se les añade una constante (sesgo o <em>bias</em>), cuyo
+resultado, finalmente, se envía a la capa de salida <span
+class="math inline">\(y\)</span> (nuestras clases objetivo), resultando
+en la siguiente forma:</p>
+<p><span class="math display">\[
+y = f(bias + \sum(weight*input))
+\]</span> Gráficamente:</p>
+<p><img
+src="https://miro.medium.com/max/346/1*dyeq4DKbXlNqPN6mnfN0vw.png"
+alt="Neurona" /> ¿Suena familiar? Con solo una capa oculta y una función
+(<span class="math inline">\(f\)</span>) de identidad tendríamos un
+modelo lineal cualquiera, solo que se ajusta mediante descenso
+estocástico de gradiente (fuera de esta discusión) en vez de mínimos
+cuadrados o máxima verosimilitud. Si esa función <span
+class="math inline">\(f\)</span> la hacemos una función sigmoide
+(logística), tenemos entonces una regresión logística para más de dos
+clases. En un sentido estricto, esta aproximación no es un GLM (no
+tenemos una familia de distribución del error), pero se puede considerar
+una generalización a más de dos clases. Algo importante a tener en
+cuenta es que al ajustar este modelo, R toma una clase como referencia,
+para la cual no otorga los coeficientes. En este caso, es setosa.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logit_mult</span> <span class='op'>&lt;-</span> <span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span>form <span class='op'>=</span> <span class='va'>Species</span><span class='op'>~</span><span class='va'>.</span>,
+                          data <span class='op'>=</span> <span class='va'>iris</span>,
+                          method <span class='op'>=</span> <span class='st'>"multinom"</span>,
+                          trace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>logit_mult</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Call:
+nnet::multinom(formula = .outcome ~ ., data = dat, decay = param$decay, 
+    trace = ..1)
+
+Coefficients:
+           (Intercept) Sepal.Length Sepal.Width Petal.Length Petal.Width
+versicolor    1.444874   -0.4096645   -2.179216     2.772008  -0.3107031
+virginica    -2.860780   -2.5296923   -4.150196     5.878699   4.5107445
+
+Std. Errors:
+           (Intercept) Sepal.Length Sepal.Width Petal.Length Petal.Width
+versicolor    9.430403     2.847250    2.409686     2.832649    5.829681
+virginica    10.247224     3.044536    2.741261     3.078484    6.076775
+
+Residual Deviance: 52.0787 
+AIC: 72.0787 </code></pre>
+</div>
+<p>¿Es un problema? Sí y no. Usualmente nos interesa solo saber qué
+variables son más importantes para la clasificación; es decir, qué
+variables son más “diferentes” entre nuestras clases, para lo cual
+podemos utilizar la función <code>VarImp</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/varImp.html'>varImp</a></span><span class='op'>(</span><span class='va'>logit_mult</span>, scale <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>multinom variable importance
+
+             Overall
+Petal.Length   8.651
+Sepal.Width    6.329
+Petal.Width    4.821
+Sepal.Length   2.939</code></pre>
+</div>
+<p>Esta importancia de variables está dada por la suma de absolutos de
+los coeficientes para una variable (ver lecturas recomendadas para más
+detalles). Una manera más fácil de interpretarlos es utilizando los
+valores escalados con respecto al valor máximo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/varImp.html'>varImp</a></span><span class='op'>(</span><span class='va'>logit_mult</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>multinom variable importance
+
+             Overall
+Petal.Length  100.00
+Sepal.Width    59.36
+Petal.Width    32.95
+Sepal.Length    0.00</code></pre>
+</div>
+<p>Esto sería todo para esta clase de GLM, aunque no quiere decir que
+sean los únicos. Si te interesa modelar el tiempo entre eventos puedes
+utilizar un modelo Gamma, puedes cambiar la relación entre la media y la
+varianza de la regresión para conteos utilizando un modelo Quasi-Poisson
+en vez de un modelo con distribución binomial negativa (ver lecturas
+recomendadas), entre otros.</p>
+<div class="sourceCode" id="cb22"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
