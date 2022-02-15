@@ -2191,15 +2191,16 @@ href="https://arturobell.github.io/Bioestadistica_R/c08_rls.html">RLS</a>
 hablamos de modificar el supuesto de la distribución de nuestros errores
 para obtener una mejor estimación, lo cual conforma una parte
 fundamental de los <strong>modelos lineales generalizados</strong>
-(GLMs). Bueno, hoy aterrizaremos esa última idea: <strong>La estructura
-principal de un GLM sigue siendo un modelo lineal, aunque nuestro
-supuesto de la distribución de errores no será exclusivamente normal,
-sino que puede tomar alguna otra <em>familia</em> de distribuciones,
-enlazada a nuestros datos con alguna función</strong>.</p>
+(GLMs).</p>
 <p>La modificación puede ser tan “simple” (al menos en términos de
 intuición) como relajar el supuesto de normalidad, pero podemos también
 utilizar otras distribuciones que nos permitan modelar otro tipo de
-información. En la sesión de hoy revisaremos:</p>
+información. Bueno, hoy aterrizaremos esa última idea: <strong>La
+estructura principal de un GLM sigue siendo un modelo lineal, aunque
+nuestro supuesto de la distribución de errores no será exclusivamente
+normal, sino que puede tomar alguna otra <em>familia</em> de
+distribuciones, enlazada a nuestros datos con alguna función</strong>.
+En la sesión de hoy revisaremos:</p>
 <ul>
 <li><strong>Regresiones robustas</strong>, expandiendo un poco la
 distribución <em>t</em> como distribución de errores y revisando una
@@ -2207,9 +2208,8 @@ alternativa.</li>
 <li><strong>Funciones de enlace</strong> y enlace inverso.</li>
 <li><strong>Regresiones para conteos</strong>: Poisson, Binomial
 Negativa y sus variantes infladas en zeros.</li>
-<li><strong>Aproximación multi-modelo para la selección de
-modelos</strong>; <em>i.e.</em>, cómo seleccionar el mejor de un
-conjunto de modelos candidatos.</li>
+<li><strong>Selección de modelos</strong>; <em>i.e.</em>, cómo
+seleccionar el mejor de un conjunto de modelos candidatos.</li>
 <li><strong>Regresiones para clases</strong>: Regresión logística
 binomial y multinomial.</li>
 </ul>
@@ -2446,24 +2446,25 @@ cada punto:</p>
 <p><img src="c16_glm_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
 </div>
 <p>Como era de esperarse, los resultados son los mismos que los de la
-regresión t de Student. Una aclaración importante es que la regresión
-<em>t</em> puede ser considerado como un GLM, mientras que la regresión
-Huber, no. En la definición de un GLM tenemos tres elementos
-importantes:</p>
+regresión <em>t</em> de Student. En la definición de un GLM tenemos tres
+elementos importantes:</p>
 <ol type="1">
 <li>El modelo lineal, que es el mismo en ambos casos.</li>
-<li>Una familia para el error, que no modificamos en la regresión
-Huber.</li>
+<li>Una familia para el error, que no modificamos en la regresión Huber;
+sin embargo la familia sería Gaussiana (Normal).</li>
 <li>Una función de enlace (o enlace inverso), que en ambos casos sería
 una función de identidad; es decir, ninguna modificación para pasar de
 nuestros datos a la distribución del error.</li>
 </ol>
-<p>¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u
-otra, solo ten en cuenta que la implementación por máxima verosimilitud
-de un modelo <em>t</em> de Student puede tener muchos bemoles al momento
-de optimizarse, además de que su salida es incompatible con algunas
-otras funciones, incluyendo el cálculo de los intervalos de confianza
-(para los coeficientes de la regresión Huber puedes utilizar la función
+<p>Es decir, que en un sentido amplio, ambas aproximaciones son GLMs,
+aunque usualmente nos referimos a GLMs cuando la distribución del error
+es diferente a una distribución normal. ¿Cuál aplicar? Ya que el
+resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que
+la implementación por máxima verosimilitud de un modelo <em>t</em> de
+Student puede tener muchos bemoles al momento de optimizarse, además de
+que su salida es incompatible con algunas otras funciones, incluyendo el
+cálculo de los intervalos de confianza (para los coeficientes de la
+regresión Huber puedes utilizar la función
 <code>confint.default(rr.huber)</code>).</p>
 <h2 id="funciones-de-enlace">Funciones de enlace</h2>
 <p>Este es un buen momento para hablar de un tema que a veces causa
@@ -2732,11 +2733,12 @@ aquí es un tanto diferente y tiene que ver con el supuesto de nuestra
 distribución Poisson: la media y la varianza son iguales. Este supuesto,
 evidentemente, no se sostiene cuando tenemos una dispersión muy grande
 de nuestros datos (varianza &gt; media), lo cual genera el problema de
-la <strong>sobre dispersión</strong>. Una estrategia es cambiar nuestra
-verosimilitud a una distribución Binomial Negativa, la cual tiene un
-parámetro adicional a la distribución Poisson. Este parámetro modela,
-justamente, la dispersión de nuestros datos. Apliquemos entonces nuestra
-regresión binomial negativa:</p>
+la <strong>sobre dispersión</strong> de nuestro <strong>modelo</strong>
+(no de los datos). Una estrategia es cambiar nuestra verosimilitud a una
+distribución Binomial Negativa, la cual tiene un parámetro adicional a
+la distribución Poisson. Este parámetro modela, justamente, la
+dispersión de nuestros datos. Apliquemos entonces nuestra regresión
+binomial negativa:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bineg</span> <span class='op'>&lt;-</span> <span class='fu'>MASS</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/MASS/man/glm.nb.html'>glm.nb</a></span><span class='op'>(</span><span class='va'>count</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>fish</span>, trace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
@@ -2949,7 +2951,10 @@ capturados incrementa 2.2 veces.</li>
 <p><strong>Corolario: La interpretación depende totalmente de la función
 de enlace que utilicemos, y siempre es necesario aplicar el enlace para
 poder interpretarlos.</strong></p>
-<p>Gráficamente:</p>
+<p>Para construir un gráfico podemos generar una línea con valores
+predichos o, mejor dicho, dos líneas: una para cada nivel de
+<code>camper</code> (en la sección de <a href="">Extras</a> encontrarás
+cómo funcionan los predictores categóricos en modelos de regresión).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fish</span><span class='op'>$</span><span class='va'>pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>zi_bineg</span>, type <span class='op'>=</span> <span class='st'>"response"</span><span class='op'>)</span>
@@ -2961,7 +2966,7 @@ poder interpretarlos.</strong></p>
        x <span class='op'>=</span> <span class='st'>"Número de hijos"</span>,
        y <span class='op'>=</span> <span class='st'>"Peces capturados"</span><span class='op'>)</span> <span class='op'>+</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Camper"</span>, labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"NO"</span>, <span class='st'>"SI"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>12</span><span class='op'>)</span>, label <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/label_number.html'>label_comma</a></span><span class='op'>(</span>accuracy <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c16_glm_files/figure-html5/unnamed-chunk-25-1.png" width="624" /></p>
@@ -2973,7 +2978,7 @@ poder interpretarlos.</strong></p>
 
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>plt</span> <span class='kw'>in</span> <span class='va'>partial_plots</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='va'>plt</span> <span class='op'>+</span> <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>12</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>12</span><span class='op'>)</span>, label <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='fu'><a href='https://scales.r-lib.org/reference/label_number.html'>label_comma</a></span><span class='op'>(</span>accuracy <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_discrete.html'>scale_x_discrete</a></span><span class='op'>(</span>limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>plt</span><span class='op'>$</span><span class='va'>data</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>plt</span><span class='op'>$</span><span class='va'>labels</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
@@ -2981,6 +2986,9 @@ poder interpretarlos.</strong></p>
 </div>
 <p><img src="c16_glm_files/figure-html5/unnamed-chunk-26-1.png" width="624" /><img src="c16_glm_files/figure-html5/unnamed-chunk-26-2.png" width="624" /></p>
 </div>
+<p>Antes de cambiar la hoja, es necesario aclarar que aquí NO hay
+supuesto de normalidad. ¿Cuál es el punto de cambiar la distribución del
+error si vamos a seguir casados buscando normalidad estadística?</p>
 <p>Y ahora podemos hablar de la selección de modelos.</p>
 <h2 id="selección-de-modelos">Selección de modelos</h2>
 <p>El tener varios varios modelos candidatos no es algo extraño,
@@ -3043,7 +3051,9 @@ class="math inline">\(AIC_c\)</span>.</li>
 <li>Podemos encontrar múltiples modelos que tengan AICs similares, esto
 solo sugiere que estas hipótesis alternativas tienen soportes similares.
 ¿Qué tanto es tantito? Esa respuesta es un poco más compleja, y requiere
-que presentemos el <span class="math inline">\(\Delta{AIC}\)</span></li>
+que presentemos el <span class="math inline">\(\Delta{AIC}\)</span>
+(también lo puedes encontrar como <span
+class="math inline">\(\Delta_i\)</span>):</li>
 </ol>
 <ul>
 <li><span class="math inline">\(\Delta AIC = AIC_i - AIC_{min}\)</span>;
@@ -3052,7 +3062,7 @@ entre los modelos candidatos. Esta transformación forza al “mejor”
 modelo a tener un <span class="math inline">\(\Delta AIC = 0\)</span>, y
 representa la pérdida de información si utilizamos un modelo candidato
 <span class="math inline">\(m_i\)</span> en vez de <span
-class="math inline">\(m_min\)</span>.</li>
+class="math inline">\(m_{min}\)</span>.</li>
 <li>Modelos con un <span class="math inline">\(\Delta_i \leq 2\)</span>
 tienen soporte substancial (evidencia),</li>
 <li>Modelos con un <span class="math inline">\(4 \leq \Delta_i \leq
@@ -3169,17 +3179,21 @@ AIC: 21.899
 Number of Fisher Scoring iterations: 10</code></pre>
 </div>
 <p>Y obtengámos los gráficos parciales, utilizando la función
-<code>visreg(mod, scale = "response", ylab = "P(Especie), gg =
-TRUE)</code>, donde <code>mod</code> es el modelo aujustado:</p>
+<code>visreg(mod, scale = "response")</code>, donde <code>mod</code> es
+el modelo aujustado:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>partial_plots</span> <span class='op'>&lt;-</span> <span class='fu'>visreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/visreg/man/visreg.html'>visreg</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, scale <span class='op'>=</span> <span class='st'>"response"</span>, ylab <span class='op'>=</span> <span class='st'>"P(Especie)"</span>, gg <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>partial_plots</span> <span class='op'>&lt;-</span> <span class='fu'>visreg</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/visreg/man/visreg.html'>visreg</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, scale <span class='op'>=</span> <span class='st'>"response"</span>,
+                                ylab <span class='op'>=</span> <span class='st'>"P(Especie)"</span>,
+                                line.par <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>col <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span>,
+                                fill.par <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"gray90"</span><span class='op'>)</span>,
+                                gg <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>plt</span> <span class='kw'>in</span> <span class='va'>partial_plots</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='va'>plt</span> <span class='op'>+</span>
          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>n.breaks <span class='op'>=</span> <span class='fl'>3</span>,
                             labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"versicolor"</span>, <span class='fl'>0.5</span>, <span class='st'>"virginica"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-         <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 </code></pre>
 </div>
@@ -3311,7 +3325,7 @@ virginica    10.247224     3.044536    2.741261     3.078484    6.076775
 Residual Deviance: 52.0787 
 AIC: 72.0787 </code></pre>
 </div>
-<p>¿Es un problema? Sí y no. Usualmente nos interesa solo saber qué
+<p>¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué
 variables son más importantes para la clasificación; es decir, qué
 variables son más “diferentes” entre nuestras clases, para lo cual
 podemos utilizar la función <code>VarImp</code>:</p>
@@ -3328,10 +3342,11 @@ Sepal.Width    6.329
 Petal.Width    4.821
 Sepal.Length   2.939</code></pre>
 </div>
-<p>Esta importancia de variables está dada por la suma de absolutos de
-los coeficientes para una variable (ver lecturas recomendadas para más
-detalles). Una manera más fácil de interpretarlos es utilizando los
-valores escalados con respecto al valor máximo:</p>
+<p>Esta importancia de variables está dada por la suma de
+<strong>absolutos</strong> de los coeficientes para una variable (ver
+lecturas recomendadas para más detalles). Una manera más fácil de
+interpretarlos es utilizando los valores escalados con respecto al valor
+máximo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/varImp.html'>varImp</a></span><span class='op'>(</span><span class='va'>logit_mult</span><span class='op'>)</span>
@@ -3362,8 +3377,8 @@ mi manera de explicar, te recomiendo ampliamente que esperes mi curso
 “Introducción a la Inferencia Bayesiana”, que estará disponible también
 aquí en Dr. Plancton en los próximos meses. Te recomiendo también
 adentrarte más en el área del aprendizaje automatizado, pues es un mundo
-enorme con un potencial enorme de aplicación a problemas biológicos. Si
-te interesaría un curso más enfocado a eso, házmelo saber y es posible
+con un potencial enorme de aplicación a problemas biológicos. Si te
+interesaría un curso más enfocado a eso, házmelo saber y es posible
 organizarlo con algunos miembros del equipo de Dr. Plancton. Recuerda
 que siempre puedes contactarme en el servidor de Discord, y que siempre
 tendrás acceso a las actualizaciones que se hagan al curso.</p>

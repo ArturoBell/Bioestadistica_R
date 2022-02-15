@@ -124,7 +124,7 @@ print(ridge.lm)
 coef(ridge.lm) # Imprime los coeficientes de la regresión
 ```
 
-Vemos que el valor de R2 es ligeramente menor al caso anterior; sin embargo, ganamos un poco de poder predictivo en el modelo de prueba:
+Vemos que el valor de $R^2$ es ligeramente menor al caso anterior; sin embargo, ganamos un poco de poder predictivo en el modelo de prueba:
 
 ```{r}
 ridge.pred <- predict(ridge.lm, as.matrix(X_test_s))
@@ -216,11 +216,15 @@ library(GGally)
 La visualización de los datos se hace en parte junto con la evaluación de la regresión, en el sentido de que solo podemos ver la relación entre los datos observados y predichos por el modelo
 
 ```{r}
-mlm.data <- data.frame(obs = y_test, s0 = predict(lasso.lm, as.matrix(X_test_s)))
+mlm.data <- data.frame(obs = y_test,
+                       s0 = predict(lasso.lm, as.matrix(X_test_s)))
 mlm.plot <- ggplot(data = mlm.data, aes(x = obs, y =  s0)) + 
-            geom_point() + 
-            geom_smooth(method = "lm", colour = rgb(118,78,144, maxColorValue = 255)) +
-            labs(title = "Gráfico de dispersión de datos observados y predichos",
+            geom_point(color = "dodgerblue4", alpha = 0.7) + 
+            geom_smooth(method = "lm",
+                        colour = rgb(118,78,144,
+                                     maxColorValue = 255),
+                        fill = NA) +
+            labs(title = "Datos observados vs. predichos",
                  subtitle = sprintf("R2e: %.2f | R2p: %.2f",
                                     round(lasso.lm$dev.ratio,2), 
                                     round(R2(lasso.pred, y_test),2)),
@@ -230,6 +234,8 @@ mlm.plot <- ggplot(data = mlm.data, aes(x = obs, y =  s0)) +
             theme_bw()
 mlm.plot
 ```
+
+Una aclaración importante tiene que ver con los 
 
 ## Ingeniería de variables
 Aplicamos un PCA para generar nuevas variables que contengan el efecto de las variables originales y que sean ortogonales:
@@ -284,8 +290,7 @@ Los resultados también son similares a aquellos de la regresión Lasso. La conc
 ## Ejercicio 1
 
 1. Realiza una regresión Lasso con los CPs. ¿Cuántas variables se mantienen?¿Cambia el desempeño de los modelos?
-2. Realiza los diagnósticos de las regresiones Ridge, Lasso y la regresión con CP. ¿Cuál está mejor ajustada? (Performance)
-3. Aplica un GLM con las variables restantes en la regresión Lasso. ¿Qué familia utilizas para el error? ¿El ajuste mejora o se mantiene igual?
+2. Utiliza el MSE o RMSE con los datos de **entrenamiento** para comparar las regresiones Ridge, Lasso y la regresión con CP. ¿Cuál está mejor ajustada?
 
 ## Ejercicio 2
 

@@ -2708,7 +2708,7 @@ para graficar las curvas ROC:</p>
   <span class='va'>rocs_plots</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
   
   <span class='co'># Valores a ciclar (clases)</span>
-  <span class='va'>counter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>classes</span><span class='op'>)</span><span class='op'>)</span> 
+  <span class='va'>counter</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>classes</span><span class='op'>)</span> 
 
   <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='va'>counter</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># para cada i en clases</span>
     <span class='kw'>if</span> <span class='op'>(</span><span class='va'>i</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># Si i == 1</span>
@@ -2718,11 +2718,11 @@ para graficar las curvas ROC:</p>
                                legacy.axes <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span>
                          <span class='co'># Establecemos el título global de la gráfica</span>
                          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span>
-                                <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Curvas ROC. AUC multi-clase = "</span>,
+                                <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"AUC multi-clase = "</span>,
                                       <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>roc_cons</span><span class='op'>$</span><span class='va'>auc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>,
                               <span class='co'># clase como subtítulo</span>
                               subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"%s"</span>,
-                                                 <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span><span class='op'>)</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,
+                                                 <span class='va'>classes</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,
                               <span class='co'># Sin nombre del eje x</span>
                               x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>, 
                               y <span class='op'>=</span> <span class='st'>"TVP (Sensibilidad)"</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2736,7 +2736,7 @@ para graficar las curvas ROC:</p>
                                color <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
                                legacy.axes <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span>
                          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"%s"</span>,
-                                                 <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span><span class='op'>)</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,
+                                                 <span class='va'>classes</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,
                               x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
                               y <span class='op'>=</span> <span class='st'>"TVP (Sensibilidad)"</span><span class='op'>)</span> <span class='op'>+</span>
                          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_abline</a></span><span class='op'>(</span>intercept <span class='op'>=</span> <span class='fl'>0</span>, slope <span class='op'>=</span> <span class='fl'>1</span>,
@@ -2747,7 +2747,7 @@ para graficar las curvas ROC:</p>
       <span class='va'>rocs_plots</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/ggroc.html'>ggroc</a></span><span class='op'>(</span><span class='va'>roc_cons</span><span class='op'>$</span><span class='va'>rocs</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>, color <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, 
                                size <span class='op'>=</span> <span class='fl'>1</span>, legacy.axes <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span>
                          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"%s"</span>,
-                                                 <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span><span class='op'>)</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,
+                                                 <span class='va'>classes</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>,
                               <span class='co'># Se agrega el nombre del eje x para todas las</span>
                               <span class='co'># gráficas (ojo a que es una sola columna)</span>
                               x <span class='op'>=</span> <span class='st'>"TFP (1 - especificidad)"</span>, 
@@ -2768,10 +2768,11 @@ para graficar las curvas ROC:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Colores de las especies:</span>
 <span class='va'>colors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"brown3"</span>, <span class='st'>"chartreuse4"</span>, <span class='st'>"deepskyblue4"</span><span class='op'>)</span>
 <span class='co'>#cairo_pdf("ROC_LDA.pdf", height = 12.9, width = 7 )</span>
-<span class='fu'>plot_rocs</span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span>, <span class='va'>roc_cons</span>, <span class='va'>colors</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>test_t</span><span class='op'>)</span>
+<span class='fu'>plot_rocs</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sort.html'>sort</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span><span class='op'>)</span><span class='op'>)</span>,
+          <span class='va'>roc_cons</span>, <span class='va'>colors</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>test_t</span><span class='op'>)</span>
 </code></pre>
 </div>
-<img src="c14_clasificacion_files/figure-html5/unnamed-chunk-20-1.png" width="192" />
+<img src="c14_clasificacion_files/figure-html5/unnamed-chunk-20-1.png" width="288" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#dev.off()</span>
 </code></pre>
@@ -3145,8 +3146,8 @@ clasificador para más de dos clases</p>
 utilizando la librería caret (Classification and Regression Training).
 Esta librería nos permite entrenar modelos de clasificación o regresión
 de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración
-de modelos y nos evita estar batallando con las librerías propias.
-Veámoslo en acción:</p>
+de modelos y nos evita estar batallando con las librerías
+independientes. Veámoslo en acción:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logit_mult</span> <span class='op'>&lt;-</span> <span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span>form <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>~</span><span class='va'>.</span>,

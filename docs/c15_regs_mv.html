@@ -2618,8 +2618,9 @@ PctSameHouse85         20.2263294
 PctSameCity85          10.5844297
 PctSameState85         -3.4981307</code></pre>
 </div>
-<p>Vemos que el valor de R2 es ligeramente menor al caso anterior; sin
-embargo, ganamos un poco de poder predictivo en el modelo de prueba:</p>
+<p>Vemos que el valor de <span class="math inline">\(R^2\)</span> es
+ligeramente menor al caso anterior; sin embargo, ganamos un poco de
+poder predictivo en el modelo de prueba:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ridge.pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>ridge.lm</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>X_test_s</span><span class='op'>)</span><span class='op'>)</span>
@@ -2856,11 +2857,15 @@ evaluación de la regresión, en el sentido de que solo podemos ver la
 relación entre los datos observados y predichos por el modelo</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mlm.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>obs <span class='op'>=</span> <span class='va'>y_test</span>, s0 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lasso.lm</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>X_test_s</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mlm.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>obs <span class='op'>=</span> <span class='va'>y_test</span>,
+                       s0 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lasso.lm</span>, <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>X_test_s</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>mlm.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mlm.data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>obs</span>, y <span class='op'>=</span>  <span class='va'>s0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>118</span>,<span class='fl'>78</span>,<span class='fl'>144</span>, maxColorValue <span class='op'>=</span> <span class='fl'>255</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Gráfico de dispersión de datos observados y predichos"</span>,
+            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span>, alpha <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>+</span> 
+            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>,
+                        colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>118</span>,<span class='fl'>78</span>,<span class='fl'>144</span>,
+                                     maxColorValue <span class='op'>=</span> <span class='fl'>255</span><span class='op'>)</span>,
+                        fill <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='op'>+</span>
+            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Datos observados vs. predichos"</span>,
                  subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"R2e: %.2f | R2p: %.2f"</span>,
                                     <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>lasso.lm</span><span class='op'>$</span><span class='va'>dev.ratio</span>,<span class='fl'>2</span><span class='op'>)</span>, 
                                     <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/postResample.html'>R2</a></span><span class='op'>(</span><span class='va'>lasso.pred</span>, <span class='va'>y_test</span><span class='op'>)</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>,
@@ -2873,6 +2878,7 @@ relación entre los datos observados y predichos por el modelo</p>
 </div>
 <p><img src="c15_regs_mv_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
 </div>
+<p>Una aclaración importante tiene que ver con los</p>
 <h2 id="ingeniería-de-variables">Ingeniería de variables</h2>
 <p>Aplicamos un PCA para generar nuevas variables que contengan el
 efecto de las variables originales y que sean ortogonales:</p>
@@ -2980,11 +2986,9 @@ mejorarlo?</p>
 <ol type="1">
 <li>Realiza una regresión Lasso con los CPs. ¿Cuántas variables se
 mantienen?¿Cambia el desempeño de los modelos?</li>
-<li>Realiza los diagnósticos de las regresiones Ridge, Lasso y la
-regresión con CP. ¿Cuál está mejor ajustada? (Performance)</li>
-<li>Aplica un GLM con las variables restantes en la regresión Lasso.
-¿Qué familia utilizas para el error? ¿El ajuste mejora o se mantiene
-igual?</li>
+<li>Utiliza el MSE o RMSE con los datos de
+<strong>entrenamiento</strong> para comparar las regresiones Ridge,
+Lasso y la regresión con CP. ¿Cuál está mejor ajustada?</li>
 </ol>
 <h2 id="ejercicio-2">Ejercicio 2</h2>
 <p>El objetivo es predecir la edad de individuos de abulón a partir de

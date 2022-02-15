@@ -274,7 +274,7 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
   rocs_plots <- list()
   
   # Valores a ciclar (clases)
-  counter <- seq_along(unique(classes)) 
+  counter <- seq_along(classes) 
 
   for (i in counter) { # para cada i en clases
     if (i == 1) { # Si i == 1
@@ -284,11 +284,11 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
                                legacy.axes = T) +
                          # Establecemos el título global de la gráfica
                          labs(title =
-                                paste("Curvas ROC. AUC multi-clase = ",
+                                paste("AUC multi-clase = ",
                                       round(roc_cons$auc[1],2)),
                               # clase como subtítulo
                               subtitle = sprintf("%s",
-                                                 unique(test_t$especie)[i]),
+                                                 classes[i]),
                               # Sin nombre del eje x
                               x = element_blank(), 
                               y = "TVP (Sensibilidad)") +
@@ -302,7 +302,7 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
                                color = colors[i], size = 1,
                                legacy.axes = T) +
                          labs(subtitle = sprintf("%s",
-                                                 unique(test_t$especie)[i]),
+                                                 classes[i]),
                               x = element_blank(),
                               y = "TVP (Sensibilidad)") +
                          geom_abline(intercept = 0, slope = 1,
@@ -313,7 +313,7 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
       rocs_plots[[i]] <- ggroc(roc_cons$rocs[[i]], color = colors[i], 
                                size = 1, legacy.axes = T) +
                          labs(subtitle = sprintf("%s",
-                                                 unique(test_t$especie)[i]),
+                                                 classes[i]),
                               # Se agrega el nombre del eje x para todas las
                               # gráficas (ojo a que es una sola columna)
                               x = "TFP (1 - especificidad)", 
@@ -330,11 +330,12 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
 
 Ahora grafiquémoslas:
 
-```{r, fig.height=4, fig.width=2}
+```{r, fig.height=5, fig.width=3}
 # Colores de las especies:
 colors <- c("brown3", "chartreuse4", "deepskyblue4")
 #cairo_pdf("ROC_LDA.pdf", height = 12.9, width = 7 )
-plot_rocs(test_t$especie, roc_cons, colors, theme_bw(), test_t)
+plot_rocs(sort(unique(test_t$especie)),
+          roc_cons, colors, theme_bw(), test_t)
 #dev.off()
 ```
  
@@ -510,7 +511,7 @@ test_t3 <- predict(pre_pars, test3)
 ```
 
 #### Ajuste del modelo
-A diferencia del caso anterior, vamos a implementar el modelo utilizando la librería caret (Classification and Regression Training). Esta librería nos permite entrenar modelos de clasificación o regresión de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración de modelos y nos evita estar batallando con las librerías propias. Veámoslo en acción:
+A diferencia del caso anterior, vamos a implementar el modelo utilizando la librería caret (Classification and Regression Training). Esta librería nos permite entrenar modelos de clasificación o regresión de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración de modelos y nos evita estar batallando con las librerías independientes. Veámoslo en acción:
 
 ```{r}
 logit_mult <- caret::train(form = as.factor(Species)~.,

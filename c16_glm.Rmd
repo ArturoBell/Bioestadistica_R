@@ -44,14 +44,14 @@ blank_theme <- function(){
 
 ## Problemas familiares
 
-En la sesión [anterior](https://arturobell.github.io/Bioestadistica_R/c15_regs_mv.html) mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en la sesión de [RLS](https://arturobell.github.io/Bioestadistica_R/c08_rls.html) hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual conforma una parte fundamental de los **modelos lineales generalizados** (GLMs). Bueno, hoy aterrizaremos esa última idea: **La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra *familia* de distribuciones, enlazada a nuestros datos con alguna función**.
+En la sesión [anterior](https://arturobell.github.io/Bioestadistica_R/c15_regs_mv.html) mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en la sesión de [RLS](https://arturobell.github.io/Bioestadistica_R/c08_rls.html) hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual conforma una parte fundamental de los **modelos lineales generalizados** (GLMs).
 
-La modificación puede ser tan "simple" (al menos en términos de intuición) como relajar el supuesto de normalidad, pero podemos también utilizar otras distribuciones que nos permitan modelar otro tipo de información. En la sesión de hoy revisaremos:
+La modificación puede ser tan "simple" (al menos en términos de intuición) como relajar el supuesto de normalidad, pero podemos también utilizar otras distribuciones que nos permitan modelar otro tipo de información. Bueno, hoy aterrizaremos esa última idea: **La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra *familia* de distribuciones, enlazada a nuestros datos con alguna función**. En la sesión de hoy revisaremos:
 
 - **Regresiones robustas**, expandiendo un poco la distribución *t* como distribución de errores y revisando una alternativa.
 - **Funciones de enlace** y enlace inverso.
 - **Regresiones para conteos**: Poisson, Binomial Negativa y sus variantes infladas en zeros.
-- **Aproximación multi-modelo para la selección de modelos**; *i.e.*, cómo seleccionar el mejor de un conjunto de modelos candidatos.
+- **Selección de modelos**; *i.e.*, cómo seleccionar el mejor de un conjunto de modelos candidatos.
 - **Regresiones para clases**: Regresión logística binomial y multinomial.
 
 
@@ -180,13 +180,13 @@ ggplot(data = ansc_iii,
   theme_bw()
 ```
 
-Como era de esperarse, los resultados son los mismos que los de la regresión t de Student. Una aclaración importante es que la regresión *t* puede ser considerado como un GLM, mientras que la regresión Huber, no. En la definición de un GLM tenemos tres elementos importantes:
+Como era de esperarse, los resultados son los mismos que los de la regresión *t* de Student. En la definición de un GLM tenemos tres elementos importantes:
 
 1. El modelo lineal, que es el mismo en ambos casos.
-2. Una familia para el error, que no modificamos en la regresión Huber.
+2. Una familia para el error, que no modificamos en la regresión Huber; sin embargo la familia sería Gaussiana (Normal).
 3. Una función de enlace (o enlace inverso), que en ambos casos sería una función de identidad; es decir, ninguna modificación para pasar de nuestros datos a la distribución del error.
 
-¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
+Es decir, que en un sentido amplio, ambas aproximaciones son GLMs, aunque usualmente nos referimos a GLMs cuando la distribución del error es diferente a una distribución normal. ¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
 
 ## Funciones de enlace
 
@@ -290,7 +290,7 @@ Como era de esperarse, el modelo inflado en cero es un mejor candidato; sin emba
 
 ### Sobre-dispersión: Regresión Binomial Negativa
 
-Esos pescadores muy suertudos pueden hacer lo mismo que nuestro punto extremo en el ejemplo de regresión robusta; es decir, jalar nuestras estimaciones hacia ellas y alejarlas de la estimación "real", solo que aquí es un tanto diferente y tiene que ver con el supuesto de nuestra distribución Poisson: la media y la varianza son iguales. Este supuesto, evidentemente, no se sostiene cuando tenemos una dispersión muy grande de nuestros datos (varianza > media), lo cual genera el problema de la **sobre dispersión**. Una estrategia es cambiar nuestra verosimilitud a una distribución Binomial Negativa, la cual tiene un parámetro adicional a la distribución Poisson. Este parámetro modela, justamente, la dispersión de nuestros datos. Apliquemos entonces nuestra regresión binomial negativa:
+Esos pescadores muy suertudos pueden hacer lo mismo que nuestro punto extremo en el ejemplo de regresión robusta; es decir, jalar nuestras estimaciones hacia ellas y alejarlas de la estimación "real", solo que aquí es un tanto diferente y tiene que ver con el supuesto de nuestra distribución Poisson: la media y la varianza son iguales. Este supuesto, evidentemente, no se sostiene cuando tenemos una dispersión muy grande de nuestros datos (varianza > media), lo cual genera el problema de la **sobre dispersión** de nuestro **modelo** (no de los datos). Una estrategia es cambiar nuestra verosimilitud a una distribución Binomial Negativa, la cual tiene un parámetro adicional a la distribución Poisson. Este parámetro modela, justamente, la dispersión de nuestros datos. Apliquemos entonces nuestra regresión binomial negativa:
 
 ```{r}
 bineg <- MASS::glm.nb(count~., data = fish, trace = F)
@@ -369,7 +369,7 @@ Pongamos atención solo a aquellos coeficientes con `count_`, pues son los que r
   
 **Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario aplicar el enlace para poder interpretarlos.**
 
-Gráficamente:
+Para construir un gráfico podemos generar una línea con valores predichos o, mejor dicho, dos líneas: una para cada nivel de `camper` (en la sección de [Extras]() encontrarás cómo funcionan los predictores categóricos en modelos de regresión).
 
 ```{r}
 fish$pred <- predict(zi_bineg, type = "response")
@@ -381,7 +381,7 @@ ggplot(data = fish, aes(x = child, y = count, color = factor(camper))) +
        x = "Número de hijos",
        y = "Peces capturados") +
   scale_color_discrete(name = "Camper", labels = c("NO", "SI")) +
-  scale_y_continuous(limits = c(0, 12))
+  scale_y_continuous(limits = c(0, 12), label = scales::label_comma(accuracy = 1))
 ```
 
 O utilizando `visreg`:
@@ -392,11 +392,13 @@ partial_plots <- visreg::visreg(bineg, scale = "response", ylab = "Capturas", gg
 
 for (plt in partial_plots) {
   plot(plt + blank_theme() +
-         scale_y_continuous(limits = c(0, 12)) +
+         scale_y_continuous(limits = c(0, 12), label = scales::label_comma(accuracy = 1)) +
          scale_x_discrete(limits = c(0, max(plt$data$x))) +
          labs(x = plt$labels$x))
 }
 ```
+
+Antes de cambiar la hoja, es necesario aclarar que aquí NO hay supuesto de normalidad. ¿Cuál es el punto de cambiar la distribución del error si vamos a seguir casados buscando normalidad estadística?
 
 Y ahora podemos hablar de la selección de modelos.
 
@@ -420,10 +422,13 @@ Donde $L$ es la verosimilitud del modelo y $k$ el número de parámetros. Si nue
 4. Las comparaciones son válidas **SOLO** para modelos ajustados con los mismos valores de respuesta; *i.e.*, mismos valores de $y$.
 5. Comparar muchos modelos con AIC es una mala idea, pues caemos en el mismo problema de las comparaciones múltiples, donde podemos encontrar por azar un modelo con el valor más bajo de AIC, cuando en realidad no es el modelo más apropiado.
 6. Para variar, cuando tratamos con tamaños de muestra pequeños (n/k < 40) el AIC pierde confiabilidad, por lo que hay que aplicar una corrección: 
+
   - $AIC_c = AIC + \frac{2k(k+1)}{n-k-1}$
   - Dado que conforme incrementa n, el $AIC_c$ se aproxima al $AIC$, es una buena idea utilizar $AIC_c$.
-6. Podemos encontrar múltiples modelos que tengan AICs similares, esto solo sugiere que estas hipótesis alternativas tienen soportes similares. ¿Qué tanto es tantito? Esa respuesta es un poco más compleja, y requiere que presentemos el $\Delta{AIC}$
-  - $\Delta AIC = AIC_i - AIC_{min}$; es decir, la diferencia de cada AIC respecto al valor mínimo de AIC entre los modelos candidatos. Esta transformación forza al "mejor" modelo a tener un $\Delta AIC = 0$, y representa la pérdida de información si utilizamos un modelo candidato $m_i$ en vez de $m_min$.
+  
+6. Podemos encontrar múltiples modelos que tengan AICs similares, esto solo sugiere que estas hipótesis alternativas tienen soportes similares. ¿Qué tanto es tantito? Esa respuesta es un poco más compleja, y requiere que presentemos el $\Delta{AIC}$ (también lo puedes encontrar como $\Delta_i$):
+
+  - $\Delta AIC = AIC_i - AIC_{min}$; es decir, la diferencia de cada AIC respecto al valor mínimo de AIC entre los modelos candidatos. Esta transformación forza al "mejor" modelo a tener un $\Delta AIC = 0$, y representa la pérdida de información si utilizamos un modelo candidato $m_i$ en vez de $m_{min}$.
   - Modelos con un $\Delta_i \leq 2$ tienen soporte substancial (evidencia),
   - Modelos con un $4 \leq \Delta_i \leq 7$ tienen considerablemente menos soporte y
   - Modelos con $\Delta_i > 10$ carecen, escencialmente, de soporte.
@@ -472,16 +477,20 @@ logit_reg <- glm(Species~., data = iris_dat, family = "binomial")
 summary(logit_reg)
 ```
 
-Y obtengámos los gráficos parciales, utilizando la función `visreg(mod, scale = "response", ylab = "P(Especie), gg = TRUE)`, donde `mod` es el modelo aujustado:
+Y obtengámos los gráficos parciales, utilizando la función `visreg(mod, scale = "response")`, donde `mod` es el modelo aujustado:
 
 ```{r}
-partial_plots <- visreg::visreg(logit_reg, scale = "response", ylab = "P(Especie)", gg = TRUE)
+partial_plots <- visreg::visreg(logit_reg, scale = "response",
+                                ylab = "P(Especie)",
+                                line.par = c(col = "dodgerblue4"),
+                                fill.par = c(fill = "gray90"),
+                                gg = TRUE)
 
 for (plt in partial_plots) {
   plot(plt +
          scale_y_continuous(n.breaks = 3,
                             labels = c("versicolor", 0.5, "virginica")) +
-         blank_theme())
+         theme_bw())
 }
 ```
 
@@ -553,13 +562,13 @@ logit_mult <- caret::train(form = Species~.,
 summary(logit_mult)
 ```
 
-¿Es un problema? Sí y no. Usualmente nos interesa solo saber qué variables son más importantes para la clasificación; es decir, qué variables son más "diferentes" entre nuestras clases, para lo cual podemos utilizar la función `VarImp`:
+¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son más "diferentes" entre nuestras clases, para lo cual podemos utilizar la función `VarImp`:
 
 ```{r}
 caret::varImp(logit_mult, scale = F)
 ```
 
-Esta importancia de variables está dada por la suma de absolutos de los coeficientes para una variable (ver lecturas recomendadas para más detalles). Una manera más fácil de interpretarlos es utilizando los valores escalados con respecto al valor máximo:
+Esta importancia de variables está dada por la suma de **absolutos** de los coeficientes para una variable (ver lecturas recomendadas para más detalles). Una manera más fácil de interpretarlos es utilizando los valores escalados con respecto al valor máximo:
 
 ```{r}
 caret::varImp(logit_mult)
@@ -569,6 +578,6 @@ Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los ún
 
 ## Despedida
 
-Con esto llegamos al final del curso. Espero que el contenido haya sido de tu agrado, que te hayas llevado algo y, sobre todo, que lo aprendido te sea útil. En este momento cuentas con bases sólidas para adentrarte más en cualquiera de los temas aquí vistos, e incluso incursionar en otros temas. Una recomendación personal es revisar un paradigma de inferencia diferente: la Inferencia Bayesiana. Si te agradó mi manera de explicar, te recomiendo ampliamente que esperes mi curso "Introducción a la Inferencia Bayesiana", que estará disponible también aquí en Dr. Plancton en los próximos meses. Te recomiendo también adentrarte más en el área del aprendizaje automatizado, pues es un mundo enorme con un potencial enorme de aplicación a problemas biológicos. Si te interesaría un curso más enfocado a eso, házmelo saber y es posible organizarlo con algunos miembros del equipo de Dr. Plancton. Recuerda que siempre puedes contactarme en el servidor de Discord, y que siempre tendrás acceso a las actualizaciones que se hagan al curso.
+Con esto llegamos al final del curso. Espero que el contenido haya sido de tu agrado, que te hayas llevado algo y, sobre todo, que lo aprendido te sea útil. En este momento cuentas con bases sólidas para adentrarte más en cualquiera de los temas aquí vistos, e incluso incursionar en otros temas. Una recomendación personal es revisar un paradigma de inferencia diferente: la Inferencia Bayesiana. Si te agradó mi manera de explicar, te recomiendo ampliamente que esperes mi curso "Introducción a la Inferencia Bayesiana", que estará disponible también aquí en Dr. Plancton en los próximos meses. Te recomiendo también adentrarte más en el área del aprendizaje automatizado, pues es un mundo con un potencial enorme de aplicación a problemas biológicos. Si te interesaría un curso más enfocado a eso, házmelo saber y es posible organizarlo con algunos miembros del equipo de Dr. Plancton. Recuerda que siempre puedes contactarme en el servidor de Discord, y que siempre tendrás acceso a las actualizaciones que se hagan al curso.
 
 Te deseo lo mejor, hoy y siempre.
