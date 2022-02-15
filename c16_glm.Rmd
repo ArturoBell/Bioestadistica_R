@@ -157,7 +157,9 @@ summary(rr.huber)
 ¿Notas algo interesante? Los resultados son los mismos que en la regresión t de Student, aunque aquí podemos ver la ponderación dada a cada punto:
 
 ```{r}
-hweights <- data.frame(x = ansc_iii$x, resid = rr.huber$residuals, weight = rr.huber$w)
+hweights <- data.frame(x = ansc_iii$x,
+                       resid = rr.huber$residuals,
+                       weight = rr.huber$w)
 hweights
 ```
 
@@ -176,7 +178,9 @@ ggplot(data = ansc_iii,
   geom_point(aes(color = hweights$weight)) +
   labs(title = "Regresión robusta",
        subtitle = "OLS (gris) vs. Huber (naranja)") +
-  scale_color_gradient(name = "Peso", low = "firebrick", high = "#1f77b4") +
+  scale_color_gradient(name = "Peso",
+                       low = "firebrick",
+                       high = "#1f77b4") +
   theme_bw()
 ```
 
@@ -374,25 +378,32 @@ Para construir un gráfico podemos generar una línea con valores predichos o, m
 ```{r}
 fish$pred <- predict(zi_bineg, type = "response")
 
-ggplot(data = fish, aes(x = child, y = count, color = factor(camper))) +
+ggplot(data = fish, aes(x = child, y = count,
+                        color = factor(camper))) +
   geom_point() +
   geom_line(aes(y = pred)) +
   labs(title = "GLM Binomial negativo",
        x = "Número de hijos",
        y = "Peces capturados") +
-  scale_color_discrete(name = "Camper", labels = c("NO", "SI")) +
-  scale_y_continuous(limits = c(0, 12), label = scales::label_comma(accuracy = 1))
+  scale_color_discrete(name = "Camper",
+                       labels = c("NO", "SI")) +
+  scale_y_continuous(limits = c(0, 12),
+                     label = scales::label_comma(accuracy = 1))
 ```
 
 O utilizando `visreg`:
 
 ```{r}
 
-partial_plots <- visreg::visreg(bineg, scale = "response", ylab = "Capturas", gg = TRUE)
+partial_plots <- visreg::visreg(bineg,
+                                scale = "response",
+                                ylab = "Capturas",
+                                gg = TRUE)
 
 for (plt in partial_plots) {
   plot(plt + blank_theme() +
-         scale_y_continuous(limits = c(0, 12), label = scales::label_comma(accuracy = 1)) +
+         scale_y_continuous(limits = c(0, 12),
+                            label = scales::label_comma(accuracy = 1)) +
          scale_x_discrete(limits = c(0, max(plt$data$x))) +
          labs(x = plt$labels$x))
 }
@@ -466,7 +477,8 @@ Apliquemos entonces una regresión logística para clasificar entre `versicolor`
 
 ```{r}
 iris_dat <- iris
-iris_dat <- subset(iris, Species == "versicolor" | Species == "virginica")
+iris_dat <- subset(iris,
+                   Species == "versicolor" | Species == "virginica")
 ```
 
 
