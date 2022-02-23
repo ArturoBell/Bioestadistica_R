@@ -74,7 +74,12 @@ plot2 + geom_vline(xintercept = wmean, color = "firebrick")
 
 #### Media geométrica
 
-Esta es menos conocida, y representa el promedio de porcentajes, razones o **tasas de crecimiento**. Se expresa como la raiz n-ésima del producto de los n valores: $MG = \sqrt[n]{\Pi_i^nx_i}$. Pensemos en que estimamos la tasa de crecimiento poblacional ($\lambda$) anual de ballenas jorobadas en tres años seguidos, a partir de un modelo de marca-recaptura, y los valores que obtuvimos fueron 1.03, 0.98, 1.4, 0.94:
+Esta es menos conocida, y representa el promedio de porcentajes, razones o **tasas de crecimiento**. Se expresa como la raiz n-ésima del producto de los n valores: 
+
+$$MG = \sqrt[n]{\Pi_i^nx_i}$$
+
+
+Pensemos en que estimamos la tasa de crecimiento poblacional ($\lambda$) anual de ballenas jorobadas en tres años seguidos, a partir de un modelo de marca-recaptura, y los valores que obtuvimos fueron 1.03, 0.98, 1.4, 0.94:
 
 ```{r}
 lamb <- c(1.03, 0.98, 1.4, 0.94)
@@ -151,6 +156,7 @@ El coeficiente de variación, también conocido como la desviación estándar re
 $$
 CV = \frac{\sigma}{\mu}*100
 $$
+
 Este es especialmente útil cuando queremos comparar las dispersiones de dos cosas que están en distinta escala, o expresar en un porcentaje qué tan grande es nuestra variabilidad en relación a nuestra estimación. Si hacemos una estimación de tamaño poblacional de 1000 individuos, con un coeficiente de variación del 50% quiere decir que nuestra variabilidad es de la mitad de nuestra estimación.
 
 ### Error estándar

@@ -2238,12 +2238,12 @@ el peso de cada observación disminuye según su distancia de 0:</p>
 <h4 id="media-geométrica">Media geométrica</h4>
 <p>Esta es menos conocida, y representa el promedio de porcentajes,
 razones o <strong>tasas de crecimiento</strong>. Se expresa como la raiz
-n-ésima del producto de los n valores: <span class="math inline">\(MG =
-\sqrt[n]{\Pi_i^nx_i}\)</span>. Pensemos en que estimamos la tasa de
-crecimiento poblacional (<span class="math inline">\(\lambda\)</span>)
-anual de ballenas jorobadas en tres años seguidos, a partir de un modelo
-de marca-recaptura, y los valores que obtuvimos fueron 1.03, 0.98, 1.4,
-0.94:</p>
+n-ésima del producto de los n valores:</p>
+<p><span class="math display">\[MG = \sqrt[n]{\Pi_i^nx_i}\]</span></p>
+<p>Pensemos en que estimamos la tasa de crecimiento poblacional (<span
+class="math inline">\(\lambda\)</span>) anual de ballenas jorobadas en
+tres años seguidos, a partir de un modelo de marca-recaptura, y los
+valores que obtuvimos fueron 1.03, 0.98, 1.4, 0.94:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lamb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.03</span>, <span class='fl'>0.98</span>, <span class='fl'>1.4</span>, <span class='fl'>0.94</span><span class='op'>)</span>
@@ -2391,12 +2391,13 @@ estándar relativa, es la relación que existe entre la desviación
 estándar y la media de los datos, tal que:</p>
 <p><span class="math display">\[
 CV = \frac{\sigma}{\mu}*100
-\]</span> Este es especialmente útil cuando queremos comparar las
-dispersiones de dos cosas que están en distinta escala, o expresar en un
-porcentaje qué tan grande es nuestra variabilidad en relación a nuestra
-estimación. Si hacemos una estimación de tamaño poblacional de 1000
-individuos, con un coeficiente de variación del 50% quiere decir que
-nuestra variabilidad es de la mitad de nuestra estimación.</p>
+\]</span></p>
+<p>Este es especialmente útil cuando queremos comparar las dispersiones
+de dos cosas que están en distinta escala, o expresar en un porcentaje
+qué tan grande es nuestra variabilidad en relación a nuestra estimación.
+Si hacemos una estimación de tamaño poblacional de 1000 individuos, con
+un coeficiente de variación del 50% quiere decir que nuestra
+variabilidad es de la mitad de nuestra estimación.</p>
 <h3 id="error-estándar">Error estándar</h3>
 <p>Esta medida es especialmente útil en la estimación de los intervalos
 de confianza de cualquier parámetro, y representa la desviación estándar

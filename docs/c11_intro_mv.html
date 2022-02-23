@@ -2162,7 +2162,7 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Matriz de covarianzas</span>
-<span class='va'>cov.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
+<span class='va'>cov.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
 
 <span class='co'># Matriz de correlación</span>
 <span class='va'>cor.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
@@ -2393,7 +2393,7 @@ anterior:</p>
   <span class='co'># Centramos los datos (a-µ(a)) sin escalarlos (sin dividir por su \sigma)</span>
   <span class='va'>dif</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/scale.html'>scale</a></span><span class='op'>(</span><span class='va'>mydata</span>, scale <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
   <span class='co'># Cálculo de la distancia de mahalanobis^2</span>
-  <span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>dif</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/solve.html'>solve</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cov</a></span><span class='op'>(</span><span class='va'>mydata</span><span class='op'>)</span>, tol <span class='op'>=</span> <span class='fl'>1e-25</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>dif</span><span class='op'>)</span><span class='op'>)</span> 
+  <span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/diag.html'>diag</a></span><span class='op'>(</span><span class='va'>dif</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/solve.html'>solve</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/pROC/man/cov.html'>cov</a></span><span class='op'>(</span><span class='va'>mydata</span><span class='op'>)</span>, tol <span class='op'>=</span> <span class='fl'>1e-25</span><span class='op'>)</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>dif</span><span class='op'>)</span><span class='op'>)</span> 
   <span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rank.html'>rank</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span> <span class='co'># Asignación de rangos a las distancias</span>
   <span class='co'># Obtención de los cuantiles teóricos según la distribución ji^2</span>
   <span class='va'>ji2</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/stats/Chisquare.html'>qchisq</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>r</span> <span class='op'>-</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>/</span><span class='va'>n</span>, <span class='va'>p</span><span class='op'>)</span>
@@ -2548,7 +2548,7 @@ Residuals 29 0.058429 0.0020148               </code></pre>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Análisis gráfico</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>disp.mv</span>, ellipse <span class='op'>=</span> <span class='cn'>T</span>, hull <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='va'>disp.mv</span>, ellipse <span class='op'>=</span> <span class='cn'>T</span>, hull <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c11_intro_mv_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
