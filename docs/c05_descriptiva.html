@@ -2110,7 +2110,311 @@ Temas
 </div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#librerías">Librerías</a></li>
+<li><a href="#descripciones">Descripciones</a></li>
+<li><a href="#medidas-de-tendencia-central">Medidas de tendencia
+central</a>
+<ul>
+<li><a href="#media">Media</a></li>
+<li><a href="#mediana">Mediana</a></li>
+<li><a href="#moda">Moda</a></li>
+</ul></li>
+<li><a href="#medidas-de-dispersión">Medidas de dispersión</a>
+<ul>
+<li><a href="#desviación-estándar-y-varianza">Desviación estándar y
+Varianza</a></li>
+<li><a href="#coeficiente-de-variación">Coeficiente de
+variación</a></li>
+<li><a href="#error-estándar">Error estándar</a></li>
+</ul></li>
+<li><a href="#gráficos">Gráficos</a></li>
+</ul>
+</nav>
+</div>
+<h2 id="librerías">Librerías</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="descripciones">Descripciones</h2>
+<p>En la sesión de visualización hablamos de que hay una gran cantidad
+de formas en las cuales podemos describir el mundo que nos rodea. Una
+imágen habla más que mil palabras, y es una forma de resumir nuestros
+datos; sin embargo, está lejos de ser la única y, de hecho, por lo
+general buscamos que el gráfico acompañe a un resumen numérico, en forma
+de un solo valor o índice. A los seres humanos nos gusta la simpleza,
+después de todo. Bueno, de eso es de lo que vamos a hablar hoy.</p>
+<p>Estoy seguro de que los conceptos que revisaremos en esta sesión los
+has revisado ya con anterioridad, por lo que no te haré el cuento largo,
+sino que me enfocaré más en las peculiaridades de cada una de las
+medidas, en qué escenarios son útiles, cuándo no lo son tanto y lo
+enlazaremos con temas que veremos más adelante. Esto con el objetivo de
+dedicar más tiempo a algo que merece más atención que recordar por
+cienmillonésima vez qué es un promedio: las distribuciones de
+probabilidad y sus usos.</p>
+<h2 id="medidas-de-tendencia-central">Medidas de tendencia central</h2>
+<p>Comencemos hablando con lo que, por lo general, es nuestro mayor
+interés: hacia dónde tienden nuestros datos. Para ello tenemos algunas
+<strong>medidas de tendencia central</strong>; es decir, literalmente
+describimos nuestros datos a partir de dónde se acumulan más.</p>
+<h3 id="media">Media</h3>
+<p>La primera de estas medidas es, posiblemente, la más común de todas:
+<strong>la media</strong> o el promedio. En su forma más simple; es
+decir, la media <strong>aritmética</strong> la obtenemos sumando todos
+nuestros datos y dividiéndolos entre su número:</p>
+<p><span class="math display">\[
+\bar{x} = \frac{\sum_{i = 1}^n x_i}{n}
+\]</span></p>
+<p>Esto es conocimiento general, y es algo con lo que todos los
+estudiantes somos torturados eventualmente. Bueno, más que recordar cómo
+calcularlo e implementarlo en R (<code>mean(x)</code>, donde
+<code>x</code> es un vector de observaciones), pensemos en qué
+representa. La media es, literalmente, un indicador de hacia qué valor
+se están acumulando nuestros datos, tal y como si colgáramos cosas en un
+tendedero (házme un favor y piensa en que el siguiente gráfico está
+invertido verticalmente):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, mean <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>plot1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>x</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span> <span class='op'>+</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span>
+<span class='va'>plot1</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>En este caso, la mayor parte de nuestros datos están acumulados
+alrededor de 0. ¿Qué crees que pase si añadimos otros 20 datos, esta vez
+acumulados en 5? Veámos el cambio:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>x2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>20</span>, mean <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>plot2</span> <span class='op'>&lt;-</span> <span class='va'>plot1</span> <span class='op'>+</span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>x2</span>, color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
+<span class='va'>plot2</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>x2</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<p>Como era de esperarse, la media se “jaló” a la derecha, y de manera
+bastante notable. Esos 5 valores extremos tuvieron un peso bastante
+importante. Literalmente fue como si hubiéramos colgado cinco cosas más
+en nuestro tendedero, pero alejadas de la ropa que colgamos en un
+inicio. Aunque la media es una manera muy efectiva de resumir nuestros
+datos, esto solo es cierto si estos se parecen a una distribución normal
+(en la sesión de técnicas paramétricas hablaremos duro y tendido con
+respecto a esto), pero si no, como en nuestro caso con los nuevos
+valores, es necesario buscar una alternativa.</p>
+<h4 id="media-ponderada">Media ponderada</h4>
+<p>Una de ellas es una modificación a la media, en la cuál cada valor
+tiene su propia ponderación o su propia importancia. Esa es la media con
+la que más padecemos los estudiantes de secundaria hacia arriba, pues el
+examen tiene una ponderación distinta a las tareas, por ejemplo. En mi
+caso personal, era un tormento cuando se ponderaba más las tareas que el
+examen, pero eso es otra historia. ¿Por qué es importante? Porque
+podemos utilizarla para “regresar” nuestra media a su lugar; de hecho,
+esta es la base fundamental detrás de las regresiones robustas, en donde
+el peso de cada observación disminuye según su distancia de 0:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Pesos</span>
+<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>-</span><span class='va'>x2</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fl'>0</span> <span class='op'>-</span> <span class='va'>x2</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>
+<span class='va'>wmean</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/weighted.mean.html'>weighted.mean</a></span><span class='op'>(</span><span class='va'>x2</span><span class='op'>$</span><span class='va'>x</span>, <span class='va'>w</span><span class='op'>)</span>
+<span class='va'>plot2</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='va'>wmean</span>, color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<h4 id="media-geométrica">Media geométrica</h4>
+<p>Esta es menos conocida, y representa el promedio de porcentajes,
+razones o <strong>tasas de crecimiento</strong>. Se expresa como la raiz
+n-ésima del producto de los n valores: <span class="math inline">\(MG =
+\sqrt[n]{\Pi_i^nx_i}\)</span>. Pensemos en que estimamos la tasa de
+crecimiento poblacional (<span class="math inline">\(\lambda\)</span>)
+anual de ballenas jorobadas en tres años seguidos, a partir de un modelo
+de marca-recaptura, y los valores que obtuvimos fueron 1.03, 0.98, 1.4,
+0.94:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lamb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.03</span>, <span class='fl'>0.98</span>, <span class='fl'>1.4</span>, <span class='fl'>0.94</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/prod.html'>prod</a></span><span class='op'>(</span><span class='va'>lamb</span><span class='op'>)</span><span class='op'>^</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>lamb</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1.073569</code></pre>
+</div>
+<p>Es decir, el crecimiento poblacional promedio fue del 7%.</p>
+<p>Otra manera de calcularla es:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>lamb</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 1.073569</code></pre>
+</div>
+<p>¿Te animas a encontrar la igualdad matemática?</p>
+<h3 id="mediana">Mediana</h3>
+<p>Una alternativa más es la mediana. A diferencia de la media, que
+“busca” hacia donde se están acumulando los datos, la mediana nos indica
+exactamente que valor se encuentra en el <strong>centro</strong> de
+nuestra base de datos. Si partimos nuestra base de datos en 100 partes
+iguales (100%), cada parte representa un <strong>cuantil</strong> (1%).
+Cada diez cuantiles tenemos un <strong>decil</strong>, cada 25 cuantiles
+tenemos un <strong>cuartil</strong> (cuartiles 25%, 50% y 75%), y en el
+cuartil 50 tenemos la <strong>mediana</strong>. Esta es, entonces, mucho
+menos sensible a valores extremos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>plot2</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>x2</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>La estimación no es exactamente la misma que la media de los datos
+originales o de la media ponderada según su distancia a 0; sin embargo,
+el efecto es notablemente menor que con la media tradicional. Esta
+resistencia a valores extremos es lo que hace que las técnicas
+<strong>no paramétricas</strong> estén basadas en la mediana, en vez de
+la media.</p>
+<h3 id="moda">Moda</h3>
+<p>La moda corresponde al valor que más se repite en un conjunto de
+datos. Con datos continuos en el sentido estricto no existe; sin
+embargo, en muchos casos sí que podemos tener repetidos dependiendo de
+la escala y la precisión de nuestro instrumento. Otra manera de
+calcularla es discretizando nuestros datos y encontrar el intervalo más
+frecuente. Una propiedad interesante de la moda es que su valor
+corresponde con el valor que tiene la mayor probabilidad dentro de la
+distribución, por lo que puede ser útil en ciertos casos de Inferencia
+Bayesiana. Para calcularla podemos utilizar la función
+<code>Mode(x)</code> de la librería <code>DescTools</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>letmode</span> <span class='op'>&lt;-</span> <span class='fu'>DescTools</span><span class='fu'>::</span><span class='fu'><a href='https://andrisignorell.github.io/DescTools/reference/Mode.html'>Mode</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>, <span class='st'>"d"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>letmode</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;a&quot;
+attr(,&quot;freq&quot;)
+[1] 2</code></pre>
+</div>
+<p>A lo largo de este curso no aplicaremos la moda, solo la agregué para
+que la tengas presente.</p>
+<h2 id="medidas-de-dispersión">Medidas de dispersión</h2>
+<p>Al igual que en el caso anterior, repasaremos rápidamente las medidas
+de dispersión, con el objetivo de explorar la intuición detrás de ellas
+y su relación con otros conceptos que revisaremos más adelante.
+Independientemente de cuál utilicemos, todas las medidas de dispersión
+indican justamente eso, qué tan grande es la variabilidad de una
+distribución, ya sea de nuestros datos o la distribución muestral del
+parámetro que estemos estimando.</p>
+<h3 id="desviación-estándar-y-varianza">Desviación estándar y
+Varianza</h3>
+<p>En pocas palabras, la varianza es una medida de la dispersión
+promedio de los datos; es decir, cuál es <strong>el área</strong>
+promedio que abarca la dispersión de los datos. En la sección de
+Multivariado vamos a ver cuál es la relación entre la varianza y la
+covarianza, a entender a la varianza como un caso especial de la
+covarianza y ver de dónde sale esa <strong>suma de cuadrados</strong>.
+Esto último también me lleva a que cada que leas <strong>suma de
+cuadrados</strong> pienses en una medida de dispersión o en la varianza
+de los datos.</p>
+<p><span class="math display">\[
+\sigma^2 = \frac{\sum{(x_i - \mu)^2}}{N}
+\]</span></p>
+<p>La desviación estándar, por otra parte, es simplemente la raíz
+cuadrada de la varianza. Si la varianza representa un área, la
+desviación estándar representa una <strong>distancia</strong>, la
+distancia promedio que existe entre cada uno de los datos y la media.
+Estas dos medidas (la desviación estándar y la varianza) son sumamente
+útiles y utilizadas en los procesos estadísticos; de hecho, junto con la
+media, son los principales <strong>parámetros poblacionales</strong> que
+usualmente queremos estimar a partir de nuestra muestra. Una aclaración
+es que la ecuación de arriba es para calcular la <strong>varianza
+poblacional</strong>, mientras que si queremos calcular la
+<strong>varianza muestral</strong> aplicaremos una corrección con los
+grados de libertad (que definiremos más adelante)</p>
+<p><span class="math display">\[
+s^2 = \frac{\sum(x_i - \bar{x})^2}{N-1}
+\]</span></p>
+<p>Esta <strong>varianza muestral</strong> se considera un estimador
+insesgado de la <strong>varianza poblacional</strong>.</p>
+<h4 id="estimadores">Estimadores</h4>
+<p>Este es un buen momento para hablar de los estimadores. ¿Qué es un
+estimador? Una medida que utilizaremos para estimar un parámetro
+poblacional. Evidentemente, no puede ser cualquier número ni cualquier
+medida, debe de tener ciertas características. Particularmente:</p>
+<ol type="1">
+<li>Insesgado: Es decir, que la media de la <strong>distribución del
+estimador</strong> sea igual al parámetro. De nuevo, en la sesión de
+técnicas paramétricas vamos a hablar sobre distribuciones muestrales, el
+teorema del límite central y su implicación para el supuesto de
+normalidad que a veces puede ser un dolor de cabeza. Por lo pronto
+entiende que “la media de la distribución del estimador” hace referencia
+a que, si hicieramos una cierta cantidad de muestreos y calculamos algún
+parámetro para cada muestreo, el promedio de esas estimaciones debe ser
+igual al parámetro poblacional.</li>
+<li>Consistencia: Es la propiedad en la que un estimador se aproxima al
+valor del parámetro conforme incrementa el tamaño de muestra, lo cual
+también tiene que ver con el teorema del límite central que revisaremos
+más adelante.</li>
+<li>Eficiencia: La estimación tiene el error estándar más pequeño cuando
+se compara con otro estimador. Por ejemplo, en una distribución Normal,
+la media y la mediana son prácticamente iguales; sin embargo, el error
+estándar de la media es <span
+class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, mientras que el
+de la mediana es <span class="math inline">\(\approx 1.25\)</span> veces
+ese valor.</li>
+<li>Suficiencia: El estimador es, por sí mismo, capaz de transmitir toda
+la información disponible en la muestra sobre el valor del
+parámetro.</li>
+</ol>
+<p>Por estas 4 razones es que la mayor parte de nuestras inferencias
+están en relación a la <strong>media poblacional</strong>, estimada a
+partir de la <strong>media muestral</strong>. La mediana no se considera
+un buen estimador de la media poblacional si la distribución no es
+simétrica, pues, como vimos arriba, está sesgada en relación a la media
+poblacional. Por otra parte, su error estándar es mayor que el error
+estándar de la media (en términos de sus distribuciones muestrales), ni
+utiliza todos los datos (solo el cuantil 50).</p>
+<h3 id="coeficiente-de-variación">Coeficiente de variación</h3>
+<p>El coeficiente de variación, también conocido como la desviación
+estándar relativa, es la relación que existe entre la desviación
+estándar y la media de los datos, tal que:</p>
+<p><span class="math display">\[
+CV = \frac{\sigma}{\mu}*100
+\]</span> Este es especialmente útil cuando queremos comparar las
+dispersiones de dos cosas que están en distinta escala, o expresar en un
+porcentaje qué tan grande es nuestra variabilidad en relación a nuestra
+estimación. Si hacemos una estimación de tamaño poblacional de 1000
+individuos, con un coeficiente de variación del 50% quiere decir que
+nuestra variabilidad es de la mitad de nuestra estimación.</p>
+<h3 id="error-estándar">Error estándar</h3>
+<p>Esta medida es especialmente útil en la estimación de los intervalos
+de confianza de cualquier parámetro, y representa la desviación estándar
+de su distribución muestral, el cuál podemos estimar como:</p>
+<p><span class="math display">\[
+\sigma_{\bar{x}} \approx \frac{\sigma_x}{\sqrt{n}}
+\]</span></p>
+<p>Normalmente nosotros no estimaremos o interpretaremos esta medida,
+sino que iremos directamente a los intervalos de confianza para expresar
+la incertidumbre alrededor de nuestras estimaciones.</p>
+<h2 id="gráficos">Gráficos</h2>
+<p>En la sesión de visualización vimos las consideraciones que debemos
+de tener en cuenta para hacer una visualización efectiva, pero no
+hablamos de los tipos de gráficos que podemos realizar. En esta sesión,
+entonces, no entraremos a ver los detalles de la visualización,
+simplemente hablaremos de los gráficos más comunes, en qué escenarios
+son útiles y cómo construirlos utilizando <code>ggplot2</code>.</p>
+<div class="sourceCode" id="cb4"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2119,6 +2423,15 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

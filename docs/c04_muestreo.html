@@ -2110,7 +2110,467 @@ Temas
 </div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#librerías">Librerías</a></li>
+<li><a href="#muestreemos-orcas">Muestreemos orcas</a></li>
+<li><a href="#un-buen-muestreo">Un buen muestreo</a>
+<ul>
+<li><a href="#errores-de-muestreomedición">Errores de
+muestreo/medición</a></li>
+</ul></li>
+<li><a href="#diseño-de-muestreo-y-representatividad">Diseño de muestreo
+y representatividad</a>
+<ul>
+<li><a href="#muestreo-aleatorio-simple">Muestreo Aleatorio
+Simple</a></li>
+<li><a href="#muestreo-aleatorio-estratificado">Muestreo Aleatorio
+Estratificado</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h2 id="librerías">Librerías</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="muestreemos-orcas">Muestreemos orcas</h2>
+<p><strong>NOTA</strong>: En la sesión presencial estos conceptos son
+abordados de manera dinámica, a manera de debate en la cuál se diseña el
+muestreo de ejemplo desde cero. Hacer esto en un video es imposible,
+pero trataré de hacer la explicación igual de amena.</p>
+<p><strong>NOTA 2</strong>: El diseño experimental o de muestreo es un
+tema lo suficientemente grande como para elaborar un curso sobre eso.
+Únicamente revisaremos los conceptos más importantes, de manera que
+puedas reflexionar un poco más sobre qué debes tomar en cuenta en tus
+diseños.</p>
+<p>Infortunadamente, no podemos hablar de algún tema sin introducir
+algunos conceptos básicos, pero trataremos de hacerlo de una manera más
+dinámica que únicamente mencionarlos. Imaginamemos el siguiente
+escenario: Queremos saber cuál es la longitud promedio de las orcas de
+cierta localidad. ¿Para qué? Para facilitar la explicación, por
+supuesto, aunque esto puede ser fácilmente extrapolado a cualquier
+investigación, sea <strong>experimental</strong> u
+<strong>observacional</strong>.</p>
+<p>Bien, entonces estudiaremos <strong>la longitud de las orcas de la
+costa central de Oaxaca</strong>. Esto conforma nuestra
+<strong>población objetivo</strong> o <strong>población
+estadística</strong>; es decir, el conjunto de
+<strong>individuos</strong> que vamos a estudiar. Nota que estos
+individuos están bien delimitados; es decir, no vamos a considerar
+delfines de otras especies ni incluir mediciones de peso o de orcas de
+otra localidad. <strong>Únicamente vamos a medir la longitud de orcas
+que nos encontremos al navegar en la costa central de Oaxaca</strong>.
+Formalmente:</p>
+<ol type="1">
+<li><strong>Población estadística</strong> Conjunto de todos los
+<strong>individuos</strong> a estudiar. Esta puede empatar o no con una
+población biológica. En este caso, lo más probable es que las orcas de
+la CCO sean solo una parte de una población de orcas transeúntes; sin
+embargo, forman nuestra población estadística.</li>
+<li><strong>Individuo</strong>: Objeto, ente, planta, animal, quimera,
+célula o cualquier <strong>unidad</strong> sobre la cual se realiza la
+observación, y que, en consecuencia, tiene el atributo que queremos
+medir.</li>
+</ol>
+<p>Estos dos conceptos van de la mano para definir las generalidades de
+nuestros métodos en campo (o laboratorio si hacemos un experimento),
+pues llevan la información que <strong>delimita</strong> nuestro
+esfuerzo y que, entonces, <strong>definen</strong> nuestro <strong>marco
+de muestreo</strong>. No tiene ningún sentido medir orcas de La Paz,
+BCS, si nuestro interés son las de la CCO. Formalmente:</p>
+<ol type="1">
+<li><strong>Marco de muestreo</strong>: Lista de las unidades de
+muestreo, donde una <strong>unidad de muestreo</strong> es la unidad
+básica para la captación de información de la población de interés. En
+palabras menos rebuscadas, es el conjunto de qué vamos a medir y a quien
+se lo vamos a medir.</li>
+</ol>
+<p>Una vez definido el marco de muestreo toca salir a campo. En un mundo
+ideal tendríamos acceso a la <strong>población</strong> completa y, por
+lo tanto, la longitud promedio que estimemos será la correcta
+<strong>para ese momento</strong>. ¿Por qué para ese momento? Puede que
+los jóvenes crezcan, que los adultos más grandes mueran o que nazcan
+nuevos individuos y que, entonces, el <strong>parámetro
+poblacional</strong> que queremos medir cambie, en este caso, la
+longitud promedio. Esto complica un poco las cosas, puesto que es
+logísticamente imposible acceder a todas las orcas de la CCO. Si lo
+hiciéramos, tendríamos un <strong>censo</strong>, de lo contrario,
+tenemos un <strong>muestreo</strong>; es decir, vamos a medir únicamente
+una <strong>fracción de la población estadística</strong>, la cual va a
+conformar nuestra <strong>muestra</strong>, y cuyos
+<strong>estadísticos</strong> van a ser nuestros estimadores de los
+<strong>parámetros poblacionales</strong>. De nuevo, formalmente:</p>
+<ol type="1">
+<li><strong>Parámetro poblacional</strong>: Función definida sobre los
+valores de las características medibles de una población. En lenguaje
+menos técnico: el valor real de lo que queremos saber de la
+<strong>población</strong>. Representados usualmente con letras griegas
+o mayúsculas (<span class="math inline">\(\mu\)</span>, M, <span
+class="math inline">\(\sigma\)</span>, S).</li>
+<li><strong>Censo</strong>: Medición de <strong>toda</strong> la
+población. En otras palabras, es un muestreo de toda la población en un
+momento dado.</li>
+<li><strong>Muestreo</strong>: Medición de un atributo en individuos de
+una población.</li>
+<li><strong>Muestra</strong>: Conjunto de individuos de la población que
+son medidos (formalmente hace referencia a las mediciones en sí
+mismas).</li>
+<li><strong>Estadístico</strong>: Función definida sobre los valorees
+medibles de una muestra. En otras palabras, la estimación del atributo
+de interés obtenida a partir de la muestra. Representados con letras
+latinas minúsculas (<span class="math inline">\(\bar{x}\)</span>,
+s)</li>
+</ol>
+<h2 id="un-buen-muestreo">Un buen muestreo</h2>
+<p>Volvamos a nuestro ejemplo con las orcas. Realizamos cierto número de
+navegaciones en la temporada seca (tal vez por limitaciones logísticas),
+en las cuales encontramos y medimos <strong>50 orcas</strong>. Ese
+número de individuos medidos es nuestro <strong>tamaño de
+muestra</strong>. Ese número es sumamente importante, pues define la
+<strong>representatividad</strong> del muestreo; es decir, qué tan buen
+“resumen” de la población es nuestra muestra. OJO: Esto solo aplica si
+el muestreo tuvo ciertas cualidades:</p>
+<ol type="1">
+<li>Aleatorio: Es decir, nuestro diseño de muestreo/experimental debe de
+permitir que todos los individuos de nuestra población sean medidos con
+la misma probabilidad. Esto es sumamente difícil de conseguir y podemos
+entrar a detalles filosófico de qué podemos considerar aleatorio y qué
+no, pero sí podemos tratar de hacerlo:</li>
+</ol>
+<ul>
+<li>Exhaustivo: Muy de la mano (de hecho una consecuencia) de la
+aleatoriedad. El muestreo debe de considerar todos los posibles valores
+o atributos de la variable a medir. En nuestro ejemplo esto se reduce a
+que midamos orcas de todos los tamaños y que no
+<strong>sesguemos</strong> el muestreo a individuos únicamente grandes o
+pequeños, salvo que así lo definiéramos en nuestro marco de
+muestreo.</li>
+</ul>
+<ol start="2" type="1">
+<li>Exclusivo: Atributos o valores de un indicador deben ser mutuamente
+excluyentes; es decir, que no tengamos un individuo que mida 8 y 9.3 m,
+por ejemplo. Esto es un poco redundante en este escenario, pero si
+fuéramos a establecer rangos de edad como cría, juvenil, hembra adulta y
+macho adulto, que todos estén en una sola categoría, por lo que hay que
+decidir qué hacer con un juvenil con características de adulto. También
+tiene que ver con tener un marco de muestreo bien definido.</li>
+<li>Precisión: Tratar de tener el mayor número de distinciones posibles
+para tener una mejor descripción. En nuestras orcas es mejor medir en
+830 cm que redondear a 8 m.</li>
+</ol>
+<h3 id="errores-de-muestreomedición">Errores de muestreo/medición</h3>
+<p>Esa “mejor descripción” me lleva también a hablar sobre el tema de
+los errores de muestreo o medición. Por más que querramos evitarlo,
+siempre habrá errores dentro de nuestro muestreo o dentro de nuestra
+medición. Tal vez utilizamos una regla de 30 cm para medir organismos
+que miden más de 30 cm, o tal vez utilizamos una regla de metal que se
+contrae si hace frío y se expande si hace calor. De cualquier manera,
+siempre vamos a ser “víctimas” de alguno de dos tipos de errores:</p>
+<ol type="1">
+<li>Error sistemático: Un error que ocurre cada que realizamos la
+medición. Es constante y consistente. Si no somos conscientes de este
+error, nuestros resultados son inválidos. Pensemos en nuestras orcas, y
+que estamos utilizando fotogrametría aérea (fotos de dron) para hacer
+nuestros registros. Si calibramos nuestra medición al ángulo de visión
+que obtenemos a 10 m de altura y tomamos todas nuestras fotos a 11 m, el
+error va a ser constante y podemos corregirlo con una re-calibración. El
+problema está cuando no sabemos que este error está sucediendo; es
+decir, asumir que nuestras fotos se tomaron a 10 m y hacer la estimación
+con esa calibración.</li>
+<li>Error aleatorio: Un error que no es constante. Volviendo a la
+fotogrametría, pensemos que obtuvimos un dron cuyo altímetro salió
+defectuoso, que no lo sabemos y que aunque marque 10 m de altura puede
+estar a ± 1m de ahí. Ese error es aleatorio. No podemos predecir si en
+un momento dado va a sobre o subestimar la altura. En este caso, los
+resultados son no confiables.</li>
+</ol>
+<p>Posiblemente esos términos de <em>no confiable</em> o
+<em>inválido</em> te suenen alarmantes. La clave para poder contender
+con ellos es a) saber que existen y b) ser conscientes de su magnitud.
+Si sabemos qué tanto estamos subestimando por la diferencia de alturas
+de 10 a 11 m, podemos corregir el valor. Si sabemos cuál es la
+distribución del error de medición del altímetro, podemos modelarlo (la
+inferencia Bayesiana se presta muy bien para eso). ¿Con eso quiero decir
+que entonces no hay que cuidar estos detalles? PARA NADA, por el
+contrario, hay que cuidarlos tanto que hay que saber cómo remediarlos o
+incluirlos en nuestros análisis de datos.</p>
+<h2 id="diseño-de-muestreo-y-representatividad">Diseño de muestreo y
+representatividad</h2>
+<p>En nuestro ejemplo tenemos mediciones de 50 orcas, asumamos que
+controlamos nuestros errores y que, por lo tanto, esos valores son
+válidos y confiables. ¿Podemos estar seguros de que esas 50 orcas nos
+dan una <strong>representación</strong> adecuada de la población? En
+otras palabras, nuestra muestra es <strong>representativa</strong>? Para
+explicar esto, generemos una población hipotética de 1000 orcas, en la
+cual hay 500 hembras y 500 machos y, para simplificarnos la existencia,
+solo hay individuos adultos. Para seguir con la simplificación,
+asumiremos que la longitud en ambos sexos tiene una distribución normal,
+con un promedio de 9.6 m para machos y 8.2 m para hembras y una
+dispersión de 0.1 m (más adelante hablaremos de todos estos detalles).
+En este escenario, podemos asumir que la <strong>media
+poblacional</strong> (el valor que queremos inferir) es el promedio de
+los promedios de ambos sexos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>machos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>500</span>, mean <span class='op'>=</span> <span class='fl'>9.6</span>, sd <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+<span class='va'>hembras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>500</span>, mean <span class='op'>=</span> <span class='fl'>8.2</span>, sd <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+<span class='va'>media_real</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>9.6</span>, <span class='fl'>8.2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pobl</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>sexo <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='fl'>500</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"H"</span>, <span class='fl'>500</span><span class='op'>)</span><span class='op'>)</span>,
+                   lt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>machos</span>, <span class='va'>hembras</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Siempre es más fácil ver un gráfico:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pobl</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>lt</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='va'>media_real</span>, color <span class='op'>=</span> <span class='st'>"forestgreen"</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Densidad de la LT de orcas"</span>,
+                  x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+                  y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pobl_dens</span>
+</code></pre>
+</div>
+<p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<p>Y ahora hablemos de los diseños <strong>probabilísticos</strong> de
+muestreo, partiendo de este ejemplo.</p>
+<h3 id="muestreo-aleatorio-simple">Muestreo Aleatorio Simple</h3>
+<p>Es, como el nombre lo indica, el más simple de los diseños. La idea
+es que haremos el muestreo de manera que la
+<strong>probabilidad</strong> de muestrear <strong>cualquier
+individuo</strong> de la población es <strong>uniforme</strong> para
+<strong>todos los individuos</strong>; es decir, la misma. PREGUNTA:
+¿Esto se sostiene para nuestro ejemplo? Cuando tenemos diseños
+observacionales como este, siempre vamos a infringir, de una manera u
+otra, con la parte aleatoria. Estamos sujetos a si encontramos o no a
+los animales, si la “curiosidad” por la embarcación es variable, etc.,
+etc., etc., por lo que, dependiendo de lo que estemos realizando,
+podemos solo “asumir” que el muestreo fue aleatorio. En este caso de
+ejemplo, por fortuna, podemos darnos el “lujo” de hacerlo de manera
+adecuada; es decir:</p>
+<ol type="1">
+<li>Definir la población estadística (hecho)</li>
+<li>Definir un conjunto de muestras con la misma probabilidad de ser
+escogidas. Son nuestras 50 muestras a obtener, para lo cual</li>
+<li>Seleccionaremos una de las muestras utilizando números
+aleatorios.</li>
+</ol>
+<p>Hagamos entonces el ejercicio para una muestra y luego dejemos que R
+haga lo demás:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ind</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>1</span>, min <span class='op'>=</span> <span class='fl'>1</span>, max <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ind</span>
+</code></pre>
+</div>
+<pre><code>[1] 161</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>[</span><span class='va'>ind</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] 9.593848</code></pre>
+</div>
+<p>Aquí lo que hicimos fue tomar un individuo de nuestra población de
+manera uniformemente “aleatoria”, en este caso el número 267 y medirlo.
+Ahora tenemos que repetir esa acción otras 49 veces, una a una, o
+podemos decirle a R que lo haga en un solo paso (imaginemos que somos
+nosotros los ) Podemos hacer esto 50 veces, una a una, o podemos decirle
+a R que las obtenga todas al mismo tiempo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>pobl</span><span class='op'>$</span><span class='va'>lt</span>, size <span class='op'>=</span> <span class='fl'>50</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 9.754284 8.155200 9.578419 9.572753 8.097646 9.539807</code></pre>
+</div>
+<p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas
+muestras, lo cual sería problemático si no tuviéramos 2) el argumento
+<code>replace = FALSE</code>. Con esto lo que hicimos fue un
+<strong>muestreo sin reemplazo</strong>; es decir, una vez que un
+individuo fue medido se “retiró” de la población, en el sentido de que
+no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues
+no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. En
+nuestro ejemplo de las orcas es correcto asumir que esto puede ser así,
+pues podemos saber quién es quien con fotos de sus aletas dorsales y,
+con ello, descartar las mediciones duplicadas. Desafortunadamente, esto
+no siempre es así, y es algo que debemos de considerar al diseñar
+nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces
+podemos realizar la estimación de nuestro promedio (media):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 8.840772</code></pre>
+</div>
+<p>Pongámosla en nuestro gráfico inicial como una línea vertical para
+ver en dónde quedó:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>No está exactamente donde debería de estar. Para complicar más las
+cosas, añadamos un pequeño sesgo a nuestro muestreo: No es completamente
+aleatorio, sino que hubo algún factor que hiciera que muestreáramos
+preferencialmente a los machos. Tal vez eran más curiosos y era más
+fácil tomar una foto con la embarcación como referencia. Simulemos ese
+escenario. Nuestra muestra seguirá siendo de 50, pero esta vez tendremos
+35 machos y 15 hembras:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>machos</span>, size <span class='op'>=</span> <span class='fl'>35</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>hembras</span>, size <span class='op'>=</span> <span class='fl'>15</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>Aquí la estimación ya se aleja mucho más de nuestra media “real”. La
+razón es, sin duda, el sesgo que añadimos hacia los machos.</p>
+<h3 id="muestreo-aleatorio-estratificado">Muestreo Aleatorio
+Estratificado</h3>
+<p>En este caso, donde la población se encuentra sub-dividida en
+<strong>estratos</strong> no traslapados y estos son muestreados de
+manera independiente, estamos hablando de un Muestreo Aleatorio
+Estratificado. Este es simplemente una “mezcla” de MAS, en el sentido
+que haremos un muestreo aleatorio simple dentro de cada estrato, aunque
+es importante conocer su tamaño de antemano. Para obtener la media
+poblacional solo obtenemos el promedio de ambos promedios:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>35</span><span class='op'>]</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>36</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<p>Matemáticamente la ecuación es más complicada, primero obtendríamos
+el peso de cada estrato (<span class="math inline">\(W_s\)</span>),
+donde <span class="math inline">\(n_s\)</span> es el tamaño del estrato
+<span class="math inline">\(s\)</span> y <span
+class="math inline">\(N\)</span> es el tamaño poblacional total:</p>
+<p><span class="math display">\[
+W_s = \frac{n_s}{N}
+\]</span></p>
+<p>Luego, la media de la población estratificada está dada por:</p>
+<p><span class="math display">\[
+\mu = \frac{\sum_{s = 1}^{S} n_s*\bar{x}_s}{N} \\
+\therefore \\
+\mu = \sum_{s = 1}^{S} W_s*\bar{x}_s
+\]</span></p>
+<p>Comprobémoslo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Peso de cada estrato:</span>
+<span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>(</span><span class='fl'>500</span><span class='op'>/</span><span class='fl'>1000</span><span class='op'>)</span>, <span class='op'>(</span><span class='fl'>500</span><span class='op'>/</span><span class='fl'>1000</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>35</span><span class='op'>]</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>36</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>w</span><span class='op'>*</span><span class='va'>m</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>La igualdad podría demostrarse matemáticamente, pero eso queda como
+ejercicio si te da curiosidad. OJO: Esto solo es válido si a) tiene
+sentido recuperar la media “total”, lo cual depende totalmente de la
+pregunta de investigación (puede que tenga más sentido estimar la media
+para cada grupo) y b) si el muestreo es <strong>representativo</strong>.
+Veamos qué pasa si muestreamos únicamente 10 y 5 individuos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>machos</span>, size <span class='op'>=</span> <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>,
+              <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>hembras</span>, size <span class='op'>=</span> <span class='fl'>5</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>, <span class='va'>muestras</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>15</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<p>Como era de esperarse, la estimación está sumamente sesgada. Esto es
+por el problema de la <strong>representatividad</strong>; es decir,
+nuestra muestra es muy pequeña (especialmente para las hembras) y, por
+lo tanto, no es una buena imagen de lo que pasa a nivel población. Como
+ejercicio, estima la media de la población estratificada con las
+ecuaciones que vimos arriba. ¿Cambió el resultado?</p>
+<p>Este problema tiene una “solución”: muestrear más. ¿Qué tanto?
+Depende de la precisión (grado de error) que querramos. La relación
+entre el tamaño de muestra, la Varianza poblacional y la precisión está
+dada por:</p>
+<p><span class="math display">\[
+n = \frac{1.96^2 S^2}{d^2}
+\]</span></p>
+<p>¿De dónde sale ese 1.96? Es el límite al 95% de confianza (en pruebas
+de hipótesis hablaremos de qué es eso) de una distribución normal, dado
+en términos de desviaciones estándar, por lo que podríamos cambiarlo por
+cualquier otro número para representar cualquier intervalo de confianza.
+¿Qué pasa si la población no tiene una distribución normal? A ese 1.96
+tenemos aproximadamente el 75% de los datos poblacionales (Desigualdad
+de Chebyshev), independientemente de su distribución. No entraré en esos
+detalles, lo que es realmente importante es que debemos de conocer la
+varianza poblacional, lo cuál es un problema y de los grandes. Gigante,
+de hecho. Podemos estimarla a partir de la muestra, pero resulta que, si
+no es representativa, nuestra estimación de la varianza tampoco es
+confiable. En este caso, para tener un muestreo representativo al 95% de
+confianza, considerando la varianza poblacional de <span
+class="math inline">\(0.1^2\)</span> y con una precisión de 0.05m,
+necesitaríamos un tamaño de muestra de mínimo 15 individuos (por
+sexo).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>n</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='op'>(</span><span class='fl'>1.96</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>0.1</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>0.05</span><span class='op'>^</span><span class='fl'>2</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 15</code></pre>
+</div>
+<p>O podemos ver cuál es la precisión de la estimación de la media de
+las hembras con nuestra muestra de 5 individuos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='op'>(</span><span class='op'>(</span><span class='fl'>1.96</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>0.1</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>d</span>
+</code></pre>
+</div>
+<pre><code>[1] 0.08765386</code></pre>
+</div>
+<p>Es decir, tenemos un márgen de error aproximado de 0.87m para la
+media de las hembras. A esto lo acompaña algo que se conoce como
+<strong>pruebas de potencia</strong>, sobre lo cual encontrarás
+referencias en la sección de lecturas recomendadas del servidor de
+Discord. También es importante mencionar que en la sesión de pruebas de
+hipótesis hablaremos de cómo representar la incertidumbre en nuestras
+estimaciones (intervalos de confianza). Por el momento basta que te
+lleves el mensaje de que es importante considerar qué factores pueden
+estar generando “ruido” en tu diseño. Si tu pregunta se puede responder
+mediante un experimento en condiciones controladas,
+<strong>controla</strong> toda posible fuente de variación externa al
+factor que te interesa, de manera que lo que midas refleje únicamente lo
+que quieras responder. Si es un estudio observacional,
+<strong>acota</strong> tu marco de muestreo lo más posible. En ambos
+casos, y en la medida de lo posible, <strong>mide</strong> todas las
+fuentes de variación que pudieran estar influenciando tus observaciones
+e inclúyelas en tus análisis.</p>
+<p>Esto sería todo para esta clase. Espero que haya sido de tu agrado y,
+sobre todo, que aunque no haya podido resolver todas tus incertidumbres,
+te haya motivado a reflexionar sobre la importancia de un buen muestreo.
+La inferencia estadística NO es magia negra que pueda resolver nuestros
+problemas, simplemente nos ayuda a tomar decisiones en situaciones de
+incertidumbre pero, que esas decisiones sean buenas (o no) depende
+totalmente de los datos que tengamos disponibles.</p>
+<div class="sourceCode" id="cb7"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2119,6 +2579,15 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

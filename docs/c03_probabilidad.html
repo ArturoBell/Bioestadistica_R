@@ -2273,14 +2273,14 @@ términos de frecuencias:</p>
 <pre><code>   Intervalo Frecuencia    Lims
 1    (0,0.1]         NA   0:0.1
 2  (0.1,0.2]         NA 0.1:0.2
-3  (0.2,0.3]         NA 0.2:0.3
-4  (0.3,0.4]          2 0.3:0.4
-5  (0.4,0.5]         34 0.4:0.5
-6  (0.5,0.6]        396 0.5:0.6
-7  (0.6,0.7]         65 0.6:0.7
-8  (0.7,0.8]          2 0.7:0.8
+3  (0.2,0.3]          1 0.2:0.3
+4  (0.3,0.4]         26 0.3:0.4
+5  (0.4,0.5]        415 0.4:0.5
+6  (0.5,0.6]         56 0.5:0.6
+7  (0.6,0.7]         NA 0.6:0.7
+8  (0.7,0.8]         NA 0.7:0.8
 9  (0.8,0.9]         NA 0.8:0.9
-10   (0.9,1]          1   0.9:1</code></pre>
+10   (0.9,1]         NA   0.9:1</code></pre>
 </div>
 <p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo
 (NOTA: Las advertencias no son errores, son solo por los NAs que
@@ -2538,13 +2538,13 @@ intervalos de confianza y el valor de la media.</p>
     One Sample t-test
 
 data:  norm.var$var
-t = 961.41, df = 9999, p-value &lt; 2.2e-16
+t = 956.32, df = 9999, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 66.84064 67.11375
+ 66.84091 67.11549
 sample estimates:
 mean of x 
- 66.97719 </code></pre>
+  66.9782 </code></pre>
 </div>
 <p>Otra forma de calcularlos es utilizando la librería
 <code>Rmisc</code>:</p>
@@ -2555,18 +2555,18 @@ mean of x
 </code></pre>
 </div>
 </div>
-<p>Una vez instalada y cargada, podemos utilizar la función <code>CI(x,
-ci = a)</code>, donde <code>x</code> es el vector que contiene los datos
-y <code>a</code> representa el nivel de “confianza” de la estimación.
-Utilicemos los mismos datos de altura que generamos hace unos
-momentos:</p>
+<p>Una vez instalada y cargada, podemos utilizar la función
+<code>CI(x, ci = a)</code>, donde <code>x</code> es el vector que
+contiene los datos y <code>a</code> representa el nivel de “confianza”
+de la estimación. Utilicemos los mismos datos de altura que generamos
+hace unos momentos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/Rmisc/man/CI.html'>CI</a></span><span class='op'>(</span><span class='va'>norm.var</span><span class='op'>$</span><span class='va'>var</span>, ci <span class='op'>=</span> <span class='fl'>0.95</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>   upper     mean    lower 
-67.11375 66.97719 66.84064 </code></pre>
+67.11549 66.97820 66.84091 </code></pre>
 </div>
 <p>Como vemos, la función calcula los intervalos de confianza utilizando
 la distribución T. Esto se debe a que es el modo más común de realizar
@@ -2588,11 +2588,12 @@ que instalarla:</p>
 <p>Una de las funciones que podemos utilizar es
 <code>groupwiseMean(formula, data, conf, R)</code>, donde
 <code>formula</code> indica al mismo tiempo las columnas de la variable
-continua y la variable de agrupamiento, tal que: <code>var ~
-grupo</code>; <code>data</code> indica el <code>data.frame</code> que
-contiene la información, <code>conf</code> que indica la amplitud de los
-intervalos y finalmente <code>R</code> que indica el número de replicas
-bootstrap a realizar. Partiendo de lo anterior:</p>
+continua y la variable de agrupamiento, tal que:
+<code>var ~ grupo</code>; <code>data</code> indica el
+<code>data.frame</code> que contiene la información, <code>conf</code>
+que indica la amplitud de los intervalos y finalmente <code>R</code> que
+indica el número de replicas bootstrap a realizar. Partiendo de lo
+anterior:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/rcompanion/man/groupwiseMean.html'>groupwiseMean</a></span><span class='op'>(</span><span class='va'>var</span><span class='op'>~</span><span class='fl'>1</span>, data <span class='op'>=</span> <span class='va'>norm.var</span>, conf <span class='op'>=</span> <span class='fl'>0.95</span>, R <span class='op'>=</span> <span class='fl'>500</span><span class='op'>)</span>
