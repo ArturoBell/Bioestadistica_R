@@ -2131,7 +2131,20 @@ Varianza</a></li>
 variación</a></li>
 <li><a href="#error-estándar">Error estándar</a></li>
 </ul></li>
-<li><a href="#gráficos">Gráficos</a></li>
+<li><a href="#gráficos">Gráficos</a>
+<ul>
+<li><a href="#gráfico-de-frecuencias">Gráfico de frecuencias</a></li>
+<li><a href="#gráfico-de-densidad">Gráfico de densidad</a></li>
+<li><a href="#gráfico-de-cajas-y-bigotes">Gráfico de cajas y
+bigotes</a></li>
+<li><a href="#gráfico-de-violín">Gráfico de violín</a></li>
+<li><a href="#gráfico-de-dispersión">Gráfico de dispersión</a></li>
+<li><a href="#gráfico-de-densidad-bivariado">Gráfico de densidad
+bivariado</a></li>
+<li><a href="#heatmaps">Heatmaps</a></li>
+<li><a href="#gráfico-de-contornos">Gráfico de contornos</a></li>
+<li><a href="#otros-gráficos">Otros gráficos</a></li>
+</ul></li>
 </ul>
 </nav>
 </div>
@@ -2139,6 +2152,8 @@ variación</a></li>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggobi.github.io/ggally'>GGally</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://allisonhorst.github.io/palmerpenguins/'>palmerpenguins</a></span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2150,14 +2165,11 @@ datos; sin embargo, está lejos de ser la única y, de hecho, por lo
 general buscamos que el gráfico acompañe a un resumen numérico, en forma
 de un solo valor o índice. A los seres humanos nos gusta la simpleza,
 después de todo. Bueno, de eso es de lo que vamos a hablar hoy.</p>
-<p>Estoy seguro de que los conceptos que revisaremos en esta sesión los
-has revisado ya con anterioridad, por lo que no te haré el cuento largo,
-sino que me enfocaré más en las peculiaridades de cada una de las
-medidas, en qué escenarios son útiles, cuándo no lo son tanto y lo
-enlazaremos con temas que veremos más adelante. Esto con el objetivo de
-dedicar más tiempo a algo que merece más atención que recordar por
-cienmillonésima vez qué es un promedio: las distribuciones de
-probabilidad y sus usos.</p>
+<p>Estoy seguro de que algunos de los conceptos que revisaremos en esta
+sesión los has revisado ya con anterioridad, por lo que no te haré el
+cuento largo, sino que me enfocaré más en las peculiaridades de cada una
+de las medidas y gráficos, en qué escenarios son útiles, cuándo no lo
+son tanto y lo enlazaremos con temas que veremos más adelante.</p>
 <h2 id="medidas-de-tendencia-central">Medidas de tendencia central</h2>
 <p>Comencemos hablando con lo que, por lo general, es nuestro mayor
 interés: hacia dónde tienden nuestros datos. Para ello tenemos algunas
@@ -2414,7 +2426,250 @@ de tener en cuenta para hacer una visualización efectiva, pero no
 hablamos de los tipos de gráficos que podemos realizar. En esta sesión,
 entonces, no entraremos a ver los detalles de la visualización,
 simplemente hablaremos de los gráficos más comunes, en qué escenarios
-son útiles y cómo construirlos utilizando <code>ggplot2</code>.</p>
+son útiles y cómo construirlos utilizando <code>ggplot2</code>. Para
+esta parte utilizaremos los datos de Pinguinos de Palmer, contenidos en
+la librería <code>palmerpenguins</code></p>
+<h3 id="gráfico-de-frecuencias">Gráfico de frecuencias</h3>
+<p>También nombrado a veces histograma. Es, posiblemente, el gráfico más
+sencillo de todos, pues lo único que hacemos es poner una barra a la
+altura del número de individuos que hay en una clase o intervalo. Para
+construirlo en <code>ggplot2</code> utilizaremos la capa
+<code>geom_histogram</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<p>Si tenemos más de un grupo y queremos ver todas las distribuciones de
+frecuencia podemos pasar el argumento <code>fill</code> dentro de los
+argumentos de estética (<code>aes()</code>)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>bill_length_mm</span>, fill <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>Habrás notado que <code>ggplot2</code> nos dio una notificación con
+respecto al número de intervalos (cajas) utilizados para estimar las
+frecuencias, en particular que utilizó 30. Podemos seleccionar una
+cantidad manualmente, por ejemplo 100, y especificarla con el argumento
+<code>bins</code>, o especificar la amplitud del intervalo con el
+argumento <code>binwidth</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>bill_length_mm</span>, fill <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span>bins <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<p>¿El problema? ¿Cómo sabemos cuántos intervalos utilizar? Si ya hay
+intervalos establecidos, por ejemplo longitudes para estados de madurez
+sexual, podemos establecer esos intervalos, pero si nuestra distribución
+es continua podemos utilizar una mejor alternativa.</p>
+<h3 id="gráfico-de-densidad">Gráfico de densidad</h3>
+<p>Los gráficos de densidad nos permiten, justamente, representar
+gráficamente la distribución de una variable continua. Recordarás de la
+clase de probabilidad que la probabilidad de un valor continuo es
+<em>teóricamente</em> 0, pero podemos estimar la densidad de
+probabilidad de un punto determinado si hacemos el intervalo
+infinitesimalmente pequeño, y es esto lo que representa un gráfico de
+densidad. Piensa en él como una versión suavizada de un gráfico de
+frecuencias:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>bill_length_mm</span>, fill <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<p>Eso se ve bastante mejor, pues ya no tenemos la incertidumbre de
+cuántas “cajas” formar para encajonar nuestros datos, pero no es lo más
+adecuado para comparar distribuciones de manera gráfica.
+Afortunadamente, también tenemos alternativas para eso.</p>
+<h3 id="gráfico-de-cajas-y-bigotes">Gráfico de cajas y bigotes</h3>
+<p>Una es el clásico gráfico de cajas y bigotes, en el cuál hay (por
+grupo) un indicador (punto, línea horizontal o muesca) de la tendencia
+central (media, mediana), una caja que indica una medida de dispersión
+(desviación estándar, rango intercuantil, error estándar) y dos
+“bigotes” (líneas verticales) que indican los límites “aceptables” de la
+distribución. Adicionalmente tenemos puntos “libres” que indican valores
+extremos. En <code>ggplot2</code> podemos construirlos con la capa
+<code>geom_boxplot</code>, siempre que especifiquemos en
+<code>aes()</code> una variable de agrupamiento para <code>x</code>, la
+variable de la que queremos ver el interés en <code>y</code> y,
+opcionalmente, un argumento de color que corresponda con los grupos en
+<code>x</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span>, y <span class='op'>=</span> <span class='va'>bill_length_mm</span>, color <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<p>Infortunadamente perdemos mucha información si lo comparamos con el
+gráfico de densidad. Si tan solo hubiera una manera de mezclarnos…
+¡Espera! Sí que la hay.</p>
+<h3 id="gráfico-de-violín">Gráfico de violín</h3>
+<p>Los gráficos de violín son, justamente, una alternativa más “fina” a
+los gráficos de cajas y bigotes, en los cuales podemos mostrar la
+distribución completa de cada grupo. En <code>ggplot2</code>
+utilizaremos la capa <code>geom_violin</code>, que requiere exactamente
+la misma información que el gráfico de caja y bigotes:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span>, y <span class='op'>=</span> <span class='va'>bill_length_mm</span>, color <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_violin.html'>geom_violin</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p>Afortunadamente, uno no está peleado con el otro, y podemos añadir la
+información resumida disponible en el gráfico de cajas y bigotes:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span>, y <span class='op'>=</span> <span class='va'>bill_length_mm</span>, color <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_violin.html'>geom_violin</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_boxplot.html'>geom_boxplot</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='cn'>NA</span>, width <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<p>Con estos gráficos vemos la relación entre una variable categórica y
+una variable numérica, pero ¿qué pasa si tenemos dos variables
+numéricas?</p>
+<h3 id="gráfico-de-dispersión">Gráfico de dispersión</h3>
+<p>El gráfico más básico es el gráfico de dispersión. Simplemente es un
+gráfico de las coordenadas dadas por una variable <code>x</code> con
+respecto a una variable <code>y</code>. En <code>ggplot2</code>
+utilizaremos la capa <code>geom_point</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>flipper_length_mm</span>,
+           y <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<p>Al igual que en el gráfico de frecuencias, podemos colorear los
+puntos según una variable categórica:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>flipper_length_mm</span>,
+           y <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<p>E, incluso, según una variable continua:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>flipper_length_mm</span>,
+           y <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>body_mass_g</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+</div>
+<p>¿Y si no me interesa ver todos los puntos, sino las distribuciones
+bivariadas? También tenemos alternativas.</p>
+<h3 id="gráfico-de-densidad-bivariado">Gráfico de densidad
+bivariado</h3>
+<p>Podemos utilizar un gráfico de densidad bivariado, el cual muestra
+contornos correspondientes a la densidad de los puntos. Su
+interpretación es exactamente igual a un mapa topográfico. Los contornos
+más pequeños representan la mayor densidad, mientras que los más grandes
+una menor densidad.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>flipper_length_mm</span>,
+           y <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density_2d.html'>geom_density2d</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+</div>
+<h3 id="heatmaps">Heatmaps</h3>
+<p>¿Y si mis dos variables son discretas? No temas, para eso tenemos
+<strong>heatmaps</strong>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span>,
+           y <span class='op'>=</span> <span class='va'>island</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_tile</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='st'>"dodgerblue4"</span>, color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+</div>
+<p>Si tienes una variable adicional (pueden ser frecuencias o alguna
+variable continua) puedes agregarla con el argumento fill dentro de
+aes:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>,
+       <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>species</span>,
+           y <span class='op'>=</span> <span class='va'>island</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_tile</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>bill_length_mm</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+</div>
+<p>¿Hay algún equivalente para tres variables numéricas? Por
+supuesto.</p>
+<h3 id="gráfico-de-contornos">Gráfico de contornos</h3>
+<p>Podemos generar un gráfico de contornos, utilizando la capa
+<code>geom_contour</code>. OJO: para esta hay que hacer cierto
+procesamiento de los datos, en el sentido que hay que generar una malla
+uniforme de coordenadas x, y, z. Esto queda fuera de la discusión por
+este momento, pero lo revisitaremos cuando grafiquemos la zona de
+decisión de un análisis de funciones discriminantes lineales en la
+sesión de clasificación.</p>
+<h3 id="otros-gráficos">Otros gráficos</h3>
+<p>Estos gráficos están lejos de ser los únicos a nuestra disposición.
+Para comparar distribuciones también tenemos <em>forest plots</em> o
+<em>ridgelines</em>. Si queremos ver la relación entre más de dos
+variables, considerando cada individuo, podemos utilizar gráficos de
+coordenadas paralelas, para lo cual utilizaremos la función
+<code>par_coord</code> de la librería <code>GGally</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>GGally</span><span class='fu'>::</span><span class='fu'><a href='https://ggobi.github.io/ggally/reference/ggparcoord.html'>ggparcoord</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>, groupColumn <span class='op'>=</span> <span class='st'>"species"</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c05_descriptiva_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<p>Y muchos otros más que no tendríamos tiempo de revisar en una sola
+sesión, cada uno con un uso particular. Algunos de ellos los veremos
+durante el curso, mientras que algunas otras alternativas las puedes
+encontrar en <a href="https://www.d3-graph-gallery.com">este enlace</a>.
+También es importante mencionar que R base y <code>ggplot2</code> no son
+las únicas librerías para generar gráficos en R. Podemos utilizar <a
+href="https://www.d3-graph-gallery.com">D3</a> o <a
+href="https://plotly.com">plotly</a>, por ejemplo, para generar no solo
+otro tipo de gráficos, sino también hacerlos interactivos.</p>
+<p>Esto sería todo para esta sesión. Espero que haya sido un buen
+recordatorio y que te sea de utilidad en algún futuro.</p>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->

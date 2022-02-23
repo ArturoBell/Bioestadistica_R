@@ -16,6 +16,8 @@ knitr::opts_chunk$set(R.options = list(width = 80))
 
 ```{r}
 library(ggplot2)
+library(GGally)
+library(palmerpenguins)
 ```
 
 
@@ -23,7 +25,7 @@ library(ggplot2)
 
 En la sesión de visualización hablamos de que hay una gran cantidad de formas en las cuales podemos describir el mundo que nos rodea. Una imágen habla más que mil palabras, y es una forma de resumir nuestros datos; sin embargo, está lejos de ser la única y, de hecho, por lo general buscamos que el gráfico acompañe a un resumen numérico, en forma de un solo valor o índice. A los seres humanos nos gusta la simpleza, después de todo. Bueno, de eso es de lo que vamos a hablar hoy.
 
-Estoy seguro de que los conceptos que revisaremos en esta sesión los has revisado ya con anterioridad, por lo que no te haré el cuento largo, sino que me enfocaré más en las peculiaridades de cada una de las medidas, en qué escenarios son útiles, cuándo no lo son tanto y lo enlazaremos con temas que veremos más adelante. Esto con el objetivo de dedicar más tiempo a algo que merece más atención que recordar por cienmillonésima vez qué es un promedio: las distribuciones de probabilidad y sus usos.
+Estoy seguro de que algunos de los conceptos que revisaremos en esta sesión los has revisado ya con anterioridad, por lo que no te haré el cuento largo, sino que me enfocaré más en las peculiaridades de cada una de las medidas y gráficos, en qué escenarios son útiles, cuándo no lo son tanto y lo enlazaremos con temas que veremos más adelante.
 
 ## Medidas de tendencia central
 
@@ -172,9 +174,158 @@ Normalmente nosotros no estimaremos o interpretaremos esta medida, sino que irem
 
 ## Gráficos
 
-En la sesión de visualización vimos las consideraciones que debemos de tener en cuenta para hacer una visualización efectiva, pero no hablamos de los tipos de gráficos que podemos realizar. En esta sesión, entonces, no entraremos a ver los detalles de la visualización, simplemente hablaremos de los gráficos más comunes, en qué escenarios son útiles y cómo construirlos utilizando `ggplot2`.
+En la sesión de visualización vimos las consideraciones que debemos de tener en cuenta para hacer una visualización efectiva, pero no hablamos de los tipos de gráficos que podemos realizar. En esta sesión, entonces, no entraremos a ver los detalles de la visualización, simplemente hablaremos de los gráficos más comunes, en qué escenarios son útiles y cómo construirlos utilizando `ggplot2`. Para esta parte utilizaremos los datos de Pinguinos de Palmer, contenidos en la librería `palmerpenguins`
+
+### Gráfico de frecuencias
+
+También nombrado a veces histograma. Es, posiblemente, el gráfico más sencillo de todos, pues lo único que hacemos es poner una barra a la altura del número de individuos que hay en una clase o intervalo. Para construirlo en `ggplot2` utilizaremos la capa `geom_histogram`:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = bill_length_mm)) +
+  geom_histogram(fill = "dodgerblue4")
+```
+
+Si tenemos más de un grupo y queremos ver todas las distribuciones de frecuencia podemos pasar el argumento `fill` dentro de los argumentos de estética (`aes()`)
+
+```{r}
+ggplot(data = penguins,
+       aes(x = bill_length_mm, fill = species)) +
+  geom_histogram()
+```
+
+Habrás notado que `ggplot2` nos dio una notificación con respecto al número de intervalos (cajas) utilizados para estimar las frecuencias, en particular que utilizó 30. Podemos seleccionar una cantidad manualmente, por ejemplo 100, y especificarla con el argumento `bins`, o especificar la amplitud del intervalo con el argumento `binwidth`:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = bill_length_mm, fill = species)) +
+  geom_histogram(bins = 100)
+```
+
+¿El problema? ¿Cómo sabemos cuántos intervalos utilizar? Si ya hay intervalos establecidos, por ejemplo longitudes para estados de madurez sexual, podemos establecer esos intervalos, pero si nuestra distribución es continua podemos utilizar una mejor alternativa.
 
 
+### Gráfico de densidad
 
+Los gráficos de densidad nos permiten, justamente, representar gráficamente la distribución de una variable continua. Recordarás de la clase de probabilidad que la probabilidad de un valor continuo es *teóricamente* 0, pero podemos estimar la densidad de probabilidad de un punto determinado si hacemos el intervalo infinitesimalmente pequeño, y es esto lo que representa un gráfico de densidad. Piensa en él como una versión suavizada de un gráfico de frecuencias:
 
+```{r}
+ggplot(data = penguins,
+       aes(x = bill_length_mm, fill = species)) +
+  geom_density(color = NA)
+```
 
+Eso se ve bastante mejor, pues ya no tenemos la incertidumbre de cuántas "cajas" formar para encajonar nuestros datos, pero no es lo más adecuado para comparar distribuciones de manera gráfica. Afortunadamente, también tenemos alternativas para eso.
+
+### Gráfico de cajas y bigotes
+
+Una es el clásico gráfico de cajas y bigotes, en el cuál hay (por grupo) un indicador (punto, línea horizontal o muesca) de la tendencia central (media, mediana), una caja que indica una medida de dispersión (desviación estándar, rango intercuantil, error estándar) y dos "bigotes" (líneas verticales) que indican los límites "aceptables" de la distribución. Adicionalmente tenemos puntos "libres" que indican valores extremos. En `ggplot2` podemos construirlos con la capa `geom_boxplot`, siempre que especifiquemos en `aes()` una variable de agrupamiento para `x`, la variable de la que queremos ver el interés en `y` y, opcionalmente, un argumento de color que corresponda con los grupos en `x`.
+
+```{r}
+ggplot(data = penguins,
+       aes(x = species, y = bill_length_mm, color = species)) +
+  geom_boxplot(fill = NA)
+```
+
+Infortunadamente perdemos mucha información si lo comparamos con el gráfico de densidad. Si tan solo hubiera una manera de mezclarnos... ¡Espera! Sí que la hay.
+
+### Gráfico de violín
+
+Los gráficos de violín son, justamente, una alternativa más "fina" a los gráficos de cajas y bigotes, en los cuales podemos mostrar la distribución completa de cada grupo. En `ggplot2` utilizaremos la capa `geom_violin`, que requiere exactamente la misma información que el gráfico de caja y bigotes:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = species, y = bill_length_mm, color = species)) +
+  geom_violin(fill = NA)
+```
+
+Afortunadamente, uno no está peleado con el otro, y podemos añadir la información resumida disponible en el gráfico de cajas y bigotes:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = species, y = bill_length_mm, color = species)) +
+  geom_violin(fill = NA) +
+  geom_boxplot(fill = NA, width = 0.1)
+```
+
+Con estos gráficos vemos la relación entre una variable categórica y una variable numérica, pero ¿qué pasa si tenemos dos variables numéricas?
+
+### Gráfico de dispersión
+
+El gráfico más básico es el gráfico de dispersión. Simplemente es un gráfico de las coordenadas dadas por una variable `x` con respecto a una variable `y`. En `ggplot2` utilizaremos la capa `geom_point`:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = flipper_length_mm,
+           y = bill_length_mm)) +
+  geom_point(color = "dodgerblue4")
+```
+
+Al igual que en el gráfico de frecuencias, podemos colorear los puntos según una variable categórica:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = flipper_length_mm,
+           y = bill_length_mm)) +
+  geom_point(aes(color = species))
+```
+
+E, incluso, según una variable continua:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = flipper_length_mm,
+           y = bill_length_mm)) +
+  geom_point(aes(color = body_mass_g))
+```
+
+¿Y si no me interesa ver todos los puntos, sino las distribuciones bivariadas? También tenemos alternativas.
+
+### Gráfico de densidad bivariado
+
+Podemos utilizar un gráfico de densidad bivariado, el cual muestra contornos correspondientes a la densidad de los puntos. Su interpretación es exactamente igual a un mapa topográfico. Los contornos más pequeños representan la mayor densidad, mientras que los más grandes una menor densidad.
+
+```{r}
+ggplot(data = penguins,
+       aes(x = flipper_length_mm,
+           y = bill_length_mm)) +
+  geom_density2d(aes(color = species))
+```
+
+### Heatmaps
+
+¿Y si mis dos variables son discretas? No temas, para eso tenemos **heatmaps**:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = species,
+           y = island)) +
+  geom_tile(fill = "dodgerblue4", color = "dodgerblue4")
+```
+
+Si tienes una variable adicional (pueden ser frecuencias o alguna variable continua) puedes agregarla con el argumento fill dentro de aes:
+
+```{r}
+ggplot(data = penguins,
+       aes(x = species,
+           y = island)) +
+  geom_tile(aes(fill = bill_length_mm))
+```
+
+¿Hay algún equivalente para tres variables numéricas? Por supuesto.
+
+### Gráfico de contornos
+
+Podemos generar un gráfico de contornos, utilizando la capa `geom_contour`. OJO: para esta hay que hacer cierto procesamiento de los datos, en el sentido que hay que generar una malla uniforme de coordenadas x, y, z. Esto queda fuera de la discusión por este momento, pero lo revisitaremos cuando grafiquemos la zona de decisión de un análisis de funciones discriminantes lineales en la sesión de clasificación.
+
+### Otros gráficos
+
+Estos gráficos están lejos de ser los únicos a nuestra disposición. Para comparar distribuciones también tenemos *forest plots* o *ridgelines*. Si queremos ver la relación entre más de dos variables, considerando cada individuo, podemos utilizar gráficos de coordenadas paralelas, para lo cual utilizaremos la función `par_coord` de la librería `GGally`:
+
+```{r}
+GGally::ggparcoord(data = penguins, groupColumn = "species", 3:6)
+```
+
+Y muchos otros más que no tendríamos tiempo de revisar en una sola sesión, cada uno con un uso particular. Algunos de ellos los veremos durante el curso, mientras que algunas otras alternativas las puedes encontrar en [este enlace](https://www.d3-graph-gallery.com). También es importante mencionar que R base y `ggplot2` no son las únicas librerías para generar gráficos en R. Podemos utilizar [D3](https://www.d3-graph-gallery.com) o [plotly](https://plotly.com), por ejemplo, para generar no solo otro tipo de gráficos, sino también hacerlos interactivos.
+
+Esto sería todo para esta sesión. Espero que haya sido un buen recordatorio y que te sea de utilidad en algún futuro.
