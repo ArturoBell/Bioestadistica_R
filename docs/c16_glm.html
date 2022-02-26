@@ -2554,7 +2554,7 @@ camper:</p>
 5     0      0     1
 6     2      1     0</code></pre>
 </div>
-<p>Exploremos nuestros datos. Al tratarse de una variable categórica
+<p>Exploremos nuestros datos. Al tratarse de una variable discreta
 podemos, sin ningún problema, utilizar un gráfico de frecuencias:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2782,7 +2782,7 @@ Number of Fisher Scoring iterations: 1
 <p>Notarás que esta salida es prácticamente la misma que la que tuvimos
 en nuestro GLM Poisson, salvo que ahora nos da el valor del parámetro de
 sobredispersión. Te estarás preguntando: ¿Cómo sé si, en efecto, mis
-datos están sobre-dispersos? Para eso podemos utilizar una prueba de
+modelos están sobre-dispersos? Para eso podemos utilizar una prueba de
 razón de verosimilitud, en la cual compararemos la verosimilitud de
 ambos modelos (binomial negativa y Poisson) y veremos si se ajustan a la
 misma distribución; es decir, la prueba de razón de verosimilitud es una
@@ -2803,7 +2803,7 @@ e.g., see help(odTest) for details/references
 Critical value of test statistic at the alpha= 0.05 level: 2.7055 
 Chi-Square Test Statistic =  1837.7652 p-value = &lt; 2.2e-16 </code></pre>
 </div>
-<p>A ojo de buen cubero era más que evidente que nuestros datos estaban
+<p>A ojo de buen cubero era más que evidente que nuestro modelo estaban
 sobre dispersos, por lo que estos resultados no son sorprendentes. Algo
 que puedes pensar es “si estoy comparando qué modelo está mejor
 ajustado, ¿puedo entonces utilizar el AIC?” Y la respuesta es, por
@@ -2947,8 +2947,8 @@ el promedio de peces capturados es de 2.86</li>
 <li>Pendientes:</li>
 </ol>
 <ul>
-<li>Child: El promedio de peces capturados disminuye 0.4 veces por cada
-hijo adicional.</li>
+<li>Child: El promedio de peces capturados disminuye 1-0.4 veces por
+cada hijo adicional.</li>
 <li>Camper: Si el pescador tiene un camper, el promedio de peces
 capturados incrementa 2.2 veces.</li>
 </ul>
@@ -3137,8 +3137,8 @@ convenientemente, el mismo que el dominio del parámetro <span
 class="math inline">\(p\)</span> de la distribución binomial (la
 probabilidad de éxito). Expresado matemáticamente:</p>
 <p><span class="math display">\[
-\theta = logit(\alpha + \beta x)\\
-y = Binom(\theta)
+\theta = logistic(\alpha + \beta x)\\
+y \sim Binom(\theta)
 \]</span></p>
 <p>Apliquemos entonces una regresión logística para clasificar entre
 <code>versicolor</code> y <code>virginica</code> de la base
@@ -3271,7 +3271,7 @@ una clase, aunque la relación entre <em>odds</em> y probabilidad es
 monótona; es decir, conforme incrementa una, la otra también.</p>
 <h3 id="regresión-logística-multinomial">Regresión logística
 multinomial</h3>
-<p>Al igual que en el caso anterior, simplemente extenderemosaquellos
+<p>Al igual que en el caso anterior, simplemente extenderemos aquellos
 detalles que no se aterrizaron por completo, particularmente el utilizar
 una red neuronal como análogo a una regresión logística multinomial.
 Como acabamos de ver, una regresión logística binaria nos permite

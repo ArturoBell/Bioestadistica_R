@@ -20,9 +20,7 @@ library(ggplot2)
 
 ## Muestreemos orcas
 
-**NOTA**: En la sesión presencial estos conceptos son abordados de manera dinámica, a manera de debate en la cuál se diseña el muestreo de ejemplo desde cero. Hacer esto en un video es imposible, pero trataré de hacer la explicación igual de amena.
-
-**NOTA 2**: El diseño experimental o de muestreo es un tema lo suficientemente grande como para elaborar un curso sobre eso. Únicamente revisaremos los conceptos más importantes, de manera que puedas reflexionar un poco más sobre qué debes tomar en cuenta en tus diseños.
+**NOTA**: El diseño experimental o de muestreo es un tema lo suficientemente grande como para elaborar un curso sobre eso. Únicamente revisaremos los conceptos más importantes, de manera que puedas reflexionar un poco más sobre qué debes tomar en cuenta en tus diseños.
 
 Infortunadamente, no podemos hablar de algún tema sin introducir algunos conceptos básicos, pero trataremos de hacerlo de una manera más dinámica que únicamente mencionarlos. Imaginamemos el siguiente escenario: Queremos saber cuál es la longitud promedio de las orcas de cierta localidad. ¿Para qué? Para facilitar la explicación, por supuesto, aunque esto puede ser fácilmente extrapolado a cualquier investigación, sea **experimental** u **observacional**.
 
@@ -47,10 +45,10 @@ Una vez definido el marco de muestreo toca salir a campo. En un mundo ideal tend
 
 Volvamos a nuestro ejemplo con las orcas. Realizamos cierto número de navegaciones en la temporada seca (tal vez por limitaciones logísticas), en las cuales encontramos y medimos **50 orcas**. Ese número de individuos medidos es nuestro **tamaño de muestra**. Ese número es sumamente importante, pues define la **representatividad** del muestreo; es decir, qué tan buen "resumen" de la población es nuestra muestra. OJO: Esto solo aplica si el muestreo tuvo ciertas cualidades:
 
-1. Aleatorio: Es decir, nuestro diseño de muestreo/experimental debe de permitir que todos los individuos de nuestra población sean medidos con la misma probabilidad. Esto es sumamente difícil de conseguir y podemos entrar a detalles filosófico de qué podemos considerar aleatorio y qué no, pero sí podemos tratar de hacerlo:
-  - Exhaustivo: Muy de la mano (de hecho una consecuencia) de la aleatoriedad. El muestreo debe de considerar todos los posibles valores o atributos de la variable a medir. En nuestro ejemplo esto se reduce a que midamos orcas de todos los tamaños y que no **sesguemos** el muestreo a individuos únicamente grandes o pequeños, salvo que así lo definiéramos en nuestro marco de muestreo.
-2. Exclusivo: Atributos o valores de un indicador deben ser mutuamente excluyentes; es decir, que no tengamos un individuo que mida 8 y 9.3 m, por ejemplo. Esto es un poco redundante en este escenario, pero si fuéramos a establecer rangos de edad como cría, juvenil, hembra adulta y macho adulto, que todos estén en una sola categoría, por lo que hay que decidir qué hacer con un juvenil con características de adulto. También tiene que ver con tener un marco de muestreo bien definido.
-3. Precisión: Tratar de tener el mayor número de distinciones posibles para tener una mejor descripción. En nuestras orcas es mejor medir en 830 cm que redondear a 8 m.
+1. **Aleatorio**: Es decir, nuestro diseño de muestreo/experimental debe de permitir que todos los individuos de nuestra población sean medidos con la misma probabilidad. Esto es sumamente difícil de conseguir y podemos entrar a detalles filosófico de qué podemos considerar aleatorio y qué no, pero sí podemos tratar de hacerlo:
+  - **Exhaustivo**: Muy de la mano (de hecho una consecuencia) de la aleatoriedad. El muestreo debe de considerar todos los posibles valores o atributos de la variable a medir. En nuestro ejemplo esto se reduce a que midamos orcas de todos los tamaños y que no **sesguemos** el muestreo a individuos únicamente grandes o pequeños, salvo que así lo definiéramos en nuestro marco de muestreo.
+2. **Exclusivo**: Atributos o valores de un indicador deben ser mutuamente excluyentes; es decir, que no tengamos un individuo que mida 8 y 9.3 m, por ejemplo. Esto es un poco redundante en este escenario, pero si fuéramos a establecer rangos de edad como cría, juvenil, hembra adulta y macho adulto, que todos estén en una sola categoría, por lo que hay que decidir qué hacer con un juvenil con características de adulto. También tiene que ver con tener un marco de muestreo bien definido.
+3. **Preciso**: Tratar de tener el mayor número de distinciones posibles para tener una mejor descripción. En nuestras orcas es mejor medir en 830 cm que redondear a 8 m.
 
 ### Errores de muestreo/medición
 
@@ -104,7 +102,7 @@ ind
 pobl$lt[ind]
 ```
 
-Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente "aleatoria", en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros los ) Podemos hacer esto 50 veces, una a una, o podemos decirle a R que las obtenga todas al mismo tiempo:
+Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente "aleatoria", en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros quienes lo hacemos):
 
 ```{r}
 muestras <- sample(pobl$lt, size = 50, replace = FALSE)

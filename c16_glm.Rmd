@@ -237,7 +237,7 @@ csvurl <- "https://stats.idre.ucla.edu/stat/data/fish.csv"
 fish <- read.csv(csvurl)[,c("child", "camper", "count")]
 head(fish)
 ```
-Exploremos nuestros datos. Al tratarse de una variable categórica podemos, sin ningún problema, utilizar un gráfico de frecuencias:
+Exploremos nuestros datos. Al tratarse de una variable discreta podemos, sin ningún problema, utilizar un gráfico de frecuencias:
 
 ```{r}
 ggplot(aes(x = count), data = fish) +
@@ -301,13 +301,13 @@ bineg <- MASS::glm.nb(count~., data = fish, trace = F)
 summary(bineg)
 ```
 
-Notarás que esta salida es prácticamente la misma que la que tuvimos en nuestro GLM Poisson, salvo que ahora nos da el valor del parámetro de sobredispersión. Te estarás preguntando: ¿Cómo sé si, en efecto, mis datos están sobre-dispersos? Para eso podemos utilizar una prueba de razón de verosimilitud, en la cual compararemos la verosimilitud de ambos modelos (binomial negativa y Poisson) y veremos si se ajustan a la misma distribución; es decir, la prueba de razón de verosimilitud es una prueba de bondad de ajuste, con distribución $\chi^2$. ¿Qué es lo que estamos comparando? Si el parámetro adicional ayuda a que el ajuste del modelo mejore significativamente. Para aplicarla podemos utilizar la función `odTest(mod_bn)` de la librería `pscl`:
+Notarás que esta salida es prácticamente la misma que la que tuvimos en nuestro GLM Poisson, salvo que ahora nos da el valor del parámetro de sobredispersión. Te estarás preguntando: ¿Cómo sé si, en efecto, mis modelos están sobre-dispersos? Para eso podemos utilizar una prueba de razón de verosimilitud, en la cual compararemos la verosimilitud de ambos modelos (binomial negativa y Poisson) y veremos si se ajustan a la misma distribución; es decir, la prueba de razón de verosimilitud es una prueba de bondad de ajuste, con distribución $\chi^2$. ¿Qué es lo que estamos comparando? Si el parámetro adicional ayuda a que el ajuste del modelo mejore significativamente. Para aplicarla podemos utilizar la función `odTest(mod_bn)` de la librería `pscl`:
 
 ```{r}
 pscl::odTest(bineg)
 ```
 
-A ojo de buen cubero era más que evidente que nuestros datos estaban sobre dispersos, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es "si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?" Y la respuesta es, por supuesto:
+A ojo de buen cubero era más que evidente que nuestro modelo estaban sobre dispersos, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es "si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?" Y la respuesta es, por supuesto:
 
 ```{r}
 AIC(poiss, zi_poiss, bineg)
@@ -368,7 +368,7 @@ Pongamos atención solo a aquellos coeficientes con `count_`, pues son los que r
 
 1. Intercepto: Cuando el pescador no tiene hijos y no lleva un camper, el promedio de peces capturados es de 2.86
 2. Pendientes:
-  - Child: El promedio de peces capturados disminuye 0.4 veces por cada hijo adicional.
+  - Child: El promedio de peces capturados disminuye 1-0.4 veces por cada hijo adicional.
   - Camper: Si el pescador tiene un camper, el promedio de peces capturados incrementa 2.2 veces.
   
 **Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario aplicar el enlace para poder interpretarlos.**
@@ -469,8 +469,8 @@ $$
 Esta función tiene la peculiaridad de que, independientemente de los valores de $z$ (el predictor lineal), el resultado siempre estará contenido entre 0 y 1, el cual es, convenientemente, el mismo que el dominio del parámetro $p$ de la distribución binomial (la probabilidad de éxito). Expresado matemáticamente:
 
 $$
-\theta = logit(\alpha + \beta x)\\
-y = Binom(\theta)
+\theta = logistic(\alpha + \beta x)\\
+y \sim Binom(\theta)
 $$
 
 Apliquemos entonces una regresión logística para clasificar entre `versicolor` y `virginica` de la base `iris`, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:
@@ -552,7 +552,7 @@ La cantidad $\frac{p(y = 1)}{1 - p(y = 1)}$ se conoce como los *odds*, que repre
 
 ### Regresión logística multinomial
 
-Al igual que en el caso anterior, simplemente extenderemosaquellos detalles que no se aterrizaron por completo, particularmente el utilizar una red neuronal como análogo a una regresión logística multinomial. Como acabamos de ver, una regresión logística binaria nos permite predecir la probabilidad de éxito; *i.e.*, de pertenecer a una sola clase. ¿Cómo lo extendemos a más de dos clases? Podemos construir modelos una clase vs. las demás, podemos utilizar una regresión **softmax**, o podemos utilizar una red neuronal. Una red neuronal está formada por capas, las cuales están conectadas entre sí tal cual neuronas:
+Al igual que en el caso anterior, simplemente extenderemos aquellos detalles que no se aterrizaron por completo, particularmente el utilizar una red neuronal como análogo a una regresión logística multinomial. Como acabamos de ver, una regresión logística binaria nos permite predecir la probabilidad de éxito; *i.e.*, de pertenecer a una sola clase. ¿Cómo lo extendemos a más de dos clases? Podemos construir modelos una clase vs. las demás, podemos utilizar una regresión **softmax**, o podemos utilizar una red neuronal. Una red neuronal está formada por capas, las cuales están conectadas entre sí tal cual neuronas:
 
 ![NN](https://miro.medium.com/max/585/1*lk7bbg9gbYKpDYSHABaDOg.png)
 

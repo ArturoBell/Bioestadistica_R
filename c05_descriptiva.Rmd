@@ -174,7 +174,7 @@ Normalmente nosotros no estimaremos o interpretaremos esta medida, sino que irem
 
 ## Gráficos
 
-En la sesión de visualización vimos las consideraciones que debemos de tener en cuenta para hacer una visualización efectiva, pero no hablamos de los tipos de gráficos que podemos realizar. En esta sesión, entonces, no entraremos a ver los detalles de la visualización, simplemente hablaremos de los gráficos más comunes, en qué escenarios son útiles y cómo construirlos utilizando `ggplot2`. Para esta parte utilizaremos los datos de Pinguinos de Palmer, contenidos en la librería `palmerpenguins`
+En la sesión de visualización vimos las consideraciones que debemos de tener en cuenta para hacer una visualización efectiva, pero no hablamos de los tipos de gráficos que podemos realizar. En esta sesión, entonces, no entraremos a ver los detalles de la visualización, simplemente hablaremos de los gráficos más comunes, en qué escenarios son útiles y cómo construirlos utilizando `ggplot2`. Para esta parte utilizaremos datos de biometrías de pinguinos, contenidos en la librería `palmerpenguins`
 
 ### Gráfico de frecuencias
 
@@ -320,7 +320,7 @@ Podemos generar un gráfico de contornos, utilizando la capa `geom_contour`. OJO
 
 ### Otros gráficos
 
-Estos gráficos están lejos de ser los únicos a nuestra disposición. Para comparar distribuciones también tenemos *forest plots* o *ridgelines*. Si queremos ver la relación entre más de dos variables, considerando cada individuo, podemos utilizar gráficos de coordenadas paralelas, para lo cual utilizaremos la función `par_coord` de la librería `GGally`:
+Estos gráficos están lejos de ser los únicos a nuestra disposición. Para comparar distribuciones también tenemos *forest plots* o *ridgelines*. Si queremos ver la relación entre más de dos variables, considerando cada individuo, podemos utilizar gráficos de coordenadas paralelas, para lo cual utilizaremos la función `ggparcord` de la librería `GGally`:
 
 ```{r}
 GGally::ggparcoord(data = penguins, groupColumn = "species", 3:6)

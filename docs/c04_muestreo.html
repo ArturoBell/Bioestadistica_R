@@ -2140,11 +2140,7 @@ Estratificado</a></li>
 </div>
 </div>
 <h2 id="muestreemos-orcas">Muestreemos orcas</h2>
-<p><strong>NOTA</strong>: En la sesión presencial estos conceptos son
-abordados de manera dinámica, a manera de debate en la cuál se diseña el
-muestreo de ejemplo desde cero. Hacer esto en un video es imposible,
-pero trataré de hacer la explicación igual de amena.</p>
-<p><strong>NOTA 2</strong>: El diseño experimental o de muestreo es un
+<p><strong>NOTA</strong>: El diseño experimental o de muestreo es un
 tema lo suficientemente grande como para elaborar un curso sobre eso.
 Únicamente revisaremos los conceptos más importantes, de manera que
 puedas reflexionar un poco más sobre qué debes tomar en cuenta en tus
@@ -2237,32 +2233,34 @@ muestra</strong>. Ese número es sumamente importante, pues define la
 “resumen” de la población es nuestra muestra. OJO: Esto solo aplica si
 el muestreo tuvo ciertas cualidades:</p>
 <ol type="1">
-<li>Aleatorio: Es decir, nuestro diseño de muestreo/experimental debe de
-permitir que todos los individuos de nuestra población sean medidos con
-la misma probabilidad. Esto es sumamente difícil de conseguir y podemos
-entrar a detalles filosófico de qué podemos considerar aleatorio y qué
-no, pero sí podemos tratar de hacerlo:</li>
+<li><strong>Aleatorio</strong>: Es decir, nuestro diseño de
+muestreo/experimental debe de permitir que todos los individuos de
+nuestra población sean medidos con la misma probabilidad. Esto es
+sumamente difícil de conseguir y podemos entrar a detalles filosófico de
+qué podemos considerar aleatorio y qué no, pero sí podemos tratar de
+hacerlo:</li>
 </ol>
 <ul>
-<li>Exhaustivo: Muy de la mano (de hecho una consecuencia) de la
-aleatoriedad. El muestreo debe de considerar todos los posibles valores
-o atributos de la variable a medir. En nuestro ejemplo esto se reduce a
-que midamos orcas de todos los tamaños y que no
+<li><strong>Exhaustivo</strong>: Muy de la mano (de hecho una
+consecuencia) de la aleatoriedad. El muestreo debe de considerar todos
+los posibles valores o atributos de la variable a medir. En nuestro
+ejemplo esto se reduce a que midamos orcas de todos los tamaños y que no
 <strong>sesguemos</strong> el muestreo a individuos únicamente grandes o
 pequeños, salvo que así lo definiéramos en nuestro marco de
 muestreo.</li>
 </ul>
 <ol start="2" type="1">
-<li>Exclusivo: Atributos o valores de un indicador deben ser mutuamente
-excluyentes; es decir, que no tengamos un individuo que mida 8 y 9.3 m,
-por ejemplo. Esto es un poco redundante en este escenario, pero si
-fuéramos a establecer rangos de edad como cría, juvenil, hembra adulta y
-macho adulto, que todos estén en una sola categoría, por lo que hay que
-decidir qué hacer con un juvenil con características de adulto. También
-tiene que ver con tener un marco de muestreo bien definido.</li>
-<li>Precisión: Tratar de tener el mayor número de distinciones posibles
-para tener una mejor descripción. En nuestras orcas es mejor medir en
-830 cm que redondear a 8 m.</li>
+<li><strong>Exclusivo</strong>: Atributos o valores de un indicador
+deben ser mutuamente excluyentes; es decir, que no tengamos un individuo
+que mida 8 y 9.3 m, por ejemplo. Esto es un poco redundante en este
+escenario, pero si fuéramos a establecer rangos de edad como cría,
+juvenil, hembra adulta y macho adulto, que todos estén en una sola
+categoría, por lo que hay que decidir qué hacer con un juvenil con
+características de adulto. También tiene que ver con tener un marco de
+muestreo bien definido.</li>
+<li><strong>Preciso</strong>: Tratar de tener el mayor número de
+distinciones posibles para tener una mejor descripción. En nuestras
+orcas es mejor medir en 830 cm que redondear a 8 m.</li>
 </ol>
 <h3 id="errores-de-muestreomedición">Errores de muestreo/medición</h3>
 <p>Esa “mejor descripción” me lleva también a hablar sobre el tema de
@@ -2372,26 +2370,25 @@ haga lo demás:</p>
 <span class='va'>ind</span>
 </code></pre>
 </div>
-<pre><code>[1] 612</code></pre>
+<pre><code>[1] 318</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>[</span><span class='va'>ind</span><span class='op'>]</span>
 </code></pre>
 </div>
-<pre><code>[1] 8.176622</code></pre>
+<pre><code>[1] 9.6134</code></pre>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de
 manera uniformemente “aleatoria”, en este caso el número 267 y medirlo.
 Ahora tenemos que repetir esa acción otras 49 veces, una a una, o
 podemos decirle a R que lo haga en un solo paso (imaginemos que somos
-nosotros los ) Podemos hacer esto 50 veces, una a una, o podemos decirle
-a R que las obtenga todas al mismo tiempo:</p>
+nosotros quienes lo hacemos):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>pobl</span><span class='op'>$</span><span class='va'>lt</span>, size <span class='op'>=</span> <span class='fl'>50</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 9.708991 9.807674 8.180075 9.490809 8.126430 9.657627</code></pre>
+<pre><code>[1] 8.163300 9.639658 9.634013 9.478904 9.703336 8.050461</code></pre>
 </div>
 <p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas
 muestras, lo cual sería problemático si no tuviéramos 2) el argumento
@@ -2411,7 +2408,7 @@ podemos realizar la estimación de nuestro promedio (media):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 9.085197</code></pre>
+<pre><code>[1] 8.808629</code></pre>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para
 ver en dónde quedó:</p>

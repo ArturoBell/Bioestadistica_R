@@ -2427,7 +2427,7 @@ hablamos de los tipos de gráficos que podemos realizar. En esta sesión,
 entonces, no entraremos a ver los detalles de la visualización,
 simplemente hablaremos de los gráficos más comunes, en qué escenarios
 son útiles y cómo construirlos utilizando <code>ggplot2</code>. Para
-esta parte utilizaremos los datos de Pinguinos de Palmer, contenidos en
+esta parte utilizaremos datos de biometrías de pinguinos, contenidos en
 la librería <code>palmerpenguins</code></p>
 <h3 id="gráfico-de-frecuencias">Gráfico de frecuencias</h3>
 <p>También nombrado a veces histograma. Es, posiblemente, el gráfico más
@@ -2651,7 +2651,7 @@ Para comparar distribuciones también tenemos <em>forest plots</em> o
 <em>ridgelines</em>. Si queremos ver la relación entre más de dos
 variables, considerando cada individuo, podemos utilizar gráficos de
 coordenadas paralelas, para lo cual utilizaremos la función
-<code>par_coord</code> de la librería <code>GGally</code>:</p>
+<code>ggparcord</code> de la librería <code>GGally</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>GGally</span><span class='fu'>::</span><span class='fu'><a href='https://ggobi.github.io/ggally/reference/ggparcoord.html'>ggparcoord</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>penguins</span>, groupColumn <span class='op'>=</span> <span class='st'>"species"</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span>
