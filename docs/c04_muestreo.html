@@ -2330,7 +2330,8 @@ los promedios de ambos sexos:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>pobl</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>lt</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_density.html'>geom_density</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span> <span class='op'>+</span>
              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='va'>media_real</span>, color <span class='op'>=</span> <span class='st'>"forestgreen"</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='va'>media_real</span>,
+                        color <span class='op'>=</span> <span class='st'>"forestgreen"</span><span class='op'>)</span> <span class='op'>+</span>
              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Densidad de la LT de orcas"</span>,
                   x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
                   y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
@@ -2370,12 +2371,12 @@ haga lo demás:</p>
 <span class='va'>ind</span>
 </code></pre>
 </div>
-<pre><code>[1] 318</code></pre>
+<pre><code>[1] 255</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>[</span><span class='va'>ind</span><span class='op'>]</span>
 </code></pre>
 </div>
-<pre><code>[1] 9.6134</code></pre>
+<pre><code>[1] 9.69123</code></pre>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de
 manera uniformemente “aleatoria”, en este caso el número 267 y medirlo.
@@ -2388,7 +2389,7 @@ nosotros quienes lo hacemos):</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 8.163300 9.639658 9.634013 9.478904 9.703336 8.050461</code></pre>
+<pre><code>[1] 8.161735 9.430717 8.244120 9.692448 9.697917 9.460006</code></pre>
 </div>
 <p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas
 muestras, lo cual sería problemático si no tuviéramos 2) el argumento
@@ -2408,13 +2409,14 @@ podemos realizar la estimación de nuestro promedio (media):</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>[1] 8.808629</code></pre>
+<pre><code>[1] 8.930112</code></pre>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para
 ver en dónde quedó:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
@@ -2428,8 +2430,10 @@ escenario. Nuestra muestra seguirá siendo de 50, pero esta vez tendremos
 35 machos y 15 hembras:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>machos</span>, size <span class='op'>=</span> <span class='fl'>35</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>hembras</span>, size <span class='op'>=</span> <span class='fl'>15</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>, color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>machos</span>, size <span class='op'>=</span> <span class='fl'>35</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>,
+              <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>hembras</span>, size <span class='op'>=</span> <span class='fl'>15</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
@@ -2447,8 +2451,9 @@ es importante conocer su tamaño de antemano. Para obtener la media
 poblacional solo obtenemos el promedio de ambos promedios:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>35</span><span class='op'>]</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>36</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-                       color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>35</span><span class='op'>]</span><span class='op'>)</span>,
+                                           <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>36</span><span class='op'>:</span><span class='fl'>50</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"firebrick"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c04_muestreo_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
@@ -2490,7 +2495,8 @@ Veamos qué pasa si muestreamos únicamente 10 y 5 individuos:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>muestras</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>machos</span>, size <span class='op'>=</span> <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>,
               <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>hembras</span>, size <span class='op'>=</span> <span class='fl'>5</span>, replace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>, <span class='va'>muestras</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>15</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>,
+<span class='va'>pobl_dens</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>muestras</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>,
+                                           <span class='va'>muestras</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>15</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>,
                        color <span class='op'>=</span> <span class='st'>"Firebrick"</span><span class='op'>)</span>
 </code></pre>
 </div>
