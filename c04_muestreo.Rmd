@@ -77,7 +77,8 @@ Siempre es más fácil ver un gráfico:
 pobl_dens <- ggplot(data = pobl, aes(x = lt)) +
              geom_density(color = "dodgerblue4") +
              theme_bw() +
-             geom_vline(xintercept = media_real, color = "forestgreen") +
+             geom_vline(xintercept = media_real,
+                        color = "forestgreen") +
              labs(title = "Densidad de la LT de orcas",
                   x = element_blank(),
                   y = element_blank())
@@ -118,14 +119,17 @@ mean(muestras)
 Pongámosla en nuestro gráfico inicial como una línea vertical para ver en dónde quedó:
 
 ```{r}
-pobl_dens + geom_vline(xintercept = mean(muestras), color = "firebrick")
+pobl_dens + geom_vline(xintercept = mean(muestras),
+                       color = "firebrick")
 ```
 
 No está exactamente donde debería de estar. Para complicar más las cosas, añadamos un pequeño sesgo a nuestro muestreo: No es completamente aleatorio, sino que hubo algún factor que hiciera que muestreáramos preferencialmente a los machos. Tal vez eran más curiosos y era más fácil tomar una foto con la embarcación como referencia. Simulemos ese escenario. Nuestra muestra seguirá siendo de 50, pero esta vez tendremos 35 machos y 15 hembras:
 
 ```{r}
-muestras <- c(sample(machos, size = 35, replace = F), sample(hembras, size = 15, replace = F))
-pobl_dens + geom_vline(xintercept = mean(muestras), color = "Firebrick")
+muestras <- c(sample(machos, size = 35, replace = F),
+              sample(hembras, size = 15, replace = F))
+pobl_dens + geom_vline(xintercept = mean(muestras),
+                       color = "Firebrick")
 ```
 
 Aquí la estimación ya se aleja mucho más de nuestra media "real". La razón es, sin duda, el sesgo que añadimos hacia los machos.
@@ -135,8 +139,9 @@ Aquí la estimación ya se aleja mucho más de nuestra media "real". La razón e
 En este caso, donde la población se encuentra sub-dividida en **estratos** no traslapados y estos son muestreados de manera independiente, estamos hablando de un Muestreo Aleatorio Estratificado. Este es simplemente una "mezcla" de MAS, en el sentido que haremos un muestreo aleatorio simple dentro de cada estrato, aunque es importante conocer su tamaño de antemano. Para obtener la media poblacional solo obtenemos el promedio de ambos promedios:
 
 ```{r}
-pobl_dens + geom_vline(xintercept = mean(c(mean(muestras[1:35]), mean(muestras[36:50]))),
-                       color = "Firebrick")
+pobl_dens + geom_vline(xintercept = mean(c(mean(muestras[1:35]),
+                                           mean(muestras[36:50]))),
+                       color = "firebrick")
 ```
 Matemáticamente la ecuación es más complicada, primero obtendríamos el peso de cada estrato ($W_s$), donde $n_s$ es el tamaño del estrato $s$ y $N$ es el tamaño poblacional total:
 
@@ -168,7 +173,8 @@ La igualdad podría demostrarse matemáticamente, pero eso queda como ejercicio 
 muestras <- c(sample(machos, size = 10, replace = F),
               sample(hembras, size = 5, replace = F))
 
-pobl_dens + geom_vline(xintercept = mean(c(muestras[1:10], muestras[11:15])),
+pobl_dens + geom_vline(xintercept = mean(c(muestras[1:10],
+                                           muestras[11:15])),
                        color = "Firebrick")
 ```
 

@@ -48,7 +48,8 @@ x <- data.frame(x = rnorm(100, mean = 0))
 plot1 <- ggplot(data = x, aes(x = x)) +
          geom_density(color = "dodgerblue4") +
          theme_bw() +
-         geom_vline(xintercept = mean(x$x), color = "dodgerblue4")
+         geom_vline(xintercept = mean(x$x),
+                    color = "dodgerblue4")
 plot1
 ```
 
@@ -57,8 +58,11 @@ En este caso, la mayor parte de nuestros datos están acumulados alrededor de 0.
 ```{r}
 set.seed(0)
 x2 <- rbind(x, data.frame(x = rnorm(20, mean = 5)))
-plot2 <- plot1 +  geom_density(aes(x = x), data = x2, color = "firebrick")
-plot2 + geom_vline(xintercept = mean(x2$x), color = "firebrick")
+plot2 <- plot1 +  geom_density(aes(x = x),
+                               data = x2,
+                               color = "firebrick")
+plot2 + geom_vline(xintercept = mean(x2$x),
+                   color = "firebrick")
 ```
 
 Como era de esperarse, la media se "jaló" a la derecha, y de manera bastante notable. Esos 5 valores extremos tuvieron un peso bastante importante. Literalmente fue como si hubiéramos colgado cinco cosas más en nuestro tendedero, pero alejadas de la ropa que colgamos en un inicio. Aunque la media es una manera muy efectiva de resumir nuestros datos, esto solo es cierto si estos se parecen a una distribución normal (en la sesión de técnicas paramétricas hablaremos duro y tendido con respecto a esto), pero si no, como en nuestro caso con los nuevos valores, es necesario buscar una alternativa.
@@ -71,7 +75,8 @@ Una de ellas es una modificación a la media, en la cuál cada valor tiene su pr
 # Pesos
 w <- max(abs(0-x2$x))/abs(0 - x2$x)
 wmean <- weighted.mean(x2$x, w)
-plot2 + geom_vline(xintercept = wmean, color = "firebrick")
+plot2 + geom_vline(xintercept = wmean,
+                   color = "firebrick")
 ```
 
 #### Media geométrica
@@ -103,7 +108,8 @@ exp(mean(log(lamb)))
 Una alternativa más es la mediana. A diferencia de la media, que "busca" hacia donde se están acumulando los datos, la mediana nos indica exactamente que valor se encuentra en el **centro** de nuestra base de datos. Si partimos nuestra base de datos en 100 partes iguales (100%), cada parte representa un **cuantil** (1%). Cada diez cuantiles tenemos un **decil**, cada 25 cuantiles tenemos un **cuartil** (cuartiles 25%, 50% y 75%), y en el cuartil 50 tenemos la **mediana**. Esta es, entonces, mucho menos sensible a valores extremos:
 
 ```{r}
-plot2 + geom_vline(xintercept = median(x2$x), color = "firebrick")
+plot2 + geom_vline(xintercept = median(x2$x),
+                   color = "firebrick")
 ```
 
 La estimación no es exactamente la misma que la media de los datos originales o de la media ponderada según su distancia a 0; sin embargo, el efecto es notablemente menor que con la media tradicional. Esta resistencia a valores extremos es lo que hace que las técnicas **no paramétricas** estén basadas en la mediana, en vez de la media.
@@ -223,7 +229,8 @@ Una es el clásico gráfico de cajas y bigotes, en el cuál hay (por grupo) un i
 
 ```{r}
 ggplot(data = penguins,
-       aes(x = species, y = bill_length_mm, color = species)) +
+       aes(x = species, y = bill_length_mm,
+           color = species)) +
   geom_boxplot(fill = NA)
 ```
 
@@ -235,7 +242,8 @@ Los gráficos de violín son, justamente, una alternativa más "fina" a los grá
 
 ```{r}
 ggplot(data = penguins,
-       aes(x = species, y = bill_length_mm, color = species)) +
+       aes(x = species, y = bill_length_mm,
+           color = species)) +
   geom_violin(fill = NA)
 ```
 
@@ -243,7 +251,8 @@ Afortunadamente, uno no está peleado con el otro, y podemos añadir la informac
 
 ```{r}
 ggplot(data = penguins,
-       aes(x = species, y = bill_length_mm, color = species)) +
+       aes(x = species, y = bill_length_mm,
+           color = species)) +
   geom_violin(fill = NA) +
   geom_boxplot(fill = NA, width = 0.1)
 ```
@@ -300,7 +309,8 @@ ggplot(data = penguins,
 ggplot(data = penguins,
        aes(x = species,
            y = island)) +
-  geom_tile(fill = "dodgerblue4", color = "dodgerblue4")
+  geom_tile(fill = "dodgerblue4",
+            color = "dodgerblue4")
 ```
 
 Si tienes una variable adicional (pueden ser frecuencias o alguna variable continua) puedes agregarla con el argumento fill dentro de aes:
@@ -323,7 +333,9 @@ Podemos generar un gráfico de contornos, utilizando la capa `geom_contour`. OJO
 Estos gráficos están lejos de ser los únicos a nuestra disposición. Para comparar distribuciones también tenemos *forest plots* o *ridgelines*. Si queremos ver la relación entre más de dos variables, considerando cada individuo, podemos utilizar gráficos de coordenadas paralelas, para lo cual utilizaremos la función `ggparcord` de la librería `GGally`:
 
 ```{r}
-GGally::ggparcoord(data = penguins, groupColumn = "species", 3:6)
+GGally::ggparcoord(data = penguins,
+                   groupColumn = "species",
+                   columns = 3:6)
 ```
 
 Y muchos otros más que no tendríamos tiempo de revisar en una sola sesión, cada uno con un uso particular. Algunos de ellos los veremos durante el curso, mientras que algunas otras alternativas las puedes encontrar en [este enlace](https://www.d3-graph-gallery.com). También es importante mencionar que R base y `ggplot2` no son las únicas librerías para generar gráficos en R. Podemos utilizar [D3](https://www.d3-graph-gallery.com) o [plotly](https://plotly.com), por ejemplo, para generar no solo otro tipo de gráficos, sino también hacerlos interactivos.
