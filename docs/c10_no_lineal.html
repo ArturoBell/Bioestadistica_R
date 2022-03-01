@@ -2116,12 +2116,31 @@ Temas
 <ul>
 <li><a href="#librerías">Librerías</a></li>
 <li><a href="#otro-tipo-de-relaciones">Otro tipo de relaciones</a></li>
+<li><a href="#violación-del-supuesto-de-linealidad">Violación del
+supuesto de linealidad</a></li>
+<li><a href="#modelos-de-crecimiento">Modelos de crecimiento</a>
+<ul>
+<li><a href="#modelo-de-von-bertalanffy-1938">Modelo de Von Bertalanffy
+(1938)</a></li>
+</ul></li>
+<li><a href="#bootstrap-e-intervalos-de-confianza">Bootstrap e
+Intervalos de Confianza</a>
+<ul>
+<li><a href="#relación-talla-peso">Relación Talla-Peso</a></li>
+</ul></li>
+<li><a href="#ejercicio">Ejercicio</a></li>
 </ul>
 </nav>
 </div>
 <h2 id="librerías">Librerías</h2>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://patchwork.data-imaginist.com'>patchwork</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://easystats.github.io/performance/'>performance</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>nlraa</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <h2 id="otro-tipo-de-relaciones">Otro tipo de relaciones</h2>
 <p>En las sesiones anteriores hablamos de modelos en los cuales asumimos
@@ -2134,12 +2153,673 @@ optimización para encontrar los valores del intercepto y la pendiente,
 según nuestros datos. La regresión no lineal es, en escencia, lo mismo:
 ajustar parámetros de un modelo a partir de los datos. La única
 diferencia es que el modelo puede describir cualquier tipo de relación
-funcional entre las variables involucradas.</p>
+funcional entre las variables involucradas. Puede ser algo tan simple
+como un modelo potencial hasta algo tan complicado como</p>
 <p>Aplicaciones biológicas de este tipo de modelos hay muchas: a)
 estimación de la riqueza específica de un sitio, b) modelar el
 crecimiento de organismos, c) relaciones talla-peso, etc., etc., etc. En
-esta sesión, por lo tanto, no entraremos en los</p>
-<div class="sourceCode" id="cb1"><pre
+esta sesión revisaremos algunos ejemplos de estos modelos y cómo
+aplicarlos e interpretarlos.</p>
+<p>Sobre esto último, implementar estos modelos en <code>R</code> es
+sumamente sencillo. Los requerimientos son a) conocer la ecuación, b)
+escribirla como una operación y c) establecer algunos valores iniciales
+para iniciar la búsqueda. Para esto utilizaremos la función
+<code>nls(formula, data, start)</code> (Nonlinear Least Squares).</p>
+<h2 id="violación-del-supuesto-de-linealidad">Violación del supuesto de
+linealidad</h2>
+<p>Tenemos dos razones básicas que nos pueden llevar a pensar en un
+modelo no lineal. La primera es que, de entrada, sepamos que nuestros
+datos deben de ser modelados de esa manera, principalmente debido a
+conocimiento previo del problema. La segunda es que se viole el supuesto
+de linealidad de los residuales. La primera es auto-explicativa, por lo
+que obviaré el escenario, pero la segunda no lo es tanto. Revisemos
+entonces un primer modelo para describir la longitud de mandíbulas de
+tiburones a partir de la edad de los mismos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>jaws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"data/jaws.csv"</span><span class='op'>)</span>
+<span class='va'>lm_jaws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>bone</span><span class='op'>~</span><span class='va'>age</span>, data <span class='op'>=</span> <span class='va'>jaws</span><span class='op'>)</span>
+<span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>lm_jaws</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>En términos de nuestros datos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>jaws_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>jaws</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>age</span>, y <span class='op'>=</span> <span class='va'>bone</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Modelo lineal"</span>,
+                  x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+                  y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lm_plot</span> <span class='op'>&lt;-</span> <span class='va'>jaws_plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>,
+                                   color <span class='op'>=</span> <span class='st'>"#ff7f0e"</span><span class='op'>)</span>
+<span class='va'>lm_plot</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<p>Tenemos un leve problema con el supuesto de linealidad. Ni por asomo
+nuestros residuales están cerca de la linea en 0, de hecho, forman una
+especie de “parábola”. Esto quiere decir que debemos de considerar otra
+aproximación, pues la descripción del modelo lineal no es adecuada. Ok,
+entonces ¿qué modelo aplicamos? Habrá que echar mano de algún modelo de
+crecimiento.</p>
+<h2 id="modelos-de-crecimiento">Modelos de crecimiento</h2>
+<p>Estos modelos se pueden construir con cualquier medida de longitud o
+peso, y en este caso utilizaremos longitudes de huesos de una especie de
+tiburón. Modelos para el crecimiento hay muchos, algunos son Gompertz
+(1832), crecimiento logístico, Morgan-Mercer-Flodin, Weibull o Richards,
+de los cuales algunos tienen variantes con más o menos parámetros. Te
+recomiendo ampliamente revisar <a
+href="http://pisces-conservation.com/growthhelp/types_of_growth_curve.htm">este
+enlace</a> para conocer un poco más sobre estos modelos (ecuaciones,
+aplicaciones, supuestos, etc.). Por desgracia, no tenemos tiempo
+suficiente para hablar de todos ellos, así que exploraremos el más
+conocido: el modelo de crecimiento individual de Von Bertalanffy.</p>
+<h3 id="modelo-de-von-bertalanffy-1938">Modelo de Von Bertalanffy
+(1938)</h3>
+<p>Este modelo lo derivó Von Bertalanffy (VB) desde algunos parámetros
+fisiológicos bastante simples. Es, posiblemente, el modelo de
+crecimiento más utilizado en estudios de pesquerías. Este modelo asume
+que la tasa de crecimiento de un organismo declina con la tasa de cambio
+de la longitud, y que puede ser descrito con el modelo:</p>
+<p><span class="math display">\[
+\frac{dl}{dt} = K(L_\infty - l)
+\]</span></p>
+<p>donde <span class="math inline">\(t\)</span> es el tiempo, <span
+class="math inline">\(l\)</span> es la longitud (o cualquier otra medida
+de tamaño), <span class="math inline">\(K\)</span> es la tasa de
+crecimiento, <span class="math inline">\(L_\infty\)</span>, que
+representa la longitud asintótica a la que el crecimiento es 0. Si
+integramos esta ecuación, obtenemos:</p>
+<p><span class="math display">\[
+L(t) = L_\infty(1-e^{-K(t-t_0)})
+\]</span></p>
+<p>En donde el parámetro <span class="math inline">\(t_0\)</span> se
+incluye para ajustar la ecuación para la talla inicial del organismoa y
+se interpreta como la edad a la cual el organismo tendría tamaño 0. Este
+modelo, entonces, consta de 3 parámetros (<span
+class="math inline">\(L_\infty\)</span>, <span
+class="math inline">\(K\)</span>, y <span
+class="math inline">\(t_0\)</span>); sin embargo, existe una
+parametrización alternativa que cambia <span
+class="math inline">\(t_0\)</span> por <span
+class="math inline">\(L_0\)</span>; es decir, la talla del individuo al
+nacer:</p>
+<p><span class="math display">\[
+L(t) = L_\infty - (L_\infty - L_0)e^{-Kt}
+\]</span></p>
+<p>Utilicemos la primera variante por conveniencia al declarar el
+modelo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vb_jaws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span><span class='op'>(</span><span class='va'>bone</span><span class='op'>~</span><span class='va'>L</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>K</span><span class='op'>*</span><span class='op'>(</span><span class='va'>age</span><span class='op'>-</span><span class='va'>t</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+          data <span class='op'>=</span> <span class='va'>jaws</span>,
+          start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>L <span class='op'>=</span> <span class='fl'>140</span>, K <span class='op'>=</span> <span class='fl'>0.5</span>, t <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>vb_jaws</span>
+</code></pre>
+</div>
+<pre><code>Nonlinear regression model
+  model: bone ~ L * (1 - exp(-K * (age - t)))
+   data: jaws
+       L        K        t 
+115.2527   0.1235   0.2378 
+ residual sum-of-squares: 8897
+
+Number of iterations to convergence: 6 
+Achieved convergence tolerance: 1.998e-06</code></pre>
+</div>
+<p>Gráficamente:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>jaws</span><span class='op'>$</span><span class='va'>vb</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>vb_jaws</span>, <span class='va'>jaws</span><span class='op'>$</span><span class='va'>age</span><span class='op'>)</span>
+<span class='va'>jaws_plot</span> <span class='op'>+</span>
+  <span class='co'># Nota que los datos de y los pasamos directamente</span>
+  <span class='co'># desde el data.frame:</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>jaws</span><span class='op'>$</span><span class='va'>vb</span><span class='op'>)</span>,
+            color <span class='op'>=</span> <span class='st'>"#ff7f0e"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Modelo Von Bertalanffy"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<p>Podemos también utilizar directamente <code>geom_smooth</code> para
+construir el gráfico. <strong>OJO</strong> <code>ggplot</code> pasa
+nuestros datos como <code>x</code> y <code>y</code>, no como los nombres
+de las variables originales. Adicionalmente, podemos utilizar la
+librería <a
+href="https://patchwork.data-imaginist.com/index.html"><code>patchwork</code></a>
+para poner ambos gráficos (lineal y vb) en un solo gráfico:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vb_plot</span> <span class='op'>&lt;-</span> <span class='va'>jaws_plot</span> <span class='op'>+</span> 
+           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"nls"</span>,
+                       formula <span class='op'>=</span> <span class='va'>y</span><span class='op'>~</span><span class='va'>L</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>K</span><span class='op'>*</span><span class='op'>(</span><span class='va'>x</span><span class='op'>-</span><span class='va'>t</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
+                       method.args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>L <span class='op'>=</span> <span class='fl'>140</span>,
+                                                       K <span class='op'>=</span> <span class='fl'>0.5</span>,
+                                                       t <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span><span class='op'>)</span>,
+                       se <span class='op'>=</span> <span class='cn'>F</span>,
+                       color <span class='op'>=</span> <span class='st'>"#ff7f0e"</span>,
+                       size <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span>
+            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Modelo Von Bertalanffy"</span><span class='op'>)</span>
+
+<span class='va'>lm_plot</span> <span class='op'>+</span> <span class='va'>vb_plot</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Relación long. mandíbula ~ edad"</span>,
+                  caption <span class='op'>=</span> <span class='st'>"Datos: JAWS"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<p>Visualmente es evidente que el modelo VB está mejor ajustado que el
+modelo lineal y, de hecho, podemos comparar ambos modelos utilizando
+teoría de la información, en particular el criterio de información de
+Akaike, del cual hablaremos con mayor detalle en la sesión de <a
+href="https://arturobell.github.io/Bioestadistica_R/c16_glm.html">Modelos
+Lineales Generalizados</a>. Por lo pronto, bástete saber que
+seleccionaremos el modelo con el menor AIC, que, como esperábamos, es el
+modelo VB:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/AIC.html'>AIC</a></span><span class='op'>(</span><span class='va'>lm_jaws</span>, <span class='va'>vb_jaws</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>        df      AIC
+lm_jaws  3 492.4925
+vb_jaws  4 436.8894</code></pre>
+</div>
+<p>El ajuste mejoró notablemente, pero ¿cómo interpretamos el modelo? La
+respuesta está en la descripción que vimos antes, pero trasladémosla a
+este caso particular:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vb_jaws</span>
+</code></pre>
+</div>
+<pre><code>Nonlinear regression model
+  model: bone ~ L * (1 - exp(-K * (age - t)))
+   data: jaws
+       L        K        t 
+115.2527   0.1235   0.2378 
+ residual sum-of-squares: 8897
+
+Number of iterations to convergence: 6 
+Achieved convergence tolerance: 1.998e-06</code></pre>
+</div>
+<p>Tenemos una <span class="math inline">\(L_\infty\)</span> de 115.25;
+es decir, la longitud a la cual la especie analizada deja de crecer
+(tasa de crecimiento = 0) es de 115.25 cm. Esto podemos verlo
+gráficamente:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pars_plot</span> <span class='op'>&lt;-</span> <span class='va'>vb_plot</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_hline</a></span><span class='op'>(</span>yintercept <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>vb_jaws</span><span class='op'>)</span><span class='op'>[</span><span class='st'>"L"</span><span class='op'>]</span>,
+                        color <span class='op'>=</span> <span class='st'>"firebrick"</span>,
+                        linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span>
+<span class='va'>pars_plot</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+</div>
+<p>Este parametro normalmente es de interés, pues representa la longitud
+máxima promedio, y puede ser útil en la evaluación de poblaciones
+sujetas a explotación, por ejemplo.</p>
+<p>El siguiente parámetro es <span class="math inline">\(K\)</span>; es
+decir, la constante de crecimiento, cuyas unidades son unidades
+recíprocas de tiempo (<em>e.g.</em> años<span
+class="math inline">\(^-1\)</span>). Esto hace que su interpretación sea
+muy poco amigable; sin embargo, podemos interpretarla en términos de
+vidas medias (ln 2/k) con unidades de tiempo. El origen del concepto de
+la vida media se encuentra en la química, particularmente en el
+decaimiento isotópico, de modo que la vida media de un isótopo
+representa el tiempo que toma a una concentración x del mismo en
+reducirse a la mitad, y ha sido extendida para expresar periodos de
+tiempo que expresen reducciones del 50% de muchas otras cosas. En este
+caso, la interpretación estaría más relacionada con la ecuación
+diferencial que vimos al inicio, en el sentido de que es el tiempo que
+toma que la tasa de crecimiento se reduzca en un 50%:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>half_life</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unname.html'>unname</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>vb_jaws</span><span class='op'>)</span><span class='op'>[</span><span class='st'>"K"</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>half_life</span>
+</code></pre>
+</div>
+<pre><code>[1] 2.784617</code></pre>
+</div>
+<p>De aquí podemos también estimar el tiempo (promedio) que toma a un
+individo alcanzar la fracción <span class="math inline">\(x\)</span> de
+<span class="math inline">\(L_\infty\)</span>:</p>
+<p><span class="math display">\[
+t_x = \frac{1}{k}ln \left( \frac{L_\infty - L_0}{L_\infty(1-x)} \right)
+\]</span> Pero no tenemos <span class="math inline">\(L_0\)</span>, ¿qué
+hacemos? Afortunadamente, ambas parametrizaciones (con <span
+class="math inline">\(t_0\)</span> o <span
+class="math inline">\(L_0\)</span>) son equivalentes, por lo que no
+necesitamos re-ajustar el modelo. Simplemente podemos estimarla a partir
+de los coeficientes de nuestro modelo:</p>
+<p><span class="math display">\[
+L_0 = L_\infty(1-e^{kt_0})
+\]</span> Entonces calculemos el tiempo promedio que toma a un individuo
+alcanzar el 95% de <span class="math inline">\(L_\infty\)</span>, lo
+cual es una posible estimación de longevidad (Ricker 1979):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vb_coef</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>vb_jaws</span><span class='op'>)</span>
+<span class='va'>L</span> <span class='op'>&lt;-</span> <span class='va'>vb_coef</span><span class='op'>[</span><span class='st'>"L"</span><span class='op'>]</span>
+<span class='va'>K</span> <span class='op'>&lt;-</span> <span class='va'>vb_coef</span><span class='op'>[</span><span class='st'>"K"</span><span class='op'>]</span>
+<span class='va'>t0</span> <span class='op'>&lt;-</span> <span class='va'>vb_coef</span><span class='op'>[</span><span class='st'>"t"</span><span class='op'>]</span>
+<span class='va'>l0</span> <span class='op'>&lt;-</span> <span class='va'>L</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>K</span><span class='op'>*</span><span class='va'>t0</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>t_95</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>K</span><span class='op'>)</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>L</span><span class='op'>-</span><span class='va'>l0</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='va'>L</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>0.95</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/unname.html'>unname</a></span><span class='op'>(</span><span class='va'>t_95</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 24.49365</code></pre>
+</div>
+<p>Es decir, la longevidad promedio de la especie es de 24.49 años. Otra
+forma de estimar la longevidad es con la fracción 0.9933 (Fabens
+1965):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>t_99</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>K</span><span class='op'>)</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>L</span><span class='op'>-</span><span class='va'>l0</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='va'>L</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>0.99</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/unname.html'>unname</a></span><span class='op'>(</span><span class='va'>t_99</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 37.52495</code></pre>
+</div>
+<p>Visualmente:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pars_plot</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_vline</a></span><span class='op'>(</span>xintercept <span class='op'>=</span> <span class='va'>t_99</span>,
+             color <span class='op'>=</span> <span class='st'>"forestgreen"</span>,
+             linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span> 
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<p>Para más detalles y una discusión sobre este modelo, te recomiendo
+ampliamente revisar el artículo de <a
+href="https://bit.ly/3IMe4aN">Cailliet et al. (2006)</a>. Una pregunta
+que muy seguramente tendrás es “¿qué pasa con los intervalos de
+confianza?”. Bueno, podemos construirlos de dos maneras: a) utilizando
+perfiles de verosimilitud con la función <code>confint()</code> o b)
+utilizar réplicas bootstrap. La primera aproximación ya la conoces
+(utilizando errores estándar, recuperables con la función
+<code>summary</code>); sin embargo, la segunda merece que la
+exploremos.</p>
+<h2 id="bootstrap-e-intervalos-de-confianza">Bootstrap e Intervalos de
+Confianza</h2>
+<p>Primero, ¿qué es Bootstrap y con qué se come? El muestreo Bootstrap
+(o bootstraping) consiste en <strong>remuestrear</strong> los datos, con
+el objetivo de crear una <strong>distribución empírica</strong> de algún
+estadístico. Es decir, NO utilizaremos ni asumiremos una distribución
+para nuestros residuales, sino que utilizaremos directamente nuestros
+datos para desccribir su distribución. Un escenario en el cual esto es
+útil es cuando el perfil de verosimilitud de nuestros parámetros no es
+simétrico, como es el caso de <span class="math inline">\(t_0\)</span>
+en nuestro modelo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/profile.html'>profile</a></span><span class='op'>(</span><span class='va'>vb_jaws</span>, <span class='st'>"t"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+</div>
+<p>¿Qué nos dice este gráfico? En pocas palabras, la forma de la
+distribución de la verosimilitud de nuestro parámetro, en términos de
+<span class="math inline">\(\tau\)</span>, que representa el valor del
+estadístico t a cada punto, donde el valor de t se calcula como la raiz
+cuadrada del cambio en la suma de cuadrados, dividido por el error
+estándar residual. ¿En Español? Entre más grande sea <span
+class="math inline">\(\tau\)</span> más nos alejamos del punto con
+máxima verosimilitud (<span class="math inline">\(\tau = 0\)</span>).
+Piensa en este gráfico como un gráfico de densidad invertido.</p>
+<p>Utilicemos entonces la función <code>boot_nls</code> de la librería
+<code>nlraa</code> para hacer el muestreo de nuestros parámetros, y
+utilicemos la función <code>confint</code> para obtener sus intervalos
+de confianza:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>boot_pars</span> <span class='op'>&lt;-</span> <span class='fu'>nlraa</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/nlraa/man/boot_nls.html'>boot_nls</a></span><span class='op'>(</span><span class='va'>vb_jaws</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Number of times model fit did not converge 3 out of 999 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>boot_ci</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>boot_pars</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>Par <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>vb_coef</span><span class='op'>)</span>, CI <span class='op'>=</span> <span class='va'>boot_ci</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>  Par     CI.2.5..   CI.97.5..
+1   L 107.87978549 123.6215722
+2   K   0.08128642   0.1732133
+3   t  -1.42202747   1.5866900</code></pre>
+</div>
+<p>Y podemos utilizar estas estimaciones para graficar nuestros IC:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>jaws</span><span class='op'>$</span><span class='va'>boot_inf</span> <span class='op'>&lt;-</span> <span class='va'>boot_ci</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>boot_ci</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='va'>jaws</span><span class='op'>$</span><span class='va'>age</span><span class='op'>-</span><span class='va'>boot_ci</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>jaws</span><span class='op'>$</span><span class='va'>boot_sup</span> <span class='op'>&lt;-</span> <span class='va'>boot_ci</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>boot_ci</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='va'>jaws</span><span class='op'>$</span><span class='va'>age</span><span class='op'>-</span><span class='va'>boot_ci</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>boot_plot</span> <span class='op'>&lt;-</span> <span class='va'>vb_plot</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_ribbon.html'>geom_ribbon</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>jaws</span><span class='op'>$</span><span class='va'>boot_inf</span>,
+                             ymax <span class='op'>=</span> <span class='va'>jaws</span><span class='op'>$</span><span class='va'>boot_sup</span>,
+                             alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,
+                         fill <span class='op'>=</span> <span class='st'>"grey70"</span>,
+                         show.legend <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span> <span class='op'>+</span>
+             <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+                  subtitle <span class='op'>=</span> <span class='st'>"IC: Bootstrap"</span><span class='op'>)</span>
+<span class='va'>boot_plot</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
+</div>
+<p>En este caso particular, los resultados son similares a los obtenidos
+utilizando la función <code>confint</code>, solo que los de
+<code>confint</code> reflejan una “menor” incertidumbre en la
+estimación. En este caso particular, es importante considerar la
+asimetría en el perfil de verosimilitud de <span
+class="math inline">\(t_0\)</span>, por lo que yo preferiría los IC
+estimados con bootstrap:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>vb_ci</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/confint.html'>confint</a></span><span class='op'>(</span><span class='va'>vb_jaws</span><span class='op'>)</span>
+<span class='va'>jaws</span><span class='op'>$</span><span class='va'>inf</span> <span class='op'>&lt;-</span> <span class='va'>vb_ci</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>vb_ci</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='va'>jaws</span><span class='op'>$</span><span class='va'>age</span><span class='op'>-</span><span class='va'>vb_ci</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>jaws</span><span class='op'>$</span><span class='va'>sup</span> <span class='op'>&lt;-</span> <span class='va'>vb_ci</span><span class='op'>[</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>vb_ci</span><span class='op'>[</span><span class='fl'>2</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>*</span><span class='op'>(</span><span class='va'>jaws</span><span class='op'>$</span><span class='va'>age</span><span class='op'>-</span><span class='va'>vb_ci</span><span class='op'>[</span><span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ci_plot</span> <span class='op'>&lt;-</span> <span class='va'>vb_plot</span> <span class='op'>+</span>
+           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_ribbon.html'>geom_ribbon</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>ymin <span class='op'>=</span> <span class='va'>jaws</span><span class='op'>$</span><span class='va'>inf</span>,
+                           ymax <span class='op'>=</span> <span class='va'>jaws</span><span class='op'>$</span><span class='va'>sup</span>,
+                           alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>,
+                       fill <span class='op'>=</span> <span class='st'>"grey70"</span>,
+                       show.legend <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span> <span class='op'>+</span>
+           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+                subtitle <span class='op'>=</span> <span class='st'>"IC: Perfil de verosimilitud"</span><span class='op'>)</span>
+
+<span class='va'>boot_plot</span> <span class='op'>+</span> <span class='va'>ci_plot</span> <span class='op'>+</span> <span class='fu'><a href='https://patchwork.data-imaginist.com/reference/plot_annotation.html'>plot_annotation</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Modelo VB y sus IC"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<h3 id="relación-talla-peso">Relación Talla-Peso</h3>
+<p>En el caso anterior modelamos la tasa de crecimento individual
+(aunque puede ser cualquier otro crecimiento), pero otra aplicación
+interesante es modelar la relación talla-peso de alguna especie. Aunque
+esta sigue un modelo potencial sumamente simple, sirve para ejemplificar
+un par de cosas y aproximaciones. Para este ejemplo utilizaremos los
+datos <code>RuffeSLRH92</code> contenidos en la librería
+<code>FSAdata</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ruffe</span> <span class='op'>&lt;-</span> <span class='fu'>FSAdata</span><span class='fu'>::</span><span class='va'><a href='https://rdrr.io/pkg/FSAdata/man/RuffeSLRH92.html'>RuffeSLRH92</a></span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"length"</span>,
+                                  <span class='st'>"weight"</span><span class='op'>)</span><span class='op'>]</span>
+<span class='co'># Eliminamos posibles NA</span>
+<span class='va'>ruffe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/na.fail.html'>na.omit</a></span><span class='op'>(</span><span class='va'>ruffe</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>ruffe</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lt"</span>, <span class='st'>"wt"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>ruffe</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   lt   wt
+1  90  9.3
+2 128 32.5
+3 112 19.0
+4  68  4.4
+5  56  2.1
+6  58  2.8</code></pre>
+</div>
+<p>Grafiquemos estos datos, pero primero reflexionemos un poco. ¿Qué
+tiene más sentido? ¿Que el peso dependa de la longitud? o, caso
+contrario, ¿que la longitud dependa del peso? Esta pregunta sobre qué
+variable depende de cuál es en apariencia trivial, pero que siempre
+debemos de plantearnos ante cualquier problema de regresión. Puedes
+ajustar tu modelo en ambos sentidos, pero ¿tiene sentido que un
+organismo crezca en longitud porque incrementó su peso? Habiendo
+definido eso, pongamos la talla (<code>lt</code>) en el eje x y el peso
+(<code>wt</code>) en el eje y:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ruffe_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>ruffe</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>lt</span>, y <span class='op'>=</span> <span class='va'>wt</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='st'>"dodgerblue4"</span>,
+                         alpha <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>+</span>
+              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Relación talla/peso"</span>,
+                   x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
+                   y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ruffe_plot</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+</div>
+<p>A simple vista es evidente que un modelo lineal no daría el ancho,
+pero tenemos una aproximación con una interpretación similar, el modelo
+potencial:</p>
+<p><span class="math display">\[
+W_i = aL^b_ie^{\epsilon_i}
+\]</span></p>
+<p>Donde <span class="math inline">\(A\)</span> y <span
+class="math inline">\(B\)</span> son constantes, representando la
+ordenada al origen y la tasa de crecimiento, respectivamente, y <span
+class="math inline">\(\epsilon\)</span> es el error multiplicativo. Esto
+es sumamente similar a un modelo lineal, ¿no? Pues, en realidad, podemos
+llevar el modelo potencial a un modelo lineal si eliminamos el
+exponencial del lado derecho</p>
+<p><span class="math display">\[
+log(W_i) = log(\alpha L^\beta_ie^{\epsilon_i}) \\
+\therefore \\
+log(W_i) = log(\alpha) + \beta*log(L_i) + \epsilon_i
+\]</span></p>
+<p>Esto simplifica mucho el problema de regresión, pues hace el error
+aditivo y estabiliza las varianzas del modelo por los logaritmos y,
+sobre todo, nos permite aplicar la RLS que ya conocemos. De hecho, este
+era el modo en el cuál se aplicaban antes las regresiones no lineales:
+linealizar la ecuación y luego utilizar RLS (o RLM) para estimar los
+coeficientes. Luego, re-convertir los coeficientes transformados
+(<em>e.g.</em> <span class="math inline">\(log(\alpha)\)</span>) para
+interpretar adecuadamente sus valores. Un proceso que se vuelve más
+engorroso conforme incrementa la complejidad (intenta hacerlo con el
+modelo VB), además de que no siempre es posible alcanzar un modelo
+lineal. Afortunadamente, podemos echar mano de las computadoras para no
+tener que resolverlo de esta manera. Apliquemos entonces el modelo
+potencial de relación talla/peso por ambas vías. Primero, el modelo
+linealizado:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ruffe_lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>wt</span><span class='op'>)</span><span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>lt</span><span class='op'>)</span>, data <span class='op'>=</span> <span class='va'>ruffe</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>ruffe_lm</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = log(wt) ~ log(lt), data = ruffe)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.25499 -0.06744  0.00552  0.08638  1.08984 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -10.88841    0.05123  -212.5   &lt;2e-16 ***
+log(lt)       2.92247    0.01131   258.4   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.164 on 734 degrees of freedom
+Multiple R-squared:  0.9891,    Adjusted R-squared:  0.9891 
+F-statistic: 6.678e+04 on 1 and 734 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<p>Si graficamos este modelo directamente vamos a tener un problema:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fitted</span> <span class='op'>&lt;-</span> <span class='va'>ruffe_lm</span><span class='op'>$</span><span class='va'>fitted.values</span>
+<span class='va'>ruffe_plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>fitted</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"#ff7f0e"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+</div>
+<p>Habrá entonces que re-convertir para pasar al espacio original de
+nuestro modelo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>fitted_rec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ruffe_lm</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span><span class='op'>*</span><span class='va'>ruffe</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>^</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ruffe_lm</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>
+<span class='va'>ruffe_plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>fitted_rec</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"#ff7f0e"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<p>Como te darás cuenta, el método funciona, pero es un poco
+convolucionado. Ajustemos ahora el modelo potencial con la función
+<code>nls</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ruffe_pot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/nls.html'>nls</a></span><span class='op'>(</span><span class='va'>wt</span><span class='op'>~</span><span class='va'>A</span><span class='op'>*</span><span class='va'>lt</span><span class='op'>^</span><span class='op'>{</span><span class='va'>B</span><span class='op'>}</span>,
+                 data <span class='op'>=</span> <span class='va'>ruffe</span>,
+                 start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>A <span class='op'>=</span> <span class='fl'>0.05</span>,
+                           B <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>ruffe</span><span class='op'>$</span><span class='va'>pot_pred</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>ruffe_pot</span>, <span class='va'>ruffe</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>)</span>
+<span class='va'>ruffe_plot</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>ruffe</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>pot_pred</span><span class='op'>)</span>,
+                       color <span class='op'>=</span> <span class='st'>"#ff7f0e"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
+</div>
+<p>Mucho más simple, ¿no? Veamos nuestros coeficientes:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ruffe_pot</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>           A            B 
+3.213069e-05 2.813585e+00 </code></pre>
+</div>
+<p>Y comparémoslos con los coeficientes del modelo lineal:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ruffe_lm</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> (Intercept) 
+1.867349e-05 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/coef.html'>coef</a></span><span class='op'>(</span><span class='va'>ruffe_lm</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code> log(lt) 
+2.922466 </code></pre>
+</div>
+<p>Hay ligeras diferencias en las estimaciones, lo cual es muy
+seguramente debido al cambio a escala logarítmica de los datos. ¿Cuál
+utilizar? Cualquiera de las aproximaciones es correcta, solo ten en
+presente que el utilizar una RLS implica jalar todos sus supuestos, por
+lo que hay que verificar el modelo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>performance</span><span class='fu'>::</span><span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>ruffe_lm</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="c10_no_lineal_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
+</div>
+<p>Y es aquí donde tenemos algunos problemas, los cuales se eliminan en
+la regresión no lineal. La RNL tiene únicamente dos requerimientos:</p>
+<ol type="1">
+<li>Haber especificado una función que describa
+<strong>adecuadamente</strong> la relación entre las variables.</li>
+<li>Seleccionar puntos de inicio correctos. Aún con un modelo adecuado,
+si los puntos de inicio no son los correctos, puedes mandar la
+estimación a un “óptimo local” en vez el “óptimo global”; es decir,
+llegar a un “falso positivo”.</li>
+</ol>
+<p>¿Cómo seleccionar puntos de incio adecuados? Esa es la parte
+complicada. Una alternativa (engorrosa) es hacerlo desde los datos. En
+nuestro ejemplo particular, esto sería algo como lo siguiente:</p>
+<ul>
+<li>Seleccionar una observación por parámetro. En nuestro caso, tenemos
+2: <span class="math inline">\(\alpha\)</span> y <span
+class="math inline">\(\beta\)</span>, por lo que seleccionaremos dos
+individuos de nuestra base de datos. Una idea puede ser seleccionar los
+extremos en <span class="math inline">\(x\)</span>:</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>min_ruffe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.min.html'>which.min</a></span><span class='op'>(</span><span class='va'>ruffe</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>)</span>
+<span class='va'>max_ruffe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.min.html'>which.max</a></span><span class='op'>(</span><span class='va'>ruffe</span><span class='op'>$</span><span class='va'>lt</span><span class='op'>)</span>
+
+<span class='va'>ruffe</span><span class='op'>[</span><span class='va'>min_ruffe</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>    lt  wt
+463 13 0.1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ruffe</span><span class='op'>[</span><span class='va'>max_ruffe</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>     lt   wt
+314 192 93.1</code></pre>
+</div>
+<ul>
+<li>Generar una ecuación para cada observación:</li>
+</ul>
+<p><span class="math display">\[
+0.1 = A * 13^B \\
+93.1 = A*192^B
+\]</span></p>
+<ul>
+<li>Resolvemos la primera ecuación para el parámetro que sea más
+sencillo despejar, en este caso A:</li>
+</ul>
+<p><span class="math display">\[
+A = \frac{0.1}{13^B}
+\]</span></p>
+<p>A no puede ser mayor a 0.1, por lo que podemos seleccionar 0.05 como
+punto de inicio.</p>
+<ul>
+<li>Utilizar ese valor para “estimar” B:</li>
+</ul>
+<span class="math display">\[
+log(0.1) = log(0.05) + B*13 \\
+\therefore \\
+B = \frac{log(0.1)}{13} - log(0.05)
+\]</span>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>0.1</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>13</span><span class='op'>)</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fl'>0.05</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 3</code></pre>
+</div>
+<p>Estos valores, de hecho, fueron los que le pasamos a la función
+<code>nls</code>. ¿Y la segunda observación? (el dato mayor) Esta puede
+ser útil para estimar un límite superior para el valor posible del
+parámetro. <strong>OJO</strong>: esto es solo si quieres evitar estar
+“jugando” con los valores. A final de cuentas, solo necesitamos acercar
+al algoritmo de búsqueda a la zona correcta, no darle la respuesta de
+antemano. Otra alternativa es linealizar el modelo y utilizar los
+parámetros re-convertidos como puntos de inicio. Una alternativa más es
+utilizar datos de la literatura. En este caso, estimaciones que hayan
+sido realizadas para otra localidad o en una especie cercana. Otra
+estrategia puede ser utilizar una RL tradicional y estimar los valores
+desde ahí. Por último, siempre podemos intentar adivinarlos a ojo,
+aunque eso es algo que requiere tener bastante experiencia y capacidad
+de abstracción.</p>
+<h2 id="ejercicio">Ejercicio</h2>
+<p>En este ejercicio tienes dos opciones:</p>
+<ol type="1">
+<li><p>Utiliza los datos <code>dolphin_age.csv</code> para ajustar el
+modelo de Von Bertalanffy y un modelo de crecimiento más. Compáralos
+utilizando el AIC y reporta e interpreta los resultados del “mejor”
+modelo (AIC más bajo). Estos son datos simulados del crecimiento del
+delfín Franciscana (o delfín del Plata, <em>Pontoporia
+blainvillei</em>). Puedes revisar la <a
+href="https://doi.org/10.1017/S0025315410001141">referencia original</a>
+para darte una idea del problema. Los datos que se simularon fueron los
+de las hembras.</p></li>
+<li><p>Utiliza datos propios para ajustar un modelo lineal y reporta e
+interpreta los resultados. No es necesario que describas detalladamente
+de qué son, únicamente la escala temporal (<em>e.g.</em>, días,
+segundos, años).</p></li>
+</ol>
+<div class="sourceCode" id="cb17"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2148,6 +2828,15 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

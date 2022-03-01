@@ -2193,7 +2193,7 @@ grupos con la función <code>hclust(dist, method)</code>.</p>
 
 <span class='va'>df1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>long <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>3.6</span>, <span class='fl'>6.5</span>, <span class='fl'>7.5</span>, <span class='fl'>15</span>, <span class='fl'>20</span><span class='op'>)</span>,
                   row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Tt"</span>, <span class='st'>"Gg"</span>, <span class='st'>"Gm"</span>, <span class='st'>"Oo"</span>, <span class='st'>"Mn"</span>, <span class='st'>"Bp"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>dist.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/factoextra/man/dist.html'>dist</a></span><span class='op'>(</span><span class='va'>df1</span>, method <span class='op'>=</span> <span class='st'>"euclidean"</span><span class='op'>)</span>
+<span class='va'>dist.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/dist.html'>dist</a></span><span class='op'>(</span><span class='va'>df1</span>, method <span class='op'>=</span> <span class='st'>"euclidean"</span><span class='op'>)</span>
 <span class='va'>hc.av</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/hclust.html'>hclust</a></span><span class='op'>(</span><span class='va'>dist.mat</span>, method <span class='op'>=</span><span class='st'>"average"</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2240,7 +2240,7 @@ grupos con la función <code>hclust(dist, method)</code>.</p>
             k <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 
 <span class='co'># Graficador base de R:</span>
-<span class='fu'><a href='https://rdrr.io/pkg/pROC/man/plot.roc.html'>plot</a></span><span class='op'>(</span><span class='va'>dend</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dend</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="c12_no_sup_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
@@ -2927,52 +2927,47 @@ ordenación.</p>
 </code></pre>
 </div>
 <pre><code>Run 0 stress 0.1033851 
-Run 1 stress 0.1188198 
+Run 1 stress 0.1033851 
+... Procrustes: rmse 4.393919e-05  max resid 0.0001397704 
+... Similar to previous best
 Run 2 stress 0.1033851 
-... Procrustes: rmse 1.970335e-05  max resid 6.222584e-05 
+... Procrustes: rmse 6.202645e-05  max resid 0.0001974067 
 ... Similar to previous best
 Run 3 stress 0.1033851 
-... Procrustes: rmse 6.603628e-05  max resid 0.0002091009 
+... Procrustes: rmse 6.673483e-06  max resid 1.537825e-05 
 ... Similar to previous best
 Run 4 stress 0.1033851 
-... Procrustes: rmse 6.571116e-05  max resid 0.0002082297 
+... Procrustes: rmse 3.218345e-05  max resid 9.974379e-05 
 ... Similar to previous best
-Run 5 stress 0.1033851 
-... New best solution
-... Procrustes: rmse 5.472195e-06  max resid 1.66047e-05 
-... Similar to previous best
+Run 5 stress 0.2150069 
 Run 6 stress 0.1033851 
-... Procrustes: rmse 1.673883e-05  max resid 5.296519e-05 
+... Procrustes: rmse 1.191496e-05  max resid 3.464143e-05 
 ... Similar to previous best
-Run 7 stress 0.1033851 
-... Procrustes: rmse 0.000110847  max resid 0.0003523373 
+Run 7 stress 0.22207 
+Run 8 stress 0.1932815 
+Run 9 stress 0.1940924 
+Run 10 stress 0.1188198 
+Run 11 stress 0.1188198 
+Run 12 stress 0.1033851 
+... New best solution
+... Procrustes: rmse 1.024441e-05  max resid 3.156828e-05 
 ... Similar to previous best
-Run 8 stress 0.1188198 
-Run 9 stress 0.1033851 
-... Procrustes: rmse 3.145978e-05  max resid 9.880461e-05 
+Run 13 stress 0.1188198 
+Run 14 stress 0.1033851 
+... Procrustes: rmse 1.672853e-05  max resid 5.329596e-05 
 ... Similar to previous best
-Run 10 stress 0.1033851 
-... Procrustes: rmse 6.479757e-06  max resid 1.310173e-05 
+Run 15 stress 0.2172252 
+Run 16 stress 0.1033851 
+... New best solution
+... Procrustes: rmse 2.27726e-06  max resid 6.118726e-06 
 ... Similar to previous best
-Run 11 stress 0.1033851 
-... Procrustes: rmse 1.165495e-05  max resid 3.694318e-05 
-... Similar to previous best
-Run 12 stress 0.1708132 
-Run 13 stress 0.1033851 
-... Procrustes: rmse 1.601501e-05  max resid 5.086657e-05 
-... Similar to previous best
-Run 14 stress 0.1642917 
-Run 15 stress 0.1188198 
-Run 16 stress 0.2176284 
 Run 17 stress 0.1188198 
-Run 18 stress 0.1033851 
-... Procrustes: rmse 6.799859e-05  max resid 0.00021525 
-... Similar to previous best
+Run 18 stress 0.1188198 
 Run 19 stress 0.1033851 
-... Procrustes: rmse 3.835759e-05  max resid 0.0001118869 
+... Procrustes: rmse 5.645737e-05  max resid 0.0001791972 
 ... Similar to previous best
 Run 20 stress 0.1033851 
-... Procrustes: rmse 5.251482e-05  max resid 0.0001695884 
+... Procrustes: rmse 3.014651e-05  max resid 9.513014e-05 
 ... Similar to previous best
 *** Solution reached</code></pre>
 <div class="sourceCode">
@@ -3000,12 +2995,12 @@ análogo a lo que hicimos con el ACP:</p>
 </code></pre>
 </div>
 <pre><code>           NMDS1      NMDS2         R     P Variable
-OD    -0.8293773  0.5586889 0.9128733 0.001       OD
-STD    0.9471231 -0.3208706 0.8744877 0.001      STD
-Temp   0.8293920 -0.5586671 0.7176450 0.001     Temp
-NH4    0.9517448 -0.3068907 0.6989930 0.002      NH4
-Caud   0.9045865  0.4262902 0.6989252 0.001     Caud
-Trans -0.7862181 -0.6179491 0.6977633 0.001    Trans</code></pre>
+OD    -0.8293702  0.5586994 0.9128753 0.001       OD
+STD    0.9471184 -0.3208843 0.8744901 0.001      STD
+Temp   0.8293836 -0.5586796 0.7176459 0.001     Temp
+NH4    0.9517433 -0.3068953 0.6989946 0.001      NH4
+Caud   0.9045942  0.4262737 0.6989190 0.001     Caud
+Trans -0.7862178 -0.6179494 0.6977768 0.001    Trans</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
