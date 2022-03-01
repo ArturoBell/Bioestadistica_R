@@ -2273,11 +2273,11 @@ términos de frecuencias:</p>
 <pre><code>   Intervalo Frecuencia    Lims
 1    (0,0.1]         NA   0:0.1
 2  (0.1,0.2]         NA 0.1:0.2
-3  (0.2,0.3]          3 0.2:0.3
-4  (0.3,0.4]          5 0.3:0.4
-5  (0.4,0.5]        302 0.4:0.5
-6  (0.5,0.6]        187 0.5:0.6
-7  (0.6,0.7]          1 0.6:0.7
+3  (0.2,0.3]          5 0.2:0.3
+4  (0.3,0.4]         19 0.3:0.4
+5  (0.4,0.5]        236 0.4:0.5
+6  (0.5,0.6]        238 0.5:0.6
+7  (0.6,0.7]         NA 0.6:0.7
 8  (0.7,0.8]         NA 0.7:0.8
 9  (0.8,0.9]         NA 0.8:0.9
 10   (0.9,1]         NA   0.9:1</code></pre>
@@ -2538,13 +2538,13 @@ intervalos de confianza y el valor de la media.</p>
     One Sample t-test
 
 data:  norm.var$var
-t = 960.89, df = 9999, p-value &lt; 2.2e-16
+t = 949.25, df = 9999, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 66.92175 67.19534
+ 66.81832 67.09485
 sample estimates:
 mean of x 
- 67.05854 </code></pre>
+ 66.95659 </code></pre>
 </div>
 <p>Otra forma de calcularlos es utilizando la librería
 <code>Rmisc</code>:</p>
@@ -2566,7 +2566,7 @@ hace unos momentos:</p>
 </code></pre>
 </div>
 <pre><code>   upper     mean    lower 
-67.19534 67.05854 66.92175 </code></pre>
+67.09485 66.95659 66.81832 </code></pre>
 </div>
 <p>Como vemos, la función calcula los intervalos de confianza utilizando
 la distribución T. Esto se debe a que es el modo más común de realizar
@@ -2600,7 +2600,7 @@ anterior:</p>
 </code></pre>
 </div>
 <pre><code>   .id     n Mean Conf.level Trad.lower Trad.upper
-1 &lt;NA&gt; 10000 67.1       0.95       66.9       67.2</code></pre>
+1 &lt;NA&gt; 10000   67       0.95       66.8       67.1</code></pre>
 </div>
 <p>Vemos que la salida es un poco más compleja; sin embargo, lo más
 relevante es que los intervalos son sumamente cercanos a los que
