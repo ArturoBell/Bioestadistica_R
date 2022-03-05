@@ -2152,7 +2152,9 @@ según nuestros datos. La regresión no lineal es, en escencia, lo mismo:
 ajustar parámetros de un modelo a partir de los datos. La única
 diferencia es que el modelo puede describir cualquier tipo de relación
 funcional entre las variables involucradas. Puede ser algo tan simple
-como un modelo potencial hasta algo tan complicado como</p>
+como un modelo potencial de un solo parámetro hasta algo tan complicado
+como el modelo de mortalidad de Chen y Watanabe (1988), o incluso
+más.</p>
 <p>Aplicaciones biológicas de este tipo de modelos hay muchas: a)
 estimación de la riqueza específica de un sitio, b) modelar el
 crecimiento de organismos, c) relaciones talla-peso, etc., etc., etc. En
@@ -2454,7 +2456,7 @@ Confianza</h2>
 el objetivo de crear una <strong>distribución empírica</strong> de algún
 estadístico. Es decir, NO utilizaremos ni asumiremos una distribución
 para nuestros residuales, sino que utilizaremos directamente nuestros
-datos para desccribir su distribución. Un escenario en el cual esto es
+datos para describir su distribución. Un escenario en el cual esto es
 útil es cuando el perfil de verosimilitud de nuestros parámetros no es
 simétrico, como es el caso de <span class="math inline">\(t_0\)</span>
 en nuestro modelo:</p>
@@ -2468,10 +2470,11 @@ en nuestro modelo:</p>
 <p>¿Qué nos dice este gráfico? En pocas palabras, la forma de la
 distribución de la verosimilitud de nuestro parámetro, en términos de
 <span class="math inline">\(\tau\)</span>, que representa el valor del
-estadístico t a cada punto, donde el valor de t se calcula como la raiz
-cuadrada del cambio en la suma de cuadrados, dividido por el error
+estadístico <span class="math inline">\(t\)</span> a cada punto, donde
+el valor de <span class="math inline">\(t\)</span> se calcula como la
+raiz cuadrada del cambio en la suma de cuadrados, dividido por el error
 estándar residual. ¿En Español? Entre más grande sea <span
-class="math inline">\(\tau\)</span> más nos alejamos del punto con
+class="math inline">\(\tau\)</span>, más nos alejamos del punto con
 máxima verosimilitud (<span class="math inline">\(\tau = 0\)</span>).
 Piensa en este gráfico como un gráfico de densidad invertido.</p>
 <p>Utilicemos entonces la función <code>boot_nls</code> de la librería
@@ -2812,10 +2815,10 @@ blainvillei</em>). Puedes revisar la <a
 href="https://doi.org/10.1017/S0025315410001141">referencia original</a>
 para darte una idea del problema. Los datos que se simularon fueron los
 de las hembras.</p></li>
-<li><p>Utiliza datos propios para ajustar un modelo lineal y reporta e
-interpreta los resultados. No es necesario que describas detalladamente
-de qué son, únicamente la escala temporal (<em>e.g.</em>, días,
-segundos, años).</p></li>
+<li><p>Utiliza datos propios para ajustar un modelo NO lineal y reporta
+e interpreta los resultados. No es necesario que describas
+detalladamente de qué son, únicamente la escala temporal (<em>e.g.</em>,
+días, segundos, años).</p></li>
 </ol>
 <div class="sourceCode" id="cb17"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
