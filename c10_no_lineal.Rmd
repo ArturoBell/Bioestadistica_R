@@ -24,7 +24,7 @@ library(nlraa)
 
 ## Otro tipo de relaciones
 
-En las sesiones anteriores hablamos de modelos en los cuales asumimos que hay una relación lineal entre nuestras variables; es decir, una variable incrementa o disminuye de manera constante en relación a la otra, pero también mencionamos que esto no siempre es así. Aquí es justo donde entra la modelación no lineal. En un problema de regresión lineal simple utilizamos alguna función de pérdida y un algoritmo de optimización para encontrar los valores del intercepto y la pendiente, según nuestros datos. La regresión no lineal es, en escencia, lo mismo: ajustar parámetros de un modelo a partir de los datos. La única diferencia es que el modelo puede describir cualquier tipo de relación funcional entre las variables involucradas. Puede ser algo tan simple como un modelo potencial hasta algo tan complicado como 
+En las sesiones anteriores hablamos de modelos en los cuales asumimos que hay una relación lineal entre nuestras variables; es decir, una variable incrementa o disminuye de manera constante en relación a la otra, pero también mencionamos que esto no siempre es así. Aquí es justo donde entra la modelación no lineal. En un problema de regresión lineal simple utilizamos alguna función de pérdida y un algoritmo de optimización para encontrar los valores del intercepto y la pendiente, según nuestros datos. La regresión no lineal es, en escencia, lo mismo: ajustar parámetros de un modelo a partir de los datos. La única diferencia es que el modelo puede describir cualquier tipo de relación funcional entre las variables involucradas. Puede ser algo tan simple como un modelo potencial de un solo parámetro hasta algo tan complicado como el modelo de mortalidad de Chen y Watanabe (1988), o incluso más.
 
 Aplicaciones biológicas de este tipo de modelos hay muchas: a) estimación de la riqueza específica de un sitio, b) modelar el crecimiento de organismos, c) relaciones talla-peso, etc., etc., etc. En esta sesión revisaremos algunos ejemplos de estos modelos y cómo aplicarlos e interpretarlos.
 
@@ -193,12 +193,13 @@ Para más detalles y una discusión sobre este modelo, te recomiendo ampliamente
 
 ## Bootstrap e Intervalos de Confianza
 
-Primero, ¿qué es Bootstrap y con qué se come? El muestreo Bootstrap (o bootstraping) consiste en **remuestrear** los datos, con el objetivo de crear una **distribución empírica** de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para desccribir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de $t_0$ en nuestro modelo:
+Primero, ¿qué es Bootstrap y con qué se come? El muestreo Bootstrap (o bootstraping) consiste en **remuestrear** los datos, con el objetivo de crear una **distribución empírica** de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para describir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de $t_0$ en nuestro modelo:
 
 ```{r}
 plot(profile(vb_jaws, "t"))
 ```
-¿Qué nos dice este gráfico? En pocas palabras, la forma de la distribución de la verosimilitud de nuestro parámetro, en términos de $\tau$, que representa el valor del estadístico t a cada punto, donde el valor de t se calcula como la raiz cuadrada del cambio en la suma de cuadrados, dividido por el error estándar residual. ¿En Español? Entre más grande sea $\tau$ más nos alejamos del punto con máxima verosimilitud ($\tau = 0$). Piensa en este gráfico como un gráfico de densidad invertido.
+
+¿Qué nos dice este gráfico? En pocas palabras, la forma de la distribución de la verosimilitud de nuestro parámetro, en términos de $\tau$, que representa el valor del estadístico $t$ a cada punto, donde el valor de $t$ se calcula como la raiz cuadrada del cambio en la suma de cuadrados, dividido por el error estándar residual. ¿En Español? Entre más grande sea $\tau$, más nos alejamos del punto con máxima verosimilitud ($\tau = 0$). Piensa en este gráfico como un gráfico de densidad invertido.
 
 Utilicemos entonces la función `boot_nls` de la librería `nlraa` para hacer el muestreo de nuestros parámetros, y utilicemos la función `confint` para obtener sus intervalos de confianza:
 
@@ -390,4 +391,4 @@ En este ejercicio tienes dos opciones:
 
 1. Utiliza los datos `dolphin_age.csv` para ajustar el modelo de Von Bertalanffy y un modelo de crecimiento más. Compáralos utilizando el AIC y reporta e interpreta los resultados del "mejor" modelo (AIC más bajo). Estos son datos simulados del crecimiento del delfín Franciscana (o delfín del Plata, *Pontoporia blainvillei*). Puedes revisar la [referencia original](https://doi.org/10.1017/S0025315410001141) para darte una idea del problema. Los datos que se simularon fueron los de las hembras.
 
-2. Utiliza datos propios para ajustar un modelo lineal y reporta e interpreta los resultados. No es necesario que describas detalladamente de qué son, únicamente la escala temporal (*e.g.*, días, segundos, años).
+2. Utiliza datos propios para ajustar un modelo NO lineal y reporta e interpreta los resultados. No es necesario que describas detalladamente de qué son, únicamente la escala temporal (*e.g.*, días, segundos, años).
