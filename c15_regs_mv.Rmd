@@ -114,11 +114,6 @@ lambdamin
 Ajustemos entonces el modelo regularizado con ese valor de lambda. (Df representa el número de coeficientes no negativos, $\%Dev = R^2$).
 
 ```{r}
-
-```
-
-
-```{r}
 ridge.lm <- glmnet(as.matrix(X_train_s), y_train, alpha = 0, lambda = lambdamin)
 print(ridge.lm)
 coef(ridge.lm) # Imprime los coeficientes de la regresión
@@ -235,7 +230,6 @@ mlm.plot <- ggplot(data = mlm.data, aes(x = obs, y =  s0)) +
 mlm.plot
 ```
 
-Una aclaración importante tiene que ver con los 
 
 ## Ingeniería de variables
 Aplicamos un PCA para generar nuevas variables que contengan el efecto de las variables originales y que sean ortogonales:

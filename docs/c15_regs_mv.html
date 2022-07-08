@@ -2509,9 +2509,6 @@ el tipo de medida de error, en este caso MSE.</p>
 (Df representa el número de coeficientes no negativos, <span
 class="math inline">\(\%Dev = R^2\)</span>).</p>
 <div class="layout-chunk" data-layout="l-body">
-
-</div>
-<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>ridge.lm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://glmnet.stanford.edu/reference/glmnet.html'>glmnet</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>X_train_s</span><span class='op'>)</span>, <span class='va'>y_train</span>, alpha <span class='op'>=</span> <span class='fl'>0</span>, lambda <span class='op'>=</span> <span class='va'>lambdamin</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>ridge.lm</span><span class='op'>)</span>
@@ -2840,7 +2837,7 @@ muchas estén altamente correlacionadas:</p>
 <span class='fu'><a href='https://rdrr.io/pkg/corrplot/man/corrplot.html'>corrplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/cor.html'>cor</a></span><span class='op'>(</span><span class='va'>dr.df</span><span class='op'>)</span>, method <span class='op'>=</span> <span class='st'>"ellipse"</span>, type <span class='op'>=</span> <span class='st'>"upper"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="c15_regs_mv_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+<p><img src="c15_regs_mv_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
 </div>
 <p>Podemos también hacer una matriz similar, aunque utilizando gráficos
 de dispersión:</p>
@@ -2876,9 +2873,8 @@ relación entre los datos observados y predichos por el modelo</p>
 <span class='va'>mlm.plot</span>
 </code></pre>
 </div>
-<p><img src="c15_regs_mv_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+<p><img src="c15_regs_mv_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
 </div>
-<p>Una aclaración importante tiene que ver con los</p>
 <h2 id="ingeniería-de-variables">Ingeniería de variables</h2>
 <p>Aplicamos un PCA para generar nuevas variables que contengan el
 efecto de las variables originales y que sean ortogonales:</p>

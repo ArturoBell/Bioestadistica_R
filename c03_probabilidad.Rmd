@@ -123,7 +123,7 @@ intervals <- function(x){
   ifelse(nchar(as.character(x))>7,
          # Extrae los caracteres 2:8 y reemplaza las "," con ":"
          str_replace(substr(x, 2, 8), ",", ":"),
-         # Si no, extrae solamente los caracteres 2:8 y reemplaza las "," con ":"
+         # Si no, extrae solamente los caracteres 2:6 y reemplaza las "," con ":"
          str_replace(substr(x, 2, 6), ",", ":"))
 }
 # Aplicamos la función personalizada y generamos una columna nueva:

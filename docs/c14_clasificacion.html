@@ -2128,16 +2128,7 @@ variables</a></li>
 href="#diagnóstico-del-modelo-de-funciones-discriminantes">Diagnóstico
 del modelo de funciones discriminantes:</a></li>
 </ul></li>
-<li><a href="#regresión-logística">Regresión logística</a>
-<ul>
-<li><a href="#ajuste-del-modelo-1">Ajuste del modelo</a></li>
-<li><a href="#importancia-de-variables-1">Importancia de
-variables</a></li>
-<li><a href="#diagnóstico-de-la-regresión-logística">Diagnóstico de la
-regresión logística</a></li>
-</ul></li>
-<li><a href="#regresión-logística-multinomial">Regresión Logística
-multinomial</a></li>
+<li><a href="#regresión-logística">Regresión logística</a></li>
 <li><a href="#ejercicio">Ejercicio</a></li>
 </ul>
 </nav>
@@ -2433,8 +2424,8 @@ de los grupos en el nuevo espacio:</p>
 del modelo de funciones discriminantes:</h3>
 <h4 id="probabilidades-de-pertenencia">Probabilidades de
 pertenencia</h4>
-Probabilidad de pertenencia de cada individuo a partir de los datos de
-prueba:
+<p>Probabilidad de pertenencia de cada individuo a partir de los datos
+de prueba:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lda_mod</span>, <span class='va'>test_t</span><span class='op'>)</span><span class='op'>$</span><span class='va'>posterior</span>
@@ -2470,27 +2461,31 @@ prueba:
 98  consocium  98 1.000000e+00 2.712993e-12 6.977327e-14
 100 consocium 100 1.000000e+00 5.416680e-14 4.344065e-13</code></pre>
 </div>
-<h4
-id="prueba-de-ji-cuadrada-para-verificar-un-acomodo-no-aleatorio-p0.005">Prueba
-de Ji-cuadrada para verificar un acomodo no aleatorio (p&lt;0.005)</h4>
+<h4 id="matriz-de-confusión">Matriz de confusión</h4>
+<p>Recordemos que la matriz de confusión es una tabla de contingencia
+que permite obtener métricas relacionadas con proporciones de
+predicciones correctas. La función <code>confusionMatrix</code> de la
+librería <code>caret</code> da, además de las vistas en la presentación,
+algunas otras que pueden ser interesantes, pues minimizan el efecto de
+la Tasa de No Información (NIR):</p>
+<ul>
+<li>p-value [Acc&gt;NIR]: es el valor de p de una prueba binomial de una
+cola para probar que la exactitud observada es mayor que la tasa de no
+información; es decir, que no estamos tratando con un modelo bobo.</li>
+<li>Kappa: Este es el valor del estadístico Kappa de Cohen, que es una
+medida de el porcentaje de las predicciones del modelo que no pueden ser
+explicadas adivinando al azar.</li>
+<li>McNemar’s test p-value: Es una prueba <span
+class="math inline">\(\chi^2\)</span> para la simetría de los renglones
+y columnas de una tabla de contingencia, de modo que la hipótesis de
+nulidad es que las probabilidades de ser clasificado en las celdas [i,j]
+y [j, i] son las mismas; es decir, que lo que está debajo de la diagonal
+sea igual a lo que está encima de la diagonal.</li>
+</ul>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pred.clase</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lda_mod</span>, <span class='va'>test_t</span><span class='op'>)</span><span class='op'>$</span><span class='va'>class</span>
-<span class='va'>jicuad</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span>, <span class='va'>pred.clase</span>, simulate.p.value <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
-<span class='va'>jicuad</span>
-</code></pre>
-</div>
-<pre><code>
-    Pearson&#39;s Chi-squared test with simulated p-value (based on 2000
-    replicates)
-
-data:  test_t$especie and pred.clase
-X-squared = 31.445, df = NA, p-value = 0.0004998</code></pre>
-</div>
-<h4 id="matriz-de-confusión">Matriz de confusión:</h4>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/confusionMatrix.html'>confusionMatrix</a></span><span class='op'>(</span><span class='va'>pred.clase</span>, <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/caret/man/confusionMatrix.html'>confusionMatrix</a></span><span class='op'>(</span><span class='va'>pred.clase</span>, <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Confusion Matrix and Statistics
@@ -2524,10 +2519,21 @@ Detection Rate                 0.2308         0.2308          0.3846
 Detection Prevalence           0.2692         0.3077          0.4231
 Balanced Accuracy              0.8039         0.8759          0.9688</code></pre>
 </div>
-<h5 id="márgenes-de-decisión.">Márgenes de decisión.</h5>
-<p>En este caso, mostraremos la probabilidad de pertenencia a cada clase
-(obtenida desde los datos de entrenamiento) como fondo del gráfico y
-sobrepondremos los datos de prueba. Para poder hacer esto habrá que
+<p>Es importante mencionar que, por lo general, el valor AUC de la curva
+ROC es una medida más robusta que estas; sin embargo, habrá veces en las
+que nos interese que los positivos predichos sean realmente positivos,
+aunque tengamos falsos negativos, por ejemplo. Pensemos que nos interesa
+asegurarnos que los individuos clasificados como consocium realmente
+sean consocium. ¿Qué medida utilizarías para saber en qué proporción se
+da ese caso? Pista: no es ni la exactitud ni el AUC. Regresa a la
+presentación si es necesario.</p>
+<h5 id="márgenes-de-decisión">Márgenes de decisión</h5>
+<p>Nos interesaremos en los márgenes de decisión de un clasificador
+cuando nos interesa saber cómo es que nuestro modelo está haciendo las
+decisiones. En este caso, mostraremos la probabilidad de pertenencia a
+cada clase (obtenida desde los datos de entrenamiento) como fondo de un
+gráfico en donde los ejes x y y serán las ecuaciones discriminantes, y
+le sobrepondremos los datos de prueba. Para poder hacer esto habrá que
 “simular” datos para nuestro fondo y formar una malla con todos ellos.
 Desafortunadamente, crear la malla requiere que hagamos cierta trampa.
 Primero, ajustaremos un modelo LDA para predecir los valores de LD1 y
@@ -2545,12 +2551,12 @@ negativo por -1 para evitar una rotación de los datos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>adjust_probs_sp</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>mesh</span>, <span class='va'>probs</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='co'># Obtener la mayor probabilidad</span>
   <span class='va'>mesh</span><span class='op'>[</span><span class='st'>"adj_probs"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>probs</span>, 
                            <span class='fl'>1</span>,
                            FUN <span class='op'>=</span> <span class='va'>max</span>
                            <span class='op'>)</span>
-  <span class='co'># Especies predichas; i.e., la especie con mayor probabilidad</span>
-  <span class='co'>## resumir con predict()$class?</span>
+  <span class='co'># Obtener la especie a la que le corresponde</span>
   <span class='va'>mesh</span><span class='op'>[</span><span class='st'>"adj_esp"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>probs</span>,
                            <span class='fl'>1</span>,
                            FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span>
@@ -2575,19 +2581,20 @@ negativo por -1 para evitar una rotación de los datos:</p>
              length.out<span class='op'>=</span><span class='fl'>300</span><span class='op'>)</span>
   
   <span class='co'># Generamos un objeto con todas las combinaciones de nuevos valores</span>
-  <span class='va'>newdat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>LD1<span class='op'>=</span><span class='va'>ld1</span>,LD2<span class='op'>=</span><span class='va'>ld2</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>newdat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/expand.grid.html'>expand.grid</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>LD1 <span class='op'>=</span> <span class='va'>ld1</span>,
+                             LD2 <span class='op'>=</span> <span class='va'>ld2</span><span class='op'>)</span><span class='op'>)</span>
   
   <span class='co'># Realizamos predicciones a partir de estos valores</span>
-  <span class='va'>preds</span> <span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>prob_lda</span>, newdata <span class='op'>=</span> <span class='va'>newdat</span><span class='op'>)</span>
+  <span class='va'>preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>prob_lda</span>, newdata <span class='op'>=</span> <span class='va'>newdat</span><span class='op'>)</span>
   
-  <span class='co'># Generamos un objeto que contendrá la "malla" con los valores de LD1, LD2, adj_probs y adj_esp</span>
+  <span class='co'># Generamos un objeto que contendrá la "malla" con los valores de</span>
+  <span class='co'># LD1, LD2, adj_probs y adj_esp</span>
   <span class='va'>mesh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>preds</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span>
   
   <span class='co'># Probabilidad de pertenencia de los valores simulados:</span>
   <span class='va'>prob_sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>preds</span><span class='op'>$</span><span class='va'>posterior</span><span class='op'>)</span>
   
-  <span class='co'># Probabilidades "ajustadas"; i.e., </span>
-  <span class='co'># la probabilidad mayor - la suma del resto de probabilidades</span>
+  <span class='co'># Probabilidades "ajustadas" para cada punto en la malla:</span>
   
   <span class='va'>mesh</span> <span class='op'>&lt;-</span> <span class='fu'>adjust_probs_sp</span><span class='op'>(</span><span class='va'>mesh</span>, <span class='va'>prob_sim</span><span class='op'>)</span>
   
@@ -2604,29 +2611,31 @@ negativo por -1 para evitar una rotación de los datos:</p>
 <p>Ahora formamos el gráfico</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mesh</span> <span class='op'>&lt;-</span> <span class='fu'>dec_bounds</span><span class='op'>(</span><span class='va'>prob_lda</span>, <span class='va'>adj_vals</span><span class='op'>)</span> <span class='co'># Generamos la malla</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Generamos la malla</span>
+<span class='va'>mesh</span> <span class='op'>&lt;-</span> <span class='fu'>dec_bounds</span><span class='op'>(</span><span class='va'>prob_lda</span>, <span class='va'>adj_vals</span><span class='op'>)</span>
 
 <span class='co'># Graficamos las probabilidades de decisión</span>
 <span class='va'>dec.probs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mesh</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>LD1</span>, y <span class='op'>=</span> <span class='va'>LD2</span>, color <span class='op'>=</span> <span class='va'>adj_esp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_tile.html'>geom_raster</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>adj_esp</span><span class='op'>)</span>, alpha <span class='op'>=</span> <span class='va'>mesh</span><span class='op'>$</span><span class='va'>adj_probs</span><span class='op'>*</span><span class='fl'>0.3</span>, show.legend <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span> <span class='op'>+</span> 
              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_minimal</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='co'>#adj_vals &lt;- as.data.frame(predict(lda_mod, train_t)$x)</span>
-<span class='co'>#adj_vals["especie"] &lt;- train_t["especie"]</span>
-
-<span class='co'># Añadimos los datos de prueba</span>
-<span class='co'># Valores de LDA para los datos de prueba</span>
+<span class='co'># Añadimos los datos de prueba al gráfico</span>
+<span class='co'># Valores de LDA para los datos de prueba;</span>
+<span class='co'># i.e., utilizar los parámetros del modelo:</span>
 <span class='va'>mesh_test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lda_mod</span>, <span class='va'>test_t</span><span class='op'>)</span><span class='op'>$</span><span class='va'>x</span><span class='op'>)</span> 
 
 <span class='co'># Obtener las probabilidades y especies predichas</span>
-<span class='va'>mesh_test</span> <span class='op'>&lt;-</span> <span class='fu'>adjust_probs_sp</span><span class='op'>(</span><span class='va'>mesh_test</span>, <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lda_mod</span>, <span class='va'>test_t</span><span class='op'>)</span><span class='op'>$</span><span class='va'>posterior</span><span class='op'>)</span> 
+<span class='va'>mesh_test</span> <span class='op'>&lt;-</span> <span class='fu'>adjust_probs_sp</span><span class='op'>(</span><span class='va'>mesh_test</span>,
+                             <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>lda_mod</span>, <span class='va'>test_t</span><span class='op'>)</span><span class='op'>$</span><span class='va'>posterior</span><span class='op'>)</span> 
 
-<span class='co'># Una etiqueta para saber si la instancia está correctamente clasificada</span>
+<span class='co'># Etiqueta para saber si la instancia está correctamente clasificada</span>
 <span class='va'>mesh_test</span><span class='op'>[</span><span class='st'>"mark"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span> <span class='op'>==</span> <span class='va'>mesh_test</span><span class='op'>$</span><span class='va'>adj_esp</span>,
                             <span class='va'>test_t</span><span class='op'>$</span><span class='va'>especie</span>,
                             <span class='st'>"Mal clasificado"</span><span class='op'>)</span>
 
-<span class='co'># Añadimos los puntos de prueba, cambiando la forma según la clase predicha por el modelo y el color por la clase observada:</span>
+<span class='co'># Añadimos los puntos de prueba,</span>
+<span class='co'># cambiando el marcador según la clase predicha por el modelo,</span>
+<span class='co'># y el color según la clase observada:</span>
 <span class='va'>clas.plot</span> <span class='op'>&lt;-</span> <span class='va'>dec.probs</span> <span class='op'>+</span> 
              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>mesh_test</span>,
                         <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>LD1</span>, y <span class='op'>=</span> <span class='va'>LD2</span>, shape <span class='op'>=</span> <span class='va'>mark</span>,
@@ -2644,7 +2653,7 @@ negativo por -1 para evitar una rotación de los datos:</p>
 <span class='va'>clas.plot</span>
 </code></pre>
 </div>
-<p><img src="c14_clasificacion_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
+<p><img src="c14_clasificacion_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2673,17 +2682,7 @@ negativo por -1 para evitar una rotación de los datos:</p>
      base.1     altura       area   Intesti
 7 0.0197607 0.05842602 0.01042717 0.2447462</code></pre>
 </div>
-<p>Podemos también mostrar un gráfico de partición, en el cual se
-muestra la clasificación según cada variable. Utilizamos la base iris
-debido a la altísima dimensionalidad de los datos del ejercicio</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>klaR</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/klaR/man/partimat.html'>partimat</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>~</span><span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span>, method <span class='op'>=</span> <span class='st'>"lda"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="c14_clasificacion_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
-</div>
-<h4 id="curva-roc-y-valor-auc.">Curva ROC y valor AUC.</h4>
+<h4 id="curva-roc-y-valor-auc">Curva ROC y valor AUC</h4>
 <p>Primero obtengamos la curva ROC y el valor de AUC multi-clase.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2701,7 +2700,6 @@ para graficar las curvas ROC:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>plot_rocs</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>classes</span>, <span class='va'>multi_roc</span>, <span class='va'>colors</span>, <span class='va'>theme</span>, <span class='va'>test_t</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='co'># Una etiqueta para saber si la instancia está correctamente clasificada</span>
   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme_get.html'>theme_set</a></span><span class='op'>(</span><span class='va'>theme</span><span class='op'>)</span>
   
   <span class='co'># Lista vacía para llenar con las gráficas</span>
@@ -2712,7 +2710,7 @@ para graficar las curvas ROC:</p>
 
   <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='va'>counter</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># para cada i en clases</span>
     <span class='kw'>if</span> <span class='op'>(</span><span class='va'>i</span> <span class='op'>==</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># Si i == 1</span>
-      <span class='co'># graficado de la curva ROC para la especie 1</span>
+      <span class='co'># curva ROC para la primera clase</span>
       <span class='va'>rocs_plots</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/ggroc.html'>ggroc</a></span><span class='op'>(</span><span class='va'>multi_roc</span><span class='op'>$</span><span class='va'>rocs</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>,
                                color <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
                                legacy.axes <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2730,7 +2728,7 @@ para graficar las curvas ROC:</p>
                                      color <span class='op'>=</span> <span class='st'>"gray50"</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
                                      <span class='co'># Línea de referencia (Azar)</span>
                                      linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span>
-    <span class='op'>}</span>
+    <span class='op'>}</span> <span class='co'># curva ROC para clase intermedias</span>
     <span class='kw'>if</span> <span class='op'>(</span><span class='va'>i</span> <span class='op'>&lt;</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>counter</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='va'>i</span> <span class='op'>&gt;</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
       <span class='va'>rocs_plots</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/ggroc.html'>ggroc</a></span><span class='op'>(</span><span class='va'>roc_cons</span><span class='op'>$</span><span class='va'>rocs</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>,
                                color <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
@@ -2742,7 +2740,7 @@ para graficar las curvas ROC:</p>
                          <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_abline</a></span><span class='op'>(</span>intercept <span class='op'>=</span> <span class='fl'>0</span>, slope <span class='op'>=</span> <span class='fl'>1</span>,
                                      color <span class='op'>=</span> <span class='st'>"gray50"</span>, size <span class='op'>=</span> <span class='fl'>1</span>, 
                                      linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span>
-    <span class='op'>}</span>
+    <span class='op'>}</span> <span class='co'># curva ROC para la última clase</span>
     <span class='kw'>if</span> <span class='op'>(</span><span class='va'>i</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>counter</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
       <span class='va'>rocs_plots</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/ggroc.html'>ggroc</a></span><span class='op'>(</span><span class='va'>roc_cons</span><span class='op'>$</span><span class='va'>rocs</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>, color <span class='op'>=</span> <span class='va'>colors</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, 
                                size <span class='op'>=</span> <span class='fl'>1</span>, legacy.axes <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span>
@@ -2772,7 +2770,7 @@ para graficar las curvas ROC:</p>
           <span class='va'>roc_cons</span>, <span class='va'>colors</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggtheme.html'>theme_bw</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>test_t</span><span class='op'>)</span>
 </code></pre>
 </div>
-<img src="c14_clasificacion_files/figure-html5/unnamed-chunk-20-1.png" width="288" />
+<img src="c14_clasificacion_files/figure-html5/unnamed-chunk-18-1.png" width="288" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#dev.off()</span>
 </code></pre>
@@ -2782,16 +2780,17 @@ para graficar las curvas ROC:</p>
 <p>Otra técnica que podemos utilizar es la regresión logística. Es
 importante recordar que este modelo de clasificación fue desarrollado
 originalmente para clasificaciones binarias, aunque ya ha sido extendido
-a clasificaciones multinomiales. Comencemos con el caso binario. En este
-caso, utilicemos la base iris para cambiar un poco de aires y cambiemos
-las etiquetas a versicolor y otra</p>
+a clasificaciones multinomiales. Esta técnica la veremos a detalle en la
+sesión de GLMs, aunque es importante mencionar que todas las formas de
+evaluación (entrenamiento-prueba, matriz de confusión, ROC-AUC) siguen
+aplicando. Para fines ilustrativos, realicemos el ajuste de un modelo
+multinomial; i.e., más de dos clases:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>iris_dat</span> <span class='op'>&lt;-</span> <span class='va'>iris</span>
-<span class='va'>iris_dat</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>iris_dat</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"versicolor"</span>, <span class='st'>"versicolor"</span>, <span class='st'>"otra"</span><span class='op'>)</span>
 <span class='va'>samples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caTools/man/sample.split.html'>sample.split</a></span><span class='op'>(</span><span class='va'>iris_dat</span><span class='op'>$</span><span class='va'>Species</span>, SplitRatio <span class='op'>=</span> <span class='fl'>.75</span><span class='op'>)</span>
-<span class='va'>train2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris_dat</span>, <span class='va'>sample</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>test2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris_dat</span>, <span class='va'>sample</span> <span class='op'>==</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>train2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris_dat</span>, <span class='va'>samples</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>test2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris_dat</span>, <span class='va'>samples</span> <span class='op'>==</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2804,380 +2803,25 @@ las etiquetas a versicolor y otra</p>
 </code></pre>
 </div>
 </div>
-<h3 id="ajuste-del-modelo-1">Ajuste del modelo</h3>
+<h4 id="ajuste-del-modelo-1">Ajuste del modelo</h4>
 <p>A diferencia del caso anterior, vamos a implementar el modelo
 utilizando la librería caret (Classification and Regression Training).
-Esta librería nos permite entrenar modelos de clasificación o regresión
-de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración
-de modelos y nos evita estar batallando con las librerías propias.
-Veámoslo en acción:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logit_reg</span> <span class='op'>&lt;-</span> <span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span>form <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>~</span><span class='va'>.</span>,
-                          data <span class='op'>=</span> <span class='va'>train_t2</span>,
-                          method <span class='op'>=</span> <span class='st'>"glm"</span>,
-                          family <span class='op'>=</span> <span class='st'>"binomial"</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<h3 id="importancia-de-variables-1">Importancia de variables</h3>
-<p>Veamos los coeficientes:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>logit_reg</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>
-Call:
-NULL
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.0676  -0.7632  -0.4016   0.8363   2.0392  
-
-Coefficients:
-             Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)   -1.0835     0.2603  -4.162 3.16e-05 ***
-Sepal.Length   0.1491     0.6608   0.226 0.821483    
-Sepal.Width   -1.3483     0.4002  -3.369 0.000754 ***
-Petal.Length   1.4449     1.3274   1.089 0.276350    
-Petal.Width   -1.5854     0.9569  -1.657 0.097566 .  
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 142.19  on 113  degrees of freedom
-Residual deviance: 111.24  on 109  degrees of freedom
-AIC: 121.24
-
-Number of Fisher Scoring iterations: 5</code></pre>
-</div>
-<h3 id="diagnóstico-de-la-regresión-logística">Diagnóstico de la
-regresión logística</h3>
-<h4 id="matriz-de-confusión-1">Matriz de confusión</h4>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>test_preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, <span class='va'>test_t2</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/caret/man/confusionMatrix.html'>confusionMatrix</a></span><span class='op'>(</span><span class='va'>test_preds</span>, <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_t2</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   otra versicolor
-  otra         19          8
-  versicolor    3          6
-                                          
-               Accuracy : 0.6944          
-                 95% CI : (0.5189, 0.8365)
-    No Information Rate : 0.6111          
-    P-Value [Acc &gt; NIR] : 0.1975          
-                                          
-                  Kappa : 0.3125          
-                                          
- Mcnemar&#39;s Test P-Value : 0.2278          
-                                          
-            Sensitivity : 0.8636          
-            Specificity : 0.4286          
-         Pos Pred Value : 0.7037          
-         Neg Pred Value : 0.6667          
-             Prevalence : 0.6111          
-         Detection Rate : 0.5278          
-   Detection Prevalence : 0.7500          
-      Balanced Accuracy : 0.6461          
-                                          
-       &#39;Positive&#39; Class : otra            
-                                          </code></pre>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/caret/man/confusionMatrix.html'>confusionMatrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, <span class='va'>train_t2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>train_t2</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>Confusion Matrix and Statistics
-
-            Reference
-Prediction   otra versicolor
-  otra         69         19
-  versicolor    9         17
-                                          
-               Accuracy : 0.7544          
-                 95% CI : (0.6649, 0.8302)
-    No Information Rate : 0.6842          
-    P-Value [Acc &gt; NIR] : 0.06303         
-                                          
-                  Kappa : 0.3857          
-                                          
- Mcnemar&#39;s Test P-Value : 0.08897         
-                                          
-            Sensitivity : 0.8846          
-            Specificity : 0.4722          
-         Pos Pred Value : 0.7841          
-         Neg Pred Value : 0.6538          
-             Prevalence : 0.6842          
-         Detection Rate : 0.6053          
-   Detection Prevalence : 0.7719          
-      Balanced Accuracy : 0.6784          
-                                          
-       &#39;Positive&#39; Class : otra            
-                                          </code></pre>
-</div>
-<h4 id="predicciones-y-observaciones">Predicciones y observaciones</h4>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preds_probs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>test_t2</span>, P_vers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, <span class='va'>test_t2</span>, type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>versicolor</span>, adj_sp <span class='op'>=</span> <span class='va'>test_preds</span><span class='op'>)</span>
-<span class='va'>preds_probs</span>
-</code></pre>
-</div>
-<pre><code>    Sepal.Length Sepal.Width Petal.Length  Petal.Width    Species     P_vers
-3    -1.37235530   0.3615629  -1.39984001 -1.300304330       otra 0.14971955
-6    -0.51677754   2.0009219  -1.17300026 -1.040471387       otra 0.01976614
-7    -1.49458070   0.8299512  -1.34313007 -1.170387859       otra 0.07511804
-15   -0.02787597   2.2351160  -1.45654994 -1.300304330       otra 0.01560462
-17   -0.51677754   2.0009219  -1.39984001 -1.040471387       otra 0.01432123
-19   -0.15010136   1.7667277  -1.17300026 -1.170387859       otra 0.03464308
-24   -0.88345373   0.5957570  -1.17300026 -0.910554916       otra 0.09365334
-32   -0.51677754   0.8299512  -1.28642013 -1.040471387       otra 0.07664476
-41   -1.00567912   1.0641453  -1.39984001 -1.170387859       otra 0.05543986
-46   -1.25012991  -0.1068254  -1.34313007 -1.170387859       otra 0.22951393
-48   -1.49458070   0.3615629  -1.34313007 -1.300304330       otra 0.15801319
-49   -0.63900294   1.5325336  -1.28642013 -1.300304330       otra 0.04554503
-55    0.82770179  -0.5752137   0.47158789  0.388609795 versicolor 0.47023607
-57    0.58325100   0.5957570   0.52829783  0.518526266 versicolor 0.13487243
-59    0.94992719  -0.3410195   0.47158789  0.128776853 versicolor 0.49879907
-61   -1.00567912  -2.4487668  -0.15222141 -0.260972560 versicolor 0.90569044
-63    0.21657482  -1.9803785   0.13132827 -0.260972560 versicolor 0.90225431
-70   -0.27232676  -1.2777961   0.07461834 -0.131056089 versicolor 0.71389785
-74    0.33880022  -0.5752137   0.52829783 -0.001139618 versicolor 0.62428056
-77    1.19437798  -0.5752137   0.58500776  0.258693324 versicolor 0.57574581
-80   -0.15010136  -1.0436020  -0.15222141 -0.260972560 versicolor 0.62129439
-85   -0.51677754  -0.1068254   0.41487795  0.388609795 versicolor 0.26247111
-86    0.21657482   0.8299512   0.41487795  0.518526266 versicolor 0.08371717
-97   -0.15010136  -0.3410195   0.24474815  0.128776853 versicolor 0.37834058
-98    0.46102561  -0.3410195   0.30145808  0.128776853 versicolor 0.41981575
-100  -0.15010136  -0.5752137   0.18803821  0.128776853 versicolor 0.43468411
-107  -1.12790452  -1.2777961   0.41487795  0.648442738       otra 0.51065815
-110   1.68327955   1.2983394   1.32223694  1.687774507       otra 0.03394767
-111   0.82770179   0.3615629   0.75513757  1.038192151       otra 0.11894699
-119   2.29440653  -1.0436020   1.77591643  1.427941565       otra 0.72471005
-121   1.31660337   0.3615629   1.09539719  1.427941565       otra 0.11346749
-123   2.29440653  -0.5752137   1.66249655  1.038192151       otra 0.68792315
-128   0.33880022  -0.1068254   0.64171770  0.778359209       otra 0.23223504
-136   2.29440653  -0.1068254   1.32223694  1.427941565       otra 0.27874723
-145   1.07215258   0.5957570   1.09539719  1.687774507       otra 0.05625463
-150   0.09434943  -0.1068254   0.75513757  0.778359209       otra 0.25572639
-        adj_sp
-3         otra
-6         otra
-7         otra
-15        otra
-17        otra
-19        otra
-24        otra
-32        otra
-41        otra
-46        otra
-48        otra
-49        otra
-55        otra
-57        otra
-59        otra
-61  versicolor
-63  versicolor
-70  versicolor
-74  versicolor
-77  versicolor
-80  versicolor
-85        otra
-86        otra
-97        otra
-98        otra
-100       otra
-107 versicolor
-110       otra
-111       otra
-119 versicolor
-121       otra
-123 versicolor
-128       otra
-136       otra
-145       otra
-150       otra</code></pre>
-</div>
-<h4 id="curvas-de-decisión">Curvas de decisión</h4>
-<p>Ahora realicemos el gráfico de la regresión logística o, mejor dicho,
-los gráficos para cada variable. Al igual que para el LDA el proceso es
-generar nuevos valores para la línea de decisión y después superponer
-los valores de prueba.Generemos entonces los valores:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>sim_values</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://scales.r-lib.org'>scales</a></span><span class='op'>)</span>
-  <span class='co'># Calculamos los límites expandidos de la función logística</span>
-  <span class='va'>varlim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://scales.r-lib.org/reference/expand_range.html'>expand_range</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
-                         <span class='co'># Amplía el intervalo un 10%"</span>
-                                 mul<span class='op'>=</span><span class='fl'>0.1</span><span class='op'>)</span>
-  
-  <span class='co'># Generamos 300 valores nuevos de la función logística en esos límites:</span>
-  <span class='va'>var_exp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>varlim</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>varlim</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>, 
-             length.out<span class='op'>=</span><span class='fl'>300</span><span class='op'>)</span>
-  
-  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>var_exp</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>sim_logdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='va'>train_t2</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>]</span>, <span class='fl'>2</span>, <span class='va'>sim_values</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>sim_logdata</span><span class='op'>[</span><span class='st'>"probs"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>logit_reg</span>, 
-                                <span class='va'>sim_logdata</span>, type <span class='op'>=</span> <span class='st'>"prob"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>versicolor</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>sim_logdata</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width     probs
-1    -2.301268   -2.495606    -1.893216   -1.742020 0.8770235
-2    -2.283609   -2.474928    -1.880243   -1.729507 0.8741541
-3    -2.265950   -2.454250    -1.867270   -1.716993 0.8712275
-4    -2.248290   -2.433572    -1.854297   -1.704479 0.8682432
-5    -2.230631   -2.412894    -1.841324   -1.691966 0.8652004
-6    -2.212972   -2.392216    -1.828351   -1.679452 0.8620985</code></pre>
-</div>
-Formemos el gráfico. Al igual que en el caso anterior lo haremos
-mediante una función para poder generarlos todos en un solo paso
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>plot_partials</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>sim_data</span>, <span class='va'>test_preds</span>,
-                          <span class='va'>prob_col</span>, <span class='va'>prob_col2</span>, <span class='va'>pos_class</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='va'>partials</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-  <span class='va'>vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>sim_data</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>sim_data</span><span class='op'>)</span><span class='op'>!=</span><span class='va'>prob_col</span><span class='op'>]</span>
-  
-  <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_along</a></span><span class='op'>(</span><span class='va'>vars</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-    
-    <span class='va'>temp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='va'>sim_data</span><span class='op'>[</span>,<span class='va'>vars</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>, probs <span class='op'>=</span> <span class='va'>sim_data</span><span class='op'>[</span>,<span class='va'>prob_col</span><span class='op'>]</span><span class='op'>)</span>
-    <span class='va'>temp2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>b <span class='op'>=</span> <span class='va'>test_preds</span><span class='op'>[</span>,<span class='va'>vars</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>test_preds</span><span class='op'>)</span>
-    
-    <span class='kw'>if</span> <span class='op'>(</span><span class='op'>(</span><span class='va'>i</span><span class='op'>%%</span><span class='fl'>2</span><span class='op'>)</span> <span class='op'>!=</span> <span class='fl'>0</span><span class='op'>)</span> <span class='op'>{</span> <span class='co'># Si el residuo de la división es != 0; el número de gráfica es non</span>
-       <span class='va'>partials</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>temp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>a</span>, y <span class='op'>=</span> <span class='va'>probs</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>temp2</span>, 
-                                   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>b</span>, y <span class='op'>=</span> <span class='va'>P_vers</span>,
-                                       color <span class='op'>=</span> <span class='va'>adj_sp</span>, shape <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span>,
-                                   size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='va'>vars</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,
-                             x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
-                             y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"p(%s)"</span>, <span class='va'>pos_class</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Predicción"</span><span class='op'>)</span> <span class='op'>+</span>
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_shape.html'>scale_shape_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Observado"</span><span class='op'>)</span>
-    <span class='op'>}</span>
-    <span class='kw'>else</span> <span class='op'>{</span><span class='co'># Si el residuo de la división es == 0; el número de gráfica es par</span>
-      <span class='va'>partials</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>temp</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>a</span>, y <span class='op'>=</span> <span class='va'>probs</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> 
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>temp2</span>, 
-                                   <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>b</span>, y <span class='op'>=</span> <span class='va'>P_vers</span>,
-                                       color <span class='op'>=</span> <span class='va'>adj_sp</span>, shape <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span>,
-                                   size <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='va'>vars</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>,
-                             x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
-                             y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Predicción"</span><span class='op'>)</span> <span class='op'>+</span>
-                        <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_shape.html'>scale_shape_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Observado"</span><span class='op'>)</span>
-    <span class='op'>}</span>
-  <span class='op'>}</span>
-  
-  <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='st'>'grid.arrange'</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>partials</span>, nrow <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span>
-</code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>plot_partials</span><span class='op'>(</span><span class='va'>sim_logdata</span>, <span class='va'>preds_probs</span>, <span class='st'>"probs"</span>, <span class='st'>"P_vers"</span>, <span class='st'>"versicolor"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="c14_clasificacion_files/figure-html5/unnamed-chunk-30-1.png" width="576" /></p>
-</div>
-<h4 id="roc-y-auc">ROC y AUC</h4>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>test_sp_num</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_t2</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>pred_clase_num</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_preds</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>roc_logit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/roc.html'>roc</a></span><span class='op'>(</span><span class='va'>test_sp_num</span>, <span class='va'>pred_clase_num</span><span class='op'>)</span>
-<span class='va'>auc_logit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/auc.html'>auc</a></span><span class='op'>(</span><span class='va'>test_sp_num</span>, <span class='va'>pred_clase_num</span><span class='op'>)</span>
-
-<span class='co'># Graficado de la curva ROC para la especie 1</span>
-<span class='va'>roc_plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pROC/man/ggroc.html'>ggroc</a></span><span class='op'>(</span><span class='va'>roc_logit</span>, color <span class='op'>=</span> <span class='st'>"deepskyblue4"</span>,
-                  size <span class='op'>=</span> <span class='fl'>1</span>, legacy.axes <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span> <span class='op'>+</span> 
-            <span class='co'># Establecemos el título global de la gráfica</span>
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"Curva ROC. AUC = "</span>, <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>auc_logit</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>, 
-                subtitle <span class='op'>=</span> <span class='st'>"Versicolor vs otras."</span>, <span class='co'># clase como subtítulo</span>
-                x <span class='op'>=</span> <span class='st'>"TFP (1 - especificidad)"</span>, <span class='co'># Sin nombre del eje x</span>
-                y <span class='op'>=</span> <span class='st'>"TVP (Sensibilidad)"</span>,
-                caption <span class='op'>=</span> <span class='st'>"Datos de prueba"</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_abline</a></span><span class='op'>(</span>intercept <span class='op'>=</span> <span class='fl'>0</span>, slope <span class='op'>=</span> <span class='fl'>1</span>,
-                        color <span class='op'>=</span> <span class='st'>"gray50"</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
-                        linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span> <span class='co'># Línea de referencia (Azar)</span>
-<span class='va'>roc_plot</span>
-</code></pre>
-</div>
-<p><img src="c14_clasificacion_files/figure-html5/unnamed-chunk-31-1.png" width="624" /></p>
-</div>
-<h2 id="regresión-logística-multinomial">Regresión Logística
-multinomial</h2>
-<p>Por último, veamos cómo se ajusta un modelo multinomial; i.e., un
-clasificador para más de dos clases</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>iris_dat</span> <span class='op'>&lt;-</span> <span class='va'>iris</span>
-<span class='va'>samples</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caTools/man/sample.split.html'>sample.split</a></span><span class='op'>(</span><span class='va'>iris_dat</span><span class='op'>$</span><span class='va'>Species</span>, SplitRatio <span class='op'>=</span> <span class='fl'>.75</span><span class='op'>)</span>
-<span class='va'>train3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris_dat</span>, <span class='va'>sample</span> <span class='op'>==</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>test3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>iris_dat</span>, <span class='va'>sample</span> <span class='op'>==</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Centremos y estandaricemos:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pre_pars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/caret/man/preProcess.html'>preProcess</a></span><span class='op'>(</span><span class='va'>train3</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"center"</span>, <span class='st'>"scale"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>train_t3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>pre_pars</span>, <span class='va'>train3</span><span class='op'>)</span>
-<span class='va'>test_t3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>pre_pars</span>, <span class='va'>test3</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<h4 id="ajuste-del-modelo-2">Ajuste del modelo</h4>
-<p>A diferencia del caso anterior, vamos a implementar el modelo
-utilizando la librería caret (Classification and Regression Training).
-Esta librería nos permite entrenar modelos de clasificación o regresión
-de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración
-de modelos y nos evita estar batallando con las librerías
-independientes. Veámoslo en acción:</p>
+Esta librería nos permite homogeneizar el proceso de declaración de
+modelos de aprendizaje supervizado, y nos evita estar batallando con las
+librerías independientes. Veámoslo en acción:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logit_mult</span> <span class='op'>&lt;-</span> <span class='fu'>caret</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/caret/man/train.html'>train</a></span><span class='op'>(</span>form <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>~</span><span class='va'>.</span>,
-                          data <span class='op'>=</span> <span class='va'>train_t3</span>,
+                          data <span class='op'>=</span> <span class='va'>train_t2</span>,
                           method <span class='op'>=</span> <span class='st'>"multinom"</span>,
                           trace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>logit_mult</span><span class='op'>)</span>
 </code></pre>
 </div>
-<pre><code>Call:
-nnet::multinom(formula = .outcome ~ ., data = dat, decay = param$decay, 
-    trace = ..1)
-
-Coefficients:
-           (Intercept) Sepal.Length Sepal.Width Petal.Length Petal.Width
-versicolor     8.06394    1.4575030   -2.263957     6.711222     5.27363
-virginica    -10.38752    0.5382543   -4.804585    22.046350    17.55141
-
-Std. Errors:
-           (Intercept) Sepal.Length Sepal.Width Petal.Length Petal.Width
-versicolor    34.96486     64.58124    19.70423     71.79894    67.67309
-virginica     36.15874     64.62893    19.78369     72.27143    68.05214
-
-Residual Deviance: 11.04544 
-AIC: 31.04544 </code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>test_preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>logit_mult</span>, <span class='va'>test_t3</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/pkg/caret/man/confusionMatrix.html'>confusionMatrix</a></span><span class='op'>(</span><span class='va'>test_preds</span>, <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_t3</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>test_preds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>logit_mult</span>, <span class='va'>test_t2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/caret/man/confusionMatrix.html'>confusionMatrix</a></span><span class='op'>(</span><span class='va'>test_preds</span>, <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='va'>test_t2</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Confusion Matrix and Statistics
@@ -3185,31 +2829,31 @@ AIC: 31.04544 </code></pre>
             Reference
 Prediction   setosa versicolor virginica
   setosa         12          0         0
-  versicolor      0         14         0
-  virginica       0          0        10
+  versicolor      0         10         1
+  virginica       0          2        11
 
 Overall Statistics
-                                     
-               Accuracy : 1          
-                 95% CI : (0.9026, 1)
-    No Information Rate : 0.3889     
-    P-Value [Acc &gt; NIR] : 1.713e-15  
-                                     
-                  Kappa : 1          
-                                     
- Mcnemar&#39;s Test P-Value : NA         
+                                          
+               Accuracy : 0.9167          
+                 95% CI : (0.7753, 0.9825)
+    No Information Rate : 0.3333          
+    P-Value [Acc &gt; NIR] : 3.978e-13       
+                                          
+                  Kappa : 0.875           
+                                          
+ Mcnemar&#39;s Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: setosa Class: versicolor Class: virginica
-Sensitivity                 1.0000            1.0000           1.0000
-Specificity                 1.0000            1.0000           1.0000
-Pos Pred Value              1.0000            1.0000           1.0000
-Neg Pred Value              1.0000            1.0000           1.0000
-Prevalence                  0.3333            0.3889           0.2778
-Detection Rate              0.3333            0.3889           0.2778
-Detection Prevalence        0.3333            0.3889           0.2778
-Balanced Accuracy           1.0000            1.0000           1.0000</code></pre>
+Sensitivity                 1.0000            0.8333           0.9167
+Specificity                 1.0000            0.9583           0.9167
+Pos Pred Value              1.0000            0.9091           0.8462
+Neg Pred Value              1.0000            0.9200           0.9565
+Prevalence                  0.3333            0.3333           0.3333
+Detection Rate              0.3333            0.2778           0.3056
+Detection Prevalence        0.3333            0.3056           0.3611
+Balanced Accuracy           1.0000            0.8958           0.9167</code></pre>
 </div>
 <p>Y la importancia de variables:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3220,10 +2864,10 @@ Balanced Accuracy           1.0000            1.0000           1.0000</code></pr
 <pre><code>multinom variable importance
 
              Overall
-Petal.Length  100.00
-Petal.Width    77.83
-Sepal.Width    18.96
-Sepal.Length    0.00</code></pre>
+Petal.Length   100.0
+Petal.Width     84.3
+Sepal.Length    14.4
+Sepal.Width      0.0</code></pre>
 </div>
 <h2 id="ejercicio">Ejercicio</h2>
 <p>Realizar una regresión logística multinomial con los datos de
@@ -3233,7 +2877,7 @@ ROC y el valor de AUC multi-clase. ¿que tan bueno consideras al modelo?
 3. ¿Cuáles fueron las variables más importantes para la clasificación?
 Compara con los resultados del ACP de la clase de reducción de
 dimensionalidad y los del LDA.</p>
-<div class="sourceCode" id="cb17"><pre
+<div class="sourceCode" id="cb10"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -3242,6 +2886,15 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

@@ -81,6 +81,7 @@ lda_mod
 ```
 
 ### Importancia de variables
+
 Calculemos la correlación entre las variables originales y las dos funciones discriminantes
 
 ```{r}
@@ -108,27 +109,33 @@ territ_plot
 ### Diagnóstico del modelo de funciones discriminantes:
 
 #### Probabilidades de pertenencia
+
 Probabilidad de pertenencia de cada individuo a partir de los datos de prueba:
+
 ```{r}
 p <- predict(lda_mod, test_t)$posterior
 p.acom <- data.frame(especie = test_t$especie, id = rownames(test_t), p = p)
 p.acom
 ```
 
-#### Prueba de Ji-cuadrada para verificar un acomodo no aleatorio (p<0.005)
+#### Matriz de confusión
+
+Recordemos que la matriz de confusión es una tabla de contingencia que permite obtener métricas relacionadas con proporciones de predicciones correctas. La función `confusionMatrix` de la librería `caret` da, además de las vistas en la presentación, algunas otras que pueden ser interesantes, pues minimizan el efecto de la Tasa de No Información (NIR):
+
+  - p-value [Acc>NIR]: es el valor de p de una prueba binomial de una cola para probar que la exactitud observada es mayor que la tasa de no información; es decir, que no estamos tratando con un modelo bobo.
+  - Kappa: Este es el valor del estadístico Kappa de Cohen, que es una medida de el porcentaje de las predicciones del modelo que no pueden ser explicadas adivinando al azar.
+  - McNemar's test p-value: Es una prueba $\chi^2$ para la simetría de los renglones y columnas de una tabla de contingencia, de modo que la hipótesis de nulidad es que las probabilidades de ser clasificado en las celdas [i,j] y [j, i] son las mismas; es decir, que lo que está debajo de la diagonal sea igual a lo que está encima de la diagonal.
+
 ```{r}
 pred.clase <- predict(lda_mod, test_t)$class
-jicuad <- chisq.test(test_t$especie, pred.clase, simulate.p.value = T)
-jicuad
-```
-
-#### Matriz de confusión:
-```{r}
 confusionMatrix(pred.clase, as.factor(test_t$especie))
 ```
 
-##### Márgenes de decisión. 
-En este caso, mostraremos la probabilidad de pertenencia a cada clase (obtenida desde los datos de entrenamiento) como fondo del gráfico y sobrepondremos los datos de prueba. Para poder hacer esto habrá que "simular" datos para nuestro fondo y formar una malla con todos ellos. Desafortunadamente, crear la malla requiere que hagamos cierta trampa. Primero, ajustaremos un modelo LDA para predecir los valores de LD1 y LD2 de cada especie:
+Es importante mencionar que, por lo general, el valor AUC de la curva ROC es una medida más robusta que estas; sin embargo, habrá veces en las que nos interese que los positivos predichos sean realmente positivos, aunque tengamos falsos negativos, por ejemplo. Pensemos que nos interesa asegurarnos que los individuos clasificados como consocium realmente sean consocium. ¿Qué medida utilizarías para saber en qué proporción se da ese caso? Pista: no es ni la exactitud ni el AUC. Regresa a la presentación si es necesario.
+
+##### Márgenes de decisión
+
+Nos interesaremos en los márgenes de decisión de un clasificador cuando nos interesa saber cómo es que nuestro modelo está haciendo las decisiones. En este caso, mostraremos la probabilidad de pertenencia a cada clase (obtenida desde los datos de entrenamiento) como fondo de un gráfico en donde los ejes x y y serán las ecuaciones discriminantes, y le sobrepondremos los datos de prueba. Para poder hacer esto habrá que "simular" datos para nuestro fondo y formar una malla con todos ellos. Desafortunadamente, crear la malla requiere que hagamos cierta trampa. Primero, ajustaremos un modelo LDA para predecir los valores de LD1 y LD2 de cada especie:
 
 ```{r}
  # Ajustamos un LDA para "predecir" los valores de las nuevas dimensiones
@@ -139,12 +146,12 @@ Generamos una función que nos permita generar una malla utilizando esos nuevos 
 
 ```{r}
 adjust_probs_sp <- function(mesh, probs){
+  # Obtener la mayor probabilidad
   mesh["adj_probs"] <- apply(probs, 
                            1,
                            FUN = max
                            )
-  # Especies predichas; i.e., la especie con mayor probabilidad
-  ## resumir con predict()$class?
+  # Obtener la especie a la que le corresponde
   mesh["adj_esp"] <- apply(probs,
                            1,
                            FUN = function(x){
@@ -169,19 +176,20 @@ dec_bounds <- function(model, adj_vals){
              length.out=300)
   
   # Generamos un objeto con todas las combinaciones de nuevos valores
-  newdat <- expand.grid(list(LD1=ld1,LD2=ld2))
+  newdat <- expand.grid(list(LD1 = ld1,
+                             LD2 = ld2))
   
   # Realizamos predicciones a partir de estos valores
-  preds <-predict(prob_lda, newdata = newdat)
+  preds <- predict(prob_lda, newdata = newdat)
   
-  # Generamos un objeto que contendrá la "malla" con los valores de LD1, LD2, adj_probs y adj_esp
+  # Generamos un objeto que contendrá la "malla" con los valores de
+  # LD1, LD2, adj_probs y adj_esp
   mesh <- as.data.frame(preds$x)
   
   # Probabilidad de pertenencia de los valores simulados:
   prob_sim <- as.data.frame(preds$posterior)
   
-  # Probabilidades "ajustadas"; i.e., 
-  # la probabilidad mayor - la suma del resto de probabilidades
+  # Probabilidades "ajustadas" para cada punto en la malla:
   
   mesh <- adjust_probs_sp(mesh, prob_sim)
   
@@ -197,29 +205,31 @@ dec_bounds <- function(model, adj_vals){
 Ahora formamos el gráfico
 
 ```{r}
-mesh <- dec_bounds(prob_lda, adj_vals) # Generamos la malla
+# Generamos la malla
+mesh <- dec_bounds(prob_lda, adj_vals)
 
 # Graficamos las probabilidades de decisión
 dec.probs <- ggplot(data = mesh, aes(x = LD1, y = LD2, color = adj_esp)) +
              geom_raster(aes(fill = adj_esp), alpha = mesh$adj_probs*0.3, show.legend = F) + 
              theme_minimal()
 
-#adj_vals <- as.data.frame(predict(lda_mod, train_t)$x)
-#adj_vals["especie"] <- train_t["especie"]
-
-# Añadimos los datos de prueba
-# Valores de LDA para los datos de prueba
+# Añadimos los datos de prueba al gráfico
+# Valores de LDA para los datos de prueba;
+# i.e., utilizar los parámetros del modelo:
 mesh_test <- as.data.frame(predict(lda_mod, test_t)$x) 
 
 # Obtener las probabilidades y especies predichas
-mesh_test <- adjust_probs_sp(mesh_test, predict(lda_mod, test_t)$posterior) 
+mesh_test <- adjust_probs_sp(mesh_test,
+                             predict(lda_mod, test_t)$posterior) 
 
-# Una etiqueta para saber si la instancia está correctamente clasificada
+# Etiqueta para saber si la instancia está correctamente clasificada
 mesh_test["mark"] <- ifelse(test_t$especie == mesh_test$adj_esp,
                             test_t$especie,
                             "Mal clasificado")
 
-# Añadimos los puntos de prueba, cambiando la forma según la clase predicha por el modelo y el color por la clase observada:
+# Añadimos los puntos de prueba,
+# cambiando el marcador según la clase predicha por el modelo,
+# y el color según la clase observada:
 clas.plot <- dec.probs + 
              geom_point(data = mesh_test,
                         aes(x = LD1, y = LD2, shape = mark,
@@ -245,13 +255,8 @@ mesh_test[mesh_test$mark == "Mal clasificado",]
 x1n[7,]
 ```
 
-Podemos también mostrar un gráfico de partición, en el cual se muestra la clasificación según cada variable. Utilizamos la base iris debido a la altísima dimensionalidad de los datos del ejercicio
+#### Curva ROC y valor AUC
 
-```{r}
-klaR::partimat(Species~., data = iris, method = "lda")
-```
-
-#### Curva ROC y valor AUC. 
 Primero obtengamos la curva ROC y el valor de AUC multi-clase. 
 
 ```{r}
@@ -267,7 +272,6 @@ Ahora creemos una función personalizada para utilizar un ciclo for para grafica
 
 ```{r}
 plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
-  # Una etiqueta para saber si la instancia está correctamente clasificada
   theme_set(theme)
   
   # Lista vacía para llenar con las gráficas
@@ -278,7 +282,7 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
 
   for (i in counter) { # para cada i en clases
     if (i == 1) { # Si i == 1
-      # graficado de la curva ROC para la especie 1
+      # curva ROC para la primera clase
       rocs_plots[[i]] <- ggroc(multi_roc$rocs[[i]],
                                color = colors[i], size = 1,
                                legacy.axes = T) +
@@ -296,7 +300,7 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
                                      color = "gray50", size = 1,
                                      # Línea de referencia (Azar)
                                      linetype = "dashed")
-    }
+    } # curva ROC para clase intermedias
     if (i < length(counter) & i > 1) {
       rocs_plots[[i]] <- ggroc(roc_cons$rocs[[i]],
                                color = colors[i], size = 1,
@@ -308,7 +312,7 @@ plot_rocs <- function(classes, multi_roc, colors, theme, test_t){
                          geom_abline(intercept = 0, slope = 1,
                                      color = "gray50", size = 1, 
                                      linetype = "dashed")
-    }
+    } # curva ROC para la última clase
     if (i == length(counter)) {
       rocs_plots[[i]] <- ggroc(roc_cons$rocs[[i]], color = colors[i], 
                                size = 1, legacy.axes = T) +
@@ -341,14 +345,14 @@ plot_rocs(sort(unique(test_t$especie)),
  
 ## Regresión logística
 
-Otra técnica que podemos utilizar es la regresión logística. Es importante recordar que este modelo de clasificación fue desarrollado originalmente para clasificaciones binarias, aunque ya ha sido extendido a clasificaciones multinomiales. Comencemos con el caso binario. En este caso, utilicemos la base iris para cambiar un poco de aires y cambiemos las etiquetas a versicolor y otra
+Otra técnica que podemos utilizar es la regresión logística. Es importante recordar que este modelo de clasificación fue desarrollado originalmente para clasificaciones binarias, aunque ya ha sido extendido a clasificaciones multinomiales. Esta técnica la veremos a detalle en la sesión de GLMs, aunque es importante mencionar que todas las formas de evaluación (entrenamiento-prueba, matriz de confusión, ROC-AUC) siguen aplicando. Para fines ilustrativos, realicemos el ajuste de un modelo multinomial; i.e., más de dos clases:
+
 
 ```{r}
 iris_dat <- iris
-iris_dat$Species <- ifelse(iris_dat$Species == "versicolor", "versicolor", "otra")
 samples <- sample.split(iris_dat$Species, SplitRatio = .75)
-train2 <- subset(iris_dat, sample == TRUE)
-test2 <- subset(iris_dat, sample == FALSE)
+train2 <- subset(iris_dat, samples == TRUE)
+test2 <- subset(iris_dat, samples == FALSE)
 ```
 
 Centremos y estandaricemos:
@@ -359,171 +363,20 @@ train_t2 <- predict(pre_pars, train2)
 test_t2 <- predict(pre_pars, test2)
 ```
 
-### Ajuste del modelo
-A diferencia del caso anterior, vamos a implementar el modelo utilizando la librería caret (Classification and Regression Training). Esta librería nos permite entrenar modelos de clasificación o regresión de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración de modelos y nos evita estar batallando con las librerías propias. Veámoslo en acción:
-
-```{r}
-logit_reg <- caret::train(form = as.factor(Species)~.,
-                          data = train_t2,
-                          method = "glm",
-                          family = "binomial")
-```
-
-### Importancia de variables
-Veamos los coeficientes:
-
-```{r}
-summary(logit_reg)
-```
-
-### Diagnóstico de la regresión logística
-
-#### Matriz de confusión
-```{r}
-test_preds <- predict(logit_reg, test_t2)
-confusionMatrix(test_preds, as.factor(test_t2$Species))
-```
-
-```{r}
-confusionMatrix(predict(logit_reg, train_t2), as.factor(train_t2$Species))
-```
-
-
-#### Predicciones y observaciones
-```{r}
-preds_probs <- data.frame(test_t2, P_vers = predict(logit_reg, test_t2, type = "prob")$versicolor, adj_sp = test_preds)
-preds_probs
-```
-
-#### Curvas de decisión
-
-Ahora realicemos el gráfico de la regresión logística o, mejor dicho, los gráficos para cada variable. Al igual que para el LDA el proceso es generar nuevos valores para la línea de decisión y después superponer los valores de prueba.Generemos entonces los valores:
-
-```{r}
-sim_values <- function(x){
-  library(scales)
-  # Calculamos los límites expandidos de la función logística
-  varlim <- expand_range(c(min(x), max(x)),
-                         # Amplía el intervalo un 10%"
-                                 mul=0.1)
-  
-  # Generamos 300 valores nuevos de la función logística en esos límites:
-  var_exp <- seq(varlim[[1]], varlim[[2]], 
-             length.out=300)
-  
-  return(var_exp)
-}
-
-sim_logdata <- as.data.frame(apply(train_t2[-c(5)], 2, sim_values))
-sim_logdata["probs"] <- predict(logit_reg, 
-                                sim_logdata, type = "prob")$versicolor
-head(sim_logdata)
-```
-
-Formemos el gráfico. Al igual que en el caso anterior lo haremos mediante una función para poder generarlos todos en un solo paso
-```{r}
-plot_partials <- function(sim_data, test_preds,
-                          prob_col, prob_col2, pos_class){
-  partials <- list()
-  vars <- colnames(sim_data)[colnames(sim_data)!=prob_col]
-  
-  for (i in seq_along(vars)) {
-    
-    temp <- data.frame(a = sim_data[,vars[i]], probs = sim_data[,prob_col])
-    temp2 <- data.frame(b = test_preds[,vars[i]], test_preds)
-    
-    if ((i%%2) != 0) { # Si el residuo de la división es != 0; el número de gráfica es non
-       partials[[i]] <- ggplot(data = temp, aes(x = a, y = probs)) + 
-                        geom_line() + 
-                        geom_point(data = temp2, 
-                                   aes(x = b, y = P_vers,
-                                       color = adj_sp, shape = Species),
-                                   size = 2) +
-                        labs(title = vars[i],
-                             x = element_blank(),
-                             y = sprintf("p(%s)", pos_class)) +
-                        scale_color_discrete(name = "Predicción") +
-                        scale_shape_discrete(name = "Observado")
-    }
-    else {# Si el residuo de la división es == 0; el número de gráfica es par
-      partials[[i]] <- ggplot(data = temp, aes(x = a, y = probs)) + 
-                        geom_line() + 
-                        geom_point(data = temp2, 
-                                   aes(x = b, y = P_vers,
-                                       color = adj_sp, shape = Species),
-                                   size = 2) +
-                        labs(title = vars[i],
-                             x = element_blank(),
-                             y = element_blank()) +
-                        scale_color_discrete(name = "Predicción") +
-                        scale_shape_discrete(name = "Observado")
-    }
-  }
-  
-  do.call('grid.arrange', c(partials, nrow = 2))
-}
- 
-```
-
-```{r, fig.height=4, fig.width=6}
-plot_partials(sim_logdata, preds_probs, "probs", "P_vers", "versicolor")
-```
-
-#### ROC y AUC
-
-```{r}
-test_sp_num <- as.numeric(as.factor(test_t2$Species))
-pred_clase_num <- as.numeric(as.factor(test_preds))
-roc_logit <- roc(test_sp_num, pred_clase_num)
-auc_logit <- auc(test_sp_num, pred_clase_num)
-
-# Graficado de la curva ROC para la especie 1
-roc_plot <- ggroc(roc_logit, color = "deepskyblue4",
-                  size = 1, legacy.axes = T) + 
-            # Establecemos el título global de la gráfica
-            labs(title = paste("Curva ROC. AUC = ", round(auc_logit,2)), 
-                subtitle = "Versicolor vs otras.", # clase como subtítulo
-                x = "TFP (1 - especificidad)", # Sin nombre del eje x
-                y = "TVP (Sensibilidad)",
-                caption = "Datos de prueba") +
-            geom_abline(intercept = 0, slope = 1,
-                        color = "gray50", size = 1,
-                        linetype = "dashed") # Línea de referencia (Azar)
-roc_plot
-```
-
-## Regresión Logística multinomial
-Por último, veamos cómo se ajusta un modelo multinomial; i.e., un clasificador para más de dos clases
-
-```{r}
-iris_dat <- iris
-samples <- sample.split(iris_dat$Species, SplitRatio = .75)
-train3 <- subset(iris_dat, sample == TRUE)
-test3 <- subset(iris_dat, sample == FALSE)
-```
-
-Centremos y estandaricemos:
-
-```{r}
-pre_pars <- preProcess(train3, method = c("center", "scale"))
-train_t3 <- predict(pre_pars, train3)
-test_t3 <- predict(pre_pars, test3)
-```
-
 #### Ajuste del modelo
-A diferencia del caso anterior, vamos a implementar el modelo utilizando la librería caret (Classification and Regression Training). Esta librería nos permite entrenar modelos de clasificación o regresión de manera sencilla o, mejor dicho, homogeneiza el proceso de declaración de modelos y nos evita estar batallando con las librerías independientes. Veámoslo en acción:
+
+A diferencia del caso anterior, vamos a implementar el modelo utilizando la librería caret (Classification and Regression Training). Esta librería nos permite homogeneizar el proceso de declaración de modelos de aprendizaje supervizado, y nos evita estar batallando con las librerías independientes. Veámoslo en acción:
 
 ```{r}
 logit_mult <- caret::train(form = as.factor(Species)~.,
-                          data = train_t3,
+                          data = train_t2,
                           method = "multinom",
                           trace = F)
-summary(logit_mult)
 ```
 
 ```{r}
-test_preds <- predict(logit_mult, test_t3)
-confusionMatrix(test_preds, as.factor(test_t3$Species))
+test_preds <- predict(logit_mult, test_t2)
+confusionMatrix(test_preds, as.factor(test_t2$Species))
 ```
 
 Y la importancia de variables:

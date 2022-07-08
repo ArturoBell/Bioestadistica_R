@@ -2258,7 +2258,7 @@ términos de frecuencias:</p>
   <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nchar.html'>nchar</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>&gt;</span><span class='fl'>7</span>,
          <span class='co'># Extrae los caracteres 2:8 y reemplaza las "," con ":"</span>
          <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span>, <span class='fl'>8</span><span class='op'>)</span>, <span class='st'>","</span>, <span class='st'>":"</span><span class='op'>)</span>,
-         <span class='co'># Si no, extrae solamente los caracteres 2:8 y reemplaza las "," con ":"</span>
+         <span class='co'># Si no, extrae solamente los caracteres 2:6 y reemplaza las "," con ":"</span>
          <span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/substr.html'>substr</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='fl'>2</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='st'>","</span>, <span class='st'>":"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># Aplicamos la función personalizada y generamos una columna nueva:</span>
@@ -2273,14 +2273,14 @@ términos de frecuencias:</p>
 <pre><code>   Intervalo Frecuencia    Lims
 1    (0,0.1]         NA   0:0.1
 2  (0.1,0.2]         NA 0.1:0.2
-3  (0.2,0.3]          4 0.2:0.3
-4  (0.3,0.4]         24 0.3:0.4
-5  (0.4,0.5]         16 0.4:0.5
-6  (0.5,0.6]        455 0.5:0.6
-7  (0.6,0.7]         NA 0.6:0.7
-8  (0.7,0.8]         NA 0.7:0.8
+3  (0.2,0.3]         NA 0.2:0.3
+4  (0.3,0.4]         NA 0.3:0.4
+5  (0.4,0.5]         11 0.4:0.5
+6  (0.5,0.6]        464 0.5:0.6
+7  (0.6,0.7]         20 0.6:0.7
+8  (0.7,0.8]          1 0.7:0.8
 9  (0.8,0.9]         NA 0.8:0.9
-10   (0.9,1]         NA   0.9:1</code></pre>
+10   (0.9,1]          4   0.9:1</code></pre>
 </div>
 <p>Ahora que tenemos el resultado en un data.frame, podemos graficarlo
 (NOTA: Las advertencias no son errores, son solo por los NAs que
@@ -2538,13 +2538,13 @@ intervalos de confianza y el valor de la media.</p>
     One Sample t-test
 
 data:  norm.var$var
-t = 940.39, df = 9999, p-value &lt; 2.2e-16
+t = 963.08, df = 9999, p-value &lt; 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 66.88372 67.16314
+ 66.83813 67.11076
 sample estimates:
 mean of x 
- 67.02343 </code></pre>
+ 66.97445 </code></pre>
 </div>
 <p>Otra forma de calcularlos es utilizando la librería
 <code>Rmisc</code>:</p>
@@ -2566,7 +2566,7 @@ hace unos momentos:</p>
 </code></pre>
 </div>
 <pre><code>   upper     mean    lower 
-67.16314 67.02343 66.88372 </code></pre>
+67.11076 66.97445 66.83813 </code></pre>
 </div>
 <p>Como vemos, la función calcula los intervalos de confianza utilizando
 la distribución T. Esto se debe a que es el modo más común de realizar
@@ -2600,7 +2600,7 @@ anterior:</p>
 </code></pre>
 </div>
 <pre><code>   .id     n Mean Conf.level Trad.lower Trad.upper
-1 &lt;NA&gt; 10000   67       0.95       66.9       67.2</code></pre>
+1 &lt;NA&gt; 10000   67       0.95       66.8       67.1</code></pre>
 </div>
 <p>Vemos que la salida es un poco más compleja; sin embargo, lo más
 relevante es que los intervalos son sumamente cercanos a los que

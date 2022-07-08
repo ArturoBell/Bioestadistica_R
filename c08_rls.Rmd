@@ -12,17 +12,11 @@ output:
 knitr::opts_chunk$set(R.options = list(width = 80))
 ```
 
-**[VIDEO](https://youtu.be/Sh8oUfIpOnA)**
-
-## Instalación de librerías
-
-```{r}
-if(!require(gap)) install.packages("gap", dependencies = T)
-```
-
 ```{r, echo = FALSE}
 library(rmarkdown)
 ```
+
+**[VIDEO](https://youtu.be/Sh8oUfIpOnA)**
 
 
 ## Funciones personalizadas
@@ -312,7 +306,7 @@ qqplot2
 
 #### Gráfico de Escala-Locación
 
-En este gráfico es posible observar que los datos no están distribuídos de manera homogénea; es decir, no son datos heterocedásticos:
+En este gráfico es posible observar que los datos no están distribuídos de manera homogénea; es decir,son datos heterocedásticos:
 
 ```{r}
 scale.loc.plot <- ggplot(reg1, aes(.fitted, sqrt(abs(.stdresid)))) + 
@@ -338,31 +332,6 @@ scale.loc.plot
 Es posible observar que existe una cantidad importande de datos extremos (fuera de $\pm$ 2 desviaciones estándar):
 
 ```{r}
-df.reg1["std.resids"] <- rstandard(reg1)
-resid.plot <- ggplot(data = df.reg1,
-                     aes(x = ajustados, y = std.resids,
-                         colour = std.resids)) + 
-              geom_point(size = 3, alpha = 0.5) +
-              stat_smooth(method = "loess",
-                          colour = rgb(118,78,144,
-                                       maxColorValue = 255)) + 
-              geom_hline(yintercept = 0, col = "red",
-                         linetype = "dashed") +
-              labs(title = "Gráfico de Residuales",
-                   x = "Valores ajustados",
-                   y = "Residuales estandarizados") +
-              blank_theme() +
-              scale_color_gradient2(low = "firebrick", 
-                                    midpoint = 0, 
-                                    mid = "deepskyblue4", 
-                                    high = "firebrick",
-                                    breaks = c(-2, 0, 2),
-                                    limits = c(-2, 2),
-                                    oob = scales::squish)
-resid.plot
-```
-
-```{r}
 resid.plot2 <- ggplot(reg1,
                       aes(x = .fitted, y = .stdresid,
                           colour = .stdresid)) + 
@@ -386,13 +355,9 @@ resid.plot2 <- ggplot(reg1,
 resid.plot2
 ```
 
-```{r}
-shapiro.test(df.reg1$std.resids)
-```
-
 ## Ajuste por máxima verosimilitud
 
-Recordemos que al realizar el ajuste por máxima verosimilitud estamos encontrando los valores de los parámetros que MAXIMICEN la probabilidad de haber encontrado los datos (verosimilitud); es decir, es método probabilístico. En el caso de la RLS, nuestro modelo encuentra la máxima expectativa de y (forma elegante de llamarle a la media), siguiendo una distribución normal. En la clase de GLM Roberto explicará cómo ajustar modelos lineales en los que el error NO se modela bajo una distribución normal y los criterios para su formación.
+Recordemos que al realizar el ajuste por máxima verosimilitud estamos encontrando los valores de los parámetros que MAXIMICEN la probabilidad de haber encontrado los datos (verosimilitud); es decir, es método probabilístico. En el caso de la RLS, nuestro modelo encuentra la máxima expectativa de y (forma elegante de llamarle a la media), siguiendo una distribución normal. En la clase de GLM explicará cómo ajustar modelos lineales en los que el error NO se modela bajo una distribución normal y los criterios para su formación.
 
 A diferencia de la implementación de una regresión por mínimos cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan intuitivo. El primer paso es establecer manualmente nuestra función de verosimilitud, ajustando una distribución normal a los residuales:
 
@@ -623,46 +588,4 @@ check_model(reg_haem)
 ```
 
 
-## Comparación de regresiones
-
-Supongamos ahora que la base de datos 1 en realidad consta de dos "grupos". Una preguna razonable sería el saber si podemos agruparlos para realizar una RLS, y esto lo podemos resolver fácilmente con la prueba de Chow (1960). Primero, partamos los datos por aproximadamente la mitad:
-
-```{r}
-df.reg2 <- df.reg1[,1:2]
-df.reg2["grupo"] <- c(rep("A", 48), rep("B", 49))
-```
-
-Ahora apliquemos la prueba de Chow, utilizando la función `chow.test(y1, x1, y2, x2)`:
-
-```{r message=FALSE, warning=FALSE}
-library(gap)
-comp.reg <- chow.test(y1 = df.reg2$v2[df.reg2$grupo == "A"],
-                      x1 = df.reg2$v1[df.reg2$grupo == "A"],
-                      y2 = df.reg2$v2[df.reg2$grupo == "B"],
-                      x2 = df.reg2$v1[df.reg2$grupo == "B"])
-print(comp.reg)
-```
-
-Veamos las regresiones gráficamente:
-
-```{r}
-ggplot(data = df.reg2, aes(x = v1, y = v2, colour = grupo, shape = grupo)) +
-geom_point(alpha = 0.5, size = 3) +
-geom_smooth(method = lm) +
-blank_theme() +
-labs(title = "Regresión lineal con dos grupos",
-     subtitle = paste("F (", comp.reg["d.f.1"], ", ",
-                      comp.reg["d.f.2"], ") = ", 
-                      round(comp.reg["F value"],2), ", ",
-                      "p = ",
-                      ifelse(comp.reg["P value"] < 0.001,
-                             " < 0.001",
-                             paste(" = ",
-                                   comp.reg["P value"]))),
-     caption = "Datos simulados")
-```
-
-
-## Ejercicio
-
-Aplicar la prueba de Chow a la base de datos `Haem.csv`, considerando los dos grupos en la columna `Loc`.
+Esto sería todo para esta sesión, espero que haya sido de tu agrado y nos vemos en la siguiente donde hablaremos de las alternativas no paramétricas a las técnicas que vimos en la sesión anterior.

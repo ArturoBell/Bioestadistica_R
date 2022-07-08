@@ -2122,10 +2122,8 @@ personalizadas</a></li>
 <ul>
 <li><a href="#corrección-de-bonferroni">Corrección de
 Bonferroni</a></li>
-<li><a href="#anova-sheirer-ray-hare">ANOVA Sheirer-Ray-Hare</a>
-<ul>
+<li><a href="#anova-sheirer-ray-hare">ANOVA Sheirer-Ray-Hare</a></li>
 <li><a href="#ejercicio">Ejercicio</a></li>
-</ul></li>
 </ul></li>
 <li><a href="#comparaciones-multivariadas">Comparaciones
 Multivariadas</a>
@@ -2133,22 +2131,13 @@ Multivariadas</a>
 <li><a href="#datos-para-comparaciones-mv">Datos para comparaciones
 Mv</a></li>
 <li><a href="#prueba-t2-de-hotelling">Prueba <span
-class="math inline">\(T^2\)</span> de Hotelling</a>
-<ul>
-<li><a href="#normalidad">Normalidad</a></li>
-<li><a href="#igualdad-de-dispersión-multivariada">Igualdad de
-dispersión multivariada</a></li>
-<li><a href="#comparación-multivariada">Comparación
-Multivariada:</a></li>
-<li><a href="#comparaciones-univariadas">Comparaciones
-univariadas</a></li>
+class="math inline">\(T^2\)</span> de Hotelling</a></li>
 </ul></li>
 <li><a href="#análisis-multivariado-de-la-varianza">Análisis
 Multivariado de la Varianza</a></li>
 <li><a
 href="#análisis-permutacional-multivariado-de-la-varianza">Análisis
 Permutacional Multivariado de la Varianza:</a></li>
-</ul></li>
 </ul>
 </nav>
 </div>
@@ -2171,8 +2160,8 @@ Permutacional Multivariado de la Varianza:</a></li>
 </code></pre>
 </div>
 </div>
-<h1 id="múltiples-hipótesis-fwer">Múltiples hipótesis: FWER</h1>
-<h2 id="corrección-de-bonferroni">Corrección de Bonferroni</h2>
+<h2 id="múltiples-hipótesis-fwer">Múltiples hipótesis: FWER</h2>
+<h3 id="corrección-de-bonferroni">Corrección de Bonferroni</h3>
 <p>La probabilidad de encontrarnos con al menos un error de tipo 1 al
 realizar múltiples comparaciones independientes incrementa a una tasa de
 <span class="math inline">\(1-(1-\alpha)^m\)</span>, donde m es el
@@ -2355,7 +2344,7 @@ class="math inline">\(1-(1-\alpha/m)^m\)</span></p>
 </div>
 <p><img src="c13_comps_mv_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
 </div>
-<h2 id="anova-sheirer-ray-hare">ANOVA Sheirer-Ray-Hare</h2>
+<h3 id="anova-sheirer-ray-hare">ANOVA Sheirer-Ray-Hare</h3>
 <p>Carguemos los datos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2638,8 +2627,8 @@ entonces el punto 1:</p>
   </script>
 </div>
 </div>
-<h1 id="comparaciones-multivariadas">Comparaciones Multivariadas</h1>
-<h2 id="datos-para-comparaciones-mv">Datos para comparaciones Mv</h2>
+<h2 id="comparaciones-multivariadas">Comparaciones Multivariadas</h2>
+<h3 id="datos-para-comparaciones-mv">Datos para comparaciones Mv</h3>
 <ol type="1">
 <li>Base de datos iris. Medidas de 4 variables cuantitativas para 50
 flores de cada especie de <em>Iris</em>: <em>setosa</em>,
@@ -2686,13 +2675,13 @@ tal y la única variable categórica fue asignada correctamente:</li>
                 
                 </code></pre>
 </div>
-<h2 id="prueba-t2-de-hotelling">Prueba <span
-class="math inline">\(T^2\)</span> de Hotelling</h2>
+<h3 id="prueba-t2-de-hotelling">Prueba <span
+class="math inline">\(T^2\)</span> de Hotelling</h3>
 <p>Es una extensión multivariada de la prueba T de Student; por lo
 tanto, es una prueba paramétrica. Comparemos si las especies
 <em>versicolor</em> y <em>virginica</em> son iguales. Para ello es
 importante revisar los supuestos del análisis:</p>
-<h3 id="normalidad">Normalidad</h3>
+<h4 id="normalidad">Normalidad</h4>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>MVN</span><span class='op'>)</span>
@@ -2754,8 +2743,8 @@ $virginica
      Test        H    p value MVN
 1 Royston 8.141444 0.06776605 YES</code></pre>
 </div>
-<h3 id="igualdad-de-dispersión-multivariada">Igualdad de dispersión
-multivariada</h3>
+<h4 id="igualdad-de-dispersión-multivariada">Igualdad de dispersión
+multivariada</h4>
 <p>Al aplicar la prueba global vemos que al parecer no hay diferencias
 importantes en las dispersiones multivariadas:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2813,7 +2802,7 @@ versicolor-setosa       versicolor-setosa
 virginica-setosa         virginica-setosa
 virginica-versicolor virginica-versicolor</code></pre>
 </div>
-<h3 id="comparación-multivariada">Comparación Multivariada:</h3>
+<h4 id="comparación-multivariada">Comparación Multivariada:</h4>
 <p>Extraemos dos grupos a comparar:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2840,7 +2829,7 @@ P-value:  0 </code></pre>
 </div>
 <p>Al parecer, los promedios de las mediciones multivariadas son
 diferentes.</p>
-<h3 id="comparaciones-univariadas">Comparaciones univariadas</h3>
+<h4 id="comparaciones-univariadas">Comparaciones univariadas</h4>
 <p>Realizaremos 4 comparaciones univariadas ¿tiene sentido aplicar una
 corrección de Bonferroni? Algo a notar es que la prueba aplicada en este
 caso es la prueba de Welch; es decir, una prueba bajo el supuesto de
@@ -2942,7 +2931,11 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># La forma por defecto de R, con la traza de Pillai</span>
-<span class='va'>res.man</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/manova.html'>manova</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span>, <span class='va'>Petal.Length</span>, <span class='va'>Sepal.Width</span>, <span class='va'>Petal.Width</span><span class='op'>)</span><span class='op'>~</span><span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
+<span class='co'># o Pillai-Bartlett</span>
+<span class='va'>res.man</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/manova.html'>manova</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span>,
+                        <span class='va'>Petal.Length</span>,
+                        <span class='va'>Sepal.Width</span>,
+                        <span class='va'>Petal.Width</span><span class='op'>)</span><span class='op'>~</span><span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>res.man</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2952,6 +2945,8 @@ Residuals 147
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
+<p>Posteriormente podemos utilizar este objeto para realizar un ANOVA
+por variable:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/summary.aov.html'>summary.aov</a></span><span class='op'>(</span><span class='va'>res.man</span><span class='op'>)</span>
@@ -2985,7 +2980,7 @@ Residuals   147  6.157   0.042
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<p>La prueba post-hoc es una prueba HSD de Tukey por cada variable.</p>
+<p>Y luego la prueba post-hoc HSD de Tukey para cada variable.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/TukeyHSD.html'>TukeyHSD</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/aov.html'>aov</a></span><span class='op'>(</span><span class='va'>Sepal.Width</span><span class='op'>~</span><span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span><span class='op'>)</span>
@@ -3059,7 +3054,9 @@ gráfico:</p>
                     subtitle <span class='op'>=</span> <span class='st'>"Valores escalados"</span>,
                     y <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
                     x <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/element.html'>element_blank</a></span><span class='op'>(</span><span class='op'>)</span>,
-                    caption <span class='op'>=</span> <span class='st'>"Datos: Iris"</span><span class='op'>)</span>
+                    caption <span class='op'>=</span> <span class='st'>"Datos: Iris"</span><span class='op'>)</span> <span class='op'>+</span>
+              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_hue.html'>scale_color_discrete</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"Especies"</span><span class='op'>)</span> <span class='op'>+</span>
+              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"right"</span><span class='op'>)</span>
 <span class='va'>coord.plot</span>
 </code></pre>
 </div>
@@ -3069,20 +3066,27 @@ gráfico:</p>
 Permutacional Multivariado de la Varianza:</h2>
 <p>Los pasos a seguir son básicamente los mismos que los que seguimos
 para realizar la prueba de homogeneidad de matrices de dispersión. Este
-supuesto es, debido a la aproximación permutacional, (posiblemente) el
-supuesto más importante para esta prueba. Es importante notar que existe
-una corrección para grupos con varianzas no homogéneas.</p>
+supuesto (factores balanceados) es, debido a la aproximación
+permutacional, (posiblemente) el supuesto más importante para esta
+prueba. Es importante notar que existe una corrección para grupos con
+varianzas no homogéneas.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>100</span> <span class='co'># Tamaño de muestra</span>
+
+<span class='co'># Tamaño de muestra</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>100</span>
 
 <span class='co'># Valores observados</span>
-<span class='va'>tr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span><span class='op'>)</span> <span class='co'># Distribución binomial con p(éxito) = 50%</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='va'>tr</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span> <span class='co'>#Valores de respuesta</span>
-
-<span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>tr</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>tr</span><span class='op'>)</span>, <span class='cn'>FALSE</span><span class='op'>)</span> <span class='co'># Muestreo aleatorio sin remplazo </span>
-<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/by.html'>by</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>s</span>, <span class='va'>mean</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># Promedio de las diferencias</span>
+<span class='co'># Distribución binomial con p(éxito) = 50%;</span>
+<span class='co'># i.e., dos clases balanceadas (volado)</span>
+<span class='va'>tr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>1</span>, <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='co'># Valores de respuesta para cada clase</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>+</span> <span class='va'>tr</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span>
+<span class='co'># Muestreo aleatorio sin remplazo </span>
+<span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>tr</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>tr</span><span class='op'>)</span>, <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='co'># Promedio de las diferencias (valor observado)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/by.html'>by</a></span><span class='op'>(</span><span class='va'>y</span>, <span class='va'>s</span>, <span class='va'>mean</span><span class='op'>)</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 1.283456</code></pre>
@@ -3115,27 +3119,26 @@ matriz de distancias (de no pasar una matriz de distancias a la prueba
 hará por default la disimilaridad de Bray-Curtis)</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Matriz de distancias</span>
-<span class='va'>dist.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, method <span class='op'>=</span> <span class='st'>"euclidean"</span><span class='op'>)</span>
-<span class='co'># Objeto que contiene los distintos niveles de agrupamiento, anidados o no</span>
-<span class='va'>grps</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span>,<span class='fl'>5</span><span class='op'>]</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Matriz de distancias Euclidianas</span>
+<span class='va'>dist.mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/vegan/man/vegdist.html'>vegdist</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>,
+                    method <span class='op'>=</span> <span class='st'>"euclidean"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
 <p>Ahora podemos aplicar el PERMANOVA. De los resultados podemos
-observar que la principal división entre especies está dada por la
-longitud del sépalo, seguida por el ancho. Las cuatro variables explican
-el 100% del espacio multivariado (<span
-class="math inline">\(R^2\)</span> de los residuales = 0). Una forma
-compacta de reportar estos resultados sería: “[…] diferencias
-significativas en la longitud del sépalo (<span
-class="math inline">\(F_{1, 143}\)</span> = <span
-class="math inline">\(5.1*10^18\)</span>; p &lt; 0.001)”</p>
+rechazar, a un <span class="math inline">\(\alpha = 0.05\)</span>, la
+hipótesis de nulidad de diferencias en las medias multivariadas entre
+especies; es decir, que existieron diferencias significativas entre las
+tres especies (<span class="math inline">\(pseudo-F_{2, 149} =
+487.33\)</span>; p = 0.001).</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/adonis.html'>adonis2</a></span><span class='op'>(</span><span class='va'>dist.mat</span><span class='op'>~</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>*</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Width</span><span class='op'>+</span>
-          <span class='va'>iris</span><span class='op'>$</span><span class='va'>Petal.Length</span><span class='op'>*</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Petal.Width</span>, 
-        data <span class='op'>=</span> <span class='va'>grps</span>, permutations <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/adonis.html'>adonis2</a></span><span class='op'>(</span><span class='va'>dist.mat</span><span class='op'>~</span><span class='va'>Species</span>, <span class='co'># Distancias partida según variables de agrupamiento</span>
+        <span class='co'># Objeto que contiene los distintos niveles de agrupamiento</span>
+        <span class='co'># anidados o no</span>
+        data <span class='op'>=</span> <span class='va'>iris</span>,
+        <span class='co'># Número de permutaciones</span>
+        permutations <span class='op'>=</span> <span class='fl'>999</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Permutation test for adonis under reduced model
@@ -3143,86 +3146,78 @@ Terms added sequentially (first to last)
 Permutation: free
 Number of permutations: 999
 
-adonis2(formula = dist.mat ~ iris$Sepal.Length * iris$Sepal.Width + iris$Petal.Length * iris$Petal.Width, data = grps, permutations = 999)
-                                    Df SumOfSqs      R2          F Pr(&gt;F)    
-iris$Sepal.Length                    1   513.34 0.75340 5.1323e+18  0.001 ***
-iris$Sepal.Width                     1    84.34 0.12377 8.4316e+17  0.001 ***
-iris$Petal.Length                    1    78.31 0.11493 7.8293e+17  0.001 ***
-iris$Petal.Width                     1     5.38 0.00790 5.3791e+16  0.001 ***
-iris$Sepal.Length:iris$Sepal.Width   1     0.00 0.00000 0.0000e+00  1.000    
-iris$Petal.Length:iris$Petal.Width   1     0.00 0.00000 0.0000e+00  1.000    
-Residual                           143     0.00 0.00000                      
-Total                              149   681.37 1.00000                      
+adonis2(formula = dist.mat ~ Species, data = iris, permutations = 999)
+          Df SumOfSqs      R2      F Pr(&gt;F)    
+Species    2   592.07 0.86894 487.33  0.001 ***
+Residual 147    89.30 0.13106                  
+Total    149   681.37 1.00000                  
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<p>Veamos la dispersión multivariada:</p>
+<p>Esta prueba la podemos acompañar con el gráfico resultante de probar
+la homogeneidad de matrices de covarianza (la salida de
+<code>betadisper</code>) o con un NMDS. Para fines prácticos, realicemos
+la primera gráfica:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/vegan/man/betadisper.html'>betadisper</a></span><span class='op'>(</span><span class='va'>dist.mat</span>, <span class='va'>grps</span><span class='op'>)</span>, hull <span class='op'>=</span> <span class='cn'>F</span>, ellipse <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Extraemos las coordenadas del PCoA</span>
+<span class='va'>displot.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/transform.html'>transform</a></span><span class='op'>(</span><span class='va'>disp.mv</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>)</span>
+<span class='co'># Asignamos el grupo correspondiente</span>
+<span class='va'>displot.data</span><span class='op'>[</span><span class='st'>'group'</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>disp.mv</span><span class='op'>$</span><span class='va'>group</span>
+<span class='co'># Graficamos con ggplot</span>
+<span class='va'>displot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>PCoA1</span>, y <span class='op'>=</span> <span class='va'>PCoA2</span>, color <span class='op'>=</span> <span class='va'>group</span><span class='op'>)</span>,
+                  data <span class='op'>=</span> <span class='va'>displot.data</span><span class='op'>)</span> <span class='op'>+</span>
+           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/stat_ellipse.html'>stat_ellipse</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.8</span><span class='op'>)</span> <span class='op'>+</span>
+           <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+           <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>displot</span>
 </code></pre>
 </div>
 <p><img src="c13_comps_mv_files/figure-html5/unnamed-chunk-42-1.png" width="624" /></p>
 </div>
-<p>Podemos utilizar también un Escalamiento Multi-Dimensional No
-Paramétrico. Esta técnica es similar al PCA en el sentido de que
-proyecta un espacio altamente dimensional a un espacio con menos
-dimensiones (k), tratando de preservar las distancias entre cada punto.
-En pocas palabras, es una “hoja” o “lámina” de pocas dimensiones dentro
-de un espacio altamente dimensional.</p>
+<p>La prueba post-hoc son PERMANOVAs para cada comparación de pares de
+especies, lo cual podemos hacer con la librería
+<code>pairwiseAdonis</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>iris.mds</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/vegan/man/metaMDS.html'>metaMDS</a></span><span class='op'>(</span><span class='va'>dist.mat</span>, distance <span class='op'>=</span> <span class='st'>"euclidean"</span>, k <span class='op'>=</span> <span class='fl'>2</span>, trace <span class='op'>=</span> <span class='cn'>F</span><span class='op'>)</span>
-<span class='va'>mds.dims</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>NMDS1 <span class='op'>=</span> <span class='va'>iris.mds</span><span class='op'>$</span><span class='va'>points</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>,
-                       NMDS2 <span class='op'>=</span> <span class='va'>iris.mds</span><span class='op'>$</span><span class='va'>points</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
-
-<span class='va'>mds.plot.data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>mds.dims</span>, <span class='va'>iris</span><span class='op'>)</span>
-
-<span class='co'># Correlaciones de cada factor con cada dimensión reducida (flechas)</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/vegan/man/envfit.html'>envfit</a></span><span class='op'>(</span><span class='va'>iris.mds</span>, <span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>arrow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>$</span><span class='va'>arrows</span>,
-                    R <span class='op'>=</span> <span class='va'>fit</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>$</span><span class='va'>r</span>, P <span class='op'>=</span> <span class='va'>fit</span><span class='op'>$</span><span class='va'>vectors</span><span class='op'>$</span><span class='va'>pvals</span><span class='op'>)</span>
-<span class='va'>arrow</span><span class='op'>[</span><span class='st'>"Variable"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>arrow</span><span class='op'>)</span>
-
-<span class='va'>arrow.p</span> <span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>arrow</span>, <span class='va'>P</span> <span class='op'>&lt;=</span> <span class='fl'>0.05</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>pairwiseAdonis</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/pairwiseAdonis/man/pairwise.adonis2.html'>pairwise.adonis2</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>dist.mat</span><span class='op'>~</span><span class='va'>Species</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
 </code></pre>
 </div>
-</div>
-<p>Posteriormente podemos graficarlo. El “estrés” representa la
-fidelidad con respecto al espacio original; entre más alto sea, mayores
-serán las deformaciones (menor fue el éxito de preservar las
-distancias). En general, valores de estrés menores a 0.1 se consideran
-aceptables, menores a 0.05 como una buena representación y por encima de
-0.3 indican una “ordenación” arbitraria. En nuestro gráfico, el estrés
-de 0.02 indica que la representación es fidedigna, que la mayor división
-entre especies se da en el eje x (usualmente) y que las variables más
-relacionadas con esa separación son la longitud y el ancho del pétalo,
-lo cual corresponde perfectamente con lo encontrado por el
-PERMANOVA.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>mds.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mds.plot.data</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>NMDS1</span>, <span class='va'>NMDS2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span>, alpha <span class='op'>=</span> <span class='fl'>0.7</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/stat_ellipse.html'>stat_ellipse</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span>,
-                         type <span class='op'>=</span> <span class='st'>"t"</span>, size <span class='op'>=</span> <span class='fl'>1</span>,
-                         geom <span class='op'>=</span> <span class='st'>"polygon"</span>, alpha <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>+</span> 
-            <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Escalamiento Multidimensional no métrico (NMDS)"</span>,
-                 subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>'Estrés ='</span>,<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>iris.mds</span><span class='op'>$</span><span class='va'>stress</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>,
-                 caption <span class='op'>=</span> <span class='st'>"Datos: Iris"</span><span class='op'>)</span> <span class='op'>+</span>
-            <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></span><span class='op'>(</span>legend.position <span class='op'>=</span> <span class='st'>"right"</span><span class='op'>)</span> <span class='co'># +</span>
-            <span class='co'># geom_segment(data = arrow.p, </span>
-            <span class='co'>#              aes(x=0, y=0, xend = NMDS1, yend = NMDS2,</span>
-            <span class='co'>#                  lty = Variable),</span>
-            <span class='co'>#              #Flechas escaladas según su R^2</span>
-            <span class='co'>#              arrow = arrow(length = unit(.2, "cm")*arrow.p$R)</span>
-            <span class='co'>#              )</span>
+<pre><code>$parent_call
+[1] &quot;dist.mat ~ Species , strata = Null , permutations 999&quot;
 
-<span class='va'>mds.plot</span>
-</code></pre>
+$setosa_vs_versicolor
+         Df SumOfSqs    R2   F Pr(&gt;F)    
+Species   1  257.327 0.849 551  0.001 ***
+Residual 98   45.767 0.151               
+Total    99  303.094 1.000               
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+$setosa_vs_virginica
+         Df SumOfSqs      R2     F Pr(&gt;F)    
+Species   1   565.13 0.90593 943.8  0.001 ***
+Residual 98    58.68 0.09407                 
+Total    99   623.81 1.00000                 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+$versicolor_vs_virginica
+         Df SumOfSqs      R2     F Pr(&gt;F)    
+Species   1   65.650 0.46961 86.77  0.001 ***
+Residual 98   74.146 0.53039                 
+Total    99  139.796 1.00000                 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+attr(,&quot;class&quot;)
+[1] &quot;pwadstrata&quot; &quot;list&quot;      </code></pre>
 </div>
-<p><img src="c13_comps_mv_files/figure-html5/unnamed-chunk-44-1.png" width="624" /></p>
-</div>
-<div class="sourceCode" id="cb33"><pre
+<p>Esto es todo para esta sesíon. Espero que haya sido de tu agrado. En
+la siguiente sesión veremos algunos procedimientos alternativos para
+casos en los que tengamos mediciones multivariadas de distintos
+grupos.</p>
+<div class="sourceCode" id="cb34"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

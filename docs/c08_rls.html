@@ -2116,8 +2116,6 @@ Temas
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#instalación-de-librerías">Instalación de
-librerías</a></li>
 <li><a href="#funciones-personalizadas">Funciones
 personalizadas</a></li>
 <li><a href="#covarianza-vs.-correlación">Covarianza vs. Correlación</a>
@@ -2145,23 +2143,13 @@ verosimilitud</a>
 Morfometrías</a></li>
 <li><a href="#bonus-librería-performance">Bonus: Librería
 <code>performance</code></a></li>
-<li><a href="#comparación-de-regresiones">Comparación de
-regresiones</a></li>
-<li><a href="#ejercicio-1">Ejercicio</a></li>
 </ul>
 </nav>
-</div>
-<p><strong><a href="https://youtu.be/Sh8oUfIpOnA">VIDEO</a></strong></p>
-<h2 id="instalación-de-librerías">Instalación de librerías</h2>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'>if</span><span class='op'>(</span><span class='op'>!</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jinghuazhao/R'>gap</a></span><span class='op'>)</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"gap"</span>, dependencies <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span>
-</code></pre>
-</div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
+<p><strong><a href="https://youtu.be/Sh8oUfIpOnA">VIDEO</a></strong></p>
 <h2 id="funciones-personalizadas">Funciones personalizadas</h2>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2251,7 +2239,7 @@ medidas:</p>
 <span class='va'>lin.plot1</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
 </div>
 <p>Ambos resultados nos dicen que existe una relación directamente
 proporcional entre ambas variables (conforme incrementa una incrementa
@@ -2275,7 +2263,7 @@ para describir los datos, veamos un ejemplo:</p>
 <span class='va'>pot.plot</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
 <p>Otro ejemplo:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2289,7 +2277,7 @@ para describir los datos, veamos un ejemplo:</p>
 <span class='va'>sin.plot</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-9-1.png" width="624" /></p>
 </div>
 <h3 id="correlación-de-pearson-vs.-correlación-de-spearman">Correlación
 de Pearson vs. Correlación de Spearman</h3>
@@ -2315,7 +2303,7 @@ continuas, siempre y cuando la relación sea monótona:</p>
 <span class='va'>mono.plot</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
 </div>
 <p>Utilicemos el primer caso para calcular las correlaciones de Pearson
 y Spearman y ver las diferencias:</p>
@@ -2377,7 +2365,7 @@ cuadrados</strong>.</p>
 <span class='va'>data.reg1</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
 </div>
 <h3 id="ajuste-y-bondad-de-ajuste">Ajuste y Bondad de ajuste</h3>
 <p>Ajustemos el modelo de mínimos cuadrados a los datos y veamos los
@@ -2448,7 +2436,7 @@ recta:</p>
 <span class='va'>lin.plot2</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-14-1.png" width="624" /></p>
 </div>
 <h3
 id="intervalos-de-confianza-para-los-parámetros-y-la-regresión">Intervalos
@@ -2479,7 +2467,7 @@ v1           1.016035  1.339263</code></pre>
 <span class='va'>lin.plot3</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-16-1.png" width="624" /></p>
 </div>
 <p>Para la regresión:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2497,7 +2485,7 @@ v1           1.016035  1.339263</code></pre>
 <span class='va'>conf.plot.reg1</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
 </div>
 <h3 id="gráficos-diagnósticos-de-la-regresión">Gráficos diagnósticos de
 la regresión</h3>
@@ -2529,7 +2517,7 @@ desviaciones con respecto a una distribución normal:</p>
 <span class='va'>qqplot1</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-18-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2554,11 +2542,11 @@ desviaciones con respecto a una distribución normal:</p>
 <span class='va'>qqplot2</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-19-1.png" width="624" /></p>
 </div>
 <h4 id="gráfico-de-escala-locación">Gráfico de Escala-Locación</h4>
 <p>En este gráfico es posible observar que los datos no están
-distribuídos de manera homogénea; es decir, no son datos
+distribuídos de manera homogénea; es decir,son datos
 heterocedásticos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2579,40 +2567,12 @@ heterocedásticos:</p>
 <span class='va'>scale.loc.plot</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-20-1.png" width="624" /></p>
 </div>
 <h4 id="gráfico-de-residuales">Gráfico de Residuales</h4>
 <p>Es posible observar que existe una cantidad importande de datos
 extremos (fuera de <span class="math inline">\(\pm\)</span> 2
 desviaciones estándar):</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df.reg1</span><span class='op'>[</span><span class='st'>"std.resids"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/influence.measures.html'>rstandard</a></span><span class='op'>(</span><span class='va'>reg1</span><span class='op'>)</span>
-<span class='va'>resid.plot</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df.reg1</span>,
-                     <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>ajustados</span>, y <span class='op'>=</span> <span class='va'>std.resids</span>,
-                         colour <span class='op'>=</span> <span class='va'>std.resids</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>3</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span> <span class='op'>+</span>
-              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>stat_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"loess"</span>,
-                          colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/rgb.html'>rgb</a></span><span class='op'>(</span><span class='fl'>118</span>,<span class='fl'>78</span>,<span class='fl'>144</span>,
-                                       maxColorValue <span class='op'>=</span> <span class='fl'>255</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> 
-              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_abline.html'>geom_hline</a></span><span class='op'>(</span>yintercept <span class='op'>=</span> <span class='fl'>0</span>, col <span class='op'>=</span> <span class='st'>"red"</span>,
-                         linetype <span class='op'>=</span> <span class='st'>"dashed"</span><span class='op'>)</span> <span class='op'>+</span>
-              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Gráfico de Residuales"</span>,
-                   x <span class='op'>=</span> <span class='st'>"Valores ajustados"</span>,
-                   y <span class='op'>=</span> <span class='st'>"Residuales estandarizados"</span><span class='op'>)</span> <span class='op'>+</span>
-              <span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-              <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_gradient.html'>scale_color_gradient2</a></span><span class='op'>(</span>low <span class='op'>=</span> <span class='st'>"firebrick"</span>, 
-                                    midpoint <span class='op'>=</span> <span class='fl'>0</span>, 
-                                    mid <span class='op'>=</span> <span class='st'>"deepskyblue4"</span>, 
-                                    high <span class='op'>=</span> <span class='st'>"firebrick"</span>,
-                                    breaks <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span>,
-                                    limits <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>,
-                                    oob <span class='op'>=</span> <span class='fu'>scales</span><span class='fu'>::</span><span class='va'><a href='https://scales.r-lib.org/reference/oob.html'>squish</a></span><span class='op'>)</span>
-<span class='va'>resid.plot</span>
-</code></pre>
-</div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
-</div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>resid.plot2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>reg1</span>,
@@ -2638,18 +2598,7 @@ desviaciones estándar):</p>
 <span class='va'>resid.plot2</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/stats/shapiro.test.html'>shapiro.test</a></span><span class='op'>(</span><span class='va'>df.reg1</span><span class='op'>$</span><span class='va'>std.resids</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>
-    Shapiro-Wilk normality test
-
-data:  df.reg1$std.resids
-W = 0.89933, p-value = 1.797e-06</code></pre>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-21-1.png" width="624" /></p>
 </div>
 <h2 id="ajuste-por-máxima-verosimilitud">Ajuste por máxima
 verosimilitud</h2>
@@ -2658,9 +2607,9 @@ encontrando los valores de los parámetros que MAXIMICEN la probabilidad
 de haber encontrado los datos (verosimilitud); es decir, es método
 probabilístico. En el caso de la RLS, nuestro modelo encuentra la máxima
 expectativa de y (forma elegante de llamarle a la media), siguiendo una
-distribución normal. En la clase de GLM Roberto explicará cómo ajustar
-modelos lineales en los que el error NO se modela bajo una distribución
-normal y los criterios para su formación.</p>
+distribución normal. En la clase de GLM explicará cómo ajustar modelos
+lineales en los que el error NO se modela bajo una distribución normal y
+los criterios para su formación.</p>
 <p>A diferencia de la implementación de una regresión por mínimos
 cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan
 intuitivo. El primer paso es establecer manualmente nuestra función de
@@ -2759,7 +2708,7 @@ fines del ejemplo) por la “forma” de la distribución de los datos:</p>
 <span class='va'>density</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-29-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
 </div>
 <p>Esta distribución “se parece” a una distribución gamma.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2837,7 +2786,7 @@ Morfometrías</h2>
        caption <span class='op'>=</span> <span class='st'>"datos: Haem.csv"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-32-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-29-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2880,7 +2829,7 @@ F-statistic:  1938 on 1 and 281 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span class='va'>qqplot2</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-34-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-31-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2902,7 +2851,7 @@ F-statistic:  1938 on 1 and 281 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span class='va'>scale.loc.plot</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-35-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-32-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2929,7 +2878,7 @@ F-statistic:  1938 on 1 and 281 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span class='va'>resid.plot2</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-36-1.png" width="624" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-33-1.png" width="624" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3011,7 +2960,7 @@ lineal que elaboramos:</p>
 <span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>reg1</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-41-1.png" width="384" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-38-1.png" width="384" /></p>
 </div>
 <p>Ahora sobre los datos <code>Haem.csv</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3019,61 +2968,12 @@ lineal que elaboramos:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://easystats.github.io/performance/reference/check_model.html'>check_model</a></span><span class='op'>(</span><span class='va'>reg_haem</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-42-1.png" width="384" /></p>
+<p><img src="c08_rls_files/figure-html5/unnamed-chunk-39-1.png" width="384" /></p>
 </div>
-<h2 id="comparación-de-regresiones">Comparación de regresiones</h2>
-<p>Supongamos ahora que la base de datos 1 en realidad consta de dos
-“grupos”. Una preguna razonable sería el saber si podemos agruparlos
-para realizar una RLS, y esto lo podemos resolver fácilmente con la
-prueba de Chow (1960). Primero, partamos los datos por aproximadamente
-la mitad:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>df.reg2</span> <span class='op'>&lt;-</span> <span class='va'>df.reg1</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>
-<span class='va'>df.reg2</span><span class='op'>[</span><span class='st'>"grupo"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='fl'>48</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"B"</span>, <span class='fl'>49</span><span class='op'>)</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Ahora apliquemos la prueba de Chow, utilizando la función
-<code>chow.test(y1, x1, y2, x2)</code>:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jinghuazhao/R'>gap</a></span><span class='op'>)</span>
-<span class='va'>comp.reg</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gap/man/chow.test.html'>chow.test</a></span><span class='op'>(</span>y1 <span class='op'>=</span> <span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>[</span><span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>grupo</span> <span class='op'>==</span> <span class='st'>"A"</span><span class='op'>]</span>,
-                      x1 <span class='op'>=</span> <span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>v1</span><span class='op'>[</span><span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>grupo</span> <span class='op'>==</span> <span class='st'>"A"</span><span class='op'>]</span>,
-                      y2 <span class='op'>=</span> <span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>v2</span><span class='op'>[</span><span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>grupo</span> <span class='op'>==</span> <span class='st'>"B"</span><span class='op'>]</span>,
-                      x2 <span class='op'>=</span> <span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>v1</span><span class='op'>[</span><span class='va'>df.reg2</span><span class='op'>$</span><span class='va'>grupo</span> <span class='op'>==</span> <span class='st'>"B"</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>comp.reg</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>     F value        d.f.1        d.f.2      P value 
-1.154458e+01 2.000000e+00 9.300000e+01 3.323879e-05 </code></pre>
-</div>
-<p>Veamos las regresiones gráficamente:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>df.reg2</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>v1</span>, y <span class='op'>=</span> <span class='va'>v2</span>, colour <span class='op'>=</span> <span class='va'>grupo</span>, shape <span class='op'>=</span> <span class='va'>grupo</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.5</span>, size <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span> <span class='op'>+</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='va'>lm</span><span class='op'>)</span> <span class='op'>+</span>
-<span class='fu'>blank_theme</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
-<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Regresión lineal con dos grupos"</span>,
-     subtitle <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"F ("</span>, <span class='va'>comp.reg</span><span class='op'>[</span><span class='st'>"d.f.1"</span><span class='op'>]</span>, <span class='st'>", "</span>,
-                      <span class='va'>comp.reg</span><span class='op'>[</span><span class='st'>"d.f.2"</span><span class='op'>]</span>, <span class='st'>") = "</span>, 
-                      <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='va'>comp.reg</span><span class='op'>[</span><span class='st'>"F value"</span><span class='op'>]</span>,<span class='fl'>2</span><span class='op'>)</span>, <span class='st'>", "</span>,
-                      <span class='st'>"p = "</span>,
-                      <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>comp.reg</span><span class='op'>[</span><span class='st'>"P value"</span><span class='op'>]</span> <span class='op'>&lt;</span> <span class='fl'>0.001</span>,
-                             <span class='st'>" &lt; 0.001"</span>,
-                             <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>" = "</span>,
-                                   <span class='va'>comp.reg</span><span class='op'>[</span><span class='st'>"P value"</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-     caption <span class='op'>=</span> <span class='st'>"Datos simulados"</span><span class='op'>)</span>
-</code></pre>
-</div>
-<p><img src="c08_rls_files/figure-html5/unnamed-chunk-45-1.png" width="624" /></p>
-</div>
-<h2 id="ejercicio-1">Ejercicio</h2>
-<p>Aplicar la prueba de Chow a la base de datos <code>Haem.csv</code>,
-considerando los dos grupos en la columna <code>Loc</code>.</p>
-<div class="sourceCode" id="cb20"><pre
+<p>Esto sería todo para esta sesión, espero que haya sido de tu agrado y
+nos vemos en la siguiente donde hablaremos de las alternativas no
+paramétricas a las técnicas que vimos en la sesión anterior.</p>
+<div class="sourceCode" id="cb18"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
