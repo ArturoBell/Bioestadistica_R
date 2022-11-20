@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bioestadística Aplicada con R y RStudio - 4&nbsp; Introducción a tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./c05_ggplot2.html" rel="next">
+<link href="./c03_bases_r.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestadística Aplicada con R y RStudio</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología como Ciencia de Datos</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlación y Regresión Lineal Simple</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#un-dialecto-dentro-de-r" id="toc-un-dialecto-dentro-de-r" class="nav-link active" data-scroll-target="#un-dialecto-dentro-de-r"><span class="toc-section-number">4.1</span>  Un dialecto dentro de <code>R</code></a>
+  <ul class="collapse">
+  <li><a href="#promedios-de-grupos-aggregate-vs-group_by-summarise" id="toc-promedios-de-grupos-aggregate-vs-group_by-summarise" class="nav-link" data-scroll-target="#promedios-de-grupos-aggregate-vs-group_by-summarise"><span class="toc-section-number">4.1.1</span>  Promedios de grupos: <code>aggregate</code> vs <code>group_by() |&gt; summarise()</code></a></li>
+  <li><a href="#subconjuntos-de-datos" id="toc-subconjuntos-de-datos" class="nav-link" data-scroll-target="#subconjuntos-de-datos"><span class="toc-section-number">4.1.2</span>  Subconjuntos de datos</a></li>
+  <li><a href="#añadir-o-modificar-columnas" id="toc-añadir-o-modificar-columnas" class="nav-link" data-scroll-target="#añadir-o-modificar-columnas"><span class="toc-section-number">4.1.3</span>  Añadir o modificar columnas</a></li>
+  </ul></li>
+  <li><a href="#por-qué-no-enseñar-tidy-desde-el-inicio" id="toc-por-qué-no-enseñar-tidy-desde-el-inicio" class="nav-link" data-scroll-target="#por-qué-no-enseñar-tidy-desde-el-inicio"><span class="toc-section-number">4.2</span>  ¿Por qué no enseñar <code>tidy</code> desde el inicio?</a>
+  <ul class="collapse">
+  <li><a href="#tidy-es-más-complejo" id="toc-tidy-es-más-complejo" class="nav-link" data-scroll-target="#tidy-es-más-complejo"><span class="toc-section-number">4.2.1</span>  <code>tidy</code> es más complejo</a></li>
+  <li><a href="#tidy-limita-tus-opciones" id="toc-tidy-limita-tus-opciones" class="nav-link" data-scroll-target="#tidy-limita-tus-opciones"><span class="toc-section-number">4.2.2</span>  <code>tidy</code> limita tus opciones</a></li>
+  <li><a href="#los-ponentes-somos-necios" id="toc-los-ponentes-somos-necios" class="nav-link" data-scroll-target="#los-ponentes-somos-necios"><span class="toc-section-number">4.2.3</span>  Los ponentes somos necios</a></li>
+  <li><a href="#tidy-expande-tus-horizontes" id="toc-tidy-expande-tus-horizontes" class="nav-link" data-scroll-target="#tidy-expande-tus-horizontes"><span class="toc-section-number">4.2.4</span>  <code>tidy</code> expande tus horizontes</a></li>
+  </ul></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión"><span class="toc-section-number">4.3</span>  Conclusión</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">4.4</span>  Ejercicio</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="un-dialecto-dentro-de-r" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="un-dialecto-dentro-de-r"><span class="header-section-number">4.1</span> Un dialecto dentro de <code>R</code></h2>
+<p>En la sesión anterior mencionamos que hay un “paquete de paquetes” que da lugar a un “dialecto” dentro de <code>R</code>: <code>tidyverse</code>, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en <code>R</code> base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, <code>tidyverse</code> proveé de un paradigma diferente, con una “gramática” (sintaxis) distinta, muy similar a lo que veremos en <code>ggplot2</code>. De hecho, <code>ggplot2</code> es un paquete del <code>tidyverse</code>, por lo que el “dialecto” <code>tidy</code> comparte la filosofía declarativa y fomenta la “encadenación” de comandos. A muchas personas les gusta más la forma <code>tidy</code>, a otras les gusta más trabajar con <code>R</code> base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión.</p>
+<p>Este nuevo dialecto fue creado con un objetivo en particular: la ciencia de datos. Como tal, cuenta con una gran cantidad de librerías (y por lo tanto funciones) especializadas para realizar operaciones rutinarias. ¿Quieres realizar gráficos? En la siguiente sesión hablaremos de <code>ggplot2</code>. ¿Quieres hacer “manipulación” (ojo, no cuchareo) de datos? Aquí veremos algnas funciones de <code>dplyr</code>. ¿Quieres trabajar con procesamiento de cadenas de caractér? Para esto está <code>stringr</code>. ¿Quieres herramientas para programación funcional? Ve hacia <code>purrr</code> (sí, triple r). <code>readxl</code> es otra librería con la que ya estás familiarizado y que forma parte del <code>tidyverse</code>. ¿Tienes un problema en el que que necesitas manejar fechas? <code>lubridate</code> puede ser una opción. Puedes conocer todos los paquetes que forman el <code>tidyverse</code> con:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tidyverse<span class="sc">::</span><span class="fu">tidyverse_packages</span>(<span class="at">include_self =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "broom"         "cli"           "crayon"        "dbplyr"       
+ [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
+ [9] "googledrive"   "googlesheets4" "haven"         "hms"          
+[13] "httr"          "jsonlite"      "lubridate"     "magrittr"     
+[17] "modelr"        "pillar"        "purrr"         "readr"        
+[21] "readxl"        "reprex"        "rlang"         "rstudioapi"   
+[25] "rvest"         "stringr"       "tibble"        "tidyr"        
+[29] "xml2"          "tidyverse"    </code></pre>
+</div>
+</div>
+<p>A partir de aquí, el cómo aprovecharlos depende mucho de el problema que tengas entre manos, pero la idea general es la misma: utilizar una gramática declarativa para llegar a la solución. Veamos en qué consiste con un ejemplo cotidiano: obtener el promedio de una variable para varios grupos.</p>
+<section id="promedios-de-grupos-aggregate-vs-group_by-summarise" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="promedios-de-grupos-aggregate-vs-group_by-summarise"><span class="header-section-number">4.1.1</span> Promedios de grupos: <code>aggregate</code> vs <code>group_by() |&gt; summarise()</code></h3>
+<p>Veamos un ejemplo en el cual calcularemos la longitud de pico promedio para cada especie de pingüino, según los datos de <code>palmerpenguins</code>. Primero, carguemos los datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ahora, obtengamos los promedios con la función <code>aggregate</code>, tal y como vimos en la sesión anterior:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data =</span> datos1, <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"38.79139"},{"1":"Chinstrap","2":"48.83382"},{"1":"Gentoo","2":"47.50488"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora repliquémoslo con <code>tidyverse</code>, particularmente con las funciones <code>group_by</code> y <code>summarise</code> (o <code>summarize</code>) de la librería <code>dplyr</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["mbill_l"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"38.79139"},{"1":"Chinstrap","2":"48.83382"},{"1":"Gentoo","2":"47.50488"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Notarás que el resultado es exactamente el mismo, aunque la forma de hacerlo es diferente. Descompongámosla paso a paso para ver qué es lo que está pasando:</p>
+<ol type="1">
+<li><code>library(dplyr)</code>: cargamos la librería <code>dplyr</code>, la cual contiene las funciones que nos interesa aplicar: <code>group_by</code> y <code>summarise</code>.</li>
+<li>Llamamos directamente a nuestros datos (<code>datos1</code>) y utilizamos un operador que no habíamos visto: <code>|&gt;</code>. Este es el operador <code>pipe</code>, el cual pasa lo que está a la izquierda de él como el primer argumento de lo que está a la derecha de él. Esto puede sonar confuso, pero la instrucción <code>datos1 |&gt; group_by(sp)</code> es equivalente a <code>group_by(datos1, sp)</code>. Podemos ver al operador <code>pipe</code> como su nombre sugiere: una tubería que manda la información de un lado hacia otro.</li>
+<li><code>group_by(sp)</code>: Como te mencionaba, <code>tidy</code> es un poco más explícito que <code>R</code> base. Mientras que el argumento con la fórmula en <code>aggregate</code> indica cómo se van a agrupar los datos, aquí primero los agrupamos y después aplicamos la función que nos interesa. <code>group_by</code> hace justamente eso, agrupar nuestros datos, nada más, nada menos. El argumento principal de esta función es la(s) columnas bajo las cuales queremos agrupar nuestros datos. En este caso solo es una (<code>sp</code>), por lo que la pasamos directamente.</li>
+<li>Nuevamente utilizamos el operador <code>|&gt;</code>. Hasta este punto hemos pasado los <code>datos1</code> a la función <code>group_by(sp)</code>, por lo que ya están agrupados por especie, pero falta aplicar la función <code>mean()</code> para obtener el promedio, entonces volvemos a encadenar hacia la función <code>summarise()</code>. Esta función recibe una serie de pares nombres de columnas y funciones a aplicar. En este caso, estamos generando una columna llamada <code>mbill_l</code> que contiene los promedios de la columna <code>bill_length_mm</code> de los <code>datos1</code>.</li>
+</ol>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si revisas documentación “antigua” sobre <code>tidyverse</code> (previa a R 4.1, de hecho), notarás que el operador <code>pipe</code> es <code>%&gt;%</code> en vez de <code>|&gt;</code>. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de <code>RStudio</code>; sin embargo, utilizaremos <code>|&gt;</code> por ser el operador <code>pipe</code> nativo de <code>R</code>, el cual fue introducido (como te imaginarás) en <code>R</code> 4.1.</p>
+</div>
+</div>
+<p>¿Abstracto? Sin duda. ¿Útil? También. ¿Más explícito que <code>R</code> base con <code>aggregate</code>? Debatible. Lo que no es debatible es que esta notación brilla especialmente en cierto tipo de problemas. Pensemos que nos interesa conocer el promedio de las longitudes de picos por especie para cada isla. Intenta hacerlo con <code>R</code> base y te darás cuenta de que no es tan intuitivo, salvo que estés familiarizado con el uso de fórmulas. ¿En <code>tidy</code>? Solamente hay que agregar la nueva variable de agrupamiento a <code>group_by</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, island) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'species'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["mbill_l"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"Biscoe","3":"38.97500"},{"1":"Adelie","2":"Dream","3":"38.50179"},{"1":"Adelie","2":"Torgersen","3":"38.95098"},{"1":"Chinstrap","2":"Dream","3":"48.83382"},{"1":"Gentoo","2":"Biscoe","3":"47.50488"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora tenemos un <code>tibble</code> (funcionalmente equivalente a un <code>data.frame</code>) con tres columnas, en donde se da el promedio para cada combinación de las variables de agrupamiento. ¿A que es más sencillo que intentar hacerlo con <code>R</code> base?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con esto no quiero deciro que <code>tidy</code> sea mejor que <code>R</code> base o viceversa, solamente que son dos aproximaciones, cada una con sus propias ventajas y desventajas. Por un lado, <code>R</code> base puede llegar a ser más compacto, pero <code>tidy</code> tiende a ser más explícito. Por supuesto, también hay casos en los que lo contrario es verdad.</p>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hay ocasiones en las cuales querrás evitar el uso de <code>tidyverse</code>, y una de ellas es al crear nuevas librerías. ¿La razón? Puedes crear un conflicto de dependencias si no lo manejas con cuidado. Otra es que es sumamente complicado depurar errores.</p>
+</div>
+</div>
+<p>Te habrás dado cuenta de que hasta este momento no hemos asignado nuestros resultados a ningún objeto. Esto se debe a dos razones. La primera, y tal vez la que pasa por tu cabeza, es que de esta manera podemos mostrar los resultados más rápidamente, y sí, pero el trasfondo está en la segunda razón: La asignación sigue un sentido opuesto al encadenamiento. Mientras que con <code>|&gt;</code> la información fluye de izquierda a derecha, con <code>&lt;-</code> la información fluye de derecha a izquierda. Quise, entonces, que primero te acostumbraras al flujo de información con <code>pipe</code>, pues asignar el resultado a un objeto es lo mismo que hemos hecho hasta ahora:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gmeans <span class="ot">&lt;-</span> datos1 <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(species, island) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'species'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gmeans</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["mbill_l"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Adelie","2":"Biscoe","3":"38.97500"},{"1":"Adelie","2":"Dream","3":"38.50179"},{"1":"Adelie","2":"Torgersen","3":"38.95098"},{"1":"Chinstrap","2":"Dream","3":"48.83382"},{"1":"Gentoo","2":"Biscoe","3":"47.50488"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="subconjuntos-de-datos" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="subconjuntos-de-datos"><span class="header-section-number">4.1.2</span> Subconjuntos de datos</h3>
+<p>En la sesión anterior nos familiarizamos con máscaras booleanas y la función subset. <code>tidy</code> tiene su propia aproximación. Pensemos que queremos quedarnos solo con los pingüinos provenientes de Biscoe. Con <code>subset</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(datos1, island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Biscoe","3":"37.8","4":"18.3","5":"174","6":"3400","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"18.7","5":"180","6":"3600","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.9","4":"19.2","5":"189","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"18.1","5":"185","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.8","4":"17.2","5":"180","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.3","4":"18.9","5":"187","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.6","5":"183","6":"3550","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"17.9","5":"187","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"172","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"18.9","5":"180","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"17.7","5":"186","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.1","4":"18.9","5":"188","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"42.0","4":"19.5","5":"200","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"34.5","4":"18.1","5":"187","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.4","4":"18.6","5":"191","6":"3700","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"39.0","4":"17.5","5":"186","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.8","5":"193","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.5","4":"16.6","5":"181","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"19.1","5":"194","6":"3750","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.7","4":"16.9","5":"185","6":"3150","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.3","4":"21.1","5":"195","6":"4400","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"17.0","5":"185","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"18.2","5":"192","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.4","4":"17.1","5":"184","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.6","4":"18.0","5":"192","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.5","4":"16.2","5":"195","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"19.1","5":"188","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"192","6":"3725","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"41.0","4":"20.0","5":"203","6":"4725","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"16.0","5":"183","6":"3075","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"20.0","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"193","6":"2925","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"18.9","5":"184","6":"3550","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.6","4":"17.2","5":"199","6":"3750","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"20.0","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"17.0","5":"181","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"43.2","4":"19.0","5":"197","6":"4775","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"16.5","5":"198","6":"3825","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"45.6","4":"20.3","5":"191","6":"4600","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"17.7","5":"193","6":"3200","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.2","4":"19.5","5":"197","6":"4275","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"20.7","5":"191","6":"3900","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.7","4":"18.3","5":"196","6":"4075","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"13.2","5":"211","6":"4500","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"16.3","5":"230","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"14.1","5":"210","6":"4450","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.2","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.6","4":"14.5","5":"215","6":"5400","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"13.5","5":"210","6":"4550","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.4","4":"14.6","5":"211","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.7","4":"15.3","5":"219","6":"5200","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"13.4","5":"209","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"15.4","5":"215","6":"5150","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"40.9","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.0","4":"16.1","5":"216","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.6","5":"213","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.6","5":"210","6":"4200","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.3","4":"15.7","5":"217","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.0","4":"13.5","5":"210","6":"4150","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.2","4":"15.2","5":"221","6":"6300","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.5","5":"209","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.1","5":"222","6":"5350","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.2","4":"14.3","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.5","5":"213","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.3","4":"15.8","5":"215","6":"5050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.9","4":"13.1","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"15.1","5":"215","6":"5100","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.3","5":"216","6":"4100","7":"NA","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.8","4":"15.0","5":"215","6":"5650","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"14.3","5":"210","6":"4600","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.3","5":"220","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"15.3","5":"222","6":"5250","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.8","4":"14.2","5":"209","6":"4700","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"207","6":"5050","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"59.6","4":"17.0","5":"230","6":"6050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.8","5":"220","6":"5150","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"16.3","5":"220","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.6","4":"13.7","5":"213","6":"4950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.4","4":"17.3","5":"219","6":"5250","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.0","4":"13.6","5":"208","6":"4350","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.7","5":"208","6":"5350","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.7","4":"13.7","5":"208","6":"3950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"16.0","5":"225","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.7","5":"210","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"15.0","5":"216","6":"4750","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"222","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.6","4":"13.9","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.9","5":"210","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"225","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.3","5":"213","6":"5100","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"15.8","5":"215","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.6","4":"14.2","5":"210","6":"4850","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"14.1","5":"220","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.4","5":"210","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.1","4":"15.0","5":"225","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.4","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.0","4":"15.4","5":"220","6":"5050","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.8","4":"13.9","5":"208","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"15.0","5":"220","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.2","4":"14.5","5":"208","6":"4450","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.3","5":"224","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.8","5":"208","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.9","5":"221","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.7","4":"13.9","5":"214","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"54.3","4":"15.7","5":"231","6":"5650","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.2","5":"219","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"16.8","5":"230","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.4","5":"214","6":"4650","7":"NA","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.2","5":"229","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"14.2","5":"220","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.7","4":"15.0","5":"223","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.7","4":"15.0","5":"216","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.6","5":"221","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"15.6","5":"221","6":"5100","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.8","5":"217","6":"5200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.0","5":"216","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.6","4":"16.0","5":"230","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.2","5":"209","6":"4600","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.3","5":"220","6":"6000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"13.8","5":"215","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"16.4","5":"223","6":"5950","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.5","5":"212","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.5","4":"15.6","5":"221","6":"5450","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.4","4":"14.6","5":"212","6":"4725","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.9","5":"224","6":"5350","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.8","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"17.3","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.4","4":"14.4","5":"218","6":"4600","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.3","4":"14.2","5":"218","6":"5300","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.0","5":"212","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.1","4":"17.0","5":"230","6":"5550","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"15.0","5":"218","6":"4950","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.2","4":"17.1","5":"228","6":"5400","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"14.5","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.1","5":"224","6":"5650","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.7","5":"214","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"15.7","5":"226","6":"5200","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.4","4":"15.8","5":"216","6":"4925","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.9","4":"14.6","5":"222","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.4","5":"203","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.5","5":"225","6":"5250","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"15.0","5":"219","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.9","4":"17.0","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"15.5","5":"215","6":"4975","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"15.0","5":"228","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"13.8","5":"216","6":"4725","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"16.1","5":"215","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"41.7","4":"14.7","5":"210","6":"4700","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"53.4","4":"15.8","5":"219","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"14.0","5":"208","6":"4575","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.1","4":"15.1","5":"209","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.2","5":"216","6":"5000","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"15.9","5":"229","6":"5950","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"15.2","5":"213","6":"4650","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.5","4":"16.3","5":"230","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.1","5":"217","6":"4375","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.1","4":"16.0","5":"230","6":"5850","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"15.7","5":"217","6":"4875","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.8","4":"16.2","5":"222","6":"6000","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"13.7","5":"214","6":"4925","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"14.3","5":"215","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.7","5":"222","6":"5750","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"14.8","5":"212","6":"5200","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.9","4":"16.1","5":"213","6":"5400","7":"male","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Mientras que con <code>tidy</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Biscoe","3":"37.8","4":"18.3","5":"174","6":"3400","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"18.7","5":"180","6":"3600","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.9","4":"19.2","5":"189","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"18.1","5":"185","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.8","4":"17.2","5":"180","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.3","4":"18.9","5":"187","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.6","5":"183","6":"3550","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"17.9","5":"187","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"172","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"18.9","5":"180","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"17.7","5":"186","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.1","4":"18.9","5":"188","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"42.0","4":"19.5","5":"200","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"34.5","4":"18.1","5":"187","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.4","4":"18.6","5":"191","6":"3700","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"39.0","4":"17.5","5":"186","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.8","5":"193","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.5","4":"16.6","5":"181","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"19.1","5":"194","6":"3750","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.7","4":"16.9","5":"185","6":"3150","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.3","4":"21.1","5":"195","6":"4400","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"17.0","5":"185","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"18.2","5":"192","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.4","4":"17.1","5":"184","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.6","4":"18.0","5":"192","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.5","4":"16.2","5":"195","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"19.1","5":"188","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"192","6":"3725","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"41.0","4":"20.0","5":"203","6":"4725","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"16.0","5":"183","6":"3075","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"20.0","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"193","6":"2925","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"18.9","5":"184","6":"3550","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.6","4":"17.2","5":"199","6":"3750","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"20.0","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"17.0","5":"181","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"43.2","4":"19.0","5":"197","6":"4775","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"16.5","5":"198","6":"3825","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"45.6","4":"20.3","5":"191","6":"4600","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"17.7","5":"193","6":"3200","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.2","4":"19.5","5":"197","6":"4275","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"20.7","5":"191","6":"3900","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.7","4":"18.3","5":"196","6":"4075","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"13.2","5":"211","6":"4500","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"16.3","5":"230","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"14.1","5":"210","6":"4450","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.2","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.6","4":"14.5","5":"215","6":"5400","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"13.5","5":"210","6":"4550","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.4","4":"14.6","5":"211","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.7","4":"15.3","5":"219","6":"5200","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"13.4","5":"209","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"15.4","5":"215","6":"5150","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"40.9","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.0","4":"16.1","5":"216","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.7","5":"214","6":"4650","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.6","5":"213","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.6","5":"210","6":"4200","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.3","4":"15.7","5":"217","6":"5850","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.0","4":"13.5","5":"210","6":"4150","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.2","4":"15.2","5":"221","6":"6300","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.5","5":"209","6":"4800","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.1","5":"222","6":"5350","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.2","4":"14.3","5":"218","6":"5700","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.5","5":"213","6":"4400","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.3","4":"15.8","5":"215","6":"5050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.9","4":"13.1","5":"215","6":"5000","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"46.1","4":"15.1","5":"215","6":"5100","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.3","5":"216","6":"4100","7":"NA","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.8","4":"15.0","5":"215","6":"5650","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"14.3","5":"210","6":"4600","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.3","5":"220","6":"5550","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"15.3","5":"222","6":"5250","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"42.8","4":"14.2","5":"209","6":"4700","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.5","5":"207","6":"5050","7":"female","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"59.6","4":"17.0","5":"230","6":"6050","7":"male","8":"2007"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.8","5":"220","6":"5150","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"16.3","5":"220","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.6","4":"13.7","5":"213","6":"4950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.4","4":"17.3","5":"219","6":"5250","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.0","4":"13.6","5":"208","6":"4350","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.7","4":"15.7","5":"208","6":"5350","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"42.7","4":"13.7","5":"208","6":"3950","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"16.0","5":"225","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.7","5":"210","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.6","4":"15.0","5":"216","6":"4750","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"222","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.6","4":"13.9","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"13.9","5":"210","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.9","5":"225","6":"5400","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.3","5":"213","6":"5100","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"15.8","5":"215","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.6","4":"14.2","5":"210","6":"4850","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"14.1","5":"220","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.1","4":"14.4","5":"210","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.1","4":"15.0","5":"225","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.4","5":"217","6":"4900","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.0","4":"15.4","5":"220","6":"5050","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.8","4":"13.9","5":"208","6":"4300","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"15.0","5":"220","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.2","4":"14.5","5":"208","6":"4450","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.3","5":"224","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.3","4":"13.8","5":"208","6":"4200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.9","5":"221","6":"5300","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.7","4":"13.9","5":"214","6":"4400","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"54.3","4":"15.7","5":"231","6":"5650","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.8","4":"14.2","5":"219","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"16.8","5":"230","6":"5700","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.4","5":"214","6":"4650","7":"NA","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.2","5":"229","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"14.2","5":"220","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"50.7","4":"15.0","5":"223","6":"5550","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.7","4":"15.0","5":"216","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.6","5":"221","6":"5000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.2","4":"15.6","5":"221","6":"5100","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.5","4":"14.8","5":"217","6":"5200","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"46.4","4":"15.0","5":"216","6":"4700","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"48.6","4":"16.0","5":"230","6":"5800","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.2","5":"209","6":"4600","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.3","5":"220","6":"6000","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"13.8","5":"215","6":"4750","7":"female","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"16.4","5":"223","6":"5950","7":"male","8":"2008"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"14.5","5":"212","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.5","4":"15.6","5":"221","6":"5450","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.4","4":"14.6","5":"212","6":"4725","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.0","4":"15.9","5":"224","6":"5350","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.9","4":"13.8","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"17.3","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.4","4":"14.4","5":"218","6":"4600","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.3","4":"14.2","5":"218","6":"5300","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"14.0","5":"212","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.1","4":"17.0","5":"230","6":"5550","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.5","4":"15.0","5":"218","6":"4950","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"52.2","4":"17.1","5":"228","6":"5400","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.5","4":"14.5","5":"212","6":"4750","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.5","4":"16.1","5":"224","6":"5650","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"14.7","5":"214","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.8","4":"15.7","5":"226","6":"5200","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.4","4":"15.8","5":"216","6":"4925","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.9","4":"14.6","5":"222","6":"4875","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.4","4":"14.4","5":"203","6":"4625","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.1","4":"16.5","5":"225","6":"5250","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.5","4":"15.0","5":"219","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.9","4":"17.0","5":"228","6":"5600","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"15.5","5":"215","6":"4975","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.1","4":"15.0","5":"228","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.3","4":"13.8","5":"216","6":"4725","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"16.1","5":"215","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"41.7","4":"14.7","5":"210","6":"4700","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"53.4","4":"15.8","5":"219","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.3","4":"14.0","5":"208","6":"4575","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.1","4":"15.1","5":"209","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.5","4":"15.2","5":"216","6":"5000","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.8","4":"15.9","5":"229","6":"5950","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"43.5","4":"15.2","5":"213","6":"4650","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"51.5","4":"16.3","5":"230","6":"5500","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.2","4":"14.1","5":"217","6":"4375","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"55.1","4":"16.0","5":"230","6":"5850","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"44.5","4":"15.7","5":"217","6":"4875","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"48.8","4":"16.2","5":"222","6":"6000","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"47.2","4":"13.7","5":"214","6":"4925","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"NA","4":"NA","5":"NA","6":"NA","7":"NA","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"46.8","4":"14.3","5":"215","6":"4850","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"50.4","4":"15.7","5":"222","6":"5750","7":"male","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"45.2","4":"14.8","5":"212","6":"5200","7":"female","8":"2009"},{"1":"Gentoo","2":"Biscoe","3":"49.9","4":"16.1","5":"213","6":"5400","7":"male","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>La notación no es tan diferente como en el caso anterior, y el resultado es el mismo. ¿Cuál utilizar? Depende totalmente de la preferencia de cada quien. A diferencia del caso anterior, subset no se vuelve tan compleja conforme vamos escalando en complejidad, y la equivalencia entre aproximaciones con <code>filter</code> se mantiene. Veamos qué pasa si obtenemos SOLO los pingüinos Adelie de Biscoe. Nuevamente, con <code>subset</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(datos1, species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">&amp;</span> island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Biscoe","3":"37.8","4":"18.3","5":"174","6":"3400","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"18.7","5":"180","6":"3600","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.9","4":"19.2","5":"189","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"18.1","5":"185","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.8","4":"17.2","5":"180","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.3","4":"18.9","5":"187","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.6","5":"183","6":"3550","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"17.9","5":"187","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"172","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"18.9","5":"180","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"17.7","5":"186","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.1","4":"18.9","5":"188","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"42.0","4":"19.5","5":"200","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"34.5","4":"18.1","5":"187","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.4","4":"18.6","5":"191","6":"3700","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"39.0","4":"17.5","5":"186","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.8","5":"193","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.5","4":"16.6","5":"181","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"19.1","5":"194","6":"3750","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.7","4":"16.9","5":"185","6":"3150","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.3","4":"21.1","5":"195","6":"4400","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"17.0","5":"185","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"18.2","5":"192","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.4","4":"17.1","5":"184","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.6","4":"18.0","5":"192","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.5","4":"16.2","5":"195","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"19.1","5":"188","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"192","6":"3725","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"41.0","4":"20.0","5":"203","6":"4725","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"16.0","5":"183","6":"3075","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"20.0","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"193","6":"2925","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"18.9","5":"184","6":"3550","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.6","4":"17.2","5":"199","6":"3750","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"20.0","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"17.0","5":"181","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"43.2","4":"19.0","5":"197","6":"4775","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"16.5","5":"198","6":"3825","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"45.6","4":"20.3","5":"191","6":"4600","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"17.7","5":"193","6":"3200","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.2","4":"19.5","5":"197","6":"4275","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"20.7","5":"191","6":"3900","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.7","4":"18.3","5":"196","6":"4075","7":"male","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Con <code>tidy</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">&amp;</span> island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["species"],"name":[1],"type":["fct"],"align":["left"]},{"label":["island"],"name":[2],"type":["fct"],"align":["left"]},{"label":["bill_length_mm"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[5],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[6],"type":["int"],"align":["right"]},{"label":["sex"],"name":[7],"type":["fct"],"align":["left"]},{"label":["year"],"name":[8],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"Biscoe","3":"37.8","4":"18.3","5":"174","6":"3400","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"18.7","5":"180","6":"3600","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.9","4":"19.2","5":"189","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"18.1","5":"185","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"38.8","4":"17.2","5":"180","6":"3800","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"35.3","4":"18.9","5":"187","6":"3800","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.6","5":"183","6":"3550","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"17.9","5":"187","6":"3200","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"172","6":"3150","7":"female","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"40.5","4":"18.9","5":"180","6":"3950","7":"male","8":"2007"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"17.7","5":"186","6":"3500","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.1","4":"18.9","5":"188","6":"4300","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"190","6":"3450","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"42.0","4":"19.5","5":"200","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"34.5","4":"18.1","5":"187","6":"2900","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.4","4":"18.6","5":"191","6":"3700","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"39.0","4":"17.5","5":"186","6":"3550","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"40.6","4":"18.8","5":"193","6":"3800","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.5","4":"16.6","5":"181","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"19.1","5":"194","6":"3750","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.7","4":"16.9","5":"185","6":"3150","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.3","4":"21.1","5":"195","6":"4400","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"37.6","4":"17.0","5":"185","6":"3600","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"18.2","5":"192","6":"4050","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"36.4","4":"17.1","5":"184","6":"2850","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.6","4":"18.0","5":"192","6":"3950","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.5","4":"16.2","5":"195","6":"3350","7":"female","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"41.1","4":"19.1","5":"188","6":"4100","7":"male","8":"2008"},{"1":"Adelie","2":"Biscoe","3":"35.0","4":"17.9","5":"192","6":"3725","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"41.0","4":"20.0","5":"203","6":"4725","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.7","4":"16.0","5":"183","6":"3075","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.8","4":"20.0","5":"190","6":"4250","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"37.9","4":"18.6","5":"193","6":"2925","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"18.9","5":"184","6":"3550","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.6","4":"17.2","5":"199","6":"3750","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.2","4":"20.0","5":"190","6":"3900","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"17.0","5":"181","6":"3175","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"43.2","4":"19.0","5":"197","6":"4775","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"38.1","4":"16.5","5":"198","6":"3825","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"45.6","4":"20.3","5":"191","6":"4600","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.7","4":"17.7","5":"193","6":"3200","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.2","4":"19.5","5":"197","6":"4275","7":"male","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"39.6","4":"20.7","5":"191","6":"3900","7":"female","8":"2009"},{"1":"Adelie","2":"Biscoe","3":"42.7","4":"18.3","5":"196","6":"4075","7":"male","8":"2009"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>¿Por qué empezar con un ejemplo tan “complejo” como el caso anterior? Para dejar “lo peor” al inicio, y a partir de ahí las cosas puedan fluir un poco mejor.</p>
+</section>
+<section id="añadir-o-modificar-columnas" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="añadir-o-modificar-columnas"><span class="header-section-number">4.1.3</span> Añadir o modificar columnas</h3>
+<p>Otra tarea cotidiana que vimos en la sesión anterior fue el añadir nuevas columnas a nuestro <code>data.frame</code>. Pensemos que tiene sentido obtener el “área” que utiliza el pico, la cual obtendríamos multiplicando <code>bill_length_mm</code> y <code>bill_depth_mm</code>. Este producto lo almacenaríamos en una nueva columna llamada <code>bill_area</code>. En <code>R</code> base:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="st">"bill_area"</span>] <span class="ot">&lt;-</span> datos1<span class="sc">$</span>bill_length_mm <span class="sc">*</span> datos1<span class="sc">$</span>bill_depth_mm</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>bill_area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  731.17  687.30  725.40      NA  708.31  809.58  692.42  768.32  617.21
+ [10]  848.40  646.38  653.94  723.36  818.32  730.06  651.48  735.30  879.75
+ [19]  632.96  989.00  691.74  704.99  689.28  691.42  667.36  667.17  755.16
+ [28]  724.95  704.94  765.45  659.65  673.32  703.10  773.01  618.80  827.12
+ [37]  776.00  780.70  725.68  760.18  657.00  750.72  666.00  868.77  625.30
+ [46]  744.48  780.90  708.75  644.40  896.76  700.92  757.89  626.50  819.00
+ [55]  624.45  770.04  682.50  763.28  605.90  718.16  603.33  871.43  639.20
+ [64]  748.02  622.44  748.80  575.10  785.01  595.94  810.92  636.50  730.48
+ [73]  681.12  865.62  621.25  791.80  687.12  721.68  582.82  804.11  595.12
+ [82]  755.04  689.96  680.94  663.94  838.39  707.85  686.34  735.36  731.32
+ [91]  642.60  743.91  581.40  716.76  626.26  771.12  708.66  745.55  532.91
+[100]  799.20  626.50  820.00  603.20  756.00  704.94  750.33  663.92  764.00
+[109]  647.70  820.80  628.65  925.68  702.69  822.90  819.72  781.41  656.20
+[118]  764.65  606.90  764.46  622.64  746.46  683.40  765.90  559.68  771.40
+[127]  682.88  759.45  666.90  793.80  689.15  827.52  680.80  693.75  670.56
+[136]  719.25  623.00  808.02  610.50  710.63  687.42  698.32  497.55  691.90
+[145]  626.64  729.30  729.12  673.44  640.80  684.18  615.60  767.75  608.52
+[154]  815.00  686.67  760.00  690.20  627.75  662.84  714.51  580.22  720.72
+[163]  560.33  788.90  623.35  706.64  668.68  774.01  567.00  747.84  669.90
+[172]  735.37  717.86  653.95  674.25  731.54  561.99  696.11  636.35  717.00
+[181]  689.26  765.00  723.69  607.76  653.95 1013.20  726.68  788.92  583.62
+[190]  768.12  598.40  764.59  584.99  793.60  620.61  744.00  802.95  606.04
+[199]  632.45  802.95  597.17  714.16  661.72  683.85  649.44  751.50  669.60
+[208]  693.00  608.82  682.50  626.40  771.12  625.14  688.38  635.23  852.51
+[217]  650.36  836.64  665.28  801.90  617.70  760.50  715.50  723.84  751.92
+[226]  688.20  696.00  777.60  674.50  832.93  623.76  741.28  711.95  819.00
+[235]  692.04  795.00  619.62  878.84  624.96  728.46  665.00  885.70  712.50
+[244]  892.62  659.75  796.95  654.15  797.56  780.52  684.74  696.96  843.15
+[253]  727.50  950.30  731.60  736.50  652.74  753.48  612.99  843.72  606.20
+[262]  726.31  767.60  791.82  661.20  839.45  651.42  881.60  698.65  790.56
+[271]  646.64      NA  669.24  791.28  668.96  803.39  832.35  975.00  984.96
+[280]  848.98 1043.46  804.56  839.02  933.66  869.40 1020.87  829.48 1049.51
+[289]  813.10  941.20  784.89  989.80 1006.00 1032.40  863.04  895.44  733.52
+[298]  848.75  717.12  981.64  835.93  988.00  929.20  940.50  825.92 1056.00
+[307]  678.94 1127.36  709.75  958.80  924.42  798.00  871.08 1076.40  778.54
+[316] 1064.65  955.50  808.50  972.19  773.50  911.11  939.80  896.79  960.40
+[325]  963.05  861.54  788.84  976.60  790.61  998.79  735.25  981.36  750.32
+[334]  981.07  943.76  884.64 1012.05  772.20  776.90 1104.84  787.35  902.72
+[343]  965.20  938.74</code></pre>
+</div>
+</div>
+<p>Ahora hagámoslo con <code>tidy</code>, pero primero reestablezcamos el objeto <code>datos1</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Y ahora hagamos la operación con <code>tidy</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> datos1 <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">bill_area =</span> bill_length_mm <span class="sc">*</span> bill_depth_mm)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>bill_area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1]  731.17  687.30  725.40      NA  708.31  809.58  692.42  768.32  617.21
+ [10]  848.40  646.38  653.94  723.36  818.32  730.06  651.48  735.30  879.75
+ [19]  632.96  989.00  691.74  704.99  689.28  691.42  667.36  667.17  755.16
+ [28]  724.95  704.94  765.45  659.65  673.32  703.10  773.01  618.80  827.12
+ [37]  776.00  780.70  725.68  760.18  657.00  750.72  666.00  868.77  625.30
+ [46]  744.48  780.90  708.75  644.40  896.76  700.92  757.89  626.50  819.00
+ [55]  624.45  770.04  682.50  763.28  605.90  718.16  603.33  871.43  639.20
+ [64]  748.02  622.44  748.80  575.10  785.01  595.94  810.92  636.50  730.48
+ [73]  681.12  865.62  621.25  791.80  687.12  721.68  582.82  804.11  595.12
+ [82]  755.04  689.96  680.94  663.94  838.39  707.85  686.34  735.36  731.32
+ [91]  642.60  743.91  581.40  716.76  626.26  771.12  708.66  745.55  532.91
+[100]  799.20  626.50  820.00  603.20  756.00  704.94  750.33  663.92  764.00
+[109]  647.70  820.80  628.65  925.68  702.69  822.90  819.72  781.41  656.20
+[118]  764.65  606.90  764.46  622.64  746.46  683.40  765.90  559.68  771.40
+[127]  682.88  759.45  666.90  793.80  689.15  827.52  680.80  693.75  670.56
+[136]  719.25  623.00  808.02  610.50  710.63  687.42  698.32  497.55  691.90
+[145]  626.64  729.30  729.12  673.44  640.80  684.18  615.60  767.75  608.52
+[154]  815.00  686.67  760.00  690.20  627.75  662.84  714.51  580.22  720.72
+[163]  560.33  788.90  623.35  706.64  668.68  774.01  567.00  747.84  669.90
+[172]  735.37  717.86  653.95  674.25  731.54  561.99  696.11  636.35  717.00
+[181]  689.26  765.00  723.69  607.76  653.95 1013.20  726.68  788.92  583.62
+[190]  768.12  598.40  764.59  584.99  793.60  620.61  744.00  802.95  606.04
+[199]  632.45  802.95  597.17  714.16  661.72  683.85  649.44  751.50  669.60
+[208]  693.00  608.82  682.50  626.40  771.12  625.14  688.38  635.23  852.51
+[217]  650.36  836.64  665.28  801.90  617.70  760.50  715.50  723.84  751.92
+[226]  688.20  696.00  777.60  674.50  832.93  623.76  741.28  711.95  819.00
+[235]  692.04  795.00  619.62  878.84  624.96  728.46  665.00  885.70  712.50
+[244]  892.62  659.75  796.95  654.15  797.56  780.52  684.74  696.96  843.15
+[253]  727.50  950.30  731.60  736.50  652.74  753.48  612.99  843.72  606.20
+[262]  726.31  767.60  791.82  661.20  839.45  651.42  881.60  698.65  790.56
+[271]  646.64      NA  669.24  791.28  668.96  803.39  832.35  975.00  984.96
+[280]  848.98 1043.46  804.56  839.02  933.66  869.40 1020.87  829.48 1049.51
+[289]  813.10  941.20  784.89  989.80 1006.00 1032.40  863.04  895.44  733.52
+[298]  848.75  717.12  981.64  835.93  988.00  929.20  940.50  825.92 1056.00
+[307]  678.94 1127.36  709.75  958.80  924.42  798.00  871.08 1076.40  778.54
+[316] 1064.65  955.50  808.50  972.19  773.50  911.11  939.80  896.79  960.40
+[325]  963.05  861.54  788.84  976.60  790.61  998.79  735.25  981.36  750.32
+[334]  981.07  943.76  884.64 1012.05  772.20  776.90 1104.84  787.35  902.72
+[343]  965.20  938.74</code></pre>
+</div>
+</div>
+<p>Evidentemente, los resultados son los mismos, lo cual me lleva directamente a la siguiente sección.</p>
+</section>
+</section>
+<section id="por-qué-no-enseñar-tidy-desde-el-inicio" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="por-qué-no-enseñar-tidy-desde-el-inicio"><span class="header-section-number">4.2</span> ¿Por qué no enseñar <code>tidy</code> desde el inicio?</h2>
+<p>Si <code>tidy</code> se acomodó a tu forma de ver las cosas, o si se te hizo más fácil de leer, es probable que te preguntes por qué no me salté <code>R</code> base para entrar directamente a <code>tidy</code>. Además de incrementar las horas del curso (broma), fue porque (pedagógicamente) <code>tidy</code> puede introducir ciertas barreras para quienes se van introduciendo a <code>R</code>. <span class="citation" data-cites="Matloff_2020">Matloff (<a href="#ref-Matloff_2020" role="doc-biblioref">2020</a>)</span> hace una excelente y extensiva recopilación de las razones por las cuales enseñar solo <code>tidy</code> (o solo <code>R</code> base) es una mala idea, así que te recomiendo leas su opinión; sin embargo, me gustaría darte mi perspectiva. Te adelanto: si no tienes experiencia en programación, el paradigma de <code>tidy</code> supone una curva de aprendizaje más alta que solo <code>R</code> base (solo <code>R</code> a partir de aquí) y, tal vez más importante, no es necesario casarse con uno u otro.</p>
+<section id="tidy-es-más-complejo" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="tidy-es-más-complejo"><span class="header-section-number">4.2.1</span> <code>tidy</code> es más complejo</h3>
+<p>Como habrás notado en esta sesión, <code>tidy</code> es, escencialmente, más complejo que <code>R</code>. Esto no es una falla en el diseño, sino que tiene que ver con la filosofía de la aproximación: generar código que sea más fácilmente leíble por seres humanos. Sin duda alguna, el utilizar <code>data |&gt; group_by() |&gt; summarise()</code> puede parecer menos críptico o más “entendible” que solo <code>aggregate(formula, data, FUN)</code>; sin embargo, esto se debe a que ya conocías qué es una librería y cómo cargarla, qué es una función y qué es un argumento, pero aún así hubo que explicar qué es encadenamiento de operaciones/funciones y el operador <code>pipe</code> y también tuvimos que entender que la información fluye de izquierda a derecha al encadenar y de derecha a izquierda al asignar.</p>
+<p>Si esto no fuera suficiente, el utilizar <code>pipes</code> puede complicar demasiado las cosas al querer depurar errores. ¿La razón? Es una capa más de abstracción. Mientras que cuando aprendemos <code>R</code> es común generar objetos intermedios con los resultados y ver sus salidas (o detectar errores en cada paso), en <code>tidy</code> esto tiende a no ser el caso. ¿Qué obtienes si solo aplicas <code>group_by()</code> en el ejemplo anterior? (<em>i.e.</em>, no aplicas <code>summarise()</code>). El ejemplo que vimos es relativamente sencillo pero, en la medida que los problemas se van haciendo más complejos, es fácil perder la pista de qué sale de una función y entra a otra.</p>
+<p>En mi opinión esto no es un problema TAN grande como pudiera parecer. Tomemos de ejemplo a <code>Python</code>, el lenguaje de programación reconocido como el más intuitivo. Al utilizarlo, el encadenamiento y uso de <code>pipes</code> es cotidiano y, aún más, preferido. En este sentido, <code>tidyverse</code> me recuerda mucho a la funcionalidad que de <code>pandas</code> en <code>Python</code> pero, al igual que aquí, lo correcto es aproximarse primero a <code>Python</code> base y luego pensar en aprender <code>pandas</code>. En mi opinión, el problema real (quitando la capa de abstracción) es en realidad dos problemas: uno relacionado con la filosofía de <code>tidy</code> y otro con quienes enseñamos <code>R</code>.</p>
+</section>
+<section id="tidy-limita-tus-opciones" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="tidy-limita-tus-opciones"><span class="header-section-number">4.2.2</span> <code>tidy</code> limita tus opciones</h3>
+<p>Un ejemplo de esto está en esta misma clase. ¿Cómo obtendríamos los promedios de datos agrupados a dos niveles? Dejé el ejercicio “en el tintero” (es parte de tu tarea para esta sesión) pero, si solo te hubiera enseñado <code>tidy</code>, no podrías pensar en ciclos, el operador <code>$</code> o cualquier otra forma de indización. ¿La razón? <code>tidy</code> no está enfocado a tratar con vectores individuales, aborrece el uso de ciclos y tampoco sigue las notaciones básicas de indización. Recuerda: en programación siempre es mejor tener más herramientas a tu disposición. Esta limitación la podemos probar rápidamente si queremos extraer los elementos 10:25 de la columna <code>sex</code> de los <code>datos1</code>. Con <code>R</code> base:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>sex[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   female male   male   female female male   female
+[11] male   female male   female male   male  
+Levels: female male</code></pre>
+</div>
+</div>
+<p>¿Con <code>tidy</code>? Realmente no hay una función que permita hacerlo. Podemos extraer la columna <code>sex</code> utilizando la función <code>select</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sex"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"male"},{"1":"female"},{"1":"female"},{"1":"NA"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"NA"},{"1":"NA"},{"1":"NA"},{"1":"NA"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"NA"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"NA"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"NA"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"NA"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"NA"},{"1":"male"},{"1":"female"},{"1":"NA"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Pero si queremos indizar el resultante obtenemos un error:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: function '[' not supported in RHS call of a pipe</code></pre>
+</div>
+</div>
+<p>¿La alternativa? Primero indizar <code>datos1</code> y luego utilizar <code>select</code>. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar <code>R</code> base.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>,] <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sex"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"NA"},{"1":"NA"},{"1":"NA"},{"1":"female"},{"1":"male"},{"1":"male"},{"1":"female"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"female"},{"1":"male"},{"1":"male"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Por otra parte, hay una falta de consistencia interna derivada de una estrategia publicitaria (tal vez) un poco mal llevada. <code>ggplot2</code> no surgió dentro del <code>tidyverse</code>, sino que fue incluído después. Si bien es cierto que la filosofía es similar (<em>i.e.</em>, una estructura declarativa), el cómo funcionan es completamente diferente. Una de las máximas de <code>tidyverse</code> (sin <code>ggplot2</code>) es que todo lo que entra o lo que sale es un <code>data.frame</code> (o <code>tibble</code>), mientras que en <code>ggplot2</code> entra un <code>data.frame</code> y sale una lista. De hecho, más adelante veremos cómo podemos utilizar ciclos para automatizar la generación de gráficos, pero esto va en contra de la filosofía de <code>tidy</code> y no sería posible si nos hubiéramos enfocado únicamente en ella.</p>
+</section>
+<section id="los-ponentes-somos-necios" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="los-ponentes-somos-necios"><span class="header-section-number">4.2.3</span> Los ponentes somos necios</h3>
+<p>El mayor problema al que nos enfrentamos al aprender algún lenguaje de programación (y en muchas otras cosas) es que estamos sujetos a los prejuicios y preferencias de la persona que nos está enseñando. Al aprender a manejar nuestro tío amante de los autos nos va a decir que la transmisión manual (estándar) es mejor que la automática, pero nuestro papá, quien ve los carros solo como un medio de transporte, nos va a decir que con la automática es suficiente. ¿Cuál es mejor? Para variar, la respuesta es: “depende”. ¿De qué? De la situación en la que nos encontremos. En ciudad tener una transmisión manual puede ser muy cansado, pero puede darnos un mayor control en una carretera con un descenso empinado y muchas curvas.</p>
+<p>En el problema <code>R</code> base vs.&nbsp;<code>tidy</code> es lo mismo. Hay ponentes “puristas” en ambos sentidos: personas que creen que <code>tidy</code> debería considerarse sacrilegio, y personas que creen que <code>R</code> base es obsoleto, arcaico, y que debería de caer en desuso. No te conviertas en ninguno de ellos y mejor toma lo mejor de ambos.</p>
+</section>
+<section id="tidy-expande-tus-horizontes" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="tidy-expande-tus-horizontes"><span class="header-section-number">4.2.4</span> <code>tidy</code> expande tus horizontes</h3>
+<p>En mi opinión, lo que te acabo de exponer son los problemas principales de enseñar solo <code>tidy</code> y, de acuerdo con <span class="citation" data-cites="Matloff_2020">Matloff (<a href="#ref-Matloff_2020" role="doc-biblioref">2020</a>)</span>, las razones por las cuales enseñar una mezcla de ambos es la mejor opción. Aprender <code>R</code> base nos permite resolver problemas que en <code>tidy</code> sería muy largo, mientras que <code>tidy</code> nos permite simplificar procedimientos que serían más complicados en <code>R</code> base. Otra ventaja de <code>tidy</code> es que permite unificar procesos bajo una misma sintaxis.</p>
+<p>Un ejemplo de esto lo tenemos en el aspecto de aprendizaje automatizado. Si te pones a revisar tutoriales/referencias sobre aprendizaje automatizado es muy probable que te encuentres con un montón de librerías (una por problema), funciones dedicadas y sintáxis que son específicas a la técnica que quieras aplicar. Teníamos/tenemos un excelente intento de solventar este problema: <code>caret</code>. Funcionaba bien en el sentido de que permitía conjuntar una gran diversidad de técnicas de aprendizaje automatizado en un mismo entorno, unificadas en un mismo estilo. Utilizando solo <code>caret</code> podríamos ir desde el preprocesamiento de los datos hasta el entrenamiento y validación de nuestros modelos. ¿El problema? Las pocas funciones que forman su esqueleto se volvieron sumamente complejas, algunas de ellas con 30 o más argumentos. El equipo de <code>posit</code> se ha puesto el mismo desafío, y su solución es <code>tidymodels</code>. A diferencia de <code>caret</code> es altamente modular, pero mantiene la intención de unificar el flujo de trabajo en una misma estructura. Tal vez yendo en contra de nuestro consejo, la mayor parte de nuestros procedimientos de aprendizaje automatizado los realizaremos bajo <code>tidymodels</code>, pero haremos referencia a las librerías y funciones involucradas en cada paso. Para ejemplificar, realicemos una regresión lineal simple entre la longitud y la profundidad del pico de los pingüinos.</p>
+<p>En <code>R</code> base lo podemos hacer en una sola línea, llamando a la función <code>lm</code> con una fórmula y unos datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bill_length_mm ~ bill_depth_mm, data = datos1)
+
+Coefficients:
+  (Intercept)  bill_depth_mm  
+      55.0674        -0.6498  </code></pre>
+</div>
+</div>
+<p>En <code>tidymodels</code> es un poco más complejo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>parsnip model object
+
+
+Call:
+stats::lm(formula = bill_length_mm ~ bill_depth_mm, data = data)
+
+Coefficients:
+  (Intercept)  bill_depth_mm  
+      55.0674        -0.6498  </code></pre>
+</div>
+</div>
+<p>¿Por qué utilizar <code>tidymodels</code> entonces? Eso lo dejaremos para las sesiones en las que hablemos de aprendizaje automatizado, pero verás que toma mucho sentido en el momento en el que quieres hacer particiones entrenamiento/prueba, optimización mediante validación cruzada, preprocesamiento de datos, evaluación, etcétera.</p>
+</section>
+</section>
+<section id="conclusión" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="conclusión"><span class="header-section-number">4.3</span> Conclusión</h2>
+<p>Aunque <code>tidy</code> puede llegar a verse más elegante o moderno que <code>R</code> base, no es un substituto total, por lo que tampoco debes de casarte con ninguno de los dos. ¿Tu problema se resuelve más rápidamente con <code>tidy</code>? Úsalo. ¿<code>R</code> base se presta mejor? Aprovéchalo. Recuerda, <code>R</code> es una caja de herramientas en la cual debes de buscar la que mejor se adapte al problema o pregunta que quieras responder.</p>
+<p>Esto es todo para esta sesión, nos vemos en la siguiente para hablar sobre teoría y buenas prácticas para la visualización de datos.</p>
+</section>
+<section id="ejercicio" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">4.4</span> Ejercicio</h2>
+<ol type="1">
+<li>Utilizando <code>R</code> base obtén los promedios de las longitudes de picos de los pingüinos de <code>palmerpenguins</code> para cada especie en cada isla. OJO: Hay al menos dos formas de hacerlo, una muy simple y una más rebuscada. No importa cuál realices, el objetivo es que te rompas la cabeza un rato ;).</li>
+<li>Utilizando <code>tidy</code> (<code>dplyr</code>), y <strong>en una sola cadena</strong>, filtra los datos para la isla <code>Biscoe</code>, crea una columna que tenga cada valor de la masa corporal menos la media global de esa columna, y luego obtén el promedio de esta columna para cada especie.</li>
+<li>Realiza la misma operación del punto 2 con <code>R</code> base. Algunas funciones que puedes tomar en cuenta para estos dos puntos son <code>subset</code>, <code>filter</code>, <code>mutate</code>, <code>aggregate</code>, <code>summarise</code> y/o <code>for</code>.</li>
+<li>Opcionalmente puedes intentar mezclar ambos procedimientos para llegar al mismo resultado.</li>
+<li>¿Qué opción se te hizo más sencilla? ¿<code>tidy</code>, <code>R</code> base o una combinación de las dos?</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Matloff_2020" class="csl-entry" role="doc-biblioentry">
+Matloff, N. 2020. <span>“Teaching <span>R</span> in a Kinder, Gentler, More Effective Manner: Teach Base-<span>R</span>, Not Just the Tidyverse.”</span> <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU" class="uri">https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./c03_bases_r.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./c05_ggplot2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
