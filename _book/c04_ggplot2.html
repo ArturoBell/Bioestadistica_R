@@ -93,7 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./s05_mv.html" rel="next">
 <link href="./c03_bases_r.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -199,6 +199,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s05_mv.html" class="sidebar-item-text sidebar-link">Técnicas multivariadas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c1x_clasificacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -214,14 +229,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#representaciones-de-la-realidad" id="toc-representaciones-de-la-realidad" class="nav-link active" data-scroll-target="#representaciones-de-la-realidad"><span class="toc-section-number">4.1</span>  Representaciones de la realidad</a></li>
-  <li><a href="#introducción-a-ggplot2" id="toc-introducción-a-ggplot2" class="nav-link" data-scroll-target="#introducción-a-ggplot2"><span class="toc-section-number">4.2</span>  Introducción a <code>ggplot2</code></a>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link" data-scroll-target="#datos-y-variables"><span class="toc-section-number">4.2</span>  Datos y variables</a></li>
+  <li><a href="#introducción-a-ggplot2" id="toc-introducción-a-ggplot2" class="nav-link" data-scroll-target="#introducción-a-ggplot2"><span class="toc-section-number">4.3</span>  Introducción a <code>ggplot2</code></a>
   <ul class="collapse">
-  <li><a href="#ggplot-..." id="toc-ggplot-..." class="nav-link" data-scroll-target="#ggplot-..."><span class="toc-section-number">4.2.1</span>  <code>ggplot() + ...</code></a></li>
-  <li><a href="#tema-de-ggplot2" id="toc-tema-de-ggplot2" class="nav-link" data-scroll-target="#tema-de-ggplot2"><span class="toc-section-number">4.2.2</span>  Tema de <code>ggplot2</code></a></li>
-  <li><a href="#personalizar-los-ejes" id="toc-personalizar-los-ejes" class="nav-link" data-scroll-target="#personalizar-los-ejes"><span class="toc-section-number">4.2.3</span>  Personalizar los ejes</a></li>
-  <li><a href="#añadir-líneas-de-referencia" id="toc-añadir-líneas-de-referencia" class="nav-link" data-scroll-target="#añadir-líneas-de-referencia"><span class="toc-section-number">4.2.4</span>  Añadir líneas de referencia</a></li>
-  <li><a href="#conclusión-y-ejercicio" id="toc-conclusión-y-ejercicio" class="nav-link" data-scroll-target="#conclusión-y-ejercicio"><span class="toc-section-number">4.2.5</span>  Conclusión y ejercicio</a></li>
-  <li><a href="#extras" id="toc-extras" class="nav-link" data-scroll-target="#extras"><span class="toc-section-number">4.2.6</span>  Extras</a></li>
+  <li><a href="#ggplot-..." id="toc-ggplot-..." class="nav-link" data-scroll-target="#ggplot-..."><span class="toc-section-number">4.3.1</span>  <code>ggplot() + ...</code></a></li>
+  <li><a href="#tema-de-ggplot2" id="toc-tema-de-ggplot2" class="nav-link" data-scroll-target="#tema-de-ggplot2"><span class="toc-section-number">4.3.2</span>  Tema de <code>ggplot2</code></a></li>
+  <li><a href="#personalizar-los-ejes" id="toc-personalizar-los-ejes" class="nav-link" data-scroll-target="#personalizar-los-ejes"><span class="toc-section-number">4.3.3</span>  Personalizar los ejes</a></li>
+  <li><a href="#añadir-líneas-de-referencia" id="toc-añadir-líneas-de-referencia" class="nav-link" data-scroll-target="#añadir-líneas-de-referencia"><span class="toc-section-number">4.3.4</span>  Añadir líneas de referencia</a></li>
+  <li><a href="#conclusión-y-ejercicio" id="toc-conclusión-y-ejercicio" class="nav-link" data-scroll-target="#conclusión-y-ejercicio"><span class="toc-section-number">4.3.5</span>  Conclusión y ejercicio</a></li>
+  <li><a href="#extras" id="toc-extras" class="nav-link" data-scroll-target="#extras"><span class="toc-section-number">4.3.6</span>  Extras</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -247,9 +263,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="representaciones-de-la-realidad" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="representaciones-de-la-realidad"><span class="header-section-number">4.1</span> Representaciones de la realidad</h2>
+<p>Como seres humanos, con una tendencia a encontrar el camino que ofrezca una menor resistencia (otra forma de decir que somos flojos), usualmente resumimos una realidad altamente compleja utilizando distintas estrategias. Si yo te pido que me digas “qué es una orca” puedes darme una descripción textual del tipo “las orcas son mamíferos del orden Cetartiodactyla”, una descripción numérica en forma de mediciones (Longitud: 6-8 m) o medidas de tendencia central/dispersión (Peso máximo: 5.5 toneladas), pero usualmente preferimos medios audiovisuales como un dibujo, un video o, en el caso de la investigación y el tema principal de hoy, gráficos.</p>
 </section>
-<section id="introducción-a-ggplot2" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="introducción-a-ggplot2"><span class="header-section-number">4.2</span> Introducción a <code>ggplot2</code></h2>
+<section id="datos-y-variables" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="datos-y-variables"><span class="header-section-number">4.2</span> Datos y variables</h2>
+<p>En una investigación reunimos <strong>datos</strong> que después representamos con <strong>gráficos</strong>. Pues bien comencemos definiendo un dato como <strong>una representación puntual de la realidad</strong>. Son un solo valor, sea una sola medición, un promedio, una desviación estándar, una proporción de sexos, etc, y el <strong>conjunto de datos de un mismo atributo medidos en distintos individuos</strong> nos dan una <strong>variable</strong>. Es decir, en nuestros conjuntos de datos cada valor es un dato, y cada columna (usualmente) es una variable. ¿Por qué es importante conocer esto? Porque hay distintos tipos de variables, los cuales definen cómo es que vamos a graficar y tratar esos datos:</p>
+<ol type="1">
+<li><strong>Cualitativas</strong>: hacen referencia a las cualidades de nuestros individuos, y tienen dos escalas:
+<ul>
+<li><strong>Nominal</strong>: hace referencia a categorías en las que <strong>no hay un orden</strong> o distintas importancias. Ejemplos pueden el sexo o el color.</li>
+<li><strong>Ordinal</strong>: aquí hay un órden, y un ejemplo muy claro son las encuestas: 0 es nunca, 1 es casi nunca, 2 es ocasionalmente, 3 es casi siempre y 4 es siempre. Aunque son categorías bien definidas, 2 &lt; 3 y 3 &lt; 4. No son cuantitativas porque las respuestas están sujetas a la interpretación personal, pero descartar el órden en el análisis sería un error.</li>
+</ul></li>
+<li><strong>Cuantitativas</strong>, que hacen referencia a atributos <strong>cuantificables</strong> de manera objetiva. Hay dos tipos, cada uno con dos escalas.
+<ul>
+<li>Tipos:
+<ul>
+<li><strong>Discretas</strong>: Son solo números enteros. Un ejemplo cotidiano es la edad, que usualmente la expresamos en años. No vamos por la vida diciendo tengo 18.5 años o 18 años con 6 meses, solo decimos tengo 18 años.</li>
+<li><strong>Continuas</strong>: Es el caso contrario, son números fraccionarios. Se les denomina continuas porque hay un número infinito de valores posibles entre un valor y el otro, un ejemplo es la temperatura (35.1ºC, 100 K, etc.)</li>
+</ul></li>
+<li>Escalas:
+<ul>
+<li><strong>Intervalo</strong>: La escala de intervalo es aquella en donde el 0 NO es absoluto o, mejor dicho, donde el 0 es arbitrario. La temperatura expresada en grados centígrados es un ejemplo claro, 0ºC no indica ausencia de movimiento molecular, solo toma como referencia arbitraria el punto de congelación del agua.</li>
+<li><strong>Razón</strong>: Aquí el 0 sí es absoluto y representa la ausencia del atributo en cuestión. La longitud es un ejemplo, si algo tiene longitud 0 más bien no tiene longitud, o si algo tiene una temperatura de 0 K quiere decir que no tiene movimiento molecular (~-273.15ºC).</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>Algo que es muy importante tener siempre bien presente es que, aún cuando existen herramientas y técnicas que nos permiten procesar múltiples variables, en cualquier procedimiento de ciencia de datos es <strong>INDISPENSABLE</strong> que los datos sean de excelente calidad y, sobre todo, que sean adecuados para responder la pregunta que nos interesa, lo cual nos debe de llevar, invariablemente, a preguntarnos “¿qué datos debo de obtener?” O, en otras palabras, “¿qué debo medir?” Una frase que se me quedó marcada de mis clases de la licenciatura es “La investigación inicia y termina en el escritorio del investigador”; es decir, no salimos a hacer trabajo de campo y a registrar todo lo que se nos atraviese, caso contrario podemos terminar en una conclusión como “los bebés son traídos por cigüeñas”, la cual tiene una anécdota bastante divertida</p>
+</section>
+<section id="introducción-a-ggplot2" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="introducción-a-ggplot2"><span class="header-section-number">4.3</span> Introducción a <code>ggplot2</code></h2>
 <p>Antes de comenzar una visualización es necesario saber qué queremos responder con ella. En este caso, utilizaremos la base de datos <code>mpg</code> incluída en <code>ggplot2</code>. El primer paso es, entonces, conocer la información que contiene. Para ello guardaremos la base en una variable que llamaremos <code>df1</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -277,13 +319,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<section id="ggplot-..." class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="ggplot-..."><span class="header-section-number">4.2.1</span> <code>ggplot() + ...</code></h3>
+<section id="ggplot-..." class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="ggplot-..."><span class="header-section-number">4.3.1</span> <code>ggplot() + ...</code></h3>
 <p>A partir de esta información podemos tratar de responder si existe una relación apreciable entre el consumo de combustible (por ejemplo en autopista) y el desplazamiento del motor, considerando la clase del vehículo. Para atender a esta pregunta utilizaremos un gráfico de dispersión, con el desplazamiento en el eje x, el consumo en el eje y y la clase indicada por los colores de los puntos. Ahora que tenemos claro qué queremos visualizar y cómo lo vamos a visualizar podemos empezar a graficar. El primer paso es inicializar el espacio de graficado con la función <code>ggplot()</code> y pasarle los parámetros estéticos utilizando la función <code>aes(x, y, colour)</code>. Es importante mencionar que en este momento aparecerá únicamente el espacio de graficado en blanco. Esto es normal, ya que únicamente definimos el “qué”, pero no el “cómo”.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> displ, <span class="at">y =</span> cty, <span class="at">colour =</span> class))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Ya que inicializamos el espacio gráfico podemos agregar la información que nos interesa. Para facilitar la construcción paso a paso y evitar el repetir código innecesariamente podemos almacenar la gráfica completa en una variable (por ejemplo <code>plot2</code>) e ir añadiendo capas (operador <code>+</code>) posteriormente. Para ver un gráfico guardado en una variable simplemente hay que llamar a esa variable. La primera capa que agregaremos será la que indicará el tipo de gráfico que deseamos (nombrados como <code>geom_*</code>), en este caso un gráfico de dispersión:</p>
@@ -292,7 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_point</span>()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="co"># Imprime el gráfico</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Ahora sí tenemos la información que necesitamos y podríamos comenzar a describir el gráfico, pero en realidad hay demasiados elementos que son innecesarios y otros que son poco informativos en su estado actual (etiquetas de ejes), entonces trabajemos uno por uno. Para modificar las etiquetas de los ejes podemos utilizar las funciones <code>xlab()</code> y <code>ylab()</code> como capas separadas; sin embargo, podemos modificar todas las etiquetas y títulos en un mismo paso utilizando la función <code>labs(title, x, y, caption, colour, ...)</code>.</p>
@@ -306,17 +348,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">caption =</span> <span class="st">'Datos: ggplot2::mpg'</span>)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="tema-de-ggplot2" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="tema-de-ggplot2"><span class="header-section-number">4.2.2</span> Tema de <code>ggplot2</code></h3>
+<section id="tema-de-ggplot2" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="tema-de-ggplot2"><span class="header-section-number">4.3.2</span> Tema de <code>ggplot2</code></h3>
 <p>Ahora que está claro cuáles son las variables que estamos mostrando podemos empezar a modificar la estética. Recordemos que debemos mantener la relación datos/tinta lo más alta posible, y uno de los elementos más prevalentes del gráfico es el fondo gris con todo y cuadrículas. Para modificar esos elementos tenemos que modificar el “tema” de la gráfica, que no es otra cosa mas que utilizar una función que nos permita modificar en una sola línea la estética general del gráfico. Los temas se encuentran señalados con el nombre <code>theme_*</code>. Probemos con <code>theme_minimal()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Logramos eliminar el fondo gris y de paso las “espinas” (líneas de los ejes) y ahora el gráfico está en mucho mejor condición para ser presentado; sin embargo aún podemos ir más lejos. El objetivo de esta gráfica no es ver los detalles precisos de la información, si no extraer la información más relevante, por lo que la cuadrícula es un elemento que no aporta nada a la visualización. Para retirarla utilizaremos la función <code>theme()</code>, la cual permite modificar el aspecto de todos los elementos del gráfico. En realidad, las funciones <code>theme_*()</code> son aplicaciones de <code>theme()</code> con diferentes valores por defecto, por lo que podemos replicar el efecto de <code>theme_minimal()</code> e incluir otras modificaciones. Otra función muy útil para este procedimiento es la función <code>element_blank()</code>, la cual le indica a <code>ggplot2</code> que no debe mostrar ese elemento. Otra cuestión importante que debemos de considerar es la relación de aspecto. Debido a que esta puede modificar enormemente la percepción de los datos, su selección no es algo trivial. En general, la proporción áurea (1:1.61) es un buen punto de partida y en series de tiempo es la proporción que menos deforma los datos. Una proporción cuadrada tiene sentido únicamente en aquellos casos en los que ambos ejes tengan la misma magnitud de variación y procuraremos que el eje más largo sea aquel con la variación más pequeña. En este caso, la variación del eje y (5 a 45) es mucho mayor que la del eje x (1.5 a 7), por lo cual una proporción cuadrada no sería una buena alternativa. En su lugar, utilicemos la proporción áurea. El último elemento que eliminaremos aquí son las marcas de los ejes, ya que realmente no aportan demasiada información.</p>
@@ -339,24 +381,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>                       )</span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="personalizar-los-ejes" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="personalizar-los-ejes"><span class="header-section-number">4.2.3</span> Personalizar los ejes</h3>
+<section id="personalizar-los-ejes" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="personalizar-los-ejes"><span class="header-section-number">4.3.3</span> Personalizar los ejes</h3>
 <p>Ahora que nos deshicimos del fondo, la cuadrícula y las líneas y marcas de los ejes podemos trabajar en los valores de los ejes. Una de las mejores maneras de hacerlo es utilizando las funciones <code>scale_x_*()</code> o <code>scale_y_*()</code>, sustituyendo el * por <code>continuous</code> o <code>discrete</code> dependiendo del tipo de variable con el que estemos trabajando. En este caso, eliminaremos por completo las marcas del eje y y dejaremos únicamente los desplazamientos más comunes en el eje x.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> plot2 <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="fl">1.8</span>, <span class="fl">2.5</span>, <span class="dv">5</span>, <span class="dv">7</span>)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="añadir-líneas-de-referencia" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="añadir-líneas-de-referencia"><span class="header-section-number">4.2.4</span> Añadir líneas de referencia</h3>
+<section id="añadir-líneas-de-referencia" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="añadir-líneas-de-referencia"><span class="header-section-number">4.3.4</span> Añadir líneas de referencia</h3>
 <p>Ahora que nos deshicimos de los valores del eje la gráfica ya no es entendible debido a que no sabemos cuál es la orientación o la escala de los datos. Una alternativa es añadir un par de líneas de referencia. Esto lo haremos con la función <code>geom_hline()</code>, la cual nos permite añadir líneas horizontales a través de todo el gráfico que cruzan al eje y en una posición que nosotros determinamos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores de referencia como el mínimo, la media y</span></span>
@@ -379,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>                            <span class="at">linetype =</span> <span class="st">'dashed'</span>)</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Ahora el gráifico ya cuenta nuevamente con un sentido de dimensión, pero no tenemos los valores de referencia, entonces habrá que poner esas anotaciones con la función <code>geom_text()</code>, utilizando como valores de posición en y los mismos que las líneas de referencia + un pequeño valor:</p>
@@ -396,28 +438,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">colour =</span> <span class="st">'forestgreen'</span>)</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plot2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Con esta última modificación terminamos de explorar algunas de las funciones más básicas e importantes para personalizar los elementos que más impactan en una visualización, pero antes de terminar de discutir este punto me gustaría terminar el objetivo que nos propusimos al inicio de sacar información de la gráfica. En general, existe una tendencia a que el consumo de combustible incremente conforme incrementa el desplazamiento, lo cual es de esperarse, ya que el desplazamiento es una medida de el volumen máximo de combustible que puede entrar al motor en un momento dado; sin embargo, podemos también observar que, independientemente del desplazamiento, las SUVs y pickups tienden a tener los peores rendimientos de combustible, mientras que los subcompactos tienden al otro extremo. Podemos también analizar a los vehículos de dos plazas y ver que aún cuando tienen desplazamientos altos, sus rendimientos son mejores que los de las SUVs.</p>
 </section>
-<section id="conclusión-y-ejercicio" class="level3" data-number="4.2.5">
-<h3 data-number="4.2.5" class="anchored" data-anchor-id="conclusión-y-ejercicio"><span class="header-section-number">4.2.5</span> Conclusión y ejercicio</h3>
+<section id="conclusión-y-ejercicio" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="conclusión-y-ejercicio"><span class="header-section-number">4.3.5</span> Conclusión y ejercicio</h3>
 <p>En cuanto a la parte visual, se podría argumentar que esta visualización final no es tan precisa como la primera, que algún elemento podría embellecerse, o que podriamos eliminar la leyenda y poner etiquetas de texto en algunos puntos para indicar las clases. Todos estos argumentos y muchos otros serían válidos ya que la estética es algo subjetivo; sin embargo, las decisiones que tomemos deberán estar en función del medio de distribución de la visualización (no es lo mismo una página web que en un medio impreso, por ejemplo) y sobre todo del público objetivo. Esta visualización en particular funciona para los fines didácticos que tenía en mente, es adecuada para una presentación de resultados de manera electrónica como este video, pero no es una visualización adecuada para una publicación científica. Tomando eso en cuenta, te sugiero hacer el ejercicio de transformarla para cumplir con ese objetivo, ¿qué elementos quitarías? ¿qué elementos cambiarías? ¿qué elementos agregarías? ¿crees que en su estado actual cumple con los criterios de Tufte y Cairo que revisamos la clase anterior?</p>
 <p>Para finalizar la clase te presento la visualización inicial y la final, una junto a la otra, para ver en dónde comenzamos, dónde terminamos y cómo llegamos hasta aquí. También te sugiero revises y descargues el PDF de <a href="https://bit.ly/2FslHr1">esta página</a>, que es un acordeón donde se encuentran los gráficos y funciones más comunes. Más adelante revisaremos algunos de ellos pero es un recurso que vale la pena tener a la mano.</p>
 <p>Esto es todo para esta clase. ¡Nos vemos en la siguiente!</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<section id="gráfico-final" class="level4" data-number="4.2.5.1">
-<h4 data-number="4.2.5.1" class="anchored" data-anchor-id="gráfico-final"><span class="header-section-number">4.2.5.1</span> Gráfico final</h4>
+<section id="gráfico-final" class="level4" data-number="4.3.5.1">
+<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="gráfico-final"><span class="header-section-number">4.3.5.1</span> Gráfico final</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Valores de referencia para utilizar en la gráfica</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>refs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">min</span>(df1<span class="sc">$</span>hwy),<span class="dv">0</span>),  <span class="co"># Valor mínimo = peor consumo</span></span>
@@ -487,29 +529,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>              </span>
 <span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>final.plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="extras" class="level3" data-number="4.2.6">
-<h3 data-number="4.2.6" class="anchored" data-anchor-id="extras"><span class="header-section-number">4.2.6</span> Extras</h3>
+<section id="extras" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="extras"><span class="header-section-number">4.3.6</span> Extras</h3>
 <p>Aunque estas modificaciones no necesariamente forman parte del proceso necesario para la visualización que era de nuestro interés, sí que son rutinarias, por lo que vale la pena echarles un ojo.</p>
-<section id="colores-de-puntos" class="level4" data-number="4.2.6.1">
-<h4 data-number="4.2.6.1" class="anchored" data-anchor-id="colores-de-puntos"><span class="header-section-number">4.2.6.1</span> Colores de puntos</h4>
+<section id="colores-de-puntos" class="level4" data-number="4.3.6.1">
+<h4 data-number="4.3.6.1" class="anchored" data-anchor-id="colores-de-puntos"><span class="header-section-number">4.3.6.1</span> Colores de puntos</h4>
 <p>Modificar los colores de los puntos. Podemos utilizar la función <code>randomColor(n)</code> de la librería con el mismo nombre. Esta función solamente recibe el número de colores que queremos y los generará de manera aleatoria:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>aleat <span class="ot">&lt;-</span> randomcoloR<span class="sc">::</span><span class="fu">randomColor</span>(<span class="dv">7</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Clase"</span>, <span class="at">values =</span> aleat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Podemos también especificar una paleta predefinida, utilizando la capa <code>scale_color_brewer()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">scale_color_brewer</span>(<span class="at">type =</span> <span class="st">"seq"</span>, <span class="at">palette =</span> <span class="st">"Paired"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Otra opción es directamente pasar un vector con los nombres de los colores que sean de nuestro interés:</p>
@@ -518,29 +560,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"dodgerblue"</span>, <span class="st">"pink"</span>, <span class="st">"gray"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Clase"</span>, <span class="at">values =</span> color_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="tamaño-de-los-puntos" class="level4" data-number="4.2.6.2">
-<h4 data-number="4.2.6.2" class="anchored" data-anchor-id="tamaño-de-los-puntos"><span class="header-section-number">4.2.6.2</span> Tamaño de los puntos</h4>
+<section id="tamaño-de-los-puntos" class="level4" data-number="4.3.6.2">
+<h4 data-number="4.3.6.2" class="anchored" data-anchor-id="tamaño-de-los-puntos"><span class="header-section-number">4.3.6.2</span> Tamaño de los puntos</h4>
 <p>Para modificar el tamaño de los puntos solamente hay que agregar el argumento <code>size</code> a la capa <code>geom_point</code>, en el cuál indicaremos qué tamaños tomarán los puntos. Puede ser un solo valor:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>O también a partir de una columna de la base de datos (dividida entre 5 para no obtener únicamente “manchas”):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> df1<span class="sc">$</span>hwy<span class="sc">/</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="tipografías-y-exportación-de-gráficos" class="level4" data-number="4.2.6.3">
-<h4 data-number="4.2.6.3" class="anchored" data-anchor-id="tipografías-y-exportación-de-gráficos"><span class="header-section-number">4.2.6.3</span> Tipografías y Exportación de gráficos</h4>
+<section id="tipografías-y-exportación-de-gráficos" class="level4" data-number="4.3.6.3">
+<h4 data-number="4.3.6.3" class="anchored" data-anchor-id="tipografías-y-exportación-de-gráficos"><span class="header-section-number">4.3.6.3</span> Tipografías y Exportación de gráficos</h4>
 <p>El manejo de las tipografías en R es un poco especial, por ello usualmente recomiendo generar el gráfico en R, exportarlo como PDF (<code>cairo_pdf("filename.pdf", width, height, family)</code>) y agregar las cursivas donde sea necesario; sin embargo, un paquete que puede resultar especialmente útil es <code>ggtext</code>. Este añade un nuevo “elemento” de texto que recibe formato Markdown (<code>element_markdown()</code>); es decir, podemos agregar <em>itálicas</em> o <strong>negritas</strong>. Para poder utilizarlo, sin embargo, es necesario modificar ligeramente nuestros datos de antemano. Para facilitarnos las cosas agregaremos una nueva columna a <code>df1</code> que contenga las clases en <em>itálicas</em> y extraeremos los valores únicos (algo más eficiente sería hacerlo al revés, pero es más lógico de esta manera):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>clase <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"*"</span>,df1<span class="sc">$</span>class,<span class="st">"*"</span>)</span>
@@ -555,7 +597,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Clase"</span>,<span class="at">labels =</span> clases) <span class="sc">+</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme</span>(<span class="at">legend.text =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Con este elemento podemos modificar también fracciones de cualquier texto de nuestra gráfica, por ejemplo carretera en negritas:</p>
@@ -563,7 +605,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>final.plot <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Consumo en **carretera**"</span>) <span class="sc">+</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Mezclando ambas modificaciones:</p>
@@ -573,7 +615,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">legend.text =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid" width="672"></p>
+<p><img src="c04_ggplot2_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 
@@ -688,8 +730,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./s05_mv.html" class="pagination-link">
+        <span class="nav-page-text">Técnicas multivariadas</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

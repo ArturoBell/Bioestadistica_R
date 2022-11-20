@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bioestadistica Aplicada con R y RStudio - Biología como Ciencia de Datos</title>
+<title>Bioestadística Aplicada con R y RStudio - Biología como Ciencia de Datos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Bioestadistica Aplicada con R y RStudio</a> 
+      <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -100,7 +100,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preparación</span></a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -113,26 +113,41 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introducción a RStudio y Quarto</span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a RStudio y Quarto</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c04_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s05_mv.html" class="sidebar-item-text sidebar-link">Técnicas multivariadas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction</span></a>
+  <a href="./c1x_clasificacion.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary</span></a>
-  </div>
-</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
@@ -172,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="objetivo-de-aprendizaje" class="level2">
 <h2 class="anchored" data-anchor-id="objetivo-de-aprendizaje">Objetivo de aprendizaje</h2>
-<p>En esta sección del curso comenzarás reflexionando sobre el cómo se han aplicado tradicionalmente las técnicas estadísticas a los problemas biológicos, y cómo esta aproximación puede no ser óptima. Después, instalarás <a href="">R</a>, <a href="">RStudio</a> y <a href="">Quarto</a>. Posteriormente te introducirás a R utilizando RStudio y terminarás con una introducción a los conceptos básicos detrás de la visualización de datos.</p>
+<p>En esta sección del curso comenzarás reflexionando sobre el cómo se han aplicado tradicionalmente las técnicas estadísticas a los problemas biológicos, y cómo esta aproximación puede no ser óptima. Después, te introducirás a R utilizando RStudio y terminarás con una introducción a los conceptos básicos detrás de la visualización de datos.</p>
 
 
 </section>
@@ -279,12 +294,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./s0_preparacion.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preparación</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preparación</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./c01_biolcdatos.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

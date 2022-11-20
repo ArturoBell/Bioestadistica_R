@@ -1,0 +1,90 @@
+# Aprendizaje supervisado: Clasificación
+
+## Bosques aleatorios
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(tidymodels)
+```
+
+```{r}
+iris.plot <- ggplot(iris, aes(x = Species, y = Petal.Length)) +
+             geom_point(color = "dodgerblue4", alpha = 0.8) +
+             theme_bw()
+iris.plot
+```
+
+El primer paso es separar nuestros datos en datos de entreenamiento y prueba, lo cual podemos hacer con las funciones `initial_split`, `training` y `testing` de la librería `rsample`:
+
+```{r}
+set.seed(123)
+iris_split <- initial_split(iris, strata = Species)
+iris_train <- training(iris_split)
+iris_test <- testing(iris_split)
+```
+
+Luego, construimos una receta para el preprocesamiento de los datos:
+
+1. Le damos a la receta (`recipe()`) la fórmula y los datos de entrenamiento
+2. Añadimos un paso para centrar los datos numéricos. Recuerda, solo estamos poniendo todos los valores numéricos en la misma escala
+
+El objeto `iris_prep` sigue los pasos a seguir para el preprocesamiento de los datos (por ello receta) y obtiene los parámetros con los que se van a preprocesar los datos, mientras que `juiced` obtiene los datos procesados. 
+
+```{r}
+iris_rec <- recipe(Species~., data = iris_train) |> 
+            step_center(all_numeric())
+iris_prep <- iris_rec |> prep()
+juiced <- juice(iris_prep)
+```
+
+Ahora podemos especificar el modelo de bosques aleatorios, donde ajustaremos sus hiperparámetros:`mtry` (el número máximo de predictores por árbol), `min_n` (el número de observaciones necesarias para seguir dividiendo los datos) y `trees` (el número de árboles en el ensemble). Después especificamos que es un bosque para clasificación, y por último le indicamos que utilice la librería `ranger` para construir el bosque:
+
+```{r}
+tune_spec <- rand_forest(mtry = tune(),
+                         trees = tune(),
+                         min_n = tune()) |> 
+             set_mode("classification") |>
+             set_engine("ranger")
+```
+
+Finalmente, formamos un flujo de trabajo que contenga ambos pasos: la receta de preprocesamiento y el modelo
+
+```{r}
+tune_wf <- workflow() |> 
+           add_recipe(iris_rec) |> 
+           add_model(tune_spec)
+```
+
+Ahora sí, podemos ajustar nuestros hiper-parámetros. Primero, asignemos un confjunto de remuestreos para la validación cruzada, construidos a partir de los datos de entrenamiento:
+
+```{r}
+set.seed(0)
+iris_fold <- vfold_cv(iris_train)
+```
+
+Luego establezcamos el procesamiento en paralelo para hacer el procedimiento más rápido. En este primer proceso vamos a escoger 20 puntos aleatorios para guiar nuestra búsqueda y no abusar de la fuerza bruta para resolver el problema:
+
+```{r}
+doParallel::registerDoParallel(cores = 6)
+tune_res <- tune_grid(tune_wf,
+                      resamples = iris_fold,
+                      grid = 20)
+```
+
+Veamos nuestros AUCs:
+
+```{r}
+tune_res |> collect_metrics() |> 
+            filter(.metric == "roc_auc") |> 
+            select(mean, min_n, mtry, trees) |>
+            pivot_longer(min_n:trees,
+                         values_to = "value",
+                         names_to = "parameter") |> 
+            ggplot(aes(value, mean, color = parameter)) +
+            geom_point(show.legend = F) +
+            facet_wrap(~parameter, scales = "free_x")
+```
+
+

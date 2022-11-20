@@ -1,29 +1,26 @@
----
-supress-bibliography: true
----
-# Introducción a RStudio y Quarto
+# Introducción a `RStudio` y `Quarto`
 
 {{< video https://www.youtube.com/embed/wo9vZccmqwc >}}
 
-En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran RStudio y Quarto (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación R, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interface que provee RStudio. Te adelanto: si lo utilizas adecuadamente, RStudio (en conjunto con Quarto) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es RStudio.
+En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran `RStudio` y `Quarto` (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación `R`, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interface que provee `RStudio`. Te adelanto: si lo utilizas adecuadamente, `RStudio` (en conjunto con `Quarto`) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es `RStudio`.
 
-## R vs. RStudio
+## `R` vs. `RStudio`
 
-Antes de volar y pretender formar un sitio web o una tesis, comencemos hablando de RStudio. En la sección de preparación instalamos tres cosas diferentes: R, RStudio, y Quarto. Olvidemos a este último por un momento y centrémonos en los dos primeros. `R` es un **lenguaje de programación**. Como tal, se ejecuta en consola, ya sea el terminal (macOS/Linux) o el interpretador de comandos `cmd` en Windows. Lo único que veremos si abrimos/ejecutamos R *per-se* es una ventana como la siguiente:
+Antes de volar y pretender formar un sitio web o una tesis, comencemos hablando de `RStudio`. En la sección de preparación instalamos tres cosas diferentes: `R`, `RStudio`, y `Quarto`. Olvidemos a este último por un momento y centrémonos en los dos primeros. `R` es un **lenguaje de programación**. Como tal, se ejecuta en consola, ya sea el terminal (macOS/Linux) o el interpretador de comandos `cmd` en Windows. Lo único que veremos si abrimos/ejecutamos `R` *per-se* es una ventana como la siguiente:
 
-![Consola de R (R GUI)](imgs/Rgui.png){#fig-Rgui}
+![Consola de `R` (`R` GUI)](imgs/Rgui.png){#fig-Rgui}
 
 Es decir, solamente veremos nuestra consola, compuesta por una descripción de la versión de `R` que estamos utilizando y un *prompt* (el símbolo `>`) que nos presiona a darle a la computadora una instrucción. Más allá de ser una interfaz extremadamente simple, no está pensada para el desarrollo de reportes como los que nosotros realizamos. No podemos escribir texto libre, ni tampoco podemos guardar nuestro progreso. Para eso habría que abrir un script, pero hay una mejor alternativa que nos permite hacer eso y mucho más: `RStudio`. Por el momento hasta aquí vamos a llegar con `R`, pero no te preocupes, le vamos a dedicar mucho más tiempo posteriormente.
 
-## El IDE RStudio
+## El IDE `RStudio`
 
 Mientras que `R` es un lenguaje de programación ejecutable en consola, **`RStudio` es un ambiente gráfico de desarrollo (IDE)**. ¿Qué significa? Que es una **interfaz gráfica** que nos permite no solo ejecutar nuestro código línea a línea, sino que también incluye otros páneles que nos facilitan enormemente la existencia y, además, abre otras puertas para la creación de documentos como este libro. Vayamos por partes.
 
-### La ventana de RStudio
+### La ventana de `RStudio`
 
 Al abrir `RStudio` por primera vez te vas a topar con una ventana como la siguiente:
 
-![Ventana de RStudio](imgs/RS_1.png){#fig-RS_1}
+![Ventana de `RStudio`](imgs/RS_1.png){#fig-RS_1}
 
 Ya sé, ya sé, no se ve mucho más amable que la ventana de `R`. Es más, se ve mucho más intimidante porque ahora tenemos la consola y otros 3 espacios. Al ser un IDE, `RStudio` incluye elementos gráficos para todo lo que pudiéramos llegar a necesitar mientras desarrollamos nuestros análisis, entonces vamos a descomponer esta ventana panel por panel, de arriba a abajo y de izquierda a derecha.
 
@@ -31,7 +28,7 @@ Ya sé, ya sé, no se ve mucho más amable que la ventana de `R`. Es más, se ve
 
 El primer panel es el **editor**:
 
-![Editor en RStudio](imgs/RS_2.png){#fig-RS_2}
+![Editor en `RStudio`](imgs/RS_2.png){#fig-RS_2}
 
 Este es, como el nombre sugiere, un **editor de textos**, que no debemos de confundir con procesador de palabras (*i.e.*, Word o similares). En él vamos a poder escribir `sripts` o `libretas` que contengan la serie de pasos que realizamos durante nuestro análisis. Cada una de las pestañas en este panel es **siempre** un documento de **texto simple**, independientemente de si es un script o una libreta. Esto tiene varias ventajas, pero la más importante es que nos podemos llevar esos archivos a cualquier computadora y estar bastante seguros de que podremos, cuando menos, ver su contenido y editarlo sin preocuparnos por problemas de compatibilidad entre versiones del software o, peor aún, sistemas operativos (\*ejem\* Word \*ejem\*). Estos archivos de texto simple pueden, dependiendo del tipo de archivo, enviar instrucciones a `R`.
 
@@ -39,13 +36,13 @@ Este es, como el nombre sugiere, un **editor de textos**, que no debemos de conf
 
 El siguiente panel es la **consola**:
 
-![Consola en RStudio](imgs/RS_2.png){#fig-RS_3}
+![Consola en `RStudio`](imgs/RS_2.png){#fig-RS_3}
 
 Este panel es, literalmente, lo que veíamos al abrir `R` en sí mismo; es decir, un espacio donde tenemos nuestro prompt y donde se ejecutarán nuestras instrucciones o líneas de comandos. Notarás que hay otras tres pestañas: una llamada `Terminal`, y otra llamada `Background Jobs`. Estas son interfaces a la terminal del sistema y a los trabajos que estemos ejecutando en segundo plano. Nuestra interacción con estas dos pestañas va a ser limitada, salvo que realicemos algo muy especializado. En el curso solo entraremos ocasionalmente al Terminal.
 
 #### ¿Reportes como scripts?
 
-Antes de pasar al siguiente panel es importante hablar de los `scripts` y las `libretas`, e intentar hacer un poco de labor de convencimiento. Si has tenido un acercamiento previo a R/RStudio, es bastante probable que estés familiarizado e incluso acostumbrado a trabajar con `scripts`. Si no, un `script` de `R` es un archivo de texto con extensión `.R` en el que ponemos nuestro código línea a línea. Pensemos en un ejercicio en el que queremos primero sumar 1 y 1, y luego 2 y 2. Nuestro script en `RStudio` se vería así:
+Antes de pasar al siguiente panel es importante hablar de los `scripts`, las `libretas`, e intentar hacer un poco de labor de convencimiento. Si has tenido un acercamiento previo a `R`/`RStudio`, es bastante probable que trabajar con `scripts` te sea familiar. Si no es así, un `script` de `R` es un archivo de texto con extensión `.R` en el que ponemos nuestro código línea a línea. Pensemos en un ejercicio en el que queremos primero sumar 1 y 1, y luego 2 y 2. Nuestro script en `RStudio` se vería así:
 
 ![Script en el editor](imgs/RS_s1.png){#fig-RS_s1}
 
@@ -59,7 +56,7 @@ Sea cual sea la opción que hayas escogido, **la salida (el resultado) aparecer�
 
 ![Script ejecutado en consola](imgs/RS_s2.png){#fig-RS_s2}
 
-¿Cuál es el problema? El primero es que en el momento en el que cerremos RStudio esos resultados se van a perder, salvo que los hayamos guardado manualmente en algún lugar. El segundo tiene que ver con una falta de cohesión: el código (las sumas) están por un lado, mientras que los resultados están por otro. El tercero se deriva de los dos anteriores: falta de legibilidad y reproducibilidad. No podemos hacer el reporte al mismo tiempo en que analizamos los datos, y si en algún momento volvemos al `script` debemos de ejecutarlo todo nuevamente para ver los resultados. Suena engorroso, ¿no? Un cuarto problema es que no tenemos descripciones de nuestros resultados. Si ya has trabajado con estos archivos me vas a decir "para eso existen los comentarios", a lo que yo te respondería que no, los comentarios no son para eso. Si no has trabajado con R ni ningún otro lenguaje de programación te preguntarás qué es un comentario. Bien, **un comentario es un fragmento de texto no ejecutable**; es decir, es algo que podemos escribir y pasarle a la consola pero que no se va a ejecutar. En `R` estos están dados por el operador `#`. Agreguemos un comentario a nuestro script con la palabra "Sumas" y ejecutémoslo todo nuevamente:
+¿Cuál es el problema? El primero es que en el momento en el que cerremos `RStudio` esos resultados se van a perder, salvo que los hayamos guardado manualmente en algún lugar. El segundo tiene que ver con una falta de unificación: el código (las sumas) están por un lado, mientras que los resultados están en otro que, además, es volátil. El tercero se deriva de los dos anteriores: falta de legibilidad y reproducibilidad. No podemos hacer el reporte al mismo tiempo en que analizamos los datos y, si en algún momento volvemos al `script`, debemos de ejecutarlo todo nuevamente para ver los resultados. Suena engorroso, ¿no? Un cuarto problema es que no tenemos descripciones de nuestros resultados. Si ya has trabajado con estos archivos me vas a decir "para eso existen los comentarios", a lo que yo te respondería que no, los comentarios no son para eso. Si no has trabajado con R ni ningún otro lenguaje de programación te preguntarás qué es un comentario. Bien, **un comentario es un fragmento de texto no ejecutable**; es decir, es algo que podemos escribir y pasarle a la consola pero que no se va a ejecutar. En `R` estos están dados por el operador `#`. Agreguemos un comentario a nuestro script con la palabra "Sumas" y ejecutémoslo todo nuevamente:
 
 ![Script con comentarios ejecutado en consola](imgs/RS_s3.png){#fig-RS_s3}
 
@@ -67,24 +64,24 @@ Como esperábamos, en la consola no hay una salida asociada a la instrucción `#
 
 #### Libretas y reportes: `Quarto`
 
-Aquí es donde entran `Quarto` y las libretas. Al instalar `Quarto` no instalamos un programa *per-se*, sino que instalamos una extensión a `RStudio` que es, y cito textualmente, "un sistema de publicación científica y técnica de código abierto construido sobre `Pandoc`", que permite, citando nuevamente: i) crear contenido dinámico no solo con R sino con otros lenguajes de programación; ii) escribir documentos como texto plano; iii) publicar artículos, reportes, presentaciones, sitios web, blogs y libros de alta calidad en formatos `HTML`, `PDF`, `MS Word`, `ePUB`; y iv) escribir con `markdown` científico, incluyendo ecuaciones, citas, referencias cruzadas, páneles de figuras, anotaciones, diseños avanzados y más. ¿A que ya suena mejor que los scripts? Sin ir más lejos, todo el material que utilizaremos en este curso fue escrito en `RStudio` utilizando `Quarto`, y puedes ver la versión final en el sitio web de acompañamiento. Debido a que explicar `Quarto` es un tema que merece le dediquemos tiempo y estar más arriba que un subtema de IDE RStudio, vamos a dejarlo de lado por el momento, solo revisemos cómo crear un nuevo documento y las diferencias fundamentales con los `scritps`. Para crear un documento podemos ir a la barra de herramientas -> File -> New file -> Quarto document, o utilizar el botón correspondiente en la ventana de RStudio:
+Aquí es donde entran `Quarto` y las libretas. Al instalar `Quarto` no instalamos un programa *per-se*, sino que instalamos una extensión a `RStudio` que es, y cito textualmente, "un sistema de publicación científica y técnica de código abierto construido sobre `Pandoc`", que permite, citando nuevamente: i) crear contenido dinámico no solo con R sino con otros lenguajes de programación; ii) escribir documentos como texto plano; iii) publicar artículos, reportes, presentaciones, sitios web, blogs y libros de alta calidad en formatos `HTML`, `PDF`, `MS Word`, `ePUB`; y iv) escribir con `markdown` científico, incluyendo ecuaciones, citas, referencias cruzadas, páneles de figuras, anotaciones, diseños avanzados y más. ¿A que ya suena mejor que los scripts? Sin ir más lejos, todo el material que utilizaremos en este curso fue escrito en `RStudio` utilizando `Quarto`, y puedes ver la versión final en el sitio web de acompañamiento. Debido a que explicar `Quarto` es un tema que merece le dediquemos tiempo y estar más arriba que un subtema de IDE `RStudio`, vamos a dejarlo de lado por el momento, solo revisemos cómo crear un nuevo documento y las diferencias fundamentales con los `scritps`. Para crear un documento podemos ir a la barra de herramientas -> File -> New file -> `Quarto` document, o utilizar el botón correspondiente en la ventana de `RStudio`:
 
-![Nuevo documento Quarto](imgs/RS_q0.png){#fig-RS_q0}
+![Nuevo documento `Quarto`](imgs/RS_q0.png){#fig-RS_q0}
 
 Al darle click nos va a aparecer la siguiente ventana para personalizar el documento:
 
-![Opciones documento Quarto](imgs/RS_q1.png){#fig-RS_q1}
+![Opciones documento `Quarto`](imgs/RS_q1.png){#fig-RS_q1}
 
 Aquí añadirás el título de tu documento y opcionalmente el autor. Por el momento dejaremos todo lo demás tal y como está y daremos click en `Create`, lo que abrirá una pestaña nueva en el editor:
 
-![Opciones documento Quarto](imgs/RS_q2.png){#fig-RS_q2}
+![Opciones documento `Quarto`](imgs/RS_q2.png){#fig-RS_q2}
 
-La pestaña se parece al contenido de un `script`, la única diferencia es un texto contenido entre `---`. A esta parte la podemos identificar como el **preámbulo** del documento, y es un fragmento de nuestro documento escrito en formato `YAML` ¿Qué es eso y con qué se come? No te preocupes ahorita por eso, solo necesitas saber ahorita que vamos a desarrollar nuestro trabajo debajo del preámbulo. En la figura @fig-RS_q3 puedes ver un ejemplo básico de un documento `Quarto` con el código de nuestras sumas.
+La pestaña se parece al contenido de un `script`, la única diferencia es un texto contenido entre `---`. A esta parte la podemos identificar como el **preámbulo** del documento, y es un fragmento de nuestro documento escrito en formato `YAML` ¿Qué es eso y con qué se come? No te preocupes ahorita por eso, solo necesitas saber ahorita que vamos a desarrollar nuestro trabajo debajo del preámbulo. En la @fig-RS_q3 puedes ver un ejemplo básico de un documento `Quarto` con el código de nuestras sumas.
 
 
-![Un documento Quarto básico](imgs/RS_q3.png){#fig-RS_q3}
+![Un documento `Quarto` básico](imgs/RS_q3.png){#fig-RS_q3}
 
-Un ejemplo más claro del potencial de Quarto es, nuevamente, el material de este curso. Pero sigamos explorando la ventana de RStudio
+Un ejemplo más claro del potencial de `Quarto` es, nuevamente, el material de este curso. Pero sigamos explorando la ventana de `RStudio`
 
 ### El ambiente de trabajo
 
@@ -118,13 +115,13 @@ Después tenemos la pestaña de **ayuda**. Aquí podemos ver, valga la redundanc
 
 En la siguiente pestaña tenemos un visor (Viewer), donde tendremos vistas previas de los documentos `RMarkdown` o `Quarto` con los que estemos trabajando. Tomando como ejemplo el documento que generamos antes, le daremos click al botón `Render` con la flecha azul, lo que da como resultado la vista previa en Viewer
 
-![Documento Quarto y su renderizado](imgs/RS_2.png){#fig-RS_4e}
+![Documento `Quarto` y su renderizado](imgs/RS_2.png){#fig-RS_4e}
 
 La última pestaña es un visor de presentaciones, el cual no utilizaremos en este curso.
 
-### Personalizando RStudio
+### Personalizando `RStudio`
 
-Como todo IDE, podemos personalizar la apariencia de RStudio. Para hacerlo simplemente ve a la barra de herramientas, Tools -> Global Options. Te aparecerá la siguiente ventana
+Como todo IDE, podemos personalizar la apariencia de `RStudio`. Para hacerlo simplemente ve a la barra de herramientas, Tools -> Global Options. Te aparecerá la siguiente ventana
 
 ![Ventana de ajustes](imgs/RS_2.png){#fig-RS_5}
 
@@ -132,7 +129,7 @@ Vamos a revisar algunas de las opciones que te recomiendo tener presentes. Puede
 
 1. **`General`**
     - `Basic`
-      - `Workspace`: Restore .RData into workspace at startup & Save workspace to .RData on exit. ¿Quieres que cada que cierres RStudio todos los objetos de tu espacio de trabajo se guarden en un archivo, y que esos mismos se carguen la siguiente vez que abras RStudio? Personalmente no es algo con lo que esté de acuerdo, porque más frecuentemente que no vas a querer un ambiente limpio, por lo que estas opciones están desmarcada y en *Never*, respectivamente.
+      - `Workspace`: Restore .RData into workspace at startup & Save workspace to .RData on exit. ¿Quieres que cada que cierres `RStudio` todos los objetos de tu espacio de trabajo se guarden en un archivo, y que esos mismos se carguen la siguiente vez que abras `RStudio`? Personalmente no es algo con lo que esté de acuerdo, porque más frecuentemente que no vas a querer un ambiente limpio, por lo que estas opciones están desmarcada y en *Never*, respectivamente.
       - `History`: La misma historia (je) que en el caso anterior. ¿Quieres que tu historial de comandos ejecutados se guarde, aún si no guardas el .RData? ¿Quieres que se remuevan los duplicados? Por las mismas razones que antes también las tengo desmarcadas.
     - `Graphics`
       - `Backend` a Cairo. Simplemente es con qué se están graficando las cosas. **¡ES INDISPENSABLE QUE TENGAS INSTALADO `xquartz` SI ESTÁS EN macOS/LINUX!**
@@ -141,15 +138,15 @@ Vamos a revisar algunas de las opciones que te recomiendo tener presentes. Puede
     - `Editor font` y `Editor font size`: Tipo y tamaño de letra. Personalmente recomiendo no cambiar el tipo de letra.
     - `Editor theme`: Cambia el color de fondo y los colores de realce de la sintaxis. Usualmente trabajo por las noches, por lo que prefiero un tema con fondo obscuro como `Tomorrow Night Bright`, pero puedes buscar el que tú quieras.
 3. **`Pane Layout`**
-    - Aquí se muestran los cuatro paneles de la ventana de RStudio. Personalmente prefiero tener los dos elementos que más utilizo lado a lado y no uno encima del otro. ¿La razón? El código crece hacia abajo, entonces el espacio vertical tiende a ser más importante que el espacio horizontal. Es decir, que en el panel superior derecho pongo la consola, y en el panel inferior izquierdo el ambiente de trabajo.
+    - Aquí se muestran los cuatro paneles de la ventana de `RStudio`. Personalmente prefiero tener los dos elementos que más utilizo lado a lado y no uno encima del otro. ¿La razón? El código crece hacia abajo, entonces el espacio vertical tiende a ser más importante que el espacio horizontal. Es decir, que en el panel superior derecho pongo la consola, y en el panel inferior izquierdo el ambiente de trabajo.
 
 El resto de opciones son más específicas, por lo que recomiendo no tocarlas salvo que sepas qué estás moviendo y con qué objetivo. Todo se puede revertir, pero no hay necesidad de fomentar dolores de cabeza.
 
-## Entra a Quarto
+# Entra a `Quarto`
 
 Ahora sí, podemos dedicarle nuestra atención a `Quarto`. Antes mencioné que era un sistema para la creación de documentos científicos y técnicos, que se instala aparte de `R` y `RStudio` (lo hicimos ya en la sesión anterior), y que es sumamente flexible. Vimos también un ejemplo de cómo crear un documento `Quarto` y un poco de cómo interactuar con él. Ahora entremos a todos los detalles. Retomemos nuestro documento de ejemplo (@fig-RS_q3).
 
-### Preámbulo
+## Preámbulo
 
 El primer elemento es el preámbulo, que mencionamos está en formato `YAML` y que está contenido entre `---`. `YAML` es un formato de serialización de datos legible por humanos. ¿En castellano? Una lista con niveles de pares de claves:valores que definen los **metadatos** de nuestro documento. En nuestro ejemplo tenemos:
 
@@ -159,11 +156,11 @@ title: "Untitled"
 ---
 ```
 
-Es decir, el título que aparecerá en el reporte es `"Untitled"`, tal y como vimos en la vista previa. Esto no tiene mucho sentido, así que cambiémoslo por `"Mi primer Quarto"` y añadamos una nueva entrada para el autor, tal que:
+Es decir, el título que aparecerá en el reporte es `"Untitled"`, tal y como vimos en la vista previa. Esto no tiene mucho sentido, así que cambiémoslo por `"Mi primer `Quarto`"` y añadamos una nueva entrada para el autor, tal que:
 
 ```
 ---
-title: "Mi primer Quarto"
+title: "Mi primer `Quarto`"
 author: "Tu nombre"
 ---
 ```
@@ -172,7 +169,7 @@ Otro elemento que usualmente se agrega en el preámbulo es el formato de salida 
 
 ```
 ---
-title: "Mi primer Quarto"
+title: "Mi primer `Quarto`"
 author: "Tu nombre"
 format:
   html:
@@ -182,11 +179,11 @@ format:
 
 Notarás algunas cosas. La primera es que `html` está **indentado**; es decir, no comienza en la misma posición que `format`. Esto es para indicar que `html` pertenece a `format`, al igual que `code-fold` pertenece a `html`. La siguiente es, justamente, que agregamos a la lista la entrada `code-fold`. Esta es una opción que indica si queremos que el código sea colapsable mediante un botón en el archivo final. En este caso, la indicamos como `true`, por lo que así será. Si no lo quisiéramos así indicaríamos `false`. Si renderizamos nuestro documento ahora tendremos:
 
-![Primer Quarto renderizado](imgs/RS_2.png){#fig-RS_4e}
+![Primer `Quarto` renderizado](imgs/RS_2.png){#fig-RS_4e}
 
-Si tienes curiosidad por saber qué características `YAML` dieron lugar al libro de acompañamiento, puedes revisar el archivo `_quarto.yml`.
+Si tienes curiosidad por saber qué características `YAML` dieron lugar al libro de acompañamiento, puedes revisar el archivo `_Quarto.yml`.
 
-### Markdown
+## Markdown
 
 Pasando el preámbulo tenemos una sección de texto libre, con algunas **anotaciones** para el formato del texto. Estas anotaciones están hechas en **lenguaje markdown**. Markdown es un "lenguaje de programación para textos" y permite hacer cosas bastante interesantes. Las anotaciones más básicas son:
 
@@ -204,20 +201,20 @@ Puedes hacer listas numeradas, como la anterior, o listas sin numerar:
 
 E, incluso, puedes hacer listas anidadas añadiendo una indentación de doble tabulación a los elementos anidados:
 
-1. Introducción a RStudio y Quarto
-    - R vs. RStudio
-    - IDE RStudio
+1. Introducción a `RStudio` y `Quarto`
+    - R vs. `RStudio`
+    - IDE `RStudio`
     
-En el archivo `.qmd` este capítulo puedes ver cómo cómo añadir imágenes, pero es básicamente el mismo procedimiento que con un enlace, salvo el añadir el operador `!` antes. Por ejemplo, esta línea añade el logo de R desde su dirección oficial, le asigna el pie de foto "Logo `R`" y una etiqueta interna que se puede utilizar para referencias cruzadas (@fig-logoR) con `@fig-logoR` :
+En el archivo `.qmd` este capítulo puedes ver cómo añadí las capturas de la ventana de `RStudio`. Añadir imágenes es básicamente el mismo procedimiento que con un enlace, solo añadiendo el operador `!` antes. Por ejemplo, la siguiente línea añade el logo de R desde su dirección oficial, le asigna el pie de foto "Logo `R`" y una etiqueta interna que se puede utilizar para referencias cruzadas (@fig-logoR) con `@fig-logoR` :
 
 ```
 ![Logo `R`](https://www.r-project.org/logo/Rlogo.png){#fig-logoR}
 ```
 ![Logo `R`](https://www.r-project.org/logo/Rlogo.png){#fig-logoR}
 
-### Referencias y citas
+## Referencias y citas
 
-Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo `.bib` como el archivo `references.bib` que está en este directorio y, por supuesto, referenciarlas en el texto [*e.g.* @knuth84]. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo `.bib` está compuesto por entradas en formato bibTeX, heredado del hermano mayor de `Markdown`: `LaTeX`. La sintaxis básica es la siguiente:
+Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo `.bib` como el archivo `references.bib` que está en este directorio y, por supuesto, referenciarlas en el texto [*e.g.* @Knuth_1984]. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo `.bib` está compuesto por entradas en formato bibTeX, heredado del hermano mayor de `Markdown`: `LaTeX`. La sintaxis básica es la siguiente:
 
 ```
 @TIPO{CLAVE,
@@ -226,16 +223,21 @@ Podemos agregar referencias, siempre y cuando estas estén contenidas en un arch
       title = {}}
 ```
 
-Los campos adicionales dependerán del `TIPO` de referencia que se esté añadiendo y si quieres ver todas las posibilidades te recomiendo revisar [esta página](). Para incluir una referencia cruzada lo único que tienes que hacer es: \@CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería \@Knuth_1984 para una referencia en el texto, @Knuth_1984, o \[\@Knuth_1984\] para una referencia dentro de paréntesis [@Knuth_1984]. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece toda la referencia bibliográfica. Para agregar la lista de referencias al final del texto, debes de agregar: el siguiente divisor debajo de un encabezado de referencias:
+Los campos adicionales dependerán del `TIPO` de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar [esta página](https://www.bibtex.com/e/entry-types/). Para incluir una referencia cruzada lo único que tienes que hacer es: \@CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería \@Knuth_1984 para una referencia en el texto, @Knuth_1984, o \[\@Knuth_1984\] para una referencia dentro de paréntesis [@Knuth_1984]. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el siguiente divisor y asegurarte de tener un encabezado de referencias al final del documento:
 
 ```
 ::: {#refs}
 :::
 ```
 
-### Consideraciones sobre `Quarto`
+::: {.callout-note}
+Yo construyo mis archivos `.bib` a mano, pero no es necesario. Si quieres pasar de un listado de referencias que ya tienes en Word puedes considerar [text2bib](https://text2bib.economics.utoronto.ca) o [Edifix](https://edifix.com) (1. OJO con las opciones; 2. Edifix es de pago). Si quieres una interfaz gráfica para manejar tus archivos `.bib`, puedes considerar [JabRef](https://www.jabref.org). Finalmente, gestores de referencias como [Mendeley](https://www.mendeley.com) o [ReadCube Papers](https://www.papersapp.com) permiten exportar las referencias en formato bib.
+:::
 
-Aunque `Quarto` es extremadamente potente y flexible, es importante tener presente algunas cosas. La primera es que NO hay manera de que en esta sesión yo pueda explicarte con lujo de detalle todas las funciones, para eso prefiero dirigirte a la (bastante extensa) [guía de `Quarto`](https://quarto.org/docs/guide/). Otra consideración es que, aunque puedes exportar tus documentos como `PDF`, `Word` o `ePUB` u otros, mi recomendación es que siempre que tengas la libertad exportes a un `HTML`, que es un poco más permisivo con líneas de código muy largas, o al mostrar tablas con muchas columnas. Si NECESITAS un PDF asegúrate de tener instalada alguna distribución de `LaTeX` o, si no quieres la instalación completa, cuando menos asegurarte de haber instalado `tinytex` como lo hicimos en la sesión de preparación, de lo contrario NO podrás exportar tus reportes a PDF.
+
+## Consideraciones sobre `Quarto`
+
+Aunque `Quarto` es extremadamente potente y flexible, es importante tener presente algunas cosas. La primera es que NO hay manera de que en esta sesión yo pueda explicarte con lujo de detalle todas las funciones, para eso prefiero dirigirte a la (bastante extensa) [guía de `Quarto`](https://`Quarto`.org/docs/guide/). Otra consideración es que, aunque puedes exportar tus documentos como `PDF`, `Word` o `ePUB` u otros, mi recomendación es que siempre que tengas la libertad exportes a un `HTML`, que es un poco más permisivo con líneas de código muy largas, o al mostrar tablas con muchas columnas. Si NECESITAS un PDF, asegúrate de tener instalada alguna distribución de `LaTeX` o, si no quieres la instalación completa, cuando menos asegurarte de haber instalado `TinyTeX` como sugerimos en la sesión de preparación, de lo contrario NO podrás exportar tus reportes a PDF.
 
 ## Ejercicio
 
@@ -248,7 +250,13 @@ Utilizando `Quarto` genera un documento `HTML` con tabla de contenidos en el que
     - Motivación para tomar el curso
     - Expectativas sobre el curso (¿hay alguna técnica particular que quieras aprender/revisar?)
     - Libro(s) favorito(s) (como cita(s) en el texto, incluyendo la(s) referencia(s) completa(s) al final del documento)
-    - Ventana de RStudio. No importa si es con los ajustes por defecto, si la pusiste igual a la mía o si pusiste un tema con colores estridentes.
+    - Una captura de pantalla con tu ventana de `RStudio`. No importa si es con los ajustes por defecto, si la pusiste igual a la mía, o si pusiste un tema con colores estridentes.
+    
+## ¿Qué sigue?
+
+En esta sesión revisamos muy someramente el poder de `RStudio` y `Quarto`, limitándonos a las funciones más indispensables y que se utilizan de manera cotidiana, pero hay mucho más por ver. Proyectos dentro de `RStudio`, elaborar libros/páginas web/tesis o incluso artículos científicos con formato editorial según los requerimientos de algunas revistas, solo por mencionar algunos.
+
+Por otra parte, una de las ventajas poco conocidas de trabajar con archivos de texto simple (`.R`, `.Rmd` o `.qmd`), al menos en el área de ciencias biológicas, es el poder aprovechar al máximo sistemas de gestión de versiones, incluyendo por supuesto al más famoso: `git`. Muy posiblemente te hayas encontrado en algún momento con [GitHub](https://github.com), que no era otra cosa mas que un almacén público de repositorios `git`. Ahora es un servidor capaz de mantener servicios simples en ejecución o, incluso, alojar páginas web (la página web de acompañamiento de este curso es un ejemplo), por lo que te recomiendo que le eches un ojo al funcionamiento de ambos (`git` y `GitHub`), y que revises la integración de `git` en  `RStudio`. Personalmente utilizo solo la línea de comandos, pero es una herramienta más dentro de nuestro IDE y que puede resultarte más intuitiva.
     
 # Referencias{.unnumbered}
     

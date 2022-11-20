@@ -2,13 +2,35 @@
 
 ## Representaciones de la realidad
 
+Como seres humanos, con una tendencia a encontrar el camino que ofrezca una menor resistencia (otra forma de decir que somos flojos), usualmente resumimos una realidad altamente compleja utilizando distintas estrategias. Si yo te pido que me digas "qué es una orca" puedes darme una descripción textual del tipo "las orcas son mamíferos del orden Cetartiodactyla", una descripción numérica en forma de mediciones (Longitud: 6-8 m) o medidas de tendencia central/dispersión (Peso máximo: 5.5 toneladas), pero usualmente preferimos medios audiovisuales como un dibujo, un video o, en el caso de la investigación y el tema principal de hoy, gráficos.
+
+
+## Datos y variables
+
+En una investigación reunimos **datos** que después representamos con **gráficos**. Pues bien comencemos definiendo un dato como **una representación puntual de la realidad**. Son un solo valor, sea una sola medición, un promedio, una desviación estándar, una proporción de sexos, etc, y el **conjunto de datos de un mismo atributo medidos en distintos individuos** nos dan una **variable**. Es decir, en nuestros conjuntos de datos cada valor es un dato, y cada columna (usualmente) es una variable. ¿Por qué es importante conocer esto? Porque hay distintos tipos de variables, los cuales definen cómo es que vamos a graficar y tratar esos datos:
+
+1. **Cualitativas**: hacen referencia a las cualidades de nuestros individuos, y tienen dos escalas:
+    - **Nominal**: hace referencia a categorías en las que **no hay un orden** o distintas importancias. Ejemplos pueden el sexo o el color.
+    - **Ordinal**: aquí hay un órden, y un ejemplo muy claro son las encuestas: 0 es nunca, 1 es casi nunca, 2 es ocasionalmente, 3 es casi siempre y 4 es siempre. Aunque son categorías bien definidas, 2 < 3 y 3 < 4. No son cuantitativas porque las respuestas están sujetas a la interpretación personal, pero descartar el órden en el análisis sería un error.
+2. **Cuantitativas**, que hacen referencia a atributos **cuantificables** de manera objetiva. Hay dos tipos, cada uno con dos escalas.
+    - Tipos:
+        - **Discretas**: Son solo números enteros. Un ejemplo cotidiano es la edad, que usualmente la expresamos en años. No vamos por la vida diciendo tengo 18.5 años o 18 años con 6 meses, solo decimos tengo 18 años.
+        - **Continuas**: Es el caso contrario, son números fraccionarios. Se les denomina continuas porque hay un número infinito de valores posibles entre un valor y el otro, un ejemplo es la temperatura (35.1ºC, 100 K, etc.)
+    - Escalas:
+        - **Intervalo**: La escala de intervalo es aquella en donde el 0 NO es absoluto o, mejor dicho, donde el 0 es arbitrario. La temperatura expresada en grados centígrados es un ejemplo claro, 0ºC no indica ausencia de movimiento molecular, solo toma como referencia arbitraria el punto de congelación del agua.
+        - **Razón**: Aquí el 0 sí es absoluto y representa la ausencia del atributo en cuestión. La longitud es un ejemplo, si algo tiene longitud 0 más bien no tiene longitud, o si algo tiene una temperatura de 0 K quiere decir que no tiene movimiento molecular (~-273.15ºC).
+
+Algo que es muy importante tener siempre bien presente es que, aún cuando existen herramientas y técnicas que nos permiten procesar múltiples variables, en cualquier procedimiento de ciencia de datos es **INDISPENSABLE** que los datos sean de excelente calidad y, sobre todo, que sean adecuados para responder la pregunta que nos interesa, lo cual nos debe de llevar, invariablemente, a preguntarnos "¿qué datos debo de obtener?" O, en otras palabras, "¿qué debo medir?" Una frase que se me quedó marcada de mis clases de la licenciatura es "La investigación inicia y termina en el escritorio del investigador"; es decir, no salimos a hacer trabajo de campo y a registrar todo lo que se nos atraviese, caso contrario podemos terminar en una conclusión como "los bebés son traídos por cigüeñas", la cual tiene una anécdota bastante divertida
+
 
 
 ## Introducción a `ggplot2`
 
 Antes de comenzar una visualización es necesario saber qué queremos responder con ella. En este caso, utilizaremos la base de datos `mpg` incluída en `ggplot2`. El primer paso es, entonces, conocer la información que contiene. Para ello guardaremos la base en una variable que llamaremos `df1`:
 
-```{r include=T}
+```{r}
+#| include: true
+
 library(ggplot2)
 
 df1 <- ggplot2::mpg
@@ -17,7 +39,9 @@ df1
 
 Una manera rápida de tener una idea de cómo está dispuesta una base de datos es utilizando la función `head(var)`. Esta nos mostrará solo las primeras instancias (renglones) del `data.frame` que estemos analizando. En la tabla inferior podemos ver que se trata de una base de datos sobre automóviles y que las columnas representan: el fabricante, el modelo, el desplazamiento de combustible (litros), el año del modelo, el número de cilindros, el tipo de transmisión, el tipo de tracción, los consumos en ciudad y autopista (en millas por galón, mpg), el tipo de combustible que utilizan y la clase a la que pertenencen. También nos plantearemos el objetivo de eliminar la mayor cantidad de elementos posibles hasta solo tener el esqueleto y de ahí agregar algunos elementos que favorezcan la interpretación.
 
-```{r echo=TRUE}
+```{r}
+#| echo: true
+
 head(df1)
 ```
 
@@ -143,18 +167,24 @@ Para finalizar la clase te presento la visualización inicial y la final, una ju
 
 Esto es todo para esta clase. ¡Nos vemos en la siguiente!
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
+
 #ggplot(data = df1, aes(x = displ, y = hwy, colour = class)) +
 #       geom_point()
 plot1
 ```
-```{r echo=FALSE}
+```{r}
+#| echo: false
+
 plot2
 ```
 
 #### Gráfico final
 
-```{r echo=TRUE}
+```{r}
+#| echo: true
+#| 
 # Valores de referencia para utilizar en la gráfica
 refs <- c(round(min(df1$hwy),0),  # Valor mínimo = peor consumo
           round(mean(df1$hwy),0), # Valor promedio
