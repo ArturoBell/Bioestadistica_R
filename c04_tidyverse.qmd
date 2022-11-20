@@ -1,0 +1,224 @@
+# Introducción a `tidyverse`
+
+## Un dialecto dentro de `R`
+
+En la sesión anterior mencionamos que hay un "paquete de paquetes" que da lugar a un "dialecto" dentro de `R`: `tidyverse`, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en `R` base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, `tidyverse` proveé de un paradigma diferente, con una "gramática" (sintaxis) distinta, muy similar a lo que veremos en `ggplot2`. De hecho, `ggplot2` es un paquete del `tidyverse`, por lo que el "dialecto" `tidy` comparte la filosofía declarativa y fomenta la "encadenación" de comandos. A muchas personas les gusta más la forma `tidy`, a otras les gusta más trabajar con `R` base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión. 
+
+Este nuevo dialecto fue creado con un objetivo en particular: la ciencia de datos. Como tal, cuenta con una gran cantidad de librerías (y por lo tanto funciones) especializadas para realizar operaciones rutinarias. ¿Quieres realizar gráficos? En la siguiente sesión hablaremos de `ggplot2`. ¿Quieres hacer "manipulación" (ojo, no cuchareo) de datos? Aquí veremos algnas funciones de `dplyr`. ¿Quieres trabajar con procesamiento de cadenas de caractér? Para esto está `stringr`. ¿Quieres herramientas para programación funcional? Ve hacia `purrr` (sí, triple r). `readxl` es otra librería con la que ya estás familiarizado y que forma parte del `tidyverse`. ¿Tienes un problema en el que que necesitas manejar fechas? `lubridate` puede ser una opción. Puedes conocer todos los paquetes que forman el `tidyverse` con:
+
+```{r}
+tidyverse::tidyverse_packages(include_self = T)
+```
+
+A partir de aquí, el cómo aprovecharlos depende mucho de el problema que tengas entre manos, pero la idea general es la misma: utilizar una gramática declarativa para llegar a la solución. Veamos en qué consiste con un ejemplo cotidiano: obtener el promedio de una variable para varios grupos.
+
+### Promedios de grupos: `aggregate` vs `group_by() |> summarise()`
+
+Veamos un ejemplo en el cual calcularemos la longitud de pico promedio para cada especie de pingüino, según los datos de `palmerpenguins`. Primero, carguemos los datos:
+
+```{r}
+datos1 <- palmerpenguins::penguins
+```
+
+Ahora, obtengamos los promedios con la función `aggregate`, tal y como vimos en la sesión anterior:
+
+```{r}
+aggregate(bill_length_mm~species, data = datos1, FUN = mean)
+```
+
+Ahora repliquémoslo con `tidyverse`, particularmente con las funciones `group_by` y `summarise` (o `summarize`) de la librería `dplyr`:
+
+```{r}
+#| message: false
+
+library(dplyr)
+
+datos1 |>
+  group_by(species) |>
+  summarise(mbill_l = mean(bill_length_mm, na.rm = T))
+```
+
+Notarás que el resultado es exactamente el mismo, aunque la forma de hacerlo es diferente. Descompongámosla paso a paso para ver qué es lo que está pasando:
+
+1. `library(dplyr)`: cargamos la librería `dplyr`, la cual contiene las funciones que nos interesa aplicar: `group_by` y `summarise`.
+2. Llamamos directamente a nuestros datos (`datos1`) y utilizamos un operador que no habíamos visto: `|>`. Este es el operador `pipe`, el cual pasa lo que está a la izquierda de él como el primer argumento de lo que está a la derecha de él. Esto puede sonar confuso, pero la instrucción `datos1 |> group_by(sp)` es equivalente a `group_by(datos1, sp)`. Podemos ver al operador `pipe` como su nombre sugiere: una tubería que manda la información de un lado hacia otro.
+3. `group_by(sp)`: Como te mencionaba, `tidy` es un poco más explícito que `R` base. Mientras que el argumento con la fórmula en `aggregate` indica cómo se van a agrupar los datos, aquí primero los agrupamos y después aplicamos la función que nos interesa. `group_by` hace justamente eso, agrupar nuestros datos, nada más, nada menos. El argumento principal de esta función es la(s) columnas bajo las cuales queremos agrupar nuestros datos. En este caso solo es una (`sp`), por lo que la pasamos directamente.
+4. Nuevamente utilizamos el operador `|>`. Hasta este punto hemos pasado los `datos1` a la función `group_by(sp)`, por lo que ya están agrupados por especie, pero falta aplicar la función `mean()` para obtener el promedio, entonces  volvemos a encadenar hacia la función `summarise()`. Esta función recibe una serie de pares nombres de columnas y funciones a aplicar. En este caso, estamos generando una columna llamada `mbill_l` que contiene los promedios de la columna `bill_length_mm` de los `datos1`.
+
+::: {.callout-important}
+Si revisas documentación "antigua" sobre `tidyverse` (previa a R 4.1, de hecho), notarás que el operador `pipe` es `%>%` en vez de `|>`. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de `RStudio`; sin embargo, utilizaremos `|>` por ser el operador `pipe` nativo de `R`, el cual fue introducido (como te imaginarás) en `R` 4.1.
+:::
+
+¿Abstracto? Sin duda. ¿Útil? También. ¿Más explícito que `R` base con `aggregate`? Debatible. Lo que no es debatible es que esta notación brilla especialmente en cierto tipo de problemas. Pensemos que nos interesa conocer el promedio de las longitudes de picos por especie para cada isla. Intenta hacerlo con `R` base y te darás cuenta de que no es tan intuitivo, salvo que estés familiarizado con el uso de fórmulas. ¿En `tidy`? Solamente hay que agregar la nueva variable de agrupamiento a `group_by`:
+
+```{r}
+datos1 |>
+  group_by(species, island) |>
+  summarise(mbill_l = mean(bill_length_mm,
+                           na.rm = T))
+```
+
+Ahora tenemos un `tibble` (funcionalmente equivalente a un `data.frame`) con tres columnas, en donde se da el promedio para cada combinación de las variables de agrupamiento. ¿A que es más sencillo que intentar hacerlo con `R` base?
+
+::: {.callout-note}
+Con esto no quiero deciro que `tidy` sea mejor que `R` base o viceversa, solamente que son dos aproximaciones, cada una con sus propias ventajas y desventajas. Por un lado, `R` base puede llegar a ser más compacto, pero `tidy` tiende a ser más explícito. Por supuesto, también hay casos en los que lo contrario es verdad.
+:::
+
+::: {.callout-warning}
+Hay ocasiones en las cuales querrás evitar el uso de `tidyverse`, y una de ellas es al crear nuevas librerías. ¿La razón? Puedes crear un conflicto de dependencias si no lo manejas con cuidado. Otra es que es sumamente complicado depurar errores.
+:::
+
+Te habrás dado cuenta de que hasta este momento no hemos asignado nuestros resultados a ningún objeto. Esto se debe a dos razones. La primera, y tal vez la que pasa por tu cabeza, es que de esta manera podemos mostrar los resultados más rápidamente, y sí, pero el trasfondo está en la segunda razón: La asignación sigue un sentido opuesto al encadenamiento. Mientras que con `|>` la información fluye de izquierda a derecha, con `<-` la información fluye de derecha a izquierda. Quise, entonces, que primero te acostumbraras al flujo de información con `pipe`, pues asignar el resultado a un objeto es lo mismo que hemos hecho hasta ahora:
+
+```{r}
+gmeans <- datos1 |>
+          group_by(species, island) |>
+          summarise(mbill_l = mean(bill_length_mm,
+                                   na.rm = T))
+gmeans
+```
+
+### Subconjuntos de datos
+
+En la sesión anterior nos familiarizamos con máscaras booleanas y la función subset. `tidy` tiene su propia aproximación. Pensemos que queremos quedarnos solo con los pingüinos provenientes de Biscoe. Con `subset`:
+
+```{r}
+subset(datos1, island == "Biscoe")
+```
+
+Mientras que con `tidy`:
+
+```{r}
+datos1 |> filter(island == "Biscoe")
+```
+
+La notación no es tan diferente como en el caso anterior, y el resultado es el mismo. ¿Cuál utilizar? Depende totalmente de la preferencia de cada quien. A diferencia del caso anterior, subset no se vuelve tan compleja conforme vamos escalando en complejidad, y la equivalencia entre aproximaciones con `filter` se mantiene. Veamos qué pasa si obtenemos SOLO los pingüinos Adelie de Biscoe. Nuevamente, con `subset`:
+
+```{r}
+subset(datos1, species == "Adelie" & island == "Biscoe")
+```
+
+Con `tidy`:
+
+```{r}
+datos1 |> filter(species == "Adelie" & island == "Biscoe")
+```
+
+¿Por qué empezar con un ejemplo tan "complejo" como el caso anterior? Para dejar "lo peor" al inicio, y a partir de ahí las cosas puedan fluir un poco mejor.
+
+### Añadir o modificar columnas
+
+Otra tarea cotidiana que vimos en la sesión anterior fue el añadir nuevas columnas a nuestro `data.frame`. Pensemos que tiene sentido obtener el "área" que utiliza el pico, la cual obtendríamos multiplicando `bill_length_mm` y `bill_depth_mm`. Este producto lo almacenaríamos en una nueva columna llamada `bill_area`. En `R` base:
+
+```{r}
+datos1["bill_area"] <- datos1$bill_length_mm * datos1$bill_depth_mm
+datos1$bill_area
+```
+
+Ahora hagámoslo con `tidy`, pero primero reestablezcamos el objeto `datos1`:
+
+```{r}
+datos1 <- palmerpenguins::penguins
+```
+
+Y ahora hagamos la operación con `tidy`:
+
+```{r}
+datos1 <- datos1 |> 
+          mutate(bill_area = bill_length_mm * bill_depth_mm)
+datos1$bill_area
+```
+
+Evidentemente, los resultados son los mismos, lo cual me lleva directamente a la siguiente sección.
+
+## ¿Por qué no enseñar `tidy` desde el inicio?
+
+Si `tidy` se acomodó a tu forma de ver las cosas, o si se te hizo más fácil de leer, es probable que te preguntes por qué no me salté `R` base para entrar directamente a `tidy`. Además de incrementar las horas del curso (broma), fue porque (pedagógicamente) `tidy` puede introducir ciertas barreras para quienes se van introduciendo a `R`. @Matloff_2020 hace una excelente y extensiva recopilación de las razones por las cuales enseñar solo `tidy` (o solo `R` base) es una mala idea, así que te recomiendo leas su opinión; sin embargo, me gustaría darte mi perspectiva. Te adelanto: si no tienes experiencia en programación, el paradigma de `tidy` supone una curva de aprendizaje más alta que solo `R` base (solo `R` a partir de aquí) y, tal vez más importante, no es necesario casarse con uno u otro.
+
+### `tidy` es más complejo
+
+Como habrás notado en esta sesión, `tidy` es, escencialmente, más complejo que `R`. Esto no es una falla en el diseño, sino que tiene que ver con la filosofía de la aproximación: generar código que sea más fácilmente leíble por seres humanos. Sin duda alguna, el utilizar `data |> group_by() |> summarise()` puede parecer menos críptico o más "entendible" que solo `aggregate(formula, data, FUN)`; sin embargo, esto se debe a que ya conocías qué es una librería y cómo cargarla, qué es una función y qué es un argumento, pero aún así hubo que explicar qué es encadenamiento de operaciones/funciones y el operador `pipe` y también tuvimos que entender que la información fluye de izquierda a derecha al encadenar y de derecha a izquierda al asignar.
+
+Si esto no fuera suficiente, el utilizar `pipes` puede complicar demasiado las cosas al querer depurar errores. ¿La razón? Es una capa más de abstracción. Mientras que cuando aprendemos `R` es común generar objetos intermedios con los resultados y ver sus salidas (o detectar errores en cada paso), en `tidy` esto tiende a no ser el caso. ¿Qué obtienes si solo aplicas `group_by()` en el ejemplo anterior? (*i.e.*, no aplicas `summarise()`). El ejemplo que vimos es relativamente sencillo pero, en la medida que los problemas se van haciendo más complejos, es fácil perder la pista de qué sale de una función y entra a otra.
+
+En mi opinión esto no es un problema TAN grande como pudiera parecer. Tomemos de ejemplo a `Python`, el lenguaje de programación reconocido como el más intuitivo. Al utilizarlo, el encadenamiento y uso de `pipes` es cotidiano y, aún más, preferido. En este sentido, `tidyverse` me recuerda mucho a la funcionalidad que de `pandas` en `Python` pero, al igual que aquí, lo correcto es aproximarse primero a `Python` base y luego pensar en aprender `pandas`. En mi opinión, el problema real (quitando la capa de abstracción) es en realidad dos problemas: uno relacionado con la filosofía de `tidy` y otro con quienes enseñamos `R`. 
+
+### `tidy` limita tus opciones
+
+Un ejemplo de esto está en esta misma clase. ¿Cómo obtendríamos los promedios de datos agrupados a dos niveles? Dejé el ejercicio "en el tintero" (es parte de tu tarea para esta sesión) pero, si solo te hubiera enseñado `tidy`, no podrías pensar en ciclos, el operador `$` o cualquier otra forma de indización. ¿La razón? `tidy` no está enfocado a tratar con vectores individuales, aborrece el uso de ciclos y tampoco sigue las notaciones básicas de indización. Recuerda: en programación siempre es mejor tener más herramientas a tu disposición. Esta limitación la podemos probar rápidamente si queremos extraer los elementos 10:25 de la columna `sex` de los `datos1`. Con `R` base:
+
+```{r}
+datos1$sex[10:25]
+```
+
+¿Con `tidy`? Realmente no hay una función que permita hacerlo. Podemos extraer la columna `sex` utilizando la función `select`:
+
+```{r}
+datos1 |> select(sex)
+```
+
+Pero si queremos indizar el resultante obtenemos un error:
+
+```{r}
+#| error: true
+
+datos1 |> select(sex)[10:25]
+```
+
+¿La alternativa? Primero indizar `datos1` y luego utilizar `select`. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar `R` base.
+
+```{r}
+datos1[10:25,] |> select(sex)
+```
+
+Por otra parte, hay una falta de consistencia interna derivada de una estrategia publicitaria (tal vez) un poco mal llevada. `ggplot2` no surgió dentro del `tidyverse`, sino que fue incluído después. Si bien es cierto que la filosofía es similar (*i.e.*, una estructura declarativa), el cómo funcionan es completamente diferente. Una de las máximas de `tidyverse` (sin `ggplot2`) es que todo lo que entra o lo que sale es un `data.frame` (o `tibble`), mientras que en `ggplot2` entra un `data.frame` y sale una lista. De hecho, más adelante veremos cómo podemos utilizar ciclos para automatizar la generación de gráficos, pero esto va en contra de la filosofía de `tidy` y no sería posible si nos hubiéramos enfocado únicamente en ella.
+
+### Los ponentes somos necios
+
+El mayor problema al que nos enfrentamos al aprender algún lenguaje de programación (y en muchas otras cosas) es que estamos sujetos a los prejuicios y preferencias de la persona que nos está enseñando. Al aprender a manejar nuestro tío amante de los autos nos va a decir que la transmisión manual (estándar) es mejor que la automática, pero nuestro papá, quien ve los carros solo como un medio de transporte, nos va a decir que con la automática es suficiente. ¿Cuál es mejor? Para variar, la respuesta es: "depende". ¿De qué? De la situación en la que nos encontremos. En ciudad tener una transmisión manual puede ser muy cansado, pero puede darnos un mayor control en una carretera con un descenso empinado y muchas curvas.
+
+En el problema `R` base vs. `tidy` es lo mismo. Hay ponentes "puristas" en ambos sentidos: personas que creen que `tidy` debería considerarse sacrilegio, y personas que creen que `R` base es obsoleto, arcaico, y que debería de caer en desuso. No te conviertas en ninguno de ellos y mejor toma lo mejor de ambos.
+
+### `tidy` expande tus horizontes
+
+En mi opinión, lo que te acabo de exponer son los problemas principales de enseñar solo `tidy` y, de acuerdo con @Matloff_2020, las razones por las cuales enseñar una mezcla de ambos es la mejor opción. Aprender `R` base nos permite resolver problemas que en `tidy` sería muy largo, mientras que `tidy` nos permite simplificar procedimientos que serían más complicados en `R` base. Otra ventaja de `tidy` es que permite unificar procesos bajo una misma sintaxis.
+
+Un ejemplo de esto lo tenemos en el aspecto de aprendizaje automatizado. Si te pones a revisar tutoriales/referencias sobre aprendizaje automatizado es muy probable que te encuentres con un montón de librerías (una por problema), funciones dedicadas y sintáxis que son específicas a la técnica que quieras aplicar. Teníamos/tenemos un excelente intento de solventar este problema: `caret`. Funcionaba bien en el sentido de que permitía conjuntar una gran diversidad de técnicas de aprendizaje automatizado en un mismo entorno, unificadas en un mismo estilo. Utilizando solo `caret` podríamos ir desde el preprocesamiento de los datos hasta el entrenamiento y validación de nuestros modelos. ¿El problema? Las pocas funciones que forman su esqueleto se volvieron sumamente complejas, algunas de ellas con 30 o más argumentos. El equipo de `posit` se ha puesto el mismo desafío, y su solución es `tidymodels`. A diferencia de `caret` es altamente modular, pero mantiene la intención de unificar el flujo de trabajo en una misma estructura. Tal vez yendo en contra de nuestro consejo, la mayor parte de nuestros procedimientos de aprendizaje automatizado los realizaremos bajo `tidymodels`, pero haremos referencia a las librerías y funciones involucradas en cada paso. Para ejemplificar, realicemos una regresión lineal simple entre la longitud y la profundidad del pico de los pingüinos.
+
+En `R` base lo podemos hacer en una sola línea, llamando a la función `lm` con una fórmula y unos datos:
+
+```{r}
+lm(bill_length_mm~bill_depth_mm, data = datos1)
+```
+
+En `tidymodels` es un poco más complejo:
+
+```{r}
+#| message: false
+
+library(tidymodels)
+
+linear_reg() |>
+  set_engine("lm") |> 
+  set_mode("regression") |> 
+  fit(bill_length_mm~bill_depth_mm, data = datos1)
+```
+
+¿Por qué utilizar `tidymodels` entonces? Eso lo dejaremos para las sesiones en las que hablemos de aprendizaje automatizado, pero verás que toma mucho sentido en el momento en el que quieres hacer particiones entrenamiento/prueba, optimización mediante validación cruzada, preprocesamiento de datos, evaluación, etcétera.
+
+## Conclusión
+
+Aunque `tidy` puede llegar a verse más elegante o moderno que `R` base, no es un substituto total, por lo que tampoco debes de casarte con ninguno de los dos. ¿Tu problema se resuelve más rápidamente con `tidy`? Úsalo. ¿`R` base se presta mejor? Aprovéchalo. Recuerda, `R` es una caja de herramientas en la cual debes de buscar la que mejor se adapte al problema o pregunta que quieras responder.
+
+Esto es todo para esta sesión, nos vemos en la siguiente para hablar sobre teoría y buenas prácticas para la visualización de datos.
+
+## Ejercicio
+
+1. Utilizando `R` base obtén los promedios de las longitudes de picos de los pingüinos de `palmerpenguins` para cada especie en cada isla. OJO: Hay al menos dos formas de hacerlo, una muy simple y una más rebuscada. No importa cuál realices, el objetivo es que te rompas la cabeza un rato ;).
+2. Utilizando `tidy` (`dplyr`), y **en una sola cadena**, filtra los datos para la isla `Biscoe`, crea una columna que tenga cada valor de la masa corporal menos la media global de esa columna, y luego obtén el promedio de esta columna para cada especie.
+3. Realiza la misma operación del punto 2 con `R` base. Algunas funciones que puedes tomar en cuenta para estos dos puntos son `subset`, `filter`, `mutate`, `aggregate`, `summarise` y/o `for`.
+4. Opcionalmente puedes intentar mezclar ambos procedimientos para llegar al mismo resultado.
+5. ¿Qué opción se te hizo más sencilla? ¿`tidy`, `R` base o una combinación de las dos?
+
+
+
