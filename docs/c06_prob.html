@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -258,7 +259,16 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#definiciones-básicas" id="toc-definiciones-básicas" class="nav-link active" data-scroll-target="#definiciones-básicas"><span class="toc-section-number">6.1</span>  Definiciones básicas</a></li>
+  <li><a href="#axiomas-de-la-probabilidad" id="toc-axiomas-de-la-probabilidad" class="nav-link" data-scroll-target="#axiomas-de-la-probabilidad"><span class="toc-section-number">6.2</span>  Axiomas de la probabilidad</a></li>
+  <li><a href="#probabilidades-marginales-y-condicionales" id="toc-probabilidades-marginales-y-condicionales" class="nav-link" data-scroll-target="#probabilidades-marginales-y-condicionales"><span class="toc-section-number">6.3</span>  Probabilidades marginales y condicionales</a></li>
+  <li><a href="#distribuciones-de-probabilidad" id="toc-distribuciones-de-probabilidad" class="nav-link" data-scroll-target="#distribuciones-de-probabilidad"><span class="toc-section-number">6.4</span>  Distribuciones de probabilidad</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -279,8 +289,92 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Antes de entrar a aplicar pruebas estadísticas y técnicas de aprendizaje automatizado es necesario que te familiarices con el concepto más fundamental de todo el curso: la probabilidad. Somos conscientes de que la mayor parte de las situaciones en nuestro día a día no son completamente predecibles, ni que decir de los problemas que queremos resolver en nuestras investigaciones, y entonces nos topamos con una pared cuando tratamos de aplicar la lógica deductiva en este escenario de incertidumbre. Si yo te digo que “hay un 40% de probabiliidad de lluvia para hoy” y te pregunto si sales con una sombrilla es bastante posible que no puedas dar una respuesta inmediatamente. La lógica deductiva tipo “Dado que A entonces B” solo sirve en escenarios de certeza. Mira el diagrama de Venn de la diapositiva de abajo. Si te digo que ocurrió A, ¿qué me puedes decir sobre B? Es esencialmente el mismo escenario que con la probabilidad de lluvia. No podemos dar una respuesta definitiva, lo único que sabemos es que están traslapados en una fracción y que en otra fracción no, por lo tanto, lo único que podemos decir es que hay cierta posibilidad de que también haya ocurrido B.</p>
+<section id="definiciones-básicas" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="definiciones-básicas"><span class="header-section-number">6.1</span> Definiciones básicas</h2>
+<p>Habrás notado que he evitado utilizar la palabra <strong>probabilidad</strong> hasta este momento. Esto es porque la probabilidad es justamente el asignarle un número a las posibilidades y, por lo tanto, podemos pensar en la probabilidad com una <strong>medida de incertidumbre</strong>. ¿Cómo la expresamos numéricamente? La manera más sencilla de entender a la probabilidad es desde un punto de vista geométrico; es decir, como <strong>una proporción o una frecuencia relativa</strong>, de la forma ¿cuántas veces ha ocurrido B en relación al número de veces que han ocurrido tanto A como B? Pero vayamos paso a paso. Primero, algunas (tediosas y obligadas) definiciones:</p>
+<ul>
+<li><strong>Experimento aleatorio</strong>: Es, como su nombre lo indica, un experimento, prueba (o como quieras llamarlo) en el cual no puedes saber con certeza cuál va a ser el <strong>resultado</strong>.</li>
+<li><strong>Espacio muestreal</strong>: Son todos y cada uno de los posibles resultados de un experimento.</li>
+<li><strong>Evento</strong>: Podemos pensar en un evento como un conjunto de datos/resultados, por lo tanto, el espacio muestreal es un evento.</li>
+</ul>
+<p>Otros eventos son:</p>
+<ul>
+<li><strong>Universo</strong>: Que incluye al espacio muestreal y el <strong>conjunto vacío</strong>. Como te imaginarás, este conjunto está vacío, no tiene nada.</li>
+<li><strong>Unión</strong>: Denotada como <span class="math inline">\(\cup\)</span> (diferente de u y U), representa la unión de dos conjuntos/eventos; es decir, el caso donde nos interesa encontrar A <strong>o</strong> B.</li>
+<li><strong>Intersección</strong>: Denotada como <span class="math inline">\(\cap\)</span> (diferente de n), representa el traslape entre dos conjuntos/eventos; es decir, el caso donde nos interesa encontrar A <strong>y</strong> B.</li>
+<li><strong>Complemento</strong>: Denotado como <span class="math inline">\(\tilde{A}\)</span>, representa lo que no es ese conjunto, en este caso, lo que NO es A, que es el área restante de B y el conjunto vacío.</li>
+</ul>
+<div id="fig-events" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src=".png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.1: Eventos y diagramas de Venn</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="axiomas-de-la-probabilidad" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="axiomas-de-la-probabilidad"><span class="header-section-number">6.2</span> Axiomas de la probabilidad</h2>
+<p>¿Qué tiene que ver esto con probabilidad? Pues que estas denominaciones dan lugar sus leyes/reglas; es decir los <strong>Axiomas de la Probabilidad</strong>:</p>
+<ol type="1">
+<li><span class="math inline">\(P(A) \geq 0\)</span>; es decir, todo evento tiene una probabilidad positiva y no mayor a 1. No necesita mayor explicación, simplemente ¿cómo interpretarías una probabilidad negativa?</li>
+<li><span class="math inline">\(P(U) = 1\)</span>; es decir, la probabilidad de nuestro espacio muestreal y el conjunto vacío es 1. Eso tiene sentido, si hacemos un experimento aleatorio vamos a tener un resultado, independientemente de cuál sea, lo cual está relacionado con el tercer axioma:</li>
+<li>Si A y B son mútuamente excluyentes: <span class="math inline">\(P(A \cup B) = P(A) + P(B)\)</span>. Básicamente, si nos interesa saber cuál es la probabilidad de que ocurran dos resultados, en donde si ocurre uno ya no ocurre el otro, lo único que tenemos que hacer es sumar la probabilidad de cada uno de ellos. Si lanzo una moneda al aire, la probabilidad de que caiga cara es del 50% y la probabilidad de que caiga cruz es del 50%, pero la probabilidad de que caiga es del 100%.</li>
+</ol>
+<p>Adicionales a estos tres axiomas tenemos dos casos especiales y una generalización:</p>
+<ol type="1">
+<li><span class="math inline">\(P(\varnothing) = 0\)</span>; el cual es autoexplicativo, la probabilidad de que ocurra el evento vacío es 0.</li>
+<li><span class="math inline">\(P(\tilde{A}) = 1 - P(A)\)</span>; es decir, si <span class="math inline">\(\tilde{A}\)</span> representa lo que no es A y dado que <span class="math inline">\(P(U) = 1\)</span>, solo debemos de restarle a ese universo la probabilidad de A.</li>
+<li><span class="math inline">\(P(A\cup B) = P(A) + P(B) - P(A \cap B)\)</span>. Te darás cuenta que este se parece al tercer axioma y es porque es una generalización al caso donde A y B no son mútuamente excluyentes. ¿De dónde sale la resta? De que si A y B se encuentran unidos (el diagrama de Venn inferior) y sumamos el área de A con el área de B terminamos sumando dos veces la zona en la que están sobrelapados (intersección); por lo tanto, tenemos que quitarlo una vez para no sobre estimar. A esta generalización se le conoce como la <strong>regla aditiva de la probabilidad</strong>.</li>
+</ol>
+<div id="fig-axiomas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src=".png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6.2: Axiomas de la probabilidad</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="probabilidades-marginales-y-condicionales" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="probabilidades-marginales-y-condicionales"><span class="header-section-number">6.3</span> Probabilidades marginales y condicionales</h2>
+<p>Ahora entendimos que podemos hacer operaciones con la probabilidad, y eso nos lleva a los siguientes dos conceptos que son sumamente importantes: las probabilidades <strong>marginal</strong> y <strong>condicional</strong>.</p>
+<p>Hablamos de una <strong>probabilidad marginal</strong> cuando nos interesa la P(A) cuando <span class="math inline">\(A \cup B\)</span>. En este caso, podemos expresar al conjunto A como <span class="math inline">\(A = (A \cap B) \cup (A \cup \tilde{B})\)</span>. ¿En Español? El conjunto A está dado por la unión de la intersección de A y B y la intersección de A con el complemento de B. ¿Aún menos rebuscado? <strong>Es la suma de las partes no unidas</strong>. El procedimiento aquí es justamente un caso similar a la regla aditiva de la probabilidad. Estamos sumando la zona traslapada entre A y B con lo que no es B, que nos deja únicamente con A. Te preguntarás por qué se denomina marginal. Para esto primero necesitamos definir una <strong>tabla de contingencia</strong>. Esta es simplemente una tabla en la que cada renglón tiene frecuencias relativas de los distintos niveles de una variable categórica y las columnas tienen las frecuencias relativas de cada nivel de otra variable categórica. En los <strong>márgenes</strong> de la tabla tenemos los totales para cada nivel (evento o conjunto) y de ahí viene el nombre.</p>
+<p>Por otra parte, la <strong>probabilidad condicional</strong> nos permite responder a la pregunta ¿cuál es la P(A) si <strong>ya sé</strong> que B ocurrió?. Matemáticamente la representamos como <span class="math inline">\(P(A|B)\)</span> (probabilidad de A <strong>dado</strong> B), y es una razón de la probabilidad conjunta de A y B (<span class="math inline">\(P(A,B)\)</span> o <span class="math inline">\(P(A \cap B)\)</span>) y la probabilidad marginal de B (<span class="math inline">\(P(B)\)</span>); es decir: <span class="math inline">\(P(A|B) = \frac{P(A,B)}{P(B)}\)</span>. La <strong>probabilidad conjunta</strong> representa la probabilidad de que dos eventos ocurran <strong>al mismo tiempo</strong> y puede llegar a ser un poco problemática. Si ambos eventos son independientes, obtenerla es sencillo: <span class="math inline">\(P(A,B) = P(A)P(B)\)</span>. El problema surge si A y B no son independientes, en cuyo caso: <span class="math inline">\(P(A,B) = P(A)P(B|A)\)</span>, lo cual nos lleva a una referencia cruzada. Por practicidad, y porque el interés del curso no es que sepas hacer estas cosas a mano, obtengamos la probabilidad conjunta desde su posición en la tabla de contingencia; es decir, cada una de sus celdas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src=".png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Probabilidades marginales y condicionales</figcaption><p></p>
+</figure>
+</div>
+<p>En el ejemplo de la diapositiva (OJO: los datos no son representativos de ninguna población) calculamos la <span class="math inline">\(P(Blond|Blue)\)</span>; es decir, la probabilidad de que alguien sea rubio si sabemos que tiene los ojos azules, dada por la división de la probabilidad conjunta <span class="math inline">\(P(Blond,Blue) = 0.16\)</span> y la marginal <span class="math inline">\(P(B) = 0.36\)</span> que resulta en <span class="math inline">\(P(Blond|Blue) \approx 0.44\)</span>. ¿Cuál sería entonces la <span class="math inline">\(P(Green|Red)\)</span>?</p>
+</section>
+<section id="distribuciones-de-probabilidad" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="distribuciones-de-probabilidad"><span class="header-section-number">6.4</span> Distribuciones de probabilidad</h2>
+<p>Dejando los memes de las viñetas (la inferior es bastante trágica), hablemos de cómo escalar de valores puntuales a algo más aplicado a la investigación. Podemos utilizar nuestra intución de probabilidad de manera cotidiana (e.g., probabilidad de lluvia), pero en cuestiones académicas tenemos una <strong>hipótesis de trabajo</strong>, la cual trasladamos a <strong>pruebas de significancia</strong> para realizar <strong>inferencias</strong>. Eso es algo que abordaremos más a detalle en la siguiente sección; sin embargo, vamos a tener múltiples datos, cuya distribución probabilidad es lo que va a moldear nuestros análisis. Es necesario, entonces, definir qué es una distribución de probabilidad.</p>
+<p>En pocas palabras, una <strong>distribución de probabilidad</strong> es una lista con todos los resultados de un evento y sus probabilidades correspondientes. Hay una gran diversidad de distribuciones teóricas de probabilidad, cada una con sus peculiaridades, parámetros, momentos y lugares para utilizarlas. No te preocupes por aprenderlas todas, hablaremos de las distribuciones relevantes para cada modelo que apliquemos. Por ahora solo es importante que conozcas que, si hablamos de <strong>distribuciones discretas</strong>, hablamos entonces de la probabilidad de cada resultado. Si tenemos una <strong>distribución continua</strong>, podemos partirla en intervalos para discretizarla y hablar de la probabilidad de que una observación pertenezca a ese intervalo. Sea cual sea el caso, estas son masas de probabilidad, las cuales suman a 1, tal que:</p>
+<p><span class="math display">\[
+\sum_{i = 1}^n P(x_i) = 1
+\]</span> <img src=".png" class="img-fluid" alt="Algunas distribuciones de probabilidad"></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿A qué me refiero con <strong>discreta</strong> o <strong>continua</strong>? A los valores que pueden tomar los resultados que dan forma a una distribución. Una distribución de probabilidad <strong>discreta</strong> solo toma valores enteros o categóricos, mientras que una <strong>continua</strong> puede tomar valores decimales. La relación de esto con nuestros datos la veremos en la siguiente sesión: muestreo.</p>
+</div>
+</div>
+<p>Pero volvamos al tema de las distribuciones continuas, porque tienen una propiedad bastante interesante. Resulta que si tenemos una distribución continua, la probabilidad de cada valor (<span class="math inline">\(P(x)\)</span>) <em>es</em> 0. ¿Por qué? Porque, por definición, todos los valores en el intervalo de la distribución son posibles y hay una cantidad infinita de ellos (de aquí sale también el problema de la precisión de punto flotante, pero esa es otra historia). ¿Cómo contender con esto? Podemos <strong>discretizar</strong> la distribución y hablar de masas de probabilidad de los intervalos resultantes (regla de Sturgess, por ejemplo); sin embargo, estos intervalos son, por mucho apellido de autor que lleven, arbitrarios. ¿Entonces? Podemos hacerlos infinitesimalmente pequeños; es decir, aproximar la amplitud de los intervalos a 0 (pero no exactamente 0) y entonces tenemos <strong>densidades de probabilidad</strong>. ¿Por qué densidad? Porque dividimos la masa de ese intervalo infinitesimalmente pequeño entre su amplitud, lo cual nos deja con una definición similar a <span class="math inline">\(densidad = \frac{masa}{área}\)</span>. Si hacemos eso, nuestras densidades pueden ser mayores a 1, lo cual indica que tenemos una alta masa en relación a la escala. El otro cambio es que, como recordarás de tus clases de cálculo, al pasar de una variable discreta a una continua pasamos de una sumatoria a una integral:</p>
+<p><span class="math display">\[
+\sum_{i = 1}^n \frac{p([x_i, i_i+\Delta x])}{\Delta x} \Rightarrow \int dxp(x) = 1
+\]</span></p>
+<p>No es necesario que memorices esto, solo que tengas en cuenta la diferencia entre masas y densidades de probabilidad. Como añadido, este mismo problema es lo que causa que un gráfico de frecuencias (histograma) no sea la mejor solución para ver la distribución de una variable continua. En su lugar podemos utilizar gráficos de densidad, los cuales hacen lo que acabamos de mencionar (al menos en escencia).</p>
+<p>Dejando las ecuaciones de lado, la selección de la distribución de probabilidad que utilizaremos depende del problema. ¿Tienes datos de conteos? Puedes utilizar las distribuciones Poisson o binomial negativa. ¿Tienes datos continuos en el intervalo 0-1? Vale la pena echarle un ojo a la distribución Beta. ¿Tienes datos binarios? Deberías voltear hacia la distribución binomial.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

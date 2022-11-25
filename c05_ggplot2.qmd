@@ -77,7 +77,7 @@ El gráfico así como está presentado puede encajar en mayor o menor medida con
 
 ![¿Realmente es necesario el color de fondo?](){#fig-100g-nobg}
 
-El siguiente elemento son, en realidad, varios. La visualización muestra el número de calorías por 100g de distintos alimentos. Eso aparece repetido en el título, el título del eje x, el título del eje y y, tal vez de forma menos obvia, en la acotación de colores y las etiquetas del eje x. ¿Qué hacer? Una posible solución Es reducir el título a "calorías por 100g". ¿100 g de qué? de lo que tenemos en las etiquetas del eje x. Esto nos permite no solo reducir el texto en el título, sino también eliminar los títulos de ambos ejes y la acotación:
+El siguiente elemento son, en realidad, varios. La visualización muestra el número de calorías por 100g de distintos alimentos. Eso aparece repetido en el título, el título del eje x, el título del eje $y$ y, tal vez de forma menos obvia, en la acotación de colores y las etiquetas del eje x. ¿Qué hacer? Una posible solución Es reducir el título a "calorías por 100g". ¿100 g de qué? de lo que tenemos en las etiquetas del eje x. Esto nos permite no solo reducir el texto en el título, sino también eliminar los títulos de ambos ejes y la acotación:
 
 ![¿Calorías por 100 g de qué?](){#fig-100g-nolegend}
 
@@ -93,11 +93,11 @@ Puede que estés pensando que hasta este punto ya eliminamos muchas cosas, pero 
 
 ![Un look más minimalista](){#fig-100g-noshade}
 
-En este punto hay algo que destaca tanto o incluso más que las barras: el texto del título y de las etiquetas del eje y. Evidentemente no podemos eliminarlos porque ya no sabríamos qué es lo que representa el gráfico, pero lo que sí podemos hacer es cambiar las negritas por gris claro, con lo cual cambiamos el punto de anclaje de la figura a la barra roja con el tocino:
+En este punto hay algo que destaca tanto o incluso más que las barras: el texto del título y de las etiquetas del eje $y$. Evidentemente no podemos eliminarlos porque ya no sabríamos qué es lo que representa el gráfico, pero lo que sí podemos hacer es cambiar las negritas por gris claro, con lo cual cambiamos el punto de anclaje de la figura a la barra roja con el tocino:
 
 ![¡Tocino!](){#fig-100g-nobold}
 
-Ahora ya estamos muy cerca, pero hay algo que se ve fuera de lugar. Ese "algo" está relacionado con el eje y: las etiquetas y las líneas guía. En este punto seguramente me dirás "si quitamos esos elementos ya no vamos a saber "qué tanto es tantito" o cuántas calorías tiene cada cosa", y tendrías la razón, pero podemos sustituirlo poniendo directamente el número de calorías por 100g de cada alimento sobre su barra, lo cual resulta en un gráfico no solo más simple sino también más preciso:
+Ahora ya estamos muy cerca, pero hay algo que se ve fuera de lugar. Ese "algo" está relacionado con el eje $y$: las etiquetas y las líneas guía. En este punto seguramente me dirás "si quitamos esos elementos ya no vamos a saber "qué tanto es tantito" o cuántas calorías tiene cada cosa", y tendrías la razón, pero podemos sustituirlo poniendo directamente el número de calorías por 100g de cada alimento sobre su barra, lo cual resulta en un gráfico no solo más simple sino también más preciso:
 
 ![¿Cuántas calorías tienes?](){#fig-100g-naked}
 
@@ -118,7 +118,7 @@ El segundo principio es el de **veracidad**. Este es auto-explicativo, pero es p
 ![A que no me alcanzas](){#fig-eleclie}
 
 
-Volviendo a la diferencia de alturas, aquí hay una "trampa" más: el eje y se encuentra truncado. ¿Qué tanto? Lo suficiente para que una diferencia de 1.59% se vea como una ventaja abrumadora de Maduro sobre Capriles. ¿Cómo se vería el gráfico si se presentara de forma veraz? Bastante menos dramático, eso es seguro:
+Volviendo a la diferencia de alturas, aquí hay una "trampa" más: el eje $y$ se encuentra truncado. ¿Qué tanto? Lo suficiente para que una diferencia de 1.59% se vea como una ventaja abrumadora de Maduro sobre Capriles. ¿Cómo se vería el gráfico si se presentara de forma veraz? Bastante menos dramático, eso es seguro:
 
 ![Tú y yo no somos tan diferentes](){#fig-electrue}
 
@@ -161,7 +161,7 @@ head(df1)
 
 ### `ggplot() + ...`  
 
-A partir de esta información podemos tratar de responder si existe una relación apreciable entre el consumo de combustible (por ejemplo en autopista) y el desplazamiento del motor, considerando la clase del vehículo. Para atender a esta pregunta utilizaremos un gráfico de dispersión, con el desplazamiento en el eje x, el consumo en el eje y y la clase indicada por los colores de los puntos. Ahora que tenemos claro qué queremos visualizar y cómo lo vamos a visualizar podemos empezar a graficar. El primer paso es inicializar el espacio de graficado con la función `ggplot()` y pasarle los parámetros estéticos utilizando la función `aes(x, y, colour)`. Es importante mencionar que en este momento aparecerá únicamente el espacio de graficado en blanco. Esto es normal, ya que únicamente definimos el "qué", pero no el "cómo".
+A partir de esta información podemos tratar de responder si existe una relación apreciable entre el consumo de combustible (por ejemplo en autopista) y el desplazamiento del motor, considerando la clase del vehículo. Para atender a esta pregunta utilizaremos un gráfico de dispersión, con el desplazamiento en el eje x, el consumo en el eje $y$ y la clase indicada por los colores de los puntos. Ahora que tenemos claro qué queremos visualizar y cómo lo vamos a visualizar podemos empezar a graficar. El primer paso es inicializar el espacio de graficado con la función `ggplot()` y pasarle los parámetros estéticos utilizando la función `aes(x, y, colour)`. Es importante mencionar que en este momento aparecerá únicamente el espacio de graficado en blanco. Esto es normal, ya que únicamente definimos el "qué", pero no el "cómo".
 
 ```{r}
 ggplot(data = df1, aes(x = displ, y = cty, colour = class))
@@ -196,7 +196,7 @@ Ahora que está claro cuáles son las variables que estamos mostrando podemos em
 plot2 + theme_minimal()
 ```
 
-Logramos eliminar el fondo gris y de paso las "espinas" (líneas de los ejes) y ahora el gráfico está en mucho mejor condición para ser presentado; sin embargo aún podemos ir más lejos. El objetivo de esta gráfica no es ver los detalles precisos de la información, si no extraer la información más relevante, por lo que la cuadrícula es un elemento que no aporta nada a la visualización. Para retirarla utilizaremos la función `theme()`, la cual permite modificar el aspecto de todos los elementos del gráfico. En realidad, las funciones `theme_*()` son aplicaciones de `theme()` con diferentes valores por defecto, por lo que podemos replicar el efecto de `theme_minimal()` e incluir otras modificaciones. Otra función muy útil para este procedimiento es la función `element_blank()`, la cual le indica a `ggplot2` que no debe mostrar ese elemento. Otra cuestión importante que debemos de considerar es la relación de aspecto. Debido a que esta puede modificar enormemente la percepción de los datos, su selección no es algo trivial. En general, la proporción áurea (1:1.61) es un buen punto de partida y en series de tiempo es la proporción que menos deforma los datos. Una proporción cuadrada tiene sentido únicamente en aquellos casos en los que ambos ejes tengan la misma magnitud de variación y procuraremos que el eje más largo sea aquel con la variación más pequeña. En este caso, la variación del eje y (5 a 45) es mucho mayor que la del eje x (1.5 a 7), por lo cual una proporción cuadrada no sería una buena alternativa. En su lugar, utilicemos la proporción áurea. El último elemento que eliminaremos aquí son las marcas de los ejes, ya que realmente no aportan demasiada información.
+Logramos eliminar el fondo gris y de paso las "espinas" (líneas de los ejes) y ahora el gráfico está en mucho mejor condición para ser presentado; sin embargo aún podemos ir más lejos. El objetivo de esta gráfica no es ver los detalles precisos de la información, si no extraer la información más relevante, por lo que la cuadrícula es un elemento que no aporta nada a la visualización. Para retirarla utilizaremos la función `theme()`, la cual permite modificar el aspecto de todos los elementos del gráfico. En realidad, las funciones `theme_*()` son aplicaciones de `theme()` con diferentes valores por defecto, por lo que podemos replicar el efecto de `theme_minimal()` e incluir otras modificaciones. Otra función muy útil para este procedimiento es la función `element_blank()`, la cual le indica a `ggplot2` que no debe mostrar ese elemento. Otra cuestión importante que debemos de considerar es la relación de aspecto. Debido a que esta puede modificar enormemente la percepción de los datos, su selección no es algo trivial. En general, la proporción áurea (1:1.61) es un buen punto de partida y en series de tiempo es la proporción que menos deforma los datos. Una proporción cuadrada tiene sentido únicamente en aquellos casos en los que ambos ejes tengan la misma magnitud de variación y procuraremos que el eje más largo sea aquel con la variación más pequeña. En este caso, la variación del eje $y$ (5 a 45) es mucho mayor que la del eje x (1.5 a 7), por lo cual una proporción cuadrada no sería una buena alternativa. En su lugar, utilicemos la proporción áurea. El último elemento que eliminaremos aquí son las marcas de los ejes, ya que realmente no aportan demasiada información.
 
 ```{r}
 plot2 <- plot2 + 
@@ -220,7 +220,7 @@ plot2
 
 ### Personalizar los ejes
 
-Ahora que nos deshicimos del fondo, la cuadrícula y las líneas y marcas de los ejes podemos trabajar en los valores de los ejes. Una de las mejores maneras de hacerlo es utilizando las funciones `scale_x_*()` o `scale_y_*()`, sustituyendo el * por `continuous` o `discrete` dependiendo del tipo de variable con el que estemos trabajando. En este caso, eliminaremos por completo las marcas del eje y y dejaremos únicamente los desplazamientos más comunes en el eje x.
+Ahora que nos deshicimos del fondo, la cuadrícula y las líneas y marcas de los ejes podemos trabajar en los valores de los ejes. Una de las mejores maneras de hacerlo es utilizando las funciones `scale_x_*()` o `scale_y_*()`, sustituyendo el * por `continuous` o `discrete` dependiendo del tipo de variable con el que estemos trabajando. En este caso, eliminaremos por completo las marcas del eje $y$ y dejaremos únicamente los desplazamientos más comunes en el eje x.
 
 ```{r}
 plot2 <- plot2 + scale_x_continuous(breaks = c(1.8, 2.5, 5, 7)) +
@@ -231,7 +231,7 @@ plot2
 
 ### Añadir líneas de referencia
 
-Ahora que nos deshicimos de los valores del eje la gráfica ya no es entendible debido a que no sabemos cuál es la orientación o la escala de los datos. Una alternativa es añadir un par de líneas de referencia. Esto lo haremos con la función `geom_hline()`, la cual nos permite añadir líneas horizontales a través de todo el gráfico que cruzan al eje y en una posición que nosotros determinamos:
+Ahora que nos deshicimos de los valores del eje la gráfica ya no es entendible debido a que no sabemos cuál es la orientación o la escala de los datos. Una alternativa es añadir un par de líneas de referencia. Esto lo haremos con la función `geom_hline()`, la cual nos permite añadir líneas horizontales a través de todo el gráfico que cruzan al eje $y$ en una posición que nosotros determinamos:
 
 ```{r}
 # Valores de referencia como el mínimo, la media y
@@ -335,7 +335,7 @@ final.plot <- ggplot(data = df1, aes(x = displ, y = hwy,
                     ) + 
               # Reducimos las divisiones del eje ex a 4 valores
               scale_x_continuous(breaks = c(1.8, 2.5, 5, 7)) +
-              # Eliminamos las divisiones del eje y
+              # Eliminamos las divisiones del eje $y$
               scale_y_continuous(breaks = NULL) +
               # Añadimos una línea roja en el peor consumo
               geom_hline(yintercept = refs[1],

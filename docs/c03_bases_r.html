@@ -83,6 +83,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -385,8 +404,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="el-lenguaje-de-programación-r" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="el-lenguaje-de-programación-r"><span class="header-section-number">3.1</span> El lenguaje de programación <code>R</code></h2>
-<p>En la sesión anterior hablamos de <code>RStudio</code> como una interfaz gráfica a <code>R</code>, pero no fuimos más allá de decir que <code>R</code> es un lenguaje de programación que se ejecuta en consola. Pues bien, <code>R</code> es, y cito textualmente, “un <strong>lenguaje</strong> y <strong>ambiente</strong> para la <strong>computación estadística</strong> y la creación de <strong>gráficos</strong>”. ¿En castellano? Es un lenguaje creado especialmente para procedimientos estadísticos y el graficado de datos. Es un software libre, por lo que además de ser gratuito es auditable (i.e., cualquiera puede revisar el código fuente), “cualquiera” puede contribuir (ojo a las comillas). En su código fuente base (R base) incluye diversos algoritmos, modelos y distribuciones de probabilidad, aunque también es fácilmente extensible por medio de paquetes o librerías.</p>
-<p>En este punto me dirás “Ok, Arturo, de acuerdo con lo que dices, pero ¿por qué se ha vuelto tan popular en análisis bioestadísticos?” Pues tiene que ver con varios factores. El primero es que es un lenguaje de <strong>alto nivel</strong>; es decir, está hecho para ser leído por humanos y no por computadoras. El segundo es que es <strong>interactivo</strong>, por lo que podemos ir modificando el código y ver su salida en tiempo real <strong>sin necesidad de compilar</strong> primero el código. El tercer</p>
+<p>En la sesión anterior hablamos de <code>RStudio</code> como una interfaz gráfica a <code>R</code>, pero no fuimos más allá de decir que <code>R</code> es un lenguaje de programación que se ejecuta en consola. Pues bien, <code>R</code> es, y cito textualmente, “un <strong>lenguaje</strong> y <strong>ambiente</strong> para la <strong>computación estadística</strong> y la creación de <strong>gráficos</strong>” <span class="citation" data-cites="Rcoreteam_2022">(<a href="references.html#ref-Rcoreteam_2022" role="doc-biblioref">R Core Team, 2022</a>)</span>. ¿En castellano? Es un lenguaje creado especialmente para procedimientos estadísticos y el graficado de datos. Es un software libre, por lo que además de ser gratuito es auditable (i.e., cualquiera puede revisar el código fuente), “cualquiera” puede contribuir (ojo a las comillas). En su código fuente base (R base) incluye diversos algoritmos, modelos y distribuciones de probabilidad, aunque también es fácilmente extensible por medio de paquetes o librerías.</p>
+<p>En este punto me dirás “Ok, Arturo, de acuerdo con lo que dices, pero ¿por qué se ha vuelto tan popular en análisis bioestadísticos?” Pues tiene que ver con varios factores. El primero es que es un lenguaje de <strong>alto nivel</strong>; es decir, está hecho para ser leído por humanos y no por computadoras. El segundo es que es <strong>interactivo</strong>, por lo que podemos ir modificando el código y ver su salida en tiempo real <strong>sin necesidad de compilar</strong> primero el código. El tercero tiene que ver su <strong>extensibilidad</strong>. Hay una gran variedad de librerías</p>
 </section>
 <section id="objetos" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="objetos"><span class="header-section-number">3.2</span> Objetos</h2>
@@ -460,6 +479,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>?stringr<span class="sc">::</span>str_extract</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora que sabemos qué es una función, qué es una librería y cómo utilizarlos, vayamos a explorar el otro tipo de objetos: las variables.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si te interesa ver la referencia de una librería puedes hacerlo con la función <code>citation("librería")</code>.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="variables" class="level2" data-number="3.4">
@@ -1551,6 +1583,11 @@ Important
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Rcoreteam_2022" class="csl-entry" role="doc-biblioentry">
+R Core Team. 2022. <em><a href="https://www.R-project.org/">R: A language and environment for statistical computing</a></em>. Vienna, Austria: R Foundation for Statistical Computing.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
