@@ -2,7 +2,7 @@
 
 ## Un dialecto dentro de `R`
 
-En la sesión anterior mencionamos que hay un "paquete de paquetes" que da lugar a un "dialecto" dentro de `R`: `tidyverse`, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en `R` base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, `tidyverse` proveé de un paradigma diferente, con una "gramática" (sintaxis) distinta, muy similar a lo que veremos en `ggplot2`. De hecho, `ggplot2` es un paquete del `tidyverse`, por lo que el "dialecto" `tidy` comparte la filosofía declarativa y fomenta la "encadenación" de comandos. A muchas personas les gusta más la forma `tidy`, a otras les gusta más trabajar con `R` base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión. 
+En la sesión anterior mencionamos que hay un "paquete de paquetes" que da lugar a un "dialecto" dentro de `R`: `tidyverse`, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en `R` base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, `tidyverse` está basado en el paradigma funcional de la programación, con una "gramática" (sintaxis) distinta, muy similar a lo que veremos en `ggplot2`. De hecho, `ggplot2` es un paquete del `tidyverse`, por lo que el "dialecto" `tidy` comparte la filosofía declarativa y fomenta la "encadenación" de comandos. A muchas personas les gusta más la forma `tidy`, a otras les gusta más trabajar con `R` base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión. 
 
 Este nuevo dialecto fue creado con un objetivo en particular: la ciencia de datos. Como tal, cuenta con una gran cantidad de librerías (y por lo tanto funciones) especializadas para realizar operaciones rutinarias. ¿Quieres realizar gráficos? En la siguiente sesión hablaremos de `ggplot2`. ¿Quieres hacer "manipulación" (ojo, no cuchareo) de datos? Aquí veremos algnas funciones de `dplyr`. ¿Quieres trabajar con procesamiento de cadenas de caractér? Para esto está `stringr`. ¿Quieres herramientas para programación funcional? Ve hacia `purrr` (sí, triple r). `readxl` es otra librería con la que ya estás familiarizado y que forma parte del `tidyverse`. ¿Tienes un problema en el que que necesitas manejar fechas? `lubridate` puede ser una opción. Puedes conocer todos los paquetes que forman el `tidyverse` con:
 
@@ -46,7 +46,7 @@ Notarás que el resultado es exactamente el mismo, aunque la forma de hacerlo es
 4. Nuevamente utilizamos el operador `|>`. Hasta este punto hemos pasado los `datos1` a la función `group_by(sp)`, por lo que ya están agrupados por especie, pero falta aplicar la función `mean()` para obtener el promedio, entonces  volvemos a encadenar hacia la función `summarise()`. Esta función recibe una serie de pares nombres de columnas y funciones a aplicar. En este caso, estamos generando una columna llamada `mbill_l` que contiene los promedios de la columna `bill_length_mm` de los `datos1`.
 
 ::: {.callout-important}
-Si revisas documentación "antigua" sobre `tidyverse` (previa a R 4.1, de hecho), notarás que el operador `pipe` es `%>%` en vez de `|>`. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de `RStudio`; sin embargo, utilizaremos `|>` por ser el operador `pipe` nativo de `R`, el cual fue introducido (como te imaginarás) en `R` 4.1.
+Si revisas documentación "antigua" sobre `tidyverse` (previa a R 4.1, de hecho), notarás que el operador `pipe` es `%>%` en vez de `|>`. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de `RStudio`. En el curso utilizaremos `|>` por ser el operador `pipe` nativo de `R`, el cual fue introducido (como te imaginarás) en `R` 4.1.
 :::
 
 ¿Abstracto? Sin duda. ¿Útil? También. ¿Más explícito que `R` base con `aggregate`? Debatible. Lo que no es debatible es que esta notación brilla especialmente en cierto tipo de problemas. Pensemos que nos interesa conocer el promedio de las longitudes de picos por especie para cada isla. Intenta hacerlo con `R` base y te darás cuenta de que no es tan intuitivo, salvo que estés familiarizado con el uso de fórmulas. ¿En `tidy`? Solamente hay que agregar la nueva variable de agrupamiento a `group_by`:
@@ -58,7 +58,7 @@ datos1 |>
                            na.rm = T))
 ```
 
-Ahora tenemos un `tibble` (funcionalmente equivalente a un `data.frame`) con tres columnas, en donde se da el promedio para cada combinación de las variables de agrupamiento. ¿A que es más sencillo que intentar hacerlo con `R` base?
+Ahora tenemos un `tibble` (funcionalmente equivalente a un `data.frame`) con tres columnas, en donde se da el promedio para cada combinación de las variables de agrupamiento. ¿A que es más sencillo que intentar hacerlo con `R` base?. Esto último no es del todo cierto, pues hay una forma muy sencilla de hacerlo con `aggregate()`, pero encontrar una manera es parte de tu tarea, así que no arruinaré la diversión.
 
 ::: {.callout-note}
 Con esto no quiero deciro que `tidy` sea mejor que `R` base o viceversa, solamente que son dos aproximaciones, cada una con sus propias ventajas y desventajas. Por un lado, `R` base puede llegar a ser más compacto, pero `tidy` tiende a ser más explícito. Por supuesto, también hay casos en los que lo contrario es verdad.
@@ -126,7 +126,7 @@ Y ahora hagamos la operación con `tidy`:
 ```{r}
 datos1 <- datos1 |> 
           mutate(bill_area = bill_length_mm * bill_depth_mm)
-datos1$bill_area
+datos1 |> select(bill_area)
 ```
 
 Evidentemente, los resultados son los mismos, lo cual me lleva directamente a la siguiente sección.
@@ -165,7 +165,7 @@ Pero si queremos indizar el resultante obtenemos un error:
 datos1 |> select(sex)[10:25]
 ```
 
-¿La alternativa? Primero indizar `datos1` y luego utilizar `select`. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar `R` base.
+¿La alternativa? Primero indizar `datos1` y luego utilizar `select`. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar `R` base, sin mencionar que en `tidy` "puro" esta solución no es aceptable.
 
 ```{r}
 datos1[10:25,] |> select(sex)
@@ -204,11 +204,11 @@ linear_reg() |>
   fit(bill_length_mm~bill_depth_mm, data = datos1)
 ```
 
-¿Por qué utilizar `tidymodels` entonces? Eso lo dejaremos para las sesiones en las que hablemos de aprendizaje automatizado, pero verás que toma mucho sentido en el momento en el que quieres hacer particiones entrenamiento/prueba, optimización mediante validación cruzada, preprocesamiento de datos, evaluación, etcétera.
+¿Por qué utilizar `tidymodels` entonces? Eso lo dejaremos para las sesiones en las que hablemos de aprendizaje automatizado, pero verás que toma mucho sentido en el momento en el que empiezas a hacer particiones entrenamiento/prueba, optimización mediante validación cruzada, preprocesamiento de datos, evaluación, y demás tareas necesarias. Lo único que te diré en este punto es que el poder homogeneizar todos estos procedimientos en un solo estilo de trabajo simplifica las cosas.
 
 ## Conclusión
 
-Aunque `tidy` puede llegar a verse más elegante o moderno que `R` base, no es un substituto total, por lo que tampoco debes de casarte con ninguno de los dos. ¿Tu problema se resuelve más rápidamente con `tidy`? Úsalo. ¿`R` base se presta mejor? Aprovéchalo. Recuerda, `R` es una caja de herramientas en la cual debes de buscar la que mejor se adapte al problema o pregunta que quieras responder.
+Aunque `tidy` puede llegar a verse más elegante o moderno que `R` base, no es un substituto total. Aunque `R` base te permite resolver los mismos problemas que `tidy`, a veces no es tan intuitivo. ¿Solución? No casarse con ninguno de los dos y exprimirlos lo mejor posible. ¿Tu problema se resuelve más rápidamente con `tidy`? Úsalo. ¿`R` base se presta mejor? Aprovéchalo. Recuerda, `R` (como cualquier otro lenguaje de programación) es una caja de herramientas en la cual debes de buscar la que mejor se adapte al problema o pregunta que quieras responder.
 
 Esto es todo para esta sesión, nos vemos en la siguiente para hablar sobre teoría y buenas prácticas para la visualización de datos.
 
