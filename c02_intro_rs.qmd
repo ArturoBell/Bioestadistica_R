@@ -150,7 +150,7 @@ Ahora sí, podemos dedicarle nuestra atención a `Quarto`. Antes mencioné que e
 
 El primer elemento es el preámbulo, que mencionamos está en formato `YAML` y que está contenido entre `---`. `YAML` es un formato de serialización de datos legible por humanos. ¿En castellano? Una lista con niveles de pares de claves:valores que definen los **metadatos** de nuestro documento. En nuestro ejemplo tenemos:
 
-```
+``` markdown
 ---
 title: "Untitled"
 ---
@@ -158,7 +158,7 @@ title: "Untitled"
 
 Es decir, el título que aparecerá en el reporte es `"Untitled"`, tal y como vimos en la vista previa. Esto no tiene mucho sentido, así que cambiémoslo por `"Mi primer `Quarto`"` y añadamos una nueva entrada para el autor, tal que:
 
-```
+``` markdown
 ---
 title: "Mi primer `Quarto`"
 author: "Tu nombre"
@@ -167,7 +167,7 @@ author: "Tu nombre"
 
 Otro elemento que usualmente se agrega en el preámbulo es el formato de salida del documento **renderizado**; es decir, ya presentado para compartir/imprimir. Mi recomendación es exportar a archivos HTML, salvo que vayas a imprimir el documento (PDF), necesites paginación (PDF de nuevo) o que por alguna desafortunada razón necesites un archivo MS Word. Un HTML lo declaramos tal que:
 
-```
+``` markdown
 ---
 title: "Mi primer `Quarto`"
 author: "Tu nombre"
@@ -207,7 +207,7 @@ E, incluso, puedes hacer listas anidadas añadiendo una indentación de doble ta
     
 En el archivo `.qmd` este capítulo puedes ver cómo añadí las capturas de la ventana de `RStudio`. Añadir imágenes es básicamente el mismo procedimiento que con un enlace, solo añadiendo el operador `!` antes. Por ejemplo, la siguiente línea añade el logo de R desde su dirección oficial, le asigna el pie de foto "Logo `R`" y una etiqueta interna que se puede utilizar para referencias cruzadas (@fig-logoR) con `@fig-logoR` :
 
-```
+``` markdown
 ![Logo `R`](https://www.r-project.org/logo/Rlogo.png){#fig-logoR}
 ```
 ![Logo `R`](https://www.r-project.org/logo/Rlogo.png){#fig-logoR}
@@ -216,19 +216,24 @@ En el archivo `.qmd` este capítulo puedes ver cómo añadí las capturas de la 
 
 Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo `.bib` como el archivo `references.bib` que está en este directorio y, por supuesto, referenciarlas en el texto [*e.g.* @Knuth_1984]. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo `.bib` está compuesto por entradas en formato bibTeX, heredado del hermano mayor de `Markdown`: `LaTeX`. La sintaxis básica es la siguiente:
 
-```
+``` markdown
 @TIPO{CLAVE,
       author = {},
       year = {},
       title = {}}
 ```
 
-Los campos adicionales dependerán del `TIPO` de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar [esta página](https://www.bibtex.com/e/entry-types/). Para incluir una referencia cruzada lo único que tienes que hacer es: \@CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería \@Knuth_1984 para una referencia en el texto, @Knuth_1984, o \[\@Knuth_1984\] para una referencia dentro de paréntesis [@Knuth_1984]. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el siguiente divisor y asegurarte de tener un encabezado de referencias al final del documento:
+Los campos adicionales dependerán del `TIPO` de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar [esta página](https://www.bibtex.com/e/entry-types/). Para incluir una referencia cruzada lo único que tienes que hacer es: \@CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería \@Knuth_1984 para una referencia en el texto, @Knuth_1984, o \[\@Knuth_1984\] para una referencia dentro de paréntesis [@Knuth_1984]. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el `div` `#refs` y tener un encabezado de referencias al final del documento, tal que:
 
-```
-::: {#refs}
+``` markdown
+# Referencias{.unnumbered}
+::: {#ref}
 :::
 ```
+
+::: {.callout-important}
+La clave del divisor en el bloque mostrado es `#ref`, pero debería de ser `#refs`. Esto es para evitar que `Quarto` se confunda y ponga aquí las referencias en vez de en la sección correspondiente. También puedes cambiar el nombre del encabezado, si así lo deseas, o retirar la anotación `{.unnumbered}` si quieres que la sección esté numerada.
+:::
 
 ::: {.callout-note}
 Yo construyo mis archivos `.bib` a mano, pero no es necesario. Si quieres pasar de un listado de referencias que ya tienes en Word puedes considerar [text2bib](https://text2bib.economics.utoronto.ca) o [Edifix](https://edifix.com) (1. OJO con las opciones; 2. Edifix es de pago). Si quieres una interfaz gráfica para manejar tus archivos `.bib`, puedes considerar [JabRef](https://www.jabref.org). Finalmente, gestores de referencias como [Mendeley](https://www.mendeley.com) o [ReadCube Papers](https://www.papersapp.com) permiten exportar las referencias en formato bib.
@@ -257,6 +262,4 @@ Utilizando `Quarto` genera un documento `HTML` con tabla de contenidos en el que
 En esta sesión revisamos muy someramente el poder de `RStudio` y `Quarto`, limitándonos a las funciones más indispensables y que se utilizan de manera cotidiana, pero hay mucho más por ver. Proyectos dentro de `RStudio`, elaborar libros/páginas web/tesis o incluso artículos científicos con formato editorial según los requerimientos de algunas revistas, solo por mencionar algunos.
 
 Por otra parte, una de las ventajas poco conocidas de trabajar con archivos de texto simple (`.R`, `.Rmd` o `.qmd`), al menos en el área de ciencias biológicas, es el poder aprovechar al máximo sistemas de gestión de versiones, incluyendo por supuesto al más famoso: `git`. Muy posiblemente te hayas encontrado en algún momento con [GitHub](https://github.com), que no era otra cosa mas que un almacén público de repositorios `git`. Ahora es un servidor capaz de mantener servicios simples en ejecución o, incluso, alojar páginas web (la página web de acompañamiento de este curso es un ejemplo), por lo que te recomiendo que le eches un ojo al funcionamiento de ambos (`git` y `GitHub`), y que revises la integración de `git` en  `RStudio`. Personalmente utilizo solo la línea de comandos, pero es una herramienta más dentro de nuestro IDE y que puede resultarte más intuitiva.
-    
-# Referencias{.unnumbered}
     

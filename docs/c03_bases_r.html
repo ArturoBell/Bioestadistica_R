@@ -222,11 +222,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -237,6 +232,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
@@ -1530,7 +1530,25 @@ UOM (Unidentified Organic Material)
 <li>Carga los <code>datos1.csv</code> y añade un renglón adicional con los totales para cada columna.</li>
 <li>Carga los <code>datos1.csv</code> y obten una tabla con los conteos promedio de cada presa para cada especie (aggregate/apply o ciclos).</li>
 <li>Combina el ciclo <code>for</code> anidado del último ejemplo con un condicional, en el cuál se imprima si la suma de ambos números (i, j) es mayor, menor o igual a 105.</li>
+<li>Ejecuta <strong>en consola</strong> el siguiente código y responde ¿qué hace cada línea?</li>
 </ol>
+<pre><code>pkgs &lt;- c("tidyverse", "Rmisc", "rcompanion", "gap", "brms", "stats4", "Metrics", "performance", "ggdendro", "dendextend", "factoextra", "cluster", "NbClust", "FactoMineR", "MASS", "klaR", "vegan", "tidymodels", "MVN", "Hotelling", "gridExtra", "GGally", "car", "FSA", "randomcoloR", "gganimate", "reshape2", "DescTools", "PerformanceAnalytics", "corrplot", "ggrepel", "pROC", "RCurl", "glmnet", "pcsl", "MuMIn", "nlraa")
+
+install.packages(pkgs, dependencies = T)</code></pre>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si tienes algún problema con la ejecución por favor házmelo saber. Esto cubre la instalación de las librerías que utilizaremos durante el curso, por lo que es sumamente importante que se ejecuten correctamente.</p>
+<p>Si en algún momento de la instalación <code>R</code> te pregunta si quieres instalar desde la fuente dile que NO. Aunque las versiones fuente están más actualizadas pueden llegar a romper la compatibilidad con otras librerías.</p>
+</div>
+</div>
 
 
 </section>

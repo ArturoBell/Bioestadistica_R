@@ -156,11 +156,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -171,6 +166,11 @@ ul.task-list li input[type="checkbox"] {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
@@ -284,13 +284,20 @@ ul.task-list li input[type="checkbox"] {
 <p>Una definición más formal es la de la Real Academia de la Lengua Española: “Rama de la matemática que utiliza <strong>grandes conjuntos de datos</strong> numéricos para obtener <strong>inferencias</strong> basadas en el cálculo de <strong>probabilidades</strong>”. De esta definición podemos retomar algunas ideas claves: la primera es que es una rama de la matemática, por lo cual los problemas que analicemos deben de seguir un razonamiento lógico y los procedimientos y resultados deben de ser expresados sin ambigüedades. La siguiente es que requiere de grandes conjuntos de datos, lo cual hace referencia a un tema que será abordado más adelante en el curso: la representatividad. Por último, podemos también reconocer su objetivo, el cual es permitirnos obtener conclusiones a partir de este conjunto de datos. A partir de esta definición podemos considerar a la bioestadística como la aplicación de la estadística a problemas biológicos, desde la estimación del tamaño poblacional de una especie, comparaciones de tallas entre sitios de muestreo, modelar el crecimiento corporal, entre muchas otras.</p>
 <p>Llegados a este punto, quiero introducir otro concepto: la ciencia de datos. En pocas palabras, esta estudia los métodos para extraer información sobre los datos y, en última instancia, facilitar la toma de decisiones. Sus objetivos son i) describir los datos, comparar entre grupos/poblaciones/clases, ordenar o clasificar observaciones y, en última instancia, predecir un resultado futuro a partir de los datos con las que se cuenta.</p>
 <p>Al igual que con la definición de estadística, existen distintas definiciones y visiones, pero por el momento analicemos este diagrama que nos habla sobre las habilidades de un individuo realizando un procedimiento a sus datos y cuál sería el resultado:</p>
+<div id="fig-cdatos" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src=".png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1.1: Ciencia de datos</figcaption><p></p>
+</figure>
+</div>
 <ol type="1">
 <li><p>Consideremos las habilidades de hackeo como <strong>habilidades de programación</strong> y el conocimiento técnico necesario para la aplicación de distintas técnicas de análisis de datos, a la <strong>experiencia</strong> como el conocimiento que el individuo tenga sobre el fenómeno que está analizando y al conocimiento sobre matemáticas y <strong>estadística</strong> como el conocimiento <strong>teórico</strong> sobre las técnicas que está aplicando.</p></li>
 <li><p>En la intersección de las habilidades de hackeo y la experiencia se encuentra una <strong>“zona de peligro”</strong>, la cual también podemos definir como el área de la “caja negra”, es decir, el área en la que se aplican pruebas y métodos sin conocer sus fundamentos y las conclusiones o inferencias están en función de la experiencia y los prejuicios de quien las realice, sin considerar su pertinencia.</p></li>
 <li><p>Por otra parte, en la intersección de la experiencia y el conocimiento de estadística se encuentra la <strong>investigación tradicional</strong>; es decir, existe un conocimiento teórico sobre las pruebas que se están aplicando y la experiencia para poder realizar inferencias sobre los datos considerando las limitaciones, fortalezas y debilidades de las técnicas; sin embargo, la visión sobre el problema se encuentra normalmente limitada a las pruebas tradicionales, lo cual a su vez limita el tipo de análisis y preguntas que se puedan resolver.</p></li>
 <li><p>En la intersección de las habilidades de hackeo y el conocimiento sobre estadística se encuentra la disciplina del <strong>“aprendizaje automatizado”</strong>, algo que discutiremos más profundamente en la sección de Técnicas Multivariadas, pero que hace referencia al extraer relaciones entre los datos de manera eficiente, independientemente de si estas relaciones son causales o no.</p></li>
-<li><p>Finalmente, en el centro, recibiendo entradas de las tres áres encontramos a la <strong>ciencia de datos</strong>. Tomando esto en consideración, te propongo hacer un ejercicio de reflexión sobre la pertinencia de aproximarnos a los problemas biológicos de una manera más flexible, eficiente, informada y que considere también la experiencia del investigador, más allá del modo tradicional e inamovible que nos ha llevado a pensar de manera incorrecta que la falta de significancia estadística es falta de significancia biológica o viceversa. ¿Es esto un problema muy grave? Esa pregunta la dejaremos para un tema donde es más adecuado abordarla: pruebas de hipótesis, en especial al hablar sobre los usos y abusos del famosísimo (¿o infame?) valor de p.</p></li>
+<li><p>Finalmente, en el centro, recibiendo entradas de las tres áres encontramos a la <strong>ciencia de datos</strong>.</p></li>
 </ol>
+<p>Tomando esto en consideración, te propongo hacer un ejercicio de reflexión sobre la pertinencia de aproximarnos a los problemas biológicos de una manera más flexible, eficiente, informada y que considere también la experiencia del investigador, más allá del modo tradicional e inamovible que nos ha llevado a pensar de manera incorrecta que la falta de significancia estadística es falta de significancia biológica o viceversa. ¿Es esto un problema muy grave? Esa pregunta la dejaremos para un tema donde es más adecuado abordarla: pruebas de hipótesis, en especial al hablar sobre los usos y abusos del famosísimo (¿infame?) valor de p.</p>
 <p>Con esta idea terminamos la primera clase del curso. Nos vemos en la siguiente para familiarizarnos con <code>RStudio</code> y cómo elaborar reportes utilizando <code>Quarto</code>.</p>
 
 

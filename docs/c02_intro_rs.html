@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -176,11 +239,6 @@ div.csl-indent {
   <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -191,6 +249,11 @@ div.csl-indent {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
@@ -299,7 +362,6 @@ div.csl-indent {
   <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">3.5</span>  Ejercicio</a></li>
   <li><a href="#qué-sigue" id="toc-qué-sigue" class="nav-link" data-scroll-target="#qué-sigue"><span class="toc-section-number">3.6</span>  ¿Qué sigue?</a></li>
   </ul></li>
-  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias">Referencias</a></li>
   </ul>
 </nav>
     </div>
@@ -533,22 +595,22 @@ div.csl-indent {
 <section id="preámbulo" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="preámbulo"><span class="header-section-number">3.1</span> Preámbulo</h2>
 <p>El primer elemento es el preámbulo, que mencionamos está en formato <code>YAML</code> y que está contenido entre <code>---</code>. <code>YAML</code> es un formato de serialización de datos legible por humanos. ¿En castellano? Una lista con niveles de pares de claves:valores que definen los <strong>metadatos</strong> de nuestro documento. En nuestro ejemplo tenemos:</p>
-<pre><code>---
-title: "Untitled"
----</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Untitled"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Es decir, el título que aparecerá en el reporte es <code>"Untitled"</code>, tal y como vimos en la vista previa. Esto no tiene mucho sentido, así que cambiémoslo por <code>"Mi primer</code>Quarto<code>"</code> y añadamos una nueva entrada para el autor, tal que:</p>
-<pre><code>---
-title: "Mi primer `Quarto`"
-author: "Tu nombre"
----</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi primer `Quarto`"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Tu nombre"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Otro elemento que usualmente se agrega en el preámbulo es el formato de salida del documento <strong>renderizado</strong>; es decir, ya presentado para compartir/imprimir. Mi recomendación es exportar a archivos HTML, salvo que vayas a imprimir el documento (PDF), necesites paginación (PDF de nuevo) o que por alguna desafortunada razón necesites un archivo MS Word. Un HTML lo declaramos tal que:</p>
-<pre><code>---
-title: "Mi primer `Quarto`"
-author: "Tu nombre"
-format:
-  html:
-    code-fold: true
----</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Mi primer `Quarto`"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Tu nombre"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notarás algunas cosas. La primera es que <code>html</code> está <strong>indentado</strong>; es decir, no comienza en la misma posición que <code>format</code>. Esto es para indicar que <code>html</code> pertenece a <code>format</code>, al igual que <code>code-fold</code> pertenece a <code>html</code>. La siguiente es, justamente, que agregamos a la lista la entrada <code>code-fold</code>. Esta es una opción que indica si queremos que el código sea colapsable mediante un botón en el archivo final. En este caso, la indicamos como <code>true</code>, por lo que así será. Si no lo quisiéramos así indicaríamos <code>false</code>. Si renderizamos nuestro documento ahora tendremos:</p>
 <div id="fig-RS_4e" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -583,7 +645,7 @@ format:
 </ul></li>
 </ol>
 <p>En el archivo <code>.qmd</code> este capítulo puedes ver cómo añadí las capturas de la ventana de <code>RStudio</code>. Añadir imágenes es básicamente el mismo procedimiento que con un enlace, solo añadiendo el operador <code>!</code> antes. Por ejemplo, la siguiente línea añade el logo de R desde su dirección oficial, le asigna el pie de foto “Logo <code>R</code>” y una etiqueta interna que se puede utilizar para referencias cruzadas (<a href="#fig-logoR">Figure&nbsp;<span>3.2</span></a>) con <code>@fig-logoR</code> :</p>
-<pre><code>![Logo `R`](https://www.r-project.org/logo/Rlogo.png){#fig-logoR}</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="al">![Logo `R`](https://www.r-project.org/logo/Rlogo.png)</span>{#fig-logoR}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-logoR" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://www.r-project.org/logo/Rlogo.png" class="img-fluid figure-img"></p>
@@ -593,14 +655,28 @@ format:
 </section>
 <section id="referencias-y-citas" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="referencias-y-citas"><span class="header-section-number">3.3</span> Referencias y citas</h2>
-<p>Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo <code>.bib</code> como el archivo <code>references.bib</code> que está en este directorio y, por supuesto, referenciarlas en el texto <span class="citation" data-cites="Knuth_1984">(<em>e.g.</em> <a href="c02_intro_rs.html#ref-Knuth_1984" role="doc-biblioref">Knuth 1984</a>)</span>. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo <code>.bib</code> está compuesto por entradas en formato bibTeX, heredado del hermano mayor de <code>Markdown</code>: <code>LaTeX</code>. La sintaxis básica es la siguiente:</p>
-<pre><code>@TIPO{CLAVE,
-      author = {},
-      year = {},
-      title = {}}</code></pre>
-<p>Los campos adicionales dependerán del <code>TIPO</code> de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar <a href="https://www.bibtex.com/e/entry-types/">esta página</a>. Para incluir una referencia cruzada lo único que tienes que hacer es: @CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería @Knuth_1984 para una referencia en el texto, <span class="citation" data-cites="Knuth_1984">Knuth (<a href="c02_intro_rs.html#ref-Knuth_1984" role="doc-biblioref">1984</a>)</span>, o [@Knuth_1984] para una referencia dentro de paréntesis <span class="citation" data-cites="Knuth_1984">(<a href="c02_intro_rs.html#ref-Knuth_1984" role="doc-biblioref">Knuth 1984</a>)</span>. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el siguiente divisor y asegurarte de tener un encabezado de referencias al final del documento:</p>
-<pre><code>::: {#refs}
-:::</code></pre>
+<p>Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo <code>.bib</code> como el archivo <code>references.bib</code> que está en este directorio y, por supuesto, referenciarlas en el texto <span class="citation" data-cites="Knuth_1984">(<em>e.g.</em> <a href="references.html#ref-Knuth_1984" role="doc-biblioref">Knuth, 1984</a>)</span>. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo <code>.bib</code> está compuesto por entradas en formato bibTeX, heredado del hermano mayor de <code>Markdown</code>: <code>LaTeX</code>. La sintaxis básica es la siguiente:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>@TIPO{CLAVE,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      author = {},</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      year = {},</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      title = {}}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Los campos adicionales dependerán del <code>TIPO</code> de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar <a href="https://www.bibtex.com/e/entry-types/">esta página</a>. Para incluir una referencia cruzada lo único que tienes que hacer es: @CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería @Knuth_1984 para una referencia en el texto, <span class="citation" data-cites="Knuth_1984">Knuth (<a href="references.html#ref-Knuth_1984" role="doc-biblioref">1984</a>)</span>, o [@Knuth_1984] para una referencia dentro de paréntesis <span class="citation" data-cites="Knuth_1984">(<a href="references.html#ref-Knuth_1984" role="doc-biblioref">Knuth, 1984</a>)</span>. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el <code>div</code> <code>#refs</code> y tener un encabezado de referencias al final del documento, tal que:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Referencias{.unnumbered}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>::: {#ref}</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La clave del divisor en el bloque mostrado es <code>#ref</code>, pero debería de ser <code>#refs</code>. Esto es para evitar que <code>Quarto</code> se confunda y ponga aquí las referencias en vez de en la sección correspondiente. También puedes cambiar el nombre del encabezado, si así lo deseas, o retirar la anotación <code>{.unnumbered}</code> si quieres que la sección esté numerada.</p>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -639,23 +715,14 @@ Note
 <h2 data-number="3.6" class="anchored" data-anchor-id="qué-sigue"><span class="header-section-number">3.6</span> ¿Qué sigue?</h2>
 <p>En esta sesión revisamos muy someramente el poder de <code>RStudio</code> y <code>Quarto</code>, limitándonos a las funciones más indispensables y que se utilizan de manera cotidiana, pero hay mucho más por ver. Proyectos dentro de <code>RStudio</code>, elaborar libros/páginas web/tesis o incluso artículos científicos con formato editorial según los requerimientos de algunas revistas, solo por mencionar algunos.</p>
 <p>Por otra parte, una de las ventajas poco conocidas de trabajar con archivos de texto simple (<code>.R</code>, <code>.Rmd</code> o <code>.qmd</code>), al menos en el área de ciencias biológicas, es el poder aprovechar al máximo sistemas de gestión de versiones, incluyendo por supuesto al más famoso: <code>git</code>. Muy posiblemente te hayas encontrado en algún momento con <a href="https://github.com">GitHub</a>, que no era otra cosa mas que un almacén público de repositorios <code>git</code>. Ahora es un servidor capaz de mantener servicios simples en ejecución o, incluso, alojar páginas web (la página web de acompañamiento de este curso es un ejemplo), por lo que te recomiendo que le eches un ojo al funcionamiento de ambos (<code>git</code> y <code>GitHub</code>), y que revises la integración de <code>git</code> en <code>RStudio</code>. Personalmente utilizo solo la línea de comandos, pero es una herramienta más dentro de nuestro IDE y que puede resultarte más intuitiva.</p>
-</section>
-</section>
-<section id="referencias" class="level1 unnumbered">
-<h1 class="unnumbered">Referencias</h1>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
 <div id="ref-Knuth_1984" class="csl-entry" role="doc-biblioentry">
-Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>The
-Computer Journal</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
-</div>
-<div id="ref-Matloff_2020" class="csl-entry" role="doc-biblioentry">
-Matloff, N. 2020. <span>“Teaching <span>R</span> in a Kinder, Gentler,
-More Effective Manner: Teach Base-<span>R</span>, Not Just the
-Tidyverse.”</span> <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU" class="uri">https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU</a>.
+Knuth DE. 1984. Literate programming. <em>The Computer Journal</em> 27:97–111. DOI: <a href="https://doi.org/10.1093/comjnl/27.2.97">10.1093/comjnl/27.2.97</a>.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
