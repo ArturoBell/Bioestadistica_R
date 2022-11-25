@@ -241,11 +241,6 @@ div.csl-indent {
   <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -256,6 +251,11 @@ div.csl-indent {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
@@ -386,7 +386,7 @@ div.csl-indent {
 
 <section id="un-dialecto-dentro-de-r" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="un-dialecto-dentro-de-r"><span class="header-section-number">4.1</span> Un dialecto dentro de <code>R</code></h2>
-<p>En la sesión anterior mencionamos que hay un “paquete de paquetes” que da lugar a un “dialecto” dentro de <code>R</code>: <code>tidyverse</code>, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en <code>R</code> base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, <code>tidyverse</code> proveé de un paradigma diferente, con una “gramática” (sintaxis) distinta, muy similar a lo que veremos en <code>ggplot2</code>. De hecho, <code>ggplot2</code> es un paquete del <code>tidyverse</code>, por lo que el “dialecto” <code>tidy</code> comparte la filosofía declarativa y fomenta la “encadenación” de comandos. A muchas personas les gusta más la forma <code>tidy</code>, a otras les gusta más trabajar con <code>R</code> base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión.</p>
+<p>En la sesión anterior mencionamos que hay un “paquete de paquetes” que da lugar a un “dialecto” dentro de <code>R</code>: <code>tidyverse</code>, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en <code>R</code> base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, <code>tidyverse</code> está basado en el paradigma funcional de la programación, con una “gramática” (sintaxis) distinta, muy similar a lo que veremos en <code>ggplot2</code>. De hecho, <code>ggplot2</code> es un paquete del <code>tidyverse</code>, por lo que el “dialecto” <code>tidy</code> comparte la filosofía declarativa y fomenta la “encadenación” de comandos. A muchas personas les gusta más la forma <code>tidy</code>, a otras les gusta más trabajar con <code>R</code> base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión.</p>
 <p>Este nuevo dialecto fue creado con un objetivo en particular: la ciencia de datos. Como tal, cuenta con una gran cantidad de librerías (y por lo tanto funciones) especializadas para realizar operaciones rutinarias. ¿Quieres realizar gráficos? En la siguiente sesión hablaremos de <code>ggplot2</code>. ¿Quieres hacer “manipulación” (ojo, no cuchareo) de datos? Aquí veremos algnas funciones de <code>dplyr</code>. ¿Quieres trabajar con procesamiento de cadenas de caractér? Para esto está <code>stringr</code>. ¿Quieres herramientas para programación funcional? Ve hacia <code>purrr</code> (sí, triple r). <code>readxl</code> es otra librería con la que ya estás familiarizado y que forma parte del <code>tidyverse</code>. ¿Tienes un problema en el que que necesitas manejar fechas? <code>lubridate</code> puede ser una opción. Puedes conocer todos los paquetes que forman el <code>tidyverse</code> con:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tidyverse<span class="sc">::</span><span class="fu">tidyverse_packages</span>(<span class="at">include_self =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -453,7 +453,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Si revisas documentación “antigua” sobre <code>tidyverse</code> (previa a R 4.1, de hecho), notarás que el operador <code>pipe</code> es <code>%&gt;%</code> en vez de <code>|&gt;</code>. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de <code>RStudio</code>; sin embargo, utilizaremos <code>|&gt;</code> por ser el operador <code>pipe</code> nativo de <code>R</code>, el cual fue introducido (como te imaginarás) en <code>R</code> 4.1.</p>
+<p>Si revisas documentación “antigua” sobre <code>tidyverse</code> (previa a R 4.1, de hecho), notarás que el operador <code>pipe</code> es <code>%&gt;%</code> en vez de <code>|&gt;</code>. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de <code>RStudio</code>. En el curso utilizaremos <code>|&gt;</code> por ser el operador <code>pipe</code> nativo de <code>R</code>, el cual fue introducido (como te imaginarás) en <code>R</code> 4.1.</p>
 </div>
 </div>
 <p>¿Abstracto? Sin duda. ¿Útil? También. ¿Más explícito que <code>R</code> base con <code>aggregate</code>? Debatible. Lo que no es debatible es que esta notación brilla especialmente en cierto tipo de problemas. Pensemos que nos interesa conocer el promedio de las longitudes de picos por especie para cada isla. Intenta hacerlo con <code>R</code> base y te darás cuenta de que no es tan intuitivo, salvo que estés familiarizado con el uso de fórmulas. ¿En <code>tidy</code>? Solamente hay que agregar la nueva variable de agrupamiento a <code>group_by</code>:</p>
@@ -475,7 +475,7 @@ Important
 </div>
 </div>
 </div>
-<p>Ahora tenemos un <code>tibble</code> (funcionalmente equivalente a un <code>data.frame</code>) con tres columnas, en donde se da el promedio para cada combinación de las variables de agrupamiento. ¿A que es más sencillo que intentar hacerlo con <code>R</code> base?</p>
+<p>Ahora tenemos un <code>tibble</code> (funcionalmente equivalente a un <code>data.frame</code>) con tres columnas, en donde se da el promedio para cada combinación de las variables de agrupamiento. ¿A que es más sencillo que intentar hacerlo con <code>R</code> base?. Esto último no es del todo cierto, pues hay una forma muy sencilla de hacerlo con <code>aggregate()</code>, pero encontrar una manera es parte de tu tarea, así que no arruinaré la diversión.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -631,47 +631,14 @@ Warning
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> datos1 <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">bill_area =</span> bill_length_mm <span class="sc">*</span> bill_depth_mm)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>bill_area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  [1]  731.17  687.30  725.40      NA  708.31  809.58  692.42  768.32  617.21
- [10]  848.40  646.38  653.94  723.36  818.32  730.06  651.48  735.30  879.75
- [19]  632.96  989.00  691.74  704.99  689.28  691.42  667.36  667.17  755.16
- [28]  724.95  704.94  765.45  659.65  673.32  703.10  773.01  618.80  827.12
- [37]  776.00  780.70  725.68  760.18  657.00  750.72  666.00  868.77  625.30
- [46]  744.48  780.90  708.75  644.40  896.76  700.92  757.89  626.50  819.00
- [55]  624.45  770.04  682.50  763.28  605.90  718.16  603.33  871.43  639.20
- [64]  748.02  622.44  748.80  575.10  785.01  595.94  810.92  636.50  730.48
- [73]  681.12  865.62  621.25  791.80  687.12  721.68  582.82  804.11  595.12
- [82]  755.04  689.96  680.94  663.94  838.39  707.85  686.34  735.36  731.32
- [91]  642.60  743.91  581.40  716.76  626.26  771.12  708.66  745.55  532.91
-[100]  799.20  626.50  820.00  603.20  756.00  704.94  750.33  663.92  764.00
-[109]  647.70  820.80  628.65  925.68  702.69  822.90  819.72  781.41  656.20
-[118]  764.65  606.90  764.46  622.64  746.46  683.40  765.90  559.68  771.40
-[127]  682.88  759.45  666.90  793.80  689.15  827.52  680.80  693.75  670.56
-[136]  719.25  623.00  808.02  610.50  710.63  687.42  698.32  497.55  691.90
-[145]  626.64  729.30  729.12  673.44  640.80  684.18  615.60  767.75  608.52
-[154]  815.00  686.67  760.00  690.20  627.75  662.84  714.51  580.22  720.72
-[163]  560.33  788.90  623.35  706.64  668.68  774.01  567.00  747.84  669.90
-[172]  735.37  717.86  653.95  674.25  731.54  561.99  696.11  636.35  717.00
-[181]  689.26  765.00  723.69  607.76  653.95 1013.20  726.68  788.92  583.62
-[190]  768.12  598.40  764.59  584.99  793.60  620.61  744.00  802.95  606.04
-[199]  632.45  802.95  597.17  714.16  661.72  683.85  649.44  751.50  669.60
-[208]  693.00  608.82  682.50  626.40  771.12  625.14  688.38  635.23  852.51
-[217]  650.36  836.64  665.28  801.90  617.70  760.50  715.50  723.84  751.92
-[226]  688.20  696.00  777.60  674.50  832.93  623.76  741.28  711.95  819.00
-[235]  692.04  795.00  619.62  878.84  624.96  728.46  665.00  885.70  712.50
-[244]  892.62  659.75  796.95  654.15  797.56  780.52  684.74  696.96  843.15
-[253]  727.50  950.30  731.60  736.50  652.74  753.48  612.99  843.72  606.20
-[262]  726.31  767.60  791.82  661.20  839.45  651.42  881.60  698.65  790.56
-[271]  646.64      NA  669.24  791.28  668.96  803.39  832.35  975.00  984.96
-[280]  848.98 1043.46  804.56  839.02  933.66  869.40 1020.87  829.48 1049.51
-[289]  813.10  941.20  784.89  989.80 1006.00 1032.40  863.04  895.44  733.52
-[298]  848.75  717.12  981.64  835.93  988.00  929.20  940.50  825.92 1056.00
-[307]  678.94 1127.36  709.75  958.80  924.42  798.00  871.08 1076.40  778.54
-[316] 1064.65  955.50  808.50  972.19  773.50  911.11  939.80  896.79  960.40
-[325]  963.05  861.54  788.84  976.60  790.61  998.79  735.25  981.36  750.32
-[334]  981.07  943.76  884.64 1012.05  772.20  776.90 1104.84  787.35  902.72
-[343]  965.20  938.74</code></pre>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(bill_area)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["bill_area"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"731.17"},{"1":"687.30"},{"1":"725.40"},{"1":"NA"},{"1":"708.31"},{"1":"809.58"},{"1":"692.42"},{"1":"768.32"},{"1":"617.21"},{"1":"848.40"},{"1":"646.38"},{"1":"653.94"},{"1":"723.36"},{"1":"818.32"},{"1":"730.06"},{"1":"651.48"},{"1":"735.30"},{"1":"879.75"},{"1":"632.96"},{"1":"989.00"},{"1":"691.74"},{"1":"704.99"},{"1":"689.28"},{"1":"691.42"},{"1":"667.36"},{"1":"667.17"},{"1":"755.16"},{"1":"724.95"},{"1":"704.94"},{"1":"765.45"},{"1":"659.65"},{"1":"673.32"},{"1":"703.10"},{"1":"773.01"},{"1":"618.80"},{"1":"827.12"},{"1":"776.00"},{"1":"780.70"},{"1":"725.68"},{"1":"760.18"},{"1":"657.00"},{"1":"750.72"},{"1":"666.00"},{"1":"868.77"},{"1":"625.30"},{"1":"744.48"},{"1":"780.90"},{"1":"708.75"},{"1":"644.40"},{"1":"896.76"},{"1":"700.92"},{"1":"757.89"},{"1":"626.50"},{"1":"819.00"},{"1":"624.45"},{"1":"770.04"},{"1":"682.50"},{"1":"763.28"},{"1":"605.90"},{"1":"718.16"},{"1":"603.33"},{"1":"871.43"},{"1":"639.20"},{"1":"748.02"},{"1":"622.44"},{"1":"748.80"},{"1":"575.10"},{"1":"785.01"},{"1":"595.94"},{"1":"810.92"},{"1":"636.50"},{"1":"730.48"},{"1":"681.12"},{"1":"865.62"},{"1":"621.25"},{"1":"791.80"},{"1":"687.12"},{"1":"721.68"},{"1":"582.82"},{"1":"804.11"},{"1":"595.12"},{"1":"755.04"},{"1":"689.96"},{"1":"680.94"},{"1":"663.94"},{"1":"838.39"},{"1":"707.85"},{"1":"686.34"},{"1":"735.36"},{"1":"731.32"},{"1":"642.60"},{"1":"743.91"},{"1":"581.40"},{"1":"716.76"},{"1":"626.26"},{"1":"771.12"},{"1":"708.66"},{"1":"745.55"},{"1":"532.91"},{"1":"799.20"},{"1":"626.50"},{"1":"820.00"},{"1":"603.20"},{"1":"756.00"},{"1":"704.94"},{"1":"750.33"},{"1":"663.92"},{"1":"764.00"},{"1":"647.70"},{"1":"820.80"},{"1":"628.65"},{"1":"925.68"},{"1":"702.69"},{"1":"822.90"},{"1":"819.72"},{"1":"781.41"},{"1":"656.20"},{"1":"764.65"},{"1":"606.90"},{"1":"764.46"},{"1":"622.64"},{"1":"746.46"},{"1":"683.40"},{"1":"765.90"},{"1":"559.68"},{"1":"771.40"},{"1":"682.88"},{"1":"759.45"},{"1":"666.90"},{"1":"793.80"},{"1":"689.15"},{"1":"827.52"},{"1":"680.80"},{"1":"693.75"},{"1":"670.56"},{"1":"719.25"},{"1":"623.00"},{"1":"808.02"},{"1":"610.50"},{"1":"710.63"},{"1":"687.42"},{"1":"698.32"},{"1":"497.55"},{"1":"691.90"},{"1":"626.64"},{"1":"729.30"},{"1":"729.12"},{"1":"673.44"},{"1":"640.80"},{"1":"684.18"},{"1":"615.60"},{"1":"767.75"},{"1":"608.52"},{"1":"815.00"},{"1":"686.67"},{"1":"760.00"},{"1":"690.20"},{"1":"627.75"},{"1":"662.84"},{"1":"714.51"},{"1":"580.22"},{"1":"720.72"},{"1":"560.33"},{"1":"788.90"},{"1":"623.35"},{"1":"706.64"},{"1":"668.68"},{"1":"774.01"},{"1":"567.00"},{"1":"747.84"},{"1":"669.90"},{"1":"735.37"},{"1":"717.86"},{"1":"653.95"},{"1":"674.25"},{"1":"731.54"},{"1":"561.99"},{"1":"696.11"},{"1":"636.35"},{"1":"717.00"},{"1":"689.26"},{"1":"765.00"},{"1":"723.69"},{"1":"607.76"},{"1":"653.95"},{"1":"1013.20"},{"1":"726.68"},{"1":"788.92"},{"1":"583.62"},{"1":"768.12"},{"1":"598.40"},{"1":"764.59"},{"1":"584.99"},{"1":"793.60"},{"1":"620.61"},{"1":"744.00"},{"1":"802.95"},{"1":"606.04"},{"1":"632.45"},{"1":"802.95"},{"1":"597.17"},{"1":"714.16"},{"1":"661.72"},{"1":"683.85"},{"1":"649.44"},{"1":"751.50"},{"1":"669.60"},{"1":"693.00"},{"1":"608.82"},{"1":"682.50"},{"1":"626.40"},{"1":"771.12"},{"1":"625.14"},{"1":"688.38"},{"1":"635.23"},{"1":"852.51"},{"1":"650.36"},{"1":"836.64"},{"1":"665.28"},{"1":"801.90"},{"1":"617.70"},{"1":"760.50"},{"1":"715.50"},{"1":"723.84"},{"1":"751.92"},{"1":"688.20"},{"1":"696.00"},{"1":"777.60"},{"1":"674.50"},{"1":"832.93"},{"1":"623.76"},{"1":"741.28"},{"1":"711.95"},{"1":"819.00"},{"1":"692.04"},{"1":"795.00"},{"1":"619.62"},{"1":"878.84"},{"1":"624.96"},{"1":"728.46"},{"1":"665.00"},{"1":"885.70"},{"1":"712.50"},{"1":"892.62"},{"1":"659.75"},{"1":"796.95"},{"1":"654.15"},{"1":"797.56"},{"1":"780.52"},{"1":"684.74"},{"1":"696.96"},{"1":"843.15"},{"1":"727.50"},{"1":"950.30"},{"1":"731.60"},{"1":"736.50"},{"1":"652.74"},{"1":"753.48"},{"1":"612.99"},{"1":"843.72"},{"1":"606.20"},{"1":"726.31"},{"1":"767.60"},{"1":"791.82"},{"1":"661.20"},{"1":"839.45"},{"1":"651.42"},{"1":"881.60"},{"1":"698.65"},{"1":"790.56"},{"1":"646.64"},{"1":"NA"},{"1":"669.24"},{"1":"791.28"},{"1":"668.96"},{"1":"803.39"},{"1":"832.35"},{"1":"975.00"},{"1":"984.96"},{"1":"848.98"},{"1":"1043.46"},{"1":"804.56"},{"1":"839.02"},{"1":"933.66"},{"1":"869.40"},{"1":"1020.87"},{"1":"829.48"},{"1":"1049.51"},{"1":"813.10"},{"1":"941.20"},{"1":"784.89"},{"1":"989.80"},{"1":"1006.00"},{"1":"1032.40"},{"1":"863.04"},{"1":"895.44"},{"1":"733.52"},{"1":"848.75"},{"1":"717.12"},{"1":"981.64"},{"1":"835.93"},{"1":"988.00"},{"1":"929.20"},{"1":"940.50"},{"1":"825.92"},{"1":"1056.00"},{"1":"678.94"},{"1":"1127.36"},{"1":"709.75"},{"1":"958.80"},{"1":"924.42"},{"1":"798.00"},{"1":"871.08"},{"1":"1076.40"},{"1":"778.54"},{"1":"1064.65"},{"1":"955.50"},{"1":"808.50"},{"1":"972.19"},{"1":"773.50"},{"1":"911.11"},{"1":"939.80"},{"1":"896.79"},{"1":"960.40"},{"1":"963.05"},{"1":"861.54"},{"1":"788.84"},{"1":"976.60"},{"1":"790.61"},{"1":"998.79"},{"1":"735.25"},{"1":"981.36"},{"1":"750.32"},{"1":"981.07"},{"1":"943.76"},{"1":"884.64"},{"1":"1012.05"},{"1":"772.20"},{"1":"776.90"},{"1":"1104.84"},{"1":"787.35"},{"1":"902.72"},{"1":"965.20"},{"1":"938.74"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Evidentemente, los resultados son los mismos, lo cual me lleva directamente a la siguiente sección.</p>
@@ -679,7 +646,7 @@ Warning
 </section>
 <section id="por-qué-no-enseñar-tidy-desde-el-inicio" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="por-qué-no-enseñar-tidy-desde-el-inicio"><span class="header-section-number">4.2</span> ¿Por qué no enseñar <code>tidy</code> desde el inicio?</h2>
-<p>Si <code>tidy</code> se acomodó a tu forma de ver las cosas, o si se te hizo más fácil de leer, es probable que te preguntes por qué no me salté <code>R</code> base para entrar directamente a <code>tidy</code>. Además de incrementar las horas del curso (broma), fue porque (pedagógicamente) <code>tidy</code> puede introducir ciertas barreras para quienes se van introduciendo a <code>R</code>. <span class="citation" data-cites="Matloff_2020">Matloff (<a href="#ref-Matloff_2020" role="doc-biblioref">2020</a>)</span> hace una excelente y extensiva recopilación de las razones por las cuales enseñar solo <code>tidy</code> (o solo <code>R</code> base) es una mala idea, así que te recomiendo leas su opinión; sin embargo, me gustaría darte mi perspectiva. Te adelanto: si no tienes experiencia en programación, el paradigma de <code>tidy</code> supone una curva de aprendizaje más alta que solo <code>R</code> base (solo <code>R</code> a partir de aquí) y, tal vez más importante, no es necesario casarse con uno u otro.</p>
+<p>Si <code>tidy</code> se acomodó a tu forma de ver las cosas, o si se te hizo más fácil de leer, es probable que te preguntes por qué no me salté <code>R</code> base para entrar directamente a <code>tidy</code>. Además de incrementar las horas del curso (broma), fue porque (pedagógicamente) <code>tidy</code> puede introducir ciertas barreras para quienes se van introduciendo a <code>R</code>. <span class="citation" data-cites="Matloff_2020">Matloff (<a href="c02_intro_rs.html#ref-Matloff_2020" role="doc-biblioref">2020</a>)</span> hace una excelente y extensiva recopilación de las razones por las cuales enseñar solo <code>tidy</code> (o solo <code>R</code> base) es una mala idea, así que te recomiendo leas su opinión; sin embargo, me gustaría darte mi perspectiva. Te adelanto: si no tienes experiencia en programación, el paradigma de <code>tidy</code> supone una curva de aprendizaje más alta que solo <code>R</code> base (solo <code>R</code> a partir de aquí) y, tal vez más importante, no es necesario casarse con uno u otro.</p>
 <section id="tidy-es-más-complejo" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="tidy-es-más-complejo"><span class="header-section-number">4.2.1</span> <code>tidy</code> es más complejo</h3>
 <p>Como habrás notado en esta sesión, <code>tidy</code> es, escencialmente, más complejo que <code>R</code>. Esto no es una falla en el diseño, sino que tiene que ver con la filosofía de la aproximación: generar código que sea más fácilmente leíble por seres humanos. Sin duda alguna, el utilizar <code>data |&gt; group_by() |&gt; summarise()</code> puede parecer menos críptico o más “entendible” que solo <code>aggregate(formula, data, FUN)</code>; sin embargo, esto se debe a que ya conocías qué es una librería y cómo cargarla, qué es una función y qué es un argumento, pero aún así hubo que explicar qué es encadenamiento de operaciones/funciones y el operador <code>pipe</code> y también tuvimos que entender que la información fluye de izquierda a derecha al encadenar y de derecha a izquierda al asignar.</p>
@@ -690,7 +657,7 @@ Warning
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="tidy-limita-tus-opciones"><span class="header-section-number">4.2.2</span> <code>tidy</code> limita tus opciones</h3>
 <p>Un ejemplo de esto está en esta misma clase. ¿Cómo obtendríamos los promedios de datos agrupados a dos niveles? Dejé el ejercicio “en el tintero” (es parte de tu tarea para esta sesión) pero, si solo te hubiera enseñado <code>tidy</code>, no podrías pensar en ciclos, el operador <code>$</code> o cualquier otra forma de indización. ¿La razón? <code>tidy</code> no está enfocado a tratar con vectores individuales, aborrece el uso de ciclos y tampoco sigue las notaciones básicas de indización. Recuerda: en programación siempre es mejor tener más herramientas a tu disposición. Esta limitación la podemos probar rápidamente si queremos extraer los elementos 10:25 de la columna <code>sex</code> de los <code>datos1</code>. Con <code>R</code> base:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>sex[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>sex[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   female male   male   female female male   female
 [11] male   female male   female male   male  
@@ -699,7 +666,7 @@ Levels: female male</code></pre>
 </div>
 <p>¿Con <code>tidy</code>? Realmente no hay una función que permita hacerlo. Podemos extraer la columna <code>sex</code> utilizando la función <code>select</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -711,14 +678,14 @@ Levels: female male</code></pre>
 </div>
 <p>Pero si queremos indizar el resultante obtenemos un error:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: function '[' not supported in RHS call of a pipe</code></pre>
 </div>
 </div>
-<p>¿La alternativa? Primero indizar <code>datos1</code> y luego utilizar <code>select</code>. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar <code>R</code> base.</p>
+<p>¿La alternativa? Primero indizar <code>datos1</code> y luego utilizar <code>select</code>. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar <code>R</code> base, sin mencionar que en <code>tidy</code> “puro” esta solución no es aceptable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>,] <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>,] <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -737,11 +704,11 @@ Levels: female male</code></pre>
 </section>
 <section id="tidy-expande-tus-horizontes" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="tidy-expande-tus-horizontes"><span class="header-section-number">4.2.4</span> <code>tidy</code> expande tus horizontes</h3>
-<p>En mi opinión, lo que te acabo de exponer son los problemas principales de enseñar solo <code>tidy</code> y, de acuerdo con <span class="citation" data-cites="Matloff_2020">Matloff (<a href="#ref-Matloff_2020" role="doc-biblioref">2020</a>)</span>, las razones por las cuales enseñar una mezcla de ambos es la mejor opción. Aprender <code>R</code> base nos permite resolver problemas que en <code>tidy</code> sería muy largo, mientras que <code>tidy</code> nos permite simplificar procedimientos que serían más complicados en <code>R</code> base. Otra ventaja de <code>tidy</code> es que permite unificar procesos bajo una misma sintaxis.</p>
+<p>En mi opinión, lo que te acabo de exponer son los problemas principales de enseñar solo <code>tidy</code> y, de acuerdo con <span class="citation" data-cites="Matloff_2020">Matloff (<a href="c02_intro_rs.html#ref-Matloff_2020" role="doc-biblioref">2020</a>)</span>, las razones por las cuales enseñar una mezcla de ambos es la mejor opción. Aprender <code>R</code> base nos permite resolver problemas que en <code>tidy</code> sería muy largo, mientras que <code>tidy</code> nos permite simplificar procedimientos que serían más complicados en <code>R</code> base. Otra ventaja de <code>tidy</code> es que permite unificar procesos bajo una misma sintaxis.</p>
 <p>Un ejemplo de esto lo tenemos en el aspecto de aprendizaje automatizado. Si te pones a revisar tutoriales/referencias sobre aprendizaje automatizado es muy probable que te encuentres con un montón de librerías (una por problema), funciones dedicadas y sintáxis que son específicas a la técnica que quieras aplicar. Teníamos/tenemos un excelente intento de solventar este problema: <code>caret</code>. Funcionaba bien en el sentido de que permitía conjuntar una gran diversidad de técnicas de aprendizaje automatizado en un mismo entorno, unificadas en un mismo estilo. Utilizando solo <code>caret</code> podríamos ir desde el preprocesamiento de los datos hasta el entrenamiento y validación de nuestros modelos. ¿El problema? Las pocas funciones que forman su esqueleto se volvieron sumamente complejas, algunas de ellas con 30 o más argumentos. El equipo de <code>posit</code> se ha puesto el mismo desafío, y su solución es <code>tidymodels</code>. A diferencia de <code>caret</code> es altamente modular, pero mantiene la intención de unificar el flujo de trabajo en una misma estructura. Tal vez yendo en contra de nuestro consejo, la mayor parte de nuestros procedimientos de aprendizaje automatizado los realizaremos bajo <code>tidymodels</code>, pero haremos referencia a las librerías y funciones involucradas en cada paso. Para ejemplificar, realicemos una regresión lineal simple entre la longitud y la profundidad del pico de los pingüinos.</p>
 <p>En <code>R</code> base lo podemos hacer en una sola línea, llamando a la función <code>lm</code> con una fórmula y unos datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -754,12 +721,12 @@ Coefficients:
 </div>
 <p>En <code>tidymodels</code> es un poco más complejo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>parsnip model object
 
@@ -772,12 +739,12 @@ Coefficients:
       55.0674        -0.6498  </code></pre>
 </div>
 </div>
-<p>¿Por qué utilizar <code>tidymodels</code> entonces? Eso lo dejaremos para las sesiones en las que hablemos de aprendizaje automatizado, pero verás que toma mucho sentido en el momento en el que quieres hacer particiones entrenamiento/prueba, optimización mediante validación cruzada, preprocesamiento de datos, evaluación, etcétera.</p>
+<p>¿Por qué utilizar <code>tidymodels</code> entonces? Eso lo dejaremos para las sesiones en las que hablemos de aprendizaje automatizado, pero verás que toma mucho sentido en el momento en el que empiezas a hacer particiones entrenamiento/prueba, optimización mediante validación cruzada, preprocesamiento de datos, evaluación, y demás tareas necesarias. Lo único que te diré en este punto es que el poder homogeneizar todos estos procedimientos en un solo estilo de trabajo simplifica las cosas.</p>
 </section>
 </section>
 <section id="conclusión" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="conclusión"><span class="header-section-number">4.3</span> Conclusión</h2>
-<p>Aunque <code>tidy</code> puede llegar a verse más elegante o moderno que <code>R</code> base, no es un substituto total, por lo que tampoco debes de casarte con ninguno de los dos. ¿Tu problema se resuelve más rápidamente con <code>tidy</code>? Úsalo. ¿<code>R</code> base se presta mejor? Aprovéchalo. Recuerda, <code>R</code> es una caja de herramientas en la cual debes de buscar la que mejor se adapte al problema o pregunta que quieras responder.</p>
+<p>Aunque <code>tidy</code> puede llegar a verse más elegante o moderno que <code>R</code> base, no es un substituto total. Aunque <code>R</code> base te permite resolver los mismos problemas que <code>tidy</code>, a veces no es tan intuitivo. ¿Solución? No casarse con ninguno de los dos y exprimirlos lo mejor posible. ¿Tu problema se resuelve más rápidamente con <code>tidy</code>? Úsalo. ¿<code>R</code> base se presta mejor? Aprovéchalo. Recuerda, <code>R</code> (como cualquier otro lenguaje de programación) es una caja de herramientas en la cual debes de buscar la que mejor se adapte al problema o pregunta que quieras responder.</p>
 <p>Esto es todo para esta sesión, nos vemos en la siguiente para hablar sobre teoría y buenas prácticas para la visualización de datos.</p>
 </section>
 <section id="ejercicio" class="level2" data-number="4.4">
@@ -791,7 +758,7 @@ Coefficients:
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
 <div id="ref-Matloff_2020" class="csl-entry" role="doc-biblioentry">
 Matloff, N. 2020. <span>“Teaching <span>R</span> in a Kinder, Gentler, More Effective Manner: Teach Base-<span>R</span>, Not Just the Tidyverse.”</span> <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU" class="uri">https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU</a>.
 </div>

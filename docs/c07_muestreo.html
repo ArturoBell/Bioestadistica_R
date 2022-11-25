@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./c08_descriptiva.html" rel="next">
+<link href="./s03_basics.html" rel="next">
 <link href="./c06_prob.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -156,11 +156,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -171,6 +166,11 @@ ul.task-list li input[type="checkbox"] {
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
@@ -258,7 +258,13 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link active" data-scroll-target="#datos-y-variables"><span class="toc-section-number">7.1</span>  Datos y variables</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -279,8 +285,34 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="datos-y-variables" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="datos-y-variables"><span class="header-section-number">7.1</span> Datos y variables</h2>
+<p>En una investigación reunimos <strong>datos</strong> con el objetivo de obtener alguna conclusión o predicción. Pues bien comencemos definiendo un dato como <strong>una representación puntual de la realidad</strong>. Son un solo valor, sea una sola medición, un promedio, una desviación estándar, una proporción de sexos, etc, y el <strong>conjunto de datos de un mismo atributo medidos en distintos individuos</strong> nos dan una <strong>variable</strong>. Es decir, en nuestros conjuntos de datos cada valor es un dato, y cada columna (usualmente) es una variable. ¿Por qué es importante conocer esto? Porque hay distintos tipos de variables, los cuales definen cómo es que vamos a graficar y tratar esos datos:</p>
+<ol type="1">
+<li><strong>Cualitativas</strong>: hacen referencia a las cualidades de nuestros individuos, y tienen dos escalas:
+<ul>
+<li><strong>Nominal</strong>: hace referencia a categorías en las que <strong>no hay un orden</strong> o distintas importancias. Ejemplos pueden el sexo o el color.</li>
+<li><strong>Ordinal</strong>: aquí hay un órden, y un ejemplo muy claro son las encuestas: 0 es nunca, 1 es casi nunca, 2 es ocasionalmente, 3 es casi siempre y 4 es siempre. Aunque son categorías bien definidas, 2 &lt; 3 y 3 &lt; 4. No son cuantitativas porque las respuestas están sujetas a la interpretación personal, pero descartar el órden en el análisis sería un error.</li>
+</ul></li>
+<li><strong>Cuantitativas</strong>, que hacen referencia a atributos <strong>cuantificables</strong> de manera objetiva. Hay dos tipos, cada uno con dos escalas.
+<ul>
+<li>Tipos:
+<ul>
+<li><strong>Discretas</strong>: Son solo números enteros. Un ejemplo cotidiano es la edad, que usualmente la expresamos en años. No vamos por la vida diciendo tengo 18.5 años o 18 años con 6 meses, solo decimos tengo 18 años.</li>
+<li><strong>Continuas</strong>: Es el caso contrario, son números fraccionarios. Se les denomina continuas porque hay un número infinito de valores posibles entre un valor y el otro, un ejemplo es la temperatura (35.1ºC, 100 K, etc.)</li>
+</ul></li>
+<li>Escalas:
+<ul>
+<li><strong>Intervalo</strong>: La escala de intervalo es aquella en donde el 0 NO es absoluto o, mejor dicho, donde el 0 es arbitrario. La temperatura expresada en grados centígrados es un ejemplo claro, 0ºC no indica ausencia de movimiento molecular, solo toma como referencia arbitraria el punto de congelación del agua.</li>
+<li><strong>Razón</strong>: Aquí el 0 sí es absoluto y representa la ausencia del atributo en cuestión. La longitud es un ejemplo, si algo tiene longitud 0 más bien no tiene longitud, o si algo tiene una temperatura de 0 K quiere decir que no tiene movimiento molecular (~-273.15ºC).</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>Algo que es muy importante tener siempre bien presente es que, aún cuando existen herramientas y técnicas que nos permiten procesar múltiples variables, en cualquier procedimiento de ciencia de datos es <strong>INDISPENSABLE</strong> que los datos sean de excelente calidad y, sobre todo, que sean adecuados para responder la pregunta que nos interesa, lo cual nos debe de llevar, invariablemente, a preguntarnos “¿qué datos debo de obtener?” O, en otras palabras, “¿qué debo medir?” Una frase que se me quedó marcada de mis clases de la licenciatura es “La investigación inicia y termina en el escritorio del investigador”; es decir, no salimos a hacer trabajo de campo y a registrar todo lo que se nos atraviese, caso contrario podemos terminar en una conclusión como “los bebés son traídos por cigüeñas”, la cual tiene una anécdota bastante divertida.</p>
+<p>Situémonos en</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -388,8 +420,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./c08_descriptiva.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./s03_basics.html" class="pagination-link">
+        <span class="nav-page-text">Técnicas básicas</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

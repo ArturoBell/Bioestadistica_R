@@ -323,7 +323,7 @@ div.csl-indent {
 </header>
 
 <p></p>
-<p>En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran <code>RStudio</code> y <code>Quarto</code> (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación <code>R</code>, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interface que provee <code>RStudio</code>. Te adelanto: si lo utilizas adecuadamente, <code>RStudio</code> (en conjunto con <code>Quarto</code>) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es <code>RStudio</code>.</p>
+<p>En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran <code>RStudio</code> y <code>Quarto</code> (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación <code>R</code>, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interfaz que provee <code>RStudio</code>. Te adelanto: si lo utilizas adecuadamente, <code>RStudio</code> (en conjunto con <code>Quarto</code>) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es <code>RStudio</code>.</p>
 <section id="r-vs.-rstudio" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="r-vs.-rstudio"><span class="header-section-number">2.1</span> <code>R</code> vs.&nbsp;<code>RStudio</code></h2>
 <p>Antes de volar y pretender formar un sitio web o una tesis, comencemos hablando de <code>RStudio</code>. En la sección de preparación instalamos tres cosas diferentes: <code>R</code>, <code>RStudio</code>, y <code>Quarto</code>. Olvidemos a este último por un momento y centrémonos en los dos primeros. <code>R</code> es un <strong>lenguaje de programación</strong>. Como tal, se ejecuta en consola, ya sea el terminal (macOS/Linux) o el interpretador de comandos <code>cmd</code> en Windows. Lo único que veremos si abrimos/ejecutamos <code>R</code> <em>per-se</em> es una ventana como la siguiente:</p>
@@ -423,7 +423,7 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.10: Opciones documento <code>Quarto</code></figcaption><p></p>
 </figure>
 </div>
-<p>La pestaña se parece al contenido de un <code>script</code>, la única diferencia es un texto contenido entre <code>---</code>. A esta parte la podemos identificar como el <strong>preámbulo</strong> del documento, y es un fragmento de nuestro documento escrito en formato <code>YAML</code> ¿Qué es eso y con qué se come? No te preocupes ahorita por eso, solo necesitas saber ahorita que vamos a desarrollar nuestro trabajo debajo del preámbulo. En la <a href="#fig-RS_q3">Figure&nbsp;<span class="quarto-unresolved-ref">fig-RS_q3</span></a> puedes ver un ejemplo básico de un documento <code>Quarto</code> con el código de nuestras sumas.</p>
+<p>La pestaña se parece al contenido de un <code>script</code>, la única diferencia es un texto contenido entre <code>---</code>. A esta parte la podemos identificar como el <strong>preámbulo</strong> del documento, y es un fragmento de nuestro documento escrito en formato <code>YAML</code> ¿Qué es eso y con qué se come? No te preocupes ahorita por eso, solo necesitas saber ahorita que vamos a desarrollar nuestro trabajo debajo del preámbulo. En la <a href="#fig-RS_q3">Figure&nbsp;<span>2.11</span></a> puedes ver un ejemplo básico de un documento <code>Quarto</code> con el código de nuestras sumas.</p>
 <div id="fig-RS_q3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/RS_q3.png" class="img-fluid figure-img"></p>
@@ -529,7 +529,7 @@ div.csl-indent {
 </section>
 <section id="entra-a-quarto" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Entra a <code>Quarto</code></h1>
-<p>Ahora sí, podemos dedicarle nuestra atención a <code>Quarto</code>. Antes mencioné que era un sistema para la creación de documentos científicos y técnicos, que se instala aparte de <code>R</code> y <code>RStudio</code> (lo hicimos ya en la sesión anterior), y que es sumamente flexible. Vimos también un ejemplo de cómo crear un documento <code>Quarto</code> y un poco de cómo interactuar con él. Ahora entremos a todos los detalles. Retomemos nuestro documento de ejemplo (<a href="#fig-RS_q3">Figure&nbsp;<span class="quarto-unresolved-ref">fig-RS_q3</span></a>).</p>
+<p>Ahora sí, podemos dedicarle nuestra atención a <code>Quarto</code>. Antes mencioné que era un sistema para la creación de documentos científicos y técnicos, que se instala aparte de <code>R</code> y <code>RStudio</code> (lo hicimos ya en la sesión anterior), y que es sumamente flexible. Vimos también un ejemplo de cómo crear un documento <code>Quarto</code> y un poco de cómo interactuar con él. Ahora entremos a todos los detalles. Retomemos nuestro documento de ejemplo (<a href="#fig-RS_q3">Figure&nbsp;<span>2.11</span></a>).</p>
 <section id="preámbulo" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="preámbulo"><span class="header-section-number">3.1</span> Preámbulo</h2>
 <p>El primer elemento es el preámbulo, que mencionamos está en formato <code>YAML</code> y que está contenido entre <code>---</code>. <code>YAML</code> es un formato de serialización de datos legible por humanos. ¿En castellano? Una lista con niveles de pares de claves:valores que definen los <strong>metadatos</strong> de nuestro documento. En nuestro ejemplo tenemos:</p>
@@ -582,7 +582,7 @@ format:
 <li>IDE <code>RStudio</code></li>
 </ul></li>
 </ol>
-<p>En el archivo <code>.qmd</code> este capítulo puedes ver cómo añadí las capturas de la ventana de <code>RStudio</code>. Añadir imágenes es básicamente el mismo procedimiento que con un enlace, solo añadiendo el operador <code>!</code> antes. Por ejemplo, la siguiente línea añade el logo de R desde su dirección oficial, le asigna el pie de foto “Logo <code>R</code>” y una etiqueta interna que se puede utilizar para referencias cruzadas (<a href="#fig-logoR">Figure&nbsp;<span class="quarto-unresolved-ref">fig-logoR</span></a>) con <code>@fig-logoR</code> :</p>
+<p>En el archivo <code>.qmd</code> este capítulo puedes ver cómo añadí las capturas de la ventana de <code>RStudio</code>. Añadir imágenes es básicamente el mismo procedimiento que con un enlace, solo añadiendo el operador <code>!</code> antes. Por ejemplo, la siguiente línea añade el logo de R desde su dirección oficial, le asigna el pie de foto “Logo <code>R</code>” y una etiqueta interna que se puede utilizar para referencias cruzadas (<a href="#fig-logoR">Figure&nbsp;<span>3.2</span></a>) con <code>@fig-logoR</code> :</p>
 <pre><code>![Logo `R`](https://www.r-project.org/logo/Rlogo.png){#fig-logoR}</code></pre>
 <div id="fig-logoR" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -593,12 +593,12 @@ format:
 </section>
 <section id="referencias-y-citas" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="referencias-y-citas"><span class="header-section-number">3.3</span> Referencias y citas</h2>
-<p>Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo <code>.bib</code> como el archivo <code>references.bib</code> que está en este directorio y, por supuesto, referenciarlas en el texto <span class="citation" data-cites="Knuth_1984">(<em>e.g.</em> <a href="#ref-Knuth_1984" role="doc-biblioref">Knuth 1984</a>)</span>. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo <code>.bib</code> está compuesto por entradas en formato bibTeX, heredado del hermano mayor de <code>Markdown</code>: <code>LaTeX</code>. La sintaxis básica es la siguiente:</p>
+<p>Podemos agregar referencias, siempre y cuando estas estén contenidas en un archivo <code>.bib</code> como el archivo <code>references.bib</code> que está en este directorio y, por supuesto, referenciarlas en el texto <span class="citation" data-cites="Knuth_1984">(<em>e.g.</em> <a href="c02_intro_rs.html#ref-Knuth_1984" role="doc-biblioref">Knuth 1984</a>)</span>. Si estás viendo la página web con este material, pasa tu cursor sobre la cita y notarás como aparece la información bibliográfica completa. Este archivo <code>.bib</code> está compuesto por entradas en formato bibTeX, heredado del hermano mayor de <code>Markdown</code>: <code>LaTeX</code>. La sintaxis básica es la siguiente:</p>
 <pre><code>@TIPO{CLAVE,
       author = {},
       year = {},
       title = {}}</code></pre>
-<p>Los campos adicionales dependerán del <code>TIPO</code> de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar <a href="https://www.bibtex.com/e/entry-types/">esta página</a>. Para incluir una referencia cruzada lo único que tienes que hacer es: @CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería @Knuth_1984 para una referencia en el texto, <span class="citation" data-cites="Knuth_1984">Knuth (<a href="#ref-Knuth_1984" role="doc-biblioref">1984</a>)</span>, o [@Knuth_1984] para una referencia dentro de paréntesis <span class="citation" data-cites="Knuth_1984">(<a href="#ref-Knuth_1984" role="doc-biblioref">Knuth 1984</a>)</span>. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el siguiente divisor y asegurarte de tener un encabezado de referencias al final del documento:</p>
+<p>Los campos adicionales dependerán del <code>TIPO</code> de referencia que se esté añadiendo. Si quieres ver algunas de las opciones más comunes, te recomiendo revisar <a href="https://www.bibtex.com/e/entry-types/">esta página</a>. Para incluir una referencia cruzada lo único que tienes que hacer es: @CLAVE. Si tomamos como ejemplo el artículo de Knuth de 1984 sobre la programación literal sería @Knuth_1984 para una referencia en el texto, <span class="citation" data-cites="Knuth_1984">Knuth (<a href="c02_intro_rs.html#ref-Knuth_1984" role="doc-biblioref">1984</a>)</span>, o [@Knuth_1984] para una referencia dentro de paréntesis <span class="citation" data-cites="Knuth_1984">(<a href="c02_intro_rs.html#ref-Knuth_1984" role="doc-biblioref">Knuth 1984</a>)</span>. En cualquiera de los dos casos, si estás viendo el material renderizado, asegúrate de pasar el cursor sobre las citas, y verás que aparece la referencia bibliográfica completa. Para agregar la lista de referencias al final del texto, debes de agregar el siguiente divisor y asegurarte de tener un encabezado de referencias al final del documento:</p>
 <pre><code>::: {#refs}
 :::</code></pre>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -647,7 +647,13 @@ Note
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-Knuth_1984" class="csl-entry" role="doc-biblioentry">
-Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>The Computer Journal</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>The
+Computer Journal</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+</div>
+<div id="ref-Matloff_2020" class="csl-entry" role="doc-biblioentry">
+Matloff, N. 2020. <span>“Teaching <span>R</span> in a Kinder, Gentler,
+More Effective Manner: Teach Base-<span>R</span>, Not Just the
+Tidyverse.”</span> <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU" class="uri">https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU</a>.
 </div>
 </div>
 </section>
