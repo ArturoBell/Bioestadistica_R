@@ -1045,7 +1045,9 @@ logit(z) = \frac{1}{1 + e^{-z}}
 \]</span></p>
 <p>Esta función tiene la peculiaridad de que, independientemente de los valores de <span class="math inline">\(z\)</span> (el predictor lineal), el resultado siempre estará contenido entre 0 y 1, el cual es, convenientemente, el mismo que el dominio del parámetro <span class="math inline">\(p\)</span> de la distribución binomial (la probabilidad de éxito). Expresado matemáticamente:</p>
 <p><span class="math display">\[
-\theta = logistic(\alpha + \beta x) \\
+\theta = logistic(\alpha + \beta x)
+\]</span></p>
+<p><span class="math display">\[
 y \sim Binom(\theta)
 \]</span></p>
 <p>Apliquemos entonces una regresión logística para clasificar entre <code>versicolor</code> y <code>virginica</code> de la base <code>iris</code>, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:</p>
