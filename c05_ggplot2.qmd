@@ -4,29 +4,143 @@
 
 Como seres humanos, con una tendencia a encontrar el camino que ofrezca una menor resistencia (otra forma de decir que somos flojos), usualmente resumimos una realidad altamente compleja utilizando distintas estrategias. Si yo te pido que me digas "qué es una orca" puedes darme una descripción textual del tipo "las orcas son mamíferos del orden Cetartiodactyla", una descripción numérica en forma de mediciones (Longitud: 6-8 m) o medidas de tendencia central/dispersión (Peso máximo: 5.5 toneladas), pero usualmente preferimos medios audiovisuales como un dibujo, un video o, en el caso de la investigación y el tema principal de hoy, gráficos.
 
+## Visualización de datos
 
-## Datos y variables
+![Calidad de gráficos en artículos científicos (xkcd)](https://imgs.xkcd.com/comics/scientific_paper_graph_quality.png){#fig-calidad}
 
-En una investigación reunimos **datos** que después representamos con **gráficos**. Pues bien comencemos definiendo un dato como **una representación puntual de la realidad**. Son un solo valor, sea una sola medición, un promedio, una desviación estándar, una proporción de sexos, etc, y el **conjunto de datos de un mismo atributo medidos en distintos individuos** nos dan una **variable**. Es decir, en nuestros conjuntos de datos cada valor es un dato, y cada columna (usualmente) es una variable. ¿Por qué es importante conocer esto? Porque hay distintos tipos de variables, los cuales definen cómo es que vamos a graficar y tratar esos datos:
+Tenemos una gran variedad de razones y objetivos para los cuales necesitamos o recurrimos a visualizaciones de datos (solo visualizaciones a partir de aquí), algunas de ellas son:
 
-1. **Cualitativas**: hacen referencia a las cualidades de nuestros individuos, y tienen dos escalas:
-    - **Nominal**: hace referencia a categorías en las que **no hay un orden** o distintas importancias. Ejemplos pueden el sexo o el color.
-    - **Ordinal**: aquí hay un órden, y un ejemplo muy claro son las encuestas: 0 es nunca, 1 es casi nunca, 2 es ocasionalmente, 3 es casi siempre y 4 es siempre. Aunque son categorías bien definidas, 2 < 3 y 3 < 4. No son cuantitativas porque las respuestas están sujetas a la interpretación personal, pero descartar el órden en el análisis sería un error.
-2. **Cuantitativas**, que hacen referencia a atributos **cuantificables** de manera objetiva. Hay dos tipos, cada uno con dos escalas.
-    - Tipos:
-        - **Discretas**: Son solo números enteros. Un ejemplo cotidiano es la edad, que usualmente la expresamos en años. No vamos por la vida diciendo tengo 18.5 años o 18 años con 6 meses, solo decimos tengo 18 años.
-        - **Continuas**: Es el caso contrario, son números fraccionarios. Se les denomina continuas porque hay un número infinito de valores posibles entre un valor y el otro, un ejemplo es la temperatura (35.1ºC, 100 K, etc.)
-    - Escalas:
-        - **Intervalo**: La escala de intervalo es aquella en donde el 0 NO es absoluto o, mejor dicho, donde el 0 es arbitrario. La temperatura expresada en grados centígrados es un ejemplo claro, 0ºC no indica ausencia de movimiento molecular, solo toma como referencia arbitraria el punto de congelación del agua.
-        - **Razón**: Aquí el 0 sí es absoluto y representa la ausencia del atributo en cuestión. La longitud es un ejemplo, si algo tiene longitud 0 más bien no tiene longitud, o si algo tiene una temperatura de 0 K quiere decir que no tiene movimiento molecular (~-273.15ºC).
+1. Explorar nuestros datos
+2. Elaborar reportes con nuestros análisis
+3. Comunicar hallazgos gráficamente
+    - Soportar resultados en una publicación
+    - Presentar a un público no especializado
 
-Algo que es muy importante tener siempre bien presente es que, aún cuando existen herramientas y técnicas que nos permiten procesar múltiples variables, en cualquier procedimiento de ciencia de datos es **INDISPENSABLE** que los datos sean de excelente calidad y, sobre todo, que sean adecuados para responder la pregunta que nos interesa, lo cual nos debe de llevar, invariablemente, a preguntarnos "¿qué datos debo de obtener?" O, en otras palabras, "¿qué debo medir?" Una frase que se me quedó marcada de mis clases de la licenciatura es "La investigación inicia y termina en el escritorio del investigador"; es decir, no salimos a hacer trabajo de campo y a registrar todo lo que se nos atraviese, caso contrario podemos terminar en una conclusión como "los bebés son traídos por cigüeñas", la cual tiene una anécdota bastante divertida
+::: {.callout-important}
+Independientemente de para qué hagamos la visualización, lo cierto es que es algo que merece mucha dedicación y que, en realidad, va más allá de hacer un simple gráfico: **la visualización de datos nos permite contar una historia**.
+:::
+
+Si obviamos no tenemos cuidado al hacer nuestras visualizaciones procedimiento podemos terminar con un gráfico como el siguiente:
+
+![Gráfico "por defecto" en `Statistica`](){#fig-statistica}
+
+¿Qué tiene de malo y cómo podemos mejorarlo? Esa es la pregunta que vamos a responder en esta sesión, replanteándola como **¿qué debo tener en cuenta para hacer una buena visualización?**, y para lo cual seguiremos algunas **heurísticas** que nos ayudarán a ser conscientes de qué elementos incluiremos en el gráfico y cuáles no.
+
+::: {.callout-note}
+¿Qué es una heurística? Es una guía que vamos a seguir hasta que encontremos algo mejor; es decir, las recomendaciones que vamos a revisar son, al final del día, eso: recomendaciones. No tienes ninguna obligación de seguirlas, ni mi objetivo es imponer estas ideas, sino hacer que seas consciente de todo lo que implica una visualización de datos.
+:::
+
+### Cairo y su rueda
+
+La primera heurística que vamos a revisar es la rueda de @Cairo_2012. Alberto es una de las figuras más relevantes en el área de la visualización de datos, y una de las muchas heurísticas que propone es considerar la siguiente rueda:
+
+![Rueda de Cairo](){#fig-rueda-cairo}
+
+Esta rueda no es una guía tal cual, sino más bien una herramienta que nos permite evaluar las compensaciones que debemos hacer al realizar nuestras visualizaciones. La rueda nos muestra seis ejes que hacen referencia a distintas características de una visualización:
+
+1. Abstracción-Figuración: Este primer eje refiere a **qué tipo de gráfico estamos utilizando**. ¿Tenemos un gráfico abstracto como un gráfico de barras, dispersión, etc.? O, por el contrario, tenemos un dibujo que describe exactamente el proceso (gráfico figurativo).
+2. Funcionalidad-Decoración: Esta es bastante auto-explicativa, y hace referencia a **qué tantos elementos decorativos forman la visualización**.
+3. Densidad-Ligereza: Refiere al **número de elementos que conforman la visualización** o, en otras palabras, a qué tan cargado está nuestro gráfico.
+4. Dimensionalidad: Refiere al **número de variables que se incluyen en el gráfico** o, puesto de otra forma, a cuántas partes de la historia queremos narrar con un mismo gráfico. No es lo mismo hacer un gráfico de dispersión en el que los puntos sean todos del mismo color a hacer uno donde los puntos estén coloreados según una tercera variable.
+5. Originalidad-Familiaridad: Refiere a si **los elementos utilizados son familiares para el observador o son elementos nuevos**. Una forma fácil de entender este eje es poner lado a lado un gráfico de frecuencias y un gráfico de densidad. Ambos cumplen con el mismo objetivo (uno es más adecuado para variables continuas), pero es bastante probable que los gráficos de frecuencias te sean más familiares.
+6. Redundancia-Novedad: Referente al **número de elementos que ayudan a soportar una misma parte de la historia**. Un ejemplo sería tener un gráfico de frecuencias para distintas clases, donde cada barra tiene un color distinto (como en la @fig-100g_orig). Ahí tanto las clases en el eje x como el color de las barras nos indican que son cosas diferentes.
+
+Si analizamos un poco la distribución de las características, los gráficos que tiendan más a estar en la mitad superior de la rueda son más complejos y profundos que los de la parte baja. De hecho, el mismo Cairo menciona que los científicos e ingenieros prefieren una rueda como esta:
+
+![Rueda preferida por científicos e ingenieros](){#fig-rueda-ciencia}
+
+Mientras que los artistas, diseñadores gráficos y periodistas preferirían una esta otra:
+
+![Rueda preferida por diseñadores gráficos](){#fig-rueda-arte}
+
+¿Esto quiere decir que forzosamente debamos de hacer gráficos abstractos, con muchos elementos "originales" pero mínimas decoraciones, que representen múltiples variables y que no sean redundantes? PARA NADA. Recuerda, esto es solo una heurística, y el hacia dónde te inclines en cada eje dependerá de qué objetivo tengas con tu visualización, a quién vaya dirigida e, incluso, en qué medio va a ser observada.
+
+#### Minard y la (fallida) invasión Napoleónica
+
+Para cerrar con esta heurística házme un favor y observa con atención el siguiente gráfico:
+
+![Gráfico de Minard sobre la invasión Napoleónica a Rusia](){fig-minard}
+
+Evidentemente es un gráfico muy cargado de información, pero es también considerado por muchos como la "mejor visualización que se ha creado". ¿Cuántos elementos lo conforman y qué parte de la historia cuentan?
+
+### Tufte y sus tintas
+
+Ahora hablemos de una heurística propuesta por una de las figuras seminales en la visualización de datos: Edward Tufte. Él propone que una buena visualización debería tener una **alta proporción de tinta de datos a tinta total**, donde él define a la **tinta de datos** como la tinta gastada para imprimir el **núcleo del gráfico**; es decir, la **información mínima necesaria para transmitir el mensaje**, mientras que la **tinta total** es, como el nombre sugiere, la cantidad de tinta empleada para imprimir **el gráfico completo**. ¿Qué implica una alta proporción de tinta de datos a tinta total? Que reduzcamos lo más posible el número de elementos en el gráfico.
+
+#### Darkhorse Analytics: Data looks better naked
+
+Para esta parte sigamos el ejemplo de [Darkhorse Analytics](https://bit.ly/naked_data), en el cual se mejora la siguiente figura:
+
+![Gráfico aparentemente inofensivo (Calorías por 100g de alimento)](){#fig-100g_orig}
+
+El gráfico así como está presentado puede encajar en mayor o menor medida con tus gustos, pero lo cierto es que es un gráfico con una gran cantidad de elementos. Bajo la heurística de las tintas de Tufte quitar es mejorar, así que vayamos elemento a elemento. El primero es el color de fondo. No entraré en el debate de si el color es bonito o no, sino más bien quiero que te preguntes ¿qué me dice el color de fondo sobre lo que se está graficando? La respuesta es: nada; por lo tanto, hay que eliminarlo:
+
+![¿Realmente es necesario el color de fondo?](){#fig-100g-nobg}
+
+El siguiente elemento son, en realidad, varios. La visualización muestra el número de calorías por 100g de distintos alimentos. Eso aparece repetido en el título, el título del eje x, el título del eje y y, tal vez de forma menos obvia, en la acotación de colores y las etiquetas del eje x. ¿Qué hacer? Una posible solución Es reducir el título a "calorías por 100g". ¿100 g de qué? de lo que tenemos en las etiquetas del eje x. Esto nos permite no solo reducir el texto en el título, sino también eliminar los títulos de ambos ejes y la acotación:
+
+![¿Calorías por 100 g de qué?](#fig-100g-nolegend)
+
+Ya "adelgazamos" nuestro gráfico, pero aún podemos continuar. El siguiente elemento son las cuadrículas que delimitan el área del gráfico y el área de graficado. Nuevamente la pregunta es ¿nos dicen algo sobre las calorías de los alimentos? Y nuevamente la respuesta es no. Aunado a esto, desde un punto de vista psicológico, el tener esas delimitaciones puede "limita" la imaginación del observador. Estés o no de acuerdo con este último punto, no cambia el que no aportan nada, así que podemos quitarlas:
+
+![¿Libertad?](#fig-100g-norects)
+
+Puede que estés pensando que hasta este punto ya eliminamos muchas cosas, pero aún hay un par de elementos más. El primero son los colores de las barras. Al igual que la acotación son un elemento redundante que manda el mensaje de que estamos tratando con cosas diferentes, pero eso ya está definido claramente en el eje x. En este caso sería más interesante resaltar alguna categoría en particular, tal vez para responder a la pregunta ¿qué tan calóricos son estos alimentos en relación al tocino?, lo que nos permitiría resaltar al tocino en rojo si ponemos a las demás en un color "neutro" como el gris:
+
+![¿Más o menos calorías que el tocino?](#fig-100g-nocol)
+
+¿Esto es todo? Aún no. Tenemos en las barras un elemento derivado de las décadas de los 80s-90s cuando se masificó el uso de las computadoras y los modelos tridimensionales: las sombras y el volumen de las barras. Realmente no aportan nada a la narrativa, sino que solo "cargan" más el gráfico, así que también las eliminamos:
+
+![Un look más minimalista](#fig-100g-noshade)
+
+En este punto hay algo que destaca tanto o incluso más que las barras: el texto del título y de las etiquetas del eje y. Evidentemente no podemos eliminarlos porque ya no sabríamos qué es lo que representa el gráfico, pero lo que sí podemos hacer es cambiar las negritas por gris claro, con lo cual cambiamos el punto de anclaje de la figura a la barra roja con el tocino:
+
+![¡Tocino!](#fig-100g-nobold)
+
+Ahora ya estamos muy cerca, pero hay algo que se ve fuera de lugar. Ese "algo" está relacionado con el eje y: las etiquetas y las líneas guía. En este punto seguramente me dirás "si quitamos esos elementos ya no vamos a saber "qué tanto es tantito" o cuántas calorías tiene cada cosa", y tendrías la razón, pero podemos sustituirlo poniendo directamente el número de calorías por 100g de cada alimento sobre su barra, lo cual resulta en un gráfico no solo más simple sino también más preciso:
+
+![¿Cuántas calorías tienes?](){#fig-100g-naked}
+
+Si comparas esta última visualización con la @fig-100g-orig notarás que hubo un cambio notable. El gráfico nuevo es más simple, más fácil de leer e incluso más preciso que el primero, con todo y que tiene muchos menos elementos.
+
+¿Con esto quiero decir que siempre debamos de tomar esta aproximación minimalista? No, para nada. De hecho, hay casos en los cuales el tener muchos elementos visuales puede ayudar a llamar la atención del lector, a expensas de la precisión del gráfico. Tomemos el siguiente ejemplo:
+
+![Precios monstruosas](){#fig-monsterprices}
+
+Ambos gráficos presentan exactamente la misma información, pero estarás de acuerdo conmigo en que el dibujo con el monstruo es mucho más llamativo que el simple gráfico de barras, lo cual lo hace más adecuado para el medio en el que fue distribuido: una revista/periódico. Evidentemente no es compatible con una publicación científica, pero si presentas el segundo gráfico es bastante probable que la gente no voltee a verlo.
+
+### Cairo y sus principios
+
+Esta siguiente heurística también fue propuesta por Cairo, y son cinco sencillos principios que debemos de seguir para llevar a una visualización altamente efectiva. El primero es el principio de **funcionalidad**, en el que **los elementos del gráfico deben de ayudar a transmitir la historia que estamos contando**. Volvamos a la @fig-100g-orig. Las barras, sus colores y la acotación eran funcionales, pero no lo eran el color del fondo o las cuadrículas de graficado. 
+
+El segundo principio es el de **veracidad**. Este es auto-explicativo, pero es posiblemente el más importante de todos: que los datos presentados sean veraces, y que sean presentados de una forma veraz o, en otras palabras: NO CUCHAREAR DATOS NI SU APARIENCIA. Ejemplos de visualizaciones donde este principio no se cumple abundan en los medios de comunicación, algunas veces sin que sea el objetivo, pero muchas otras intencionalmente para forzar una narrativa. Un caso particular es la @fig-eleclies, en donde tenemos el gráfico presentado en los medios de comunicación durante las elecciones entre Nicolás Maduro y Henrique Capriles. En apariencia la diferencia en votos era gigantesca, acrecentado no solo por la diferencia de alturas de los cilindros, sino también por ser figuras tridimensionales. Si los seres humanos somos malos juzgando áreas (razón por la que no se recomienda hacer gráficos de pastel), somos peores aún juzgando volúmenes.
+
+![A que no me alcanzas](#fig-eleclies)
 
 
+Volviendo a la diferencia de alturas, aquí hay una "trampa" más: el eje y se encuentra truncado. ¿Qué tanto? Lo suficiente para que una diferencia de 1.59% se vea como una ventaja abrumadora de Maduro sobre Capriles. ¿Cómo se vería el gráfico si se presentara de forma veraz? Bastante menos dramático, eso es seguro:
+
+![Tú y yo no somos tan diferentes](#fig-electrue)
+
+Recuerda: no porque estemos contando una historia tenemos porque forzar una narrativa o solo mostrar lo que nos conviene. Nuevamente, ejemplos como este abundan en los medios de comunicación, y [aquí](https://bit.ly/graphics_lie) puedes ver algunos otros.
+
+El tercer principio es el de **belleza**. También es autoexplicativo: que el gráfico sea "bonito". El problema con este principio es que es sumamente subjetivo. Lo que puede ser bonito para mi puede no serlo para ti, y viceversa, pero podemos valernos de las dos heurísticas anteriores para llegar a un gráfico que sea atractivo y, sobre todo, legible.
+
+Si estos tres principios se cumplen y van de la mano, llegamos de forma automática al cuarto: **el principio de comprensibilidad**. Cairo menciona que una visualización comprensible es aquella que permite que el lector/observador pueda ver el gráfico, analizarlo y que pueda tener un momento de "¡EUREKA!", sin que nosotros describamos el gráfico.
+
+### Del dicho al hecho hay mucho trecho
+
+Estas son algunas de las consideraciones más básicas que debemos de tener al realizar una visualización de datos, pero no son las únicas. Te recomiendo leer el artículo de @Rougier_2014, el cual tiene otras guías para mejorar nuestras figuras. Ahora bien, una cosa es conocer la teoría, pero de nada sirve si no podemos llevarlo a la práctica, y es aquí donde entra `ggplot2`.
 
 ## Introducción a `ggplot2`
 
-Antes de comenzar una visualización es necesario saber qué queremos responder con ella. En este caso, utilizaremos la base de datos `mpg` incluída en `ggplot2`. El primer paso es, entonces, conocer la información que contiene. Para ello guardaremos la base en una variable que llamaremos `df1`:
+Recordarás de las primeras sesiones que un componente muy importante de `R` es la realización de gráficos, lo cual quiere decir que `R` base nos permite realizar visualizaciones de datos. De hecho, el graficador por defecto es sumamente potente, pero desafortunadamente no es precisamente intuitivo. En este sentido, la librería `ggplot2` es una (¿mejor?) alternativa en la que los gráficos se crean de manera declarativa, y está basada en el libro "Grammar of Graphics" [@Wilkinson_2005]. Digo "¿mejor?" porque, como en todo, es una cuestión de gustos y costumbre; sin embargo, pedagógicamente es bastante amable. La creación de gráficos se realiza mediante capas, donde tenemos nuestros datos, en un data.frame, luego indicamos qué queremos que grafique y en dónde, luego cómo queremos que lo grafique, y luego cómo queremos los demás elementos. En código tendríamos algo así:
+
+```
+ggplot(data = datos, aes(x, y)) + geom_*() + ...
+```
+
+Podría explicarte qué es cada cosa aquí, o podemos mejor aprender haciendo y crear una visualización. Antes de comenzar una visualización es necesario saber qué queremos responder con ella. En este caso, utilizaremos la base de datos `mpg` incluída en `ggplot2`. El primer paso es, entonces, conocer la información que contiene. Para ello guardaremos la base en una variable que llamaremos `df1`:
 
 ```{r}
 #| include: true
@@ -161,17 +275,12 @@ Con esta última modificación terminamos de explorar algunas de las funciones m
 
 ### Conclusión y ejercicio
 
-En cuanto a la parte visual, se podría argumentar que esta visualización final no es tan precisa como la primera, que algún elemento podría embellecerse, o que podriamos eliminar la leyenda y poner etiquetas de texto en algunos puntos para indicar las clases. Todos estos argumentos y muchos otros serían válidos ya que la estética es algo subjetivo; sin embargo, las decisiones que tomemos deberán estar en función del medio de distribución de la visualización (no es lo mismo una página web que en un medio impreso, por ejemplo) y sobre todo del público objetivo. Esta visualización en particular funciona para los fines didácticos que tenía en mente, es adecuada para una presentación de resultados de manera electrónica como este video, pero no es una visualización adecuada para una publicación científica. Tomando eso en cuenta, te sugiero hacer el ejercicio de transformarla para cumplir con ese objetivo, ¿qué elementos quitarías? ¿qué elementos cambiarías? ¿qué elementos agregarías? ¿crees que en su estado actual cumple con los criterios de Tufte y Cairo que revisamos la clase anterior?
+En cuanto a la parte visual, se podría argumentar que esta visualización final no es tan precisa como la primera, que algún elemento podría embellecerse, o que podriamos eliminar la leyenda y poner etiquetas de texto en algunos puntos para indicar las clases. Todos estos argumentos y muchos otros serían válidos ya que la estética es algo subjetivo; sin embargo, las decisiones que tomemos deberán estar en función del medio de distribución de la visualización (no es lo mismo una página web que en un medio impreso, por ejemplo) y sobre todo del público objetivo. Esta visualización en particular funciona para los fines didácticos que tenía en mente, es adecuada para una presentación de resultados de manera electrónica como este video, pero no es una visualización adecuada para una publicación científica. Arreglar eso será tu ejercicio para esta sesión.
 
-Para finalizar la clase te presento la visualización inicial y la final, una junto a la otra, para ver en dónde comenzamos, dónde terminamos y cómo llegamos hasta aquí. También te sugiero revises y descargues el PDF de [esta página](https://bit.ly/2FslHr1), que es un acordeón donde se encuentran los gráficos y funciones más comunes. Más adelante revisaremos algunos de ellos pero es un recurso que vale la pena tener a la mano. 
-
-Esto es todo para esta clase. ¡Nos vemos en la siguiente!
+Para finalizar con el objetivo principal de la clase te presento la visualización inicial y la final, una junto a la otra, para ver en dónde comenzamos, dónde terminamos y cómo llegamos hasta aquí. También te sugiero revises y descargues el PDF de [esta página](https://bit.ly/2FslHr1), que es un acordeón donde se encuentran los gráficos y funciones más comunes. Más adelante revisaremos algunos de ellos pero es un recurso que vale la pena tener a la mano. 
 
 ```{r}
 #| echo: false
-
-#ggplot(data = df1, aes(x = displ, y = hwy, colour = class)) +
-#       geom_point()
 plot1
 ```
 ```{r}
@@ -181,6 +290,8 @@ plot2
 ```
 
 #### Gráfico final
+
+Y también el código necesario para el gráfico final, todo en un solo bloque de código.
 
 ```{r}
 #| echo: true
@@ -298,7 +409,7 @@ final.plot + geom_point(size = df1$hwy/5)
 
 #### Tipografías y Exportación de gráficos
 
-El manejo de las tipografías en R es un poco especial, por ello usualmente recomiendo generar el gráfico en R, exportarlo como PDF (`cairo_pdf("filename.pdf", width, height, family)`) y agregar las cursivas donde sea necesario; sin embargo, un paquete que puede resultar especialmente útil es `ggtext`. Este añade un nuevo "elemento" de texto que recibe formato Markdown (`element_markdown()`); es decir, podemos agregar *itálicas* o **negritas**. Para poder utilizarlo, sin embargo, es necesario modificar ligeramente nuestros datos de antemano. Para facilitarnos las cosas agregaremos una nueva columna a `df1` que contenga las clases en *itálicas* y extraeremos los valores únicos (algo más eficiente sería hacerlo al revés, pero es más lógico de esta manera):
+El manejo de las tipografías en R es un poco especial, por ello usualmente recomiendo generar el gráfico en R, exportarlo como PDF (`cairo_pdf("filename.pdf", width, height, family)`) y agregar las cursivas donde sea necesario; sin embargo, un paquete que puede resultar especialmente útil es `ggtext`. Este añade un nuevo tipo de "elemento" de texto que recibe formato Markdown (`element_markdown()`); es decir, podemos agregar *itálicas* o **negritas**. Para poder utilizarlo, sin embargo, es necesario modificar ligeramente nuestros datos de antemano. Para facilitarnos las cosas agregaremos una nueva columna a `df1` que contenga las clases en *itálicas* y extraeremos los valores únicos (algo más eficiente sería hacerlo al revés, pero es más lógico de esta manera):
 
 ```{r}
 df1$clase <- paste0("*",df1$class,"*")
@@ -329,3 +440,16 @@ final.plot + scale_color_discrete(name = "Clase",labels = clases) +
              theme(plot.subtitle = ggtext::element_markdown(),
                    legend.text = ggtext::element_markdown())
 ```
+
+Ahora sí, esto es todo para esta clase. ¡Nos vemos en la siguiente!
+
+## Ejercicio
+
+Ajusta la visualización de los datos `mpg` para que pueda ser publicable en una revista científica (de tu interés) y responde:
+
+1. ¿Qué elementos quitarías?
+2. ¿Qué elementos cambiarías?
+3. ¿Qué elementos agregarías?
+4. ¿Crees que en su estado actual cumple con los criterios de Tufte y Cairo que revisamos en clase? (Explica tu respuesta).
+
+NOTA: En vez de los datos `mpg` puedes utilizar datos propios o los datos de pingüinos de Palmer.
