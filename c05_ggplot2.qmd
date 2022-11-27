@@ -6,7 +6,7 @@ Como seres humanos, con una tendencia a encontrar el camino que ofrezca una meno
 
 ## Visualización de datos
 
-![Calidad de gráficos en artículos científicos (xkcd)](https://imgs.xkcd.com/comics/scientific_paper_graph_quality.png){#fig-calidad}
+![Calidad de gráficos en artículos científicos (Fuente: xkcd)](https://imgs.xkcd.com/comics/scientific_paper_graph_quality.png){#fig-calidad}
 
 Tenemos una gran variedad de razones y objetivos para los cuales necesitamos o recurrimos a visualizaciones de datos (solo visualizaciones a partir de aquí), algunas de ellas son:
 
@@ -65,7 +65,7 @@ Evidentemente es un gráfico muy cargado de información, pero es también consi
 
 ### Tufte y sus tintas
 
-Ahora hablemos de una heurística propuesta por una de las figuras seminales en la visualización de datos: Edward Tufte. Él propone que una buena visualización debería tener una **alta proporción de tinta de datos a tinta total**, donde él define a la **tinta de datos** como la tinta gastada para imprimir el **núcleo del gráfico**; es decir, la **información mínima necesaria para transmitir el mensaje**, mientras que la **tinta total** es, como el nombre sugiere, la cantidad de tinta empleada para imprimir **el gráfico completo**. ¿Qué implica una alta proporción de tinta de datos a tinta total? Que reduzcamos lo más posible el número de elementos en el gráfico.
+Ahora hablemos de una heurística propuesta por una de las figuras seminales en la visualización de datos: Edward Tufte. Él propone que una buena visualización debería tener una **alta proporción de tinta de datos a tinta total** [@Tufte_1983], donde la **tinta de datos** es la tinta gastada para imprimir el **núcleo del gráfico**; es decir, la **información mínima necesaria para transmitir el mensaje**, mientras que la **tinta total** es, como el nombre sugiere, la cantidad de tinta empleada para imprimir **el gráfico completo**. ¿Qué implica una alta proporción de tinta de datos a tinta total? Que reduzcamos lo más posible el número de elementos en el gráfico.
 
 #### Darkhorse Analytics: Data looks better naked
 
@@ -136,7 +136,7 @@ Estas son algunas de las consideraciones más básicas que debemos de tener al r
 
 Recordarás de las primeras sesiones que un componente muy importante de `R` es la realización de gráficos, lo cual quiere decir que `R` base nos permite realizar visualizaciones de datos. De hecho, el graficador por defecto es sumamente potente, pero desafortunadamente no es precisamente intuitivo. En este sentido, la librería `ggplot2` es una (¿mejor?) alternativa en la que los gráficos se crean de manera declarativa, y está basada en el libro "Grammar of Graphics" [@Wilkinson_2005]. Digo "¿mejor?" porque, como en todo, es una cuestión de gustos y costumbre; sin embargo, pedagógicamente es bastante amable. La creación de gráficos se realiza mediante capas, donde tenemos nuestros datos, en un data.frame, luego indicamos qué queremos que grafique y en dónde, luego cómo queremos que lo grafique, y luego cómo queremos los demás elementos. En código tendríamos algo así:
 
-```
+```{{r}}
 ggplot(data = datos, aes(x, y)) + geom_*() + ...
 ```
 

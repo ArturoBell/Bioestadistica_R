@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -378,13 +378,14 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
 </header>
 
-<p></p>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/wo9vZccmqwc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran <code>RStudio</code> y <code>Quarto</code> (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación <code>R</code>, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interfaz que provee <code>RStudio</code>. Te adelanto: si lo utilizas adecuadamente, <code>RStudio</code> (en conjunto con <code>Quarto</code>) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es <code>RStudio</code>.</p>
 <section id="r-vs.-rstudio" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="r-vs.-rstudio"><span class="header-section-number">2.1</span> <code>R</code> vs.&nbsp;<code>RStudio</code></h2>
@@ -430,7 +431,7 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.4: Consola en <code>RStudio</code></figcaption><p></p>
 </figure>
 </div>
-<p>Este panel es, literalmente, lo que veíamos al abrir <code>R</code> en sí mismo; es decir, un espacio donde tenemos nuestro prompt y donde se ejecutarán nuestras instrucciones o líneas de comandos. Notarás que hay otras tres pestañas: una llamada <code>Terminal</code>, y otra llamada <code>Background Jobs</code>. Estas son interfaces a la terminal del sistema y a los trabajos que estemos ejecutando en segundo plano. Nuestra interacción con estas dos pestañas va a ser limitada, salvo que realicemos algo muy especializado. En el curso solo entraremos ocasionalmente al Terminal.</p>
+<p>Este panel es, literalmente, lo que veíamos al abrir <code>R</code> por sí solo; es decir, un espacio donde tenemos nuestro prompt y donde se ejecutarán nuestras instrucciones o líneas de comandos. Notarás que hay otras tres pestañas: una llamada <code>Terminal</code>, y otra llamada <code>Background Jobs</code>. Estas son interfaces a la terminal del sistema y a los trabajos que estemos ejecutando en segundo plano. Nuestra interacción con estas dos pestañas tiende a ser limitada (o incluso nula), salvo que realicemos algo muy especializado.</p>
 </section>
 <section id="reportes-como-scripts" class="level4" data-number="2.2.1.3">
 <h4 data-number="2.2.1.3" class="anchored" data-anchor-id="reportes-como-scripts"><span class="header-section-number">2.2.1.3</span> ¿Reportes como scripts?</h4>
@@ -767,7 +768,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -803,24 +821,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -291,6 +291,7 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -302,13 +303,23 @@ div.csl-indent {
 Cairo A. 2012. <em>The functional art</em>. Berkeley, USA: New Riders,
 Pearson Education.
 </div>
+<div id="ref-Haig_2010" class="csl-entry" role="doc-biblioentry">
+Haig BD. 2010. What is a spurious corelation? <em>Understanding
+Statistics</em> 2:125–132. DOI: <a href="https://doi.org/10.1207/S15328031US0202_03">10.1207/S15328031US0202_03</a>.
+</div>
+<div id="ref-Hoferetal_2004" class="csl-entry" role="doc-biblioentry">
+Höfer T, Przyrembel H, Verleger S. 2004. <a href="">New evidence for the
+theory of the stork</a>. <em>Paediatric and Perinatal Epidemiology</em>
+18:88–92.
+</div>
 <div id="ref-Knuth_1984" class="csl-entry" role="doc-biblioentry">
 Knuth DE. 1984. Literate programming. <em>The Computer Journal</em>
 27:97–111. DOI: <a href="https://doi.org/10.1093/comjnl/27.2.97">10.1093/comjnl/27.2.97</a>.
 </div>
 <div id="ref-Matloff_2020" class="csl-entry" role="doc-biblioentry">
-Matloff N. 2020. Teaching <span>R</span> in a kinder, gentler, more
-effective manner: Teach base-<span>R</span>, not just the tidyverse.
+Matloff N. 2020. <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU">Teaching
+<span>R</span> in a kinder, gentler, more effective manner: Teach
+base-<span>R</span>, not just the tidyverse</a>.
 </div>
 <div id="ref-Rcoreteam_2022" class="csl-entry" role="doc-biblioentry">
 R Core Team. 2022. <em><a href="https://www.R-project.org/">R: A
@@ -319,8 +330,33 @@ Austria: R Foundation for Statistical Computing.
 Rougier NP, Droettboom M, Bourne PE. 2014. Ten simple rules for better
 figures. <em>PLoS computational biology</em> 10:e1003833–7. DOI: <a href="https://doi.org/10.1371/journal.pcbi.1003833">10.1371/journal.pcbi.1003833</a>.
 </div>
+<div id="ref-Savage_1954" class="csl-entry" role="doc-biblioentry">
+Savage LJ. 1954. <em>The foundations of statistics</em>. John Wiley
+&amp; Sons.
+</div>
+<div id="ref-Sawyer.2013" class="csl-entry" role="doc-biblioentry">
+Sawyer SF. 2013. <span class="nocase">Analysis of Variance: The
+Fundamental Concepts</span>. <em>Journal of Manual &amp; Manipulative
+Therapy</em> 17:27E–38E. DOI: <a href="https://doi.org/10.1179/jmt.2009.17.2.27e">10.1179/jmt.2009.17.2.27e</a>.
+</div>
+<div id="ref-Sies_1988" class="csl-entry" role="doc-biblioentry">
+Sies H. 1988. <a href="">A new parameter for sex education</a>.
+<em>Nature</em> 332:495.
+</div>
+<div id="ref-Tufte_1983" class="csl-entry" role="doc-biblioentry">
+Tufte E. 1983. <em>The visual display of quantitative information</em>.
+Cheshire, Connecticut: Graphics Press.
+</div>
 <div id="ref-Wilkinson_2005" class="csl-entry" role="doc-biblioentry">
 Wilkinson L. 2005. <em>The grammar of graphics</em>. USA: Springer.
+</div>
+<div id="ref-Zar_2010" class="csl-entry" role="doc-biblioentry">
+Zar JH. 2010. <em><span>Biostatistical Analysis</span></em>. Prentice
+Hall.
+</div>
+<div id="ref-Zuur_2009" class="csl-entry" role="doc-biblioentry">
+Zuur AF, Ieno EN, Walker N, Saveliev AA, Smith GM. 2009. <em><span class="nocase">Mixed effects models and extensions in ecology with
+R</span></em>. Springer. DOI: <a href="https://doi.org/10.1007/978-0-387-87458-6">10.1007/978-0-387-87458-6</a>.
 </div>
 </div>
 
@@ -368,7 +404,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -404,24 +457,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

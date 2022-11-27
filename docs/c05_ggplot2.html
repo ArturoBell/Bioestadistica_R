@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -382,6 +382,7 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -397,7 +398,7 @@ div.csl-indent {
 <div id="fig-calidad" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://imgs.xkcd.com/comics/scientific_paper_graph_quality.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;5.1: Calidad de gráficos en artículos científicos (xkcd)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5.1: Calidad de gráficos en artículos científicos (Fuente: xkcd)</figcaption><p></p>
 </figure>
 </div>
 <p>Tenemos una gran variedad de razones y objetivos para los cuales necesitamos o recurrimos a visualizaciones de datos (solo visualizaciones a partir de aquí), algunas de ellas son:</p>
@@ -491,7 +492,7 @@ Note
 </section>
 <section id="tufte-y-sus-tintas" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="tufte-y-sus-tintas"><span class="header-section-number">5.2.2</span> Tufte y sus tintas</h3>
-<p>Ahora hablemos de una heurística propuesta por una de las figuras seminales en la visualización de datos: Edward Tufte. Él propone que una buena visualización debería tener una <strong>alta proporción de tinta de datos a tinta total</strong>, donde él define a la <strong>tinta de datos</strong> como la tinta gastada para imprimir el <strong>núcleo del gráfico</strong>; es decir, la <strong>información mínima necesaria para transmitir el mensaje</strong>, mientras que la <strong>tinta total</strong> es, como el nombre sugiere, la cantidad de tinta empleada para imprimir <strong>el gráfico completo</strong>. ¿Qué implica una alta proporción de tinta de datos a tinta total? Que reduzcamos lo más posible el número de elementos en el gráfico.</p>
+<p>Ahora hablemos de una heurística propuesta por una de las figuras seminales en la visualización de datos: Edward Tufte. Él propone que una buena visualización debería tener una <strong>alta proporción de tinta de datos a tinta total</strong> <span class="citation" data-cites="Tufte_1983">(<a href="references.html#ref-Tufte_1983" role="doc-biblioref">Tufte, 1983</a>)</span>, donde la <strong>tinta de datos</strong> es la tinta gastada para imprimir el <strong>núcleo del gráfico</strong>; es decir, la <strong>información mínima necesaria para transmitir el mensaje</strong>, mientras que la <strong>tinta total</strong> es, como el nombre sugiere, la cantidad de tinta empleada para imprimir <strong>el gráfico completo</strong>. ¿Qué implica una alta proporción de tinta de datos a tinta total? Que reduzcamos lo más posible el número de elementos en el gráfico.</p>
 <section id="darkhorse-analytics-data-looks-better-naked" class="level4" data-number="5.2.2.1">
 <h4 data-number="5.2.2.1" class="anchored" data-anchor-id="darkhorse-analytics-data-looks-better-naked"><span class="header-section-number">5.2.2.1</span> Darkhorse Analytics: Data looks better naked</h4>
 <p>Para esta parte sigamos el ejemplo de <a href="https://bit.ly/naked_data">Darkhorse Analytics</a>, en el cual se mejora la siguiente figura:</p>
@@ -590,7 +591,9 @@ Note
 <section id="introducción-a-ggplot2" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="introducción-a-ggplot2"><span class="header-section-number">5.3</span> Introducción a <code>ggplot2</code></h2>
 <p>Recordarás de las primeras sesiones que un componente muy importante de <code>R</code> es la realización de gráficos, lo cual quiere decir que <code>R</code> base nos permite realizar visualizaciones de datos. De hecho, el graficador por defecto es sumamente potente, pero desafortunadamente no es precisamente intuitivo. En este sentido, la librería <code>ggplot2</code> es una (¿mejor?) alternativa en la que los gráficos se crean de manera declarativa, y está basada en el libro “Grammar of Graphics” <span class="citation" data-cites="Wilkinson_2005">(<a href="references.html#ref-Wilkinson_2005" role="doc-biblioref">Wilkinson, 2005</a>)</span>. Digo “¿mejor?” porque, como en todo, es una cuestión de gustos y costumbre; sin embargo, pedagógicamente es bastante amable. La creación de gráficos se realiza mediante capas, donde tenemos nuestros datos, en un data.frame, luego indicamos qué queremos que grafique y en dónde, luego cómo queremos que lo grafique, y luego cómo queremos los demás elementos. En código tendríamos algo así:</p>
-<pre><code>ggplot(data = datos, aes(x, y)) + geom_*() + ...</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(x, y)) <span class="sc">+</span> geom_<span class="sc">*</span>() <span class="sc">+</span> ...</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Podría explicarte qué es cada cosa aquí, o podemos mejor aprender haciendo y crear una visualización. Antes de comenzar una visualización es necesario saber qué queremos responder con ella. En este caso, utilizaremos la base de datos <code>mpg</code> incluída en <code>ggplot2</code>. El primer paso es, entonces, conocer la información que contiene. Para ello guardaremos la base en una variable que llamaremos <code>df1</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -940,6 +943,9 @@ Cairo A. 2012. <em>The functional art</em>. Berkeley, USA: New Riders, Pearson E
 <div id="ref-Rougier_2014" class="csl-entry" role="doc-biblioentry">
 Rougier NP, Droettboom M, Bourne PE. 2014. Ten simple rules for better figures. <em>PLoS computational biology</em> 10:e1003833–7. DOI: <a href="https://doi.org/10.1371/journal.pcbi.1003833">10.1371/journal.pcbi.1003833</a>.
 </div>
+<div id="ref-Tufte_1983" class="csl-entry" role="doc-biblioentry">
+Tufte E. 1983. <em>The visual display of quantitative information</em>. Cheshire, Connecticut: Graphics Press.
+</div>
 <div id="ref-Wilkinson_2005" class="csl-entry" role="doc-biblioentry">
 Wilkinson L. 2005. <em>The grammar of graphics</em>. USA: Springer.
 </div>
@@ -988,7 +994,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1024,24 +1047,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

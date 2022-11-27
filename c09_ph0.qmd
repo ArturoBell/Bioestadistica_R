@@ -1,1 +1,200 @@
 # Pruebas de hipótesis
+
+Aunque me gustaría entrar directamente al tema de pruebas de hipótesis, es necesario que empecemos por entender qué es la **inferencia estadística**. En la [primera]() sesión dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por @Savage_1954: "[La estadística] es la ciencia de tomar **decisiones** bajo situaciones de **incertidumbre**.
+
+Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no. ¿Bonito? Tal vez demasiado para ser verdad y, como era de esperarse, lo es. Tenemos un jefe con una actitud bastante mejorable, pero dejando eso de lado, tenemos algunas limitaciones logísticas:la primera es que nuestro reporte es a través de un aparatito que cuenta con **dos botones** uno para decir que **sí hay vida** y otro para decir que **no hay vida** en un planeta dado, otra limitación es que tenemos **recursos limitados** y que únicamente podemos hacer caminatas de dos horas. Esto se traduce en que estamos en una situación de **incertidumbre**.
+
+![](){#fig-incert}
+
+Un desafío más es que NO podemos ver un planeta y no dar un reporte. Debemos, sí o sí, decir si hay vida en el planeta o no. Esto lleva a que necesitemos establecer una **decisión por defecto**. ¿Por defecto para qué? Para aquellos casos en los que NO podamos aterrizar en el planeta y explorarlo (tal vez hay una tormenta eléctrica, o alguna otra situación). Estarás de acuerdo conmigo en que decir que NO hay vida en el planeta tiene más sentido que decir que sí, y no por la situación del planeta en si misma, sino porque de lo contrario no tiene caso hacer una exploración espacial. Me explico. Si la acción por defecto fuera decir que sí hay vida en el planeta no necesitariamos ni siquiera hacer exploraciones, simple y sencillamente presionaríamos el botón correspondiente cada que nos avisaran de un nuevo planeta.
+
+![](){#fig-decision}
+
+Una vez planteadas nuestras decisiones por defecto, podemos pensar en probar si hay vida en el planeta o no. Esto es un escenario típico de una **prueba de hipótesis de nulidad** y ahora necesitamos definir una hipótesis nula y una alternativa. Para nuestra **hipótesis nula** nos podemos preguntar: 
+
+"Si **supiera todo** sobre este planeta, **¿qué me inclinaría a presionar el botón X?**".
+
+Espero que tu respuesta haya sido "Que no haya vida en el planeta". Simple, ¿no? A final de cuentas lo sabemos TODO sobre el planeta, incluyendo si hay vida o no y en consecuencia presionaremos el botón X si y solo si no hay vida. ¿Y la hipótesis alternativa? Pues está dada por todas las situaciones en las que la hipótesis nula sea falsa, en este caso que sí haya vida en el planeta.
+
+![](){#fig-H0}
+
+Entonces, definimos nuestras hipótesis:
+
+- **Nula ($H_0$)**: No hay vida en el planeta
+- **Alternativa($H_A$)**: Sí la hay
+
+Salimos entonces a explorar el universo, encontramos un planeta, aterrizamos y damos nuestra caminata. El resultado: 0 organismos en las dos horas que caminamos. Te pregunto: ¿qué aprendimos que sea de interés? Y aquí espero que tu respuesta sea **Nada**. Me explico, tuvimos una muestra de 0 organismos, no sabemos de qué tamaño es la población (si es que la hay). ¿Explicaciones para el resultado? Bastantes, pero todo se reduce a que tuvimos que tomar nuestra decisión por defecto y, por lo tanto, no aprendimos nada del planeta. Literalmente obtuvimos el mismo resultado que si hubieramos pasado de largo y eso está bien. No entraré en la discusión de por qué el buscar siempre aprender algo es un sinsentido, solo diré que quien quiera hacerlo es porque tiene demasiada energía, pero sigamos con nuestro ejemplo.
+
+![No sabes nada, Jon Snow](){#fig-nolearn}
+
+Recordemos la definición de Savage y tomemos una decisión. Para ello cambiemos nuestra pregunta a lo que debería de ser el mantra detrás de todas las pruebas de hipótesis: **¿Mi evidencia deja en ridículo a mi hipótesis de nulidad?** La respuesta debería de ser no, pues no encontramos nada que la contradijera y, por lo tanto, presionaremos nuestro botón de no hay vida en el planeta.
+
+![¿Nuestra evidencia hace quedar en ridículo a nuestra $H_0$?](){}
+
+Salimos del planeta y llegamos a otro. Repetimos el proceso, solo que aquí sí nos encontramos una forma de vida alienígena en forma de exactamente un individuo. Recordemos nuestro marco de decisión. Nuestra acción por defecto es presionar el botón X si no hay vida (hipótesis nula) y acabamos de encontrar un individuo (solo uno). ¿El tamaño de la población? No lo sabemos. **¿Nuestra evidencia deja en ridículo a nuestra hipótesis nula?** Por supuesto que sí, entonces la rechazamos y tomamos nuestra acción alternativa: presionar el botón con la palomita verde. ¿Qué aprendimos que sea de interés? Que hay vida en el planeta.
+
+![¡Aprendimos algo!](){#fig-learn}
+
+Este ejemplo es lo que hacemos o deberíamos de hacer al aplicar una prueba de hipótesis de nulidad. Establecer nuestra acción por defecto y la alternativa, definir nuestra hipótesis de nulidad, ir a tomar datos y luego preguntarnos si esa evidencia deja en ridículo a nuestra hipótesis nula. ¿Cómo definimos la acción por defecto? Eso es tarea del tomador de decisiones, y en la academia muy pocas veces las tenemos definidas. ¿Cómo concluimos? Si nuestra evidencia ridiculiza a nuestra hipótesis nula, tendremos una conclusión a favor de la hipótesis alternativa. ¿Si no? No aprendimos nada y tomamos la decisión por defecto. ¿Es la correcta? No lo sabemos, pero tampoco nos interesa... o al menos hasta cierto punto. Es aquí donde entran los **tipos de errores** y los **valores de p**, solo recuerda: buscar tus llaves antes de salir de casa y no encontrarlas después de 5 minutos NO indica que no estén, solo no sabes dónde están.
+
+![Alimento experimental vs. control](){#fig-alimento}
+
+## Tipos de errores
+
+## Valor de p
+
+```{r}
+library(ggplot2)
+
+n <- 100000
+v1 <- data.frame(var = rnorm(n))
+sds <- data.frame(xf = c(3, 1.96, 1))
+
+sds["AUC"] <- NA
+
+for (i in seq_along(sds$xf)) {
+  sds$AUC[i] <-
+    as.character(round(1 -length(v1$var[(v1$var < -sds$xf[i]) |
+                                        (v1$var > sds$xf[i])]) /n,
+                       2))
+}
+
+sds
+
+uni.norm <- ggplot() + 
+            geom_rect(data = sds, aes(xmin = -xf, xmax = xf, 
+                                      ymin = 0, ymax = Inf, 
+                                      fill = AUC),  alpha = 0.3) +
+            geom_density(data = v1, aes(var),
+                         kernel = "gaussian", 
+                         colour = "deepskyblue4",
+                         fill = "deepskyblue4", 
+                         alpha = 0.6) +
+            labs(x = "Z",
+                 y = element_blank(),
+                 title =
+                   "Gráfico de densidad de una distribución normal",
+                 subtitle = expression(paste("n = 100000; ",
+                                             mu, " = 0; ",
+                                             sigma, " = 1")),
+                 caption = "Datos simulados") +
+            theme(panel.grid.minor = element_blank(),
+                  panel.grid.major = element_blank(),
+                  panel.background = element_blank(),
+                  axis.line = element_blank(),
+                  aspect.ratio = 1/1.61,
+                  axis.ticks = element_blank(),
+                  text = element_text(family = "Montserrat",
+                                      colour = "gray50")
+                  ) +
+            scale_y_continuous(breaks = NULL) +
+            scale_x_continuous(breaks = c(-sds$xf, sds$xf))
+            
+uni.norm
+```
+
+## Prueba básica: $t$ de Student
+
+La prueba de hipótesis más conocida, y con justa razón, es la prueba $t$ de Student. Esta prueba se construye a partir de una distribución $t$ de Student, la cual tiene tres parámetros: i) $\mu$: media o centro de la distribución, ii) $\sigma$: escala de la distribución (desviación estándar) y iii) $\nu$: grados de libertad.
+
+### Prueba para muestras independientes
+
+La primera variación la tenemos cuando queremos comparar las medias de dos muestras independientes o, mejor dicho, dos grupos independientes. Es decir, los individuos que forman al grupo 1 son diferentes de los que conforman al grupo 2. La ecuación original sufre una ligera modificación, en donde ahora se considera la desviación estándar mancomunada de las muestras; es decir, la variación en el valor dada por la existencia de ambos grupos. Esto es importante, pues no es lo mismo tener una diferencia promedio de 10g con una desviación mancomunada de 100 g a tener esos mismos 10g de diferencia con una desviación mancomunada de 10g.
+
+Para implementarla en `R` vamos a utilizar la función `t.test(formula, data)` que ya conocíamos, solo que añadiremos dos argumentos adicionales: `var.equal = T` y `paired = F`. `var.equal` hace referencia al supuesto de homogeneidad de varianzas que mencionamos antes. Si no se cumple podemos pasar `var.equal = F` y entonces se aplicará la prueba $t$ de Welch, la cual modifica el modo en el que se estima la varianza mancomunada y permite contender con varianzas desigualees. `paired`, por otra parte, define si es una prueba para muestras independientes (`F`) o muestras dependientes (pareadas, `T`). Esto último lo veremos más adelante.
+
+Creemos primero un conjunto de datos:
+
+```{r}
+A <- rnorm(10, 10, 0.1)
+B <- rnorm(10, 11, 0.1)
+
+df1 <- data.frame(grupo = "A", v1 = A)
+df1 <- rbind(df1, data.frame(grupo = "B", v1 = B))
+head(df1)
+```
+
+
+```{r}
+t.test(v1~grupo, data = df1, var.equal = T, paired = F)
+```
+
+La salida nos da los siguientes valores:
+
+t = valor del estadístico de prueba, indica la posición en el eje X en el gráfico de la distribución
+p-value = Es la proporción de la distribución fuera del área del valor crítico; es decir, 1-AUC hasta ese valor crítico.
+df = grados de libertad de la muestra. Representan el número de observaciones independientes; es decir, "retiramos la media". Ejemplo: 10, 11, 12. La media es 11; por lo tanto, la cantidad de observaciones independientes de la media es 2.
+
+Podemos también presentar los resultados de manera gráfica. Para ello necesitaremos guardar los resultados de nuestra prueba t.test en un objeto y extraer la información de ahí. ¿Cómo verificamos cuál es el tipo de objeto?
+
+```{r}
+ttest <- t.test(v1~grupo, data = df1, var.equal = T, paired = F)
+typeof(ttest)
+```
+
+El objeto es una lista NOMBRADA, por lo que podemos acceder a su contenido utilizando el operador de [[]] (posición numérica o "nombre") o el operador $. Guardemos el valor de p en un nuevo objeto para incluirlo en la gráfica:
+
+```{r}
+p_val <- ttest$p.value
+p_val
+```
+
+Construyamos y grafiquemos los intervalos de confianza para la media de cada grupo (95%):
+
+```{r}
+ICs <- rcompanion::groupwiseMean(v1~grupo, data = df1, conf = 0.95)
+
+error.plot <- ggplot(data = ICs, aes(x = grupo, y = Mean)) +
+              geom_point(color = "deepskyblue4") + 
+              geom_errorbar(aes(ymin = Trad.lower, ymax = Trad.upper),
+                            color = "deepskyblue4") +
+              theme(panel.grid.minor = element_blank(),
+                    panel.grid.major = element_blank(),
+                    panel.background = element_blank(),
+                    axis.line = element_blank(),
+                    aspect.ratio = 1/1.61,
+                    axis.ticks = element_blank(),
+                    text = element_text(colour = "gray50"),
+                    legend.position = "none") +
+              labs(x = "Grupo",
+                   y = "x",
+                   title = "¿Diferencias significativas?",
+                   subtitle = 
+                     "µ e IC para una variable aleatoria",
+                   caption =  paste("t(v = ",
+                                    ttest$parameter, ", 0.05) = ",
+                                    round(ttest[["statistic"]] ,2), 
+                                    "; ",
+                                    ifelse(p_val < 0.0001,
+                                           "p < 0.0001",
+                                           paste("p = ", p_val))))
+              
+error.plot
+```
+
+### Prueba para muestras pareadas
+
+Carguemos los datos, que en este caso están contenidos en un archivo de excel:
+
+```{r}
+dependientes <- openxlsx::read.xlsx("datos/datos_t.xlsx", sheet = 2)
+dependientes
+```
+
+Notar que está en formato compacto (no codificado), por lo tanto hay que transformarla:
+
+```{r}
+dependientes.m <- reshape2::melt(dependientes, value.name = "FC",
+                                 na.rm = T, variable.name = "periodo")
+dependientes.m
+```
+
+Aplicamos la prueba:
+
+```{r}
+t.test(FC~periodo, data = dependientes.m, paired = T, alternative = "less")
+```
+
+## Ejercicio
+
+Realizar la prueba t con los datos de la hoja 1 del archivo, la cual contiene datos de dos muestras independientes. La tarea consiste en cargar los datos, realizar la prueba y presentar un gráfico en el que se reporten los resultados.
