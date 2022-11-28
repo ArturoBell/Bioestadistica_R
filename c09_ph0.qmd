@@ -4,11 +4,11 @@ Aunque me gustaría entrar directamente al tema de pruebas de hipótesis, es nec
 
 Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no. ¿Bonito? Tal vez demasiado para ser verdad y, como era de esperarse, lo es. Tenemos un jefe con una actitud bastante mejorable, pero dejando eso de lado, tenemos algunas limitaciones logísticas:la primera es que nuestro reporte es a través de un aparatito que cuenta con **dos botones** uno para decir que **sí hay vida** y otro para decir que **no hay vida** en un planeta dado, otra limitación es que tenemos **recursos limitados** y que únicamente podemos hacer caminatas de dos horas. Esto se traduce en que estamos en una situación de **incertidumbre**.
 
-![](){#fig-incert}
+![Exploración espacial e incertidumbre](){#fig-incert}
 
 Un desafío más es que NO podemos ver un planeta y no dar un reporte. Debemos, sí o sí, decir si hay vida en el planeta o no. Esto lleva a que necesitemos establecer una **decisión por defecto**. ¿Por defecto para qué? Para aquellos casos en los que NO podamos aterrizar en el planeta y explorarlo (tal vez hay una tormenta eléctrica, o alguna otra situación). Estarás de acuerdo conmigo en que decir que NO hay vida en el planeta tiene más sentido que decir que sí, y no por la situación del planeta en si misma, sino porque de lo contrario no tiene caso hacer una exploración espacial. Me explico. Si la acción por defecto fuera decir que sí hay vida en el planeta no necesitariamos ni siquiera hacer exploraciones, simple y sencillamente presionaríamos el botón correspondiente cada que nos avisaran de un nuevo planeta.
 
-![](){#fig-decision}
+![Decisiones por defecto y alternativa](){#fig-decision}
 
 Una vez planteadas nuestras decisiones por defecto, podemos pensar en probar si hay vida en el planeta o no. Esto es un escenario típico de una **prueba de hipótesis de nulidad** y ahora necesitamos definir una hipótesis nula y una alternativa. Para nuestra **hipótesis nula** nos podemos preguntar: 
 
@@ -16,7 +16,7 @@ Una vez planteadas nuestras decisiones por defecto, podemos pensar en probar si 
 
 Espero que tu respuesta haya sido "Que no haya vida en el planeta". Simple, ¿no? A final de cuentas lo sabemos TODO sobre el planeta, incluyendo si hay vida o no y en consecuencia presionaremos el botón X si y solo si no hay vida. ¿Y la hipótesis alternativa? Pues está dada por todas las situaciones en las que la hipótesis nula sea falsa, en este caso que sí haya vida en el planeta.
 
-![](){#fig-H0}
+![Hipótesis de nulidad e hipótesis alternativa](){#fig-H0}
 
 Entonces, definimos nuestras hipótesis:
 
@@ -29,7 +29,7 @@ Salimos entonces a explorar el universo, encontramos un planeta, aterrizamos y d
 
 Recordemos la definición de Savage y tomemos una decisión. Para ello cambiemos nuestra pregunta a lo que debería de ser el mantra detrás de todas las pruebas de hipótesis: **¿Mi evidencia deja en ridículo a mi hipótesis de nulidad?** La respuesta debería de ser no, pues no encontramos nada que la contradijera y, por lo tanto, presionaremos nuestro botón de no hay vida en el planeta.
 
-![¿Nuestra evidencia hace quedar en ridículo a nuestra $H_0$?](){}
+![¿Nuestra evidencia hace quedar en ridículo a nuestra $H_0$?](){#fig-ridic}
 
 Salimos del planeta y llegamos a otro. Repetimos el proceso, solo que aquí sí nos encontramos una forma de vida alienígena en forma de exactamente un individuo. Recordemos nuestro marco de decisión. Nuestra acción por defecto es presionar el botón X si no hay vida (hipótesis nula) y acabamos de encontrar un individuo (solo uno). ¿El tamaño de la población? No lo sabemos. **¿Nuestra evidencia deja en ridículo a nuestra hipótesis nula?** Por supuesto que sí, entonces la rechazamos y tomamos nuestra acción alternativa: presionar el botón con la palomita verde. ¿Qué aprendimos que sea de interés? Que hay vida en el planeta.
 
@@ -44,6 +44,7 @@ Este ejemplo es lo que hacemos o deberíamos de hacer al aplicar una prueba de h
 ## Valor de p
 
 ```{r}
+#| message: false
 library(ggplot2)
 
 n <- 100000
