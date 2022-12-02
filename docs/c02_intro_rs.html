@@ -386,7 +386,7 @@ div.csl-indent {
 </header>
 
 <div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/wo9vZccmqwc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran <code>RStudio</code> y <code>Quarto</code> (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación <code>R</code>, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interfaz que provee <code>RStudio</code>. Te adelanto: si lo utilizas adecuadamente, <code>RStudio</code> (en conjunto con <code>Quarto</code>) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es <code>RStudio</code>.</p>
+<p>En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y obtener el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. De hecho, hay muchas revistas que solicitan que en el material suplementario se incluyan tanto el código como los datos utilizados, o que estos estén disponibles en un repositorio público. El problema es que muchas veces este código se comparte “en crudo”, lo cual lo hace menos transparente. ¿Cómo solucionarlo? Tenemos <code>sweave</code> o libretas <code>Jupyter</code>, por ejemplo; sin embargo, <code>RStudio</code> y <code>Quarto</code> (la evolución de RMarkdown) ofrecen una alternativa bastante útil, así que antes de entrar propiamente al lenguaje de programación <code>R</code>, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interfaz que provee <code>RStudio</code>. Te adelanto: si lo utilizas adecuadamente, <code>RStudio</code> (en conjunto con <code>Quarto</code>) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es <code>RStudio</code>.</p>
 <section id="r-vs.-rstudio" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="r-vs.-rstudio"><span class="header-section-number">2.1</span> <code>R</code> vs.&nbsp;<code>RStudio</code></h2>
 <p>Antes de volar y pretender formar un sitio web o una tesis, comencemos hablando de <code>RStudio</code>. En la sección de preparación instalamos tres cosas diferentes: <code>R</code>, <code>RStudio</code>, y <code>Quarto</code>. Olvidemos a este último por un momento y centrémonos en los dos primeros. <code>R</code> es un <strong>lenguaje de programación</strong>. Como tal, se ejecuta en consola, ya sea el terminal (macOS/Linux) o el interpretador de comandos <code>cmd</code> en Windows. Lo único que veremos si abrimos/ejecutamos <code>R</code> <em>per-se</em> es una ventana como la siguiente:</p>
@@ -410,7 +410,20 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.2: Ventana de <code>RStudio</code></figcaption><p></p>
 </figure>
 </div>
-<p>Ya sé, ya sé, no se ve mucho más amable que la ventana de <code>R</code>. Es más, se ve mucho más intimidante porque ahora tenemos la consola y otros 3 espacios. Al ser un IDE, <code>RStudio</code> incluye elementos gráficos para todo lo que pudiéramos llegar a necesitar mientras desarrollamos nuestros análisis, entonces vamos a descomponer esta ventana panel por panel, de arriba a abajo y de izquierda a derecha.</p>
+<p>Ya sé, ya sé, no se ve mucho más amable que la ventana de <code>R</code>. Es más, se ve mucho más intimidante porque ahora tenemos la consola y otros espacios. Al ser un IDE, <code>RStudio</code> incluye elementos gráficos para todo lo que pudiéramos llegar a necesitar mientras desarrollamos nuestros análisis, entonces vamos a descomponer esta ventana panel por panel, de arriba a abajo y de izquierda a derecha.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si no te aparecen los cuatro páneles no te preocupes, simplemente ve a <code>File -&gt; New File -&gt; R script</code>. Con eso se abrirá el panel faltante.</p>
+</div>
+</div>
 <section id="el-editor" class="level4" data-number="2.2.1.1">
 <h4 data-number="2.2.1.1" class="anchored" data-anchor-id="el-editor"><span class="header-section-number">2.2.1.1</span> El editor</h4>
 <p>El primer panel es el <strong>editor</strong>:</p>
@@ -427,14 +440,14 @@ div.csl-indent {
 <p>El siguiente panel es la <strong>consola</strong>:</p>
 <div id="fig-RS_3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_3.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.4: Consola en <code>RStudio</code></figcaption><p></p>
 </figure>
 </div>
 <p>Este panel es, literalmente, lo que veíamos al abrir <code>R</code> por sí solo; es decir, un espacio donde tenemos nuestro prompt y donde se ejecutarán nuestras instrucciones o líneas de comandos. Notarás que hay otras tres pestañas: una llamada <code>Terminal</code>, y otra llamada <code>Background Jobs</code>. Estas son interfaces a la terminal del sistema y a los trabajos que estemos ejecutando en segundo plano. Nuestra interacción con estas dos pestañas tiende a ser limitada (o incluso nula), salvo que realicemos algo muy especializado.</p>
 </section>
-<section id="reportes-como-scripts" class="level4" data-number="2.2.1.3">
-<h4 data-number="2.2.1.3" class="anchored" data-anchor-id="reportes-como-scripts"><span class="header-section-number">2.2.1.3</span> ¿Reportes como scripts?</h4>
+<section id="scripts-qué-cómo-cuándo-y-por-qué." class="level4" data-number="2.2.1.3">
+<h4 data-number="2.2.1.3" class="anchored" data-anchor-id="scripts-qué-cómo-cuándo-y-por-qué."><span class="header-section-number">2.2.1.3</span> Scripts: qué, cómo, cuándo y por qué.</h4>
 <p>Antes de pasar al siguiente panel es importante hablar de los <code>scripts</code>, las <code>libretas</code>, e intentar hacer un poco de labor de convencimiento. Si has tenido un acercamiento previo a <code>R</code>/<code>RStudio</code>, es bastante probable que trabajar con <code>scripts</code> te sea familiar. Si no es así, un <code>script</code> de <code>R</code> es un archivo de texto con extensión <code>.R</code> en el que ponemos nuestro código línea a línea. Pensemos en un ejercicio en el que queremos primero sumar 1 y 1, y luego 2 y 2. Nuestro script en <code>RStudio</code> se vería así:</p>
 <div id="fig-RS_s1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -499,16 +512,16 @@ div.csl-indent {
 <section id="el-ambiente-de-trabajo" class="level3" data-number="2.2.2">
 <h3 data-number="2.2.2" class="anchored" data-anchor-id="el-ambiente-de-trabajo"><span class="header-section-number">2.2.2</span> El ambiente de trabajo</h3>
 <p>El siguiente panel es lo que se conoce como el <strong>ambiente de trabajo</strong> (<em>workspace</em>), que nos da un listado de las cosas que le hemos dado a <code>R</code> para que recuerde (objetos). En la siguiente sesión hablaremos largo y tendido de esto, pero veamos un ejemplo donde, utilizando la consola, le digamos a <code>R</code> que recuerde el resultado de la suma <code>1 + 1</code>, <strong>asignándolo</strong> a una referencia que arbitráriamente llamaré <code>suma</code>:</p>
-<div id="fig-RS_3a" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-RS_4a" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_4a.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.12: Guardar un resultado en la consola</figcaption><p></p>
 </figure>
 </div>
-<p>Dos cosas: 1) La <strong>asignación</strong> se hizo con el operador <code>&lt;-</code>. Esto es sumamente importante, en <code>R</code> guardamos cosas utilizando ese operador y no <code>=</code>. 2) Al ejecutar la línea no obtuvimos el resultado. Esto es porque solo le dijimos que lo recordara, que lo anotara en un post-it, si quieres, no que nos lo mostrara. Si queremos que nos lo muestre solo tenemos que llamarlo por su nombre (ejecutar en la consola):</p>
-<div id="fig-RS_3b" class="quarto-figure quarto-figure-center anchored">
+<p>Aquí hay dos cosas a tener en cuenta: 1. La <strong>asignación</strong> se hizo con el operador <code>&lt;-</code>. Esto es sumamente importante: en <code>R</code> guardamos cosas utilizando el operador <code>&lt;-</code> y no <code>=</code>. 2. Al ejecutar la línea no obtuvimos el resultado. Esto es porque solo le dijimos que lo recordara, que lo anotara en un post-it, si quieres, no que nos lo mostrara. Si queremos que nos lo muestre solo tenemos que llamarlo por su nombre (ejecutar en la consola):</p>
+<div id="fig-RS_4b" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_4b.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.13: Imprimir el resultado</figcaption><p></p>
 </figure>
 </div>
@@ -517,49 +530,43 @@ div.csl-indent {
 <section id="el-ambiente-gráfico" class="level3" data-number="2.2.3">
 <h3 data-number="2.2.3" class="anchored" data-anchor-id="el-ambiente-gráfico"><span class="header-section-number">2.2.3</span> El ambiente gráfico</h3>
 <p>El último panel corresponde al ambiente gráfico. Este panel junta varios elementos a los que es más fácil acceder visualmente. La primera pestaña es un <strong>explorador de archivos</strong>. puedes dar click a cada carpeta para ver sus elementos, crear nuevas carpetas, y mucho más. En este curso no lo utilizaremos más que como una referencia visual de dónde están ubicados nuestros archivos.</p>
-<div id="fig-RS_4a" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-RS_5a" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_5a.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.14: Explorador de archivos</figcaption><p></p>
 </figure>
 </div>
 <p>La siguiente pestaña nos muestra la serie de <strong>gráficos</strong> que hemos ido generando. Podemos ejecutar en la consola el comando <code>plot(cars)</code> y verás que el gráfico se muestra en esta pestaña.</p>
-<div id="fig-RS_4b" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-RS_5b" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_5b.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.15: Gráfico en el ambiente gráfico</figcaption><p></p>
 </figure>
 </div>
 <p>En la siguiente pestaña encontraremos un listado de las <strong>librerías/paqueterías</strong> que tenemos instaladas, sus versiones, una breve descripción de para qué son, así como botones para instalarlas o actualizarlas.</p>
-<div id="fig-RS_4c" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-RS_5c" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_5c.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.16: Paquetes</figcaption><p></p>
 </figure>
 </div>
-<p>Después tenemos la pestaña de <strong>ayuda</strong>. Aquí podemos ver, valga la redundancia, ayuda sobre <code>R</code>, pero también sobre funciones en las que estemos interesados. Si queremos ver la ayuda de una función <code>FUN</code> vamos a utilizar el comando <code>?FUN</code>, tal que:</p>
-<div id="fig-RS_4d" class="quarto-figure quarto-figure-center anchored">
+<p>Después tenemos la pestaña de <strong>ayuda</strong>. Aquí podemos ver, valga la redundancia, ayuda sobre <code>R</code>, pero también sobre funciones en las que estemos interesados. Si queremos ver la ayuda de una función <code>FUN</code> podemos o utilizar el comando <code>?FUN</code> <a href="#fig-RS_5d">Figure&nbsp;<span>2.17</span></a> o utilizar la barra de búsqueda de la pestaña</p>
+<div id="fig-RS_5d" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_5d.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.17: ¡Ayuda!</figcaption><p></p>
 </figure>
 </div>
-<p>En la siguiente pestaña tenemos un visor (Viewer), donde tendremos vistas previas de los documentos <code>RMarkdown</code> o <code>Quarto</code> con los que estemos trabajando. Tomando como ejemplo el documento que generamos antes, le daremos click al botón <code>Render</code> con la flecha azul, lo que da como resultado la vista previa en Viewer</p>
-<div id="fig-RS_4e" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.18: Documento <code>Quarto</code> y su renderizado</figcaption><p></p>
-</figure>
-</div>
+<p>En la siguiente pestaña tenemos un visor (Viewer), donde tendremos vistas previas de los documentos <code>RMarkdown</code> o <code>Quarto</code> con los que estemos trabajando. Tomando como ejemplo el documento <code>Quarto</code> que generamos antes, da click al botón <code>Render</code> con la flecha azul. ¿Qué obtienes?</p>
 <p>La última pestaña es un visor de presentaciones, el cual no utilizaremos en este curso.</p>
 </section>
 <section id="personalizando-rstudio" class="level3" data-number="2.2.4">
 <h3 data-number="2.2.4" class="anchored" data-anchor-id="personalizando-rstudio"><span class="header-section-number">2.2.4</span> Personalizando <code>RStudio</code></h3>
-<p>Como todo IDE, podemos personalizar la apariencia de <code>RStudio</code>. Para hacerlo simplemente ve a la barra de herramientas, Tools -&gt; Global Options. Te aparecerá la siguiente ventana</p>
-<div id="fig-RS_5" class="quarto-figure quarto-figure-center anchored">
+<p>Como todo IDE, podemos personalizar la apariencia de <code>RStudio</code>. Para hacerlo simplemente ve a la barra de herramientas, luego en <code>Tools -&gt; Global Options</code>. Te aparecerá la siguiente ventana</p>
+<div id="fig-RS_6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.19: Ventana de ajustes</figcaption><p></p>
+<p><img src="imgs/RS_6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.18: Ventana de ajustes</figcaption><p></p>
 </figure>
 </div>
 <p>Vamos a revisar algunas de las opciones que te recomiendo tener presentes. Puedes hacer los cambios y aplicarlos todos juntos al final con el botón <code>Apply</code>:</p>
@@ -573,7 +580,7 @@ div.csl-indent {
 </ul></li>
 <li><code>Graphics</code>
 <ul>
-<li><code>Backend</code> a Cairo. Simplemente es con qué se están graficando las cosas. <strong>¡ES INDISPENSABLE QUE TENGAS INSTALADO <code>xquartz</code> SI ESTÁS EN macOS/LINUX!</strong></li>
+<li><code>Backend</code> a Cairo. Simplemente es con qué se están graficando las cosas. <strong>¡Es INDISPENSABLE que hayas instalado <code>XQuartz</code> si estás en macOS!</strong></li>
 </ul></li>
 </ul></li>
 <li><strong><code>Appearance</code></strong>
@@ -587,7 +594,7 @@ div.csl-indent {
 <li>Aquí se muestran los cuatro paneles de la ventana de <code>RStudio</code>. Personalmente prefiero tener los dos elementos que más utilizo lado a lado y no uno encima del otro. ¿La razón? El código crece hacia abajo, entonces el espacio vertical tiende a ser más importante que el espacio horizontal. Es decir, que en el panel superior derecho pongo la consola, y en el panel inferior izquierdo el ambiente de trabajo.</li>
 </ul></li>
 </ol>
-<p>El resto de opciones son más específicas, por lo que recomiendo no tocarlas salvo que sepas qué estás moviendo y con qué objetivo. Todo se puede revertir, pero no hay necesidad de fomentar dolores de cabeza.</p>
+<p>El resto de opciones son más específicas, por lo que recomiendo no tocarlas salvo que sepas qué estás moviendo y con qué objetivo. Todo se puede revertir, pero no hay necesidad de buscar dolores de cabeza.</p>
 </section>
 </section>
 <section id="entra-a-quarto" class="level1" data-number="3">
@@ -613,9 +620,9 @@ div.csl-indent {
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Notarás algunas cosas. La primera es que <code>html</code> está <strong>indentado</strong>; es decir, no comienza en la misma posición que <code>format</code>. Esto es para indicar que <code>html</code> pertenece a <code>format</code>, al igual que <code>code-fold</code> pertenece a <code>html</code>. La siguiente es, justamente, que agregamos a la lista la entrada <code>code-fold</code>. Esta es una opción que indica si queremos que el código sea colapsable mediante un botón en el archivo final. En este caso, la indicamos como <code>true</code>, por lo que así será. Si no lo quisiéramos así indicaríamos <code>false</code>. Si renderizamos nuestro documento ahora tendremos:</p>
-<div id="fig-RS_4e" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-RS_7" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imgs/RS_2.png" class="img-fluid figure-img"></p>
+<p><img src="imgs/RS_7.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;3.1: Primer <code>Quarto</code> renderizado</figcaption><p></p>
 </figure>
 </div>
@@ -694,7 +701,7 @@ Note
 </section>
 <section id="consideraciones-sobre-quarto" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="consideraciones-sobre-quarto"><span class="header-section-number">3.4</span> Consideraciones sobre <code>Quarto</code></h2>
-<p>Aunque <code>Quarto</code> es extremadamente potente y flexible, es importante tener presente algunas cosas. La primera es que NO hay manera de que en esta sesión yo pueda explicarte con lujo de detalle todas las funciones, para eso prefiero dirigirte a la (bastante extensa) <a href="https://%60Quarto%60.org/docs/guide/">guía de <code>Quarto</code></a>. Otra consideración es que, aunque puedes exportar tus documentos como <code>PDF</code>, <code>Word</code> o <code>ePUB</code> u otros, mi recomendación es que siempre que tengas la libertad exportes a un <code>HTML</code>, que es un poco más permisivo con líneas de código muy largas, o al mostrar tablas con muchas columnas. Si NECESITAS un PDF, asegúrate de tener instalada alguna distribución de <code>LaTeX</code> o, si no quieres la instalación completa, cuando menos asegurarte de haber instalado <code>TinyTeX</code> como sugerimos en la sesión de preparación, de lo contrario NO podrás exportar tus reportes a PDF.</p>
+<p>Aunque <code>Quarto</code> es extremadamente potente y flexible, es importante tener presente algunas cosas. La primera es que NO hay manera de que en una sola sesión yo pueda explicarte con lujo de detalle todas sus funciones y posibilidades, para eso prefiero dirigirte a la (bastante completa) <a href="https://%60Quarto%60.org/docs/guide/">guía de <code>Quarto</code></a>. Otra consideración es que, aunque puedes exportar tus documentos como <code>PDF</code>, <code>Word</code> o <code>ePUB</code> u otros, mi recomendación es que siempre que tengas la libertad exportes a un <code>HTML</code>, que es un poco más permisivo con líneas de código muy largas, o al mostrar tablas con muchas columnas. Si NECESITAS de un PDF, asegúrate de tener instalada alguna distribución de <code>LaTeX</code> o, si no quieres la instalación completa, cuando menos asegurarte de haber instalado <code>TinyTeX</code> como sugerimos en la sesión de preparación, de lo contrario NO podrás exportar tus reportes a PDF.</p>
 </section>
 <section id="ejercicio" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">3.5</span> Ejercicio</h2>
@@ -873,6 +880,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+  </div>
+</footer>
 
 
 

@@ -2,7 +2,7 @@
 
 {{< video https://www.youtube.com/embed/wo9vZccmqwc >}}
 
-En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y dar a conocer el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. Es ahí donde entran `RStudio` y `Quarto` (la evolución de RMarkdown), así que antes de entrar propiamente al lenguaje de programación `R`, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interfaz que provee `RStudio`. Te adelanto: si lo utilizas adecuadamente, `RStudio` (en conjunto con `Quarto`) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es `RStudio`.
+En la sesión anterior hablamos de cómo la ciencia de datos nos proveé de las herramientas que necesitamos para poder extraer conclusiones sensibles desde nuestros datos; sin embargo, el análisis de nuestros datos va (o debería ir) mucho más allá de aplicar una prueba estadística y obtener el valor de p correspondiente. El análisis de datos es un proceso, y como científicos debemos de ser capaces de reportar ese proceso de una manera ordenada, transparente y reproducible. De hecho, hay muchas revistas que solicitan que en el material suplementario se incluyan tanto el código como los datos utilizados, o que estos estén disponibles en un repositorio público. El problema es que muchas veces este código se comparte "en crudo", lo cual lo hace menos transparente. ¿Cómo solucionarlo? Tenemos `sweave` o libretas `Jupyter`, por ejemplo; sin embargo, `RStudio` y `Quarto` (la evolución de RMarkdown) ofrecen una alternativa bastante útil, así que antes de entrar propiamente al lenguaje de programación `R`, hablemos de cómo realizar reportes y cómo podemos aprovechar al máximo la interfaz que provee `RStudio`. Te adelanto: si lo utilizas adecuadamente, `RStudio` (en conjunto con `Quarto`) puede ser el lugar donde escribas tu tesis, por muy inverosímil que parezca. De hecho, este sitio fue construido utilizando ambas cosas. Sin más preámbulo, comencemos por hablar de qué es `RStudio`.
 
 ## `R` vs. `RStudio`
 
@@ -22,7 +22,11 @@ Al abrir `RStudio` por primera vez te vas a topar con una ventana como la siguie
 
 ![Ventana de `RStudio`](imgs/RS_1.png){#fig-RS_1}
 
-Ya sé, ya sé, no se ve mucho más amable que la ventana de `R`. Es más, se ve mucho más intimidante porque ahora tenemos la consola y otros 3 espacios. Al ser un IDE, `RStudio` incluye elementos gráficos para todo lo que pudiéramos llegar a necesitar mientras desarrollamos nuestros análisis, entonces vamos a descomponer esta ventana panel por panel, de arriba a abajo y de izquierda a derecha.
+Ya sé, ya sé, no se ve mucho más amable que la ventana de `R`. Es más, se ve mucho más intimidante porque ahora tenemos la consola y otros espacios. Al ser un IDE, `RStudio` incluye elementos gráficos para todo lo que pudiéramos llegar a necesitar mientras desarrollamos nuestros análisis, entonces vamos a descomponer esta ventana panel por panel, de arriba a abajo y de izquierda a derecha. 
+
+::: {.callout-important}
+Si no te aparecen los cuatro páneles no te preocupes, simplemente ve a `File -> New File -> R script`. Con eso se abrirá el panel faltante.
+:::
 
 #### El editor
 
@@ -36,11 +40,11 @@ Este es, como el nombre sugiere, un **editor de textos**, que no debemos de conf
 
 El siguiente panel es la **consola**:
 
-![Consola en `RStudio`](imgs/RS_2.png){#fig-RS_3}
+![Consola en `RStudio`](imgs/RS_3.png){#fig-RS_3}
 
 Este panel es, literalmente, lo que veíamos al abrir `R` por sí solo; es decir, un espacio donde tenemos nuestro prompt y donde se ejecutarán nuestras instrucciones o líneas de comandos. Notarás que hay otras tres pestañas: una llamada `Terminal`, y otra llamada `Background Jobs`. Estas son interfaces a la terminal del sistema y a los trabajos que estemos ejecutando en segundo plano. Nuestra interacción con estas dos pestañas tiende a ser limitada (o incluso nula), salvo que realicemos algo muy especializado.
 
-#### ¿Reportes como scripts?
+#### Scripts: qué, cómo, cuándo y por qué.
 
 Antes de pasar al siguiente panel es importante hablar de los `scripts`, las `libretas`, e intentar hacer un poco de labor de convencimiento. Si has tenido un acercamiento previo a `R`/`RStudio`, es bastante probable que trabajar con `scripts` te sea familiar. Si no es así, un `script` de `R` es un archivo de texto con extensión `.R` en el que ponemos nuestro código línea a línea. Pensemos en un ejercicio en el que queremos primero sumar 1 y 1, y luego 2 y 2. Nuestro script en `RStudio` se vería así:
 
@@ -87,11 +91,13 @@ Un ejemplo más claro del potencial de `Quarto` es, nuevamente, el material de e
 
 El siguiente panel es lo que se conoce como el **ambiente de trabajo** (*workspace*), que nos da un listado de las cosas que le hemos dado a `R` para que recuerde (objetos). En la siguiente sesión hablaremos largo y tendido de esto, pero veamos un ejemplo donde, utilizando la consola, le digamos a `R` que recuerde el resultado de la suma `1 + 1`, **asignándolo** a una referencia que arbitráriamente llamaré `suma`:
 
-![Guardar un resultado en la consola](imgs/RS_2.png){#fig-RS_3a}
+![Guardar un resultado en la consola](imgs/RS_4a.png){#fig-RS_4a}
 
-Dos cosas: 1) La **asignación** se hizo con el operador `<-`. Esto es sumamente importante, en `R` guardamos cosas utilizando ese operador y no `=`. 2) Al ejecutar la línea no obtuvimos el resultado. Esto es porque solo le dijimos que lo recordara, que lo anotara en un post-it, si quieres, no que nos lo mostrara. Si queremos que nos lo muestre solo tenemos que llamarlo por su nombre (ejecutar en la consola):
+Aquí hay dos cosas a tener en cuenta: 
+1. La **asignación** se hizo con el operador `<-`. Esto es sumamente importante: en `R` guardamos cosas utilizando el operador `<-` y no `=`.
+2. Al ejecutar la línea no obtuvimos el resultado. Esto es porque solo le dijimos que lo recordara, que lo anotara en un post-it, si quieres, no que nos lo mostrara. Si queremos que nos lo muestre solo tenemos que llamarlo por su nombre (ejecutar en la consola):
 
-![Imprimir el resultado](imgs/RS_2.png){#fig-RS_3b}
+![Imprimir el resultado](imgs/RS_4b.png){#fig-RS_4b}
 
 ¿Qué tiene que ver esto con el ambiente de trabajo? Pues ahora ya no está vacío, ya tenemos una entrada en la lista, en donde se muestra el nombre del objeto y su valor. Conforme vayamos creando más objetos, más entradas tendrá esa lista. Prueba a crear un objeto que contenga el texto `"Hola mundo"` (ojo a las comillas) y dar click en su nombre en el ambiente de trabajo. ¿Qué ocurre?
 
@@ -99,31 +105,29 @@ Dos cosas: 1) La **asignación** se hizo con el operador `<-`. Esto es sumamente
 
 El último panel corresponde al ambiente gráfico. Este panel junta varios elementos a los que es más fácil acceder visualmente. La primera pestaña es un **explorador de archivos**. puedes dar click a cada carpeta para ver sus elementos, crear nuevas carpetas, y mucho más. En este curso no lo utilizaremos más que como una referencia visual de dónde están ubicados nuestros archivos.
 
-![Explorador de archivos](imgs/RS_2.png){#fig-RS_4a}
+![Explorador de archivos](imgs/RS_5a.png){#fig-RS_5a}
 
 La siguiente pestaña nos muestra la serie de **gráficos** que hemos ido generando. Podemos ejecutar en la consola el comando `plot(cars)` y verás que el gráfico se muestra en esta pestaña.
 
-![Gráfico en el ambiente gráfico](imgs/RS_2.png){#fig-RS_4b}
+![Gráfico en el ambiente gráfico](imgs/RS_5b.png){#fig-RS_5b}
 
 En la siguiente pestaña encontraremos un listado de las **librerías/paqueterías** que tenemos instaladas, sus versiones, una breve descripción de para qué son, así como botones para instalarlas o actualizarlas.
 
-![Paquetes](imgs/RS_2.png){#fig-RS_4c}
+![Paquetes](imgs/RS_5c.png){#fig-RS_5c}
 
-Después tenemos la pestaña de **ayuda**. Aquí podemos ver, valga la redundancia, ayuda sobre `R`, pero también sobre funciones en las que estemos interesados. Si queremos ver la ayuda de una función `FUN` vamos a utilizar el comando `?FUN`, tal que:
+Después tenemos la pestaña de **ayuda**. Aquí podemos ver, valga la redundancia, ayuda sobre `R`, pero también sobre funciones en las que estemos interesados. Si queremos ver la ayuda de una función `FUN` podemos o utilizar el comando `?FUN` [@fig-RS_5d] o utilizar la barra de búsqueda de la pestaña
 
-![¡Ayuda!](imgs/RS_2.png){#fig-RS_4d}
+![¡Ayuda!](imgs/RS_5d.png){#fig-RS_5d}
 
-En la siguiente pestaña tenemos un visor (Viewer), donde tendremos vistas previas de los documentos `RMarkdown` o `Quarto` con los que estemos trabajando. Tomando como ejemplo el documento que generamos antes, le daremos click al botón `Render` con la flecha azul, lo que da como resultado la vista previa en Viewer
-
-![Documento `Quarto` y su renderizado](imgs/RS_2.png){#fig-RS_4e}
+En la siguiente pestaña tenemos un visor (Viewer), donde tendremos vistas previas de los documentos `RMarkdown` o `Quarto` con los que estemos trabajando. Tomando como ejemplo el documento `Quarto` que generamos antes, da click al botón `Render` con la flecha azul. ¿Qué obtienes?
 
 La última pestaña es un visor de presentaciones, el cual no utilizaremos en este curso.
 
 ### Personalizando `RStudio`
 
-Como todo IDE, podemos personalizar la apariencia de `RStudio`. Para hacerlo simplemente ve a la barra de herramientas, Tools -> Global Options. Te aparecerá la siguiente ventana
+Como todo IDE, podemos personalizar la apariencia de `RStudio`. Para hacerlo simplemente ve a la barra de herramientas, luego en `Tools -> Global Options`. Te aparecerá la siguiente ventana
 
-![Ventana de ajustes](imgs/RS_2.png){#fig-RS_5}
+![Ventana de ajustes](imgs/RS_6.png){#fig-RS_6}
 
 Vamos a revisar algunas de las opciones que te recomiendo tener presentes. Puedes hacer los cambios y aplicarlos todos juntos al final con el botón `Apply`:
 
@@ -132,7 +136,7 @@ Vamos a revisar algunas de las opciones que te recomiendo tener presentes. Puede
       - `Workspace`: Restore .RData into workspace at startup & Save workspace to .RData on exit. ¿Quieres que cada que cierres `RStudio` todos los objetos de tu espacio de trabajo se guarden en un archivo, y que esos mismos se carguen la siguiente vez que abras `RStudio`? Personalmente no es algo con lo que esté de acuerdo, porque más frecuentemente que no vas a querer un ambiente limpio, por lo que estas opciones están desmarcada y en *Never*, respectivamente.
       - `History`: La misma historia (je) que en el caso anterior. ¿Quieres que tu historial de comandos ejecutados se guarde, aún si no guardas el .RData? ¿Quieres que se remuevan los duplicados? Por las mismas razones que antes también las tengo desmarcadas.
     - `Graphics`
-      - `Backend` a Cairo. Simplemente es con qué se están graficando las cosas. **¡ES INDISPENSABLE QUE TENGAS INSTALADO `xquartz` SI ESTÁS EN macOS/LINUX!**
+      - `Backend` a Cairo. Simplemente es con qué se están graficando las cosas. **¡Es INDISPENSABLE que hayas instalado `XQuartz` si estás en macOS!**
 2. **`Appearance`**
     - `Zoom`: ¿Qué tan grandes quieres todos los elementos de la ventana? Para mi trabajo personal, y dependiendo de la resolución del monitor donde se encuentre la ventana, esta oscila entre 100% y 125%, para este curso está en 175-200%
     - `Editor font` y `Editor font size`: Tipo y tamaño de letra. Personalmente recomiendo no cambiar el tipo de letra.
@@ -140,7 +144,7 @@ Vamos a revisar algunas de las opciones que te recomiendo tener presentes. Puede
 3. **`Pane Layout`**
     - Aquí se muestran los cuatro paneles de la ventana de `RStudio`. Personalmente prefiero tener los dos elementos que más utilizo lado a lado y no uno encima del otro. ¿La razón? El código crece hacia abajo, entonces el espacio vertical tiende a ser más importante que el espacio horizontal. Es decir, que en el panel superior derecho pongo la consola, y en el panel inferior izquierdo el ambiente de trabajo.
 
-El resto de opciones son más específicas, por lo que recomiendo no tocarlas salvo que sepas qué estás moviendo y con qué objetivo. Todo se puede revertir, pero no hay necesidad de fomentar dolores de cabeza.
+El resto de opciones son más específicas, por lo que recomiendo no tocarlas salvo que sepas qué estás moviendo y con qué objetivo. Todo se puede revertir, pero no hay necesidad de buscar dolores de cabeza.
 
 # Entra a `Quarto`
 
@@ -179,7 +183,7 @@ format:
 
 Notarás algunas cosas. La primera es que `html` está **indentado**; es decir, no comienza en la misma posición que `format`. Esto es para indicar que `html` pertenece a `format`, al igual que `code-fold` pertenece a `html`. La siguiente es, justamente, que agregamos a la lista la entrada `code-fold`. Esta es una opción que indica si queremos que el código sea colapsable mediante un botón en el archivo final. En este caso, la indicamos como `true`, por lo que así será. Si no lo quisiéramos así indicaríamos `false`. Si renderizamos nuestro documento ahora tendremos:
 
-![Primer `Quarto` renderizado](imgs/RS_2.png){#fig-RS_4e}
+![Primer `Quarto` renderizado](imgs/RS_7.png){#fig-RS_7}
 
 Si tienes curiosidad por saber qué características `YAML` dieron lugar al libro de acompañamiento, puedes revisar el archivo `_Quarto.yml`.
 
@@ -242,7 +246,7 @@ Yo construyo mis archivos `.bib` a mano, pero no es necesario. Si quieres pasar 
 
 ## Consideraciones sobre `Quarto`
 
-Aunque `Quarto` es extremadamente potente y flexible, es importante tener presente algunas cosas. La primera es que NO hay manera de que en esta sesión yo pueda explicarte con lujo de detalle todas las funciones, para eso prefiero dirigirte a la (bastante extensa) [guía de `Quarto`](https://`Quarto`.org/docs/guide/). Otra consideración es que, aunque puedes exportar tus documentos como `PDF`, `Word` o `ePUB` u otros, mi recomendación es que siempre que tengas la libertad exportes a un `HTML`, que es un poco más permisivo con líneas de código muy largas, o al mostrar tablas con muchas columnas. Si NECESITAS un PDF, asegúrate de tener instalada alguna distribución de `LaTeX` o, si no quieres la instalación completa, cuando menos asegurarte de haber instalado `TinyTeX` como sugerimos en la sesión de preparación, de lo contrario NO podrás exportar tus reportes a PDF.
+Aunque `Quarto` es extremadamente potente y flexible, es importante tener presente algunas cosas. La primera es que NO hay manera de que en una sola sesión yo pueda explicarte con lujo de detalle todas sus funciones y posibilidades, para eso prefiero dirigirte a la (bastante completa) [guía de `Quarto`](https://`Quarto`.org/docs/guide/). Otra consideración es que, aunque puedes exportar tus documentos como `PDF`, `Word` o `ePUB` u otros, mi recomendación es que siempre que tengas la libertad exportes a un `HTML`, que es un poco más permisivo con líneas de código muy largas, o al mostrar tablas con muchas columnas. Si NECESITAS de un PDF, asegúrate de tener instalada alguna distribución de `LaTeX` o, si no quieres la instalación completa, cuando menos asegurarte de haber instalado `TinyTeX` como sugerimos en la sesión de preparación, de lo contrario NO podrás exportar tus reportes a PDF.
 
 ## Ejercicio
 
