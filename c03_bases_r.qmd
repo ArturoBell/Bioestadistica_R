@@ -4,7 +4,7 @@
 
 En la sesión anterior hablamos de `RStudio` como una interfaz gráfica a `R`, pero no fuimos más allá de decir que `R` es un lenguaje de programación que se ejecuta en consola. Pues bien, `R` es, y cito textualmente, "un **lenguaje** y **ambiente** para la **computación estadística** y la creación de **gráficos**" [@Rcoreteam_2022]. ¿En castellano? Es un lenguaje creado especialmente para procedimientos estadísticos y el graficado de datos. Es un software libre, por lo que además de ser gratuito es auditable (i.e., cualquiera puede revisar el código fuente), "cualquiera" puede contribuir (ojo a las comillas). En su código fuente base (R base) incluye diversos algoritmos, modelos y distribuciones de probabilidad, aunque también es fácilmente extensible por medio de paquetes o librerías.
 
-En este punto me dirás "Ok, Arturo, de acuerdo con lo que dices, pero ¿por qué se ha vuelto tan popular en análisis bioestadísticos?" Pues tiene que ver con varios factores. El primero es que es un lenguaje de **alto nivel**; es decir, está hecho para ser leído por humanos y no por computadoras. El segundo es que es **interactivo**, por lo que podemos ir modificando el código y ver su salida en tiempo real **sin necesidad de compilar** primero el código. El tercero tiene que ver su **extensibilidad**. Hay una gran variedad de librerías 
+En este punto me dirás "Ok, Arturo, de acuerdo con lo que dices, pero ¿por qué se ha vuelto tan popular en análisis bioestadísticos?" Pues tiene que ver con varios factores. El primero es que es un lenguaje de **alto nivel**; es decir, está hecho para ser leído por humanos y no por computadoras. El segundo es que es **interactivo**, por lo que podemos ir modificando el código y ver su salida en tiempo real **sin necesidad de compilar** primero el código. El tercero tiene que ver su **extensibilidad**. Hay una gran variedad de librerías que agregan funcionalidades particulares, que van desde funcionalidades muy generales hasta la implementaciones muy particulares dependientes del área de investigación. ¿Algunos ejemplos? En `tidyverse` tenemos un dialecto enfocado a la ciencia de datos y la programación funcional. En `ggplot2` tenemos un potente graficador. En `vegan` tenemos una gran cantidad de funciones para problemas de ecología de comunidades. En `SIBER` tenemos una forma de estimar tamaños de nichos isotópicos. En `STAN` (`rstan`, para ser más preciso) tenemos un ambiente general para inferencia Bayesiana. En fin, hay tantas librerías como problemas a resolver, y continuamente se añaden nuevas, pero antes de saltar a utilizarlas necesitamos entender las bases de `R` base (je).
 
 ## Objetos
 
@@ -155,17 +155,17 @@ Las estructuras son colecciones de valores, cada una con sus propiedades y sus m
 La estructura más básica. Una colección **unidimensional** de elementos. Las funciones para crearlos son: `c()`, la cual *combina* una serie de elementos en un vector (mismo tipo) o una lista (diferentes tipos); `vector(mode, length)`: genera un vector "vacío" con longitud (número de elementos) `length` y tipo de datos `'mode'`.
 
 ```{r}
-vect.1 <- c(1:5)
-vect.2 <- vector(mode = 'double', length = 5)
-print(vect.1)
-print(vect.2)
+vect_1 <- c(1:5)
+vect_2 <- vector(mode = 'double', length = 5)
+print(vect_1)
+print(vect_2)
 ```
 
 Para indexar un vector utilizamos: `var[i]`, donde `i` representa la posición del (los) elemento(s) de interés:
 
 ```{r}
-print(vect.1[4])
-print(vect.1[2:3])
+print(vect_1[4])
+print(vect_1[2:3])
 ```
 
 #### Factor
@@ -183,66 +183,66 @@ fact.1
 Una estructura bidimensional (columnas/renglones). Se generan utilizando la función `matrix(data, nrow, ncol, byrow)`, donde `data` representa la colección de objetos que formarán la matriz, `nrow` y `ncol` el número de renglones y columnas, respectivamente, y `byrow` si se llenará por renglones (`FALSE`) o por columnas (`TRUE`, por defecto)
 
 ```{r}
-mat.1 <- matrix(c(T, F, F, T), nrow = 2, ncol = 2)
-mat.1
+mat_1 <- matrix(c(T, F, F, T), nrow = 2, ncol = 2)
+mat_1
 ```
 
 Para indexar una matriz utilizaremos también corchetes; sin embargo, indicaremos el par renglón,columna donde se ubica el elemento:
 
 ```{r}
-print(mat.1[1,1])
-print(mat.1[2,1])
+print(mat_1[1,1])
+print(mat_1[2,1])
 ```
 
 Si quisieramos indexar toda una dimensión (renglón o columna), utilizaríamos el mismo método, dejando en blanco la dimensión contraria; es decir, si nos interesa una columna, dejaremos en blanco el número de renglón y si nos interesa un renglón dejaremos en blanco el número de columna:
 
 ```{r}
-print(mat.1[,2])
-print(mat.1[1,])
+print(mat_1[,2])
+print(mat_1[1,])
 ```
 
-OJO: `print(mat.1[c(1,1)])` NO da la diagonal de la matriz, esa la obtenemos con `diag(mat1)`, sino que repite 2 veces el primer elemento de la matriz
+OJO: `print(mat_1[c(1,1)])` NO da la diagonal de la matriz, esa la obtenemos con `diag(mat1)`, sino que repite 2 veces el primer elemento de la matriz
 
 ```{r}
-mat.1[c(2,1),1]
+mat_1[c(2,1),1]
 ```
 
 
 #### DataFrame
 
-El DataFrame es la estructura con la que más comúnmente estaremos en contacto. Es una tabla completa que, a diferencia de la matriz, contiene nombres de columnas. Tiene dos particularidades que hay que considerar: 1) todos los elementos que forman a cada columna deberán ser del mismo tipo y 2) El número de renglones de todas las columnas debe de ser el mismo. Se crean utilizando la función `data.frame(col.name = data, ...)`:
+El DataFrame es la estructura con la que más comúnmente estaremos en contacto. Es una tabla completa que, a diferencia de la matriz, contiene nombres de columnas. Tiene dos particularidades que hay que considerar: 1) todos los elementos que forman a cada columna deberán ser del mismo tipo y 2) El número de renglones de todas las columnas debe de ser el mismo. Se crean utilizando la función `data.frame(col_name = data, ...)`:
 
 ```{r}
-df.1 <- data.frame(col.a = c(0:5), 
-                   col.b = c(20:25), 
-                   col.c = c(15:20))
+df_1 <- data.frame(col_a = c(0:5), 
+                   col_b = c(20:25), 
+                   col_c = c(15:20))
 # Nota: Si no se indica el nombre de las columnas este será asignado automáticamente
-df.1
+df_1
 ```
 
-Existen distintos modos de indexar un DataFrame. El primero de ellos `var$col.name`:
+Existen distintos modos de indexar un DataFrame. El primero de ellos `var$col_name`:
 
 ```{r}
-df.1$col.a
+df_1$col_a
 ```
 
 Ejercicio renglones 1 y 4 de la columna c:
 
 ```{r}
-df.1$col.c[c(1,4)]
+df_1$col_c[c(1,4)]
 ```
 
 
 Como vemos, este modo de indexación extrae la columna completa en forma de un vector, por lo que si queremos accesar un valor en particular solo habrá que utilizar ese método de indexación:
 
 ```{r}
-df.1$col.b[4]
+df_1$col_b[4]
 ```
 
 Finalmente, también podemos utilizar el método de indexación de matrices, recordando que se especifica el par renglón, columna:
 
 ```{r}
-df.1[4,2]
+df_1[4,2]
 ```
 
 Esta es la estructura con la que más debemos de familiarizarnos, pues la mayor parte de nuestros datos los representamos en ella. ¿Siempre debemos de ingresar los datos manualmente? Para nada, tenemos todo un abanico de funciones que nos permiten cargar datos directamente de archivos, pero eso lo veremos más adelante.
@@ -252,14 +252,14 @@ Esta es la estructura con la que más debemos de familiarizarnos, pues la mayor 
 Las listas son una colección de cualquier combinación de datos o estructuras, incluyendo otras listas:
 
 ```{r}
-l.1 <- list(df.1, mat.1, vect.1)
-print(l.1)
+l_1 <- list(df_1, mat_1, vect_1)
+print(l_1)
 ```
 
 En la salida de arriba vemos el método de indexación: `var[[i]][j,k]`, donde `i` representa el número de objeto en la lista y `j,k` el par renglón,columna (de aplicar). En el caso de DataFrames podemos seguir utilizando el operador `$` para utilizar los noombres de columnas:
 
 ```{r}
-l.1[[1]]$col.a[6]
+l_1[[1]]$col_a[6]
 ```
 
 Ahora que hemos hablado de todos los tipos de estructuras, y antes de encaminarnos hacia los procesos de automatización, hablemos de cómo cargar nuestros datos en R.
@@ -267,10 +267,10 @@ Ahora que hemos hablado de todos los tipos de estructuras, y antes de encaminarn
 Ejercicios:
 
 ```{r}
-l.1[[2]][2,2]
-l.1[[3]][5]
-l.1[[1]]$col.b[3:4]
-l.1[[1]]$col.a[c(6,1)]
+l_1[[2]][2,2]
+l_1[[3]][5]
+l_1[[1]]$col_b[3:4]
+l_1[[1]]$col_a[c(6,1)]
 ```
 
 
@@ -593,7 +593,7 @@ for (i in x) {
 5. Carga los `datos1.csv` y añade un renglón adicional con los totales para cada columna. 
 6. Carga los `datos1.csv` y obten una tabla con los conteos promedio de cada presa para cada especie (aggregate/apply o ciclos).
 7. Combina el ciclo `for` anidado del último ejemplo con un condicional, en el cuál se imprima si la suma de ambos números (i, j) es mayor, menor o igual a 105.
-8. Ejecuta **en consola** el siguiente código y responde ¿qué hace cada línea?
+8. Ejecuta el siguiente código y responde ¿qué hace cada línea? Recuerda que ante la duda siempre puedes revisar la ayuda de las funciones.
 
 ```{{r}}
 pkgs <- c("tidyverse", "Rmisc", "rcompanion",

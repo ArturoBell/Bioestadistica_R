@@ -49,7 +49,7 @@ Notarás que el resultado es exactamente el mismo, aunque la forma de hacerlo es
 Si revisas documentación "antigua" sobre `tidyverse` (previa a R 4.1, de hecho), notarás que el operador `pipe` es `%>%` en vez de `|>`. El resultado es el mismo y, de hecho, a partir de R 4.1 puedes seleccionar cuál utilizar en las preferencias de `RStudio`. En el curso utilizaremos `|>` por ser el operador `pipe` nativo de `R`, el cual fue introducido (como te imaginarás) en `R` 4.1.
 :::
 
-¿Abstracto? Sin duda. ¿Útil? También. ¿Más explícito que `R` base con `aggregate`? Debatible. Lo que no es debatible es que esta notación brilla especialmente en cierto tipo de problemas. Pensemos que nos interesa conocer el promedio de las longitudes de picos por especie para cada isla. Intenta hacerlo con `R` base y te darás cuenta de que no es tan intuitivo, salvo que estés familiarizado con el uso de fórmulas. ¿En `tidy`? Solamente hay que agregar la nueva variable de agrupamiento a `group_by`:
+¿Abstracto? Sin duda. ¿Útil? También. ¿Más explícito que `R` base con `aggregate`? Debatible. Lo que no es debatible es que esta notación brilla especialmente en cierto tipo de problemas. Pensemos que nos interesa conocer el promedio de las longitudes de picos por especie para cada isla. Intenta hacerlo con `R` base y te darás cuenta de que no es tan intuitivo, salvo que estés familiarizado con el uso de fórmulas o ciclos y condcionales. ¿En `tidy`? Solamente hay que agregar la nueva variable de agrupamiento a `group_by`:
 
 ```{r}
 datos1 |>
@@ -135,7 +135,7 @@ Evidentemente, los resultados son los mismos, lo cual me lleva directamente a la
 
 Si `tidy` se acomodó a tu forma de ver las cosas, o si se te hizo más fácil de leer, es probable que te preguntes por qué no me salté `R` base para entrar directamente a `tidy`. Además de incrementar las horas del curso (broma), fue porque (pedagógicamente) `tidy` puede introducir ciertas barreras para quienes se van introduciendo a `R`. @Matloff_2020 hace una excelente y extensiva recopilación de las razones por las cuales enseñar solo `tidy` (o solo `R` base) es una mala idea, así que te recomiendo leas su opinión; sin embargo, me gustaría darte mi perspectiva. Te adelanto: si no tienes experiencia en programación, el paradigma de `tidy` supone una curva de aprendizaje más alta que solo `R` base (solo `R` a partir de aquí) y, tal vez más importante, no es necesario casarse con uno u otro.
 
-### `tidy` es más complejo
+### `tidy` es más abstracto
 
 Como habrás notado en esta sesión, `tidy` es, escencialmente, más complejo que `R`. Esto no es una falla en el diseño, sino que tiene que ver con la filosofía de la aproximación: generar código que sea más fácilmente leíble por seres humanos. Sin duda alguna, el utilizar `data |> group_by() |> summarise()` puede parecer menos críptico o más "entendible" que solo `aggregate(formula, data, FUN)`; sin embargo, esto se debe a que ya conocías qué es una librería y cómo cargarla, qué es una función y qué es un argumento, pero aún así hubo que explicar qué es encadenamiento de operaciones/funciones y el operador `pipe` y también tuvimos que entender que la información fluye de izquierda a derecha al encadenar y de derecha a izquierda al asignar.
 
@@ -165,7 +165,11 @@ Pero si queremos indizar el resultante obtenemos un error:
 datos1 |> select(sex)[10:25]
 ```
 
-¿La alternativa? Primero indizar `datos1` y luego utilizar `select`. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar `R` base, sin mencionar que en `tidy` "puro" esta solución no es aceptable.
+::: {.callout-note}
+RHS es el acrónimo de "Right Hand Side"; es decir, el operador `[` no está soportado a la derecha de `|>`.
+:::
+
+¿La alternativa? Primero indizar `datos1` y luego utilizar `select`. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar `R` base, sin mencionar que en `tidy` "puro" esta solución no es aceptable. ¿La razón? En `tidy` predomina el **paradigma funcional** de la programación; es decir, **la salida depende únicamente de los argumentos pasados a la función**.
 
 ```{r}
 datos1[10:25,] |> select(sex)
@@ -179,7 +183,7 @@ El mayor problema al que nos enfrentamos al aprender algún lenguaje de programa
 
 En el problema `R` base vs. `tidy` es lo mismo. Hay ponentes "puristas" en ambos sentidos: personas que creen que `tidy` debería considerarse sacrilegio, y personas que creen que `R` base es obsoleto, arcaico, y que debería de caer en desuso. No te conviertas en ninguno de ellos y mejor toma lo mejor de ambos.
 
-### `tidy` expande tus horizontes
+### `tidy` homogeneiza procesos
 
 En mi opinión, lo que te acabo de exponer son los problemas principales de enseñar solo `tidy` y, de acuerdo con @Matloff_2020, las razones por las cuales enseñar una mezcla de ambos es la mejor opción. Aprender `R` base nos permite resolver problemas que en `tidy` sería muy largo, mientras que `tidy` nos permite simplificar procedimientos que serían más complicados en `R` base. Otra ventaja de `tidy` es que permite unificar procesos bajo una misma sintaxis.
 
