@@ -520,7 +520,7 @@ div.csl-indent {
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["v1"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"9.936671","_rn_":"1"},{"1":"A","2":"10.010689","_rn_":"2"},{"1":"A","2":"10.075819","_rn_":"3"},{"1":"A","2":"10.104007","_rn_":"4"},{"1":"A","2":"10.057073","_rn_":"5"},{"1":"A","2":"10.071558","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["v1"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"10.059087","_rn_":"1"},{"1":"A","2":"9.985866","_rn_":"2"},{"1":"A","2":"10.182981","_rn_":"3"},{"1":"A","2":"9.786372","_rn_":"4"},{"1":"A","2":"10.038934","_rn_":"5"},{"1":"A","2":"10.119794","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -532,13 +532,13 @@ div.csl-indent {
     Two Sample t-test
 
 data:  v1 by grupo
-t = -20.489, df = 18, p-value = 6.343e-14
+t = -20.055, df = 18, p-value = 9.186e-14
 alternative hypothesis: true difference in means between group A and group B is not equal to 0
 95 percent confidence interval:
- -1.1010855 -0.8962809
+ -1.0948050 -0.8871767
 sample estimates:
 mean in group A mean in group B 
-       9.989406       10.988089 </code></pre>
+       10.00563        10.99662 </code></pre>
 </div>
 </div>
 <p>La salida nos da los siguientes valores:</p>
@@ -556,7 +556,7 @@ mean in group A mean in group B
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>p_val</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 6.343306e-14</code></pre>
+<pre><code>[1] 9.18608e-14</code></pre>
 </div>
 </div>
 <p>Construyamos y grafiquemos los intervalos de confianza para la media de cada grupo (95%):</p>
