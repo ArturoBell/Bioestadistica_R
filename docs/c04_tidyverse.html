@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.269">
@@ -131,15 +131,15 @@ div.csl-indent {
   "type": "textbox",
   "limit": 20,
   "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
   }
 }</script>
 
@@ -344,7 +344,7 @@ div.csl-indent {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
   <li><a href="#un-dialecto-dentro-de-r" id="toc-un-dialecto-dentro-de-r" class="nav-link active" data-scroll-target="#un-dialecto-dentro-de-r"><span class="toc-section-number">4.1</span>  Un dialecto dentro de <code>R</code></a>
@@ -390,7 +390,7 @@ div.csl-indent {
 <p>En la sesión anterior mencionamos que hay un “paquete de paquetes” que da lugar a un “dialecto” dentro de <code>R</code>: <code>tidyverse</code>, pero no especifiqué a qué me refería con ello. Pues bien, mientras que en <code>R</code> base los procedimientos los realizamos línea a línea, generando a veces una gran cantidad de objetos intermedios o sobreescribiendo los existentes, <code>tidyverse</code> está basado en el paradigma funcional de la programación, con una “gramática” (sintaxis) distinta, muy similar a lo que veremos en <code>ggplot2</code>. De hecho, <code>ggplot2</code> es un paquete del <code>tidyverse</code>, por lo que el “dialecto” <code>tidy</code> comparte la filosofía declarativa y fomenta la “encadenación” de comandos. A muchas personas les gusta más la forma <code>tidy</code>, a otras les gusta más trabajar con <code>R</code> base. En lo personal soy partidario de que utilices lo que más te acomode, siempre y cuando lo que hagas tenga sentido, pero más de esto cerca del final de la sesión.</p>
 <p>Este nuevo dialecto fue creado con un objetivo en particular: la ciencia de datos. Como tal, cuenta con una gran cantidad de librerías (y por lo tanto funciones) especializadas para realizar operaciones rutinarias. ¿Quieres realizar gráficos? En la siguiente sesión hablaremos de <code>ggplot2</code>. ¿Quieres hacer “manipulación” (ojo, no cuchareo) de datos? Aquí veremos algnas funciones de <code>dplyr</code>. ¿Quieres trabajar con procesamiento de cadenas de caractér? Para esto está <code>stringr</code>. ¿Quieres herramientas para programación funcional? Ve hacia <code>purrr</code> (sí, triple r). <code>readxl</code> es otra librería con la que ya estás familiarizado y que forma parte del <code>tidyverse</code>. ¿Tienes un problema en el que que necesitas manejar fechas? <code>lubridate</code> puede ser una opción. Puedes conocer todos los paquetes que forman el <code>tidyverse</code> con:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tidyverse<span class="sc">::</span><span class="fu">tidyverse_packages</span>(<span class="at">include_self =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tidyverse<span class="sc">::</span><span class="fu">tidyverse_packages</span>(<span class="at">include_self =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "broom"         "cli"           "crayon"        "dbplyr"       
  [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
@@ -407,11 +407,11 @@ div.csl-indent {
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="promedios-de-grupos-aggregate-vs-group_by-summarise"><span class="header-section-number">4.1.1</span> Promedios de grupos: <code>aggregate</code> vs <code>group_by() |&gt; summarise()</code></h3>
 <p>Veamos un ejemplo en el cual calcularemos la longitud de pico promedio para cada especie de pingüino, según los datos de <code>palmerpenguins</code>. Primero, carguemos los datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora, obtengamos los promedios con la función <code>aggregate</code>, tal y como vimos en la sesión anterior:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data =</span> datos1, <span class="at">FUN =</span> mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data =</span> datos1, <span class="at">FUN =</span> mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -427,7 +427,7 @@ div.csl-indent {
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm, <span class="at">na.rm =</span> T))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -450,7 +450,7 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Important
+Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -462,7 +462,7 @@ Important
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species, island) <span class="sc">|&gt;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na.rm =</span> T))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'species'. You can override using the
 `.groups` argument.</code></pre>
@@ -483,7 +483,7 @@ Important
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Note
+Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -496,7 +496,7 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Warning
+Advertencia
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -508,12 +508,12 @@ Warning
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gmeans <span class="ot">&lt;-</span> datos1 <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">group_by</span>(species, island) <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">summarise</span>(<span class="at">mbill_l =</span> <span class="fu">mean</span>(bill_length_mm,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">na.rm =</span> T))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'species'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gmeans</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gmeans</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -528,7 +528,7 @@ Warning
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="subconjuntos-de-datos"><span class="header-section-number">4.1.2</span> Subconjuntos de datos</h3>
 <p>En la sesión anterior nos familiarizamos con máscaras booleanas y la función subset. <code>tidy</code> tiene su propia aproximación. Pensemos que queremos quedarnos solo con los pingüinos provenientes de Biscoe. Con <code>subset</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(datos1, island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(datos1, island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -540,7 +540,7 @@ Warning
 </div>
 <p>Mientras que con <code>tidy</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -552,7 +552,7 @@ Warning
 </div>
 <p>La notación no es tan diferente como en el caso anterior, y el resultado es el mismo. ¿Cuál utilizar? Depende totalmente de la preferencia de cada quien. A diferencia del caso anterior, subset no se vuelve tan compleja conforme vamos escalando en complejidad, y la equivalencia entre aproximaciones con <code>filter</code> se mantiene. Veamos qué pasa si obtenemos SOLO los pingüinos Adelie de Biscoe. Nuevamente, con <code>subset</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(datos1, species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">&amp;</span> island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">subset</span>(datos1, species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">&amp;</span> island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -564,7 +564,7 @@ Warning
 </div>
 <p>Con <code>tidy</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">&amp;</span> island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">&amp;</span> island <span class="sc">==</span> <span class="st">"Biscoe"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -581,7 +581,7 @@ Warning
 <p>Otra tarea cotidiana que vimos en la sesión anterior fue el añadir nuevas columnas a nuestro <code>data.frame</code>. Pensemos que tiene sentido obtener el “área” que utiliza el pico, la cual obtendríamos multiplicando <code>bill_length_mm</code> y <code>bill_depth_mm</code>. Este producto lo almacenaríamos en una nueva columna llamada <code>bill_area</code>. En <code>R</code> base:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="st">"bill_area"</span>] <span class="ot">&lt;-</span> datos1<span class="sc">$</span>bill_length_mm <span class="sc">*</span> datos1<span class="sc">$</span>bill_depth_mm</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>bill_area</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>bill_area</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1]  731.17  687.30  725.40      NA  708.31  809.58  692.42  768.32  617.21
  [10]  848.40  646.38  653.94  723.36  818.32  730.06  651.48  735.30  879.75
@@ -626,13 +626,13 @@ Warning
 </div>
 <p>Ahora hagámoslo con <code>tidy</code>, pero primero reestablezcamos el objeto <code>datos1</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> palmerpenguins<span class="sc">::</span>penguins</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Y ahora hagamos la operación con <code>tidy</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="ot">&lt;-</span> datos1 <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">bill_area =</span> bill_length_mm <span class="sc">*</span> bill_depth_mm)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(bill_area)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(bill_area)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -658,7 +658,7 @@ Warning
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="tidy-limita-tus-opciones"><span class="header-section-number">4.2.2</span> <code>tidy</code> limita tus opciones</h3>
 <p>Un ejemplo de esto está en esta misma clase. ¿Cómo obtendríamos los promedios de datos agrupados a dos niveles? Dejé el ejercicio “en el tintero” (es parte de tu tarea para esta sesión) pero, si solo te hubiera enseñado <code>tidy</code>, no podrías pensar en ciclos, el operador <code>$</code> o cualquier otra forma de indización. ¿La razón? <code>tidy</code> no está enfocado a tratar con vectores individuales, aborrece el uso de ciclos y tampoco sigue las notaciones básicas de indización. Recuerda: en programación siempre es mejor tener más herramientas a tu disposición. Esta limitación la podemos probar rápidamente si queremos extraer los elementos 10:25 de la columna <code>sex</code> de los <code>datos1</code>. Con <code>R</code> base:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>sex[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>datos1<span class="sc">$</span>sex[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   female male   male   female female male   female
 [11] male   female male   female male   male  
@@ -667,7 +667,7 @@ Levels: female male</code></pre>
 </div>
 <p>¿Con <code>tidy</code>? Realmente no hay una función que permita hacerlo. Podemos extraer la columna <code>sex</code> utilizando la función <code>select</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -679,7 +679,7 @@ Levels: female male</code></pre>
 </div>
 <p>Pero si queremos indizar el resultante obtenemos un error:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error: function '[' not supported in RHS call of a pipe</code></pre>
 </div>
@@ -690,7 +690,7 @@ Levels: female male</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Note
+Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -699,7 +699,7 @@ Note
 </div>
 <p>¿La alternativa? Primero indizar <code>datos1</code> y luego utilizar <code>select</code>. Esto, como ves aquí abajo, funciona, pero hubiera sido mucho más fácil solo utilizar <code>R</code> base, sin mencionar que en <code>tidy</code> “puro” esta solución no es aceptable. ¿La razón? En <code>tidy</code> predomina el <strong>paradigma funcional</strong> de la programación; es decir, <strong>la salida depende únicamente de los argumentos pasados a la función</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>,] <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>datos1[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>,] <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -722,7 +722,7 @@ Note
 <p>Un ejemplo de esto lo tenemos en el aspecto de aprendizaje automatizado. Si te pones a revisar tutoriales/referencias sobre aprendizaje automatizado es muy probable que te encuentres con un montón de librerías (una por problema), funciones dedicadas y sintáxis que son específicas a la técnica que quieras aplicar. Teníamos/tenemos un excelente intento de solventar este problema: <code>caret</code>. Funcionaba bien en el sentido de que permitía conjuntar una gran diversidad de técnicas de aprendizaje automatizado en un mismo entorno, unificadas en un mismo estilo. Utilizando solo <code>caret</code> podríamos ir desde el preprocesamiento de los datos hasta el entrenamiento y validación de nuestros modelos. ¿El problema? Las pocas funciones que forman su esqueleto se volvieron sumamente complejas, algunas de ellas con 30 o más argumentos. El equipo de <code>posit</code> se ha puesto el mismo desafío, y su solución es <code>tidymodels</code>. A diferencia de <code>caret</code> es altamente modular, pero mantiene la intención de unificar el flujo de trabajo en una misma estructura. Tal vez yendo en contra de nuestro consejo, la mayor parte de nuestros procedimientos de aprendizaje automatizado los realizaremos bajo <code>tidymodels</code>, pero haremos referencia a las librerías y funciones involucradas en cada paso. Para ejemplificar, realicemos una regresión lineal simple entre la longitud y la profundidad del pico de los pingüinos.</p>
 <p>En <code>R</code> base lo podemos hacer en una sola línea, llamando a la función <code>lm</code> con una fórmula y unos datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -740,7 +740,7 @@ Coefficients:
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(bill_length_mm<span class="sc">~</span>bill_depth_mm, <span class="at">data =</span> datos1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>parsnip model object
 
@@ -774,7 +774,7 @@ Coefficients:
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
 <div id="ref-Matloff_2020" class="csl-entry" role="doc-biblioentry">
-Matloff N. 2020. <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU">Teaching <span>R</span> in a kinder, gentler, more effective manner: Teach base-<span>R</span>, not just the tidyverse</a>.
+Matloff N. 2020. <a href="https://github.com/matloff/TidyverseSkeptic?fbclid=IwAR0b_e0fWGfFe1exc_VwJUh4TGLtOxoEb4h3YJv6BOCbybSdVBNp6T2xJIU">Teaching <span>R</span> in a Kinder, Gentler, More Effective Manner: Teach Base-<span>R</span>, Not Just the Tidyverse</a>.
 </div>
 </div>
 </section>
@@ -820,12 +820,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
+    button.setAttribute("title", "Copiado");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
+      button.setAttribute("data-bs-title", "Copiado");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",
