@@ -151,7 +151,11 @@ muestras <- sample(pobl$lt, size = 50, replace = FALSE)
 head(muestras)
 ```
 
-Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento `replace = FALSE`. Con esto lo que hicimos fue un **muestreo sin reemplazo**; es decir, una vez que un individuo fue medido se "retiró" de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos **duplicados** o *pseudo-réplicas*. En nuestro ejemplo de las orcas es correcto asumir que esto puede ser así, pues podemos saber quién es quien con fotos de sus aletas dorsales y, con ello, descartar las mediciones duplicadas. Desafortunadamente, esto no siempre es así, y es algo que debemos de considerar al diseñar nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces podemos realizar la estimación de nuestro promedio (media):
+Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento `replace = FALSE`. Con esto lo que hicimos fue un **muestreo sin reemplazo**; es decir, una vez que un individuo fue medido se "retiró" de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos **duplicados** o *pseudo-réplicas*.
+
+![¿Con o sin reemplazo?](){#fig-mreemp}
+
+En nuestro ejemplo de las orcas es correcto asumir que esto puede ser así, pues podemos saber quién es quien con fotos de sus aletas dorsales y, con ello, descartar las mediciones duplicadas. Desafortunadamente, esto no siempre es así, y es algo que debemos de considerar al diseñar nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces podemos realizar la estimación de nuestro promedio (media):
 
 ```{r}
 mean(muestras)

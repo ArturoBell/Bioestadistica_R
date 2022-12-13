@@ -13,7 +13,7 @@ Primero, algunas (tediosas y obligadas) definiciones:
 
 Otros eventos son:
 
-- **Universo**: Que incluye al espacio muestreal y el **conjunto vacío**. Como te imaginarás, este conjunto está vacío, no tiene nada.
+- **Universo**: Que incluye al espacio muestreal y el **conjunto vacío** ($\varnothing$). Como te imaginarás, este conjunto está vacío, no tiene nada.
 - **Unión**: Denotada como $\cup$ (diferente de u y U), representa la unión de dos conjuntos/eventos; es decir, el caso donde nos interesa encontrar A **o** B.
 - **Intersección**: Denotada como $\cap$ (diferente de n), representa el traslape entre dos conjuntos/eventos; es decir, el caso donde nos interesa encontrar A **y** B.
 - **Complemento**: Denotado como $\tilde{A}$, representa lo que no es ese conjunto, en este caso, lo que NO es A, que es el área restante de B y el conjunto vacío.
@@ -32,7 +32,7 @@ Adicionales a estos tres axiomas tenemos dos casos especiales y una generalizaci
 
 1. $P(\varnothing) = 0$; el cual es autoexplicativo, la probabilidad de que ocurra el evento vacío es 0.
 2. $P(\tilde{A}) = 1 - P(A)$; es decir, si $\tilde{A}$ representa lo que no es A y dado que $P(U) = 1$, solo debemos de restarle a ese universo la probabilidad de A.
-3. $P(A\cup B) = P(A) + P(B) - P(A \cap B)$. Te darás cuenta que este se parece al tercer axioma y es porque es una generalización al caso donde A y B no son mútuamente excluyentes. ¿De dónde sale la resta? De que si A y B se encuentran unidos (el diagrama de Venn inferior) y sumamos el área de A con el área de B terminamos sumando dos veces la zona en la que están sobrelapados (intersección); por lo tanto, tenemos que quitarlo una vez para no sobre estimar. A esta generalización se le conoce como la **regla aditiva de la probabilidad**.
+3. $P(A \cup B) = P(A) + P(B) - P(A \cap B)$. Te darás cuenta que este se parece al tercer axioma y es porque es una generalización al caso donde A y B no son mútuamente excluyentes. ¿De dónde sale la resta? De que si A y B se encuentran unidos (el diagrama de Venn inferior) y sumamos el área de A con el área de B terminamos sumando dos veces la zona en la que están sobrelapados (intersección); por lo tanto, tenemos que quitarlo una vez para no sobre estimar. A esta generalización se le conoce como la **regla aditiva de la probabilidad**.
 
 ![Axiomas de la probabilidad](){#fig-axiomas}
 
@@ -44,7 +44,7 @@ Hablamos de una **probabilidad marginal** cuando nos interesa la P(A) cuando $A 
 
 Por otra parte, la **probabilidad condicional** nos permite responder a la pregunta ¿cuál es la P(A) si **ya sé** que B ocurrió?. Matemáticamente la representamos como $P(A|B)$ (probabilidad de A **dado** B), y es una razón de la probabilidad conjunta de A y B ($P(A,B)$ o $P(A \cap B)$) y la probabilidad marginal de B ($P(B)$); es decir: $P(A|B) = \frac{P(A,B)}{P(B)}$. La **probabilidad conjunta** representa la probabilidad de que dos eventos ocurran **al mismo tiempo** y puede llegar a ser un poco problemática. Si ambos eventos son independientes, obtenerla es sencillo: $P(A,B) = P(A)P(B)$. El problema surge si A y B no son independientes, en cuyo caso: $P(A,B) = P(A)P(B|A)$, lo cual nos lleva a una referencia cruzada. Por practicidad, y porque el interés del curso no es que sepas hacer estas cosas a mano, obtengamos la probabilidad conjunta desde su posición en la tabla de contingencia; es decir, cada una de sus celdas.
 
-![Probabilidades marginales y condicionales](){}
+![Probabilidades marginales y condicionales](){#fig-probcond}
 
 En el ejemplo de la diapositiva (OJO: los datos no son representativos de ninguna población) calculamos la $P(Blond|Blue)$; es decir, la probabilidad de que alguien sea rubio si sabemos que tiene los ojos azules, dada por la división de la probabilidad conjunta $P(Blond,Blue) = 0.16$ y la marginal $P(B) = 0.36$ que resulta en $P(Blond|Blue) \approx 0.44$. ¿Cuál sería entonces la $P(Green|Red)$?
 
@@ -75,3 +75,7 @@ $$
 No es necesario que memorices esto, solo que tengas en cuenta la diferencia entre masas y densidades de probabilidad. Como añadido, este mismo problema es lo que causa que un gráfico de frecuencias (histograma) no sea la mejor solución para ver la distribución de una variable continua. En su lugar podemos utilizar gráficos de densidad, los cuales hacen lo que acabamos de mencionar (al menos en escencia).
 
 Dejando las ecuaciones de lado, la selección de la distribución de probabilidad que utilizaremos depende del problema. ¿Tienes datos de conteos? Puedes utilizar las distribuciones Poisson o binomial negativa. ¿Tienes datos continuos en el intervalo 0-1? Vale la pena echarle un ojo a la distribución Beta. ¿Tienes datos binarios? Deberías voltear hacia la distribución binomial.
+
+## Probabilidades en el mundo real
+
+Hasta este momento la sesión ha sido casi completamente teórica, y la razón es simple: aunque la probabilidad vista desde el punto de vista geométrico es "sencilla", en el momento en el que queremos llevarla a la realidad las cosas pueden volverse un poco caóticas, así que tomemos algunos ejemplos  
