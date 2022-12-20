@@ -15,6 +15,8 @@ En una investigación reunimos **datos** con el objetivo de obtener alguna concl
         - **Intervalo**: La escala de intervalo es aquella en donde el 0 NO es absoluto o, mejor dicho, donde el 0 es arbitrario. La temperatura expresada en grados centígrados es un ejemplo claro, 0ºC no indica ausencia de movimiento molecular, solo toma como referencia arbitraria el punto de congelación del agua.
         - **Razón**: Aquí el 0 sí es absoluto y representa la ausencia del atributo en cuestión. La longitud es un ejemplo, si algo tiene longitud 0 más bien no tiene longitud, o si algo tiene una temperatura de 0 K quiere decir que no tiene movimiento molecular (~-273.15ºC).
         
+![Tipos y escalas de variables](imgs/datavars.png){#fig-datavars}
+        
 ## ¿Qué datos obtener?
 
 Algo que es muy importante tener siempre bien presente es que, aún cuando existen herramientas y técnicas que nos permiten procesar múltiples variables, en cualquier procedimiento de ciencia de datos es **INDISPENSABLE** que los datos sean de excelente calidad y, sobre todo, que sean adecuados para responder la pregunta que nos interesa, lo cual nos debe de llevar, invariablemente, a preguntarnos "¿qué datos debo de obtener?" O, en otras palabras, "¿qué debo medir?" Una frase que se me quedó marcada de mis clases de la licenciatura es "La investigación inicia y termina en el escritorio del investigador"; es decir, no salimos a hacer trabajo de campo y a registrar todo lo que se nos atraviese, caso contrario podemos terminar en una conclusión como "los bebés son traídos por cigüeñas", o podemos tomar una decisión equivocada.
@@ -23,9 +25,9 @@ Algo que es muy importante tener siempre bien presente es que, aún cuando exist
 
 Situémonos en la Alemania de 1960-1980, cuando estaban pasando por una crisis de natalidad. @Sies_1988 quiso encontrar una medida que permitiera entender el problema y salió a buscar respuestas. En esta búsqueda se encontró con algo que le pareció sumamente interesante: había una relación notablemente alta entre la cantidad de pares de cigüeñas reproductoras y la cantidad de bebés nacidos.
 
-![Bebes, cigüeñas y casualidad](){#fig-stork}
+![Bebes, cigüeñas y casualidad](imgs/siestork.png){#fig-stork}
 
-Por muy inverosímil que esto pueda parecernos, lo cierto es que este tipo de relaciones altas entre variables que no están relacionadas existen y en ocasiones puede ser muy difícil identificar si en efecto la relación es causal, casual, o si obedece a que ambas dependen de una tercera variable latente (no observada). Sobre este tema te recomiendo el artículo de @Hoferetal_2004 sobre la ["teoría de la cigüeña"](https://bit.ly/t_stork), el de @Haig_2010  [qué es una correlación espuria](https://bit.ly/spur_det) y también revisar esta página de internet [con otras correlaciones curiosas](https://bit.ly/spur_corrs).
+Por muy inverosímil que esto pueda parecernos, lo cierto es que este tipo de relaciones altas entre variables que no están relacionadas existen y en ocasiones puede ser muy difícil identificar si en efecto la relación es causal, casual, o si obedece a que ambas dependen de una tercera variable latente (no observada). Sobre este tema te recomiendo el artículo de @Hoferetal_2004 sobre la ["teoría de la cigüeña"](https://bit.ly/t_stork), el de @Haig_2010 sobre [qué es una correlación espuria](https://bit.ly/spur_det) y también revisar esta página de internet [con otras correlaciones curiosas](https://bit.ly/spur_corrs).
 
 ::: {.callout-note}
 Si bien es cierto que las correlaciones espurias es algo que debíamos de ver en el tema de correlación, es importante reconocer que un muestreo bien planeado, basado en ciencia, es lo que minimiza la probabilidad de que describamos una relación de este tipo. Matemáticamente es prácticamente identificar si la relación que tenemos es causal o casual, por lo que es mejor evitarlas con un poco de planeación y sentido común.
@@ -35,7 +37,7 @@ Si bien es cierto que las correlaciones espurias es algo que debíamos de ver en
 
 Otro ejemplo de la importancia de la selección de variables es el "Sesgo de supervivencia". Situémonos ahora en la Segunda Guerra Mundial, en los cuarteles de la Fuerza Aérea de Estados Unidos. A un grupo de matemáticos le fue dada la tarea de designar qué partes de los aviones debían ser reforzadas para incrementar la tasa de supervivencia. El grupo entonces analizó los aviones que volvían a la base y generaron un diagrama como este, en el cual los puntos rojos representan las áreas con mayores daños balísticos.
 
-![¿Dónde reforzamos?](){#fig-stork}
+![¿Dónde reforzamos?](imgs/survival.png){#fig-survival}
 
 La primera aproximación que viene a la cabeza es reforzar esas zonas, pero Abraham Wald tuvo la suficiente visión para darse cuenta de un problema fundamental con lo que estaban midiendo: los aviones que volvían; es decir, aquellos que no habían sido derribados. Entonces propuso que en su lugar se reforzaran aquellas zonas donde NO había daños, ya que esos aviones fueron los que no volvieron a su base. El resultado: se incrementó la supervivencia como se había solicitado.
 
@@ -57,11 +59,29 @@ Bien, entonces estudiaremos la **longitud de las orcas de la costa central de Oa
 
 2. **Individuo**: Objeto, ente, planta, animal, quimera, célula o cualquier **unidad** sobre la cual se realiza la observación y que, consecuentemente, tiene el atributo que queremos medir.
 
+::: {#fig-indpop layout-nrow=2}
+
+![Individuo](imgs/individual.png){#fig-individual}
+
+![Población estadística y población biológica](imgs/population.png){#fig-population}
+
+De individuo a población.
+:::
+
+::: {.callout-tip}
+La @fig-population tiene algunos símbolos que no hemos mencionado, todos referentes a la simbología/notación de conjuntos:
+
+- $\{\}$ Indican que es un conjunto  
+- $\lor$ es el "ó lógico" (uno u otro).
+- $\subset$ indica que lo que está a la izquierda es un subconjunto de lo que está a la derecha.
+:::
+
+
 Ambos conceptos van de la mano para definir las generalidades de nuestros métodos en campo o laboratorio, pues llevan la información que **delimita** nuestro esfuerzo y que, entonces, define nuestro **marco de muestreo**. No tiene ningún sentido medir orcas de La Paz, BCS, si nuestro interés son las de la CCO, Formalmente:
 
 - **Marco de muestreo**: Lista de todas las unidades de muestreo, donde una **unidad de muestreo** es la unidad básica para la captación de información de la población de interés. En palabras menos rebuscadas: el conjunto de qué vamos a medir y a quién (o a qué) se lo vamos a medir.
 
-Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo ideal tendríamos acceso a la **población** completa, por lo que la estimación de la longitud promedio que realizaramos sería correcta pra ese momento. ¿Por qué solo en ese momento? Puede que los individuos juveniles crezcan, que los más viejos mueran, que nazcan nuevos, que se vayan algunos, etc., y que, entonces el **parámetro poblacional** (la longitud promedio) que queremos medir cambie. Esto complica un poco las cosas, pues es logísticamente imposible acceder a todas las orcas de la CCO. Si lo hiciéramos tendríamos un **censo**, de lo contrario tenemos un **muestreo**; es decir, vamos a medir únicamente una **fracción de la población estadística**, la cual va a conformar nuestra **muestra** y cuyos **estadísticos** van a ser nuestros estimadores de los **parámetros poblacionales**. Formalmente (@fig-pobn):
+Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo ideal tendríamos acceso a la **población** completa, por lo que la estimación de la longitud promedio que realizaramos sería correcta pra ese momento. ¿Por qué solo en ese momento? Puede que los individuos juveniles crezcan, que los más viejos mueran, que nazcan nuevos, que se vayan algunos, etc., y que, entonces el **parámetro poblacional** (la longitud promedio) que queremos medir cambie. Esto complica un poco las cosas, pues es logísticamente imposible acceder a todas las orcas de la CCO. Si lo hiciéramos tendríamos un **censo**, de lo contrario tenemos un **muestreo**; es decir, vamos a medir únicamente una **fracción de la población estadística**, la cual va a conformar nuestra **muestra** y cuyos **estadísticos** van a ser nuestros estimadores de los **parámetros poblacionales**. Formalmente (@fig-parstats):
 
 1. **Parámetro poblacional**: Función definida sobre los valores de las características medibles de una población. En palabras ménos técnicas: el valor real de lo que queremos saber de la **población**. Representados usualmente con letras griegas o mayúsculas ($\mu$ o $M$, $\sigma$ o S, por ejemplo).
 
@@ -73,7 +93,7 @@ Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo i
 
 5. **Estadístico**: Función definida sobre los valores medibles de una muestra. En otras palabras, la estimación del atributo de interés a partir de la muestra. Representados con letras latinas minúsculas ($\bar{x}$, $s$).
 
-![Estadístico es a muestra como parámetro es a población.](){#fig-pobn}
+![Estadístico es a muestra como parámetro es a población.](imgs/parstats.png){#fig-parstats}
 
 ## Un buen muestreo
 
@@ -86,16 +106,16 @@ Volvamos a nuestro ejemplo con las orcas. Realizamos cierto número de navegacio
 
 ### Errores de muestreo/medición
 
-Esa "mejor descripción" me lleva también a hablar sobre el tema de los errores de muestreo o medición. Por más que querramos evitarlo, siempre habrá errores dentro de nuestro muestreo o dentro de nuestra medición. Tal vez utilizamos una regla de 30 cm para medir organismos que miden más de 30 cm, o tal vez utilizamos una regla de metal que se contrae si hace frío y se expande si hace calor. De cualquier manera, siempre vamos a ser "víctimas" de alguno de dos tipos de errores [@fig-dianas]:
+Esa "mejor descripción" me lleva también a hablar sobre el tema de los errores de muestreo o medición. Por más que querramos evitarlo, siempre habrá errores dentro de nuestro muestreo o dentro de nuestra medición. Tal vez utilizamos una regla de 30 cm para medir organismos que miden más de 30 cm, o tal vez utilizamos una regla de metal que se contrae si hace frío y se expande si hace calor. De cualquier manera, siempre vamos a ser "víctimas" de alguno de dos tipos de errores (@fig-dianas):
 
 1. **Error sistemático**: Un error que ocurre cada que realizamos la medición. Es constante y consistente. Si no somos conscientes de este error, nuestros resultados son inválidos. Pensemos en nuestras orcas, y que estamos utilizando fotogrametría aérea (fotos de dron) para hacer nuestros registros. Si calibramos nuestra medición al ángulo de visión que obtenemos a 10 m de altura y tomamos todas nuestras fotos a 11 m, el error va a ser constante y podemos corregirlo con una re-calibración. El problema está cuando no sabemos que este error está sucediendo; es decir, asumir que nuestras fotos se tomaron a 10 m y hacer la estimación con esa calibración.
 2. **Error aleatorio**: Un error que no es constante. Volviendo a la fotogrametría, pensemos que obtuvimos un dron cuyo altímetro salió defectuoso, que no lo sabemos y que aunque marque 10 m de altura puede estar a ± 1m de ahí. Ese error es aleatorio. No podemos predecir si en un momento dado va a sobre o subestimar la altura. En este caso, los resultados son no confiables.
 
-![Tipos de errores representados con dianas de tiro](){#fig-dianas}
+![Tipos de errores representados con dianas de tiro.](imgs/dianas.png){#fig-dianas}
 
 Posiblemente esos términos de *no confiable* o *inválido* te suenen alarmantes. La clave para poder contender con ellos es a) saber que existen y b) ser conscientes de su magnitud. Si sabemos qué tanto estamos subestimando por la diferencia de alturas de 10 a 11 m, podemos corregir el valor. Si sabemos cuál es la distribución del error de medición del altímetro, podemos modelarlo (la inferencia Bayesiana se presta muy bien para eso). ¿Con eso quiero decir que entonces no hay que cuidar estos detalles? PARA NADA, por el contrario, hay que cuidarlos tanto que hay que saber cómo remediarlos o incluirlos en nuestros análisis de datos.
 
-::: {.callout-note}
+::: {.callout-warning}
 Recuerda que, desde un punto de vista práctico, la estadística es muy simple: le das un conjunto de datos y te regresa algunos números. Que lo resultante sea confiable no depende solo de utilizar una técnica adecuada, sino de que la materia prima (los datos) sea buena. ¿Has probado un jugo de naranja hecho con naranjas "pasadas"?
 :::
 
@@ -151,9 +171,9 @@ muestras <- sample(pobl$lt, size = 50, replace = FALSE)
 head(muestras)
 ```
 
-Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento `replace = FALSE`. Con esto lo que hicimos fue un **muestreo sin reemplazo**; es decir, una vez que un individuo fue medido se "retiró" de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos **duplicados** o *pseudo-réplicas*.
+Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento `replace = FALSE`. Con esto lo que hicimos fue un **muestreo sin reemplazo**; es decir, una vez que un individuo fue medido se "retiró" de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos **duplicados** o *pseudo-réplicas*. Por otra parte, el **muestreo con reemplazo** es útil en otro tipo de situaciones, por ejemplo cuando queremos aproximar frecuencias a largo plazo como hicimos en la sesión anterior.
 
-![¿Con o sin reemplazo?](){#fig-mreemp}
+![¿Con o sin reemplazo?](imgs/mreemp.png){#fig-mreemp}
 
 En nuestro ejemplo de las orcas es correcto asumir que esto puede ser así, pues podemos saber quién es quien con fotos de sus aletas dorsales y, con ello, descartar las mediciones duplicadas. Desafortunadamente, esto no siempre es así, y es algo que debemos de considerar al diseñar nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces podemos realizar la estimación de nuestro promedio (media):
 

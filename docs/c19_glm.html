@@ -1196,16 +1196,16 @@ nnet::multinom(formula = .outcome ~ ., data = dat, decay = param$decay,
 
 Coefficients:
            (Intercept) Sepal.Length Sepal.Width Petal.Length Petal.Width
-versicolor    18.69037    -5.458424   -8.707401     14.24477   -3.097684
-virginica    -23.83628    -7.923634  -15.370769     23.65978   15.135301
+versicolor    1.444874   -0.4096645   -2.179216     2.772008  -0.3107031
+virginica    -2.860780   -2.5296923   -4.150196     5.878699   4.5107445
 
 Std. Errors:
            (Intercept) Sepal.Length Sepal.Width Petal.Length Petal.Width
-versicolor    34.97116     89.89215    157.0415     60.19170    45.48852
-virginica     35.76649     89.91153    157.1196     60.46753    45.93406
+versicolor    9.430403     2.847250    2.409686     2.832649    5.829681
+virginica    10.247224     3.044536    2.741261     3.078484    6.076775
 
-Residual Deviance: 11.89973 
-AIC: 31.89973 </code></pre>
+Residual Deviance: 52.0787 
+AIC: 72.0787 </code></pre>
 </div>
 </div>
 <p>¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son más “diferentes” entre nuestras clases, para lo cual podemos utilizar la función <code>VarImp</code>:</p>
@@ -1215,10 +1215,10 @@ AIC: 31.89973 </code></pre>
 <pre><code>multinom variable importance
 
              Overall
-Petal.Length   37.90
-Sepal.Width    24.08
-Petal.Width    18.23
-Sepal.Length   13.38</code></pre>
+Petal.Length   8.651
+Sepal.Width    6.329
+Petal.Width    4.821
+Sepal.Length   2.939</code></pre>
 </div>
 </div>
 <p>Esta importancia de variables está dada por la suma de <strong>absolutos</strong> de los coeficientes para una variable (ver lecturas recomendadas para más detalles). Una manera más fácil de interpretarlos es utilizando los valores escalados con respecto al valor máximo:</p>
@@ -1229,8 +1229,8 @@ Sepal.Length   13.38</code></pre>
 
              Overall
 Petal.Length  100.00
-Sepal.Width    43.62
-Petal.Width    19.78
+Sepal.Width    59.36
+Petal.Width    32.95
 Sepal.Length    0.00</code></pre>
 </div>
 </div>

@@ -411,6 +411,12 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 </ol>
+<div id="fig-datavars" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/datavars.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.1: Tipos y escalas de variables</figcaption><p></p>
+</figure>
+</div>
 </section>
 <section id="qué-datos-obtener" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="qué-datos-obtener"><span class="header-section-number">7.2</span> ¿Qué datos obtener?</h2>
@@ -420,11 +426,11 @@ div.csl-indent {
 <p>Situémonos en la Alemania de 1960-1980, cuando estaban pasando por una crisis de natalidad. <span class="citation" data-cites="Sies_1988">Sies (<a href="references.html#ref-Sies_1988" role="doc-biblioref">1988</a>)</span> quiso encontrar una medida que permitiera entender el problema y salió a buscar respuestas. En esta búsqueda se encontró con algo que le pareció sumamente interesante: había una relación notablemente alta entre la cantidad de pares de cigüeñas reproductoras y la cantidad de bebés nacidos.</p>
 <div id="fig-stork" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.1: Bebes, cigüeñas y casualidad</figcaption><p></p>
+<p><img src="imgs/siestork.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.2: Bebes, cigüeñas y casualidad</figcaption><p></p>
 </figure>
 </div>
-<p>Por muy inverosímil que esto pueda parecernos, lo cierto es que este tipo de relaciones altas entre variables que no están relacionadas existen y en ocasiones puede ser muy difícil identificar si en efecto la relación es causal, casual, o si obedece a que ambas dependen de una tercera variable latente (no observada). Sobre este tema te recomiendo el artículo de <span class="citation" data-cites="Hoferetal_2004">Höfer, Przyrembel &amp; Verleger (<a href="references.html#ref-Hoferetal_2004" role="doc-biblioref">2004</a>)</span> sobre la <a href="https://bit.ly/t_stork">“teoría de la cigüeña”</a>, el de <span class="citation" data-cites="Haig_2010">Haig (<a href="references.html#ref-Haig_2010" role="doc-biblioref">2010</a>)</span> <a href="https://bit.ly/spur_det">qué es una correlación espuria</a> y también revisar esta página de internet <a href="https://bit.ly/spur_corrs">con otras correlaciones curiosas</a>.</p>
+<p>Por muy inverosímil que esto pueda parecernos, lo cierto es que este tipo de relaciones altas entre variables que no están relacionadas existen y en ocasiones puede ser muy difícil identificar si en efecto la relación es causal, casual, o si obedece a que ambas dependen de una tercera variable latente (no observada). Sobre este tema te recomiendo el artículo de <span class="citation" data-cites="Hoferetal_2004">Höfer, Przyrembel &amp; Verleger (<a href="references.html#ref-Hoferetal_2004" role="doc-biblioref">2004</a>)</span> sobre la <a href="https://bit.ly/t_stork">“teoría de la cigüeña”</a>, el de <span class="citation" data-cites="Haig_2010">Haig (<a href="references.html#ref-Haig_2010" role="doc-biblioref">2010</a>)</span> sobre <a href="https://bit.ly/spur_det">qué es una correlación espuria</a> y también revisar esta página de internet <a href="https://bit.ly/spur_corrs">con otras correlaciones curiosas</a>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -442,10 +448,10 @@ Nota
 <section id="contradicciones" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="contradicciones"><span class="header-section-number">7.2.2</span> Contradicciones</h3>
 <p>Otro ejemplo de la importancia de la selección de variables es el “Sesgo de supervivencia”. Situémonos ahora en la Segunda Guerra Mundial, en los cuarteles de la Fuerza Aérea de Estados Unidos. A un grupo de matemáticos le fue dada la tarea de designar qué partes de los aviones debían ser reforzadas para incrementar la tasa de supervivencia. El grupo entonces analizó los aviones que volvían a la base y generaron un diagrama como este, en el cual los puntos rojos representan las áreas con mayores daños balísticos.</p>
-<div id="fig-stork" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-survival" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.2: ¿Dónde reforzamos?</figcaption><p></p>
+<p><img src="imgs/survival.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.3: ¿Dónde reforzamos?</figcaption><p></p>
 </figure>
 </div>
 <p>La primera aproximación que viene a la cabeza es reforzar esas zonas, pero Abraham Wald tuvo la suficiente visión para darse cuenta de un problema fundamental con lo que estaban midiendo: los aviones que volvían; es decir, aquellos que no habían sido derribados. Entonces propuso que en su lugar se reforzaran aquellas zonas donde NO había daños, ya que esos aviones fueron los que no volvieron a su base. El resultado: se incrementó la supervivencia como se había solicitado.</p>
@@ -476,11 +482,55 @@ Nota
 <li><p><strong>Población estadística</strong>: Conjunto de todos los individuos a estudiar. Esta puede empatar o no con una población biológica. En este caso, lo más probable es que las orcas de la CCO sean parte de una población de orcas transeúntes; sin embargo, forman nuestra población estadística.</p></li>
 <li><p><strong>Individuo</strong>: Objeto, ente, planta, animal, quimera, célula o cualquier <strong>unidad</strong> sobre la cual se realiza la observación y que, consecuentemente, tiene el atributo que queremos medir.</p></li>
 </ol>
+<div id="fig-indpop" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-individual" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/individual.png" class="img-fluid figure-img" data-ref-parent="fig-indpop"></p>
+<p></p><figcaption class="figure-caption">(a) Individuo</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-population" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/population.png" class="img-fluid figure-img" data-ref-parent="fig-indpop"></p>
+<p></p><figcaption class="figure-caption">(b) Población estadística y población biológica</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.4: De individuo a población.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La <a href="#fig-population">Figura&nbsp;<span>7.4 (b)</span></a> tiene algunos símbolos que no hemos mencionado, todos referentes a la simbología/notación de conjuntos:</p>
+<ul>
+<li><span class="math inline">\(\{\}\)</span> Indican que es un conjunto<br>
+</li>
+<li><span class="math inline">\(\lor\)</span> es el “ó lógico” (uno u otro).</li>
+<li><span class="math inline">\(\subset\)</span> indica que lo que está a la izquierda es un subconjunto de lo que está a la derecha.</li>
+</ul>
+</div>
+</div>
 <p>Ambos conceptos van de la mano para definir las generalidades de nuestros métodos en campo o laboratorio, pues llevan la información que <strong>delimita</strong> nuestro esfuerzo y que, entonces, define nuestro <strong>marco de muestreo</strong>. No tiene ningún sentido medir orcas de La Paz, BCS, si nuestro interés son las de la CCO, Formalmente:</p>
 <ul>
 <li><strong>Marco de muestreo</strong>: Lista de todas las unidades de muestreo, donde una <strong>unidad de muestreo</strong> es la unidad básica para la captación de información de la población de interés. En palabras menos rebuscadas: el conjunto de qué vamos a medir y a quién (o a qué) se lo vamos a medir.</li>
 </ul>
-<p>Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo ideal tendríamos acceso a la <strong>población</strong> completa, por lo que la estimación de la longitud promedio que realizaramos sería correcta pra ese momento. ¿Por qué solo en ese momento? Puede que los individuos juveniles crezcan, que los más viejos mueran, que nazcan nuevos, que se vayan algunos, etc., y que, entonces el <strong>parámetro poblacional</strong> (la longitud promedio) que queremos medir cambie. Esto complica un poco las cosas, pues es logísticamente imposible acceder a todas las orcas de la CCO. Si lo hiciéramos tendríamos un <strong>censo</strong>, de lo contrario tenemos un <strong>muestreo</strong>; es decir, vamos a medir únicamente una <strong>fracción de la población estadística</strong>, la cual va a conformar nuestra <strong>muestra</strong> y cuyos <strong>estadísticos</strong> van a ser nuestros estimadores de los <strong>parámetros poblacionales</strong>. Formalmente (<a href="#fig-pobn">Figura&nbsp;<span>7.3</span></a>):</p>
+<p>Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo ideal tendríamos acceso a la <strong>población</strong> completa, por lo que la estimación de la longitud promedio que realizaramos sería correcta pra ese momento. ¿Por qué solo en ese momento? Puede que los individuos juveniles crezcan, que los más viejos mueran, que nazcan nuevos, que se vayan algunos, etc., y que, entonces el <strong>parámetro poblacional</strong> (la longitud promedio) que queremos medir cambie. Esto complica un poco las cosas, pues es logísticamente imposible acceder a todas las orcas de la CCO. Si lo hiciéramos tendríamos un <strong>censo</strong>, de lo contrario tenemos un <strong>muestreo</strong>; es decir, vamos a medir únicamente una <strong>fracción de la población estadística</strong>, la cual va a conformar nuestra <strong>muestra</strong> y cuyos <strong>estadísticos</strong> van a ser nuestros estimadores de los <strong>parámetros poblacionales</strong>. Formalmente (<a href="#fig-parstats">Figura&nbsp;<span>7.5</span></a>):</p>
 <ol type="1">
 <li><p><strong>Parámetro poblacional</strong>: Función definida sobre los valores de las características medibles de una población. En palabras ménos técnicas: el valor real de lo que queremos saber de la <strong>población</strong>. Representados usualmente con letras griegas o mayúsculas (<span class="math inline">\(\mu\)</span> o <span class="math inline">\(M\)</span>, <span class="math inline">\(\sigma\)</span> o S, por ejemplo).</p></li>
 <li><p><strong>Censo</strong>: Medición de <strong>toda la población</strong>. En otras palabras: un muestreo de toda la población en un momento determinado en el tiempo.</p></li>
@@ -488,10 +538,10 @@ Nota
 <li><p><strong>Muestra</strong>: Conjunto de individuos de la población que son medidos (formalmente hace referencia a las mediciones en sí mismas).</p></li>
 <li><p><strong>Estadístico</strong>: Función definida sobre los valores medibles de una muestra. En otras palabras, la estimación del atributo de interés a partir de la muestra. Representados con letras latinas minúsculas (<span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(s\)</span>).</p></li>
 </ol>
-<div id="fig-pobn" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-parstats" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.3: Estadístico es a muestra como parámetro es a población.</figcaption><p></p>
+<p><img src="imgs/parstats.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.5: Estadístico es a muestra como parámetro es a población.</figcaption><p></p>
 </figure>
 </div>
 </section>
@@ -510,25 +560,25 @@ Nota
 </ol>
 <section id="errores-de-muestreomedición" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="errores-de-muestreomedición"><span class="header-section-number">7.5.1</span> Errores de muestreo/medición</h3>
-<p>Esa “mejor descripción” me lleva también a hablar sobre el tema de los errores de muestreo o medición. Por más que querramos evitarlo, siempre habrá errores dentro de nuestro muestreo o dentro de nuestra medición. Tal vez utilizamos una regla de 30 cm para medir organismos que miden más de 30 cm, o tal vez utilizamos una regla de metal que se contrae si hace frío y se expande si hace calor. De cualquier manera, siempre vamos a ser “víctimas” de alguno de dos tipos de errores <a href="#fig-dianas">Figura&nbsp;<span>7.4</span></a>:</p>
+<p>Esa “mejor descripción” me lleva también a hablar sobre el tema de los errores de muestreo o medición. Por más que querramos evitarlo, siempre habrá errores dentro de nuestro muestreo o dentro de nuestra medición. Tal vez utilizamos una regla de 30 cm para medir organismos que miden más de 30 cm, o tal vez utilizamos una regla de metal que se contrae si hace frío y se expande si hace calor. De cualquier manera, siempre vamos a ser “víctimas” de alguno de dos tipos de errores (<a href="#fig-dianas">Figura&nbsp;<span>7.6</span></a>):</p>
 <ol type="1">
 <li><strong>Error sistemático</strong>: Un error que ocurre cada que realizamos la medición. Es constante y consistente. Si no somos conscientes de este error, nuestros resultados son inválidos. Pensemos en nuestras orcas, y que estamos utilizando fotogrametría aérea (fotos de dron) para hacer nuestros registros. Si calibramos nuestra medición al ángulo de visión que obtenemos a 10 m de altura y tomamos todas nuestras fotos a 11 m, el error va a ser constante y podemos corregirlo con una re-calibración. El problema está cuando no sabemos que este error está sucediendo; es decir, asumir que nuestras fotos se tomaron a 10 m y hacer la estimación con esa calibración.</li>
 <li><strong>Error aleatorio</strong>: Un error que no es constante. Volviendo a la fotogrametría, pensemos que obtuvimos un dron cuyo altímetro salió defectuoso, que no lo sabemos y que aunque marque 10 m de altura puede estar a ± 1m de ahí. Ese error es aleatorio. No podemos predecir si en un momento dado va a sobre o subestimar la altura. En este caso, los resultados son no confiables.</li>
 </ol>
 <div id="fig-dianas" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.4: Tipos de errores representados con dianas de tiro</figcaption><p></p>
+<p><img src="imgs/dianas.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.6: Tipos de errores representados con dianas de tiro.</figcaption><p></p>
 </figure>
 </div>
 <p>Posiblemente esos términos de <em>no confiable</em> o <em>inválido</em> te suenen alarmantes. La clave para poder contender con ellos es a) saber que existen y b) ser conscientes de su magnitud. Si sabemos qué tanto estamos subestimando por la diferencia de alturas de 10 a 11 m, podemos corregir el valor. Si sabemos cuál es la distribución del error de medición del altímetro, podemos modelarlo (la inferencia Bayesiana se presta muy bien para eso). ¿Con eso quiero decir que entonces no hay que cuidar estos detalles? PARA NADA, por el contrario, hay que cuidarlos tanto que hay que saber cómo remediarlos o incluirlos en nuestros análisis de datos.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Nota
+Advertencia
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -577,11 +627,11 @@ Nota
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1000</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ind</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 899</code></pre>
+<pre><code>[1] 132</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pobl<span class="sc">$</span>lt[ind]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.098336</code></pre>
+<pre><code>[1] 9.499661</code></pre>
 </div>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente “aleatoria”, en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros quienes lo hacemos):</p>
@@ -589,14 +639,21 @@ Nota
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">sample</span>(pobl<span class="sc">$</span>lt, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9.714124 8.310223 8.084687 9.736892 9.638594 8.355758</code></pre>
+<pre><code>[1] 8.255895 8.259293 9.397333 9.652765 8.289903 9.501149</code></pre>
 </div>
 </div>
-<p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento <code>replace = FALSE</code>. Con esto lo que hicimos fue un <strong>muestreo sin reemplazo</strong>; es decir, una vez que un individuo fue medido se “retiró” de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. En nuestro ejemplo de las orcas es correcto asumir que esto puede ser así, pues podemos saber quién es quien con fotos de sus aletas dorsales y, con ello, descartar las mediciones duplicadas. Desafortunadamente, esto no siempre es así, y es algo que debemos de considerar al diseñar nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces podemos realizar la estimación de nuestro promedio (media):</p>
+<p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento <code>replace = FALSE</code>. Con esto lo que hicimos fue un <strong>muestreo sin reemplazo</strong>; es decir, una vez que un individuo fue medido se “retiró” de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. Por otra parte, el <strong>muestreo con reemplazo</strong> es útil en otro tipo de situaciones, por ejemplo cuando queremos aproximar frecuencias a largo plazo como hicimos en la sesión anterior.</p>
+<div id="fig-mreemp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/mreemp.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7.7: ¿Con o sin reemplazo?</figcaption><p></p>
+</figure>
+</div>
+<p>En nuestro ejemplo de las orcas es correcto asumir que esto puede ser así, pues podemos saber quién es quien con fotos de sus aletas dorsales y, con ello, descartar las mediciones duplicadas. Desafortunadamente, esto no siempre es así, y es algo que debemos de considerar al diseñar nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces podemos realizar la estimación de nuestro promedio (media):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.951304</code></pre>
+<pre><code>[1] 8.999935</code></pre>
 </div>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para ver en dónde quedó:</p>

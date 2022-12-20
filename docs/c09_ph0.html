@@ -462,7 +462,7 @@ div.csl-indent {
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["xf"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AUC"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"3.00","2":"1"},{"1":"1.96","2":"0.95"},{"1":"1.00","2":"0.68"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["xf"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AUC"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"3.00","2":"1"},{"1":"1.96","2":"0.95"},{"1":"1.00","2":"0.69"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -520,7 +520,7 @@ div.csl-indent {
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["v1"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"9.913253","_rn_":"1"},{"1":"A","2":"10.194007","_rn_":"2"},{"1":"A","2":"9.906226","_rn_":"3"},{"1":"A","2":"9.930166","_rn_":"4"},{"1":"A","2":"10.049436","_rn_":"5"},{"1":"A","2":"10.034768","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["v1"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"10.035695","_rn_":"1"},{"1":"A","2":"9.963712","_rn_":"2"},{"1":"A","2":"9.988055","_rn_":"3"},{"1":"A","2":"10.064156","_rn_":"4"},{"1":"A","2":"9.962723","_rn_":"5"},{"1":"A","2":"10.011287","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -532,13 +532,13 @@ div.csl-indent {
     Two Sample t-test
 
 data:  v1 by grupo
-t = -24.811, df = 18, p-value = 2.265e-15
+t = -29.58, df = 18, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means between group A and group B is not equal to 0
 95 percent confidence interval:
- -1.1388636 -0.9610486
+ -1.113144 -0.965507
 sample estimates:
 mean in group A mean in group B 
-       10.00574        11.05569 </code></pre>
+       10.00907        11.04839 </code></pre>
 </div>
 </div>
 <p>La salida nos da los siguientes valores:</p>
@@ -556,7 +556,7 @@ mean in group A mean in group B
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>p_val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2.265336e-15</code></pre>
+<pre><code>[1] 1.028433e-16</code></pre>
 </div>
 </div>
 <p>Construyamos y grafiquemos los intervalos de confianza para la media de cada grupo (95%):</p>
