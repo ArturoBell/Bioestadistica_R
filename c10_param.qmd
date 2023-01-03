@@ -11,9 +11,45 @@ library(dplyr)
 library(ggpubr)
 ```
 
-## Teorema del Límite Central
+## Introducción
 
-"Dadas muestras aleatorias e independientes con N observaciones cada una, la distribución de sus medias se aproxima a una distribución normal conforme N incrementa, INDEPENDIENTEMENTE de la distribución poblacional"; es decir, mientras N sea grande, $\bar{x} \sim Normal$. Para probar esto podemos hacer un ejercicio en el cual simulemos una población con distribución Gamma, cuya zona de mayor densidad se encuentra desplazada a la izquierda:
+Por fin dejaremos atrás los fundamentos de la estadística. Tal vez 10 sesiones con fundamentos se te hayan hecho largas, pero todos los conceptos que hemos visto tienen una razón de ser. No podía hablar de pruebas de hipótesis sin que antes supiéramos qué es la probabilidad y qué representa. No podíamos empezar a aplicar procedimientos estadísticos sin antes revisar las bases de `R`. No podíamos hacer visualizaciones efectivas sin hablar de las heurísticas correspondientes. En fin, creo que ya me entiendes. A partir de la siguiente sesión vamos a revisar solo la teoría correspondiente a cada prueba/técnica, asumiendo que ya cuentas con las bases que establecimos en las sesiones anteriores.
+
+## ¿Por qué paramétricas?
+
+Lo primero que tenemos que abordar es ¿por qué se les conoce como pruebas paramétricas? Porque las inferencias que vamos a realizar son sobre los **parámetros poblacionales**, usualmente la media ($\mu$) y la varianza ($\sigma$). Ejemplos de pruebas paramétricas tenemos muchos, entre los más famosos tenemos la $t$ de Student que revisamos en la sesión anterior, los análisis de la varianza (ANOVAs) que revisaremos en esta sesión, la correlación de Pearson y la regresión lineal que veremos en la siguiente, entre otros.
+
+::: {.callout-note}
+Nota para breviario cultural: todas las pruebas que mencioné con anterioridad son aplicaciones del modelo lineal general. ¿Eso qué significa? Que se asume que los grupos son separables linealmente, o que la relación entre dos o más variables es lineal.
+:::
+
+Independientemente de la prueba o de la técnica, todas las técnicas paramétricas tienen al menos tres supuestos; *i.e*, requieren de al menos tres cosas:
+
+1. Que la **distribución muestreal del valor de interés sea normal**.
+2. Que las **varianzas sean homogéneas**.
+3. Que las muestras sean independientes.
+
+La tercera sale sola si planteamos bien nuestro diseño experimental; es decir, que cada dato sea "independiente" de los demás. En otras palabras, que no sean mediciones de los mismos individuos, por ejemplo, o que las respuestas de cada individuo subsecuente no dependan del que estamos midiendo ahorita. Los primeros dos requieren de un poco más de explicación, así que vayamos paso a paso y hablemos de cada uno, empezando por la mayor tortura: el supuesto de normalidad.
+
+## Supuesto de Normalidad
+
+Existe por ahí un artículo titulado "Normalidad estadística y biología: una relación tortuosa". Si bien es cierto que el cómo se desarrollaron los análisis, y por lo tanto sus conclusiones, no tiene ni pies ni cabeza, ni ningún tipo de fundamento, el título me parece bastante llamativo porque desde que nos empezamos a aproximar a las pruebas de hipótesis se nos habla del supuesto de normalidad o de que "nuestros datos deben de ser normales". Bueno, hablemos a fondo de este supuesto, de qué es, qué no es, y por qué es importante.
+
+### Versión corta
+
+Si no quieres entrar en demasiados detalles puedes quedarte con lo que voy a decir aquí y seguir con tu camino. Si te interesa conocer un poco más puedes leer después la versión larga.
+
+En pocas palabras, el supuesto de normalidad se lee "La distribución **muestral** de la **media** es **normal**". Si nosotros realizamos muestreos con tamaños de muestra $n$ y para cada uno estimamos la media, conforme $n \rightarrow \infty$ la distribución de esa media se volverá normal. Esa es la **distribución muestreal de la media**. Esta es una relación no controversial pues, aunque con $n \geq 30$ prácticamente lo garantizamos tenemos un problema: debemos de generalizar para cualquier $n$ y simplificar, lo que nos lleva a que "las poblaciones muestreadas sigan una distribución normal". Esto puede no ser práctico probarlo, pero sí que podemos utilizar nuestra muestra y ver si esta proviene de una distribución normal; *ergo*, aplicamos una prueba de normalidad para ver si nuestros datos se ajustan o no a una distribución normal.
+
+### Versión larga
+
+Posiblemente la versión corta haya sido demasiado corta, y fue a propósito, pues me interesa que le des al menos una hojeada a la versión larga.
+
+Volvamos al asunto de que estamos tratando con la **distribución muestral de la media**. Esto es un problemón, porque una muestra **NO** contiene información sobre ella. A final de cuentas, una distribución muestral es el producto de distintas muestras, entonces debemos de llenar esos "vacíos" de información utilizando el centro, la dispersión y otros estadísticos descriptivos, y **asumimos** una distribución normal. ¿Por qué una distribución normal? Podría ser extremadamente breve y decirte que porque muchísimos atributos se distribuyen naturalmente de manera estadísticamente normal, pero en realidad es debido a otro concepto: el Teorema del Límite Central.
+
+#### Teorema del Límite Central
+
+Este teorema establece que: "Dadas muestras aleatorias e independientes con N observaciones cada una, la distribución de sus medias se aproxima a una distribución normal conforme N incrementa, INDEPENDIENTEMENTE de la distribución poblacional"; es decir, mientras N sea grande, $\bar{x} \sim Normal$. Para probar esto podemos hacer un ejercicio en el cual simulemos una población con distribución Gamma, cuya zona de mayor densidad se encuentra desplazada a la izquierda:
 
 ```{r}
 set.seed(0)
@@ -149,7 +185,7 @@ dist_n30
 #dev.off()
 ```
 
-Un aspecto importante a considerar es la "Primera Propiedad Conocida" de la distribución normal: *dadas muestras aleatorias e independientes con N observaciones cada una (tomadas de una distribución normal), la distribución de medias muestreales es normal e insesgada (i.e., centrada en la media poblacional), independientemente del tamaño de N*. Por lo tanto, aún un N de 1 debería dar una distribución parecida a la normal. Comprobemos:
+Un aspecto importante a considerar es la "Primera Propiedad Conocida" de la distribución normal: *dadas muestras aleatorias e independientes con N observaciones cada una (tomadas de una distribución normal), la distribución de medias muestreales es normal e insesgada (i.e., centrada en la media poblacional), independientemente del tamaño de N*. Por lo tanto, aún con un tamaño de muestra de 1 debería dar una distribución parecida a la normal. Comprobemos:
 
 ```{r}
 N = 1
@@ -192,11 +228,14 @@ dist_n1
 #dev.off()
 ```
 
-La implicación de esta propiedad es que entre menos "normal" (en términos de su distribución estadística) sea nuestra población de estudio, necesitaremos un mayor tamaño de muestra para que nuestra distribución muestral de la media sea normal. El problema surge cuando nos debemos de enfrentar a tamaños de muestra pequeños (n < 30). Aunque siempre podemos asumir (literalmente) que nuestra población se encuentra normalmente distribuida y "capitalizar en la robustez del modelo estadístico subyacente", abusando del TLC, o reconocer que tamaños de muestra más pequeños nos pueden acercar lo suficiente (n > 30 es para casos extremos). La tercera opción es la evaluación formal, la cual consiste en hacer una prueba de bondad de ajuste para conocer si nuestros datos se desvían o no de una distribución normal teórica. Antes de entrar a esos métodos, analicemos la prueba de bondad de ajuste más conocida: la prueba $\chi^2$ de independencia.
+La implicación de esta propiedad es que entre menos "normal" (en términos de su distribución estadística) sea nuestra población de estudio, necesitaremos un mayor tamaño de muestra para que nuestra distribución muestral de la media sea normal. El problema surge cuando nos debemos de enfrentar a tamaños de muestra pequeños (n < 30). 
 
-## Pruebas de bondad de ajuste: 
+Aunque siempre podemos asumir (literalmente) que nuestra población se encuentra normalmente distribuida y "capitalizar en la robustez del modelo estadístico subyacente", abusando del TLC, o reconocer que tamaños de muestra más pequeños nos pueden acercar lo suficiente (n > 30 es para casos extremos) podemos hacerlo mejor. La tercera opción es la evaluación formal, la cual consiste en hacer una prueba de bondad de ajuste para conocer si nuestros datos se desvían o no de una distribución normal teórica. Antes de entrar a esos métodos, analicemos la prueba de bondad de ajuste más conocida: la prueba $\chi^2$ de independencia.
 
-### $\chi^2$
+## Pruebas de bondad de ajuste
+
+### $\chi^2$ de independencia
+
 Esta prueba nos permite probar si la distribución de nuestros datos (frecuencias de variables nominales) son iguales a una distribución teórica. El ejemplo más sencillo lo tenemos al evaluar si la distribución de sexos en una población es diferente de 1:1. En este caso, la distribución de nuestros datos es binomial (dos categorías, verdadero/falso, éxito/fracaso, macho/hembra, etc.). En nuestro muestreo contamos 142 machos y 190 hembras. Coloquemos esos datos en un objeto y realicemos la prueba:
 
 ```{r}
@@ -277,6 +316,7 @@ corrplot::corrplot(contrib, is.corr = F)
 Ahora que tenemos una idea sobre cómo funcionan las pruebas de bondad de ajuste, podemos regresar a hablar sobre las pruebas de normalidad.
 
 ### Supuesto de Normalidad
+
 Como imaginarás, las pruebas de normalidad son pruebas de bondad de ajuste en donde la distribución teórica es una distribución normal, aunque el modo en el cual se evalúan las desviaciones de la normalidad (*i.e.*, las diferencias) es diferente para cada prueba. Para aplicarlas, utilizaremos la base de datos de muestras independientes del archivo `datos_t`, particularmente la columna DC:
 
 ```{r}
@@ -427,6 +467,7 @@ Conjuntando con el gráfico kde original podemos ver por qué la prueba K-S arro
 Habiendo explicado dos de las pruebas de normalidad más comunes, pasemos a los análisis paramétricos. El primero de ellos lo revisamos durante la clase de pruebas de hipótesis: la prueba t de Student, por lo que pasaremos directamente al Análisis de la Varianza.
 
 ## Análisis de la Varianza
+
 En términos simples, podemos pensar en el ANOVA como una extensión de la prueba t-Student a más de dos grupos a comparar. Durante la clase de Comparaciones Multivariadas abordamos el riesgo que conlleva realizar múltiples pruebas de hipótesis (comparaciones) en nuestros datos; es decir, el problema de realizar dos o más comparaciones entre grupos como si se tratara de pruebas independientes. Por el momento, solo ten en mente que se incrementa la posibilidad de obtener un falso positivo únicamente por azar, por lo que hay que utilizar una técnica adecuada y es ahí donde entra el ANOVA o, mejor dicho, los ANOVAs. Como te imaginarás, estas pruebas nos permiten comparar medias entre más de dos grupos, aunque aquí la comparación se realiza de manera global y la hipótesis alternativa se expresa como "Al menos una de las medias es diferente". Esto quiere decir que el ANOVA no nos dirá entre qué par(es) de grupos se encontraron las diferencias, sino que habrá que acompañarlo de una prueba post-hoc. Esta prueba es la prueba de diferencias honestas (HSD) de Tukey, la cual se encuentra basada en la distribución de los rangos estudentizados y fue diseñada para no incrementar la probabilidad de falsos positivos al realizar múltiples comparaciones. En esta sesión revisaremos tres modaliades de ANOVA: de una vía, de dos vías y factorial, de menor a mayor complejidad, aunque estos no son los únicos. Entre los demás diseños de ANOVA se encuentran el ANOVA de medidas repetidas (estudios de crecimiento en laboratorio con medidas intermedias entre el inicio y el final, por ejemplo) o el ANOVA anidado, en el cual el diseño es similar a una muñeca rusa.
 
 Antes de aplicar y explicar los modelos de ANOVA, es necesario desarrollar una intuición sobre el procedimiento. El nombre "Análisis de Varianza" viene de que, literalmente, se utilizan las varianzas para comparar las medias. Aunque el proceso matemático implica calcular promedios de promedios, varias sumas de cuadrados y cuadrados medios del error, podemos resumirlo para fines prácticos en que la comparación se realiza mediante una razón/cociente, tal que:
@@ -553,7 +594,7 @@ head(df)
 
 #### Comprobación de supuestos
 
-El segundo paso es la comprobación de supuestos. Primero el de Normalidad:
+El segundo paso es la comprobación de supuestos. Primero el de Normalidad. Tenemos varios grupos, por lo que las **pruebas de normalidad son para cada grupo**.
 
 ```{r}
 #Normalidad
@@ -588,6 +629,7 @@ car::leveneTest(PT~Periodo, data = df)
 ```
 
 #### Aplicación del ANOVA
+
 El siguiente paso es aplicar el ANOVA. El valor de p es bastante bajo, lo cual ridiculiza nuestra hipótesis de nulidad y concluimos que al menos un par de medias son significativamente diferentes entre sí (F(2, 155) = 574.3; p < 0.0001).
 
 ```{r}
@@ -595,9 +637,17 @@ una_via <- aov(PT~Periodo, data = df)
 summary(una_via)
 ```
 
+Te has de preguntar, ¿las medias de qué grupos son diferentes? Eso no lo podemos saber con un ANOVA, sino que hay que aplicar una **prueba post-hoc**: una prueba que evalúe las diferencias entre cada par de grupos.
+
 #### Prueba post-hoc
 
-El último paso es aplicar la prueba post-hoc. Esta prueba se construye a partir de la distribución de rangos estudentizados, y fue diseñada para evitar el conflicto entre el $\alpha$ y el número de comparaciones, por lo que la interpretación del valor de p es directa. En este caso, el valor de p fue muy pequeño para las tres comparaciones, por lo que rechazamos nuestra hipótesis de nulidad en los tres casos. El resto de la tabla es también informativo, pues nos indica la magnitud de las diferencias y sus intervalos de confianza (tal y como en la prueba t de Student):
+El último paso es aplicar la prueba post-hoc. Esta prueba se construye a partir de la distribución de rangos estudentizados, y fue diseñada para evitar el conflicto entre el $\alpha$ y el número de comparaciones, por lo que la interpretación del valor de p es directa (sin correcciones).
+
+::: {.callout-important}
+¿Por qué no aplicar una prueba $t$ para cada par de grupos? Porque en ese caso inflaríamos nuestro $\alpha$. Hablaremos más de esta relación y algunas correcciones al valor de p en la sesión de [hipótesis multivariadas](). Por el momento quédate con que cada prueba para comparar múltiples grupos (tipo ANOVA) tiene su prueba *post-hoc*.
+:::
+
+En este caso, el valor de p fue muy pequeño para las tres comparaciones, por lo que rechazamos nuestra hipótesis de nulidad en los tres casos. El resto de la tabla es también informativo, pues nos indica la magnitud de las diferencias y sus intervalos de confianza (tal y como en la prueba t de Student):
 
 ```{r}
 TukeyHSD(una_via)
@@ -606,7 +656,14 @@ TukeyHSD(una_via)
 Con esos 4 pasos terminamos nuestro ANOVA de una vía. Pasemos entonces al ANOVA de dos vías.
 
 ### ANOVA de dos vías
-Si una vía es a un factor, dos vías es a dos factores. En este análisis compararemos el efecto de ambos factores simultáneamente, pero de manera independiente; es decir, aunque se hará la comparación para ambos, no se considerará la interacción entre ellos. Nuestro segundo factor será la Dieta. Los pasos son exactamente los mismos que en el anterior:
+
+Si una vía es a un factor, dos vías es a dos factores. En este análisis compararemos el efecto de ambos factores simultáneamente, pero de manera independiente; es decir, aunque se hará la comparación para ambos, no se considerará la interacción entre ellos. 
+
+::: {.callout-note}
+¿Qué es la interacción? Eso lo veremos más adelante, pero se resume a que el efecto de un factor dependa del efecto de otro.
+:::
+
+Nuestro segundo factor será la Dieta. Los pasos son exactamente los mismos que en el anterior:
 
 #### Comprobación de Supuestos
 
@@ -638,7 +695,7 @@ car::leveneTest(PT~Dieta, data = df)
 
 #### Aplicación del ANOVA.
 
-El ANOVA de dos vías es un caso especial del ANOVA factorial, en el cuál únicamente hay dos factores y NO se considera su interacción, por lo que el modo de declararlo es una fórmula en la cuál los factores se consideran de manera aditiva. La forma tradicional de reportar los resultados de este ANOVA sería: hubo un efecto significativo de las dietas (F(2, 153) = 11.45; p < 0.0001) y de los periodos (F(2, 153) = 560.42; p < 0.0001).
+El ANOVA de dos vías es un caso especial del ANOVA factorial, en el cuál únicamente hay dos factores y NO se considera su interacción, por lo que el modo de declararlo es una fórmula en la cuál los factores se consideran de manera aditiva: `Respuesta~Factor1+Factor2`. La forma tradicional de reportar los resultados de este ANOVA sería: hubo un efecto significativo de las dietas (F(2, 153) = 11.45; p < 0.0001) y de los periodos (F(2, 153) = 560.42; p < 0.0001).
 
 ```{r}
 dos_vias <- aov(PT~Dieta+Periodo, data = df)
@@ -653,7 +710,7 @@ En este caso tuvimos valores de p muy pequeños para ambos factores, realicemos 
 TukeyHSD(dos_vias)
 ```
 
-Considerando el diseño factorial de la base de datos, ¿cómo interpretarías estos resultados? ¿podemos confiar en ellos? La respuesta que yo esperaría es que no, pues si el experimento fue bien diseñado al inicio todos los animales debían tener aproximadamente las mismas características y vimos tanto gráficamente como en ambos ANOVAs que hubo un crecimiento. Veamos qué pasa con las distribuciones utilizando un gráfico de interacción.
+Considerando el diseño factorial de la base de datos, ¿cómo interpretarías estos resultados? ¿podemos confiar en ellos? La respuesta que yo esperaría es que no, pues si el experimento fue bien diseñado, al inicio todos los animales debían tener aproximadamente las mismas características y vimos tanto gráficamente como en ambos ANOVAs que hubo un crecimiento. Veamos qué pasa con las distribuciones utilizando un gráfico de interacción.
 
 ```{r}
 ggplot(data = df, aes(x = Dieta, y = PT, fill = Periodo)) +
@@ -667,13 +724,15 @@ ggplot(data = df, aes(x = Dieta, y = PT, fill = Periodo)) +
 Es evidente que en los tres tratamientos hubo un crecimiento, el cual además parece haber sido bastante similar. Este es un ejemplo del error de tipo III que mencionaba en la clase de pruebas de hipótesis: utilizar la matemática correcta para responder la pregunta equivocada. Veamos qué pasa si realizamos un ANOVA factorial.
 
 ### ANOVA factorial
-Como te podrás imaginar a partir de lo mencionado sobre el ANOVA de dos vías, este ANOVA es la versión más generalizada en la cual podemos utilzar más de dos factores y además analizar su interacción. Sigamos con la base anterior, en este caso considerando también el factor réplica:
+
+Como te podrás imaginar a partir de lo mencionado sobre el ANOVA de dos vías, este ANOVA es la versión más generalizada en la cual podemos utilzar más de dos factores y analizar su interacción. Sigamos con la base anterior, en este caso considerando también el factor réplica:
 
 ```{r}
 df$Rep <- factor(df$Rep, levels = c("A", "B"))
 ```
 
 #### Comprobación de supuestos
+
 No hay sorpresas en ninguno de los dos casos, las interpretaciones de los resultados son las mismas que en el caso anterior; es decir, este NO es el modo correcto de comprobar la normalidad. Cuando hablemos del ANOVA de medidas repetidas veremos un ejemplo de cómo hacerlo de manera correcta (normalidad de un factor dados los niveles del otro factor).
 
 ```{r}
@@ -683,11 +742,11 @@ norm <- data.frame(grupo = NA, W = NA, p = NA)
 ## Niveles a probar:
 lvls <- levels(df$Rep)
 
-# for (i in seq_along(lvls)) {
-#   temp <- shapiro.test(df$PT[df$Rep == lvls[i]])
-#   norm[i,] <- c(lvls[i], temp$statistic, temp$p.value)
-# }
-# norm
+for (i in seq_along(lvls)) {
+  temp <- shapiro.test(df$PT[df$Rep == lvls[i]])
+  norm[i,] <- c(lvls[i], temp$statistic, temp$p.value)
+}
+norm
 ```
 
 ```{r}

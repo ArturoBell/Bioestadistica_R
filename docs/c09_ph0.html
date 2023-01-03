@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bioestadística Aplicada con R y RStudio - 9&nbsp; Pruebas de hipótesis</title>
+<title>Bioestadística Aplicada con R y RStudio - 9&nbsp; Pruebas de significancia estadística</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -156,7 +156,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -259,7 +259,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -348,14 +348,22 @@ div.csl-indent {
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#tipos-de-errores" id="toc-tipos-de-errores" class="nav-link active" data-scroll-target="#tipos-de-errores"><span class="toc-section-number">9.1</span>  Tipos de errores</a></li>
-  <li><a href="#valor-de-p" id="toc-valor-de-p" class="nav-link" data-scroll-target="#valor-de-p"><span class="toc-section-number">9.2</span>  Valor de p</a></li>
-  <li><a href="#prueba-básica-t-de-student" id="toc-prueba-básica-t-de-student" class="nav-link" data-scroll-target="#prueba-básica-t-de-student"><span class="toc-section-number">9.3</span>  Prueba básica: <span class="math inline">\(t\)</span> de Student</a>
+  <li><a href="#hipótesis" id="toc-hipótesis" class="nav-link active" data-scroll-target="#hipótesis"><span class="toc-section-number">9.1</span>  Hipótesis</a></li>
+  <li><a href="#pruebas-de-hipótesis-de-nulidad" id="toc-pruebas-de-hipótesis-de-nulidad" class="nav-link" data-scroll-target="#pruebas-de-hipótesis-de-nulidad"><span class="toc-section-number">9.2</span>  Pruebas de hipótesis de nulidad</a></li>
+  <li><a href="#tipos-de-errores" id="toc-tipos-de-errores" class="nav-link" data-scroll-target="#tipos-de-errores"><span class="toc-section-number">9.3</span>  Tipos de errores</a></li>
+  <li><a href="#nivel-de-significancia" id="toc-nivel-de-significancia" class="nav-link" data-scroll-target="#nivel-de-significancia"><span class="toc-section-number">9.4</span>  Nivel de significancia</a></li>
+  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza"><span class="toc-section-number">9.5</span>  Intervalos de confianza</a>
   <ul class="collapse">
-  <li><a href="#prueba-para-muestras-independientes" id="toc-prueba-para-muestras-independientes" class="nav-link" data-scroll-target="#prueba-para-muestras-independientes"><span class="toc-section-number">9.3.1</span>  Prueba para muestras independientes</a></li>
-  <li><a href="#prueba-para-muestras-pareadas" id="toc-prueba-para-muestras-pareadas" class="nav-link" data-scroll-target="#prueba-para-muestras-pareadas"><span class="toc-section-number">9.3.2</span>  Prueba para muestras pareadas</a></li>
+  <li><a href="#cálculo-de-los-intervalos-de-confianza" id="toc-cálculo-de-los-intervalos-de-confianza" class="nav-link" data-scroll-target="#cálculo-de-los-intervalos-de-confianza"><span class="toc-section-number">9.5.1</span>  Cálculo de los intervalos de confianza</a></li>
   </ul></li>
-  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">9.4</span>  Ejercicio</a></li>
+  <li><a href="#valores-de-p-usos-y-abusos" id="toc-valores-de-p-usos-y-abusos" class="nav-link" data-scroll-target="#valores-de-p-usos-y-abusos"><span class="toc-section-number">9.6</span>  Valores de p: usos y abusos</a></li>
+  <li><a href="#prueba-básica-t-de-student" id="toc-prueba-básica-t-de-student" class="nav-link" data-scroll-target="#prueba-básica-t-de-student"><span class="toc-section-number">9.7</span>  Prueba básica: <span class="math inline">\(t\)</span> de Student</a>
+  <ul class="collapse">
+  <li><a href="#prueba-t-para-una-muestra" id="toc-prueba-t-para-una-muestra" class="nav-link" data-scroll-target="#prueba-t-para-una-muestra"><span class="toc-section-number">9.7.1</span>  Prueba <span class="math inline">\(t\)</span> para una muestra</a></li>
+  <li><a href="#prueba-para-muestras-independientes" id="toc-prueba-para-muestras-independientes" class="nav-link" data-scroll-target="#prueba-para-muestras-independientes"><span class="toc-section-number">9.7.2</span>  Prueba para muestras independientes</a></li>
+  <li><a href="#prueba-para-muestras-pareadas" id="toc-prueba-para-muestras-pareadas" class="nav-link" data-scroll-target="#prueba-para-muestras-pareadas"><span class="toc-section-number">9.7.3</span>  Prueba para muestras pareadas</a></li>
+  </ul></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">9.8</span>  Ejercicio</a></li>
   </ul>
 </nav>
     </div>
@@ -364,7 +372,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></h1>
 </div>
 
 
@@ -379,68 +387,157 @@ div.csl-indent {
 
 </header>
 
-<p>Aunque me gustaría entrar directamente al tema de pruebas de hipótesis, es necesario que empecemos por entender qué es la <strong>inferencia estadística</strong>. En la <a href="">primera</a> sesión dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por <span class="citation" data-cites="Savage_1954">Savage (<a href="references.html#ref-Savage_1954" role="doc-biblioref">1954</a>)</span>: “[La estadística] es la ciencia de tomar <strong>decisiones</strong> bajo situaciones de <strong>incertidumbre</strong>.</p>
-<p>Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no. ¿Bonito? Tal vez demasiado para ser verdad y, como era de esperarse, lo es. Tenemos un jefe con una actitud bastante mejorable, pero dejando eso de lado, tenemos algunas limitaciones logísticas:la primera es que nuestro reporte es a través de un aparatito que cuenta con <strong>dos botones</strong> uno para decir que <strong>sí hay vida</strong> y otro para decir que <strong>no hay vida</strong> en un planeta dado, otra limitación es que tenemos <strong>recursos limitados</strong> y que únicamente podemos hacer caminatas de dos horas. Esto se traduce en que estamos en una situación de <strong>incertidumbre</strong>.</p>
+<p>Aunque me gustaría entrar directamente al tema de pruebas de hipótesis, es necesario que empecemos por entender qué hipótesis es la que estamos probando, y lo que es la <strong>inferencia estadística</strong>.</p>
+<section id="hipótesis" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="hipótesis"><span class="header-section-number">9.1</span> Hipótesis</h2>
+<p>Si yo te preguntara ¿qué es una hipótesis? Yo esperaría una respuesta cercana a “una posible explicación a un fenómeno”. La definición “completa” que me gustaría que recordaras es “una serie de premisas concatenadas para dar una explicación a un fenómeno”, de la forma “Dado que A, entonces B” (¿recuerdas la probabilidad condicional?). Bueno, pues es importante reconocer que esa NO es la hipótesis que probamos con las pruebas de significancia, o al menos no directamente. Si a nosotros nos interesa saber si un nuevo alimento, llamémosle A, es capaz de darnos peces más grandes que nuestro alimento actual (control, C), entonces diseñaríamos un experimento con dos grupos: un grupo experimental al que le daríamos el alimento A, y un grupo control al que se le daría el alimento C. Nuestra hipótesis sería algo como “Dadas las diferentes composiciones de los alimentos A y C, la talla final será diferente entre ambos grupos”. Esa es nuestra <strong>hipótesis de trabajo</strong>; es decir, nuestra posible explicación; sin embargo, esta no es una <strong>hipótesis estadística</strong>.</p>
+<p>¿Qué es entonces una hipótesis estadística? Sería más correcto hablar de <strong>juegos de hipótesis estadísticas</strong>, el cual quedaría de la siguiente manera:</p>
+<ul>
+<li><span class="math inline">\(H_0: \mu_1 = \mu_2; \bar{X_A} = \bar{X_C}\)</span></li>
+<li><span class="math inline">\(H_1: \mu_2 ≠ \mu_2; \bar{X_A} ≠ \bar{X_C}\)</span></li>
+</ul>
+<p>Entonces, es un juego porque hay más de una, y representan un <strong>escenario de igualdad o de diferencia</strong>. Por cada juego de hipótesis hay <strong>al menos una hipótesis de nulidad (<span class="math inline">\(H_0\)</span>) y una hipótesis alternativa (<span class="math inline">\(H_1\)</span>)</strong>. ¿Cómo llegamos a estas hipótesis y qué representan? Bien, es ahí donde debemos de hablar de las <strong>pruebas de significancia estadística</strong>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los términos “pruebas de hipótesis de nulidad” y “pruebas de significancia estadística” hacen referencia a lo mismo; es decir, son sinónimos para referirnos al proceso mediante el cual utilizaremos a la estadística para tomar una decisión.</p>
+</div>
+</div>
+</section>
+<section id="pruebas-de-hipótesis-de-nulidad" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="pruebas-de-hipótesis-de-nulidad"><span class="header-section-number">9.2</span> Pruebas de hipótesis de nulidad</h2>
+<p>En la <a href="">primera</a> sesión dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por <span class="citation" data-cites="Savage_1954">Savage (<a href="references.html#ref-Savage_1954" role="doc-biblioref">1954</a>)</span>: “[La estadística] es la ciencia de tomar <strong>decisiones</strong> bajo situaciones de <strong>incertidumbre</strong>.</p>
+<p>Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no.</p>
+<div id="fig-planetas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/ph0_1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.1: A buscar planetas.</figcaption><p></p>
+</figure>
+</div>
+<p>¿Bonito? Tal vez demasiado para ser verdad y, como era de esperarse, lo es. Tenemos un jefe con una actitud bastante mejorable, pero dejando eso de lado, tenemos algunas limitaciones logísticas:la primera es que nuestro reporte es a través de un aparatito que cuenta con <strong>dos botones</strong> uno para decir que <strong>sí hay vida</strong> y otro para decir que <strong>no hay vida</strong> en un planeta dado, otra limitación es que tenemos <strong>recursos limitados</strong> y que únicamente podemos hacer caminatas de dos horas. Esto se traduce en que estamos en una situación de <strong>incertidumbre</strong>.</p>
 <div id="fig-incert" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.1: Exploración espacial e incertidumbre</figcaption><p></p>
+<p><img src="imgs/ph0_2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.2: Exploración espacial e incertidumbre.</figcaption><p></p>
 </figure>
 </div>
 <p>Un desafío más es que NO podemos ver un planeta y no dar un reporte. Debemos, sí o sí, decir si hay vida en el planeta o no. Esto lleva a que necesitemos establecer una <strong>decisión por defecto</strong>. ¿Por defecto para qué? Para aquellos casos en los que NO podamos aterrizar en el planeta y explorarlo (tal vez hay una tormenta eléctrica, o alguna otra situación). Estarás de acuerdo conmigo en que decir que NO hay vida en el planeta tiene más sentido que decir que sí, y no por la situación del planeta en si misma, sino porque de lo contrario no tiene caso hacer una exploración espacial. Me explico. Si la acción por defecto fuera decir que sí hay vida en el planeta no necesitariamos ni siquiera hacer exploraciones, simple y sencillamente presionaríamos el botón correspondiente cada que nos avisaran de un nuevo planeta.</p>
 <div id="fig-decision" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.2: Decisiones por defecto y alternativa</figcaption><p></p>
+<p><img src="imgs/ph0_3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.3: Decisiones por defecto y alternativa.</figcaption><p></p>
 </figure>
 </div>
-<p>Una vez planteadas nuestras decisiones por defecto, podemos pensar en probar si hay vida en el planeta o no. Esto es un escenario típico de una <strong>prueba de hipótesis de nulidad</strong> y ahora necesitamos definir una hipótesis nula y una alternativa. Para nuestra <strong>hipótesis nula</strong> nos podemos preguntar:</p>
+<p>Una vez planteadas nuestras decisiones por defecto, podemos pensar en probar si hay vida en el planeta o no. Esto es un escenario típico de una <strong>prueba de hipótesis de nulidad</strong>, lo que nos lleva a definir una hipótesis nula y una alternativa. Para nuestra <strong>hipótesis nula</strong> nos podemos preguntar:</p>
 <p>“Si <strong>supiera todo</strong> sobre este planeta, <strong>¿qué me inclinaría a presionar el botón X?</strong>”.</p>
 <p>Espero que tu respuesta haya sido “Que no haya vida en el planeta”. Simple, ¿no? A final de cuentas lo sabemos TODO sobre el planeta, incluyendo si hay vida o no y en consecuencia presionaremos el botón X si y solo si no hay vida. ¿Y la hipótesis alternativa? Pues está dada por todas las situaciones en las que la hipótesis nula sea falsa, en este caso que sí haya vida en el planeta.</p>
-<div id="fig-H0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.3: Hipótesis de nulidad e hipótesis alternativa</figcaption><p></p>
-</figure>
-</div>
 <p>Entonces, definimos nuestras hipótesis:</p>
 <ul>
-<li><strong>Nula (<span class="math inline">\(H_0\)</span>)</strong>: No hay vida en el planeta</li>
-<li><strong>Alternativa(<span class="math inline">\(H_A\)</span>)</strong>: Sí la hay</li>
+<li><strong>Nula (<span class="math inline">\(H_0\)</span>)</strong>: No hay vida en el planeta.</li>
+<li><strong>Alternativa(<span class="math inline">\(H_A\)</span>)</strong>: Sí la hay.</li>
 </ul>
+<div id="fig-H0" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/ph0_4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.4: Hipótesis de nulidad e hipótesis alternativa.</figcaption><p></p>
+</figure>
+</div>
 <p>Salimos entonces a explorar el universo, encontramos un planeta, aterrizamos y damos nuestra caminata. El resultado: 0 organismos en las dos horas que caminamos. Te pregunto: ¿qué aprendimos que sea de interés? Y aquí espero que tu respuesta sea <strong>Nada</strong>. Me explico, tuvimos una muestra de 0 organismos, no sabemos de qué tamaño es la población (si es que la hay). ¿Explicaciones para el resultado? Bastantes, pero todo se reduce a que tuvimos que tomar nuestra decisión por defecto y, por lo tanto, no aprendimos nada del planeta. Literalmente obtuvimos el mismo resultado que si hubieramos pasado de largo y eso está bien. No entraré en la discusión de por qué el buscar siempre aprender algo es un sinsentido, solo diré que quien quiera hacerlo es porque tiene demasiada energía, pero sigamos con nuestro ejemplo.</p>
 <div id="fig-nolearn" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.4: No sabes nada, Jon Snow</figcaption><p></p>
+<p><img src="imgs/ph0_5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.5: No sabes nada, Jon Snow.</figcaption><p></p>
 </figure>
 </div>
 <p>Recordemos la definición de Savage y tomemos una decisión. Para ello cambiemos nuestra pregunta a lo que debería de ser el mantra detrás de todas las pruebas de hipótesis: <strong>¿Mi evidencia deja en ridículo a mi hipótesis de nulidad?</strong> La respuesta debería de ser no, pues no encontramos nada que la contradijera y, por lo tanto, presionaremos nuestro botón de no hay vida en el planeta.</p>
 <div id="fig-ridic" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.5: ¿Nuestra evidencia hace quedar en ridículo a nuestra <span class="math inline">\(H_0\)</span>?</figcaption><p></p>
+<p><img src="imgs/ph0_6.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.6: ¿Nuestra evidencia hace quedar en ridículo a nuestra <span class="math inline">\(H_0\)</span>?</figcaption><p></p>
 </figure>
 </div>
 <p>Salimos del planeta y llegamos a otro. Repetimos el proceso, solo que aquí sí nos encontramos una forma de vida alienígena en forma de exactamente un individuo. Recordemos nuestro marco de decisión. Nuestra acción por defecto es presionar el botón X si no hay vida (hipótesis nula) y acabamos de encontrar un individuo (solo uno). ¿El tamaño de la población? No lo sabemos. <strong>¿Nuestra evidencia deja en ridículo a nuestra hipótesis nula?</strong> Por supuesto que sí, entonces la rechazamos y tomamos nuestra acción alternativa: presionar el botón con la palomita verde. ¿Qué aprendimos que sea de interés? Que hay vida en el planeta.</p>
 <div id="fig-learn" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.6: ¡Aprendimos algo!</figcaption><p></p>
+<p><img src="imgs/ph0_7.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.7: ¡Aprendimos algo!</figcaption><p></p>
 </figure>
 </div>
 <p>Este ejemplo es lo que hacemos o deberíamos de hacer al aplicar una prueba de hipótesis de nulidad. Establecer nuestra acción por defecto y la alternativa, definir nuestra hipótesis de nulidad, ir a tomar datos y luego preguntarnos si esa evidencia deja en ridículo a nuestra hipótesis nula. ¿Cómo definimos la acción por defecto? Eso es tarea del tomador de decisiones, y en la academia muy pocas veces las tenemos definidas. ¿Cómo concluimos? Si nuestra evidencia ridiculiza a nuestra hipótesis nula, tendremos una conclusión a favor de la hipótesis alternativa. ¿Si no? No aprendimos nada y tomamos la decisión por defecto. ¿Es la correcta? No lo sabemos, pero tampoco nos interesa… o al menos hasta cierto punto. Es aquí donde entran los <strong>tipos de errores</strong> y los <strong>valores de p</strong>, solo recuerda: buscar tus llaves antes de salir de casa y no encontrarlas después de 5 minutos NO indica que no estén, solo no sabes dónde están.</p>
 <div id="fig-alimento" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src=".png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.7: Alimento experimental vs.&nbsp;control</figcaption><p></p>
+<p><img src="imgs/ph0_8.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.8: Alimento experimental vs.&nbsp;control</figcaption><p></p>
 </figure>
 </div>
-<section id="tipos-de-errores" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="tipos-de-errores"><span class="header-section-number">9.1</span> Tipos de errores</h2>
 </section>
-<section id="valor-de-p" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="valor-de-p"><span class="header-section-number">9.2</span> Valor de p</h2>
+<section id="tipos-de-errores" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="tipos-de-errores"><span class="header-section-number">9.3</span> Tipos de errores</h2>
+<p>Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los <strong>tipos de errores estadísticos</strong>. En la <a href="">sesión de muestreo</a> hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy “obvio” que parezca, <strong>probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad</strong>. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:</p>
+<ul>
+<li>Error de tipo I (<span class="math inline">\(\alpha\)</span>): Probabilidad de rechazar la hipótesis nula cuando es verdadera.</li>
+<li>Error de tipo II (<span class="math inline">\(\beta\)</span>): Probabilidad de NO rechazar la hipótesis nula cuando es falsa.</li>
+</ul>
+<p>Si recuerdas nuestro viaje espacial y el proceso mediante el cual decidíamos si había vida en un planeta o no, todo se reduce a si nos quedamos con nuestra decisión por defecto (no rechazar la hipótesis de nulidad) o si nuestra evidencia la dejó en ridículo (rechazar la hipótesis de nulidad). Si te es posible, procura recordar estas definiciones. ¿Por qué digo que si te es posible? Porque puede ser que no te acomode pensar en términos de “rechazo” y que prefieras pensar en términos de aceptación. Bajo ese esquema tendríamos:</p>
+<ul>
+<li>Error de tipo I (<span class="math inline">\(\alpha\)</span>): Probabilidad de aceptar la hipótesis aternativa siendo falsa.</li>
+<li>Error de tipo II (<span class="math inline">\(\beta\)</span>): Probabilidad de aceptar la hipótesis nula siendo falsa.</li>
+</ul>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La definición de los tipos de errores estadísticos está formalmente en términos de rechazar o no la hipótesis de nulidad. Este re-planteamiento en forma de aceptación es solo una herramienta didáctica. ¿Por qué? Porque nunca “aceptamos” o damos algo por cierto si es que estamos en un escenario de incertidumbre. Este re-planteamiento tiene solo un fin didáctico.</p>
+</div>
+</div>
+<p>Ahora bien, hay una tercera forma de entender estos errores, la cual simplifica mucho las cosas. Imagina un escenario en el que van una mujer evidentemente embarazada y, por alguna extraña razón, un hombre a hacerse una prueba de embarazo. El doctor puede, entonces, dar dos veredictos por caso: la persona está embarazada o no está embarazada. Gráficamente esto podemos ponerlo de la siguiente manera:</p>
+<div id="fig-errores" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/ph0_errores.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.9: Errores y falsedades.</figcaption><p></p>
+</figure>
+</div>
+<p>Que un hombre esté embarazado es imposible, por lo que decirle a nuestro curioso paciente que lo está es un <strong>falso positivo</strong> o un <strong>error de tipo I</strong>. Por otra parte, decirle a la mujer que está embarazada que no lo está es un <strong>falso negativo</strong>, o un <strong>error de tipo II</strong>.</p>
+<p>Aunque estos son los dos tipos de errores estadísticos formales, tenemos un tercero que, aún no siendo normal, es necesario que cuidemos:</p>
+<ul>
+<li>Error Tipo III: Rechazar correctamente la hipótesis nula equivocada.</li>
+</ul>
+<p>¿A qué me refiero con esto? A utilizar la matemática correcta para responder una pregunta equivocada; es decir, utilizar pruebas que no responden o atacan directamente nuestro problema. Un ejemplo de esto puede ser utilizar un modelo lineal simple para describir una relación exponencial, pero hablaremos de estos problemas más adelante.</p>
+<p>Ahora bien, hablamos de <strong>probabilidades</strong>, mientras que en el ejemplo de la <a href="#fig-errores">Figura&nbsp;<span>9.9</span></a> vimos errores particulares. Pues es aquí donde entra el famosísimo (¿infame?) valor de p.</p>
+</section>
+<section id="nivel-de-significancia" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="nivel-de-significancia"><span class="header-section-number">9.4</span> Nivel de significancia</h2>
+<p>Si te pregunto ¿qué es el valor de p y qué representa? Es posible que busques la definición funcional y que me digas que es un valor que si es menor a 0.05 indica que la prueba es “significativa” y que si es mayor no lo es. Eso es solo la <strong>regla de decisión</strong>, pero no define al valor de p.&nbsp;</p>
+<p>¿Qué es entonces? Retrocedamos un poco a nuestro ejemplo de la exploración espacial. Partíamos del supuesto (decisión por defecto) de que no hay vida en ningún planeta, y que nuestra evidencia debe de ridiculizar a nuestra hipótesis de nulidad para que presionemos el botón de que sí hay vida en el planeta. En nuestras <strong>pruebas de significancia</strong> es exactamente lo mismo. <strong>Partimos del supuesto de que no hay un efecto (o diferencia) significativa</strong>. Esto lo representamos con un <strong>modelo teórico de distribución de probabilidades</strong>, el cuál representa <strong>un universo donde la hipótesis nula siempre es verdadera</strong>. Es decir, esta distribución teórica de probabilidades son todos los casos en los cuales NO existe ningún efecto o diferencia entre nada. Un mundo gris y aburrido, vamos.</p>
+<p>En este escenario entonces nosotros buscamos evidencia que nos haga cambiar de opinión, y lo evaluamos en términos probabilísticos lo evaluamos como la <strong>probabilidad de que el modelo teórico haya generado los datos</strong> que estamos viendo. ¿A que esto tiene más sentido que solo la regla de decisión?</p>
+<p>Ahora puede que te preguntes: ¿de dónde sale esta probabilidad? Pues está definida por un <strong>estadístico de prueba</strong>. Tomando nuestros datos vamos a calcular el valor que les corresponde según la función del modelo teórico. Luego, vamos a obtener la <strong>probabildiad de encontrar, de forma aleatoria, ese valor, o uno con la misma probabilidad, o una menor</strong>. Ahora bien, si recuerdas algo de la sesión de probabilidad puede que esta última definición no te cuadre, y es que si tenemos una distribución continua no podemos buscar la probabilidad individual de un valor, por lo que la reformulamos como <strong>la probabilidad de encontrar otro valor al menos igual de grande</strong>, y esto es lo que conocemos como el <strong>nivel de significancia</strong>.</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Valor de p, p-value y nivel de significancia son exactamente lo mismo, solo que algunas personas utilizan “nivel de significancia” para referirse al valor de <span class="math inline">\(\alpha\)</span>; <em>e.g.</em>, “las pruebas se consideraron significativas a un nivel de significancia <span class="math inline">\(\alpha = 0.05\)</span>. Esto es erróneo, pues <span class="math inline">\(\alpha\)</span> representa la probailidad de cometer un error de tipo 1 con la que estamos dispuestos a vivir, pero vamos a entrar a más detalles un poco más adelante.</p>
+</div>
+</div>
+<p>Sé que esta última parte es sumamente abstracta, así que grafiquemos una distribución normal con un algunas áreas bajo la curva (probabilidades) de referencia:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -457,149 +554,454 @@ div.csl-indent {
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                       <span class="dv">2</span>))</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>sds</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>uni_norm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_rect</span>(<span class="at">data =</span> sds, <span class="fu">aes</span>(<span class="at">xmin =</span> <span class="sc">-</span>xf, <span class="at">xmax =</span> xf, </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="cn">Inf</span>, </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">fill =</span> AUC),  <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_density</span>(<span class="at">data =</span> v1, <span class="fu">aes</span>(var),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">kernel =</span> <span class="st">"gaussian"</span>, </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fill =</span> <span class="st">"deepskyblue4"</span>, </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Z"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title =</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Gráfico de densidad de una distribución normal"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"n = 100000; "</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                                             mu, <span class="st">" = 0; "</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                                             sigma, <span class="st">" = 1"</span>)),</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos simulados"</span>) <span class="sc">+</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                  <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>                  <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                  <span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Montserrat"</span>,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span>sds<span class="sc">$</span>xf, sds<span class="sc">$</span>xf))</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>uni_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["xf"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AUC"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"3.00","2":"1"},{"1":"1.96","2":"0.95"},{"1":"1.00","2":"0.69"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
+<div id="fig-norm" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="c09_ph0_files/figure-html/fig-norm-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.10: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>uni.norm <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_rect</span>(<span class="at">data =</span> sds, <span class="fu">aes</span>(<span class="at">xmin =</span> <span class="sc">-</span>xf, <span class="at">xmax =</span> xf, </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="cn">Inf</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">fill =</span> AUC),  <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_density</span>(<span class="at">data =</span> v1, <span class="fu">aes</span>(var),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">kernel =</span> <span class="st">"gaussian"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fill =</span> <span class="st">"deepskyblue4"</span>, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Z"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">title =</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Gráfico de densidad de una distribución normal"</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"n = 100000; "</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                             mu, <span class="st">" = 0; "</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                             sigma, <span class="st">" = 1"</span>)),</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos simulados"</span>) <span class="sc">+</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Montserrat"</span>,</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span>sds<span class="sc">$</span>xf, sds<span class="sc">$</span>xf))</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>uni.norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="c09_ph0_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
+<p>¿Qué nos dice este gráfico? Imagina que hacemos el procedimiento estadístico correspondiente y obtenemos un valor de <span class="math inline">\(Z = 1.0\)</span>. El área comprendida entre <span class="math inline">\(Z = 1\)</span> y <span class="math inline">\(Z = -1\)</span> es del 0.68. ¿Esto quiere decir que nuestro valor de p es de 0.68? NO, todo lo contrario. Recuerda, buscamos un valor <strong>al menos igual de grande</strong>; por lo tanto, nos interesa lo que está fuera de la zona sombreada (buscamos valores <span class="math inline">\(|Z| \geq 1\)</span>) y entonces nuestro valor de <span class="math inline">\(p = 1-0.68 = 0.32\)</span>. ¿Es suficiente una probabilidad del 32% para decir que nuestra evidencia dejó en ridículo a nuestra hipótesis de nulidad? Creo que estarás de acuerdo conmigo en que no.</p>
+<p>Pero volvamos a nuestro gráfico. Las zonas sombreadas representan las zonas de no rechazo a distintos niveles de “confianza”, de manera que si obtenemos un valor de <code>Z</code> (estadístico de prueba) <span class="math inline">\(\leq 1\)</span> estamos en el intervalo de confianza del 68%, <span class="math inline">\(\leq 1.96\)</span> del 95% y <span class="math inline">\(\leq 3\)</span> de <span class="math inline">\(\approx\)</span> 99%.</p>
+<p>Imagina que ahora obtuvimos un valor de <span class="math inline">\(Z = 1.97\)</span>, recuerda lo que vimos en la sesión de probabilidad sobre el uso de la distribución normal en <code>R</code>. ¿Qué valor de <span class="math inline">\(p\)</span> le corresponde? ¿Es un resultado “significativo? ¿Qué tal con <span class="math inline">\(Z = 1.95\)</span>?</p>
+<p>Esto me llevaría al siguiente punto de discusión, sonre el obscurantismo alrededor del valor de p, pero tomemos un desvío para hablar sobre otro concepto muy relacionado con el valor de p: los intervalos de confianza</p>
 </section>
-<section id="prueba-básica-t-de-student" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="prueba-básica-t-de-student"><span class="header-section-number">9.3</span> Prueba básica: <span class="math inline">\(t\)</span> de Student</h2>
-<p>La prueba de hipótesis más conocida, y con justa razón, es la prueba <span class="math inline">\(t\)</span> de Student. Esta prueba se construye a partir de una distribución <span class="math inline">\(t\)</span> de Student, la cual tiene tres parámetros: i) <span class="math inline">\(\mu\)</span>: media o centro de la distribución, ii) <span class="math inline">\(\sigma\)</span>: escala de la distribución (desviación estándar) y iii) <span class="math inline">\(\nu\)</span>: grados de libertad.</p>
-<section id="prueba-para-muestras-independientes" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="prueba-para-muestras-independientes"><span class="header-section-number">9.3.1</span> Prueba para muestras independientes</h3>
-<p>La primera variación la tenemos cuando queremos comparar las medias de dos muestras independientes o, mejor dicho, dos grupos independientes. Es decir, los individuos que forman al grupo 1 son diferentes de los que conforman al grupo 2. La ecuación original sufre una ligera modificación, en donde ahora se considera la desviación estándar mancomunada de las muestras; es decir, la variación en el valor dada por la existencia de ambos grupos. Esto es importante, pues no es lo mismo tener una diferencia promedio de 10g con una desviación mancomunada de 100 g a tener esos mismos 10g de diferencia con una desviación mancomunada de 10g.</p>
-<p>Para implementarla en <code>R</code> vamos a utilizar la función <code>t.test(formula, data)</code> que ya conocíamos, solo que añadiremos dos argumentos adicionales: <code>var.equal = T</code> y <code>paired = F</code>. <code>var.equal</code> hace referencia al supuesto de homogeneidad de varianzas que mencionamos antes. Si no se cumple podemos pasar <code>var.equal = F</code> y entonces se aplicará la prueba <span class="math inline">\(t\)</span> de Welch, la cual modifica el modo en el que se estima la varianza mancomunada y permite contender con varianzas desigualees. <code>paired</code>, por otra parte, define si es una prueba para muestras independientes (<code>F</code>) o muestras dependientes (pareadas, <code>T</code>). Esto último lo veremos más adelante.</p>
-<p>Creemos primero un conjunto de datos:</p>
+<section id="intervalos-de-confianza" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="intervalos-de-confianza"><span class="header-section-number">9.5</span> Intervalos de confianza</h2>
+<p>Los intervalos de confianza, como recordarás que mencionamos someramente en la sesión de <a href="">estadística descriptiva</a>, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de “certeza” alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.</p>
+<p>Entonces, ¿qué son los intervalos de confianza? Son una referencia de la “certeza” que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación <span class="math inline">\(\bar{x} ± SD\)</span>, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que <span class="math inline">\(\bar{x}; [IC_i, IC_s]\)</span>, donde <span class="math inline">\(IC_i\)</span> representa el límite inferior del intervalo de confianza e <span class="math inline">\(IC_s\)</span> el límite superior.</p>
+<p>Estos límites indican entre dónde y dónde (o, mejor dicho, entre qué valores) se puede encontrar la estimación. Si son equivalentes al valor de p, entonces siguen también un modelo teórico de distribución de probabilidades, y su amplitud está dada por un porcentaje de esa distribución (igual que en la zona de no rechazo de una hipótesis de nulidad).</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dada esta descripción, es muy posible que quieras interpretarlos como “hay X% de probabilidad de que la estimación se encuentre en este intervalo”. <strong>NO SE INTERPRETAN DE ESA MANERA</strong>. La forma adecuada es, si realizo <span class="math inline">\(N\)</span> muestreos independientes, cada uno con tamaño de muestra <span class="math inline">\(n\)</span>, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real” (poblacional; <span class="quarto-unresolved-ref">?fig-IC</span>).</p>
+</div>
+</div>
+<p><img src="imgs/IC.png" id="fig-IC" class="img-fluid" alt="Interpretación de los intervalos de confianza: si realizo n muestreos independientes, cada uno con tamaño de muestra N, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real”">.</p>
+<section id="cálculo-de-los-intervalos-de-confianza" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="cálculo-de-los-intervalos-de-confianza"><span class="header-section-number">9.5.1</span> Cálculo de los intervalos de confianza</h3>
+<p>Te mencioné anteriormente que los IC siguen un modelo de distribución de probabilidades. Los modelos más comunes son las distribuciones <span class="math inline">\(t\)</span> de Student y normal. Por el momento no es necesario que te preocupes por el modelo subyacente; sin embargo, lo más común es que utilicemos la distribución <span class="math inline">\(t\)</span>. ¿La razón? La veremos más adelante cuando expliquemos propiamente la pruena <span class="math inline">\(t\)</span> de Student. Las ecuaciones correspondientes las puedes encontrar en un libro de estadística básica <span class="citation" data-cites="Zar_2010">(<em>e.g.</em>, <a href="references.html#ref-Zar_2010" role="doc-biblioref">Zar, 2010</a>)</span>, así que te ahorraré el que las leas aquí y mejor vayamos directamente a cómo calcularlos con <code>R</code>.</p>
+<p>Para ejemplificarlo utilicemos 15 muestras de nuestros 10000 datos simulados bajo una distribución normal estándar (<code>v1$var</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">0.1</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="st">"A"</span>, <span class="at">v1 =</span> A)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df1, <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="st">"B"</span>, <span class="at">v1 =</span> B))</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(v1<span class="sc">$</span>var, <span class="at">size =</span> <span class="dv">15</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La estimación de la media ya la conocemos. En este caso fue de -0.27, que podríamos decir se encuentra alejado de la media poblacional 0 que establecimos, pero ¿qué tanto es tantito? Es ahí donde entran los IC.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(v2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.08964503</code></pre>
+</div>
+</div>
+<p>Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas maneras de hacerlo. Comenzando con <code>R</code> base podemos utilizar la función<code>t.test(x, conf.level)</code>, donde <code>x</code> es el vector de observaciones y <code>conf.level</code> el nivel de confianza deseado:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  v2
+t = 0.36588, df = 14, p-value = 0.7199
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -0.4358470  0.6151371
+sample estimates:
+ mean of x 
+0.08964503 </code></pre>
+</div>
+</div>
+<p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\bar{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tanto los IC como el valor de p pueden utilizarse para “probar hipótesis” (<em>sensu</em> pruebas de significancia). Si tus intervalos de confianza con amplitud <span class="math inline">\(1-\alpha\)</span> para un efecto dado incluyen al 0, entonces vas a tener un valor de <span class="math inline">\(p &gt; \alpha\)</span>.</p>
+</div>
+</div>
+<p>Otra forma de calcularlos es con la función <code>Rmisc::CI(x, ci)</code>, donde <code>x</code> es el vector de observaciones y <code>ci</code> el nivel de confianza:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Rmisc<span class="sc">::</span><span class="fu">CI</span>(<span class="at">x =</span> v2, <span class="at">ci =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      upper        mean       lower 
+ 0.61513705  0.08964503 -0.43584699 </code></pre>
+</div>
+</div>
+<p>Una alternativa más es utilizar la función <code>rcompanion::groupwiseMean(formula, data, conf, R)</code>, la cual tiene dos funcionalidades interesantes: i) permite calcular los IC para varios grupos, y ii) poder estimar los intervalos a partir de remuestreos Bootstrap. En esta función: <code>formula</code> es lo que vimos en la función <code>aggregate</code>, donde indicamos al mismo tiempo la variable numérica y la variable de agrupamiento, tal que: <code>var~grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> la amplitud de los intervalos y <code>R</code> el número de réplicas Bootstrap a realizar. Sustituyendo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>rcompanion<span class="sc">::</span><span class="fu">groupwiseMean</span>(v2<span class="sc">~</span><span class="dv">1</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> <span class="fu">as.data.frame</span>(v2),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">conf =</span> <span class="fl">0.95</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">R =</span> <span class="cn">NA</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["grupo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["v1"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"10.035695","_rn_":"1"},{"1":"A","2":"9.963712","_rn_":"2"},{"1":"A","2":"9.988055","_rn_":"3"},{"1":"A","2":"10.064156","_rn_":"4"},{"1":"A","2":"9.962723","_rn_":"5"},{"1":"A","2":"10.011287","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.0896","4":"0.95","5":"-0.436","6":"0.615"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
+<p>Aquí notarás algunas cosas interesantes:</p>
+<ul>
+<li>En <code>formula</code> pasamos <code>v2~1</code>, porque no tenemos una columna de agrupamiento (solo tenemos <code>1</code> grupo).</li>
+<li>En <code>data</code> pasamos nuestro vector como un <code>data.frame</code> utilizando <code>as.data.frame(v2)</code>.</li>
+<li>En <code>R</code> pasamos <code>NA</code> para indicar que NO queremos que los IC se estimen utilizando réplicas Bootstrap.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las réplicas Bootstrap son útiles cuando tenemos distribuciones muy sesgadas y no normales, a diferencia de nuestros datos de ejemplo. Cambia a <code>R = 500</code>. ¿Cambió algo?</p>
+</div>
+</div>
+<p>Después de este pequeño rodeo en el cual vimos cómo los IC y los valores de p están íntimamente relacionados, volvamos a hablar de estos últimos y qué consideraciones debemos de tener al utilizarlos e interpretarlos.</p>
+</section>
+</section>
+<section id="valores-de-p-usos-y-abusos" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="valores-de-p-usos-y-abusos"><span class="header-section-number">9.6</span> Valores de p: usos y abusos</h2>
+<p>Dependiendo de cuántas veces hayas llevado una materia de estadística estarás más o menos familiarizado con la frase “No se encontraron diferencias significativas (<span class="math inline">\(p &gt; \alpha = 0.05\)</span>).” Pregunta: ¿de dónde salió ese <span class="math inline">\(\alpha = 0.05\)</span>? Ojo, no te estoy preguntando qué representa <span class="math inline">\(\alpha\)</span>, sino de dónde salió el criterio de tomar 0.05 como el umbral para decidir si algo es significativo o no. Según qué tanto hayas leído (o qué tanto hayan hecho su tarea tus profesores), puedes dar una de tres respuestas:</p>
+<ol type="1">
+<li>“Porque así me lo enseñaron” (<em>sensu</em> convención).</li>
+<li>“Porque es lo aceptado en el área de investigación” (<em>idem</em>).</li>
+<li>“Porque así lo planteó Ronald Fisher, pues consideró que 1/20 falsos positivos eran pocos”.</li>
+</ol>
+<p>Y las tres respuestas tienen algo de razón, pero también ambas están equivocadas. Me explico. Si bien es cierto que en el área de ecología y biología en general un <span class="math inline">\(\alpha\)</span> de 0.05 se ha considerado como “suficiente”, justo porque estamos dispuestos a aceptar 1/20 falsos positivos, en otras áreas se requiere de mayor certeza para tomar una decisión. En el área de investigación médica y farmacéutica, por ejemplo, usualmente toman valores de 0.01 e, incluso, 0.001. La razón es que <strong>el nivel de <span class="math inline">\(\alpha\)</span> debe de decidirse <em>a priori</em>, según el problema</strong> que tengamos entre manos y cuántos falsos positivos estemos dispuestos a aceptar.</p>
+<p>Veamos el caso de la siguiente figura <span class="citation" data-cites="Armheinetal_2019">(<a href="references.html#ref-Armheinetal_2019" role="doc-biblioref">Armhein, Greenland &amp; McShane, 2019</a>)</span>:</p>
+<div id="fig-fconc" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/false_conclusions.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.11: Valores de p, intervalos de confianza y conclusiones erróneas.</figcaption><p></p>
+</figure>
+</div>
+<p>Aquí tenemos dos estudios que, en realidad, dieron resultados equivalentes o, cuando menos, que no están en conflicto uno con el otro. El estudio azul tuvo el mismo efecto positivo promedio que el rojo, aunque con un IC mucho más angosto y, en consecuencia, un valor de p “signficativo” (pequeño). El estudio rojo, por el contrario tiene un intervalo de confianza mucho más amplios que incluyeron el 0 y, consecuentemente, un valor de p “no significativo”. ¿Cuál sería la forma correcta de interpretar estos resultados? Primero, no descartar al estudio rojo o tacharlo de “no significativo”. Mejor, pensemos en los IC como intervalos de compatibilidad, describamos los resultados en función de las consecuencias de estos intervalos, con especial énfasis en la estimación puntual, pues es la más compatible con los datos. La razón de esto es que, por puro efecto del azar, el estudio azul podría replicar exactamente el mismo estudio y esta vez obteer un IC similar al rojo o viceversa.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¡Significancia estadística NO IMPLICA significancia biológica!</p>
+</div>
+</div>
+<p>¿A qué me refiero con esta advertencia? A que no porque la prueba arroje efectos o diferencias significativas quiere decir que esas diferencias sean importantes para el fenómeno que estemos analizando y, de hecho, en la siguiente sesión vamos a ver un ejemplo donde la diferencia es muy pequeña en magnitud, pero es estadísticamente significativa. Sin más preámbulo, vayamos a aplicar una prueba de significancia.</p>
+</section>
+<section id="prueba-básica-t-de-student" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="prueba-básica-t-de-student"><span class="header-section-number">9.7</span> Prueba básica: <span class="math inline">\(t\)</span> de Student</h2>
+<p>La prueba de hipótesis más conocida es la prueba <span class="math inline">\(t\)</span> de Student, y con justa razón. Esta prueba se construye a partir de una distribución <span class="math inline">\(t\)</span> de Student, la cual tiene tres parámetros: i) <span class="math inline">\(\mu\)</span>: media o centro de la distribución (posición del punto de mayor densidad en el eje x), ii) <span class="math inline">\(\sigma\)</span>: escala de la distribución (desviación estándar) y iii) <span class="math inline">\(\nu\)</span>: grados de libertad. Recordarás que los parámetros de una distribución afectan su forma. En este caso, el parámetro “más importante” son los grados de libertad, pues conforme estos se acerquen a infinito más se acercará la distribución a una normal. De hecho, con <span class="math inline">\(n \geq 30\)</span> se considera que la distribución es prácticamente normal. ¿Qué es lo que cambia? La altura o el peso de las colas:</p>
+<div id="fig-studentt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/tstudent.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.12: Distribución <span class="math inline">\(t\)</span> de Student con diferentes grados de libertad <span class="math inline">\(k\)</span> (<span class="math inline">\(\nu\)</span>).</figcaption><p></p>
+</figure>
+</div>
+<p>Este cambio en la altura de las colas es sumamente importante, y es lo que hace que la distribución <span class="math inline">\(t\)</span> sea uno de los “caballitos de batalla” de la estadística, pues literalmente estamos siendo conscientes que, conforme disminuye el tamaño de muestra (grados de libertad, pero ahorita los definimos), incrementa la probabilidad de tener valores extremos (el peso de las colas). Con esto también establecemos que no queremos que esos valores extremos desvíen nuestras estimaciones.</p>
+<p>En este punto estarás pensando “todo eso está muy bien, pero ¿qué son los grados de libertad y con qué se comen?” Y este concepto es uno que se entiende mejor si lo deducimos con un ejercicio extremadamente simple. Si yo te digo que obtengas el promedio de los números 1, 2 y 3 harías esto:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v1<span class="sc">~</span>grupo, <span class="at">data =</span> df1, <span class="at">var.equal =</span> T, <span class="at">paired =</span> F)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>Y si te digo ahora que hagas eso mismo para los números 1 y 3:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p>Obtenemos exactamente el mismo resultado que antes, pues retiramos la media del conjunto de datos original. Eso son los <strong>grados de libertad</strong>: <strong>el número de observaciones independientes de la media</strong>, tal que <span class="math inline">\(\nu = n - 1\)</span>. Es sumamente importante que tengas presente este concepto, pues un montón de pruebas involucran grados de libertad.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En algunas pruebas verás que los grados de libertad se estiman de distintas maneras, según qué involucre la prueba y qué grados de libertad sean los que se están calculando, pero la escencia siempre es la misma: retirar la media de los datos.</p>
+</div>
+</div>
+<p>Volviendo a la prueba <span class="math inline">\(t\)</span>, tenemos dos variantes y media: una prueba para una muestra, una para dos muestras independientes o una para dos muestras dependientes. ¿Por qué dos variantes y media? Ya lo verás con el caso de dos muestras dependientes (pareadas). En general, esta prueba nos permite <strong>comparar dos valores</strong> (un promedio contra una referencia o dos promedios). Sus supuestos son:</p>
+<ul>
+<li>Normalidad (si son dos grupos cada grupo debe de estar normalmente distribuido)</li>
+<li>Muestras independientes; es decir que la observación <span class="math inline">\(x_i\)</span> sea independiente de la observación <span class="math inline">\(x_j\)</span>, que es diferente de tener muestras pareadas.</li>
+<li>Homogeneidad de varianzas.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En la siguiente sesión hablaremos largo y tendido de estos supuestos, pero por el momento entiéndelos como “requisitos” o “características” que deben de tener nuestros datos para que podamos confiar en los resultados de la prueba.</p>
+</div>
+</div>
+<p>Adicionalmente se “recomienda” que se utilice con tamaños de muestra menores a 30, por aquello de que a partir de 30 la distribución se vuelve prácticamente normal, pero también es recomendada si no conocemos la varianza poblacional.</p>
+<section id="prueba-t-para-una-muestra" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="prueba-t-para-una-muestra"><span class="header-section-number">9.7.1</span> Prueba <span class="math inline">\(t\)</span> para una muestra</h3>
+<p>Esta prueba nos permite comparar la media de una muestra con un valor de referencia. La función de la prueba <span class="math inline">\(t\)</span> para una muestra está dada por:</p>
+<p><span class="math display">\[
+t = \frac{\bar{x}- \mu_0}{\frac{s}{\sqrt{n}}}
+\]</span> Donde: <span class="math inline">\(\bar{x}\)</span> es el promedio de nuestra muestra, <span class="math inline">\(\mu_0\)</span> es un valor de referencia con el que queremos comparar <span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(s\)</span> es la desviación estándar de la muestra y <span class="math inline">\(n\)</span> es el número de observaciones. Esta ya la aplicamos antes cuando estimamos los intervalos de confianza con la función <code>t.test</code>, pero volvamos a visitarla:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  v2
+t = 0.36588, df = 14, p-value = 0.7199
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ -0.4358470  0.6151371
+sample estimates:
+ mean of x 
+0.08964503 </code></pre>
+</div>
+</div>
+<p>Ahora sí podemos revisar la salida completa. La primera línea nos dice el tipo de prueba <span class="math inline">\(t\)</span> que estamos aplicando. En este caso pasamos un solo vector, por lo que la prueba a aplicar es para una sola muestra. La segunda línea nos da el nombre de los datos. La tercera nos da los resultados de la prueba: el valor del estadístico <span class="math inline">\(t\)</span>, los grados de libertad <code>d.f.</code> (degrees of freedoom) y el valor de p (<code>p-value</code>), mientras que la cuarta nos da la hipótesis alternativa que estamos evaluando (la nula no cambia, ¿o sí?) ¿Contra qué valor está contrastando? Por defecto contra 0 (podemos cambiarlo con el argumento <code>mu</code>).</p>
+<p>¿Cómo reportamos estos resultados? “La media no fue signficativamente diferente de 0 (<span class="math inline">\(t = -1.29\)</span>, <span class="math inline">\(d.f. = 14\)</span>, <span class="math inline">\(p = 0.21 &gt; \alpha = 0.05\)</span>).</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Siempre que hagas una prueba estadística es importante reportar el valor del estadístico de prueba y el/los parámetro(s) de la distribución, además del valor de p.&nbsp;¿La razón? Para allá vamos.</p>
+</div>
+</div>
+<p>Ahora bien, ¿por qué da una hipótesis alternativa? Porque podemos probar una de tres:</p>
+<ul>
+<li>La media es diferente de <span class="math inline">\(\mu_0\)</span>, en donde se aplica una prueba de dos colas.</li>
+<li>La media es menor a <span class="math inline">\(\mu_0\)</span>, en donde se aplica una prueba de una sola cola (considera la cola derecha).</li>
+<li>La media es mayor a <span class="math inline">\(\mu_0\)</span>, en donde se aplica también una prueba de una cola (la cola izquierda)</li>
+</ul>
+<p>Lo cual me lleva a hablar de pruebas de dos o una cola. El qué hipótesis alternativa se prueba ya lo definimos, pero ¿a qué se refiere eso de una o dos colas? A qué cola(s) integramos. En la <span class="quarto-unresolved-ref">?fig-normal</span> vimos que sumabamos lo que estaba fuera de nuestra área de aceptación, tanto a la derecha como a la izquierda; es decir, las colas de la distribución. Si solo sumamos lo que está a la derecha estamos preguntándonos si nuestra media es menor a <span class="math inline">\(\mu_0\)</span>.</p>
+<p>Esto podemos modificarlo con el argumento <code>alternative</code>, que puede ser <code>"two.sided"</code> (por defecto), <code>"greater"</code> o <code>"less"</code>. Veamos el resultado con la hipótesis alternativa de que la media es menor a 0:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  v2
+t = 0.36588, df = 14, p-value = 0.64
+alternative hypothesis: true mean is less than 0
+95 percent confidence interval:
+      -Inf 0.5211819
+sample estimates:
+ mean of x 
+0.08964503 </code></pre>
+</div>
+</div>
+<p>Aquí, además de la hipótesis alternativa, hay dos cambios que es importante notar: el valor de p y el intervalo de confianza. Empecemos con el segundo, donde tenemos [-Inf, 0.099]. Esto no es ningún error. Simple y sencillamente refleja nuestra hipótesis alternativa: Si la media es menor no tiene caso que consideremos la cola izquierda, por lo que el límite inferior se va a -Inf, mientras que el límite superior se reduce a 0.099. Compara ese valor de 0.099 con el resultado de la prueba de dos colas. ¿Qué notas? Es exactamente la mitad. Estos intervalos de confianza son simétricos, por lo que si solo estamos considerando un lado es lógico que la amplitud se reduzca a la mitad y eso me lleva al otro cambio: el valor de p.&nbsp;También es exactamente la mitad del que nos dio la prueba para dos colas, y es por la misma razón, estamos considerando la mitad del área bajo la curva. Pero aquí hay una advertencia muy, pero muy importante:</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La decisión de si se aplica una prueba de una o dos colas es algo que se realiza <em>a priori</em>; es decir, desde un inicio seleccionamos nuestra hipótesis alternativa. No se vale aplicar la prueba de dos colas (hay diferencias significativas), ver que nuestro valor de p &gt; 0.05, pero no es tan grande y luego aplicar una prueba de una cola para forzar un resultado significativo.</p>
+</div>
+</div>
+<p>Esta es la razón por la que hay que reportar la prueba, el valor del estadístico de prueba, los parámetros involucrados y el valor de p: podemos verificar que el resultado corresponda con la hipótesis que se dice se está probando. Me ha tocado saber de casos donde en la sección de métodos ponen la hipótesis alternativa en términos de “es diferente” (prueba de dos colas) y a la hora de presentar los resultados quieren “colar” una prueba de una cola. Pensemos que alguien nos dice en la sección de métodos: “Para evaluar si la media de la variable X fue significativamente de 0 se utilizó una prueba <span class="math inline">\(t\)</span> de Student (<span class="math inline">\(\alpha = 0.05\)</span>)”, y en los resultados: “La media fue significativamente diferente de 0 (<span class="math inline">\(\mu = 0.25; SD = 0.2\)</span>; t = -1.7, df = 14, p = 0.027). Ese valor de t es”grande”, pero no lo suficiente para dar un valor de p tan “lejano” de 0.05, por lo que nos damos a la tarea de corroborarlo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="at">q =</span> <span class="sc">-</span><span class="fl">1.7</span>, <span class="at">df =</span> <span class="dv">14</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.05561478</code></pre>
+</div>
+</div>
+<p>¡Sorpresa! El valor sí que era más pequeño (la mitad), por lo que esta persona aplicó una prueba de una cola y quiso darla como una prueba de dos colas. Otra forma de hacerlo sería comprobar el valor de t que le correspondería a ese valor de p:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="at">p =</span> <span class="fl">0.027</span>, <span class="at">df =</span> <span class="dv">14</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2.103324</code></pre>
+</div>
+</div>
+<p>Moraleja: dejemos las pruebas de una sola cola para cuando realmente sea nuestro interés probar si algo es mayor o menor que otra cosa que, te adelanto, son muy pocos casos en donde tenemos suficiente información para sospechar eso desde nuestro diseño experimental.</p>
+</section>
+<section id="prueba-para-muestras-independientes" class="level3" data-number="9.7.2">
+<h3 data-number="9.7.2" class="anchored" data-anchor-id="prueba-para-muestras-independientes"><span class="header-section-number">9.7.2</span> Prueba para muestras independientes</h3>
+<p>La siguiente variación la tenemos cuando queremos comparar las medias de dos muestras independientes o, mejor dicho, dos grupos independientes. Es decir, los individuos que forman al grupo 1 son diferentes de los que conforman al grupo 2. La ecuación original sufre una ligera modificación, en donde ahora se considera la desviación estándar mancomunada (<span class="math inline">\(sp\)</span>) de las muestras; es decir, la variación en el valor dada por ambos grupos. Esto es importante, pues no es lo mismo tener una diferencia promedio de 10g con una desviación mancomunada de 100 g a tener esos mismos 10g de diferencia con una desviación mancomunada de 10g. La función queda entonces:</p>
+<p><span class="math display">\[
+t = \frac{\bar{x_1} - \bar{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+\]</span></p>
+<p>Donde:</p>
+<p><span class="math display">\[
+sp = \sqrt{\frac{(n_1 - 1)s_{x_1}^2 + (n_2 - 1)s_{x_2}^2}{n_1 + n_2 -2}}
+\]</span></p>
+<p>Afortunadamente para implementarla en <code>R</code> solo vamos a utilizar la función <code>t.test(formula, data)</code> que ya conocíamos, solo que añadiremos dos argumentos adicionales: <code>var.equal = T</code> y <code>paired = F</code>. <code>var.equal</code> hace referencia al supuesto de homogeneidad de varianzas que mencionamos antes. Si no se cumple podemos pasar <code>var.equal = F</code> y entonces se aplicará la prueba <span class="math inline">\(t\)</span> de Welch, la cual modifica el modo en el que se estima la varianza mancomunada y permite contender con varianzas desiguales. <code>paired</code>, por otra parte, define si es una prueba para muestras independientes (<code>F</code>) o muestras dependientes (pareadas, <code>T</code>). Esto último lo veremos más adelante.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué prueba aplicar? ¿<span class="math inline">\(t\)</span> de Welch o <span class="math inline">\(t\)</span> de Student? Por defecto la función <code>t.test</code> aplica la prueba de Welch, la cual es más poderosa que la de Student cuando no se cumple el supuesto de homogeneidad de varianzas y al menos tan poderosa como la de Student cuando se cumplen todos sus supuestos. La decisión es tuya, pero la prueba <span class="math inline">\(t\)</span> de Welch cubre la mayor parte de los casos.</p>
+</div>
+</div>
+<p>Creemos primero un conjunto de datos y luego apliquemos la prueba:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos del grupo A</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos del grupo B</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="fl">0.1</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Formar un solo data.frame</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="st">"A"</span>, <span class="at">v1 =</span> A)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df1, <span class="fu">data.frame</span>(<span class="at">grupo =</span> <span class="st">"B"</span>, <span class="at">v1 =</span> B))</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar la prueba</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v1<span class="sc">~</span>grupo, <span class="at">data =</span> df1, <span class="at">var.equal =</span> T, <span class="at">paired =</span> F)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
 
 data:  v1 by grupo
-t = -29.58, df = 18, p-value &lt; 2.2e-16
+t = -28.643, df = 18, p-value &lt; 2.2e-16
 alternative hypothesis: true difference in means between group A and group B is not equal to 0
 95 percent confidence interval:
- -1.113144 -0.965507
+ -1.0535072 -0.9095223
 sample estimates:
 mean in group A mean in group B 
-       10.00907        11.04839 </code></pre>
+       10.00929        10.99081 </code></pre>
 </div>
 </div>
-<p>La salida nos da los siguientes valores:</p>
-<p>t = valor del estadístico de prueba, indica la posición en el eje X en el gráfico de la distribución p-value = Es la proporción de la distribución fuera del área del valor crítico; es decir, 1-AUC hasta ese valor crítico. df = grados de libertad de la muestra. Representan el número de observaciones independientes; es decir, “retiramos la media”. Ejemplo: 10, 11, 12. La media es 11; por lo tanto, la cantidad de observaciones independientes de la media es 2.</p>
+<p>La salida es muy parecida al caso anterior: el tipo de prueba, el valor del estadístico de prueba, los grados de libertad, el valor de p, la hipótesis alternativa, un intervalo de confianza y los promedios de cada grupo. ¿Qué representa ese intervalo de confianza? Es el intervalo de confianza para la <strong>diferencia de medias</strong>, que es el cómo estamos comparando los grupos.</p>
 <p>Podemos también presentar los resultados de manera gráfica. Para ello necesitaremos guardar los resultados de nuestra prueba t.test en un objeto y extraer la información de ahí. ¿Cómo verificamos cuál es el tipo de objeto?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(v1<span class="sc">~</span>grupo, <span class="at">data =</span> df1, <span class="at">var.equal =</span> T, <span class="at">paired =</span> F)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(ttest)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ttest <span class="ot">&lt;-</span> <span class="fu">t.test</span>(v1<span class="sc">~</span>grupo, <span class="at">data =</span> df1, <span class="at">var.equal =</span> T, <span class="at">paired =</span> F)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(ttest)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list"</code></pre>
 </div>
 </div>
-<p>El objeto es una lista NOMBRADA, por lo que podemos acceder a su contenido utilizando el operador de [[]] (posición numérica o “nombre”) o el operador $. Guardemos el valor de p en un nuevo objeto para incluirlo en la gráfica:</p>
+<p>El objeto es una lista NOMBRADA, por lo que podemos acceder a su contenido utilizando el operador de <code>[[]]</code> (posición numérica o <code>"nombre"</code>) o el operador <code>$</code>. Guardemos el valor de p en un nuevo objeto para incluirlo en la gráfica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>p_val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>p_val <span class="ot">&lt;-</span> ttest<span class="sc">$</span>p.value</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>p_val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.028433e-16</code></pre>
+<pre><code>[1] 1.814597e-16</code></pre>
 </div>
 </div>
 <p>Construyamos y grafiquemos los intervalos de confianza para la media de cada grupo (95%):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ICs <span class="ot">&lt;-</span> rcompanion<span class="sc">::</span><span class="fu">groupwiseMean</span>(v1<span class="sc">~</span>grupo, <span class="at">data =</span> df1, <span class="at">conf =</span> <span class="fl">0.95</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>error.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ICs, <span class="fu">aes</span>(<span class="at">x =</span> grupo, <span class="at">y =</span> Mean)) <span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Trad.lower, <span class="at">ymax =</span> Trad.upper),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"gray50"</span>),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Grupo"</span>,</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="st">"x"</span>,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">title =</span> <span class="st">"¿Diferencias significativas?"</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subtitle =</span> </span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"µ e IC para una variable aleatoria"</span>,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">caption =</span>  <span class="fu">paste</span>(<span class="st">"t(v = "</span>,</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                                    ttest<span class="sc">$</span>parameter, <span class="st">", 0.05) = "</span>,</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">round</span>(ttest[[<span class="st">"statistic"</span>]] ,<span class="dv">2</span>), </span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"; "</span>,</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">ifelse</span>(p_val <span class="sc">&lt;</span> <span class="fl">0.0001</span>,</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"p &lt; 0.0001"</span>,</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">paste</span>(<span class="st">"p = "</span>, p_val))))</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>              </span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>error.plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ICs <span class="ot">&lt;-</span> rcompanion<span class="sc">::</span><span class="fu">groupwiseMean</span>(v1<span class="sc">~</span>grupo, <span class="at">data =</span> df1, <span class="at">conf =</span> <span class="fl">0.95</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>error.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ICs, <span class="fu">aes</span>(<span class="at">x =</span> grupo, <span class="at">y =</span> Mean)) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> Trad.lower, <span class="at">ymax =</span> Trad.upper),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"gray50"</span>),</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="st">"x"</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">title =</span> <span class="st">"¿Diferencias significativas?"</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subtitle =</span> </span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"µ e IC para una variable aleatoria"</span>,</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">caption =</span>  <span class="fu">paste</span>(<span class="st">"t(v = "</span>,</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>                                    ttest<span class="sc">$</span>parameter, <span class="st">", 0.05) = "</span>,</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">round</span>(ttest[[<span class="st">"statistic"</span>]] ,<span class="dv">2</span>), </span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"; "</span>,</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">ifelse</span>(p_val <span class="sc">&lt;</span> <span class="fl">0.0001</span>,</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"p &lt; 0.0001"</span>,</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">paste</span>(<span class="st">"p = "</span>, p_val))))</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>error.plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c09_ph0_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="c09_ph0_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="prueba-para-muestras-pareadas" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="prueba-para-muestras-pareadas"><span class="header-section-number">9.3.2</span> Prueba para muestras pareadas</h3>
-<p>Carguemos los datos, que en este caso están contenidos en un archivo de excel:</p>
+<section id="prueba-para-muestras-pareadas" class="level3" data-number="9.7.3">
+<h3 data-number="9.7.3" class="anchored" data-anchor-id="prueba-para-muestras-pareadas"><span class="header-section-number">9.7.3</span> Prueba para muestras pareadas</h3>
+<p>Esta prueba nos permite comparar los promedios de una variable de un mismo grupo en dos momentos diferentes en el tiempo, por ejemplo, comparar si la frecuencia cardiaca promedio de un grupo de participantes fue diferente antes y después de hacer ejercicio; es decir tendremos datos pareados cuando tengamos mediciones de los mismos individuos (identificados) en dos momentos diferentes. La prueba para muestras pareadas es la media variante que mencioné al inicio. ¿Por qué media? Porque en realidad aplica la prueba de una sola muestra, solo que con un paso previo: restamos los valores de cada individuo para quedarnos con un solo vector de diferencias y con ese aplicar la prueba para una muestra:</p>
+<p><span class="math display">\[
+t = \frac{\bar{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
+\]</span></p>
+<p>Donde <span class="math inline">\(\bar{X_D}\)</span> y <span class="math inline">\(S_D\)</span> son el promedio y la desviación estándar de las diferencias. Hagamos el ejercicio. Primero, carguemos los datos, que en este caso están contenidos en un archivo de excel:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dependientes <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">"datos/datos_t.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dependientes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dependientes <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">"datos/datos_t.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dependientes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -611,12 +1013,12 @@ mean in group A mean in group B
 </div>
 <p>Notar que está en formato compacto (no codificado), por lo tanto hay que transformarla:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dependientes.m <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(dependientes, <span class="at">value.name =</span> <span class="st">"FC"</span>,</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">na.rm =</span> T, <span class="at">variable.name =</span> <span class="st">"periodo"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dependientes_m <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(dependientes, <span class="at">value.name =</span> <span class="st">"FC"</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">na.rm =</span> T, <span class="at">variable.name =</span> <span class="st">"periodo"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No id variables; using all as measure variables</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dependientes.m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dependientes_m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -628,31 +1030,59 @@ mean in group A mean in group B
 </div>
 <p>Aplicamos la prueba:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FC<span class="sc">~</span>periodo, <span class="at">data =</span> dependientes.m, <span class="at">paired =</span> T, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(FC<span class="sc">~</span>periodo, <span class="at">data =</span> dependientes_m, <span class="at">paired =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
 
 data:  FC by periodo
-t = -6.1115, df = 9, p-value = 8.838e-05
-alternative hypothesis: true mean difference is less than 0
+t = -6.1115, df = 9, p-value = 0.0001768
+alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
-      -Inf -12.32097
+ -24.11459 -11.08541
 sample estimates:
 mean difference 
           -17.6 </code></pre>
 </div>
 </div>
+<p>Como era de esperarse, hubo diferencias en la frecuencia cardiaca. Ahora comprobemos que solo se hizo la resta de inicial vs final:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>dif_FC <span class="ot">&lt;-</span> dependientes<span class="sc">$</span>Después <span class="sc">-</span> dependientes<span class="sc">$</span>Antes</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dif_FC)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  dif_FC
+t = 6.1115, df = 9, p-value = 0.0001768
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 11.08541 24.11459
+sample estimates:
+mean of x 
+     17.6 </code></pre>
+</div>
+</div>
 </section>
 </section>
-<section id="ejercicio" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">9.4</span> Ejercicio</h2>
-<p>Realizar la prueba t con los datos de la hoja 1 del archivo, la cual contiene datos de dos muestras independientes. La tarea consiste en cargar los datos, realizar la prueba y presentar un gráfico en el que se reporten los resultados.</p>
+<section id="ejercicio" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">9.8</span> Ejercicio</h2>
+<p>En esta sesión hay dos ejercicios:</p>
+<ol type="1">
+<li><p>Carga el archivo <code>Datos1.csv</code> (ojo con los nombres de las columnas al cargarlo) y realiza la estimación de la media, la desviación estándar y los intervalos de confianza (calquiera de las formas) para al menos 3 tamaños de muestra diferentes (considera que tienes la población completa). El objetivo es que veas y describas cómo cambian tanto la estimación puntual como la amplitud de los intervalos de confianza al incrementar el tamaño de muestra. Puedes utilizar cualquiera de las variables <code>LT</code> o <code>PT</code>.</p></li>
+<li><p>Realiza la prueba t con los datos de la hoja 1 del archivo <code>datos_t.xlsx</code>, la cual contiene datos de dos muestras independientes. La tarea consiste en cargar los datos, realizar la prueba y presentar un gráfico en el que se reporten los resultados.</p></li>
+</ol>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Armheinetal_2019" class="csl-entry" role="doc-biblioentry">
+Armhein V, Greenland S, McShane B. 2019. Scientists rise up against statistical significance. <em>Nature</em> 567:305-307. DOI: <a href="https://doi.org/10.1038/d41586-019-00857-9.">10.1038/d41586-019-00857-9.</a>
+</div>
 <div id="ref-Savage_1954" class="csl-entry" role="doc-biblioentry">
 Savage LJ. 1954. <em>The Foundations of Statistics</em>. John Wiley &amp; Sons.
+</div>
+<div id="ref-Zar_2010" class="csl-entry" role="doc-biblioentry">
+Zar JH. 2010. <em><span>Biostatistical Analysis</span></em>. Prentice Hall.
 </div>
 </div>
 </section>
