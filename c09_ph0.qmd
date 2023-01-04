@@ -1,4 +1,4 @@
-# Pruebas de significancia estadística
+# Pruebas de significancia estadística {#sec-ph0}
 
 Aunque me gustaría entrar directamente al tema de pruebas de hipótesis, es necesario que empecemos por entender qué hipótesis es la que estamos probando, y lo que es la **inferencia estadística**.
 
@@ -8,8 +8,8 @@ Si yo te preguntara ¿qué es una hipótesis? Yo esperaría una respuesta cercan
 
 ¿Qué es entonces una hipótesis estadística? Sería más correcto hablar de **juegos de hipótesis estadísticas**, el cual quedaría de la siguiente manera:
 
-- $H_0: \mu_1 = \mu_2; \bar{X_A} = \bar{X_C}$
-- $H_1: \mu_2 ≠ \mu_2; \bar{X_A} ≠ \bar{X_C}$
+- $H_0: \mu_1 = \mu_2; \overline{X_A} = \overline{X_C}$
+- $H_1: \mu_2 ≠ \mu_2; \overline{X_A} ≠ \overline{X_C}$
 
 Entonces, es un juego porque hay más de una, y representan un **escenario de igualdad o de diferencia**. Por cada juego de hipótesis hay **al menos una hipótesis de nulidad ($H_0$) y una hipótesis alternativa ($H_1$)**. ¿Cómo llegamos a estas hipótesis y qué representan? Bien, es ahí donde debemos de hablar de las **pruebas de significancia estadística**.
 
@@ -19,7 +19,7 @@ Los términos "pruebas de hipótesis de nulidad" y "pruebas de significancia est
 
 ## Pruebas de hipótesis de nulidad
 
-En la [primera]() sesión dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por @Savage_1954: "[La estadística] es la ciencia de tomar **decisiones** bajo situaciones de **incertidumbre**.
+En el @sec-biolcdatos dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por @Savage_1954: "[La estadística] es la ciencia de tomar **decisiones** bajo situaciones de **incertidumbre**.
 
 Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no.
 
@@ -64,7 +64,7 @@ Este ejemplo es lo que hacemos o deberíamos de hacer al aplicar una prueba de h
 
 ## Tipos de errores
 
-Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los **tipos de errores estadísticos**. En la [sesión de muestreo]() hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy "obvio" que parezca, **probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad**. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:
+Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los **tipos de errores estadísticos**. En el @sec-muestreo hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy "obvio" que parezca, **probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad**. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:
 
 - Error de tipo I ($\alpha$): Probabilidad de rechazar la hipótesis nula cuando es verdadera.
 - Error de tipo II ($\beta$): Probabilidad de NO rechazar la hipótesis nula cuando es falsa.
@@ -110,7 +110,8 @@ Sé que esta última parte es sumamente abstracta, así que grafiquemos una dist
 
 ```{r}
 #| message: false
-#| label: fig-norm 
+#| label: fig-normal
+#| fig-cap: "Áreas bajo la curva (AUC) para tres valores de Z de referencia. Estas representan las **zonas de aceptación**, con su amplitud (confianza) dada por el valor de AUC."
 library(ggplot2)
 
 n <- 100000
@@ -164,27 +165,27 @@ Pero volvamos a nuestro gráfico. Las zonas sombreadas representan las zonas de 
 
 Imagina que ahora obtuvimos un valor de $Z = 1.97$, recuerda lo que vimos en la sesión de probabilidad sobre el uso de la distribución normal en `R`. ¿Qué valor de $p$ le corresponde? ¿Es un resultado "significativo? ¿Qué tal con $Z = 1.95$?
 
-Esto me llevaría al siguiente punto de discusión, sonre el obscurantismo alrededor del valor de p, pero tomemos un desvío para hablar sobre otro concepto muy relacionado con el valor de p: los intervalos de confianza
+Esto me llevaría al siguiente punto de discusión, sobre el obscurantismo alrededor del valor de p, pero tomemos un desvío para hablar sobre otro concepto muy relacionado con este último: los intervalos de confianza
 
 ## Intervalos de confianza
 
-Los intervalos de confianza, como recordarás que mencionamos someramente en la sesión de [estadística descriptiva](), representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de "certeza" alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.
+Los intervalos de confianza, como recordarás que mencionamos someramente en el @sec-descriptiva, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de "certeza" alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.
 
-Entonces, ¿qué son los intervalos de confianza? Son una referencia de la "certeza" que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación $\bar{x} ± SD$, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que $\bar{x}; [IC_i, IC_s]$, donde $IC_i$ representa el límite inferior del intervalo de confianza e $IC_s$ el límite superior.
+Entonces, ¿qué son los intervalos de confianza? Son una referencia de la "certeza" que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación $\overline{x} ± SD$, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que $\overline{x}; [IC_i, IC_s]$, donde $IC_i$ representa el límite inferior del intervalo de confianza e $IC_s$ el límite superior.
 
 Estos límites indican entre dónde y dónde (o, mejor dicho, entre qué valores) se puede encontrar  la estimación. Si son equivalentes al valor de p, entonces siguen también un modelo teórico de distribución de probabilidades, y su amplitud está dada por un porcentaje de esa distribución (igual que en la zona de no rechazo de una hipótesis de nulidad).
 
 ::: {.callout-warning}
-Dada esta descripción, es muy posible que quieras interpretarlos como "hay X% de probabilidad de que la estimación se encuentre en este intervalo". **NO SE INTERPRETAN DE ESA MANERA**. La forma adecuada es, si realizo $N$ muestreos independientes, cada uno con tamaño de muestra $n$, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media "real" (poblacional; @fig-IC).
+Dada esta descripción, es muy posible que quieras interpretarlos como "hay X% de probabilidad de que la estimación se encuentre en este intervalo". **NO SE INTERPRETAN DE ESA MANERA**. La forma adecuada es, si realizo $N$ muestreos independientes, cada uno con tamaño de muestra $n$, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media "real" (poblacional; @fig-ICs).
 :::
 
-![Interpretación de los intervalos de confianza: si realizo $n$ muestreos independientes, cada uno con tamaño de muestra $N$, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media "real"](imgs/IC.png){#fig-IC}.
+![Representación gráfica de la interpretación de los intervalos de confianza: 100 muestreos independientes con tamaño de muestra 20. Para cada uno se estima la media (x) y sus intervalos de confianza (líneas verticales). Solo seis (rojo) no incluyeron la media real (línea azul):](imgs/IC.png){#fig-ICs}
 
 ### Cálculo de los intervalos de confianza
 
 Te mencioné anteriormente que los IC siguen un modelo de distribución de probabilidades. Los modelos más comunes son las distribuciones $t$ de Student y normal. Por el momento no es necesario que te preocupes por el modelo subyacente; sin embargo, lo más común es que utilicemos la distribución $t$. ¿La razón? La veremos más adelante cuando expliquemos propiamente la pruena $t$ de Student. Las ecuaciones correspondientes las puedes encontrar en un libro de estadística básica [*e.g.*, @Zar_2010], así que te ahorraré el que las leas aquí y mejor vayamos directamente a cómo calcularlos con `R`.
 
-Para ejemplificarlo utilicemos 15 muestras de nuestros 10000 datos simulados bajo una distribución normal estándar (`v1$var`):
+Para ejemplificarlo utilicemos 15 muestras de nuestros 10,000 datos simulados bajo una distribución normal estándar (`v1$var`):
 
 ```{r}
 set.seed(0)
@@ -203,7 +204,7 @@ Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas mane
 t.test(v2, conf.level = 0.95)
 ```
 
-Esta función aplica una prueba $t$ de Student para una sola muestra, por lo que da un valor del estadístico de prueba $t$, los grados de libertad `df` y un valor de p. Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: $[-0.73, 0.18]$. Este intervalo es grande en relación a nuestra media ($|IC_s - IC_i| = |0.18-0.73| = 0.55 > |\bar{x}| = 0.27$), lo cual nos dice que no "confiamos" mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar ($\mu = 0; \sigma = 1$). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).
+Esta función aplica una prueba $t$ de Student para una sola muestra, por lo que da un valor del estadístico de prueba $t$, los grados de libertad `df` y un valor de p. Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: $[-0.73, 0.18]$. Este intervalo es grande en relación a nuestra media ($|IC_s - IC_i| = |0.18-0.73| = 0.55 > |\overline{x}| = 0.27$), lo cual nos dice que no "confiamos" mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar ($\mu = 0; \sigma = 1$). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).
 
 ::: {.callout-tip}
 Tanto los IC como el valor de p pueden utilizarse para "probar hipótesis" (*sensu* pruebas de significancia). Si tus intervalos de confianza con amplitud $1-\alpha$ para un efecto dado incluyen al 0, entonces vas a tener un valor de $p > \alpha$.
@@ -301,9 +302,9 @@ Adicionalmente se "recomienda" que se utilice con tamaños de muestra menores a 
 Esta prueba nos permite comparar la media de una muestra con un valor de referencia. La función de la prueba $t$ para una muestra está dada por:
 
 $$
-t = \frac{\bar{x}- \mu_0}{\frac{s}{\sqrt{n}}}
+t = \frac{\overline{x}- \mu_0}{\frac{s}{\sqrt{n}}}
 $$
-Donde: $\bar{x}$ es el promedio de nuestra muestra, $\mu_0$ es un valor de referencia con el que queremos comparar $\bar{x}$, $s$ es la desviación estándar de la muestra y $n$ es el número de observaciones. Esta ya la aplicamos antes cuando estimamos los intervalos de confianza con la función `t.test`, pero volvamos a visitarla:
+Donde: $\overline{x}$ es el promedio de nuestra muestra, $\mu_0$ es un valor de referencia con el que queremos comparar $\overline{x}$, $s$ es la desviación estándar de la muestra y $n$ es el número de observaciones. Esta ya la aplicamos antes cuando estimamos los intervalos de confianza con la función `t.test`, pero volvamos a visitarla:
 
 ```{r}
 t.test(v2, conf.level = 0.95)
@@ -356,7 +357,7 @@ Moraleja: dejemos las pruebas de una sola cola para cuando realmente sea nuestro
 La siguiente variación la tenemos cuando queremos comparar las medias de dos muestras independientes o, mejor dicho, dos grupos independientes. Es decir, los individuos que forman al grupo 1 son diferentes de los que conforman al grupo 2. La ecuación original sufre una ligera modificación, en donde ahora se considera la desviación estándar mancomunada ($sp$) de las muestras; es decir, la variación en el valor dada por ambos grupos. Esto es importante, pues no es lo mismo tener una diferencia promedio de 10g con una desviación mancomunada de 100 g a tener esos mismos 10g de diferencia con una desviación mancomunada de 10g. La función queda entonces:
 
 $$
-t = \frac{\bar{x_1} - \bar{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+t = \frac{\overline{x_1} - \overline{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
 $$
 
 Donde:
@@ -442,10 +443,10 @@ error.plot
 Esta prueba nos permite comparar los promedios de una variable de un mismo grupo en dos momentos diferentes en el tiempo, por ejemplo, comparar si la frecuencia cardiaca promedio de un grupo de participantes fue diferente antes y después de hacer ejercicio; es decir tendremos datos pareados cuando tengamos mediciones de los mismos individuos (identificados) en dos momentos diferentes. La prueba para muestras pareadas es la media variante que mencioné al inicio. ¿Por qué media? Porque en realidad aplica la prueba de una sola muestra, solo que con un paso previo: restamos los valores de cada individuo para quedarnos con un solo vector de diferencias y con ese aplicar la prueba para una muestra:
 
 $$
-t = \frac{\bar{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
+t = \frac{\overline{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
 $$
 
-Donde $\bar{X_D}$ y $S_D$ son el promedio y la desviación estándar de las diferencias. Hagamos el ejercicio. Primero, carguemos los datos, que en este caso están contenidos en un archivo de excel:
+Donde $\overline{X_D}$ y $S_D$ son el promedio y la desviación estándar de las diferencias. Hagamos el ejercicio. Primero, carguemos los datos, que en este caso están contenidos en un archivo de excel:
 
 ```{r}
 dependientes <- openxlsx::read.xlsx("datos/datos_t.xlsx", sheet = 2)

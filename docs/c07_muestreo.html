@@ -259,7 +259,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -269,7 +269,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlación y Regresión Lineal Simple</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
   </div>
 </li>
       </ul>
@@ -373,7 +373,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></h1>
+<h1 class="title"><span id="sec-muestreo" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></h1>
 </div>
 
 
@@ -627,11 +627,11 @@ Advertencia
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1000</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ind</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 132</code></pre>
+<pre><code>[1] 467</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pobl<span class="sc">$</span>lt[ind]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9.499661</code></pre>
+<pre><code>[1] 9.42255</code></pre>
 </div>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente “aleatoria”, en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros quienes lo hacemos):</p>
@@ -639,7 +639,7 @@ Advertencia
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">sample</span>(pobl<span class="sc">$</span>lt, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.255895 8.259293 9.397333 9.652765 8.289903 9.501149</code></pre>
+<pre><code>[1] 8.167183 8.196013 9.676545 9.725936 8.158998 9.627604</code></pre>
 </div>
 </div>
 <p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento <code>replace = FALSE</code>. Con esto lo que hicimos fue un <strong>muestreo sin reemplazo</strong>; es decir, una vez que un individuo fue medido se “retiró” de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. Por otra parte, el <strong>muestreo con reemplazo</strong> es útil en otro tipo de situaciones, por ejemplo cuando queremos aproximar frecuencias a largo plazo como hicimos en la sesión anterior.</p>
@@ -653,7 +653,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.999935</code></pre>
+<pre><code>[1] 8.93053</code></pre>
 </div>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para ver en dónde quedó:</p>

@@ -269,7 +269,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlación y Regresión Lineal Simple</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
   </div>
 </li>
       </ul>
@@ -372,7 +372,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></h1>
+<h1 class="title"><span id="sec-ph0" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></h1>
 </div>
 
 
@@ -393,8 +393,8 @@ div.csl-indent {
 <p>Si yo te preguntara ¿qué es una hipótesis? Yo esperaría una respuesta cercana a “una posible explicación a un fenómeno”. La definición “completa” que me gustaría que recordaras es “una serie de premisas concatenadas para dar una explicación a un fenómeno”, de la forma “Dado que A, entonces B” (¿recuerdas la probabilidad condicional?). Bueno, pues es importante reconocer que esa NO es la hipótesis que probamos con las pruebas de significancia, o al menos no directamente. Si a nosotros nos interesa saber si un nuevo alimento, llamémosle A, es capaz de darnos peces más grandes que nuestro alimento actual (control, C), entonces diseñaríamos un experimento con dos grupos: un grupo experimental al que le daríamos el alimento A, y un grupo control al que se le daría el alimento C. Nuestra hipótesis sería algo como “Dadas las diferentes composiciones de los alimentos A y C, la talla final será diferente entre ambos grupos”. Esa es nuestra <strong>hipótesis de trabajo</strong>; es decir, nuestra posible explicación; sin embargo, esta no es una <strong>hipótesis estadística</strong>.</p>
 <p>¿Qué es entonces una hipótesis estadística? Sería más correcto hablar de <strong>juegos de hipótesis estadísticas</strong>, el cual quedaría de la siguiente manera:</p>
 <ul>
-<li><span class="math inline">\(H_0: \mu_1 = \mu_2; \bar{X_A} = \bar{X_C}\)</span></li>
-<li><span class="math inline">\(H_1: \mu_2 ≠ \mu_2; \bar{X_A} ≠ \bar{X_C}\)</span></li>
+<li><span class="math inline">\(H_0: \mu_1 = \mu_2; \overline{X_A} = \overline{X_C}\)</span></li>
+<li><span class="math inline">\(H_1: \mu_2 ≠ \mu_2; \overline{X_A} ≠ \overline{X_C}\)</span></li>
 </ul>
 <p>Entonces, es un juego porque hay más de una, y representan un <strong>escenario de igualdad o de diferencia</strong>. Por cada juego de hipótesis hay <strong>al menos una hipótesis de nulidad (<span class="math inline">\(H_0\)</span>) y una hipótesis alternativa (<span class="math inline">\(H_1\)</span>)</strong>. ¿Cómo llegamos a estas hipótesis y qué representan? Bien, es ahí donde debemos de hablar de las <strong>pruebas de significancia estadística</strong>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -413,7 +413,7 @@ Nota
 </section>
 <section id="pruebas-de-hipótesis-de-nulidad" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="pruebas-de-hipótesis-de-nulidad"><span class="header-section-number">9.2</span> Pruebas de hipótesis de nulidad</h2>
-<p>En la <a href="">primera</a> sesión dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por <span class="citation" data-cites="Savage_1954">Savage (<a href="references.html#ref-Savage_1954" role="doc-biblioref">1954</a>)</span>: “[La estadística] es la ciencia de tomar <strong>decisiones</strong> bajo situaciones de <strong>incertidumbre</strong>.</p>
+<p>En el <a href="c01_biolcdatos.html"><span>Capítulo&nbsp;1</span></a> dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por <span class="citation" data-cites="Savage_1954">Savage (<a href="references.html#ref-Savage_1954" role="doc-biblioref">1954</a>)</span>: “[La estadística] es la ciencia de tomar <strong>decisiones</strong> bajo situaciones de <strong>incertidumbre</strong>.</p>
 <p>Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no.</p>
 <div id="fig-planetas" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -480,7 +480,7 @@ Nota
 </section>
 <section id="tipos-de-errores" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="tipos-de-errores"><span class="header-section-number">9.3</span> Tipos de errores</h2>
-<p>Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los <strong>tipos de errores estadísticos</strong>. En la <a href="">sesión de muestreo</a> hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy “obvio” que parezca, <strong>probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad</strong>. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:</p>
+<p>Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los <strong>tipos de errores estadísticos</strong>. En el <a href="c07_muestreo.html"><span>Capítulo&nbsp;7</span></a> hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy “obvio” que parezca, <strong>probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad</strong>. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:</p>
 <ul>
 <li>Error de tipo I (<span class="math inline">\(\alpha\)</span>): Probabilidad de rechazar la hipótesis nula cuando es verdadera.</li>
 <li>Error de tipo II (<span class="math inline">\(\beta\)</span>): Probabilidad de NO rechazar la hipótesis nula cuando es falsa.</li>
@@ -585,10 +585,10 @@ Importante
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>uni_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-norm" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-normal" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="c09_ph0_files/figure-html/fig-norm-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.10: <strong>?(caption)</strong></figcaption><p></p>
+<p><img src="c09_ph0_files/figure-html/fig-normal-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.10: Áreas bajo la curva (AUC) para tres valores de Z de referencia. Estas representan las <strong>zonas de aceptación</strong>, con su amplitud (confianza) dada por el valor de AUC.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -596,12 +596,12 @@ Importante
 <p>¿Qué nos dice este gráfico? Imagina que hacemos el procedimiento estadístico correspondiente y obtenemos un valor de <span class="math inline">\(Z = 1.0\)</span>. El área comprendida entre <span class="math inline">\(Z = 1\)</span> y <span class="math inline">\(Z = -1\)</span> es del 0.68. ¿Esto quiere decir que nuestro valor de p es de 0.68? NO, todo lo contrario. Recuerda, buscamos un valor <strong>al menos igual de grande</strong>; por lo tanto, nos interesa lo que está fuera de la zona sombreada (buscamos valores <span class="math inline">\(|Z| \geq 1\)</span>) y entonces nuestro valor de <span class="math inline">\(p = 1-0.68 = 0.32\)</span>. ¿Es suficiente una probabilidad del 32% para decir que nuestra evidencia dejó en ridículo a nuestra hipótesis de nulidad? Creo que estarás de acuerdo conmigo en que no.</p>
 <p>Pero volvamos a nuestro gráfico. Las zonas sombreadas representan las zonas de no rechazo a distintos niveles de “confianza”, de manera que si obtenemos un valor de <code>Z</code> (estadístico de prueba) <span class="math inline">\(\leq 1\)</span> estamos en el intervalo de confianza del 68%, <span class="math inline">\(\leq 1.96\)</span> del 95% y <span class="math inline">\(\leq 3\)</span> de <span class="math inline">\(\approx\)</span> 99%.</p>
 <p>Imagina que ahora obtuvimos un valor de <span class="math inline">\(Z = 1.97\)</span>, recuerda lo que vimos en la sesión de probabilidad sobre el uso de la distribución normal en <code>R</code>. ¿Qué valor de <span class="math inline">\(p\)</span> le corresponde? ¿Es un resultado “significativo? ¿Qué tal con <span class="math inline">\(Z = 1.95\)</span>?</p>
-<p>Esto me llevaría al siguiente punto de discusión, sonre el obscurantismo alrededor del valor de p, pero tomemos un desvío para hablar sobre otro concepto muy relacionado con el valor de p: los intervalos de confianza</p>
+<p>Esto me llevaría al siguiente punto de discusión, sobre el obscurantismo alrededor del valor de p, pero tomemos un desvío para hablar sobre otro concepto muy relacionado con este último: los intervalos de confianza</p>
 </section>
 <section id="intervalos-de-confianza" class="level2" data-number="9.5">
 <h2 data-number="9.5" class="anchored" data-anchor-id="intervalos-de-confianza"><span class="header-section-number">9.5</span> Intervalos de confianza</h2>
-<p>Los intervalos de confianza, como recordarás que mencionamos someramente en la sesión de <a href="">estadística descriptiva</a>, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de “certeza” alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.</p>
-<p>Entonces, ¿qué son los intervalos de confianza? Son una referencia de la “certeza” que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación <span class="math inline">\(\bar{x} ± SD\)</span>, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que <span class="math inline">\(\bar{x}; [IC_i, IC_s]\)</span>, donde <span class="math inline">\(IC_i\)</span> representa el límite inferior del intervalo de confianza e <span class="math inline">\(IC_s\)</span> el límite superior.</p>
+<p>Los intervalos de confianza, como recordarás que mencionamos someramente en el <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de “certeza” alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.</p>
+<p>Entonces, ¿qué son los intervalos de confianza? Son una referencia de la “certeza” que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación <span class="math inline">\(\overline{x} ± SD\)</span>, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que <span class="math inline">\(\overline{x}; [IC_i, IC_s]\)</span>, donde <span class="math inline">\(IC_i\)</span> representa el límite inferior del intervalo de confianza e <span class="math inline">\(IC_s\)</span> el límite superior.</p>
 <p>Estos límites indican entre dónde y dónde (o, mejor dicho, entre qué valores) se puede encontrar la estimación. Si son equivalentes al valor de p, entonces siguen también un modelo teórico de distribución de probabilidades, y su amplitud está dada por un porcentaje de esa distribución (igual que en la zona de no rechazo de una hipótesis de nulidad).</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -613,14 +613,19 @@ Advertencia
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dada esta descripción, es muy posible que quieras interpretarlos como “hay X% de probabilidad de que la estimación se encuentre en este intervalo”. <strong>NO SE INTERPRETAN DE ESA MANERA</strong>. La forma adecuada es, si realizo <span class="math inline">\(N\)</span> muestreos independientes, cada uno con tamaño de muestra <span class="math inline">\(n\)</span>, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real” (poblacional; <span class="quarto-unresolved-ref">?fig-IC</span>).</p>
+<p>Dada esta descripción, es muy posible que quieras interpretarlos como “hay X% de probabilidad de que la estimación se encuentre en este intervalo”. <strong>NO SE INTERPRETAN DE ESA MANERA</strong>. La forma adecuada es, si realizo <span class="math inline">\(N\)</span> muestreos independientes, cada uno con tamaño de muestra <span class="math inline">\(n\)</span>, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real” (poblacional; <a href="#fig-ICs">Figura&nbsp;<span>9.11</span></a>).</p>
 </div>
 </div>
-<p><img src="imgs/IC.png" id="fig-IC" class="img-fluid" alt="Interpretación de los intervalos de confianza: si realizo n muestreos independientes, cada uno con tamaño de muestra N, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real”">.</p>
+<div id="fig-ICs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/IC.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.11: Representación gráfica de la interpretación de los intervalos de confianza: 100 muestreos independientes con tamaño de muestra 20. Para cada uno se estima la media (x) y sus intervalos de confianza (líneas verticales). Solo seis (rojo) no incluyeron la media real (línea azul):</figcaption><p></p>
+</figure>
+</div>
 <section id="cálculo-de-los-intervalos-de-confianza" class="level3" data-number="9.5.1">
 <h3 data-number="9.5.1" class="anchored" data-anchor-id="cálculo-de-los-intervalos-de-confianza"><span class="header-section-number">9.5.1</span> Cálculo de los intervalos de confianza</h3>
 <p>Te mencioné anteriormente que los IC siguen un modelo de distribución de probabilidades. Los modelos más comunes son las distribuciones <span class="math inline">\(t\)</span> de Student y normal. Por el momento no es necesario que te preocupes por el modelo subyacente; sin embargo, lo más común es que utilicemos la distribución <span class="math inline">\(t\)</span>. ¿La razón? La veremos más adelante cuando expliquemos propiamente la pruena <span class="math inline">\(t\)</span> de Student. Las ecuaciones correspondientes las puedes encontrar en un libro de estadística básica <span class="citation" data-cites="Zar_2010">(<em>e.g.</em>, <a href="references.html#ref-Zar_2010" role="doc-biblioref">Zar, 2010</a>)</span>, así que te ahorraré el que las leas aquí y mejor vayamos directamente a cómo calcularlos con <code>R</code>.</p>
-<p>Para ejemplificarlo utilicemos 15 muestras de nuestros 10000 datos simulados bajo una distribución normal estándar (<code>v1$var</code>):</p>
+<p>Para ejemplificarlo utilicemos 15 muestras de nuestros 10,000 datos simulados bajo una distribución normal estándar (<code>v1$var</code>):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">&lt;-</span> <span class="fu">sample</span>(v1<span class="sc">$</span>var, <span class="at">size =</span> <span class="dv">15</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -629,7 +634,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(v2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.08964503</code></pre>
+<pre><code>[1] -0.1024773</code></pre>
 </div>
 </div>
 <p>Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas maneras de hacerlo. Comenzando con <code>R</code> base podemos utilizar la función<code>t.test(x, conf.level)</code>, donde <code>x</code> es el vector de observaciones y <code>conf.level</code> el nivel de confianza deseado:</p>
@@ -640,16 +645,16 @@ Advertencia
     One Sample t-test
 
 data:  v2
-t = 0.36588, df = 14, p-value = 0.7199
+t = -0.3438, df = 14, p-value = 0.7361
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.4358470  0.6151371
+ -0.7417717  0.5368171
 sample estimates:
  mean of x 
-0.08964503 </code></pre>
+-0.1024773 </code></pre>
 </div>
 </div>
-<p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\bar{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
+<p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\overline{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -667,8 +672,8 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Rmisc<span class="sc">::</span><span class="fu">CI</span>(<span class="at">x =</span> v2, <span class="at">ci =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      upper        mean       lower 
- 0.61513705  0.08964503 -0.43584699 </code></pre>
+<pre><code>     upper       mean      lower 
+ 0.5368171 -0.1024773 -0.7417717 </code></pre>
 </div>
 </div>
 <p>Una alternativa más es utilizar la función <code>rcompanion::groupwiseMean(formula, data, conf, R)</code>, la cual tiene dos funcionalidades interesantes: i) permite calcular los IC para varios grupos, y ii) poder estimar los intervalos a partir de remuestreos Bootstrap. En esta función: <code>formula</code> es lo que vimos en la función <code>aggregate</code>, donde indicamos al mismo tiempo la variable numérica y la variable de agrupamiento, tal que: <code>var~grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> la amplitud de los intervalos y <code>R</code> el número de réplicas Bootstrap a realizar. Sustituyendo:</p>
@@ -681,7 +686,7 @@ Tip
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.0896","4":"0.95","5":"-0.436","6":"0.615"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"-0.102","4":"0.95","5":"-0.742","6":"0.537"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -721,7 +726,7 @@ Nota
 <div id="fig-fconc" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/false_conclusions.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.11: Valores de p, intervalos de confianza y conclusiones erróneas.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.12: Valores de p, intervalos de confianza y conclusiones erróneas.</figcaption><p></p>
 </figure>
 </div>
 <p>Aquí tenemos dos estudios que, en realidad, dieron resultados equivalentes o, cuando menos, que no están en conflicto uno con el otro. El estudio azul tuvo el mismo efecto positivo promedio que el rojo, aunque con un IC mucho más angosto y, en consecuencia, un valor de p “signficativo” (pequeño). El estudio rojo, por el contrario tiene un intervalo de confianza mucho más amplios que incluyeron el 0 y, consecuentemente, un valor de p “no significativo”. ¿Cuál sería la forma correcta de interpretar estos resultados? Primero, no descartar al estudio rojo o tacharlo de “no significativo”. Mejor, pensemos en los IC como intervalos de compatibilidad, describamos los resultados en función de las consecuencias de estos intervalos, con especial énfasis en la estimación puntual, pues es la más compatible con los datos. La razón de esto es que, por puro efecto del azar, el estudio azul podría replicar exactamente el mismo estudio y esta vez obteer un IC similar al rojo o viceversa.</p>
@@ -746,7 +751,7 @@ Advertencia
 <div id="fig-studentt" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/tstudent.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.12: Distribución <span class="math inline">\(t\)</span> de Student con diferentes grados de libertad <span class="math inline">\(k\)</span> (<span class="math inline">\(\nu\)</span>).</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9.13: Distribución <span class="math inline">\(t\)</span> de Student con diferentes grados de libertad <span class="math inline">\(k\)</span> (<span class="math inline">\(\nu\)</span>).</figcaption><p></p>
 </figure>
 </div>
 <p>Este cambio en la altura de las colas es sumamente importante, y es lo que hace que la distribución <span class="math inline">\(t\)</span> sea uno de los “caballitos de batalla” de la estadística, pues literalmente estamos siendo conscientes que, conforme disminuye el tamaño de muestra (grados de libertad, pero ahorita los definimos), incrementa la probabilidad de tener valores extremos (el peso de las colas). Con esto también establecemos que no queremos que esos valores extremos desvíen nuestras estimaciones.</p>
@@ -802,8 +807,8 @@ Nota
 <h3 data-number="9.7.1" class="anchored" data-anchor-id="prueba-t-para-una-muestra"><span class="header-section-number">9.7.1</span> Prueba <span class="math inline">\(t\)</span> para una muestra</h3>
 <p>Esta prueba nos permite comparar la media de una muestra con un valor de referencia. La función de la prueba <span class="math inline">\(t\)</span> para una muestra está dada por:</p>
 <p><span class="math display">\[
-t = \frac{\bar{x}- \mu_0}{\frac{s}{\sqrt{n}}}
-\]</span> Donde: <span class="math inline">\(\bar{x}\)</span> es el promedio de nuestra muestra, <span class="math inline">\(\mu_0\)</span> es un valor de referencia con el que queremos comparar <span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(s\)</span> es la desviación estándar de la muestra y <span class="math inline">\(n\)</span> es el número de observaciones. Esta ya la aplicamos antes cuando estimamos los intervalos de confianza con la función <code>t.test</code>, pero volvamos a visitarla:</p>
+t = \frac{\overline{x}- \mu_0}{\frac{s}{\sqrt{n}}}
+\]</span> Donde: <span class="math inline">\(\overline{x}\)</span> es el promedio de nuestra muestra, <span class="math inline">\(\mu_0\)</span> es un valor de referencia con el que queremos comparar <span class="math inline">\(\overline{x}\)</span>, <span class="math inline">\(s\)</span> es la desviación estándar de la muestra y <span class="math inline">\(n\)</span> es el número de observaciones. Esta ya la aplicamos antes cuando estimamos los intervalos de confianza con la función <code>t.test</code>, pero volvamos a visitarla:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -811,13 +816,13 @@ t = \frac{\bar{x}- \mu_0}{\frac{s}{\sqrt{n}}}
     One Sample t-test
 
 data:  v2
-t = 0.36588, df = 14, p-value = 0.7199
+t = -0.3438, df = 14, p-value = 0.7361
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.4358470  0.6151371
+ -0.7417717  0.5368171
 sample estimates:
  mean of x 
-0.08964503 </code></pre>
+-0.1024773 </code></pre>
 </div>
 </div>
 <p>Ahora sí podemos revisar la salida completa. La primera línea nos dice el tipo de prueba <span class="math inline">\(t\)</span> que estamos aplicando. En este caso pasamos un solo vector, por lo que la prueba a aplicar es para una sola muestra. La segunda línea nos da el nombre de los datos. La tercera nos da los resultados de la prueba: el valor del estadístico <span class="math inline">\(t\)</span>, los grados de libertad <code>d.f.</code> (degrees of freedoom) y el valor de p (<code>p-value</code>), mientras que la cuarta nos da la hipótesis alternativa que estamos evaluando (la nula no cambia, ¿o sí?) ¿Contra qué valor está contrastando? Por defecto contra 0 (podemos cambiarlo con el argumento <code>mu</code>).</p>
@@ -841,7 +846,7 @@ Importante
 <li>La media es menor a <span class="math inline">\(\mu_0\)</span>, en donde se aplica una prueba de una sola cola (considera la cola derecha).</li>
 <li>La media es mayor a <span class="math inline">\(\mu_0\)</span>, en donde se aplica también una prueba de una cola (la cola izquierda)</li>
 </ul>
-<p>Lo cual me lleva a hablar de pruebas de dos o una cola. El qué hipótesis alternativa se prueba ya lo definimos, pero ¿a qué se refiere eso de una o dos colas? A qué cola(s) integramos. En la <span class="quarto-unresolved-ref">?fig-normal</span> vimos que sumabamos lo que estaba fuera de nuestra área de aceptación, tanto a la derecha como a la izquierda; es decir, las colas de la distribución. Si solo sumamos lo que está a la derecha estamos preguntándonos si nuestra media es menor a <span class="math inline">\(\mu_0\)</span>.</p>
+<p>Lo cual me lleva a hablar de pruebas de dos o una cola. El qué hipótesis alternativa se prueba ya lo definimos, pero ¿a qué se refiere eso de una o dos colas? A qué cola(s) integramos. En la <a href="#fig-normal">Figura&nbsp;<span>9.10</span></a> vimos que sumabamos lo que estaba fuera de nuestra área de aceptación, tanto a la derecha como a la izquierda; es decir, las colas de la distribución. Si solo sumamos lo que está a la derecha estamos preguntándonos si nuestra media es menor a <span class="math inline">\(\mu_0\)</span>.</p>
 <p>Esto podemos modificarlo con el argumento <code>alternative</code>, que puede ser <code>"two.sided"</code> (por defecto), <code>"greater"</code> o <code>"less"</code>. Veamos el resultado con la hipótesis alternativa de que la media es menor a 0:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -850,13 +855,13 @@ Importante
     One Sample t-test
 
 data:  v2
-t = 0.36588, df = 14, p-value = 0.64
+t = -0.3438, df = 14, p-value = 0.3681
 alternative hypothesis: true mean is less than 0
 95 percent confidence interval:
-      -Inf 0.5211819
+      -Inf 0.4225146
 sample estimates:
  mean of x 
-0.08964503 </code></pre>
+-0.1024773 </code></pre>
 </div>
 </div>
 <p>Aquí, además de la hipótesis alternativa, hay dos cambios que es importante notar: el valor de p y el intervalo de confianza. Empecemos con el segundo, donde tenemos [-Inf, 0.099]. Esto no es ningún error. Simple y sencillamente refleja nuestra hipótesis alternativa: Si la media es menor no tiene caso que consideremos la cola izquierda, por lo que el límite inferior se va a -Inf, mientras que el límite superior se reduce a 0.099. Compara ese valor de 0.099 con el resultado de la prueba de dos colas. ¿Qué notas? Es exactamente la mitad. Estos intervalos de confianza son simétricos, por lo que si solo estamos considerando un lado es lógico que la amplitud se reduzca a la mitad y eso me lleva al otro cambio: el valor de p.&nbsp;También es exactamente la mitad del que nos dio la prueba para dos colas, y es por la misma razón, estamos considerando la mitad del área bajo la curva. Pero aquí hay una advertencia muy, pero muy importante:</p>
@@ -893,7 +898,7 @@ Advertencia
 <h3 data-number="9.7.2" class="anchored" data-anchor-id="prueba-para-muestras-independientes"><span class="header-section-number">9.7.2</span> Prueba para muestras independientes</h3>
 <p>La siguiente variación la tenemos cuando queremos comparar las medias de dos muestras independientes o, mejor dicho, dos grupos independientes. Es decir, los individuos que forman al grupo 1 son diferentes de los que conforman al grupo 2. La ecuación original sufre una ligera modificación, en donde ahora se considera la desviación estándar mancomunada (<span class="math inline">\(sp\)</span>) de las muestras; es decir, la variación en el valor dada por ambos grupos. Esto es importante, pues no es lo mismo tener una diferencia promedio de 10g con una desviación mancomunada de 100 g a tener esos mismos 10g de diferencia con una desviación mancomunada de 10g. La función queda entonces:</p>
 <p><span class="math display">\[
-t = \frac{\bar{x_1} - \bar{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+t = \frac{\overline{x_1} - \overline{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
 \]</span></p>
 <p>Donde:</p>
 <p><span class="math display">\[
@@ -996,9 +1001,9 @@ mean in group A mean in group B
 <h3 data-number="9.7.3" class="anchored" data-anchor-id="prueba-para-muestras-pareadas"><span class="header-section-number">9.7.3</span> Prueba para muestras pareadas</h3>
 <p>Esta prueba nos permite comparar los promedios de una variable de un mismo grupo en dos momentos diferentes en el tiempo, por ejemplo, comparar si la frecuencia cardiaca promedio de un grupo de participantes fue diferente antes y después de hacer ejercicio; es decir tendremos datos pareados cuando tengamos mediciones de los mismos individuos (identificados) en dos momentos diferentes. La prueba para muestras pareadas es la media variante que mencioné al inicio. ¿Por qué media? Porque en realidad aplica la prueba de una sola muestra, solo que con un paso previo: restamos los valores de cada individuo para quedarnos con un solo vector de diferencias y con ese aplicar la prueba para una muestra:</p>
 <p><span class="math display">\[
-t = \frac{\bar{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
+t = \frac{\overline{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
 \]</span></p>
-<p>Donde <span class="math inline">\(\bar{X_D}\)</span> y <span class="math inline">\(S_D\)</span> son el promedio y la desviación estándar de las diferencias. Hagamos el ejercicio. Primero, carguemos los datos, que en este caso están contenidos en un archivo de excel:</p>
+<p>Donde <span class="math inline">\(\overline{X_D}\)</span> y <span class="math inline">\(S_D\)</span> son el promedio y la desviación estándar de las diferencias. Hagamos el ejercicio. Primero, carguemos los datos, que en este caso están contenidos en un archivo de excel:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dependientes <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">"datos/datos_t.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dependientes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>

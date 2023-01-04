@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Bioestadística Aplicada con R y RStudio - 11&nbsp; Correlación y Regresión Lineal Simple</title>
+<title>Bioestadística Aplicada con R y RStudio - 11&nbsp; Modelo lineal</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,88 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
 
@@ -61,6 +143,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -70,7 +156,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlación y Regresión Lineal Simple</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -173,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de hipótesis</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -183,7 +269,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlación y Regresión Lineal Simple</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
   </div>
 </li>
       </ul>
@@ -258,14 +344,31 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">11.1</span>  Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">11.2</span>  Introducción</a></li>
+  <li><a href="#regla-de-tres-y-el-modelo-lineal" id="toc-regla-de-tres-y-el-modelo-lineal" class="nav-link" data-scroll-target="#regla-de-tres-y-el-modelo-lineal"><span class="toc-section-number">11.3</span>  Regla de tres y el modelo lineal</a></li>
+  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="toc-section-number">11.4</span>  Regresión lineal simple</a>
+  <ul class="collapse">
+  <li><a href="#mínimos-cuadrados" id="toc-mínimos-cuadrados" class="nav-link" data-scroll-target="#mínimos-cuadrados"><span class="toc-section-number">11.4.1</span>  Mínimos cuadrados</a></li>
+  <li><a href="#supuestos-de-la-regresión-lineal" id="toc-supuestos-de-la-regresión-lineal" class="nav-link" data-scroll-target="#supuestos-de-la-regresión-lineal"><span class="toc-section-number">11.4.2</span>  Supuestos de la Regresión Lineal</a></li>
+  <li><a href="#predicción-vs.-interpretación" id="toc-predicción-vs.-interpretación" class="nav-link" data-scroll-target="#predicción-vs.-interpretación"><span class="toc-section-number">11.4.3</span>  Predicción vs.&nbsp;Interpretación</a></li>
+  <li><a href="#máxima-verosimilitud" id="toc-máxima-verosimilitud" class="nav-link" data-scroll-target="#máxima-verosimilitud"><span class="toc-section-number">11.4.4</span>  Máxima verosimilitud</a></li>
+  </ul></li>
+  <li><a href="#correlación-y-covarianza" id="toc-correlación-y-covarianza" class="nav-link" data-scroll-target="#correlación-y-covarianza"><span class="toc-section-number">11.5</span>  Correlación y covarianza</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">11.6</span>  Ejercicio</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Correlación y Regresión Lineal Simple</span></h1>
+<h1 class="title"><span id="sec-rls" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></h1>
 </div>
 
 
@@ -280,8 +383,878 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="librerías" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">11.1</span> Librerías</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats4)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Metrics)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="introducción" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">11.2</span> Introducción</h2>
+<p>En muchísimos lugares encontramos, de forma completamente natural, patrones que se repiten una y otra vez, tal y como en la música. El mundo de la estadística y del <strong>aprendizaje automatizado</strong> se construye de la misma manera, partiendo de pequeños <em>motivos</em> que aparecen una y otra vez. En esta sesión vamos a hablar de el, posiblemente, más popular de todos: el <strong>modelo lineal</strong>. Hablaremos entonces del caso más básico y escalaremos paso a paso en la complejidad.</p>
+</section>
+<section id="regla-de-tres-y-el-modelo-lineal" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="regla-de-tres-y-el-modelo-lineal"><span class="header-section-number">11.3</span> Regla de tres y el modelo lineal</h2>
+<p>Antes de empezar a hablar propiamente de la regresión lineal, sus diferencias con la correlación, en qué consiste, cómo aplicarlas y demás detalles, demos un paso hacia atrás y expliquemos el fundamento con manzanitas (literalmente).</p>
+<p>Imagina que te digo que gasté 50 pesos para comprar 10 manzanas y luego te pregunto ¿cuánto cuesta una? Para responder a la pregunta aplicarás, aunque no seas consciente, el modelo lineal, pero primero resolvamos el problema con una regla de tres</p>
+<p><span class="math display">\[\begin{align*}
+10 🍎 = \$50 \\
+1🍎 = ?
+\end{align*}\]</span></p>
+<p>Aquí multiplicaríamos <span class="math inline">\(1🍎 \times 50\$\)</span> y dividimos entre <span class="math inline">\(10🍎\)</span>, lo cual nos lleva a decir que una manzana me costó 5<span class="math inline">\(\$\)</span>:</p>
+<p><span class="math display">\[
+\frac{1🍎 \times 50 \$}{10🍎} = 5\frac{\$}{🍎}
+\]</span></p>
+<p>Hasta aquí nada nuevo, así que hagamos ese resultado a un lado por el momento y volvamos al problema del modelo lineal. ¿En qué consiste un modelo lineal? En utilizar la ecuación de la recta (<span class="math inline">\(y = a + bx\)</span>) para establecer una relación (lineal, dah) entre dos variables. Con nuestras manzanas podemos representarlo de la siguiente manera, donde <span class="math inline">\(y\)</span> es el dinero (<span class="math inline">\(\$\)</span>) gastado para alguna cantidad de manzanas (🍎):</p>
+<p><span class="math display">\[
+\$ = a + b*🍎
+\]</span></p>
+<p>¿Qué representan <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span> Empecemos, por simplicidad didáctica, definiendo <span class="math inline">\(b\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+Si \\
+\$ = a + b*🍎 \\
+\Rightarrow \$ - a = b*🍎 \\
+\therefore \frac{\$ - a}{🍎} = b
+\end{align*}\]</span></p>
+<p>Este pequeño ejercicio algebráico nos dice que <span class="math inline">\(b\)</span> es el resultado de <strong>dividir nuestro precio</strong> (menos <span class="math inline">\(a\)</span>) entre <strong>el número de manzanas</strong>. ¿Te suena? ¡Es el <strong>precio por una manzana</strong>! Te preguntarás: ¿entonces **qué es <span class="math inline">\(a\)</span> y por qué no lo consideramos antes? Para darle sentido pensemos en qué haría que ambas aproximaciones nos lleven al mismo resultado: que <span class="math inline">\(a\)</span> fuera 0, ¿no? Pues eso tiene todo el sentido del mundo, pues es el precio de 0 manzanas. Tomando esto en cuenta podemos asignarle nombre a nuestros distintos elementos:</p>
+<ol type="1">
+<li><span class="math inline">\(y\)</span> es nuestra variable dependiente (lo que queremos predecir); es decir, el número de pesos gastados.</li>
+<li><span class="math inline">\(x\)</span> es nuestra variable independiente (con lo que vamos a predecir); es decir, el número de manzanas compradas.</li>
+<li><span class="math inline">\(a\)</span> es la <strong>ordenada al origen</strong> o <strong>intercepto</strong>, representada como <span class="math inline">\(\beta_0\)</span> o <span class="math inline">\(\alpha\)</span>, indica el precio de 0 manzanas. Matemáticamente esto lo definimos como el punto donde la recta corta a la ordenada (eje y) o, en palabras más sencillas, el punto donde x = 0.</li>
+<li><span class="math inline">\(b\)</span> es la <strong>pendiente</strong>, representada como <span class="math inline">\(\beta_1\)</span> o <span class="math inline">\(\beta\)</span>, e indica el precio de una manzana. Formalmente es la <strong>tasa de cambio</strong> que existe del eje <span class="math inline">\(x\)</span> al eje <span class="math inline">\(y\)</span>; es decir, “cuántas unidades nos vamos a mover en el eje y por una unidad en el eje x”.</li>
+</ol>
+<div id="fig-ruleofthree" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/ruleofthree.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11.1: De la regla de tres al modelo lineal</figcaption><p></p>
+</figure>
+</div>
+<p>¿Por qué se le denomina lineal? Porque si lo graficamos tendremos una línea recta:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>manzanas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>precio <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(manzanas, <span class="at">precio =</span> a<span class="sc">+</span>b<span class="sc">*</span>manzanas)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> precio, <span class="fu">aes</span>(<span class="at">x =</span> manzanas, <span class="at">y =</span> precio)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> scales<span class="sc">::</span><span class="fu">pretty_breaks</span>()) <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Precio por cantidad de manzanas (n)"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Modelo: $ = 0 + 5*n"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-linmod" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/fig-linmod-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11.2: Modelo lineal con el precio por cantidad de manzanas.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Aunque esto nos lleva a un pequeño inconveniente o una consideración. Si utilizamos un modelo lineal estamos asumiendo explícitamente (aunque a veces inconscientemente) que el <strong>cambio entre nuestras variables es constante</strong>, determinado por <span class="math inline">\(\beta\)</span>. Reflexiona: ¿en la naturaleza cuántos procesos crees que sean realmente lineales? Con esto no quiero decir que debamos de olvidarnos del modelo lineal y que, entonces, esta sesión es una pérdida de tiempo, no. Quiero decir que debemos de ser consciente del <strong>supuesto</strong> bajo el cual estamos trabajando, muchas veces para simplificarnos la existencia.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Recuerdas la definición formal de un modelo? Es una <strong>representación SIMPLIFICADA de la realidad</strong>; es decir, siempre que involucremos un modelo, sea cual sea, estamos dejando cosas en el tintero. Recuerda el aforismo propuesto por Box: “Todos los modelos están equivocados, pero algunos son útiles”.</p>
+</div>
+</div>
+</section>
+<section id="regresión-lineal-simple" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">11.4</span> Regresión lineal simple</h2>
+<p>Antes mencioné que la regla de tres es una aplicación del modelo lineal, lo que no dije es que es, en realidad, un ejercicio de <strong>regresión</strong>. ¿Qué es una regresión? Es una parte del <strong>aprendizaje automatizado supervisado</strong>, del cual hablaremos con más lujo de detalle en la sección correspondiente, pero podemos definirla como el proceso de <strong>estimar los parámetros de un modelo matemático a partir de ciertos datos</strong>. En una regresión <strong>la variable dependiente siempre es continua</strong>. ¿Qué pasa si tenemos una variable dependiente categórica? Entonces estamos en un escenario de clasificación, pero no nos adelantemos.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué es el aprendizaje automatizado? Por el momento entiendelo como la filosofía de “enseñar con ejemplos” llevada a modelos matemáticos y predicciones. En cualquier modelo de aprendizaje automatizado supervisado tenemos una serie de ejemplos (datos), en los cuales una o más variables sirven como predictoras de otra(s); es decir, el objetivo es generar buenas predicciones.</p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué es un parámetro en este contexto? Una manera fácil de entender los parámetros de un modelo es verlos como perillas que regulan cómo se transforma lo que está a la derecha del símbolo de igualdad para llegar a lo que está a la izquierda. Si te das cuenta es básicamente lo que sucede con las distribuciones de probabilidad, y con justa razón: las distribuciones de probabilidad son, en sí mismas, modelos. No confundas esta definición con la definición de parámetro poblacional.</p>
+</div>
+</div>
+<p>Ahora bien, hay una gran cantidad de <strong>métodos de auste</strong> de una regresión, pero todos se reducen a una cosa: <strong>minimizar una función de pérdida</strong>. ¿Qué es una función de pérdida y con qué se come? Es una forma rebuscada de llamarle a la <strong>distancia que existe entre nuestros valores observados y los valores predichos por el modelo</strong> o, en palabras más sencillas, qué tan lejos quedó la flecha del blanco; es decir, <strong>al ajustar un modelo estamos minimizando su error</strong>. ¿Cuáles valores predichos? Aaaah, que bueno que preguntaste. Si vuelves a la <a href="#fig-linmod">Figura&nbsp;<span>11.2</span></a> te darás cuenta que, utilizando los <strong>parámetros</strong> estimados con nuestra regla de tres (<span class="math inline">\(a\)</span> = 0 y <span class="math inline">\(b\)</span> = 5) calculamos cuánto gastaríamos si compraramos desde 1 hasta 10 manzanas. De esos costos solo teníamos el dato de que <span class="math inline">\(10 🍎 = \$50\)</span>, todo lo demás es una predicción.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lo que hicimos fue, de hecho, una <strong>extrapolación</strong>, pues <strong>predijimos valores fuera del alcance de nuestros datos observados</strong>. Si tuvieramos “huecos” en nuestros datos y quisiéramos rellenarlos con el modelo tendríamos una <strong>interpolación</strong>; es decir, <strong>predeciríamos valores dentro del alcance de nuestros datos observados</strong>.</p>
+</div>
+</div>
+<p>Pero volvamos a nuestra regresión lineal. El modelo más simple es el que veremos en esta sesión: la regresión lineal simple. En esta, tal y como en nuestro ejemplo con las manzanas, describimos la relación entre dos variables continuas utilizando la ecuación de la recta. Formalmente este lo expresamos como:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1*x + \epsilon
+\]</span></p>
+<p>Mencioné que existen distintas formas de ajustar sus parámetros, entre las que tenemos (ordenadas de mayor a menor complejidad):</p>
+<ul>
+<li>Mínimos cuadrados, que veremos a continuación.</li>
+<li>Máxima verosimilitud, que también veremos a continuación.</li>
+<li>Inferencia Bayesiana, que en realidad incluye como caso especial a la máxima verosimilitud.</li>
+<li>Descenso estocástico de gradiente, en ciertos escenarios de redes neuronales.</li>
+</ul>
+<p>Empecemos entonces con el ajuste por mínimos cuadrados.</p>
+<section id="mínimos-cuadrados" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="mínimos-cuadrados"><span class="header-section-number">11.4.1</span> Mínimos cuadrados</h3>
+<p>En este método de ajuste la función de pérdida es la función cuadrática:</p>
+<p><span class="math display">\[
+D(y_i - \hat{y_i}) = \sum_{i=1}^n(y_i - \hat{y_i})^2 = \sum_{i=1}^n \epsilon^2
+\]</span></p>
+<p>Es decir, <strong>minimizamos la distancia</strong> (diferencia) <strong>cuadrática entre los valores observados y los valores predichos</strong>. Analíticamente (cálculo) el proceso consiste en obtener la derivada parcial de <span class="math inline">\(D(y_i - \hat{y_i})\)</span>, igualarla a 0, y encontrar una expresión para <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span>. Te voy a ahorrar toda la <a href="https://bit.ly/minimos_cuadrados">matemática correspondiente</a> y te daré, solo como referencia, estas últimas expresiones. Para <span class="math inline">\(\beta_1\)</span>:</p>
+<p><span class="math display">\[
+  \beta_1 = \frac{\Sigma_{i = 1}^n(x_i - \overline{x})(y_i - \overline{y})}{\Sigma_{i = 1}^n(x_i - \overline{x})^2}
+\]</span></p>
+<p>Y para <span class="math inline">\(\beta_0\)</span>:</p>
+<p><span class="math display">\[
+\beta_0 = \overline{y}- \beta_1*\overline{x}
+\]</span></p>
+<p>¿Por qué solo como referencia? Porque (afortunadamente para nosotros) <code>R</code> ya tiene codificado todo el proceso en la función <code>lm(formula, data)</code> y no tenemos que preocuparnos por nada de eso.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recordarás que en el <a href="c04_tidyverse.html"><span>Capítulo&nbsp;4</span></a> hablé (y ejemplifiqué) sobre cómo ajustar una regresión lineal simple, tanto con <code>R</code> como con <code>tidymodels</code>. En esta sesión <code>tidymodels</code> aún nos queda “un poco grande”, en el sentido de que aún no podemos aprovechar todo lo que ofrece, por lo que me voy a limitar a utilizar la forma de <code>R</code> base.</p>
+</div>
+</div>
+<p>Para ejemplificarlo carguemos los datos contenidos en <code>example_data.csv</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_reg1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/example_data.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Luego grafiquémoslos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plot_data_reg1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df_reg1,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v1 y v2"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plot_data_reg1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="ajuste-y-bondad-de-ajuste" class="level4" data-number="11.4.1.1">
+<h4 data-number="11.4.1.1" class="anchored" data-anchor-id="ajuste-y-bondad-de-ajuste"><span class="header-section-number">11.4.1.1</span> Ajuste y Bondad de ajuste</h4>
+<p>Ahora ajustemos el modelo de mínimos cuadrados (<code>lm()</code>) a los datos y veamos los resultados de la regresión (<code>summary()</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>reg1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(v2<span class="sc">~</span>v1, <span class="at">data =</span> df_reg1)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = v2 ~ v1, data = df_reg1)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-5.8956 -1.9924 -0.5525  1.5351 15.3006 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -3.72654    0.73213   -5.09 1.81e-06 ***
+v1           1.17765    0.08141   14.47  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.095 on 95 degrees of freedom
+Multiple R-squared:  0.6878,    Adjusted R-squared:  0.6845 
+F-statistic: 209.3 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>Describamos la salida elemento por elemento:</p>
+<ul>
+<li><code>Call</code>: es el cómo llamamos a la función. ¿La razón? En caso de que estemos llamando a la función <code>lm</code> dentro de otra función, cosa que no hicimos. De cualquier manera, sirve como una forma de verificar que pusimos las cosas en orden. -<code>Residuals</code>: Nos da información sobre la distribución de los residuales (la diferencia entre observado y predicho). Esta es útil con fines diagnósticos, pero hablaremos más a fondo de ellos más adelante.</li>
+<li><code>Coefficients</code>: Nos da una tabla con los valores de los parámetros del modelo, donde la pendiente tiene el nombre de la variable predictora, su error estándar y una prueba <span class="math inline">\(t\)</span> para cada uno. ¿Contra qué está comparando? Contra un <strong>modelo nulo</strong>; es decir, contra un modelo donde ese parámetro tenga un valor = 0.</li>
+<li><code>Residual standard error</code>: Más información sobre los residuales, aunque en este caso es el error estándar. Este es sumamente útil para darnos una idea de qué tan preciso es el modelo, pues indica en cuántas unidades, en promedio, se desvía la predicción de los datos observados. Este valor, dividido entre el promedio de la variable predicha nos da la tasa de error del modelo.</li>
+<li><code>Multiple R-squared</code>: Es el valor del famosísimo (¿infame?) <strong>coeficiente de determinación</strong> (<span class="math inline">\(R^2\)</span>). Si ya has llevado clases de estadística y de regresión lineal es muy posible que lo entiendas como “la varianza de los datos explicada por el modelo”. ¿Por qué digo infame? Porque, al igual que el valor de p, es un valor del cuál se abusa. Nuevamente, los seres humanos somos flojos por naturaleza, por lo que nos gusta resumir las cosas en un solo número. En este sentido, el <span class="math inline">\(R^2\)</span> es una medida de <strong>bondad de ajuste</strong>; es decir, de qué tan bien ajustado está el modelo. Es muy práctico, pues está contenido en el intervalo <span class="math inline">\([0,1]\)</span> y representa un porcentaje; sin embargo, para que podamos confiar en él debemos de haber cubierto con el resto de <strong>supuestos de la RLS</strong>. Personalmtente te sugiero mejor tomar el RSE como medida de ajuste, aunque la interpretación no sea tan directa.</li>
+<li><code>Adjusted R-squared</code>: Es un ajuste al <span class="math inline">\(R^2\)</span> que lo hace menos optimista, especialmente diseñado para escenarios de regresión múltiple (de ahí el “Multiple” del punto anterior). Por el momento lo vamos a ignorar.</li>
+<li><code>F-statistic</code>: Resultados de un ANOVA que, al igual que el punto anterior vamos a ignorar porque es informativo solo en regresiones múltiples. Es un ANOVA para comparar todo el modelo contra un modelo nulo, por lo que aquí solo es redundante con las pruebas <span class="math inline">\(t\)</span> para cada parámetro.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué es la bondad de ajuste? Como dice el nombre, qué tan bien ajustado está el modelo, en el sentido de qué tan buenas son las predicciones.</p>
+</div>
+</div>
+<p>Los resultados del modelo los podemos reportar como:</p>
+<p>En el modelo de regresión lineal simple tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+<p>Usualmente acompañaríamos este reporte de un gráfico, el cual podemos construir con la capa <code>geom_smooth(method = "lm", se = FALSE)</code>, tal que:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_reg1 <span class="ot">&lt;-</span> plot_data_reg1 <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">maxColorValue =</span> <span class="dv">255</span>)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">caption =</span> <span class="fu">paste</span>(<span class="st">"Modelo ajustado: v2 = "</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">round</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">1</span>],<span class="dv">2</span>), </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">" + "</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">round</span>(reg1<span class="sc">$</span>coefficients[<span class="dv">2</span>],<span class="dv">2</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                                   <span class="st">"*v1 + e"</span>))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plot_reg1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ahora bien, recordarás que ninguna estimación es infalible, por lo que tanto el reporte como el gráfico están incompletos. Hablemos entonces de los intervalos de confianza.</p>
+<section id="intervalos-de-confianza-para-los-parámetros" class="level5" data-number="11.4.1.1.1">
+<h5 data-number="11.4.1.1.1" class="anchored" data-anchor-id="intervalos-de-confianza-para-los-parámetros"><span class="header-section-number">11.4.1.1.1</span> Intervalos de confianza para los parámetros</h5>
+<p>En un modelo de regresión lineal tenemos “dos” intervalos de confianza: los intervalos de confianza para la estimación de los parámetros y el intervalo de confianza para la regresión. Los primeros, como te imaginarás, representan la incertidumbre alrededor de la estimación de nuestros parámetros de regresión. Como recordarás de lo que mencioné en el capítulo <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, estos se construyen a partir de su error estándar (<span class="math inline">\(IC_{95\%} = \beta ± 1.96*EE\)</span>) y, a diferencia de lo que vimos en el <a href="c09_ph0.html"><span>Capítulo&nbsp;9</span></a>, ahora los obtenemos con la función <code>confint()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>confint_reg1 <span class="ot">&lt;-</span> <span class="fu">confint</span>(reg1, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>confint_reg1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %    97.5 %
+(Intercept) -5.179989 -2.273085
+v1           1.016035  1.339263</code></pre>
+</div>
+</div>
+<p>Con esta información podemos realizar un gráfico donde representemos esta incertidumbre, en donde obtengamos dos límites para la línea de regresión utilizando esos valores, tal que:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construimos el límite inferior con el límite del 2.5% de los intervalos</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_reg1[<span class="st">"inf_int"</span>] <span class="ot">&lt;-</span> confint_reg1[<span class="dv">1</span>,<span class="dv">1</span>] <span class="sc">+</span> confint_reg1[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>df_reg1<span class="sc">$</span>v1</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Construimos el límite superior con el límite del 97.5% de los intervalos</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df_reg1[<span class="st">"sup_int"</span>] <span class="ot">&lt;-</span> confint_reg1[<span class="dv">1</span>,<span class="dv">2</span>] <span class="sc">+</span> confint_reg1[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>df_reg1<span class="sc">$</span>v1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Añadiéndolos al gráfico de los datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_reg1 <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> df_reg1,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">ymin =</span> inf_int,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> sup_int),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">"gray70"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Intervalos de confianza para los parámetros"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Pero este no es el gráfico que usualmente veremos. Si deseáramos inlcuir esta información solo añadiríamos los IC al reporte, tal que:</p>
+<p>En el modelo de regresión lineal simple tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02, 1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En este caso nuestros datos son “adimensionales”; es decir, no tenemos unidades de ninguna variable. Si nuestras variables no son adimensionales debemos de incluir también las unidades correspondientes (pesos, manzanas y pesos/manzana, si volvemos a nuestro ejemplo).</p>
+</div>
+</div>
+</section>
+<section id="intervalo-de-confianza-para-la-regresión" class="level5" data-number="11.4.1.1.2">
+<h5 data-number="11.4.1.1.2" class="anchored" data-anchor-id="intervalo-de-confianza-para-la-regresión"><span class="header-section-number">11.4.1.1.2</span> Intervalo de confianza para la regresión</h5>
+<p>¿Si el gráfico anterior no es el que presentamos, cuál es? Uno que incluya el intervalo de confianza para la regresión <em>per-se</em> (también llamado para la recta). ¿Recuerdas el RSE? Pues se construye con ese valor. Para incluirlo en el gráfico solo tenemos que modificar ligeramente <code>geom_smooth()</code> y hacer <code>se = TRUE</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_reg1 <span class="sc">+</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">se =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'
+`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-rls1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/fig-rls1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11.3: Modelo de regresión lineal simple de <code>v2</code> y <code>v1</code>. La línea morada representa el ajuste lineal, y el área sombreada el intervalo de confianza para la regresión</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estamos obteniendo dos mensajes de <code>geom_smooth()</code> porque en <code>plot_reg1</code> ya teníamos esa capa (con <code>se = FALSE</code>). Diré lo obvio, pero cuando hagas tus gráficos NO es necesario que repitas capas.</p>
+</div>
+</div>
+<p>Nuestro reporte completo quedaría entonces como:</p>
+<p>En el modelo de regresión lineal simple (<a href="#fig-rls1">Figura&nbsp;<span>11.3</span></a>) tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02, 1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+<p>Y ahora toca abordar el “elefante en el cuarto” y comprobar que nuestra regresión sea confiable.</p>
+</section>
+</section>
+</section>
+<section id="supuestos-de-la-regresión-lineal" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="supuestos-de-la-regresión-lineal"><span class="header-section-number">11.4.2</span> Supuestos de la Regresión Lineal</h3>
+<p>¿Qué no ya habíamos evaluado la bondad del ajuste? Sí y no. En realidad hice una pequeña trampa para que veas por qué el <span class="math inline">\(R^2\)</span> no cuenta toda la historia, y por qué no debemos de confiar ciegamente en él. La regresión lineal simple, como buena técnica paramétrica, tiene sus supuestos:</p>
+<ul>
+<li><strong>Linealidad</strong>: Existe una relación lineal entre las variables involucradas.</li>
+<li><strong>Independencia</strong>: El error es independiente; <em>i.e.</em>, no hay correlación entre el error de puntos consecutivos (aplica para series de tiempo).</li>
+<li><strong>Normalidad</strong>: El error sigue una distribución normal.</li>
+<li><strong>Homocedasticidad</strong>: El error tiene una varianza constante para cada valor de <span class="math inline">\(X\)</span>.</li>
+</ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Te darás cuenta de que todo está en términos del “error”, tal y como hablábamos de distribuciones muestrales de la media en el capítulo <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a>. Siguiendo la misma lógica, nuestras inferencias para comprobar los supuestos las haremos sobre los residuales.</p>
+</div>
+</div>
+<p>Si no cumplimos con uno, varios, o ninguno, la confiabilidad de nuestro modelo de regresión para fines de interpretación va disminuyendo. Los primeros dos son bastante lógicos. El primero es auto-explicativo: si la relación no es lineal, el modelo lineal no es suficiente para describirla. El segundo tiene que ver con datos de series de tiempo y algo que se conoce como <strong>autocorrelación</strong>, pero esto se reduce a que el error del punto <span class="math inline">\(t_i\)</span> no dependa del punto <span class="math inline">\(t_{i-1}\)</span>.</p>
+<p>El <strong>supuesto de normalidad</strong>, para variar, requiere de un poco más de explicación: <strong>la distribución que debe ser normal es la del error</strong>. En ningún lugar se habla de que <span class="math inline">\(Y\)</span> o <span class="math inline">\(X\)</span> deban de estar normalmente distribuidos, solamente el error. Esto puede sonarte extraño, pero tiene todo el sentido del mundo: si estamos optimizando el modelo a partir de los residuales, ¿por qué habría de importarnos la distribución cruda de las variables?</p>
+<p>El <strong>supuesto de homocedasticidad</strong>, por otra parte, es análogo al supuesto de homogeneidad de varianzas pero, nuevamente, nos interesa qué pasa con el error, no con las variables originales (por favor, no hagas una prueba de Levene con tus variables como grupos). En este caso lo importante es que el error sea parejo, independientemente de si tenemos valores pequeños o grandes del predictor.</p>
+<p>¿Cómo evaluamos estos supuestos? Mayoritariamente con gráficos de dispersión, pero vamos uno a uno:</p>
+<ul>
+<li><strong>Linealidad</strong>: Con un gráfico de residuales. En este gráfico tenemos los residuales estandarizados (cada residual menos el promedio de los residuales, dividido entre la desviación estándar) en el eje <span class="math inline">\(y\)</span>, y los valores ajustados por el modelo (predicciones) en el eje <span class="math inline">\(x\)</span>. Se pueden añadir dos referencias: una línea de referencia horizontal en <span class="math inline">\(y = 0\)</span> y una curva LOESS (hablaremos un poco de este modelo en el <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>). Si la relación entre nuestras variables predicha y predictora es perfectamente lineal, entonces todos los puntos caerán sobre la línea de referencia y la curva LOESS será completamente horizontal en 0. Entre menos lineal sea la relación más se alejarán los puntos de la línea y mayores curvaturas tendrá el modelo LOESS. Adicionalmente, puede servir para identificar valores extremos (puntos que caigan fuera de <span class="math inline">\([-1.96, 1.96]\)</span> si se trabaja a un 95% de confianza).</li>
+<li><strong>Independencia</strong>: Con un gráfico de autocorrelación. Dado que el análisis de series de tiempo está fuera del alcance de este grupo lo vamos a obivar.</li>
+<li><strong>Normalidad</strong>: Una prueba de normalidad de los residuales y con un gráfico cuantil-cuantil (QQ plot). En este gráfico se grafican (valga la redundancia) los residuales en el eje <span class="math inline">\(y\)</span>, y cuantiles teóricos según una distribución normal en el eje <span class="math inline">\(x\)</span>. Además se traza una línea de referencia con una pendiente de 1, que representa una distribución normal perfecta. El objetivo es que la prueba de normalidad sea no significativa y que los residuales caigan lo más cercanamente posible a la línea de referencia.</li>
+<li><strong>Homocedasticidad</strong>: Una prueba <span class="citation" data-cites="BreuschPagan_1979">Breusch &amp; Pagan (<a href="references.html#ref-BreuschPagan_1979" role="doc-biblioref">1979</a>)</span> y un gráfico de escala-locación (scale-location). La prueba, como te imaginarás, tiene la hipótesis de nulidad de que el error (residuales) está homogéneamente distribuido. En el gráfico tenemos en el eje <span class="math inline">\(y\)</span> la raíz cuadrada del absoluto de los residuales estandarizados (<span class="math inline">\(\sqrt{|re|}\)</span>) y en el eje <span class="math inline">\(x\)</span> los valores ajustados. ¿Por qué la raíz del absoluto? Ese detalle ya es clavarse demasiado, y prefiero que nos adentremos bien a otro tema un poco más adelante, así que conformemonos por saber que queremos que los puntos estén distribuidos de manera aleatoria (homogénea) en todo el eje <span class="math inline">\(x\)</span>. ¿Qué quiere decir esto? que no tengamos una mayor dispersión de los puntos (varianza de los residuales) en valores ajustados pequeños (a la izquierda del gráfico) que en los valores más grandes (derecha del gráfico), lo que se vería como un &gt; imaginario, o viceversa, o algún otro patrón.</li>
+</ul>
+<p>¿Muchos gráficos? Tal vez. Podríamos hacerlo a mano, o podemos aprovechar la librería <code>performance</code> y obtenerlos todos de una vez con la función <code>check_model(object)</code>, donde <code>object</code> es el objeto con los resultados del ajuste. Esta función nos da todos los gráficos en un solo paso:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>reg1_diags <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_model</span>(reg1)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reg1_diags</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-performance" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/fig-performance-1.png" class="img-fluid figure-img" width="576"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11.4: Gráficos diagnósticos de la regresión.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Y se acabó el encanto. Resulta que no cumplimos con ninguno de los supuestos, y entonces nuestro <span class="math inline">\(R^2 \approx 0.7\)</span> nos mintió vilmente. Cada quien reacciona de forma diferente a cuándo alguien le miente, pero lo que es seguro que pase es que desconfiará, al menos un poco, de todo lo que esa persona le diga en un futuro. En defensa del <span class="math inline">\(R^2\)</span>, no es su culpa y, de hecho, estoy siendo demasiado duro con él. Me explico: el <span class="math inline">\(R^2\)</span> es confiable como medida de ajuste sí y solo si se cumplen los mismos supuestos de la regresión lineal simple, lo cual no es el caso; <em>ergo</em>, no podíamos confiar en él desde un principio porque nuestros datos no lo permiten. El problema es que se ha malversado su uso, y muchas personas lo utilizan como si fuera el único sello de garantía, cuando en realidad es el último.</p>
+<p>Pero volvamos a nuestros gráficos. En la <a href="#fig-performance">Figura&nbsp;<span>11.4</span></a> se ven muy pequeños, y hay un par que no hemos explicado:</p>
+<ol type="1">
+<li><strong>Posterior predictive check</strong>: Este tipo de gráficos es uno de los más socorridos en inferencia Bayesiana, para comprobar que la distribución posterior obtenida por el modelo sea consistente con los datos observados. Aquí no tenemos un modelo Bayesiano, pero sí que podemos utilizar la información de la distribución de los parámetros (estimación y error estándar) para simular datos aleatorios. Si el modelo tiene una buena capacidad predictiva, entonces los datos observados <span class="math inline">\(Y\)</span> deben de caer dentro del área comprendida por las líneas de los datos predichos <span class="math inline">\(\hat{Y}\)</span>. En este caso, la capacidad predictiva del modelo no es del todo mala, solamente tenemos una sobre-estimación notable en valores cercanos a 10. Esto nos habla de la robustez del modelo lineal, pero no por ello hay que abusar de él.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(performance<span class="sc">::</span><span class="fu">check_predictions</span>(reg1)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li><strong>Linearity</strong>: Es el gráfico de residuales. Desafortunadamente no hay una forma de obtenerlo en una sola línea, así que tocará construirlo a mano y, de paso, modificar un par de cosas. La primera es graficar los residuales estandarizados (menos su media y divididos entre su desviación estándar) para poder darnos una idea de si tenemos valores extremos o no. La segunda es asignar una escala de colores para facilitarlo. Para poder hacer esto vamos a pasarle a <code>ggplot()</code> directamente el objeto de regresión, y en <code>aes()</code> vamos a utilizar dos atributos ocultos del objeto <code>reg1</code>: <code>.fitted</code> con los valores predichos y <code>.stdresid</code> con los residuales estandarizados. En el gráfico resultante podemos ver que hay varios valores con residuales altos (tonos rojizos), y algunos extremos (&gt; 1.96). La curva LOESS no se ve exageradamente desviada de la línea de referencia, lo cual indica que un modelo lineal puede no ser tan mala elección.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializar el espacio gráfico</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> reg1, <span class="co"># Objeto de regresión</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>       <span class="co"># Datos ajustados y residuales estandarizados</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .stdresid,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> .stdresid)) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gráfico de dispersión</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Referencia en 0</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"black"</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Referencia loess</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">colour =</span> <span class="st">"#3aaf85"</span>) <span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gradiente de colores</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "#cd201f": color para los extremos (rojo)</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "#1b6ca8": color para el punto intermedio (0)</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Escala de -2 a 2 (debería ser 1.96)</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># oob: ¿qué hacer con datos fuera de los límites?</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># scales::squish : marcarlos como si estuvieran en el límite</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradient2</span>(<span class="at">low =</span> <span class="st">"#cd201f"</span>,</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>                        <span class="at">midpoint =</span> <span class="dv">0</span>, </span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">mid =</span> <span class="st">"#1b6ca8"</span>, </span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">high =</span> <span class="st">"#cd201f"</span>,</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>                        <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">2</span>),</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>                        <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>                        <span class="at">oob =</span> scales<span class="sc">::</span>squish) <span class="sc">+</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Linearity"</span>,</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Reference line should be flat and horizontal"</span>,</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Standardized residuals"</span>,</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fitted values"</span>) <span class="sc">+</span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="3" type="1">
+<li><strong>Homogeneity of variance</strong>: Homocedasticidad/Heterocedasticidad. Con un poco de imaginación puedes trazar un &gt;, indicando que hay una mayor varianza en los valores pequeños que en los valores grandes. La prueba <span class="citation" data-cites="BreuschPagan_1979">Breusch &amp; Pagan (<a href="references.html#ref-BreuschPagan_1979" role="doc-biblioref">1979</a>)</span>, por otra parte, sugiere que la varianza es homogénea. Este es un típico caso donde conviene errar en el lado de la precaución y profundizar en el análisis antes de sacar una conclusión. ¿Qué pasa con nuestro &gt; si quitamos el punto extremo con un residual estandarizado &gt; 4? Se vuelve mucho menos marcado, ¿no? Posiblemente sea eso lo que está viendo la prueba y que no esté siendo engañada por ese punto. Dada la estructura de los datos (muchos acumulados en valores pequeños y pocos en valores grandes), yo decidiría que no se cumple el supuesto de homogeneidad de varianzas.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>reg1_homoced <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_heteroscedasticity</span>(reg1)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_homoced) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reg1_homoced</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: Error variance appears to be homoscedastic (p = 0.206).</code></pre>
+</div>
+</div>
+<ol start="4" type="1">
+<li><strong>Influential Observations</strong>: Este es otro gráfico diagnóstico que no había mencionado porque no está directamente relacionado con los supuestos. Este gráfico se conoce como <strong>gráfico de apalancamiento</strong>, y señala observaciones que pudieran estar “engañando” o afectando de manera importante la estimación de la recta. En otras palabras, que “jalen” la recta hacia ellos, por estar extremadamente lejos de la tendencia central de <span class="math inline">\(y\)</span> para ese punto <span class="math inline">\(x\)</span>. En menos palabras: nos permite identificar “outliers”. Hay una gran cantidad de métodos, y la función <code>performance::check_outliers()</code> califica cada valor con una nota compuesta por el promedio de los resultados binarios (“outlier” o no, 1 o 0) de cada método. Representa la probabilidad de que cada observación sea clasificada como “outlier” por al menos un método. Se considera un “outlier” si su calificación es superior o igual a 0.5 (líneas verdes punteadas); es decir, vamos a buscar puntos que estén fuera del “cono” formado por los contornos. En este caso ninguno está fuera del contorno, pero el punto 1 se ve sospechoso.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>reg1_outliers <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_outliers</span>(reg1)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_outliers)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="5" type="1">
+<li><strong>Normality</strong>: Por último, el gráfico de normalidad. No es de sorprender que tengamos “desviaciones de la normalidad” bastante marcadas en algunos puntos, especialmente cerca de la cola derecha de la distribución. La prueba de normalidad de los residuales también rechaza que se cumpla el supuesto.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reg1_norm <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_normality</span>(reg1)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_norm, <span class="at">type =</span> <span class="st">"qq"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>For confidence bands, please install `qqplotr`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>reg1_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Warning: Non-normality of residuals detected (p &lt; .001).</code></pre>
+</div>
+</div>
+<p>Independientemente de mi “bullying” al <span class="math inline">\(R^2\)</span>, ahora ya sabes todo lo que implica hacer una regresión lineal simple, y que es mucho más que simplemente picar botones en alguna suite estadística o utilizar la función <code>lm</code> en <code>R</code> o alguna otra función en otro lenguaje de programación.</p>
+</section>
+<section id="predicción-vs.-interpretación" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="predicción-vs.-interpretación"><span class="header-section-number">11.4.3</span> Predicción vs.&nbsp;Interpretación</h3>
+<p>Ahora bien, mencioné en varias ocasiones cosas relacionadas con la “predicción” y la “interpretación”. Pues resulta que, como vimos arriba, para fines predictivos no importan demasiado los supuestos, y antes de que agarres un trinche y una antorcha escucha lo que tengo que decir. Antes te dije que la regresión forma parte del aprendizaje automatizado supervisado y, como tal, su principal (por no decir único) objetivo es la predicción. Un modelo de regresión exitoso es un modelo que pueda predecir adecuadamente, punto. ¿Y la interpretación? Esa es otra cara de la moneda. De hecho, están inversamente correlacionadas, en el sentido de que entre más poderosa es una técnica, menos interpretable es. De todos estos detalles vamos a hablar más adelante en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>, pero por el momento quiero que te quedes con lo siguiente:</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La validación de supuestos es solo necesaria si nos interesa explicar los parámetros del modelo, no si solo nos interesan sus predicciones.</p>
+</div>
+</div>
+<p>Sin ir demasiado lejos, el modelo que construimos arriba no cumple con el supuesto de normalidad (los demás están en la cuerda floja) y aún así las predicciones posteriores (en el <em>posterior predictive check</em>) se ven bastante aceptables. Desafortunadamente para nostros, usualmente nos interesa la interpretación, así que hay que hacer la tarea completa.</p>
+<p>¿Y si solo me interesan las predicciones? Bueno, igual hay que verificar algunas cosas, pero eso lo veremos en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>.</p>
+</section>
+<section id="máxima-verosimilitud" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="máxima-verosimilitud"><span class="header-section-number">11.4.4</span> Máxima verosimilitud</h3>
+<p>Bueno, ya sabemos cómo aplicar, interpretar, y validar los supuestos de una regresión lineal en <code>R</code> utilizando el método de mínimos cuadrados, pero antes te mencioné que también había otros métodos entre los que se encuentra el <strong>ajuste por máxima verosimilitud</strong>. Entonces es necesario explicar qué es la verosimilitud para luego ver cómo maximizarla, ¿no crees?</p>
+<p>Recordemos por un momento lo que revisamos en el <a href="c06_prob.html"><span>Capítulo&nbsp;6</span></a> sobre la probabilidad. Dijimos que, cuando tenemos resultados mutuamente excluyentes y exhaustivos (todos los resultados), la suma de todas sus probabilidades es exactamente 1, tal que:</p>
+<p><span class="math display">\[
+\sum_i^n p_i == 1
+\]</span></p>
+<p>Hasta aquí todo bien, pero ¿dónde entra la <strong>verosimilitud</strong>? Si buscas en el diccionario de la Real Academia Española te vas a encontrar con una de sus siempre útiles definiciones: “Cualidad de verosímil”, por lo que hay que definir verosímil: “<strong>que tiene apariencia de verdadero</strong>”. Eso ya tiene más sentido. En un escenario de investigación nosotros podemos plantear múltiples hipótesis, que no son necesariamente excluyentes entre sí, entonces no podemos simplemente utilizar la probabilidad. Entendamos la verosimilitud con un ejemplo:</p>
+<p>Imagina que alguien a quien conoces te dice que uno de sus amigos tiene poderes psíquicos. Tú, como persona de ciencia, decides ponerlo a prueba. Acuerdan una reunión y le pones un “desafío” simple: vas a lanzar diez volados, y el debe de adivinar el resultado. Al final, él adivina correctamente 7/10 volados. Sin dejarte llevar por tu escepticismo planteas algunas hipótesis: i) simple coincidencia, el tamaño de muestra no es lo suficientemente grande; ii) la moneda no es del todo “justa”, sino que tiende a caer más hacia cierto lado; iii) esta persona tiene una visión cinética sobre-humana y puede ver qué es lo que está arriba antes de que atrapes la moneda, iv) esta persona realmente tiene algo de clarividente. ¿Cuál crees que sea más verosímil? Espero que me digas que la primera hipótesis, especialmente después de lo que vimos en el <a href="c06_prob.html"><span>Capítulo&nbsp;6</span></a>. Si por el contrario hubieran sido 1000 lanzamientos y hubiera adivinado 700, la historia sería otra, pero con 7/10 puede ser un capricho del mundo. Eso que hicimos fue, justamente, un ajuste por <strong>máxima verosimilitud</strong>: <strong>seleccionar la hipótesis más verosímil de entre un conjunto dado</strong>, solo que vamos a cambiar hipótesis por valores de parámetros.</p>
+<p>¿Formalmente? Un ajuste por máxima verosimilitud consiste en <strong>estimar parámetros</strong> de un modelo, dado un conjunto de observaciones, en donde se encuentra <strong>valores que maximicen la verosimilitud de las observaciones dados los valores de los parámetros</strong>. Puesto de otra manera, buscamos el conjunto de valores que maximicen la probabilidad de que nos hayamos encontrado nuestros datos, según el modelo que escogimos. Esto se parece mucho a lo que vimos en el <a href="c09_ph0.html"><span>Capítulo&nbsp;9</span></a> sobre el nivel de significancia, solo que nuestro modelo “deja de ser una distribución de probabilidades” para ser un modelo de regresión. ¿Por qué las comillas? Porque nuestro error no puede quedar “suelto”, pero en máxima verosimilitud podemos trabajar con <strong>cualquier distribución de probabilidad que se ajuste a nuestro problema</strong>; de hecho, esto es lo que da lugar a los <strong>modelos lineales generalizados</strong>, pero eso lo veremos en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>.</p>
+<p>¿Cómo lo llevamos a la práctica? Primero quiero que te des la oportunidad de ver una relación interesante que puede ahorrarte mucho trabajo, o que puede abrirte la puerta a otro tipo de análisis.</p>
+<section id="mínimos-cuadrados-máxima-verosimilitud-e-inferencia-bayesiana" class="level4" data-number="11.4.4.1">
+<h4 data-number="11.4.4.1" class="anchored" data-anchor-id="mínimos-cuadrados-máxima-verosimilitud-e-inferencia-bayesiana"><span class="header-section-number">11.4.4.1</span> Mínimos cuadrados, máxima verosimilitud e inferencia Bayesiana</h4>
+<p>Esta parte es completamente teórica y asumo que el ver procedimientos algebraicos no te supone un problema. De no ser así, puedes saltar al final para obtener la idea clave. Si decides que te interesa, vamos allá.</p>
+<p>Recordemos que un problema de <strong>regresión</strong> consiste en <strong>estimar los parámetros de un modelo matemático dado un conjunto de observaciones</strong>, y que tenemos una gran diversidad de formas de hacerlo. Comencemos hablando del método de ajuste más común para una RLS: <strong>mínimos cuadrados</strong>. Como mencioné antes, con este método <strong>minimizamos</strong> la <strong>función de pérdida cuadrática</strong>; es decir:</p>
+<p><span class="math display">\[\begin{align*}
+\epsilon = y - \hat{y}\\
+L = \epsilon^2
+\end{align*}\]</span></p>
+<p>Cuando utilizamos este método <strong>asumimos</strong> algunas cosas, entre ellas que nuestros <strong>residuales</strong> (no nuestra variable) se encuentran <strong>normalmente distribuidos</strong>. Aunque este método funciona, se prefiere utilizar métodos probabilísticos (<span class="citation" data-cites="Gerrodette_2011">Gerrodette (<a href="references.html#ref-Gerrodette_2011" role="doc-biblioref">2011</a>)</span>), tal como la aproximación por <strong>máxima verosimilitud</strong>. Antes utilizamos un ejemplo práctico para definirla, pero ahora aproximémosla desde el <strong>teorema de Bayes</strong>:</p>
+<p><span class="math display">\[
+p(\theta|x) = \frac{p(x|\theta)p(\theta)}{p(x)}
+\]</span></p>
+<p>Que podemos simplificar como:</p>
+<p><span class="math display">\[
+Posterior = \frac{verosimilitud \times previa}{evidencia}
+\]</span></p>
+<p>El teorema de Bayes es lo que da lugar al <strong>paradígma de la inferencia Bayesiana</strong>, el cual no vemos en este curso; sin embargo explicar el teorema es bastante sencillo: <strong>¿qué tan probable es una hipótesis (<span class="math inline">\(\theta\)</span>), dada cierta evidencia (datos, <span class="math inline">\(x\)</span>)? (probabilidad posterior, <span class="math inline">\(p(\theta|x)\)</span>)</strong>. Para responderlo vamos a obtener la <strong>relación que hay entre qué tan probable es la evidencia, dada la hipótesis (<span class="math inline">\(p(x|\theta)\)</span>, nuestra verosimilitud), qué tan probable creamos nosotros que es nuestra hipótesis (probabilidad previa, <span class="math inline">\(p(\theta)\)</span>) y la probabilidad de la evidencia en sí misma (<span class="math inline">\(p(x)\)</span>)</strong>. Obtener la probabilidad de la evidencia es un tema en sí mismo (en realidad solo la aproximamos), así que lo vamos a obviarla de la ecuación. Recordarás que en la inferencia estadística frecuentista partimos del hecho de que <strong>no sabemos nada</strong> sobre nuestro problema, y podemos entonces, al menos de manera teórica, establecer eso en el teorema de Bayes, lo cual nos lleva a <strong>cancelar nuestros términos de previa y evidencia</strong> y terminar con la siguiente equivalencia:</p>
+<p><span class="math display">\[
+Posterior \equiv verosimilitud
+\]</span></p>
+<p>Este <strong>caso especial</strong> de la <strong>inferencia Bayesiana</strong> tiene un nombre: <strong>Estimación Máxima A posteriori</strong> (Maximum A posteriori Estimate, MAP) y es <strong>equivalente a la estimación puntual de un ajuste por máxima verosimilitud</strong>. ¿Por qué? Porque en esa aproximación tratamos de encontrar valores de nuestros parámetros que maximicen la verosimilitud de las observaciones, dados los parámetros. De manera matemática definimos la equivalencia como:</p>
+<p><span class="math display">\[
+p(x|\theta) \equiv L(\theta|x) \implies p(x_1, x_2, ..., x_n|\theta)
+\]</span></p>
+<p>Otro de nuestros supuestos en este paradigma es que las muestras son independientes entre sí, por lo que podemos expandir nuestra probabilidad conjunta con <span class="math inline">\(P(A,B) = P(A)P(B)\)</span>:</p>
+<p><span class="math display">\[
+L(\theta|x_1, x_2, ..., x_n) \equiv p(x_1|\theta)p(x_2|\theta),...,p(x_n|\theta)= \prod p(x_i|\theta)
+\]</span></p>
+<p>Y este término es lo que queremos maximizar, por lo cual lo podemos escribir tal que:</p>
+<p><span class="math display">\[
+\begin{matrix} max \\ \theta \end{matrix}
+\left\{ \prod p(x_i|\theta) \right\}
+\]</span></p>
+<p>El problema es que ni a nosotros ni a las computadoras nos gusta hacer multiplicaciones, por lo que podemos aplicar un logaritmo para convertir el productorio en una sumatoria. Recuerda: el logaritmo de un producto es igual a la suma del logaritmo de cada uno de sus componentes, por lo tanto:</p>
+<p><span class="math display">\[
+\begin{matrix} max \\ \theta \end{matrix}
+\left\{ log \left( \prod p(x_i|\theta) \right) \right\} \implies
+\begin{matrix} max \\ \theta \end{matrix}
+\left\{ \sum_i^n log(p(x_i|\theta)) \right\}
+\]</span></p>
+<p>Esta última parte era un poco innecesaria, nada más que un breviario cultural para que conocieras por qué utilizamos logaritmos de verosimilitud, cosa que haremos más adelante, pero ahora vayamos al meollo del asunto:</p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Uno de los supuestos del ajuste por mínimos cuadrados es un error normalmente distribuido. En máxima verosimilitud podemos ajustar nuestro error a cualquier distribución de probabilidad. Si utilizamos a la distribución normal como la distribución del error, entonces <strong>mínimos cuadrados, máxima verosimilitud (distribución normal) e inferencia Bayesiana (verosimilitud normal y previas muy planas)</strong> dan <strong>estimaciones equivalentes</strong>.</p>
+</div>
+</div>
+</section>
+<section id="ajuste-por-máxima-verosimilitud" class="level4" data-number="11.4.4.2">
+<h4 data-number="11.4.4.2" class="anchored" data-anchor-id="ajuste-por-máxima-verosimilitud"><span class="header-section-number">11.4.4.2</span> Ajuste por máxima verosimilitud</h4>
+<p>En este punto puedes estar en uno de estos escenarios: a) lograste seguir toda la explicación y se te hizo lógica (si fue así, ¡felicidades! Eres un tan ñoño o ñoña como yo); b) seguiste la explicación y se te hizo lógica, pero no terminaste de entender el teorema de Bayes (igualmente, ¡felicidades! Vas para ñoño/ñoña que chutas); c) lo leíste pero te perdiste solo con las ecuaciones (también ¡felicidades!, tienes la intención de convertirte en ñoño/ñoña); o d) saltaste directamente a lo importante (¡felicidades a ti también! Tienes una vida 🥲). Si estás en los casos c y d, y puede que b seguramente no estés del todo convencido de que mínimos cuadrados y máxima verosimlitud con un error normal sean equivalentes. Si estás en el caso a, te gustaría una demostración. ¿Y si no te interesa? Igual la vamos a hacer.</p>
+<p>A diferencia de la implementación de una regresión por mínimos cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan intuitivo. El primer paso es establecer manualmente nuestra función de verosimilitud, ajustando una distribución normal a los residuales:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df_reg1[<span class="fu">c</span>(<span class="st">"v1"</span>, <span class="st">"v2"</span>)]</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(b0, b1, mu, sigma){</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Encontrar los residuales. Modelo a ajustar</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> data<span class="sc">$</span>v2 <span class="sc">-</span> data<span class="sc">$</span>v1 <span class="sc">*</span> b1 <span class="sc">-</span> b0</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcular la verosimilitud. Residuales con distribución normal.</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> <span class="fu">suppressWarnings</span>(<span class="fu">dnorm</span>(R, mu, sigma))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sumar el logaritmo de las verosimilitudes para</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># todos los puntos de datos.</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>(R))</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ahora ajustemos el modelo que acabamos de crear, utilizando la función <code>stats4::mle(fun, start = list())</code> (*maximum likelihood estimation), donde <code>fun</code> es la función de verosimilitud a ajustar y <code>start</code> son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mle_fit <span class="ot">&lt;-</span> <span class="fu">mle</span>(LL, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">b0 =</span> <span class="dv">1</span>, <span class="at">b1 =</span> <span class="dv">1</span>, <span class="at">sigma =</span> <span class="dv">1</span>), </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed =</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">0</span>), </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">nobs =</span> <span class="fu">length</span>(data<span class="sc">$</span>v2))</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mle_fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Maximum likelihood estimation
+
+Call:
+mle(minuslogl = LL, start = list(b0 = 1, b1 = 1, sigma = 1), 
+    fixed = list(mu = 0), nobs = length(data$v2))
+
+Coefficients:
+       Estimate Std. Error
+b0    -3.726537 0.72453828
+b1     1.177649 0.08056368
+sigma  3.063056 0.21991454
+
+-2 log L: 492.4402 </code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hay que definir valores iniciales para los parámetros porque, a diferencia de por mínimos cuadrados, el proceso de minimización del negativo de la suma del logaritmo de la verosimilitud es <strong>iterativo</strong> mediante un algoritmo de búsqueda. El más común es el algoritmo de búsqueda de Newton-Raphson (o Newton-Fourier). ¿A qué me refiero con iterativo? A que la computadora variará los parámetros hasta llegar a la solución “optima”:</p>
+<div id="fig-iterative" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/iterative.gif" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11.5: Ajuste iterativo de parámetros</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Esta salida fue un poco más simple que la salida de la función <code>lm()</code> pero, ¿fue de diferente la estimación? Si vemos los coeficientes de nuestro ajuste por mínimos cuadrados veremos que la estimación puntual es la misma, y los errores estándares son prácticamente iguales:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)<span class="sc">$</span>coefficients</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
+(Intercept) -3.726537 0.73212521 -5.090027 1.805160e-06
+v1           1.177649 0.08140729 14.466134 9.513254e-26</code></pre>
+</div>
+</div>
+<p>Además, el error estándar de la estimación por mínimos cuadrados es prácticamente igual al <code>sigma</code> de la estimación por máxima verosimilitud:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)<span class="sc">$</span>sigma</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.095131</code></pre>
+</div>
+</div>
+<p>Moraleja: no utilices estimación por máxima verosimilitud si vas a utilizar una distribución normal. Lo único que ganas es hacer pasos adicionales. ¿Cómo utilizar otras distribuciones? Eso lo veremos a detalle en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>.</p>
+</section>
+</section>
+</section>
+<section id="correlación-y-covarianza" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="correlación-y-covarianza"><span class="header-section-number">11.5</span> Correlación y covarianza</h2>
+<p>Sé que la sesión hasta este momento ha sido larga y tediosa, pero el tema de regresión merece entrar a la teoría para no obtener conclusiones equivocadas. Dejemos de lado esa parte y cerremos hablando de dos conceptos relacionados: la correlación y la covarianza.</p>
+<p>La <strong>covarianza</strong> nos indica <strong>cómo varía una variable en relación a otra</strong>. La <strong>correlación</strong> describe <strong>la relación entre dos variables</strong>. Ya me imagino la expresión de confusión que tienes mientras te preguntas ¿entonces son lo mismo? Pues no, la diferencia es que la <strong>correlación</strong> es un <strong>índice</strong>; es decir, está contenida en el intervalo <span class="math inline">\([-1, 1]\)</span>, por lo que esta mide no solo la dirección, sino la “fuerza” o el grado de linealidad de la relación, donde 0 es una relación lineal nula. Matemáticamente la diferencia es que la correlación entre dos variables es su covarianza dividida entre el producto de sus desviaciones estándar:</p>
+<p><span class="math display">\[\begin{align*}
+cov(X,Y) = \frac{\Sigma_{i=1}^n(X_i-\bar{X})(Y_i-\bar{Y})}{n-1} \\
+cor(X,Y) = \frac{cov(X,Y)}{\sigma_x * \sigma_y}
+\end{align*}\]</span></p>
+<p>Es decir, son conceptos que están muy relacionados entre sí. En ambos el <strong>signo</strong> del valor indica la <strong>dirección de la relación</strong>, mientras que la <strong>magnitud</strong> indica la <strong>fuerza</strong> de la relación. El problema con la covarianza es que no tiene límites, entonces no puedes saber si una covarianza de 500 es particularmente grande salvo que tengas otra covarianza con la cual comparar, mientras que una correlación de 0.7 es una correlación moderadamente fuerte.</p>
+<p>Muy seguramente por tu cabeza haya pasado la pregunta: “si ambas nos dicen cómo es la relación entre dos variables, ¿cuál es la diferencia con la regresión?”. Pues que la <strong>regresión es un modelo predictivo</strong>, mientras que la <strong>correlación/covarianza es un estadístico descriptivo</strong>. Aquí no estamos comprometiendo que haya una tasa de cambio de <span class="math inline">\(X\)</span> hacia <span class="math inline">\(Y\)</span>, ni estamos interesados en qué valor de <span class="math inline">\(X\)</span> le corresponde a <span class="math inline">\(y = 0\)</span>. Aquí <strong>no nos interesa predecir, sino describir</strong>. Si no quieres comprometerte con todo lo que implica un modelo predictivo (aún nos faltó ver el tema del sobre-ajuste), solo calcula el <strong>coeficiente de correlación</strong> correspondiente.</p>
+<p>¿Por qué correspondiente? Porque tenemos más de una forma de calcular la correlación, y cada una tiene sus bemoles. La ecuación que vimos arriba es para el <strong>coeficiente de correlación de Pearson</strong>, el cual elevado al cuadrado nos da el coeficiente de determinación que vimos antes. Como tal, es un coeficiente <strong>paramétrico</strong> y tiene algunos supuestos:</p>
+<ol type="1">
+<li><strong>Variables en escala de intervalo o razón</strong></li>
+<li><strong>Relación lineal</strong> entre ambas variables. Sí, asume que el cambio de una variable a otra es constante.</li>
+<li><strong>Normalidad</strong> Ambas variables deben de tener una distribución aproximadamente normal, por lo que aquí sí nos interesa la distribución de nuestras variables.</li>
+<li>Cada observación debe de tener el par de datos <span class="math inline">\((v1, v2)\)</span>.</li>
+</ol>
+<p>Estos supuestos, a estas alturas, son autoexplicativos. ¿Qué pasa si no cumplimos con alguno de los primeros tres? Podemos utilizar la alternativa <strong>no paramétrica</strong>: el coeficiente de correlación <span class="math inline">\(\rho\)</span> de Spearman. En este los supuestos son:</p>
+<ol type="1">
+<li><strong>Variables al menos en escala ordinal</strong></li>
+<li><strong>Relación monótona entre ambas variables</strong>; es decir, que la relación vaya en un solo sentido (conforme aumenta una aumenta la otra, o conforme aumenta la otra disminuye), independientemente de que la tasa de cambio de una a otra no sea constante.</li>
+<li>Cada observación debe de tener el par de datos <span class="math inline">\((v1, v2)\)</span></li>
+</ol>
+<p>Bastante más relajado, ¿no? Pero esto no quiere decir que solo debas de utilizar este coeficiente, utiliza el que más se ajuste a tus datos particulares.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En el <a href="c12_nopar.html"><span>Capítulo&nbsp;12</span></a> vamos a hablar de las técnicas no paramétricas y sus ventajas y desventajas con respecto a las técnicas paramétricas.</p>
+</div>
+</div>
+<p>Ahora bien, ¿cómo obtenemos estos coeficientes en <code>R</code>? Muy sencillo, con las funciones <code>cor(X, Y)</code> y <code>cov(X, Y)</code>:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estos coeficientes son simétricos, por lo que asignar variables <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> como dependientes e independientes es un error. ¿Notaste que arriba todo lo puse en términos de <span class="math inline">\(v1\)</span> y <span class="math inline">\(v2\)</span>?</p>
+</div>
+</div>
+<p>Primero, generemos un par de variables donde la segunda sea una función lineal de la primera:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> <span class="sc">-</span><span class="dv">20</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v2"</span>] <span class="ot">&lt;-</span> (<span class="dv">10</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>df1<span class="sc">$</span>v1)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["v1"],"name":[1],"type":["int"],"align":["right"]},{"label":["v2"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-20","2":"-30"},{"1":"-19","2":"-28"},{"1":"-18","2":"-26"},{"1":"-17","2":"-24"},{"1":"-16","2":"-22"},{"1":"-15","2":"-20"},{"1":"-14","2":"-18"},{"1":"-13","2":"-16"},{"1":"-12","2":"-14"},{"1":"-11","2":"-12"},{"1":"-10","2":"-10"},{"1":"-9","2":"-8"},{"1":"-8","2":"-6"},{"1":"-7","2":"-4"},{"1":"-6","2":"-2"},{"1":"-5","2":"0"},{"1":"-4","2":"2"},{"1":"-3","2":"4"},{"1":"-2","2":"6"},{"1":"-1","2":"8"},{"1":"0","2":"10"},{"1":"1","2":"12"},{"1":"2","2":"14"},{"1":"3","2":"16"},{"1":"4","2":"18"},{"1":"5","2":"20"},{"1":"6","2":"22"},{"1":"7","2":"24"},{"1":"8","2":"26"},{"1":"9","2":"28"},{"1":"10","2":"30"},{"1":"11","2":"32"},{"1":"12","2":"34"},{"1":"13","2":"36"},{"1":"14","2":"38"},{"1":"15","2":"40"},{"1":"16","2":"42"},{"1":"17","2":"44"},{"1":"18","2":"46"},{"1":"19","2":"48"},{"1":"20","2":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora obtengamos la covarianza:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cov</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v2)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>covar</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 287</code></pre>
+</div>
+</div>
+<p>Y el índice de correlación de <code>Pearson</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v2)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>corre</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p>Aquí queda también demostrado por qué la covarianza es tan difícil de interpretar por sí sola, pues en este caso con una relación lineal perfecta fue de 287, pero si cambias los valores de <code>v1</code> de alguna manera vas a obtener otro valor, mientras que la correlación seguirá siendo 1. Gráficamente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">5</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Qué pasa cuando nos alejamos de esta relación lineal?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v3"</span>] <span class="ot">&lt;-</span> (<span class="sc">-</span>df1<span class="sc">$</span>v1<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v3)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v3)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v3)) <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">50</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Otro ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v4"</span>] <span class="ot">&lt;-</span> <span class="fu">sin</span>(df1<span class="sc">$</span>v1)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v4)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v4)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v4)) <span class="sc">+</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">3</span>,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">2</span>,</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Aunque todas estas relaciones pueden ser predichas, un coeficiente de correlación lineal no es capaz de capturarlas y, por definición, tampoco un modelo de regresión lineal. ¿Qué hacer en estos casos? Veremos algunas alternativas en el <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>. Ahora ejemplifiquemos el coeficiente de correlación de Spearman. Primero, y para dejar más claro el concepto, veamos la diferencia entre una relación monótona y una no monótona:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>], </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">v2 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>]<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mono =</span> <span class="st">"monótona"</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">v1=</span> df1<span class="sc">$</span>v1, </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">v2 =</span> df1<span class="sc">$</span>v3, </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mono =</span> <span class="st">"no monótona"</span>))</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df2, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>mono, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Y ahora calculemos los coeficientes de correlación de Pearson y Spearman para la relación monótona. La diferencia fue de 0.3, lo cual no es muy grande, pero conforme nos empezamos a alejar de escenarios ideales el coeficiente de Pearson empieza a perder sensibilidad y confiabilidad.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"Pearson = "</span>,</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>((<span class="fu">cor</span>(df2<span class="sc">$</span>v1[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>],</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                 df2<span class="sc">$</span>v2[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>], </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"pearson"</span>)), <span class="dv">2</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Pearson =  0.97"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"Spearman = "</span>,</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>((<span class="fu">cor</span>(df2<span class="sc">$</span>v1[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>],</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                 df2<span class="sc">$</span>v2[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>], </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"spearman"</span>)), <span class="dv">2</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Spearman =  1"</code></pre>
+</div>
+</div>
+<p>Ya para cerrar, ¿son estos los únicos coeficientes de correlación? Para nada, tenemos también: <span class="math inline">\(\tau\)</span> de Kendall, <span class="math inline">\(\phi k\)</span> (<span class="citation" data-cites="Baaketal_2019">Baak et&nbsp;al. (<a href="references.html#ref-Baaketal_2019" role="doc-biblioref">2019</a>)</span>), V de Cramer, <a href="https://bit.ly/PPS_medium">Predictive Power Score</a> y el coeficiente de Máxima Información (<span class="citation" data-cites="Reshefetal_2011">Reshef et&nbsp;al. (<a href="references.html#ref-Reshefetal_2011" role="doc-biblioref">2011</a>)</span>). Te invito a que leas más sobre ellos, sus ventajas y sus desventajas. Predictive Power Score no es direccional, por ejemplo (<a href="#fig-pps">Figura&nbsp;<span>11.6</span></a>).</p>
+<div id="fig-pps" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/pps.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11.6: Predictive Power Score en una relación parabólica</figcaption><p></p>
+</figure>
+</div>
+<p>Por fin llegamos al final de esta extensa (pero espero no aburrida) sesión. Espero que la hayas encontrado útil, y que te motive a hacer toda la chamba detrás de un modelo de predicción como lo es la regresión lineal simple.</p>
+</section>
+<section id="ejercicio" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">11.6</span> Ejercicio</h2>
+<p>Aunque me encantaría que para esta sesión no hubiera ejercicio, es importante que practiques lo que discutimos aquí. El ejercicio que vas a realizar es realizar una regresión entre las variables <code>LT</code> (longitud total) y <code>AM</code> (altura máxima) de los datos de peces haemúlidos de los datos <code>Haem.csv</code>. Responde:</p>
+<ol type="1">
+<li>La regresión asume un cambio direccional entre las variables <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span>; es decir, el cambio en una modifica a la otra. ¿Cuál es la variable dependiente? ¿<code>LT</code> o <code>AM</code>? ¿Por qué?</li>
+<li>Calcula la correlación entre ambas variables. ¿Qué coeficiente utilizas y por qué?</li>
+<li>Realiza la regresión lineal simple. ¿Qué método de ajuste utilizas y por qué?</li>
+<li>Reporta los resultados de la regresión (incluyendo el gráfico correspondiente).</li>
+<li>Realiza la comprobación de los supuestos. ¿Es confiable el modelo para fines de predicción? ¿Y para interpretación?</li>
+</ol>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Baaketal_2019" class="csl-entry" role="doc-biblioentry">
+Baak M, Koopman R, Snoek H, Klous S. 2019. A new correlation coefficient between categorical, ordinal and interval variables with <span>Pearson</span> characteristics. <em>ArXiV</em>. DOI: <a href="https://doi.org/10.48550/arxiv.1811.11440">10.48550/arxiv.1811.11440</a>.
+</div>
+<div id="ref-BreuschPagan_1979" class="csl-entry" role="doc-biblioentry">
+Breusch TS, Pagan AR. 1979. <a href="">A simple test for heteroscedasticity and random coefficient variation</a>. <em>Econometrica</em> 47:1287-1294.
+</div>
+<div id="ref-Gerrodette_2011" class="csl-entry" role="doc-biblioentry">
+Gerrodette T. 2011. Inference without significance: measuring support for hypotheses rather than rejecting them. <em>Marine Ecology</em> 32:404-418. DOI: <a href="https://doi.org/10.1111/j.1439-0485.2011.00466.x">10.1111/j.1439-0485.2011.00466.x</a>.
+</div>
+<div id="ref-Reshefetal_2011" class="csl-entry" role="doc-biblioentry">
+Reshef DN, Reshef YA, Finucane HK, Grossman SR, McVean G, Turnbaugh PJ, Lander ES, Mitzenmacher M, Sabeti PC. 2011. Detecting Novel Associations in Large Datasets. <em>Science</em> 334:1518-1524. DOI: <a href="https://doi.org/10.1126/science.1205438">10.1126/science.1205438</a>.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
