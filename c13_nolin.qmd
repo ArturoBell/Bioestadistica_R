@@ -12,7 +12,7 @@ library(nlraa)
 
 ## Otro tipo de relaciones
 
-En las sesiones anteriores hablamos de modelos en los cuales asumimos que hay una relación lineal entre nuestras variables; es decir, una variable incrementa o disminuye de manera constante en relación a la otra, pero también mencionamos que esto no siempre es así. Aquí es justo donde entra la modelación no lineal. En un problema de regresión lineal simple utilizamos alguna función de pérdida y un algoritmo de optimización para encontrar los valores del intercepto y la pendiente, según nuestros datos. La regresión no lineal es, en escencia, lo mismo: ajustar parámetros de un modelo a partir de los datos. La única diferencia es que el modelo puede describir cualquier tipo de relación funcional entre las variables involucradas. Puede ser algo tan simple como un modelo potencial de un solo parámetro hasta algo tan complicado como el modelo de mortalidad de Chen y Watanabe (1988), o incluso más.
+En las sesiones anteriores hablamos de modelos en los cuales asumimos que hay una relación lineal entre nuestras variables; es decir, una variable incrementa o disminuye de manera constante en relación a la otra, pero también mencionamos que esto no siempre es así. Aquí es justo donde entra la modelación no lineal. En un problema de regresión lineal simple utilizamos alguna función de pérdida y un algoritmo de optimización para encontrar los valores del intercepto y la pendiente, según nuestros datos. La regresión no lineal es, en escencia, lo mismo: ajustar parámetros de un modelo a partir de los datos. La única diferencia es que el modelo puede describir cualquier tipo de relación funcional entre las variables involucradas. Puede ser algo tan simple como un modelo potencial de un solo parámetro hasta algo tan complicado como el modelo de mortalidad de @ChenWatanabe_1989, o incluso más.
 
 Aplicaciones biológicas de este tipo de modelos hay muchas: a) estimación de la riqueza específica de un sitio, b) modelar el crecimiento de organismos, c) relaciones talla-peso, etc., etc., etc. En esta sesión revisaremos algunos ejemplos de estos modelos y cómo aplicarlos e interpretarlos.
 
@@ -28,7 +28,7 @@ jaws <- read.csv("datos/jaws.csv")
 lm_jaws <- lm(bone~age, data = jaws)
 performance::check_model(lm_jaws)
 ```
-En términos de nuestros datos:
+Podemos ver que el supuesto de linealidad no se sostiene, y en consecuencia tenemos una pobre capacidad predictiva en el *posterior predictive check*. Si vemos nuestros datos:
 
 ```{r}
 jaws_plot <- ggplot(data = jaws, aes(x = age, y = bone)) +
@@ -42,11 +42,11 @@ lm_plot <- jaws_plot + geom_smooth(method = "lm",
 lm_plot
 ```
 
-Tenemos un leve problema con el supuesto de linealidad. Ni por asomo nuestros residuales están cerca de la linea en 0, de hecho, forman una especie de "parábola". Esto quiere decir que debemos de considerar otra aproximación, pues la descripción del modelo lineal no es adecuada. Ok, entonces ¿qué modelo aplicamos? Habrá que echar mano de algún modelo de crecimiento.
+Ni por asomo nuestros residuales están cerca de la linea en 0, de hecho, forman una especie de "parábola". Esto quiere decir que debemos de considerar otra aproximación, pues la descripción del modelo lineal no es adecuada. Ok, entonces ¿qué modelo aplicamos? Sabemos que son datos de edades y longitudes de mandíbulas, por lo que habrá que echar mano de algún modelo de crecimiento.
 
 ## Modelos de crecimiento
 
-Estos modelos se pueden construir con cualquier medida de longitud o peso, y en este caso utilizaremos longitudes de huesos de una especie de tiburón. Modelos para el crecimiento hay muchos, algunos son Gompertz (1832), crecimiento logístico, Morgan-Mercer-Flodin, Weibull o Richards, de los cuales algunos tienen variantes con más o menos parámetros. Te recomiendo ampliamente revisar [este enlace](http://pisces-conservation.com/growthhelp/types_of_growth_curve.htm) para conocer un poco más sobre estos modelos (ecuaciones, aplicaciones, supuestos, etc.). Por desgracia, no tenemos tiempo suficiente para hablar de todos ellos, así que exploraremos el más conocido: el modelo de crecimiento individual de Von Bertalanffy.
+Estos modelos se pueden construir con cualquier medida de longitud o peso, y en este caso utilizaremos longitudes de huesos de una especie de tiburón. Modelos para el crecimiento hay muchos, algunos son @Gompertz_1832, crecimiento logístico, Morgan-Mercer-Flodin, Weibull o Richards, de los cuales algunos tienen variantes con más o menos parámetros. Te recomiendo ampliamente revisar [este enlace](http://pisces-conservation.com/growthhelp/types_of_growth_curve.htm) para conocer un poco más sobre estos modelos (ecuaciones, aplicaciones, supuestos, etc.). Por desgracia, no tenemos tiempo suficiente para hablar de todos ellos, así que exploraremos el más conocido: el modelo de crecimiento individual de Von Bertalanffy.
 
 ### Modelo de Von Bertalanffy (1938)
 
@@ -90,7 +90,11 @@ jaws_plot +
   labs(title = "Modelo Von Bertalanffy")
 ```
 
-Podemos también utilizar directamente `geom_smooth` para construir el gráfico. **OJO** `ggplot` pasa nuestros datos como `x` y `y`, no como los nombres de las variables originales. Adicionalmente, podemos utilizar la librería [`patchwork`](https://patchwork.data-imaginist.com/index.html) para poner ambos gráficos (lineal y vb) en un solo gráfico:
+Podemos también utilizar directamente `geom_smooth` para construir el gráfico. Adicionalmente, podemos utilizar la librería `patchwork` para poner ambos gráficos (lineal y vb) en un solo gráfico:
+
+::: {.callout-warning}
+`ggplot` pasa nuestros datos como `x` y `y`, no como los nombres de las variables originales.
+:::
 
 ```{r}
 vb_plot <- jaws_plot + 
@@ -108,7 +112,7 @@ lm_plot + vb_plot +
                   caption = "Datos: JAWS")
 ```
 
-Visualmente es evidente que el modelo VB está mejor ajustado que el modelo lineal y, de hecho, podemos comparar ambos modelos utilizando teoría de la información, en particular el criterio de información de Akaike, del cual hablaremos con mayor detalle en la sesión de [Modelos Lineales Generalizados](https://arturobell.github.io/Bioestadistica_R/c16_glm.html). Por lo pronto, bástete saber que seleccionaremos el modelo con el menor AIC, que, como esperábamos, es el modelo VB:
+Visualmente es evidente que el modelo VB está mejor ajustado que el modelo lineal y, de hecho, podemos comparar ambos modelos utilizando teoría de la información, en particular el criterio de información de Akaike, del cual hablaremos con mayor detalle en el @sec-glm. Por lo pronto, bástete saber que seleccionaremos el modelo con el menor AIC que, como esperábamos, es el modelo VB:
 
 ```{r}
 AIC(lm_jaws, vb_jaws)
@@ -148,7 +152,7 @@ Pero no tenemos $L_0$, ¿qué hacemos? Afortunadamente, ambas parametrizaciones 
 $$
 L_0 = L_\infty(1-e^{kt_0})
 $$
-Entonces calculemos el tiempo promedio que toma a un individuo alcanzar el 95% de $L_\infty$, lo cual es una posible estimación de longevidad (Ricker 1979):
+Entonces calculemos el tiempo promedio que toma a un individuo alcanzar el 95% de $L_\infty$, lo cual es una posible estimación de longevidad [@Ricker_1979]:
 
 ```{r}
 vb_coef <- coef(vb_jaws)
@@ -175,12 +179,15 @@ pars_plot +
              color = "forestgreen",
              linetype = "dashed") 
 ```
+:::{.callout-tip}
+Para más detalles y una discusión sobre este modelo, te recomiendo ampliamente revisar el artículo de @Callietetal_2006. 
+:::
 
-Para más detalles y una discusión sobre este modelo, te recomiendo ampliamente revisar el artículo de [Cailliet et al. (2006)](https://bit.ly/3IMe4aN). Una pregunta que muy seguramente tendrás es "¿qué pasa con los intervalos de confianza?". Bueno, podemos construirlos de dos maneras: a) utilizando perfiles de verosimilitud con la función `confint()` o b) utilizar réplicas bootstrap. La primera aproximación ya la conoces (utilizando errores estándar, recuperables con la función `summary`); sin embargo, la segunda merece que la exploremos. 
+Una pregunta que muy seguramente tendrás es "¿qué pasa con los intervalos de confianza?". Bueno, podemos construirlos de dos maneras: a) utilizando perfiles de verosimilitud con la función `confint()` o b) utilizar réplicas bootstrap. La primera aproximación ya la conoces (utilizando errores estándar, recuperables con la función `summary`); sin embargo, la segunda merece que la exploremos. 
 
 ## Bootstrap e Intervalos de Confianza
 
-Primero, ¿qué es Bootstrap y con qué se come? El muestreo Bootstrap (o bootstraping) consiste en **remuestrear** los datos, con el objetivo de crear una **distribución empírica** de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para describir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de $t_0$ en nuestro modelo:
+Primero, ¿qué es Bootstrap y con qué se come? Mencionamos algo de esto en el @sec-ph0, pero ono dimos mayores detalles más que podemos utilizarlo para calcular los intervalos de confianza. El muestreo Bootstrap (o bootstraping) consiste en **remuestrear** los datos, con el objetivo de crear una **distribución empírica** de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para describir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de $t_0$ en nuestro modelo:
 
 ```{r}
 plot(profile(vb_jaws, "t"))
@@ -367,10 +374,111 @@ round((log(0.1)/13)-log(0.05))
 
 Estos valores, de hecho, fueron los que le pasamos a la función `nls`. ¿Y la segunda observación? (el dato mayor) Esta puede ser útil para estimar un límite superior para el valor posible del parámetro. **OJO**: esto es solo si quieres evitar estar "jugando" con los valores. A final de cuentas, solo necesitamos acercar al algoritmo de búsqueda a la zona correcta, no darle la respuesta de antemano. Otra alternativa es linealizar el modelo y utilizar los parámetros re-convertidos como puntos de inicio. Una alternativa más es utilizar datos de la literatura. En este caso, estimaciones que hayan sido realizadas para otra localidad o en una especie cercana. Otra estrategia puede ser utilizar una RL tradicional y estimar los valores desde ahí. Por último, siempre podemos intentar adivinarlos a ojo, aunque eso es algo que requiere tener bastante experiencia y capacidad de abstracción.
 
+Estos fueron solo un par de ejemplos sobre el uso de modelos no lineales, pero hay muchos más. Me gustaría poder ejemplificar el uso de todos y cada uno de ellos, pues puede que ninguno de los que aquí presenté se ajuste a tus necesidades particulares; sin embargo, espero que haya sido lo suficientemente claro en cómo podemos maximizar su potencial y qué cosas debes de tener en cuenta, tanto para su implementación en `R` como para la interpretación de sus resultados. 
+
+Ahora bien, ¿qué pasa si no conocemos el modelo? Tienes que encontrar la ecuación, definir tus parámetros, su fundamento, luego validarlo y publicarlo. Nah, mentira. Aunque es una posibilidad, eso es trabajo de las personas del área de matemáticas. Podemos utilizar regresiones polinómiales o LOESS. Vayamos allá.
+
+## Regresión polinomial
+
+Antes de entrar a la regresión polinomial hay que tener claro qué es un polinomio. Recordarás de tus clases de secundaria que se ve algo así:
+
+$$
+Y = \beta_0x^0 + \beta_1x^1 + \cdots + \beta_nx^n
+$$
+
+Esto se ve sospechosamete parecido a nuestra regresión lineal, ¿no? Pues sí, en realidad lo único que estamos haciendo es agregar términos adicionales, donde nuestra variable se va elevando en potencias con cada nuevo término, y el número de términos define el orden del polinomio. La regresión lineal simple podríamos considerarla una regresión polinomial de primer orden, pero tal vez sería más preciso decir que la regresión polinomial es una extensión de la regresión lineal. ¿Qué tiene que ver esto con los modelos no lineales? Que cada término añade una curvatura.
+
+Te voy a ser honesto, no soy muy fan de las regresiones polinomiales, y me gustaría que tú tampoco lo fueras. ¿El motivo? Con un polinomio de orden suficiente podemos, literalmente, predecir a la perfección nuestros datos. Eso es excelente, ¿no? ¡Vamos a solo aplicar regresiones polinomiales de orden $n-1$ y obtener ajustes perfectos! **¡PARA!** Aunque podemos predecir a la perfección nuestros datos observados, ¿qué pasa con datos que no observamos? Recordarás que el objetivo primordial de un modelo de regresión es predecir, pero no nuestros datos, sino datos que el modelo no ha visto. Usualmente, entre mejor reproduzca un modelo los datos con los que fue entrenado, peor es su capacidad predictiva real. 
+
+:::{.callout-note}
+Hablaremos largo y tendido de esta relación complejidad del modelo vs. capacidad predictiva y del problema conocido como **sobre ajuste** en el @sec-clasif. Por el momento ten presente que buscamos un modelo que permita describir los datos de manera "suficiente", sin llegar a ser perfecto.
+:::
+
+Ejemplifiquemos una regresión polinomial de orden dos con el ejemplo de los datos `jaws`. Hacerlo es extremadamente sencillo, solo tenemos que añadir la función `poly(x, degree)` a nuestra `formula` en `lm()`:
+
+```{r}
+jaws_poly <- lm(bone~poly(age, degree = 2), data = jaws)
+summary(jaws_poly)
+```
+
+La salida es prácticamente idéntica a la de la regresión lineal que vimos en el @sec-rls, con la diferencia de que ahora tenemos un término adicional, de modo que nuestro modelo queda como:
+
+$$
+bone = \beta_0 + \beta_1*age^1 + \beta_2*age^2 + e
+$$
+
+Sustituyendo los coeficientes:
+
+$$
+bone = 93.98 + 182.01*age^1 - 118.95*age^2 + e
+$$
+
+Podemos añadir este ajuste al gráfico:
+
+```{r}
+poly_plot <- jaws_plot + 
+             geom_smooth(method = "lm",
+                         formula = y~poly(x, degree = 2),
+                         se = T,
+                         color = "#ff7f0e",
+                         size = 0.5) +
+              labs(title = "Modelo polinomial (2)")
+lm_plot + vb_plot + poly_plot +
+  plot_annotation(title = "Relación long. mandíbula ~ edad",
+                  caption = "Datos: JAWS")
+```
+
+El ajuste es mejor que el modelo lineal, pero no tiene absolutamente ningún sentido biológico que la longitud de la mandíbula disminuya después de que los animales cumplan 35 años. ¿Qué pasa con un polinomio de tercer orden? Veámoslo:
+
+```{r}
+poly_plot <- jaws_plot + 
+             geom_smooth(method = "lm",
+                         formula = y~poly(x, degree = 3),
+                         se = T,
+                         color = "#ff7f0e",
+                         size = 0.5) +
+              labs(title = "Modelo polinomial (3)")
+lm_plot + vb_plot + poly_plot +
+  plot_annotation(title = "Relación long. mandíbula ~ edad",
+                  caption = "Datos: JAWS")
+```
+
+Como ya habíamos mencionado, se añade una curva adicional, ahora tenemos un cambio alrededor de los 25 años y un aumento después de los 45. Y así podríamos irnos hasta llegar a un polinomio de orden $u-1$ ($u$: número de valores únicos), pero eso no tiene ningún caso porque la interpretación se vuelve extremadamente compleja con más de dos o tres términos. En una regresión polinomial los coeficientes ya no son pendientes como las que vimos en la regresión lineal simple. Si quisiéramos saber cuántas unidades nos movemos en $y$ por cambio unitario en $x$ ya no podemos simplemente revisar $\beta_1$, pues la presencia de $\beta_2$ o más términos tienen un efecto en esa cantidad. En nuestro ejemplo de orden 2 el primer coeficiente es positivo, que indica el crecimiento en la primera parte de la curva, mientras que el segundo es negativo, e indica el decremento a partir de los 35 años. 
+
+Desafortunadamente, el problema de la interpretación de los parámetros no es solo matemático. Si fuera el caso, con una inspección cuidadosa y entendimiento del modelo podríamos interpretarlo. El problema es que, en muchos casos, los parámetros no se traducen a cantidades relevantes para nuestra área del conocimiento. ¿Qué nos dice la pendiente $\beta_2 = -118.95$? Definitivamente el decremento subsecuente no es de 118.95 cm por año. **Los parámetros de una regresión polinomial son solo perillas para ajustar el modelo, sin un significado "real" que sea claro**. Luego tenemos el problema de seleccionar el orden adecuado. Una alternativa es ir construyendo regresiones polinomiales incrementando el orden y parando cuando la pendiente del último deje de ser significativa, o empezar del orden máximo e ir disminuyendo. De cualquier manera, creo que estarás de acuerdo conmigo en que es innecesario pero, ¿qué pasa si sé que la relación de mis datos no es lineal, pero no tengo el modelo teórico que la describa? En ese caso te recomendaría probar un modelo aditivo generalizado (GAM) o una regresión LOESS, que es de lo que vamos a hablar ahora.
+
+## Regresión LOESS
+
+LOESS: **Locally Estimated Scatterplot Smoothing**; es decir, es un suavizado estimado localmente. ¿A qué nos referimos con suavizado? A que vamos a tratar de encontrar una curva que "suavice" (minimice) los "movimientos" a través de nuestros datos. El suavizado LOESS se construye haciendo un gran número de lineas de regresión (de orden dos o uno) a través de una ventana que se mueve a través del eje $x$. Es decir, va a partir el eje $x$ en intervalos y ajustar una regresión para cada intervalo, luego el modelo final resulta de unirlas todas. Entre más grande sea la ventana, más "suavizada" estará la curva, de modo que si la ventana es del tamaño de todo el eje $x$ tendremos una regresión lineal simple. Si es muy pequeña, tendremos una curva que pasará por todos los puntos.
+
+Apliquemos ahora LOESS a los datos `jaws`. La salida aquí es más críptica que la de la regresión polinomial. No tenemos ninguna prueba de hipótesis. Es más, no tenemos ningún parámetro. En este sentido la regresión (o mejor dicho suavizado) LOESS es una forma de **regresión no paramétrica**, pero eso no quiera decir que no haya forma de controlar el ajuste. De hecho, podemos cambiar todos los elementos que aparecen en la zona de `Control settings`, e incluso podríamos optimizarlos con validación cruzada, pero más de esto en el @sec-clasif.
+
+```{r}
+jaws_loess <- loess(bone~age, data = jaws)
+summary(jaws_loess)
+```
+
+¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, `degree`) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. El error siguió una distribución normal (`family: gaussian`), los datos fueron "normalizados" (más de esto en el @sec-intromv). Tenemos un "número equivalente de parámetros", que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más "bronco":
+
+```{r}
+loess_plot <- jaws_plot + 
+              geom_smooth(method = "loess",
+                          color = "#ff7f0e",
+                          size = 0.5) +
+               labs(title = "LOESS")
+lm_plot + vb_plot + loess_plot +
+  plot_annotation(title = "Relación long. mandíbula ~ edad",
+                  caption = "Datos: JAWS")
+```
+
+Mi sugerencia es que, si no hay una ecuación que describa la relación no lineal, pienses antes en LOESS que en una regresión polinomial, pero ten en cuenta que esto aplica solo para ciertos casos en los que tiene sentido asumir el error como normal. En el @sec-glm vamos a ver cómo podemos generalizar el modelo lineal para contender con otro tipo de variables dependientes, conteos, por ejemplo, y capturar tendencias no lineales en el proceso.
+
+Con esto terminamos esta sesión. Espero que haya sido de tu agrado, y nos vemos en la siguiente, donde ya vamos a entrar al tema de técnicas multivariadas.
+
 ## Ejercicio
 
 En este ejercicio tienes dos opciones:
 
-1. Utiliza los datos `dolphin_age.csv` para ajustar el modelo de Von Bertalanffy y un modelo de crecimiento más. Compáralos utilizando el AIC y reporta e interpreta los resultados del "mejor" modelo (AIC más bajo). Estos son datos simulados del crecimiento del delfín Franciscana (o delfín del Plata, *Pontoporia blainvillei*). Puedes revisar la [referencia original](https://doi.org/10.1017/S0025315410001141) para darte una idea del problema. Los datos que se simularon fueron los de las hembras.
+1. Utiliza los datos `dolphin_age.csv` para ajustar el modelo de Von Bertalanffy y un modelo de crecimiento más. Compáralos utilizando el AIC y reporta e interpreta los resultados del "mejor" modelo (AIC más bajo). Estos son datos simulados del crecimiento del delfín Franciscana (o delfín del Plata, *Pontoporia blainvillei*). Puedes revisar @Bottaetal_2010 para darte una idea del problema. Los datos que se simularon fueron los de las hembras.
 
-2. Utiliza datos propios para ajustar un modelo NO lineal y reporta e interpreta los resultados. No es necesario que describas detalladamente de qué son, únicamente la escala temporal (*e.g.*, días, segundos, años).
+2. Utiliza datos propios para ajustar un modelo NO lineal y reporta e interpreta los resultados.
