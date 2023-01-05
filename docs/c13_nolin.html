@@ -83,6 +83,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -338,7 +357,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#bootstrap-e-intervalos-de-confianza" id="toc-bootstrap-e-intervalos-de-confianza" class="nav-link" data-scroll-target="#bootstrap-e-intervalos-de-confianza"><span class="toc-section-number">13.5</span>  Bootstrap e Intervalos de Confianza</a></li>
   <li><a href="#relación-talla-peso" id="toc-relación-talla-peso" class="nav-link" data-scroll-target="#relación-talla-peso"><span class="toc-section-number">13.6</span>  Relación Talla-Peso</a></li>
-  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">13.7</span>  Ejercicio</a></li>
+  <li><a href="#regresión-polinomial" id="toc-regresión-polinomial" class="nav-link" data-scroll-target="#regresión-polinomial"><span class="toc-section-number">13.7</span>  Regresión polinomial</a></li>
+  <li><a href="#regresión-loess" id="toc-regresión-loess" class="nav-link" data-scroll-target="#regresión-loess"><span class="toc-section-number">13.8</span>  Regresión LOESS</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">13.9</span>  Ejercicio</a></li>
   </ul>
 </nav>
     </div>
@@ -373,7 +394,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="otro-tipo-de-relaciones" class="level2" data-number="13.2">
 <h2 data-number="13.2" class="anchored" data-anchor-id="otro-tipo-de-relaciones"><span class="header-section-number">13.2</span> Otro tipo de relaciones</h2>
-<p>En las sesiones anteriores hablamos de modelos en los cuales asumimos que hay una relación lineal entre nuestras variables; es decir, una variable incrementa o disminuye de manera constante en relación a la otra, pero también mencionamos que esto no siempre es así. Aquí es justo donde entra la modelación no lineal. En un problema de regresión lineal simple utilizamos alguna función de pérdida y un algoritmo de optimización para encontrar los valores del intercepto y la pendiente, según nuestros datos. La regresión no lineal es, en escencia, lo mismo: ajustar parámetros de un modelo a partir de los datos. La única diferencia es que el modelo puede describir cualquier tipo de relación funcional entre las variables involucradas. Puede ser algo tan simple como un modelo potencial de un solo parámetro hasta algo tan complicado como el modelo de mortalidad de Chen y Watanabe (1988), o incluso más.</p>
+<p>En las sesiones anteriores hablamos de modelos en los cuales asumimos que hay una relación lineal entre nuestras variables; es decir, una variable incrementa o disminuye de manera constante en relación a la otra, pero también mencionamos que esto no siempre es así. Aquí es justo donde entra la modelación no lineal. En un problema de regresión lineal simple utilizamos alguna función de pérdida y un algoritmo de optimización para encontrar los valores del intercepto y la pendiente, según nuestros datos. La regresión no lineal es, en escencia, lo mismo: ajustar parámetros de un modelo a partir de los datos. La única diferencia es que el modelo puede describir cualquier tipo de relación funcional entre las variables involucradas. Puede ser algo tan simple como un modelo potencial de un solo parámetro hasta algo tan complicado como el modelo de mortalidad de <span class="citation" data-cites="ChenWatanabe_1989">Chen &amp; Watanabe (<a href="references.html#ref-ChenWatanabe_1989" role="doc-biblioref">1989</a>)</span>, o incluso más.</p>
 <p>Aplicaciones biológicas de este tipo de modelos hay muchas: a) estimación de la riqueza específica de un sitio, b) modelar el crecimiento de organismos, c) relaciones talla-peso, etc., etc., etc. En esta sesión revisaremos algunos ejemplos de estos modelos y cómo aplicarlos e interpretarlos.</p>
 <p>Sobre esto último, implementar estos modelos en <code>R</code> es sumamente sencillo. Los requerimientos son a) conocer la ecuación, b) escribirla como una operación y c) establecer algunos valores iniciales para iniciar la búsqueda. Para esto utilizaremos la función <code>nls(formula, data, start)</code> (Nonlinear Least Squares).</p>
 </section>
@@ -388,7 +409,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>En términos de nuestros datos:</p>
+<p>Podemos ver que el supuesto de linealidad no se sostiene, y en consecuencia tenemos una pobre capacidad predictiva en el <em>posterior predictive check</em>. Si vemos nuestros datos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>jaws_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> jaws, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> bone)) <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>) <span class="sc">+</span></span>
@@ -406,11 +427,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Tenemos un leve problema con el supuesto de linealidad. Ni por asomo nuestros residuales están cerca de la linea en 0, de hecho, forman una especie de “parábola”. Esto quiere decir que debemos de considerar otra aproximación, pues la descripción del modelo lineal no es adecuada. Ok, entonces ¿qué modelo aplicamos? Habrá que echar mano de algún modelo de crecimiento.</p>
+<p>Ni por asomo nuestros residuales están cerca de la linea en 0, de hecho, forman una especie de “parábola”. Esto quiere decir que debemos de considerar otra aproximación, pues la descripción del modelo lineal no es adecuada. Ok, entonces ¿qué modelo aplicamos? Sabemos que son datos de edades y longitudes de mandíbulas, por lo que habrá que echar mano de algún modelo de crecimiento.</p>
 </section>
 <section id="modelos-de-crecimiento" class="level2" data-number="13.4">
 <h2 data-number="13.4" class="anchored" data-anchor-id="modelos-de-crecimiento"><span class="header-section-number">13.4</span> Modelos de crecimiento</h2>
-<p>Estos modelos se pueden construir con cualquier medida de longitud o peso, y en este caso utilizaremos longitudes de huesos de una especie de tiburón. Modelos para el crecimiento hay muchos, algunos son Gompertz (1832), crecimiento logístico, Morgan-Mercer-Flodin, Weibull o Richards, de los cuales algunos tienen variantes con más o menos parámetros. Te recomiendo ampliamente revisar <a href="http://pisces-conservation.com/growthhelp/types_of_growth_curve.htm">este enlace</a> para conocer un poco más sobre estos modelos (ecuaciones, aplicaciones, supuestos, etc.). Por desgracia, no tenemos tiempo suficiente para hablar de todos ellos, así que exploraremos el más conocido: el modelo de crecimiento individual de Von Bertalanffy.</p>
+<p>Estos modelos se pueden construir con cualquier medida de longitud o peso, y en este caso utilizaremos longitudes de huesos de una especie de tiburón. Modelos para el crecimiento hay muchos, algunos son <span class="citation" data-cites="Gompertz_1832">Gompertz (<a href="references.html#ref-Gompertz_1832" role="doc-biblioref">1832</a>)</span>, crecimiento logístico, Morgan-Mercer-Flodin, Weibull o Richards, de los cuales algunos tienen variantes con más o menos parámetros. Te recomiendo ampliamente revisar <a href="http://pisces-conservation.com/growthhelp/types_of_growth_curve.htm">este enlace</a> para conocer un poco más sobre estos modelos (ecuaciones, aplicaciones, supuestos, etc.). Por desgracia, no tenemos tiempo suficiente para hablar de todos ellos, así que exploraremos el más conocido: el modelo de crecimiento individual de Von Bertalanffy.</p>
 <section id="modelo-de-von-bertalanffy-1938" class="level3" data-number="13.4.1">
 <h3 data-number="13.4.1" class="anchored" data-anchor-id="modelo-de-von-bertalanffy-1938"><span class="header-section-number">13.4.1</span> Modelo de Von Bertalanffy (1938)</h3>
 <p>Este modelo lo derivó Von Bertalanffy (VB) desde algunos parámetros fisiológicos bastante simples. Es, posiblemente, el modelo de crecimiento más utilizado en estudios de pesquerías. Este modelo asume que la tasa de crecimiento de un organismo declina con la tasa de cambio de la longitud, y que puede ser descrito con el modelo:</p>
@@ -457,7 +478,20 @@ Achieved convergence tolerance: 1.998e-06</code></pre>
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Podemos también utilizar directamente <code>geom_smooth</code> para construir el gráfico. <strong>OJO</strong> <code>ggplot</code> pasa nuestros datos como <code>x</code> y <code>y</code>, no como los nombres de las variables originales. Adicionalmente, podemos utilizar la librería <a href="https://patchwork.data-imaginist.com/index.html"><code>patchwork</code></a> para poner ambos gráficos (lineal y vb) en un solo gráfico:</p>
+<p>Podemos también utilizar directamente <code>geom_smooth</code> para construir el gráfico. Adicionalmente, podemos utilizar la librería <code>patchwork</code> para poner ambos gráficos (lineal y vb) en un solo gráfico:</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>ggplot</code> pasa nuestros datos como <code>x</code> y <code>y</code>, no como los nombres de las variables originales.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vb_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"nls"</span>,</span>
@@ -479,7 +513,7 @@ Achieved convergence tolerance: 1.998e-06</code></pre>
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Visualmente es evidente que el modelo VB está mejor ajustado que el modelo lineal y, de hecho, podemos comparar ambos modelos utilizando teoría de la información, en particular el criterio de información de Akaike, del cual hablaremos con mayor detalle en la sesión de <a href="https://arturobell.github.io/Bioestadistica_R/c16_glm.html">Modelos Lineales Generalizados</a>. Por lo pronto, bástete saber que seleccionaremos el modelo con el menor AIC, que, como esperábamos, es el modelo VB:</p>
+<p>Visualmente es evidente que el modelo VB está mejor ajustado que el modelo lineal y, de hecho, podemos comparar ambos modelos utilizando teoría de la información, en particular el criterio de información de Akaike, del cual hablaremos con mayor detalle en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>. Por lo pronto, bástete saber que seleccionaremos el modelo con el menor AIC que, como esperábamos, es el modelo VB:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(lm_jaws, vb_jaws)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -532,7 +566,7 @@ t_x = \frac{1}{k}ln \left( \frac{L_\infty - L_0}{L_\infty(1-x)} \right)
 \]</span> Pero no tenemos <span class="math inline">\(L_0\)</span>, ¿qué hacemos? Afortunadamente, ambas parametrizaciones (con <span class="math inline">\(t_0\)</span> o <span class="math inline">\(L_0\)</span>) son equivalentes, por lo que no necesitamos re-ajustar el modelo. Simplemente podemos estimarla a partir de los coeficientes de nuestro modelo:</p>
 <p><span class="math display">\[
 L_0 = L_\infty(1-e^{kt_0})
-\]</span> Entonces calculemos el tiempo promedio que toma a un individuo alcanzar el 95% de <span class="math inline">\(L_\infty\)</span>, lo cual es una posible estimación de longevidad (Ricker 1979):</p>
+\]</span> Entonces calculemos el tiempo promedio que toma a un individuo alcanzar el 95% de <span class="math inline">\(L_\infty\)</span>, lo cual es una posible estimación de longevidad <span class="citation" data-cites="Ricker_1979">(<a href="references.html#ref-Ricker_1979" role="doc-biblioref">Ricker, 1979</a>)</span>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>vb_coef <span class="ot">&lt;-</span> <span class="fu">coef</span>(vb_jaws)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> vb_coef[<span class="st">"L"</span>]</span>
@@ -563,12 +597,25 @@ L_0 = L_\infty(1-e^{kt_0})
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Para más detalles y una discusión sobre este modelo, te recomiendo ampliamente revisar el artículo de <a href="https://bit.ly/3IMe4aN">Cailliet et al.&nbsp;(2006)</a>. Una pregunta que muy seguramente tendrás es “¿qué pasa con los intervalos de confianza?”. Bueno, podemos construirlos de dos maneras: a) utilizando perfiles de verosimilitud con la función <code>confint()</code> o b) utilizar réplicas bootstrap. La primera aproximación ya la conoces (utilizando errores estándar, recuperables con la función <code>summary</code>); sin embargo, la segunda merece que la exploremos.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para más detalles y una discusión sobre este modelo, te recomiendo ampliamente revisar el artículo de <span class="citation" data-cites="Callietetal_2006">Cailliet et&nbsp;al. (<a href="references.html#ref-Callietetal_2006" role="doc-biblioref">2006</a>)</span>.</p>
+</div>
+</div>
+<p>Una pregunta que muy seguramente tendrás es “¿qué pasa con los intervalos de confianza?”. Bueno, podemos construirlos de dos maneras: a) utilizando perfiles de verosimilitud con la función <code>confint()</code> o b) utilizar réplicas bootstrap. La primera aproximación ya la conoces (utilizando errores estándar, recuperables con la función <code>summary</code>); sin embargo, la segunda merece que la exploremos.</p>
 </section>
 </section>
 <section id="bootstrap-e-intervalos-de-confianza" class="level2" data-number="13.5">
 <h2 data-number="13.5" class="anchored" data-anchor-id="bootstrap-e-intervalos-de-confianza"><span class="header-section-number">13.5</span> Bootstrap e Intervalos de Confianza</h2>
-<p>Primero, ¿qué es Bootstrap y con qué se come? El muestreo Bootstrap (o bootstraping) consiste en <strong>remuestrear</strong> los datos, con el objetivo de crear una <strong>distribución empírica</strong> de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para describir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de <span class="math inline">\(t_0\)</span> en nuestro modelo:</p>
+<p>Primero, ¿qué es Bootstrap y con qué se come? Mencionamos algo de esto en el <a href="c09_ph0.html"><span>Capítulo&nbsp;9</span></a>, pero ono dimos mayores detalles más que podemos utilizarlo para calcular los intervalos de confianza. El muestreo Bootstrap (o bootstraping) consiste en <strong>remuestrear</strong> los datos, con el objetivo de crear una <strong>distribución empírica</strong> de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para describir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de <span class="math inline">\(t_0\)</span> en nuestro modelo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">profile</span>(vb_jaws, <span class="st">"t"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -585,7 +632,7 @@ L_0 = L_\infty(1-e^{kt_0})
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Par"],"name":[1],"type":["chr"],"align":["left"]},{"label":["CI.2.5.."],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI.97.5.."],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"L","2":"107.20307690","3":"124.2172721"},{"1":"K","2":"0.08247122","3":"0.1828868"},{"1":"t","2":"-1.53249396","3":"1.5495759"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Par"],"name":[1],"type":["chr"],"align":["left"]},{"label":["CI.2.5.."],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI.97.5.."],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"L","2":"108.34661417","3":"124.1559551"},{"1":"K","2":"0.08062862","3":"0.1789375"},{"1":"t","2":"-1.55112517","3":"1.5727145"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -816,16 +863,178 @@ B = \frac{log(0.1)}{13} - log(0.05)
 </div>
 </div>
 <p>Estos valores, de hecho, fueron los que le pasamos a la función <code>nls</code>. ¿Y la segunda observación? (el dato mayor) Esta puede ser útil para estimar un límite superior para el valor posible del parámetro. <strong>OJO</strong>: esto es solo si quieres evitar estar “jugando” con los valores. A final de cuentas, solo necesitamos acercar al algoritmo de búsqueda a la zona correcta, no darle la respuesta de antemano. Otra alternativa es linealizar el modelo y utilizar los parámetros re-convertidos como puntos de inicio. Una alternativa más es utilizar datos de la literatura. En este caso, estimaciones que hayan sido realizadas para otra localidad o en una especie cercana. Otra estrategia puede ser utilizar una RL tradicional y estimar los valores desde ahí. Por último, siempre podemos intentar adivinarlos a ojo, aunque eso es algo que requiere tener bastante experiencia y capacidad de abstracción.</p>
+<p>Estos fueron solo un par de ejemplos sobre el uso de modelos no lineales, pero hay muchos más. Me gustaría poder ejemplificar el uso de todos y cada uno de ellos, pues puede que ninguno de los que aquí presenté se ajuste a tus necesidades particulares; sin embargo, espero que haya sido lo suficientemente claro en cómo podemos maximizar su potencial y qué cosas debes de tener en cuenta, tanto para su implementación en <code>R</code> como para la interpretación de sus resultados.</p>
+<p>Ahora bien, ¿qué pasa si no conocemos el modelo? Tienes que encontrar la ecuación, definir tus parámetros, su fundamento, luego validarlo y publicarlo. Nah, mentira. Aunque es una posibilidad, eso es trabajo de las personas del área de matemáticas. Podemos utilizar regresiones polinómiales o LOESS. Vayamos allá.</p>
 </section>
-<section id="ejercicio" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">13.7</span> Ejercicio</h2>
+<section id="regresión-polinomial" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="regresión-polinomial"><span class="header-section-number">13.7</span> Regresión polinomial</h2>
+<p>Antes de entrar a la regresión polinomial hay que tener claro qué es un polinomio. Recordarás de tus clases de secundaria que se ve algo así:</p>
+<p><span class="math display">\[
+Y = \beta_0x^0 + \beta_1x^1 + \cdots + \beta_nx^n
+\]</span></p>
+<p>Esto se ve sospechosamete parecido a nuestra regresión lineal, ¿no? Pues sí, en realidad lo único que estamos haciendo es agregar términos adicionales, donde nuestra variable se va elevando en potencias con cada nuevo término, y el número de términos define el orden del polinomio. La regresión lineal simple podríamos considerarla una regresión polinomial de primer orden, pero tal vez sería más preciso decir que la regresión polinomial es una extensión de la regresión lineal. ¿Qué tiene que ver esto con los modelos no lineales? Que cada término añade una curvatura.</p>
+<p>Te voy a ser honesto, no soy muy fan de las regresiones polinomiales, y me gustaría que tú tampoco lo fueras. ¿El motivo? Con un polinomio de orden suficiente podemos, literalmente, predecir a la perfección nuestros datos. Eso es excelente, ¿no? ¡Vamos a solo aplicar regresiones polinomiales de orden <span class="math inline">\(n-1\)</span> y obtener ajustes perfectos! <strong>¡PARA!</strong> Aunque podemos predecir a la perfección nuestros datos observados, ¿qué pasa con datos que no observamos? Recordarás que el objetivo primordial de un modelo de regresión es predecir, pero no nuestros datos, sino datos que el modelo no ha visto. Usualmente, entre mejor reproduzca un modelo los datos con los que fue entrenado, peor es su capacidad predictiva real.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hablaremos largo y tendido de esta relación complejidad del modelo vs.&nbsp;capacidad predictiva y del problema conocido como <strong>sobre ajuste</strong> en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>. Por el momento ten presente que buscamos un modelo que permita describir los datos de manera “suficiente”, sin llegar a ser perfecto.</p>
+</div>
+</div>
+<p>Ejemplifiquemos una regresión polinomial de orden dos con el ejemplo de los datos <code>jaws</code>. Hacerlo es extremadamente sencillo, solo tenemos que añadir la función <code>poly(x, degree)</code> a nuestra <code>formula</code> en <code>lm()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>jaws_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(bone<span class="sc">~</span><span class="fu">poly</span>(age, <span class="at">degree =</span> <span class="dv">2</span>), <span class="at">data =</span> jaws)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jaws_poly)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = bone ~ poly(age, degree = 2), data = jaws)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-28.175  -9.360   1.275   8.089  37.905 
+
+Coefficients:
+                       Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)              93.979      2.062  45.585  &lt; 2e-16 ***
+poly(age, degree = 2)1  182.082     15.150  12.019  &lt; 2e-16 ***
+poly(age, degree = 2)2 -118.949     15.150  -7.852 2.48e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 15.15 on 51 degrees of freedom
+Multiple R-squared:  0.8016,    Adjusted R-squared:  0.7939 
+F-statistic: 103.1 on 2 and 51 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>La salida es prácticamente idéntica a la de la regresión lineal que vimos en el <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a>, con la diferencia de que ahora tenemos un término adicional, de modo que nuestro modelo queda como:</p>
+<p><span class="math display">\[
+bone = \beta_0 + \beta_1*age^1 + \beta_2*age^2 + e
+\]</span></p>
+<p>Sustituyendo los coeficientes:</p>
+<p><span class="math display">\[
+bone = 93.98 + 182.01*age^1 - 118.95*age^2 + e
+\]</span></p>
+<p>Podemos añadir este ajuste al gráfico:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>poly_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> y<span class="sc">~</span><span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">2</span>),</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> T,</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Modelo polinomial (2)"</span>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> poly_plot <span class="sc">+</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c13_nolin_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>El ajuste es mejor que el modelo lineal, pero no tiene absolutamente ningún sentido biológico que la longitud de la mandíbula disminuya después de que los animales cumplan 35 años. ¿Qué pasa con un polinomio de tercer orden? Veámoslo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>poly_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> y<span class="sc">~</span><span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">3</span>),</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> T,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Modelo polinomial (3)"</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> poly_plot <span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c13_nolin_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Como ya habíamos mencionado, se añade una curva adicional, ahora tenemos un cambio alrededor de los 25 años y un aumento después de los 45. Y así podríamos irnos hasta llegar a un polinomio de orden <span class="math inline">\(u-1\)</span> (<span class="math inline">\(u\)</span>: número de valores únicos), pero eso no tiene ningún caso porque la interpretación se vuelve extremadamente compleja con más de dos o tres términos. En una regresión polinomial los coeficientes ya no son pendientes como las que vimos en la regresión lineal simple. Si quisiéramos saber cuántas unidades nos movemos en <span class="math inline">\(y\)</span> por cambio unitario en <span class="math inline">\(x\)</span> ya no podemos simplemente revisar <span class="math inline">\(\beta_1\)</span>, pues la presencia de <span class="math inline">\(\beta_2\)</span> o más términos tienen un efecto en esa cantidad. En nuestro ejemplo de orden 2 el primer coeficiente es positivo, que indica el crecimiento en la primera parte de la curva, mientras que el segundo es negativo, e indica el decremento a partir de los 35 años.</p>
+<p>Desafortunadamente, el problema de la interpretación de los parámetros no es solo matemático. Si fuera el caso, con una inspección cuidadosa y entendimiento del modelo podríamos interpretarlo. El problema es que, en muchos casos, los parámetros no se traducen a cantidades relevantes para nuestra área del conocimiento. ¿Qué nos dice la pendiente <span class="math inline">\(\beta_2 = -118.95\)</span>? Definitivamente el decremento subsecuente no es de 118.95 cm por año. <strong>Los parámetros de una regresión polinomial son solo perillas para ajustar el modelo, sin un significado “real” que sea claro</strong>. Luego tenemos el problema de seleccionar el orden adecuado. Una alternativa es ir construyendo regresiones polinomiales incrementando el orden y parando cuando la pendiente del último deje de ser significativa, o empezar del orden máximo e ir disminuyendo. De cualquier manera, creo que estarás de acuerdo conmigo en que es innecesario pero, ¿qué pasa si sé que la relación de mis datos no es lineal, pero no tengo el modelo teórico que la describa? En ese caso te recomendaría probar un modelo aditivo generalizado (GAM) o una regresión LOESS, que es de lo que vamos a hablar ahora.</p>
+</section>
+<section id="regresión-loess" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="regresión-loess"><span class="header-section-number">13.8</span> Regresión LOESS</h2>
+<p>LOESS: <strong>Locally Estimated Scatterplot Smoothing</strong>; es decir, es un suavizado estimado localmente. ¿A qué nos referimos con suavizado? A que vamos a tratar de encontrar una curva que “suavice” (minimice) los “movimientos” a través de nuestros datos. El suavizado LOESS se construye haciendo un gran número de lineas de regresión (de orden dos o uno) a través de una ventana que se mueve a través del eje <span class="math inline">\(x\)</span>. Es decir, va a partir el eje <span class="math inline">\(x\)</span> en intervalos y ajustar una regresión para cada intervalo, luego el modelo final resulta de unirlas todas. Entre más grande sea la ventana, más “suavizada” estará la curva, de modo que si la ventana es del tamaño de todo el eje <span class="math inline">\(x\)</span> tendremos una regresión lineal simple. Si es muy pequeña, tendremos una curva que pasará por todos los puntos.</p>
+<p>Apliquemos ahora LOESS a los datos <code>jaws</code>. La salida aquí es más críptica que la de la regresión polinomial. No tenemos ninguna prueba de hipótesis. Es más, no tenemos ningún parámetro. En este sentido la regresión (o mejor dicho suavizado) LOESS es una forma de <strong>regresión no paramétrica</strong>, pero eso no quiera decir que no haya forma de controlar el ajuste. De hecho, podemos cambiar todos los elementos que aparecen en la zona de <code>Control settings</code>, e incluso podríamos optimizarlos con validación cruzada, pero más de esto en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>jaws_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(bone<span class="sc">~</span>age, <span class="at">data =</span> jaws)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jaws_loess)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+loess(formula = bone ~ age, data = jaws)
+
+Number of Observations: 54 
+Equivalent Number of Parameters: 4.35 
+Residual Standard Error: 13.41 
+Trace of smoother matrix: 4.75  (exact)
+
+Control settings:
+  span     :  0.75 
+  degree   :  2 
+  family   :  gaussian
+  surface  :  interpolate     cell = 0.2
+  normalize:  TRUE
+ parametric:  FALSE
+drop.square:  FALSE </code></pre>
+</div>
+</div>
+<p>¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, <code>degree</code>) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. El error siguió una distribución normal (<code>family: gaussian</code>), los datos fueron “normalizados” (más de esto en el <a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a>). Tenemos un “número equivalente de parámetros”, que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más “bronco”:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>loess_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>,</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"LOESS"</span>)</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> loess_plot <span class="sc">+</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'
+`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c13_nolin_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Mi sugerencia es que, si no hay una ecuación que describa la relación no lineal, pienses antes en LOESS que en una regresión polinomial, pero ten en cuenta que esto aplica solo para ciertos casos en los que tiene sentido asumir el error como normal. En el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a> vamos a ver cómo podemos generalizar el modelo lineal para contender con otro tipo de variables dependientes, conteos, por ejemplo, y capturar tendencias no lineales en el proceso.</p>
+<p>Con esto terminamos esta sesión. Espero que haya sido de tu agrado, y nos vemos en la siguiente, donde ya vamos a entrar al tema de técnicas multivariadas.</p>
+</section>
+<section id="ejercicio" class="level2" data-number="13.9">
+<h2 data-number="13.9" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">13.9</span> Ejercicio</h2>
 <p>En este ejercicio tienes dos opciones:</p>
 <ol type="1">
-<li><p>Utiliza los datos <code>dolphin_age.csv</code> para ajustar el modelo de Von Bertalanffy y un modelo de crecimiento más. Compáralos utilizando el AIC y reporta e interpreta los resultados del “mejor” modelo (AIC más bajo). Estos son datos simulados del crecimiento del delfín Franciscana (o delfín del Plata, <em>Pontoporia blainvillei</em>). Puedes revisar la <a href="https://doi.org/10.1017/S0025315410001141">referencia original</a> para darte una idea del problema. Los datos que se simularon fueron los de las hembras.</p></li>
-<li><p>Utiliza datos propios para ajustar un modelo NO lineal y reporta e interpreta los resultados. No es necesario que describas detalladamente de qué son, únicamente la escala temporal (<em>e.g.</em>, días, segundos, años).</p></li>
+<li><p>Utiliza los datos <code>dolphin_age.csv</code> para ajustar el modelo de Von Bertalanffy y un modelo de crecimiento más. Compáralos utilizando el AIC y reporta e interpreta los resultados del “mejor” modelo (AIC más bajo). Estos son datos simulados del crecimiento del delfín Franciscana (o delfín del Plata, <em>Pontoporia blainvillei</em>). Puedes revisar <span class="citation" data-cites="Bottaetal_2010">Botta et&nbsp;al. (<a href="references.html#ref-Bottaetal_2010" role="doc-biblioref">2010</a>)</span> para darte una idea del problema. Los datos que se simularon fueron los de las hembras.</p></li>
+<li><p>Utiliza datos propios para ajustar un modelo NO lineal y reporta e interpreta los resultados.</p></li>
 </ol>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Bottaetal_2010" class="csl-entry" role="doc-biblioentry">
+Botta S, Secchi ER, Muelbert MMC, Danilewicz D, Negri MF, Cappozzo HL, Hohn AA. 2010. Age and growth of franciscana dolphins, <em>Pontoporia blainvillei</em> (Cetacea: Pontoporiidae) incidentally caught off southern Brazil and northern Argentina. <em>Journal of the Marine Biological Association of the United Kingdom</em> 90:1492-1500. DOI: <a href="https://doi.org/10.1017/S0025315410001141">10.1017/S0025315410001141</a>.
+</div>
+<div id="ref-Callietetal_2006" class="csl-entry" role="doc-biblioentry">
+Cailliet GM, Smith WD, Mollet HF, Goldman KJ. 2006. Age and growth studies of chondrichthyan fishes: the need for consistency in terminology, verification, validation, and growth function fitting. <em>Environmental Biology of Fishes</em> 77:211-228. DOI: <a href="https://doi.org/10.1007/s10641-006-9105-5">10.1007/s10641-006-9105-5</a>.
+</div>
+<div id="ref-ChenWatanabe_1989" class="csl-entry" role="doc-biblioentry">
+Chen S, Watanabe S. 1989. Age Dependence of Natural Mortality Coefficient in Fish Population Dynamics. <em>NIPPON SUISAN GAKKAISHI</em> 55:205-208. DOI: <a href="https://doi.org/10.2331/suisan.55.205">10.2331/suisan.55.205</a>.
+</div>
+<div id="ref-Gompertz_1832" class="csl-entry" role="doc-biblioentry">
+Gompertz B. 1832. <a href="">On the Nature of the Function Expressive of the Law of Human Mortality, and on a New Mode of Determining the Value of Life Contingencies.</a> <em>Phylosophical Transcriptions of the Royal Society of London</em> 123:513-585.
+</div>
+<div id="ref-Ricker_1979" class="csl-entry" role="doc-biblioentry">
+Ricker WE. 1979. Growth rates and models. In: Hoar WS, Randall DJ, Brett JR eds. <em>Fish physiology</em>. 677-747.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
