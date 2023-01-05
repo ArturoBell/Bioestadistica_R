@@ -458,7 +458,7 @@ jaws_loess <- loess(bone~age, data = jaws)
 summary(jaws_loess)
 ```
 
-¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, `degree`) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. El error siguió una distribución normal (`family: gaussian`), los datos fueron "normalizados" (más de esto en el @sec-intromv). Tenemos un "número equivalente de parámetros", que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más "bronco":
+¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, `degree`) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. El error siguió una distribución normal (`family: gaussian`), los datos fueron "normalizados" (más de esto en el @sec-intro-mv). Tenemos un "número equivalente de parámetros", que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más "bronco":
 
 ```{r}
 loess_plot <- jaws_plot + 
