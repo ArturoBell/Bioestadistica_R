@@ -370,6 +370,7 @@ div.csl-indent {
   <li><a href="#transformación-logarítmica" id="toc-transformación-logarítmica" class="nav-link" data-scroll-target="#transformación-logarítmica"><span class="toc-section-number">14.9.2</span>  Transformación logarítmica</a></li>
   <li><a href="#raíz-cuadrada" id="toc-raíz-cuadrada" class="nav-link" data-scroll-target="#raíz-cuadrada"><span class="toc-section-number">14.9.3</span>  Raíz cuadrada</a></li>
   </ul></li>
+  <li><a href="#aprendizaje-automatizado" id="toc-aprendizaje-automatizado" class="nav-link" data-scroll-target="#aprendizaje-automatizado"><span class="toc-section-number">14.10</span>  Aprendizaje Automatizado</a></li>
   </ul>
 </nav>
     </div>
@@ -1325,7 +1326,72 @@ Eigenvalues for PCoA axes:
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Con esto terminamos esta sesión. Sé que estuvo fuertemente cargada de teoría y matemática, pero es necesario que tengas al menos una noción de dónde surgen las cosas. No es necesario que te las aprendas de memoria, o que sepas calcular las matrices a mano, solo que entiendas la lógica detrás de los procedimientos para que no abuses de ellos. Como recompensa por llegar hasta aquí no hay ejercicio para esta sesión ;).</p>
+</section>
+</section>
+<section id="aprendizaje-automatizado" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="aprendizaje-automatizado"><span class="header-section-number">14.10</span> Aprendizaje Automatizado</h2>
+<p>Ahora hablemos sobre la diferencia entre estadística multivariada y aprendizaje automatizado. Hasta este momento la mayor parte de nuestros problemas han consistido en tener unos datos, encasillarlos en un conjunto de reglas utilizando programación o pruebas de significancia estadística para obtener una respuesta (<em>e.g.</em>, “las medias de los grupos fueron diferentes; <a href="#fig-tparadigm">Figura&nbsp;<span>14.3</span></a>); sin embargo, vimos en los <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> y <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a> que podemos decirle a la computadora que nos diga bajo qué reglas están jugando nuestros datos. Eso justamente es el <strong>aprendizaje automatizado</strong> <a href="#fig-supervised">Figura&nbsp;<span>14.4</span></a>, <a href="#fig-unsupervised">Figura&nbsp;<span>14.5</span></a>. Este <em>Machine Learning</em> es una parte de la estadística, en la cuál la computadora”aprende” a partir de ejemplos que nosotros le proporcionamos. En los temas de regresíon teníamos pares de datos <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span>, y le dijimos a la computadora que encontrara un conjunto de parámetros que permitieran transormar los valores de <span class="math inline">\(x\)</span> a los valores de <span class="math inline">\(y\)</span> con el menor error posible.</p>
+<div id="fig-tparadigm" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/tparadigm.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.3: Paradigma tradicional para resolver problemas.</figcaption><p></p>
+</figure>
+</div>
+<p>Dentro del aprendizaje automatizado tenemos dos categorías generales:</p>
+<ol type="1">
+<li><strong>Aprendizaje supervisado</strong>: Aquí se engloban las técnicas que, como nuestras regresiones, mapean los valores de nuestros predictores hacia los valores de la variable (o las variables) a predecir. Esta categoría se sub-divide en dos clases adicionales, que están definidas por las características de la variable dependiente:
+<ol type="a">
+<li><strong>Regresión</strong>: En esta la variable dependiente es una variable <strong>numérica</strong> (puede ser continua u ordinal). Tanto los modelos lineales como no lineales forman parte de esta clase de técnicas.</li>
+<li><strong>Clasificación</strong>: Si la regresión trabaja con variables numéricas (ordinales o continuas), la clasificación trabaja con variables <strong>nominales</strong> (algunas pueden trabajar con variables ordinales); es decir, lo que vamos a predecir son etiquetas de <strong>clases</strong> o grupos (de ahí “clasificación”). Tenemos una gran cantidad de algoritmos de clasificación, desde los más simples que suponen diferencias lineales entre las clases hasta algunos altamente complejos con grandes cantidades de parámetros como las redes neuronales convolucionales.</li>
+</ol></li>
+</ol>
+<div id="fig-supervised" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/supervised.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.4: Aprendizaje supervisado.</figcaption><p></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li><strong>Aprendizaje no supervisado</strong>: Aquí se engloban las técnicas o algoritmos que permiten extraer patrones ocultos en los datos. En el aprendizaje automatizado no tenemos una variable dependiente/de respuesta, solamente un conjunto de observaciones multivariadas de las cuales queremos extraer información que nos sea útil. Aquí también tenemos diversas clases, pero podemos resumirlas en dos:
+<ol type="a">
+<li><strong>Reducción de la dimensionalidad</strong>: Aquí el objetivo es poder “resumir” nuestros datos multivariados en solo una o dos valores, conservando la mayor cantidad de la información original. Aquí encontramos técnicas como los Ánálisis de Componentes Principales (PCA), Análisis de Coordenadas Principales (PCoA), Escalamiento Multidimensional No Métrico (NMDS). Si ya has tenido un acercamiento previo a estas técnicas puede que esto no te cuadre del todo, pues el NMDS (por ejemplo) es una técnica de ordenación. Y no estarías mal, pero en el proceso estamos reduciendo la dimensional original de los datos para poder realizar la ordenación. <strong>Nuestra entrada en estas técnicas es un conjunto de observaciones multivariadas, y la salida otro conjunto de observaciones compuesto por un menor número de variables</strong></li>
+<li><strong>Agrupamientos</strong>: El nombre lo dice todo, su objetivo es el formar grupos. ¿Cómo? Igual a como lo haríamos nosostros: juntando las instancias que más se parecen entre sí en un solo grupo, y mandando a las que no se parecen a otro grupo. <strong>Nuestra entrada es un conjunto de observaciones multivariadas, y la salida la agrupación a la que pertenece cada una</strong>.</li>
+</ol></li>
+</ol>
+<div id="fig-unsupervised" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/unsupervised.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.5: Aprendizaje no supervisado.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué “supervisado” y “no supervisado”? Porque en el primero tenemos una función de pérdida (error) que podemos supervisar y optimizar para mejorar nuestras predicciones, mientras que en el segundo no.</p>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aunque en la clasificación y en los agrupamientos estemos lidiando con grupos o clases, no son lo mismo. La clasificación es aprendizaje supervisado, la agrupación es aprendizaje no supervisado.</p>
+</div>
+</div>
+<p>Adicional a estas dos tenemos otras dos menos conocidas: el aprendizaje por refuerzo y el aprendizaje semi-supervisado, pero esos quedan fuera del alcance de este curso.</p>
+<p>Con esto terminamos esta sesión. Sé que estuvo fuertemente cargada de teoría y matemática, pero es necesario que tengas al menos una noción de dónde surgen las cosas. No es necesario que te las aprendas de memoria, o que sepas calcular las matrices a mano, solo que entiendas la lógica detrás de los procedimientos para que no abuses de ellos. Como recompensa por llegar hasta aquí, no hay ejercicio para esta sesión ;).</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
@@ -1333,7 +1399,6 @@ Eigenvalues for PCoA axes:
 Anderson MJ. 2005. Distance-Based Tests for Homogeneity of Multivariate Dispersions. <em>Biometrics</em> 62:245-253. DOI: <a href="https://doi.org/10.1111/j.1541-0420.2005.00440.x">10.1111/j.1541-0420.2005.00440.x</a>.
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->

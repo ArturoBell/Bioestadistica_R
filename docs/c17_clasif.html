@@ -83,6 +83,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -127,6 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -328,7 +348,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#bosques-aleatorios" id="toc-bosques-aleatorios" class="nav-link active" data-scroll-target="#bosques-aleatorios"><span class="toc-section-number">17.1</span>  Bosques aleatorios</a></li>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">17.1</span>  Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">17.2</span>  Introducción</a></li>
+  <li><a href="#clasificación-y-clasificadores" id="toc-clasificación-y-clasificadores" class="nav-link" data-scroll-target="#clasificación-y-clasificadores"><span class="toc-section-number">17.3</span>  Clasificación y clasificadores</a></li>
+  <li><a href="#consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" id="toc-consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" class="nav-link" data-scroll-target="#consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado"><span class="toc-section-number">17.4</span>  Consideraciones al construir un modelo de aprendizaje automatizado</a>
+  <ul class="collapse">
+  <li><a href="#ajuste-sub-y-sobre" id="toc-ajuste-sub-y-sobre" class="nav-link" data-scroll-target="#ajuste-sub-y-sobre"><span class="toc-section-number">17.4.1</span>  Ajuste (sub y sobre)</a></li>
+  <li><a href="#fuga-de-información" id="toc-fuga-de-información" class="nav-link" data-scroll-target="#fuga-de-información"><span class="toc-section-number">17.4.2</span>  Fuga de información</a></li>
+  </ul></li>
+  <li><a href="#evaluación-de-un-clasificador" id="toc-evaluación-de-un-clasificador" class="nav-link" data-scroll-target="#evaluación-de-un-clasificador"><span class="toc-section-number">17.5</span>  Evaluación de un clasificador</a>
+  <ul class="collapse">
+  <li><a href="#matriz-de-confusión" id="toc-matriz-de-confusión" class="nav-link" data-scroll-target="#matriz-de-confusión"><span class="toc-section-number">17.5.1</span>  Matriz de confusión</a></li>
+  <li><a href="#curva-de-características-del-operador-receptor-roc" id="toc-curva-de-características-del-operador-receptor-roc" class="nav-link" data-scroll-target="#curva-de-características-del-operador-receptor-roc"><span class="toc-section-number">17.5.2</span>  Curva de Características del Operador Receptor (ROC)</a></li>
+  <li><a href="#área-bajo-la-curva-roc-roc-auc" id="toc-área-bajo-la-curva-roc-roc-auc" class="nav-link" data-scroll-target="#área-bajo-la-curva-roc-roc-auc"><span class="toc-section-number">17.5.3</span>  Área bajo la curva ROC (ROC-AUC)</a></li>
+  </ul></li>
+  <li><a href="#árboles-de-decisión-y-ensambles" id="toc-árboles-de-decisión-y-ensambles" class="nav-link" data-scroll-target="#árboles-de-decisión-y-ensambles"><span class="toc-section-number">17.6</span>  Árboles de decisión y ensambles</a>
+  <ul class="collapse">
+  <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión"><span class="toc-section-number">17.6.1</span>  Árboles de decisión</a></li>
+  <li><a href="#bosques-aleatorios" id="toc-bosques-aleatorios" class="nav-link" data-scroll-target="#bosques-aleatorios"><span class="toc-section-number">17.6.2</span>  Bosques aleatorios</a></li>
+  </ul></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">17.7</span>  Ejercicio</a></li>
   </ul>
 </nav>
     </div>
@@ -352,86 +391,766 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="bosques-aleatorios" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="bosques-aleatorios"><span class="header-section-number">17.1</span> Bosques aleatorios</h2>
+<section id="librerías" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">17.1</span> Librerías</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vip)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>iris.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(<span class="at">x =</span> Species, <span class="at">y =</span> Petal.Length)) <span class="sc">+</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>iris.plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="c17_clasif_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</section>
+<section id="introducción" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">17.2</span> Introducción</h2>
+<p>Hasta el momento hemos visto dos formas de involucrar respuestas categóricas: crearlas con alguna técnica de agrupamientos, o utilizarlas para hacer comparaciones con pruebas de significancia. En este capítulo vamos a hablar de (en mi opinión) una mejor alternativa (dependiendo de tu objetivo): la <strong>clasificación</strong>. La clasificación es una <strong>técnica de aprendizaje supervisado</strong> en la que el <strong>objetivo es predecir clases</strong> (etiquetas) a partir de los valores de los predictores. Al ser aprendizaje supervisado podemos evaluar su desempeño; es decir, qué tan bien estamos prediciendo nuestras etiquetas. Si tenemos un buen desempeño, podemos utilizar alguna medida de importancia de variables para explicar el modelo. Si no, toca volear mesas, jalarnos los cabellos, y regresar a pensar qué es lo que está fallando: ¿el modelo seleccionado no es el óptimo? ¿Debíamos de utilizar algún preprocesamiento? ¿el modelo no está optimizado adecuadamente? Al terminar este capítulo deberías de ser capaz de responder adecuadamente a todas estas preguntas. En la <a href="#fig-catresp">Figura&nbsp;<span>17.1</span></a> tienes una pequeña comparación entre los agrupamientos, la comparación y la clasificación.</p>
+<div id="fig-catresp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/catresp.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.1: Comparación entre agrupamientos, comparación y clasificación</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="clasificación-y-clasificadores" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="clasificación-y-clasificadores"><span class="header-section-number">17.3</span> Clasificación y clasificadores</h2>
+<p>Ya sabemos en qué consiste la clasificación, ahora veamos el fundamento detrás de todos los modelos de clasificación (clasificadores). Hoy en día uno de los temas que está muy de moda es la visión por computadora. Aunque se puede hacer un modelo no supervisado para la identificación de objetos, en muchos casos tenemos algo como lo siguiente: un conjunto de imágenes de un objeto (elefantes) y otro conjunto de imágenes de otro (jirafas). Le damos este par de etiquetas e imágenes a la computadora para entrenar un clasificador; es decir, para ajustar los parámetros del modelo. Posteriormente verificamos que el modelo funcione bien pasándole una imagen sin etiquetar y que sea el clasificador quien le asigne una etiqueta. Si el modelo aprendió lo que tenía que aprender debería de ser capaz de decirnos que una imagen de una jirafa es una jirafa, y no un elefante.</p>
+<div id="fig-traintest" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/traintest.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.2: Clasificación de imágenes de elefantes y jirafas.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
 </div>
 </div>
-<p>El primer paso es separar nuestros datos en datos de entreenamiento y prueba, lo cual podemos hacer con las funciones <code>initial_split</code>, <code>training</code> y <code>testing</code> de la librería <code>rsample</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>iris_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(iris, <span class="at">strata =</span> Species)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>iris_train <span class="ot">&lt;-</span> <span class="fu">training</span>(iris_split)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>iris_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(iris_split)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-body-container callout-body">
+<p><strong>Este proceso de entrenamiento y prueba debemos de aplicarlo con todos los modelos de aprendizaje supervisado, independientemente de si son regresiones o clasificaciones</strong>.</p>
 </div>
-<p>Luego, construimos una receta para el preprocesamiento de los datos:</p>
+</div>
+<p>Ya tenemos una idea del qué hace la clasificación, pero nos falta el cómo. Para regresión hemos hablado de distintos modelos (lineales, <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> o no lineales, <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>), y en clasificación es lo mismo, tenemos una gran cantidad de métodos, cada uno con sus supuestos, fortalezas, y debilidades. En los renglones de la <a href="#fig-clasifcomp">Figura&nbsp;<span>17.3</span></a> tenemos tres conjuntos de datos bivariados con dos clases (roja y azul) cada uno, y en las columnas los <strong>márgenes de decisión</strong> de los clasificadores; es decir, el <strong>límite entre ambas clases que aprendió cada clasificador</strong>. Esta es la gran diferencia entre los clasificadores: la complejidad de los límites que son capaces de aprender. En la tercera columna tenemos una máquina de soporte vectorial con un kernel lineal (linear SVM); es decir, que solamente puede aprender un límite lineal entre las clases. La consecuencia es que tiene un desempeño muy pobre en el segundo conjunto de datos, pero uno bastante aceptable el tercero. A su derecha tenemos también una máquina de soporte vectorial, solo que esta vez con un kernel RBF (RBF SVM) que puede aprender un límite más complejo. Como resultado el desempeño es mejor en todos los casos que en su contraparte lineal. Y así podríamos ir analizando caso por caso, viendo quién funciona mejor en qué tipo de casos, pero verás una tendencia clara: <strong>los clasificadores con límites de decisión más flexibles son los que tienen un mejor desempeño, independientemente del problema</strong>.</p>
+<div id="fig-clasifcomp" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_classifier_comparison_001.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.3: Comparación de clasificadores</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Eso son excelentes noticias, ¿no? Simplemente seleccionemos el algoritmo más flexible de todos y quitémonos de problemas. <strong>NO</strong>, para nada. Usualmente, <strong>conforme incrementa la flexibilidad del modelo, incrementa su complejidad</strong>.</p>
+</div>
+</div>
+</section>
+<section id="consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado"><span class="header-section-number">17.4</span> Consideraciones al construir un modelo de aprendizaje automatizado</h2>
+<p>Esto último me lleva a hablar sobre con qué cosas debemos de tener cuidado al generar un modelo de aprendizaje automatizado, pues va mucho más allá de solo utilizar <code>lm()</code> y reportar un <span class="math inline">\(R^2\)</span>.</p>
+<section id="ajuste-sub-y-sobre" class="level3" data-number="17.4.1">
+<h3 data-number="17.4.1" class="anchored" data-anchor-id="ajuste-sub-y-sobre"><span class="header-section-number">17.4.1</span> Ajuste (sub y sobre)</h3>
+<p>En los <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> y <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a> vimos cómo entrenar y “evaluar” un modelo de regresión, pero no pusimos demasiada atención a la parte de la bondad de ajuste. ¿Por qué? Porque <strong>evaluar un modelo PREDICTIVO a partir de los datos que lo entrenaron es un SINSENTIDO</strong>. Es el equivalente a que yo te diga que al final del curso va a haber un examen, que te proporcione una guía de estudio, que tú como estudiante diligente la resuelvas y la estudies, y que el examen tenga exactamente las mismas preguntas. ¿Qué representaría tu calificación? ¿Lo que aprendiste sobre el curso o qué tan bien memorizaste la guía de estudio? Evidentemente lo segundo. En el caso de los modelos de aprendizaje supervisado pasa lo mismo: “aprenden” la información contenida en los datos, pero en el peor de los casos solo “memorizan” los datos que se les dieron (<a href="#fig-obama">Figura&nbsp;<span>17.4</span></a>).</p>
+<div id="fig-obama" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/obama.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.4: Probar un modelo de ML con datos de entrenamiento es ponerse una medalla a uno mismo por su buen desempeño: no es una evaluación objetiva.</figcaption><p></p>
+</figure>
+</div>
+<p>¿Cómo contendemos con esto? Hacemos una división de nuestros datos: la mayor parte de los datos (usualmente alrededor del 75%) se utiliza para entrenamiento, mientras que los datos restantes se utilizan para probar el modelo final:</p>
+<div id="fig-traintesdtiv" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/traintestdiv.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.5: División entrenamiento/prueba.</figcaption><p></p>
+</figure>
+</div>
+<p>Esto lo que nos permite es evaluar objetivamente el desempeño de nuestro modelo, pues nunca ha visto los datos de prueba. Volviendo a la analogía del examen final y la guía de estudio, sería como si yo esta vez te diera un examen que abarque los mismos temas que en la guía, pero con problemas que te hagan pensar o abordarlos desde otra perspectiva para que realmente demuestres tu dominio sobre el temario, y no solo que resolviste la guía.</p>
+<p>Esta “memorización” tiene un nombre: <strong>sobreajuste</strong>, que se define formalmente como <strong>una poca capacidad de generalización del modelo</strong>; es decir, que vamos a tener medidas de bondad de ajuste (o medidas de evaluación) mucho mejores en los datos de entrenamiento que en los datos de prueba. En todo escenario de aprendizaje supervisado buscamos un modelo que sea capaz de extraer la mayor cantidad de información posible de los datos, sin llegar a memorizar cada dato (sobreajuste), pero tampoco pasarnos de simples (subajuste; <a href="#fig-overunderfit">Figura&nbsp;<span>17.6</span></a>)</p>
+<div id="fig-overunderfit" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/overunderfit.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.6: Tres modelos ajustados a un conjunto de datos: a) un modelo cuadrático que captura adecuadamente la relación entre las variables, no predice exactamente ningún punto, pero tampoco hay casos que estén extremadamente lejos (ajuste óptimo); b) un modelo lineal que no es suficiente para capturar adecuadamente la relación entre las variables (subajustado); y c) un modelo polinomial de orden n-1 que memorizó a la perfección los datos de entrenamiento, pero al que si se le da un dato fuera de ellos no podrá predecir adecuadamente (sobreajustado).</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿A qué medidas de bondad de ajuste me refiero? A aquellas que tienen que ver con la capacidad predictiva del modelo. En regresiones serían medidas como el <span class="math inline">\(R^2\)</span> o el <span class="math inline">\(MSE\)</span>. Más adelante explicaremos a detalle cómo evaluar el desempeño con un clasificador, pero es con una matriz de confusión, la curva de Características del Operador Receptor (ROC) y el área bajo esta (AUC-ROC).</p>
+</div>
+</div>
+<p>Además de la parte práctica/filosófica tenemos otro problema que resolver: la <strong>compensación/balance de sesgo-varianza</strong>. El sesgo lo entendemos como la diferencia entre la predicción promedio de nuestro modelo y el valor real que queremos predecir (nuestro error), de manera que modelos con un alto sesgo no le prestan demasiada atención a los datos (error grande) y en consecuencia están sobre-simplificados. La varianza en este contexto la entendemos como la variabilidad del modelo de predicción para un punto dado, de modo que un modelo con una alta varianza le presta demasiada atención a los datos de entrenamiento y no generaliza bien a datos que nunca ha visto. ¿Por qué compensación? Porque, como ya había mencionado superficialmente antes, <strong>entre más complejo sea el modelo, mayor es la probabilidad del sobreajuste</strong>. ¿Qué tan severo puede ser? Tan severo como en la siguiente figura:</p>
+<div id="fig-modcomplex" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/modcomplex.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.7: Relación entre el desempeño de un modelo en realción a su complejidad, evaluado en datos de entrenamiento y en datos de prueba. A mayor complejidad incrementa el desempeño en los datos de entrenamiento, pero no es así con datos que no ha visto.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando hablo de la complejidad del modelo no me refiero solo a seleccionar un modelo que sea más complejo que otro, sino también a la cantidad de variables. No porque podamos meter cientos o miles de variables a un modelo quiere decir que debemos hacerlo, hay que hacer una rigurosa selección de variables para reducir la diferencia entre los datos de entrenamiento y los de prueba.</p>
+</div>
+</div>
+<section id="validación-cruzada-y-optimización" class="level4" data-number="17.4.1.1">
+<h4 data-number="17.4.1.1" class="anchored" data-anchor-id="validación-cruzada-y-optimización"><span class="header-section-number">17.4.1.1</span> Validación cruzada y optimización</h4>
+<p>Con esto llegamos a la validación cruzada y la optimización de hiper-parámetros. La <strong>validación cruzada</strong> consiste en <strong>partir los datos de entrenamiento en <span class="math inline">\(k\)</span> conjuntos de entrenamiento/prueba, evaluar el desempeño para cada uno, y promediarlos</strong> (<a href="#fig-crossval">Figura&nbsp;<span>17.8</span></a>)</p>
+<div id="fig-crossval" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.8: Validación cruzada y cómo repartir los datos para entrenar, optimizar y validar un modelo de aprendizaje supervisado.</figcaption><p></p>
+</figure>
+</div>
+<p>Lo que conseguimos con esto es una evaluación más robusta del desempeño de nuestro modelo, pues ya estamos viendo qué pasa con distintas combinaciones de datos vistos/no vistos. Pudiera llegar a suceder que tenemos mucha suerte y que la partición original se preste para obtener buenas métricas, o tener muy mala suerte y que se preste para tener malas métricas. Y para acabar de “redondear” lo escépticos que somos con nuestro modelo, después de haber probado con distintos <span class="math inline">\(k\)</span> sub-conjuntos (k-folds), lo volvemos a probar con los datos de prueba originales (hay quien los denomina en este contexto datos de validación).</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Así como no muestreamos solo un individuo para hacer inferencias, tampoco consideramos una sola partición entrenamiento prueba. ¿Cuántas sub-divisiones debemos de hacer? Pueden ser tan pocas como 5, o tantas como n-1, pero un “estándar” (más bien una convención por comodidad) es que la validación cruzada sea de orden 10 (10 k-folds).</p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tamaño de la partición entrenamiento-prueba original y el orden de la validación cruzada dependen del número de datos que tengas. Si tu conjunto de prueba queda con un tamaño muy reducido (pensemos menos de diez observaciones), mejor solo quédate con la validación cruzada en todos tus datos.</p>
+</div>
+</div>
+<p>¿Y qué pinta la “optimización de hiperparámetros” aquí? Para empezar, ¿qué es la optimización de hiperparámetros? Pues bien, resulta que muchos <strong>modelos de aprendizaje supervisado</strong> tienen no solo los parámetros que queremos ajustar (por ejemplo las pendientes en la regresión lineal), sino que también tienen otros <strong>parámetros que controlan su complejidad</strong>. Esto puede ser el valor de <span class="math inline">\(\alpha\)</span> o <span class="math inline">\(\lambda\)</span> en una regresión regularizada como las que veremos en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a>, o el número máximo de predictores que considera un árbol de decisión. Es importante <strong>optimizar esos hiperparámetros</strong>, para no terminar con un modelo innecesariamente complejo que no va a tener una buena capacidad predictiva, y la mejor manera de hacerlo es utilizando <strong>validación cruzada</strong>.</p>
+</section>
+</section>
+<section id="fuga-de-información" class="level3" data-number="17.4.2">
+<h3 data-number="17.4.2" class="anchored" data-anchor-id="fuga-de-información"><span class="header-section-number">17.4.2</span> Fuga de información</h3>
+<p>Hay otra cosa con la que debemos de tener muchísimo cuidado al construir cualquier modelo de aprendizaje automatizado: la <strong>fuga de información</strong>. Volviendo a nuestra analogía del examen sería el equivalente a que alguien te soplara las respuestas del examen, o a que sacaras un acordeón. ¿Cómo pasa esto? No prestando atención a la información que le damos al modelo. <strong>El conjunto de prueba debe de aislarse completamente del de entrenamiento</strong>. ¿Necesitas pre-procesar los datos de una manera (escalarlos, por ejemplo)? Escala los datos de entrenamiento y utiliza esos parámetros para escalar los datos de prueba. Si vas a centrar y estandarizar, separa tus datos, calcula las medias y desviaciones de cada variable con los datos de entrenamiento y con esas medias y desviaciones centra y estandariza ambos conjuntos de datos; es decir, <strong>no escales la base completa</strong>, de lo contrario le estás dando al <strong>modelo información sobre datos que no debería de ver en ningún momento antes de la evaluación</strong>. Tampoco las escales por separado, pues eso te introducirá un sesgo aleatorio derivado de la división.</p>
+<p>Otro caso de fuga de información, aún menos evidente que el anterior, es tener casos en los que tengamos algo tipo “la variable <span class="math inline">\(A\)</span> lógicamente implica la respuesta <span class="math inline">\(Y\)</span>”. ¿Cómo es esto? Imagina que una tienda departamental que vende únicamente joyas, películas y electrónica (raro, lo sé) nos contrata para saber cuánto va a gastar un cliente en joyería (el segmento con mayores utilidades) a partir de lo que gasta en las otras dos cosas, por lo que nos da los registros cliente a cliente en la siguiente tabla:</p>
+<div id="fig-dataleak" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/dataleak.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.9: Registro de ventas de una tienda departamental imaginaria. ¿Qué cliente no da información útil para predecir el gasto en joyería a partir de lo gastado en películas y electrónica?</figcaption><p></p>
+</figure>
+</div>
+<p>¿Qué cliente salta a la vista? Espero que me digas que el 11125, pues la única razón por la que el cliente está en el registro es porque compró algo de joyería. Nada más. <strong>Esto hace que nuestro modelo aprenda algo, pero ese algo es una peculiaridad y no algo relevante sobre lo modelado</strong>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tema de la fuga de información es sumamente extenso, pero una excelente lecura al respecto es <span class="citation" data-cites="Kaufmanetal_2012">Kaufman et&nbsp;al. (<a href="references.html#ref-Kaufmanetal_2012" role="doc-biblioref">2012</a>)</span>.</p>
+</div>
+</div>
+<p>Ahora sí, hablemos de cómo evaluar un clasificador.</p>
+</section>
+</section>
+<section id="evaluación-de-un-clasificador" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="evaluación-de-un-clasificador"><span class="header-section-number">17.5</span> Evaluación de un clasificador</h2>
+<p>Hace un par de subtemas mencioné someramente las formas con las que evaluamos la calidad de las predicciones de un clasificador. Bien, ahora entremos a los detalles correspondientes.</p>
+<section id="matriz-de-confusión" class="level3" data-number="17.5.1">
+<h3 data-number="17.5.1" class="anchored" data-anchor-id="matriz-de-confusión"><span class="header-section-number">17.5.1</span> Matriz de confusión</h3>
+<p>La matriz de confusión no es otra cosa mas que una <strong>tabla de contingencia que relaciona las clases observadas y las predichas por el clasificador</strong>. En un caso de clasificación binaria (dos clases objetivo) tendríamos una estructura como la siguiente:</p>
+<table class="table">
+<caption>Matriz de confusión para un clasificador binario. V: verdadero; F, falso; P: positivo; N: negativo; es decir, en la diagonal tenemos las clasificaciones correctas (verdaderos positivo y negativo), y encima y debajo los errores (falsos positivo y negativo).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\hat{A}\)</span></td>
+<td style="text-align: center;">VP</td>
+<td style="text-align: center;">FP</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\hat{B}\)</span></td>
+<td style="text-align: center;">FN</td>
+<td style="text-align: center;">VN</td>
+</tr>
+</tbody>
+</table>
+<p>Si lo piensas con atención, esto es todo lo que necesitamos: en qué acertó y en qué se equivocó, aunque esto se vuelve muy impráctico cuando tenemos más de dos clases, y no nos permite evaluar rápidamente nuestro clasificador. Es aquí donde entran las medidas derivadas de esta matríz. Expliquémoslas todas con la siguiente matriz de confusión:</p>
+<table class="table">
+<caption>Ejemplo de matriz de confusión.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\hat{A}\)</span></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\hat{B}\)</span></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
 <ol type="1">
-<li>Le damos a la receta (<code>recipe()</code>) la fórmula y los datos de entrenamiento</li>
-<li>Añadimos un paso para centrar los datos numéricos. Recuerda, solo estamos poniendo todos los valores numéricos en la misma escala</li>
+<li><strong>Exactitud</strong> (Accuracy): Representa el <strong>porcentaje de clasificaciones correctas</strong>, independientemente de si fueron verdaderos positivos o verdaderos negativos. Es decir, la suma de los elementos en la diagonal dividida entre el número total de observaciones. En nuestro ejemplo el clasificador tuvo una exactitud del 75%.</li>
 </ol>
-<p>El objeto <code>iris_prep</code> sigue los pasos a seguir para el preprocesamiento de los datos (por ello receta) y obtiene los parámetros con los que se van a preprocesar los datos, mientras que <code>juiced</code> obtiene los datos procesados.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>iris_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Species<span class="sc">~</span>., <span class="at">data =</span> iris_train) <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">step_center</span>(<span class="fu">all_numeric</span>())</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>iris_prep <span class="ot">&lt;-</span> iris_rec <span class="sc">|&gt;</span> <span class="fu">prep</span>()</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>juiced <span class="ot">&lt;-</span> <span class="fu">juice</span>(iris_prep)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="math display">\[Exact = \frac{VP+VN}{N} = \frac{4+5}{12} = \frac{3}{4} =0.75\]</span></p>
+<ol start="2" type="1">
+<li><strong>Precisión</strong> (Precision): Representa el <strong>porcentaje de clasificaciones positivas correctas</strong>; es decir, de todas las clasificaciones que fueron positivas, qué proporción era en realidad positiva. Nuestro clasificador de ejemplo tuvo una precisión del 80%:</li>
+</ol>
+<p><span class="math display">\[Prec = \frac{VP}{VP+FP} = \frac{4}{4+1} = \frac{4}{5} = 0.8 \]</span></p>
+<ol start="3" type="1">
+<li><strong>Tasa de verdaderos positivos</strong> (True Positive Rate, TPR). También conocida como sensibilidad. Esta indica qué <strong>porcentaje de los verdaderos positivos se clasificó correctamente</strong>; es decir, dividimos los verdaderos positivos entre la suma de estos y los falsos negativos, pues debieron de haber sido verdaderos positivos. Nuestro clasificador de ejemplo tuvo una sensibilidad del 66%</li>
+</ol>
+<p><span class="math display">\[TPR = \frac{VP}{VP+FN} = \frac{4}{6} \approx 0.66\]</span></p>
+<ol start="4" type="1">
+<li><strong>Tasa de verdaderos negativos</strong> (True Negative Rate, TNR). También conocida como especificidad. Es la <strong>proporción de los verdaderos negativos que se clasificó correctamente</strong>, siguiendo la misma lógica de la TPR. Nuestro clasificador de ejemplo tuvo una especificidad del 80%.</li>
+</ol>
+<p><span class="math display">\[TNR = \frac{VN}{VN+FP} = \frac{5}{6} \approx 0.8\]</span></p>
+<ol start="5" type="1">
+<li><strong>F1</strong>. Esta es una medida que relaciona la precisión y la tasa de verdaderos positivos para dar una <strong>medida de la robustez del modelo</strong>. En nuestro modelo de ejemplo fue del 77%:</li>
+</ol>
+<p><span class="math display">\[F1 = \frac{2*Prec*TPR}{Prec + TPR} = 2*\frac{0.75*0.8}{0.75+0.8} \approx 0.77\]</span></p>
+<ol start="6" type="1">
+<li><strong>Tasa de No Información</strong> (No-Information Rate, NIR). Es el <strong>porcentaje que representa la clase mayoritaria</strong> del total, y representa la exactitud que tendría un modelo “bobo”; es decir, un modelo que predijera siempre esa clase mayoritaria. Nuestras clases están balanceadas, por lo que la NIR es del 50%:</li>
+</ol>
+<p><span class="math display">\[NIR = max(n_i) = \frac{6}{12} = 0.5\]</span></p>
+<p>Además de estas <code>R</code> nos da otras dos que también son útiles:</p>
+<ol start="7" type="1">
+<li><p><span class="math inline">\(p(Exact &gt; NIR)\)</span>: el resultado de una <strong>prueba binomial para ver si la exactitud del modelo es superior a la de un modelo bobo</strong>.</p></li>
+<li><p><strong>Kappa de Cohen</strong>: es un índice de la confiabilidad interna del clasificador. En pocas palabras, es el <strong>porcentaje de clasificaciones correctas que no son atribuíbles al azar</strong>. Como buen índice, está contenido en el intervalo <span class="math inline">\([-1,1]\)</span>, pero el valor máximo alcanzable en nuestro problema depende de qué tan balanceadas (o no) estén nuestras clases. Entre más balanceadas estén, más fácil será alcanzar valores altos, y viceversa.</p></li>
+</ol>
+<p>Si bien todas estas medidas representan distintos aspectos de la clasificación, hay un par de formas de evaluación más que, para la mayor parte de los problemas, dan una mejor representación de la capacidad predictiva del modelo.</p>
+</section>
+<section id="curva-de-características-del-operador-receptor-roc" class="level3" data-number="17.5.2">
+<h3 data-number="17.5.2" class="anchored" data-anchor-id="curva-de-características-del-operador-receptor-roc"><span class="header-section-number">17.5.2</span> Curva de Características del Operador Receptor (ROC)</h3>
+<p>Si has escuchado algo sobre los <strong>modelos de distribución de especies</strong> (MAXENT o similares), seguramente también hayas escuchado sobre la curva ROC. Esto es porque esos modelos son, en realidad, <strong>clasificadores que predicen si una especie puede estar (positivo) o no (falso) en un lugar determinado</strong>, pero eso es salirnos del tema.</p>
+<p>La <strong>curva ROC</strong> muestra la relación entre la TPR y la FPR (que es el complemento de la TPR: 1-TPR) a distintos niveles, lo cual da una <strong>evaluación más confiable de la capacidad predictiva del modelo</strong> <span class="citation" data-cites="MeyerBaese_2014">(<a href="references.html#ref-MeyerBaese_2014" role="doc-biblioref">Meyer-Baese &amp; Schmid, 2014</a>)</span> donde el mejor modelo llevará la “curva” hacia la esquina superior izquierda (una tasa de verdaderos positivos perfecta en todos los casos), y un modelo bobo estará cercano a una línea central de referencia con pendiente de 1, lo que representa una clasificación al azar:</p>
+<div id="fig-roccurve" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/roccurve.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.10: Curva ROC y sus partes. Entre mejor sea el modelo más se acercará a la esquina superior izquierda. Un modelo que solo haga predicciones al azar (bobo) estará en la línea amarilla. Si la curva se va debajo de esa línea solo quiere decir que el modelo está prediciendo la clase positiva como negativa.</figcaption><p></p>
+</figure>
 </div>
-<p>Ahora podemos especificar el modelo de bosques aleatorios, donde ajustaremos sus hiperparámetros:<code>mtry</code> (el número máximo de predictores por árbol), <code>min_n</code> (el número de observaciones necesarias para seguir dividiendo los datos) y <code>trees</code> (el número de árboles en el ensemble). Después especificamos que es un bosque para clasificación, y por último le indicamos que utilice la librería <code>ranger</code> para construir el bosque:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">trees =</span> <span class="fu">tune</span>(),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">set_engine</span>(<span class="st">"ranger"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="área-bajo-la-curva-roc-roc-auc" class="level3" data-number="17.5.3">
+<h3 data-number="17.5.3" class="anchored" data-anchor-id="área-bajo-la-curva-roc-roc-auc"><span class="header-section-number">17.5.3</span> Área bajo la curva ROC (ROC-AUC)</h3>
+<p>La curva ROC es sumamente útil para ver qué tan bueno o malo es el modelo, pero siempre es más fácil lidiar con un solo número. Es ahí donde entra el área bajo la curva (AUC-ROC). Esta <strong>área bajo la curva</strong> está en el intervalo [0,1], donde 1 es una clasificación perfecta, 0.5 una clasificación aleatoria (no hubo clasificación), y 0 es que el modelo reciprocó (invirtió) la clase a predecir.</p>
+<p>El AUC tiene <strong>dos bondades</strong>:</p>
+<ol type="1">
+<li>Es <strong>invariable con respecto a la escala</strong>; es decir, mide qué tan bien se clasifican las predicciones, más que dar sus valores absolutos.</li>
+<li>Es <strong>invariable con respecto al umbral de clasificación</strong>. Cuando entrenamos un modelo de clasificación podemos seleccionar un umbral para que el modelo diga que algo es la clase positiva. Entre más bajo sea este umbral, más positivos vamos a tener. El AUC mide la calidad de las predicciones del modelo, independientemente de qué umbral se haya seleccionado.</li>
+</ol>
+<p>Estas dos bondades, sin embargo, tienen <strong>dos bemoles</strong>:</p>
+<ol type="1">
+<li>La invarianza de escala puede ser inconveniente. A veces necesitamos resultados de probabilidad bien calibrados (¿qué probabilidad hay de que una observación sea clasificada como A y no como B?), y el AUC no es eso.</li>
+<li>La invarianza al umbral de clasificación puede ponernos el pie. En casos en los que tenemos grandes disparidades en el costo de falsos negativos con relación a falsos positivos es imperante minimizar uno de esos errores de clasificación, y el AUC no es la medida para eso.</li>
+</ol>
+<p>No hay un criterio claro para decir “qué tanto es tantito” y definir si un modelo es “bueno” o “malo”, pero <span class="citation" data-cites="Hosmeretal_2013">Hosmer, Lemeshow &amp; Sturdivant (<a href="references.html#ref-Hosmeretal_2013" role="doc-biblioref">2013</a>)</span> dan los siguientes intervalos:</p>
+<ul>
+<li>0.5: no hay clasificación</li>
+<li>(0.5, 0.7]: clasificación pobre</li>
+<li>(0.7, 0.8]: clasificación aceptable</li>
+<li>(0.8, 0.9]: excelente clasificación</li>
+<li>(0.9, 1]: clasificación excepcional</li>
+</ul>
+<p>Ahora sí, después de toda esta teoría podemos aprender a implementar, evaluar e interpretar clasificadores.</p>
+</section>
+</section>
+<section id="árboles-de-decisión-y-ensambles" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="árboles-de-decisión-y-ensambles"><span class="header-section-number">17.6</span> Árboles de decisión y ensambles</h2>
+<p>En la primera versión del curso hablé sobre clasificadores “tradicionales” que se han empleado en el área de la biología (regresión logística y análisis de funciones discriminantes lineales), pero creo que vale la pena hablar de algunas alternativas con márgenes de decisión más flexibles y que son casi igual de interpretables.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>Finalmente, formamos un flujo de trabajo que contenga ambos pasos: la receta de preprocesamiento y el modelo</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tune_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_recipe</span>(iris_rec) <span class="sc">|&gt;</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(tune_spec)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-caption-container flex-fill">
+Nota
 </div>
-<p>Ahora sí, podemos ajustar nuestros hiper-parámetros. Primero, asignemos un confjunto de remuestreos para la validación cruzada, construidos a partir de los datos de entrenamiento:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>iris_fold <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(iris_train)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Luego establezcamos el procesamiento en paralelo para hacer el procedimiento más rápido. En este primer proceso vamos a escoger 20 puntos aleatorios para guiar nuestra búsqueda y no abusar de la fuerza bruta para resolver el problema:</p>
+<div class="callout-body-container callout-body">
+<p>La regresión logística la vamos a retomar en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a> porque es un modelo lineal con un error binomial.</p>
+</div>
+</div>
+<p>¿Por qué “casi” igual de interpretables? Porque usualmente entre más flexible es un modelo, más complejo es su funcionamiento, menos simple es explicar cómo hace las predicciones y, por lo tanto, sacar conclusiones sobre cómo influyen las variables. Pero empecemos por lo sencillo.</p>
+<section id="árboles-de-decisión" class="level3" data-number="17.6.1">
+<h3 data-number="17.6.1" class="anchored" data-anchor-id="árboles-de-decisión"><span class="header-section-number">17.6.1</span> Árboles de decisión</h3>
+<p>Los <strong>árboles de decisión</strong> son un modelo que “clasifica según el principio de partición recursiva, donde el espacio de atributos se parte recursivamente en regiones que contienen observaciones con valores de respuesta similares” <span class="citation" data-cites="Strobletal_2009">(<a href="references.html#ref-Strobletal_2009" role="doc-biblioref">Strobl, Malley &amp; Tutz, 2009</a>)</span>. A veces me pregunto porque los matemáticos hacen definiciones tan agresivas, pero tiene mucho sentido. No explicaré qué es la recursividad porque sería desviarnos del tema, pero podemos simplificar la definición de un árbol de decisión como un <strong>modelo que clasifica a partir de decisiones binarias sobre nuestros datos, como si fuera un diagrama de flujo</strong>. Imagina que queremos decidir si vamos a surfear o no (asume que sabemos), entonces seguiríamos un diagrama de flujo como el siguiente:</p>
+<div id="fig-dectree" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/dectree.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17.11: ¿Surfear o no? He ahí el dilema</figcaption><p></p>
+</figure>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las partes del árbol de decisión son básicamente las mismas que las del dendrograma (<a href="c15_nosup.html"><span>Capítulo&nbsp;15</span></a>). La diferencia es que no tenemos una raíz, cada nodo (punto de decisión) involucra una sola variable, y al final no tenemos hojas, sino nodos terminales.</p>
+</div>
+</div>
+<p>Aplicado a nuestros datos la <strong>lógica</strong> es la misma: <strong>encontrar límites en cada variable que permitan llevar la decisión hacia una clase u otra</strong>. El algoritmo <span class="citation" data-cites="Breiman_2001">(<a href="references.html#ref-Breiman_2001" role="doc-biblioref">Breiman, 2001</a>)</span> tiene un objetivo: que después de cada decisión incremente la “pureza” de los nodos que le siguen; es decir, que con cada decisión se abarque la mayor cantidad de datos posible hasta lograr una clasificación perfecta. Esto se logra <strong>minimizando la impureza Gini</strong>. Este índice tiene bastante teoría detrás, pero podemos simplificarlo como la <strong>tasa de error que obtendríamos si retiramos una variable</strong>, de modo que un buen predictor minimizará ese error y dará como resultado nodos más puros [ShogaRangswamy_2018]. En pocas palabras: vamos a seleccionar la variable con la que nos equivoquemos menos al hacer las decisiones.</p>
+<p>Como te habrás dado cuenta, es un algoritmo con una lógica que nos es fácil de entender, pues es muy similar a cómo tomamos decisiones (si A, entonces B) y, de hecho, esa es una de sus <strong>ventajas</strong>:</p>
+<ol type="1">
+<li>Los árboles de decisión son <strong>fáciles de interpretar</strong>: su lógica binaria y la representación visual hace que interpretarlos sea sencillo. Además, la estructura jerárquica facilita saber qué atributos son los más importantes e incluye la interacción (por el momento entendámosla como la correlación) entre ellos.</li>
+<li>Requieren de <strong>poca o nula preparación de los datos</strong>: pueden lidiar con muchos tipos de variables, sean continuas o discretas, e incluso pueden lidiar con datos faltantes.</li>
+<li>Son <strong>flexibles</strong>: Aunque los estamos viendo en el tema de clasificación, podemos utilizarlos también para problemas de regresión. De hecho, si utilizas el algoritmo de <span class="citation" data-cites="Breiman_2001">Breiman (<a href="references.html#ref-Breiman_2001" role="doc-biblioref">2001</a>)</span> que describimos antes, también se les conoce como Classification and Regression Trees (CART).</li>
+</ol>
+<p>Como todo lo demás en esta vida, si hay ventajas también hay <strong>desventajas</strong>:</p>
+<ol type="1">
+<li><strong>Propensos al sobreajuste</strong>. ¿Recuerdas que buscamos perfeccionar la clasificación lo más posible? Si dejamos que el árbol crezca indefinidamente va a, literalmente, memorizar los datos que le dimos para entrenarlo.</li>
+<li>Son <strong>estimadores con alta varianza</strong>, de modo que pequeñas variaciones dentro de los datos pueden producir árboles muy diferentes.</li>
+<li><strong>Alto costo computacional</strong>, derivado de la aproximación “codiciosa” (greedy) tomada durante su construcción (entiendelo como evaluar todo al mismo tiempo). Entre más datos y clases con límites complejos tengamos, más tiempo o poder computacional (o ambos) vamos a necesitar para entrenar el modelo.</li>
+</ol>
+<p>La tercer desventaja la podemos “obviar”, pues para fines de investigación no vamos a necesitar entrenar y obtener el modelo prácticamente en tiempo real, pero las primeras dos sí que son importantes, y nos llevan a hablar de los ensambles de árboles, particularmente los bosques aleatorios.</p>
+</section>
+<section id="bosques-aleatorios" class="level3" data-number="17.6.2">
+<h3 data-number="17.6.2" class="anchored" data-anchor-id="bosques-aleatorios"><span class="header-section-number">17.6.2</span> Bosques aleatorios</h3>
+<p>Para empezar, ¿qué es un <strong>ensamble</strong>? Es <strong>juntar múltiples modelos de aprendizaje automatizado para obtener un modelo con una mejor capacidad predictiva</strong>. Si nuestro modelo base son <strong>árboles de decisión</strong> y juntamos varios, es natural llamar a su <strong>ensamble</strong> un “<strong>bosque</strong>”. O bueno, solo a uno de sus ensambles, porque en realidad hay más modelos (AdaBoost, XGBoost, bagged trees) que son ensambles de árboles. ¿Por qué seleccionar a los <strong>bosques aleatorios</strong>? Realmente por practicidad, pues tanto AdaBoost como XGBoost tendrían razones similares:</p>
+<ol type="1">
+<li>Comparten las <strong>fortalezas de los árboles de decisión</strong>, con excepción de la interpretación (ya hablaremos de eso en el ejemplo).</li>
+<li>Nulifican la principal desventaja de los árboles de decisión: al ser varios árboles se <strong>minimiza la probabilidad de sobreajuste</strong>.</li>
+<li>Minimizan también la alta varianza o, mejor dicho, se apropian de ella. La naturaleza aleatoria de los bosques aleatorio hace que, aún con los mismos datos, podamos obtener bosques completamente diferentes. ¿Importa? Para nada, porque no vamos a explicar cada bosque de manera individual.</li>
+</ol>
+<p>Ahora bien, <strong>¿cómo funcionan los bosques aleatorios?</strong> No puedo construir diferentes árboles de decisión si tengo los mismos datos de entrenamiento, entonces hay que cambiar eso. La forma en que lo hacemos deriva de dos conceptos <span class="citation" data-cites="Pal_2017">(<a href="references.html#ref-Pal_2017" role="doc-biblioref">Pal, 2017</a>)</span>:</p>
+<ol type="1">
+<li><strong>Agregación Bootstrap</strong> (“Bagging”): Se genera un conjunto de entrenamiento diferente para cada árbol, utilizando muestreos con reemplazo del conjunto original de datos de entrenamiento</li>
+<li><strong>Selección aleatoria de atributos</strong>: Puedes entenderla como una agregación Bootstrap para los predictores , en la que los atributos (variables) considerados en cada nodo son un subconjunto aleatorio de las variables originales.</li>
+</ol>
+<p>Es decir, cada árbol en el bosque va a trabajar con su propio subconjunto de observaciones, y en cada partición va a poder seleccionar solo de un subconjunto aleatorio de variables. El resultado es un modelo de aprendizaje supervisado que se considera como uno de los más eficientes <span class="citation" data-cites="Carvajaletal_2018">(<a href="references.html#ref-Carvajaletal_2018" role="doc-biblioref">Carvajal, Maucec &amp; Cullick, 2018</a>)</span>, pero básta de cháchara y pongámonos manos a la obra.</p>
+<section id="entrenamiento" class="level4" data-number="17.6.2.1">
+<h4 data-number="17.6.2.1" class="anchored" data-anchor-id="entrenamiento"><span class="header-section-number">17.6.2.1</span> Entrenamiento</h4>
+<p>Utilicemos esta vez los datos <code>palmerpenguins::penguins_raw</code>, y aprovechemos también para introducir el uso de <code>tidymodels</code>. Nuestro proceso consiste de básicamente 11 pasos (+1):</p>
+<ol start="0" type="1">
+<li>Guardemos los datos en un objeto, manteniendo solo las variables numéricas (sin el identificador). El resultado es un conjunto de datos con 7 variables:
+<ol type="1">
+<li>Longitud del culmen</li>
+<li>Profundidad del culmen</li>
+<li>Longitud de la aleta</li>
+<li>Masa corporal</li>
+<li>Delta 15 N (o/oo)</li>
+<li>Delta 13 C (o/oo)</li>
+<li>Species, que contiene las etiquetas que queremos predecir</li>
+</ol></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>(<span class="at">cores =</span> <span class="dv">6</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tune_res <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">resamples =</span> iris_fold,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">grid =</span> <span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>peng_data <span class="ot">&lt;-</span> penguins_raw <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Seleccionar solo las columnas numéricas y "Species"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">select</span>(<span class="fu">where</span>(is.numeric) <span class="sc">|</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">contains</span>(<span class="st">"Species"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Extraer la primera palabra de la columna `Species`</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">mutate</span>(<span class="at">Species =</span> <span class="fu">str_extract</span>(Species,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">w*"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Descartar los datos faltantes</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">drop_na</span>()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(peng_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Sample Number"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Culmen Length (mm)"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Culmen Depth (mm)"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Flipper Length (mm)"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Body Mass (g)"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Delta 15 N (o/oo)"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Delta 13 C (o/oo)"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Species"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"2","2":"39.5","3":"17.4","4":"186","5":"3800","6":"8.94956","7":"-24.69454","8":"Adelie"},{"1":"3","2":"40.3","3":"18.0","4":"195","5":"3250","6":"8.36821","7":"-25.33302","8":"Adelie"},{"1":"5","2":"36.7","3":"19.3","4":"193","5":"3450","6":"8.76651","7":"-25.32426","8":"Adelie"},{"1":"6","2":"39.3","3":"20.6","4":"190","5":"3650","6":"8.66496","7":"-25.29805","8":"Adelie"},{"1":"7","2":"38.9","3":"17.8","4":"181","5":"3625","6":"9.18718","7":"-25.21799","8":"Adelie"},{"1":"8","2":"39.2","3":"19.6","4":"195","5":"4675","6":"9.46060","7":"-24.89958","8":"Adelie"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora optimicemos e interpretemos el modelo de bosques</p>
+<ol type="1">
+<li><strong>Dividir los datos en datos de entrenamiento y prueba</strong>. Para esto utilizaremos las funciones <code>rsample::initial_split()</code> y <code>rsample::training()</code>. Además, remuestrearemos los datos de entrenamiento para realizar la validación cruzada y optimizar los hiper-parámetros del modelo con la función <code>rsample::vfold_cv()</code></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dividimos los datos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>peng_split <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(peng_data)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los datos de entrenamiento</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>peng_train <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">training</span>(peng_split)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos para validación cruzada</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>peng_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(peng_train)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><strong>Preprocesar los datos</strong>. Para esto haremos lo que <code>tidymodels</code> denomina como una receta. Recordarás que los árboles de decisión no requieren prácticamente ningún tipo de preprocesamiento, pero centremos las variables numéricas para ejemplificar.
+<ul>
+<li>Pasos:
+<ol type="1">
+<li>Le damos a la receta (<code>recipe()</code>) la fórmula y los datos de entrenamiento.</li>
+<li>Añadimos un paso adicional para centrar los datos numéricos.</li>
+</ol></li>
+<li>El objeto <code>peng_prep</code> sigue los pasos que definimos para el procesamiento de los datos (por eso receta) y obtiene los parámetros que se van a utilizar, mientras que <code>peng_juiced</code> contiene los datos ya procesados.</li>
+</ul></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una lista completa de todos los pasos de pre-procesamiento la puedes encontrar en la <a href="https://www.tidymodels.org/find/recipes/">documentación correspondiente</a> de <code>tidymodels</code>.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formación de la receta</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>peng_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(Species<span class="sc">~</span>., <span class="at">data =</span> peng_train) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">update_role</span>(<span class="fu">contains</span>(<span class="st">"Sample"</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">new_role =</span> <span class="st">"id vars"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">step_center</span>(<span class="fu">all_numeric</span>())</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener parámetros para preprocesar</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>peng_prep <span class="ot">&lt;-</span> peng_rec <span class="sc">|&gt;</span> <span class="fu">prep</span>()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocesar los datos</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>peng_juiced <span class="ot">&lt;-</span> peng_prep <span class="sc">|&gt;</span> <span class="fu">juice</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li><strong>Crear el modelo</strong>. Ahora podemos especificar el modelo de bosques aleatorios.
+<ul>
+<li>Evidentemente debemos de controlar la complejidad del modelo, lo cual haremos ajustando sus hiperparámetros:
+<ul>
+<li><code>mtry</code> (el número máximo de predictores por árbol)</li>
+<li><code>min_n</code> (el número de observaciones necesarias para seguir dividiendo los datos)</li>
+<li><code>trees</code> (el número de árboles en el ensemble).</li>
+</ul></li>
+<li>Después especificamos que es un bosque para clasificación, y por último le indicamos que utilice la librería <code>ranger</code> para construir el bosque:</li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificar el modelo</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Los hiperparámetros van a ser ajustados</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tune_spec <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(<span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">trees =</span> <span class="fu">tune</span>(),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Es un problema de clasificación</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Se va a resolver con la librería ranger</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">set_engine</span>(<span class="st">"ranger"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una lista completa de modelos la puedes encontrar <a href="https://www.tidymodels.org/find/parsnip/">aquí</a></p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Luego, y es aquí donde brilla <code>tidymodels</code>, <strong>formar un flujo de trabajo (<code>workflow()</code>) que contenga ambos pasos</strong>: la receta de preprocesamiento y el modelo.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se inicia un flujo de trabajo</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tune_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Sigue la receta para pre-procesar datos</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_recipe</span>(peng_rec) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Entrena el modelo</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(tune_spec)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En este punto no hemos entrenado el modelo, solo le hemos dicho a <code>tidymodels</code> cómo queremos que se manejen nuestros datos y qué modelo queremos aplicar. ¿Por qué “brilla” entonces <code>tidymodels</code>? Porque separa los pasos de la declaración del modelo de la ejecución, por lo que puedes modificar la especificación del modelo o del preprocesamiento de los datos de manera independiente, y permite que re-entrenemos el modelo simplemente modificando los datos en el paso 1.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li><strong>Ajustar los hiper-parámetros</strong>
+<ol type="1">
+<li>Establecer el procesamiento en paralelo para que el modelo se entrene de manera más eficiente</li>
+<li>Entrenar el modelo, lo cual podemos hacer con fuerza bruta, proponiendo una malla gigantesca de posibles valores, o podemos hacerlo de manera más eficiente escogiendo 20 puntos aleatorios para guiar la búsqueda. Hagamos lo segundo:</li>
+</ol></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignar 8 núcleos para la computación en paralelo</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisa cuántos puedes disponer tú (más o menos)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>(<span class="at">cores =</span> <span class="dv">8</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscar los mejores hiperparámetros de entre 20 valores</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>tune_res <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">resamples =</span> peng_cv,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">grid =</span> <span class="dv">20</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>i Creating pre-processing data to finalize unknown parameter: mtry</code></pre>
 </div>
 </div>
-<p>Veamos nuestros AUCs:</p>
+<ol start="6" type="1">
+<li><strong>Evaluar primer ajuste</strong>. En este punto solo propusimos 20 valores tentativos para los hiper-parámetros del bosque, con el objetivo de guiar la búsqueda y no abusar de la confianza de nuestras computadoras. Pues bien, ahora hay que ver alrededor de qué valores vamos a hacer la optimización. ¿Cómo? Graficando los valores de AUC que le corresponden a cada valor de cada hiperparámetro. En la figura de abajo pareciera que todo es un caos, pero en realidad podemos ver que el AUC está en sus puntos más altos con:
+<ol type="1">
+<li><code>min_n</code> entre 5 y 10</li>
+<li><code>mtry</code> con menos de 3</li>
+<li><code>trees</code> con alrededor de 1000.</li>
+</ol></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tune_res <span class="sc">|&gt;</span> <span class="fu">collect_metrics</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(mean, min_n, mtry, trees) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(min_n<span class="sc">:</span>trees,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"parameter"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, mean, <span class="at">color =</span> parameter)) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter, <span class="at">scales =</span> <span class="st">"free_x"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar los valores de AUC de validación cruzada</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Recuperar los valores</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tune_res <span class="sc">|&gt;</span> <span class="fu">collect_metrics</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Quedarnos solo con los AUC</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extraer las columnas con las medidas</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(mean, min_n, mtry, trees) <span class="sc">|&gt;</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Poner la malla en formato largo</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(min_n<span class="sc">:</span>trees,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"parameter"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Graficar con `ggplot`</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, mean, <span class="at">color =</span> parameter)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"AUC"</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c17_clasif_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nota que estamos encadenando el procesamiento de los resultados y su graficado. Eso no tiene nada de sorprendente, a final de cuentas <code>ggplot</code> recibe como primer argumento un <code>data.frame</code>, pero es importante que observes que el operador de encadenamiento pasa de <code>|&gt;</code> a <code>+</code>.</p>
+</div>
+</div>
+<ol start="7" type="1">
+<li><strong>Ajustar el ajuste</strong>; es decir, ajustar mejor los hiperparámetros con valores alrededor de esos “óptimos” que encontramos arriba.
+<ol type="1">
+<li>Establecemos una malla de búsqueda más fina con la función <code>grid_regular</code>.</li>
+<li>Re-entrenamos el modelo, pero esta vez de manera más dirigida con <code>rf_grid</code>. El resultdo es que ahora todos los AUCs resultantes están por encima de 0.995.</li>
+</ol></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Establecer una malla con los nuevos valores de referencia</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>)),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">trees</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">700</span>, <span class="dv">1100</span>)),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="dv">5</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizar los hiperparámetros con esa malla</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>tune2_res <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">resamples =</span> peng_cv,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">grid =</span> rf_grid)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener y graficar los resultados</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>tune2_res <span class="sc">|&gt;</span> <span class="fu">collect_metrics</span>() <span class="sc">|&gt;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">select</span>(mean, min_n, mtry, trees) <span class="sc">|&gt;</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">pivot_longer</span>(min_n<span class="sc">:</span>trees,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_to =</span> <span class="st">"parameter"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, mean, <span class="at">color =</span> parameter)) <span class="sc">+</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"AUC"</span>) <span class="sc">+</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c17_clasif_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ol start="8" type="1">
+<li><strong>Seleccionar el mejor modelo</strong>. Con el código anterior optimizamos lo más posible los hiper-parámetros, ahora toca seleccionar la mejor combinación de hiperparámetros.
+<ol type="1">
+<li>Identificar el modelo con la función <code>select_best()</code></li>
+<li>Actualizar la especificación original (<code>tune_spec</code>)</li>
+</ol></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Seleccionar el modelo con los mejores hiperparámetros</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (a los que les corresponde el mayor AUC)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>best_auc <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tune2_res, <span class="st">"roc_auc"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Actualizar el modelo con los nuevos parámetros</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>final_rf <span class="ot">&lt;-</span> <span class="fu">finalize_model</span>(<span class="at">x =</span> tune_spec,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">parameters =</span> best_auc)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Muestra los detalles del modelo</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>final_rf</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Random Forest Model Specification (classification)
+
+Main Arguments:
+  mtry = 2
+  trees = 700
+  min_n = 5
+
+Computational engine: ranger </code></pre>
+</div>
+</div>
+<ol start="9" type="1">
+<li><strong>Revisar importancia de variables</strong>. ¿Qué podemos aprender de este modelo? Las variables más importante para la clasificación son la longitud del culmen, seguida de la longitud de la aleta. ¿Tienen sentido biológico estos resultados? Esa es una discusión para otro momento, pues solo tomamos estos datos para ejemplificar la implementación de los bosques aleatorios.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar la importancia de variables</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pasa el modelo final</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>final_rf <span class="sc">|&gt;</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Fija que se va a extraer la importancia de variables</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"permutation"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Estimada desde los datos de entrenamiento (- el identificador)</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(Species <span class="sc">~</span>.,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> <span class="fu">juice</span>(peng_prep) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">"Sample"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcula y grafica la importancia de variables</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"deepskyblue3"</span>) <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Importancia de variables"</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c17_clasif_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="10" type="1">
+<li>Muy importante, <strong>verificar que el modelo no esté sobreajustado</strong>. Para esto vamos a crear un último flujo de trabajo, y después ajustar una última vez. ¿Por qué? Porque nuestros modelos hasta ahora se entrenaron en 10 subconjuntos de nuestros datos de entrenamiento (validación cruzada). Para este último ajuste usaremos la función <code>last_fit()</code>, la cual ajusta el modelo final en todos los datos de entrenamiento y evalúa en los datos de prueba. Los valores de ROC-AUC y de exactitud son muy buenos, pero además en línea con lo que esperábamos de la optimización (AUC &gt; 0.995), lo cual quiere decir que el modelo no está sobre-ajustado, sino que es muy bueno.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Flujo de trabajo final</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>final_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">add_recipe</span>(peng_rec) <span class="sc">|&gt;</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">add_model</span>(final_rf)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Último ajuste</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>final_res <span class="ot">&lt;-</span> final_wf <span class="sc">|&gt;</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">last_fit</span>(peng_split)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados de la evaluación en los datos de prueba</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>final_res <span class="sc">|&gt;</span> </span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[".metric"],"name":[1],"type":["chr"],"align":["left"]},{"label":[".estimator"],"name":[2],"type":["chr"],"align":["left"]},{"label":[".estimate"],"name":[3],"type":["dbl"],"align":["right"]},{"label":[".config"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"accuracy","2":"multiclass","3":"0.9879518","4":"Preprocessor1_Model1"},{"1":"roc_auc","2":"hand_till","3":"0.9971361","4":"Preprocessor1_Model1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creación de las curvas ROC</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>rf_auc <span class="ot">&lt;-</span> final_res <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">collect_predictions</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>          <span class="fu">roc_curve</span>(Species, <span class="fu">c</span>(.pred_Adelie,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                               .pred_Chinstrap,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                               .pred_Gentoo)) <span class="sc">|&gt;</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">model =</span> <span class="st">"Random Forest"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(rf_auc) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Curvas ROC"</span>) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c17_clasif_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En la función <code>roc_curve</code> del objeto <code>rf_auc</code> estamos pasando un vector con tres objetos ocultos: <code>.pred_Adelie</code>, <code>.pred_Chinstrap</code>, <code>.pred_Gentoo</code>. Estos contienen la probabilidad de pertenencia de cada observación a cada especie, y es con los que se obtiene la curva ROC que le corresponde a cada especie, pues la curva es solo para clasificaciones binarias. ¿Cómo funciona en este caso? La clase positiva es la clase predicha en cada curva, y la negativa es lo demás, básicamente representando un clasificador clase + vs.&nbsp;resto.</p>
+</div>
+</div>
+<ol start="11" type="1">
+<li><strong>Elaborar el reporte</strong> ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a <span class="citation" data-cites="EnriquezGarciaetal_2022">Enríquez-García et&nbsp;al. (<a href="references.html#ref-EnriquezGarciaetal_2022" role="doc-biblioref">2022</a>)</span> para ver cómo describir el método, pero los resultados podemos resumirlos como:</li>
+</ol>
+<blockquote class="blockquote">
+<p>El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 0.99 en los datos de entrenamiento). Las variables más importantes para la clasificación fueron la longitud del culmen (<span class="math inline">\(\approx 14\%\)</span>), seguida de la longitud de la aleta (<span class="math inline">\(\approx 12.5\%\)</span>). El bosque aleatorio optimizado estuvo compuesto por 700 árboles, cada uno formado con un predictor (<code>mtry</code>), considerando al menos 5 observaciones para poder hacer una división (<code>n_min</code>).</p>
+</blockquote>
+<p>Esto fue todo para este (espero) motivante capítulo, donde entramos de lleno al mundo del aprendizaje supervisado. Me hubiera gustado darte un poco menos de teoría, pero aplicar modelos de aprendizaje automatizado es algo que requiere que pongamos muchísima atención a qué es lo que hacemos en cada paso y por qué, pues es muy fácil que resbalemos y que terminemos presumiendo un modelo sobreajustado. Voy a confirmar tus sospechas: también hay que verificar que nuestras regresiones no estén sobreajustadas, pero eso lo dejamos para la siguiente sesión.</p>
+</section>
+</section>
+</section>
+<section id="ejercicio" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">17.7</span> Ejercicio</h2>
+<p>Aplica un clasificador de bosques aleatorios a los datos <code>Medidas.txt</code> que utilizamos en el <a href="c15_nosup.html"><span>Capítulo&nbsp;15</span></a>. Compara la importancia de variables con las cargas factoriales del ACP y con las variables significativas para la ordenación del NMDS. ¿Hay diferencias?</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Breiman_2001" class="csl-entry" role="doc-biblioentry">
+Breiman L. 2001. Random Forests. <em>Machine Learning</em> 45:5-32. DOI: <a href="https://doi.org/10.1023/A:1010933404324">10.1023/A:1010933404324</a>.
+</div>
+<div id="ref-Carvajaletal_2018" class="csl-entry" role="doc-biblioentry">
+Carvajal G, Maucec M, Cullick S. 2018. <span>Components of artificial intelligence and data analytics</span>. In: <em>Intelligent Digital Oil and Gas Fields. Concepts, Collaboration, and Right-Time Decisions</em>. Cambridge, Massachusetts, USA: Gulf Professional Publishing, 101-148. DOI: <a href="https://doi.org/10.1016/B978-0-12-804642-5.00004-9">10.1016/B978-0-12-804642-5.00004-9</a>.
+</div>
+<div id="ref-EnriquezGarciaetal_2022" class="csl-entry" role="doc-biblioentry">
+Enríquez-García AB annd FV-Z, Tripp-Valdez A, Moreno-Sánchez XG, Galván-Magaña F, Elorriaga-Verplancken FR. 2022. Foraging segregation between spotted (<em>Stenella attenuata</em>) and spinner (<em>Stenella longirostris</em>) dolphins in the Mexican South Pacific. <em>Marine Mammal Science</em> 38:1070-1087. DOI: <a href="https://doi.org/10.1111/mms.12912">10.1111/mms.12912</a>.
+</div>
+<div id="ref-Hosmeretal_2013" class="csl-entry" role="doc-biblioentry">
+Hosmer DWJr, Lemeshow S, Sturdivant RX. 2013. <em>Applied Logistic Regression</em>. John Wiley &amp; Sons, Inc. DOI: <a href="https://doi.org/10.1002/9781118548387">10.1002/9781118548387</a>.
+</div>
+<div id="ref-Kaufmanetal_2012" class="csl-entry" role="doc-biblioentry">
+Kaufman S, Rosset S, Perlich C, Stitelman O. 2012. Leakage in Data Mining: Formulation, Detection, and Avoidance. <em>ACM Transactions on Knowledge Discovery from Data</em> 6. DOI: <a href="https://doi.org/10.1145/2382577.2382579">10.1145/2382577.2382579</a>.
+</div>
+<div id="ref-MeyerBaese_2014" class="csl-entry" role="doc-biblioentry">
+Meyer-Baese A, Schmid V. 2014. Chapter 7 - <span>Foundations</span> of neural networks. In: Meyer-Baese A, Schmid V eds. <em>Pattern recognition and signal analysis in medical imaging</em>. Oxford: Academic Press, 197-243. DOI: <a href="https://doi.org/10.1016/B978-0-12-409545-8.00007-8">10.1016/B978-0-12-409545-8.00007-8</a>.
+</div>
+<div id="ref-Pal_2017" class="csl-entry" role="doc-biblioentry">
+Pal R. 2017. Regression trees, Random Forests, Probabilistic trees, Stacked generalization, Probabilistic Random Forests, Weight optimization. In: Pal R ed. <em>Predictive Modeling of Drug Sensitivity</em>. Academic Press, 149-188. DOI: <a href="https://doi.org/10.1016/B978-0-12-805274-7.00007-5">10.1016/B978-0-12-805274-7.00007-5</a>.
+</div>
+<div id="ref-Strobletal_2009" class="csl-entry" role="doc-biblioentry">
+Strobl C, Malley J, Tutz G. 2009. An Introduction to Recursive Partitioning: Rationale, Aplication and Characteristics of Classification and Regression Trees, Bagging and Random Forests. <em>Physiological Methods</em> 14:323-348. DOI: <a href="https://doi.org/10.1037/a0016973">10.1037/a0016973</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

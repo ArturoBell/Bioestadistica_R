@@ -708,4 +708,34 @@ kde_plots <- kdeplots(df2, aes(datos, color = transf)) +
 kde_plots
 ```
 
-Con esto terminamos esta sesión. Sé que estuvo fuertemente cargada de teoría y matemática, pero es necesario que tengas al menos una noción de dónde surgen las cosas. No es necesario que te las aprendas de memoria, o que sepas calcular las matrices a mano, solo que entiendas la lógica detrás de los procedimientos para que no abuses de ellos. Como recompensa por llegar hasta aquí no hay ejercicio para esta sesión ;).
+## Aprendizaje Automatizado
+
+Ahora hablemos sobre la diferencia entre estadística multivariada y aprendizaje automatizado. Hasta este momento la mayor parte de nuestros problemas han consistido en tener unos datos, encasillarlos en un conjunto de reglas utilizando programación o pruebas de significancia estadística para obtener una respuesta (*e.g.*, "las medias de los grupos fueron diferentes; @fig-tparadigm); sin embargo, vimos en los @sec-rls y @sec-nolin que podemos decirle a la computadora que nos diga bajo qué reglas están jugando nuestros datos. Eso justamente es el **aprendizaje automatizado** [@fig-supervised; @fig-unsupervised]. Este *Machine Learning* es una parte de la estadística, en la cuál la computadora "aprende" a partir de ejemplos que nosotros le proporcionamos. En los temas de regresíon teníamos pares de datos $x$ y $y$, y le dijimos a la computadora que encontrara un conjunto de parámetros que permitieran transormar los valores de $x$ a los valores de $y$ con el menor error posible.
+
+![Paradigma tradicional para resolver problemas.](imgs/tparadigm.png){#fig-tparadigm}
+
+Dentro del aprendizaje automatizado tenemos dos categorías generales:
+
+1. **Aprendizaje supervisado**: Aquí se engloban las técnicas que, como nuestras regresiones, mapean los valores de nuestros predictores hacia los valores de la variable (o las variables) a predecir. Esta categoría se sub-divide en dos clases adicionales, que están definidas por las características de la variable dependiente:
+    a) **Regresión**: En esta la variable dependiente es una variable **numérica** (puede ser continua u ordinal). Tanto los modelos lineales como no lineales forman parte de esta clase de técnicas. 
+    b) **Clasificación**: Si la regresión trabaja con variables numéricas (ordinales o continuas), la clasificación trabaja con variables **nominales** (algunas pueden trabajar con variables ordinales); es decir, lo que vamos a predecir son etiquetas de **clases** o grupos (de ahí "clasificación"). Tenemos una gran cantidad de algoritmos de clasificación, desde los más simples que suponen diferencias lineales entre las clases hasta algunos altamente complejos con grandes cantidades de parámetros como las redes neuronales convolucionales.
+    
+![Aprendizaje supervisado.](imgs/supervised.png){#fig-supervised}
+
+2. **Aprendizaje no supervisado**: Aquí se engloban las técnicas o algoritmos que permiten extraer patrones ocultos en los datos. En el aprendizaje automatizado no tenemos una variable dependiente/de respuesta, solamente un conjunto de observaciones multivariadas de las cuales queremos extraer información que nos sea útil. Aquí también tenemos diversas clases, pero podemos resumirlas en dos:
+    a) **Reducción de la dimensionalidad**: Aquí el objetivo es poder "resumir" nuestros datos multivariados en solo una o dos valores, conservando la mayor cantidad de la información original. Aquí encontramos técnicas como los Ánálisis de Componentes Principales (PCA), Análisis de Coordenadas Principales (PCoA), Escalamiento Multidimensional No Métrico (NMDS). Si ya has tenido un acercamiento previo a estas técnicas puede que esto no te cuadre del todo, pues el NMDS (por ejemplo) es una técnica de ordenación. Y no estarías mal, pero en el proceso estamos reduciendo la dimensional original de los datos para poder realizar la ordenación. **Nuestra entrada en estas técnicas es un conjunto de observaciones multivariadas, y la salida otro conjunto de observaciones compuesto por un menor número de variables**
+    b) **Agrupamientos**: El nombre lo dice todo, su objetivo es el formar grupos. ¿Cómo? Igual a como lo haríamos nosostros: juntando las instancias que más se parecen entre sí en un solo grupo, y mandando a las que no se parecen a otro grupo. **Nuestra entrada es un conjunto de observaciones multivariadas, y la salida la agrupación a la que pertenece cada una**.
+    
+![Aprendizaje no supervisado.](imgs/unsupervised.png){#fig-unsupervised}
+    
+:::{.callout-note}
+¿Por qué "supervisado" y "no supervisado"? Porque en el primero tenemos una función de pérdida (error) que podemos supervisar y optimizar para mejorar nuestras predicciones, mientras que en el segundo no.
+:::
+    
+:::{.callout-warning}
+Aunque en la clasificación y en los agrupamientos estemos lidiando con grupos o clases, no son lo mismo. La clasificación es aprendizaje supervisado, la agrupación es aprendizaje no supervisado.
+:::
+    
+Adicional a estas dos tenemos otras dos menos conocidas: el aprendizaje por refuerzo y el aprendizaje semi-supervisado, pero esos quedan fuera del alcance de este curso.
+
+Con esto terminamos esta sesión. Sé que estuvo fuertemente cargada de teoría y matemática, pero es necesario que tengas al menos una noción de dónde surgen las cosas. No es necesario que te las aprendas de memoria, o que sepas calcular las matrices a mano, solo que entiendas la lógica detrás de los procedimientos para que no abuses de ellos. Como recompensa por llegar hasta aquí, no hay ejercicio para esta sesión ;).

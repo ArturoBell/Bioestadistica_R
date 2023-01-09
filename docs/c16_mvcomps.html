@@ -20,6 +20,88 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -61,6 +143,10 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -258,7 +344,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">16.1</span>  Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">16.2</span>  Introducción</a></li>
+  <li><a href="#controlando-el-error" id="toc-controlando-el-error" class="nav-link" data-scroll-target="#controlando-el-error"><span class="toc-section-number">16.3</span>  Controlando el error</a></li>
+  <li><a href="#t2-de-hotelling" id="toc-t2-de-hotelling" class="nav-link" data-scroll-target="#t2-de-hotelling"><span class="toc-section-number">16.4</span>  <span class="math inline">\(T^2\)</span> de Hotelling</a>
+  <ul class="collapse">
+  <li><a href="#implementación-en-r" id="toc-implementación-en-r" class="nav-link" data-scroll-target="#implementación-en-r"><span class="toc-section-number">16.4.1</span>  Implementación en <code>R</code></a></li>
+  </ul></li>
+  <li><a href="#análisis-multivariado-de-la-varianza" id="toc-análisis-multivariado-de-la-varianza" class="nav-link" data-scroll-target="#análisis-multivariado-de-la-varianza"><span class="toc-section-number">16.5</span>  Análisis Multivariado de la Varianza</a>
+  <ul class="collapse">
+  <li><a href="#implementación" id="toc-implementación" class="nav-link" data-scroll-target="#implementación"><span class="toc-section-number">16.5.1</span>  Implementación</a></li>
+  </ul></li>
+  <li><a href="#análisis-permutacional-multivariado-de-la-varianza" id="toc-análisis-permutacional-multivariado-de-la-varianza" class="nav-link" data-scroll-target="#análisis-permutacional-multivariado-de-la-varianza"><span class="toc-section-number">16.6</span>  Análisis Permutacional Multivariado de la Varianza</a>
+  <ul class="collapse">
+  <li><a href="#implementación-1" id="toc-implementación-1" class="nav-link" data-scroll-target="#implementación-1"><span class="toc-section-number">16.6.1</span>  Implementación</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -280,8 +386,669 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="librerías" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">16.1</span> Librerías</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># library(Hotelling)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># library(GridExtra)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pairwiseAdonis)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="introducción" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">16.2</span> Introducción</h2>
+<p>Vamos a dejar por un momento el tema del aprendizaje automatizado para hablar sobre pruebas de significancia multivariadas, pero es necesario que antes retomemos un tema que dejé pendiente en la <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a>: el problema de las múltiples hipótesis.</p>
+</section>
+<section id="controlando-el-error" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="controlando-el-error"><span class="header-section-number">16.3</span> Controlando el error</h2>
+<p>Hasta antes de esta sección de multivariado habíamos abordado problemas en donde respondíamos preguntas individuales a nuestros datos, principalmente en términos de pruebas de significancia; sin embargo, en el <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a> vimos que había que utilizar un ANOVA seguido de una prueba <em>post-hoc</em> al comparar las medias una variable numérica entre más de dos dos grupos para evitar inflar nuestro valor de <span class="math inline">\(\alpha\)</span>, pero no entramos en más detalles.</p>
+<p>¿Qué pasa cuando contrastamos simultáneamente más de una hipótesis? Conforme incrementamos la cantidad de preguntas incrementamos la probabilidad de obtener respuestas incorrectas. ¿Por qué? Porque tenemos un error por cada tipo de pregunta. Esto hace que sea necesario corregir de alguna manera para que la tasa de error a nivel de la familia (<em>Family-wise Error Rate</em>) se mantenga constante. es decir que nuestro valor de <span class="math inline">\(\alpha\)</span> represente la probabilidad de que tengamos <strong>al menos un error de tipo I</strong>.</p>
+<p>Esta probabilidad de encontrar al menos un falso positivo al realizar múltiples comparaciones independientes incrementa a una tasa de <span class="math inline">\(1-(1-\alpha)^m\)</span>, donde <span class="math inline">\(m\)</span> es el número de comparaciones que estamos realizando <span class="citation" data-cites="KingEckersley_2019">(<a href="references.html#ref-KingEckersley_2019" role="doc-biblioref">King &amp; Eckersley, 2019</a>)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">m =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>error[<span class="st">"P_alpha"</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span><span class="fl">-0.05</span>)<span class="sc">^</span>error<span class="sc">$</span>m</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>error_rate <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> error, <span class="fu">aes</span>(m, P_alpha)) <span class="sc">+</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.05</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>              <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.08</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"0.05"</span>, <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>              <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.53</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"0.5"</span>, <span class="at">colour =</span> <span class="st">"firebrick"</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>              <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.97</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"1"</span>, <span class="at">colour =</span> <span class="st">"firebrick"</span>,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"P(error) al incrementar el número de pruebas (m)"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subtitle =</span> <span class="fu">bquote</span>({<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span><span class="sc">-</span> alpha)<span class="sc">^</span>m}),</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                   <span class="at">caption =</span> <span class="st">"King &amp; Eckersley (2019)"</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>error_rate</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notarás que con <span class="math inline">\(m = 10\)</span> ya nos acercamos peligrosamente a tener un 50% de probabilidad de encontrarnos al menos un falso positivo. Creo que estarás conmigo que eso es una apuesta bastante arriesgada cuando originalmente pensabas que la probabilidad era del 5%.</p>
+<p>Imagina que estamos contratados en una farmacéutica como científicos de datos, y que nuestra jefa nos da la tarea de hacer los ensayos clínicos para un nuevo medicamento diseñado para incrementar la fuerza de voluntad de los estudiantes para aprender estadística. Nosotros vamos y llegamos a la conclusión de que el medicamento no tuvo un efecto sobre ese atributo en particular. Evidentemente ni a la jefa ni a sus superiores les agrada la noticia, por lo que deciden explotarnos laboralmente y hacer un ensayo clínico en el que probemos otras 1000 cosas (reducir la ansiedad, mejorar la memoria, etc.), y nos piden que utilicemos el mismo valor de <span class="math inline">\(\alpha\)</span> de antes: 0.05. Como empleados responsables que quieren evitar un despido nosotros hacemos el colosal ensayo, y encontramos la siguiente distribución de efectos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">45</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>robs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(n))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>robs[<span class="st">"color"</span>] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(robs<span class="sc">$</span>z <span class="sc">&lt;</span> <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">|</span> robs<span class="sc">$</span>z <span class="sc">&gt;</span> <span class="fl">1.96</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"firebrick"</span>, <span class="st">"deepskyblue4"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>robs_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> robs, <span class="fu">aes</span>(z)) <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Observaciones aleatorias a un alpha de 0.05"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Bandas indican límites del LS   "</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="fu">paste</span>(n, <span class="st">" datos simulados"</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="st">"Z"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="sc">-</span><span class="fl">1.96</span>, </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>), </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                        ) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">1.96</span>, </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>), </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                        <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                        ) <span class="sc">+</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> z, <span class="at">y =</span> <span class="dv">0</span>), </span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> robs<span class="sc">$</span>color, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.96</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">1.96</span>, <span class="dv">3</span>), </span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">as.character</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.96</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">1.96</span>, <span class="dv">3</span>))</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                                ) <span class="sc">+</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>             <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">3</span>, <span class="at">y =</span> <span class="fl">0.5</span>, </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"# sign = "</span>, </span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">length</span>(robs<span class="sc">$</span>color[robs<span class="sc">$</span>color <span class="sc">==</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">"firebrick"</span>]),</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"/"</span>, n),</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                      <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>robs_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¡Tuvimos un efecto significativo en 58! Hacemos el reporte correspondiente a nuestra jefa e inmediatamente la empresa se dispone a vender el producto. ¿Te hace algún tipo de ruido ese valor de 58/1000? Es sospechosamente cercano a nuestra probabilidad de <span class="math inline">\(\alpha\)</span> de 0.05, ¿no? Eso quiere decir que cuando menos una parte de esos efectos significativos son productos del azar. ¿La consecuencia de haber hecho así el análisis? La empresa fue demandada por publicidad engañosa porque el medicamento no cumplió con lo prometido.</p>
+<p>¿Cómo podíamos haber evitado la avalancha de demandas? Hay una alternativa sumamente sencilla: la <strong>corrección de Bonferroni</strong>. Lo único que teníamos que hacer era dividir nuestro valor de <span class="math inline">\(\alpha\)</span> nominal (con el que estamos trabajando) entre el número de contrastes a realizar. El resultado es que la tasa de error se vuelve prácticamente constante:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>error[<span class="st">"P_bonf"</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span><span class="sc">-</span>(<span class="fl">0.05</span><span class="sc">/</span>error<span class="sc">$</span>m))<span class="sc">^</span>error<span class="sc">$</span>m</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>error_corr <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> error, <span class="fu">aes</span>(m, P_bonf)) <span class="sc">+</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="fl">0.04</span>, <span class="fl">0.06</span>)) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.05</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.04</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"lightslategray"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.06</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="st">"lightslategray"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>              <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.0505</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"0.05"</span>, <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span> </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.0405</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"0.04"</span>, <span class="at">colour =</span> <span class="st">"lightslategray"</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>              <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.0595</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">label =</span> <span class="st">"0.06"</span>,<span class="at">colour =</span> <span class="st">"lightslategray"</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"P(error) al corregir según el número de pruebas (m)"</span>,</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                   <span class="at">subtitle =</span> <span class="fu">bquote</span>({<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span><span class="sc">-</span> (alpha<span class="sc">/</span>m))<span class="sc">^</span>m}),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>                   <span class="at">caption =</span> <span class="st">"King &amp; Eckersley (2019)"</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>                   )</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>error_corr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Apliquemos entonces esta simple corrección a nuestro ensayo clínico y veamos cómo se distribuyen nuestros efectos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>a_corr <span class="ot">&lt;-</span> (<span class="fl">0.05</span><span class="sc">/</span>n)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sig_lev <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">qnorm</span>(a_corr))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>robs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">z =</span> <span class="fu">rnorm</span>(n))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>robs[<span class="st">"color"</span>] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(robs<span class="sc">$</span>z <span class="sc">&lt;</span> <span class="sc">-</span>sig_lev <span class="sc">|</span> robs<span class="sc">$</span>z <span class="sc">&gt;</span> sig_lev,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"firebrick"</span>, <span class="st">"deepskyblue4"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>rcor_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> robs, <span class="fu">aes</span>(z)) <span class="sc">+</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Observaciones aleatorias a un alpha de 0.05"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Bandas indican límites del LS corregido"</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="fu">paste</span>(n, <span class="st">" datos simulados"</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="st">"Z"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="sc">-</span>sig_lev, </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>), </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                        <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                        ) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> sig_lev, </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>), </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                        <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                        ) <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> z, <span class="at">y =</span> <span class="dv">0</span>), </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> robs<span class="sc">$</span>color, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.96</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">1.96</span>, <span class="dv">3</span>), </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">as.character</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="fl">1.96</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">1.96</span>, <span class="dv">3</span>))</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>                                ) <span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>             <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">2.5</span>, <span class="at">y =</span> <span class="fl">0.5</span>, </span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"# sign = "</span>, </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">length</span>(robs<span class="sc">$</span>color[robs<span class="sc">$</span>color <span class="sc">==</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                                                        <span class="st">"firebrick"</span>]),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"/"</span>, n),</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>                      <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>                      )</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>rcor_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ahora no tuvimos ningún efecto significativo. Básicamente le dimos un placebo a todos nuestros sujetos experimentales. Vamos con nuestra jefa, le damos el reporte correspondiente, se pone furiosa porque la empresa perdió dinero y le va a tocar una llamada de atención, pero preferible eso a tener pérdidas millonarias derivadas de la fabricación en masa de un producto que no sirve, y la subsecuente lluvia de demandas.</p>
+<p>¿Eso quiere decir que siempre vamos a utilizar una corrección de Bonferroni? Como mucho en esta vida, depende. ¿De qué? De la respuesta que demos a la misma pregunta que deberíamos de hacernos al seleccionar un valor de <span class="math inline">\(\alpha\)</span>: ¿Qué prefiero sea más probable, un falso positivo o un falso negativo? A final de cuentas, si disminuímos la probabilidad de tener falsos positivos, por lógica incrementamos la probabilidad de tener falsos negativos. ¿La razón? Nos estamos haciendo más conservadores y, de hecho, esa es una de las principales críticas <span class="citation" data-cites="Perneger_1998">(<a href="references.html#ref-Perneger_1998" role="doc-biblioref">Perneger, 1998</a>)</span> a la corrección de Bonferroni, que es muy conservadora e incrementa <span class="math inline">\(\beta\)</span>. Hay otra crítica un poco más filosófica que tiene que ver con la pregunta de si cambia la interpretación de UNA prueba porque se hicieron otras 999, pero no entraremos en esos detalles.</p>
+<p>Ahora sí, podemos seguir con las pruebas multivariadas.</p>
+</section>
+<section id="t2-de-hotelling" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="t2-de-hotelling"><span class="header-section-number">16.4</span> <span class="math inline">\(T^2\)</span> de Hotelling</h2>
+<p>Hasta el momento hemos visto que los análisis multivariados son abstractos. Podemos, sin ningún problema visualizar una distribución normal bivariada, solo hay que graficar una variable contra la otra (<a href="#fig-bivnorm">Figura&nbsp;<span>16.1</span></a>), ¿pero con veinte variables? Nuestra imaginación de seres tridimensionales no llega hasta allá.</p>
+<div id="fig-bivnorm" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/bivnorm.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;16.1: Distribuciones normales bivariadas</figcaption><p></p>
+</figure>
+</div>
+<p>La solución es hacer una prueba multivariada (para mantener nuestro error controlado), y acompañarla de pruebas univariadas. La primera de estas prueba es la prueba <span class="math inline">\(T^2\)</span> de Hotelling, que es una generalización multivariada de la prueba <span class="math inline">\(t\)</span> de Student. Como tal, es una prueba paramétrica, por lo que existen los supuestos de normalidad multivariada y de igualdad de matrices de covarianza (en el <a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a> ya revisamos esos temas, así que obviaré el procedimiento). Las ecuaciones son una adaptación de la prueba <span class="math inline">\(t\)</span> hacia el espacio multivariado, pasando de trabajar con una o dos medias a trabajar con uno o dos vectores de medias:</p>
+<ol type="1">
+<li>Para una muestra o muestras pareadas:</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+T^2 = n(\bar{x}- \mu)^TC^{-1}(\bar{x}-\mu) \\
+C = \frac{1}{n-1}\sum_{i=1}^n{(x_i-\bar{x})(x_i-\bar{x})^T} \\
+\nu = p, n-p
+\end{align*}\]</span></p>
+<ol start="2" type="1">
+<li>Para dos muestras independientes</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+T^2 = n(\bar{x_1}- \bar{x_2})^TC^{-1}(\bar{x_1}- \bar{x_2}) \\
+C =
+\frac{(n_1 - 1)C_1 + (n_2-1)C_2}
+{n_1 + n_2 - 2} \\
+
+\nu = p, n_1 + n_2 - p - 1
+\end{align*}\]</span></p>
+<p>El estadístico de prueba sigue una distribución <span class="math inline">\(F\)</span> de Fisher, como en el ANOVA:</p>
+<p><span class="math display">\[
+F = \frac{n - p}{p(n-1)}T^2
+\]</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El objetivo de mostrar las ecuaciones no es que te las aprendas, solo que veas la lógica detrás de las “generalizaciones” que vamos a ver más adelante.</p>
+</div>
+</div>
+<section id="implementación-en-r" class="level3" data-number="16.4.1">
+<h3 data-number="16.4.1" class="anchored" data-anchor-id="implementación-en-r"><span class="header-section-number">16.4.1</span> Implementación en <code>R</code></h3>
+<p>Para todas las pruebas que revisaremos el día de hoy vamos a utilizar los datos de <code>palmerpenguins</code> que utilizamos para los gráficos del <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, por lo que vamos a filtrar la base <code>penguins</code> para quedarnos solo con las variables numéricas sobre peso o longitud. Tiene mucho que no vemos algo de <code>tidyverse</code>, así que pongámoslo en práctica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>num_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"mm"</span>, <span class="st">"g"</span>, <span class="st">"species"</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">na.omit</span>()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(num_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["bill_length_mm"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[3],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[4],"type":["int"],"align":["right"]},{"label":["species"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"39.1","2":"18.7","3":"181","4":"3750","5":"Adelie"},{"1":"39.5","2":"17.4","3":"186","4":"3800","5":"Adelie"},{"1":"40.3","2":"18.0","3":"195","4":"3250","5":"Adelie"},{"1":"36.7","2":"19.3","3":"193","4":"3450","5":"Adelie"},{"1":"39.3","2":"20.6","3":"190","4":"3650","5":"Adelie"},{"1":"38.9","2":"17.8","3":"181","4":"3625","5":"Adelie"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>La prueba la aplicaremos con la función <code>Hoteling::hotelling.test(x, y)</code>, donde <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> son las matrices de datos de cada grupo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> num_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> num_data <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Gentoo"</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>hot_t2 <span class="ot">&lt;-</span> Hotelling<span class="sc">::</span><span class="fu">hotelling.test</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>hot_t2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Test stat:  4586.7 
+Numerator df:  4 
+Denominator df:  269 
+P-value:  0 </code></pre>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La función <code>hotelling.test</code> puede recibir una fórmula, pero hay un error y tanto el estadístico de prueba como el valor de p resultan en <code>NaN</code> (“Not a Number).</p>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El valor de p no es exactamente 0, solo es extremadamente pequeño (del orden <span class="math inline">\(\times10^{-16}\)</span> o aún más pequeño) y la función lo muestra como 0.</p>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Cómo diferenciar entre dónde utilizar <code>filter</code> y dónde <code>select</code>? <code>filter</code> extrae renglones, mientras que <code>select</code> extrae columnas.</p>
+</div>
+</div>
+<p>Si la distribución del estadístico de prueba es la distribución <span class="math inline">\(F\)</span>, entonces los resultados se interpretan como los resultados de un ANOVA: Hay diferencias en al menos una de las medias (<span class="math inline">\(F_{4,269} = 4586.7; p &lt; 0.0001\)</span>).</p>
+<section id="comparaciones-univariadas" class="level4" data-number="16.4.1.1">
+<h4 data-number="16.4.1.1" class="anchored" data-anchor-id="comparaciones-univariadas"><span class="header-section-number">16.4.1.1</span> Comparaciones univariadas</h4>
+<p>Realizaremos 4 comparaciones univariadas. ¿tiene sentido aplicar una corrección de Bonferroni?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Formamos un objeto para la aplicación de la prueba t</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t2_data <span class="ot">&lt;-</span> num_data <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span> <span class="sc">|</span> species <span class="sc">==</span> <span class="st">"Gentoo"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Prueba t para lcada variable</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data =</span> t2_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  bill_length_mm by species
+t = -24.725, df = 242.58, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group Adelie and group Gentoo is not equal to 0
+95 percent confidence interval:
+ -9.407672 -8.019303
+sample estimates:
+mean in group Adelie mean in group Gentoo 
+            38.79139             47.50488 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bill_depth_mm<span class="sc">~</span>species, <span class="at">data =</span> t2_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  bill_depth_mm by species
+t = 25.337, df = 271.98, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group Adelie and group Gentoo is not equal to 0
+95 percent confidence interval:
+ 3.102837 3.625651
+sample estimates:
+mean in group Adelie mean in group Gentoo 
+            18.34636             14.98211 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(flipper_length_mm<span class="sc">~</span>species, <span class="at">data =</span> t2_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  flipper_length_mm by species
+t = -34.445, df = 261.75, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group Adelie and group Gentoo is not equal to 0
+95 percent confidence interval:
+ -28.79018 -25.67652
+sample estimates:
+mean in group Adelie mean in group Gentoo 
+            189.9536             217.1870 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(body_mass_g<span class="sc">~</span>species, <span class="at">data =</span> t2_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  body_mass_g by species
+t = -23.386, df = 249.64, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group Adelie and group Gentoo is not equal to 0
+95 percent confidence interval:
+ -1491.183 -1259.525
+sample estimates:
+mean in group Adelie mean in group Gentoo 
+            3700.662             5076.016 </code></pre>
+</div>
+</div>
+<p>En todos los casos rechazamos la hipótesis de nulidad (<span class="math inline">\(p &lt; 0.0001\)</span>), lo cual no es de sorprender: los pingüinos Adelie son más pequeños que los Gentoo (aunque sorprende el resultado de la profundidad del pico). Aquí normalmente haríamos un gráfico de acompañamiento, pero mejor escalemos al caso para más de dos grupos.</p>
+</section>
+</section>
+</section>
+<section id="análisis-multivariado-de-la-varianza" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="análisis-multivariado-de-la-varianza"><span class="header-section-number">16.5</span> Análisis Multivariado de la Varianza</h2>
+<p>Es, como te imaginarás, una extensión multivariada del ANOVA factorial. Aquí ya no entraré en los detalles de la prueba, pues vimos los fundamentos del ANOVA en el <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a>, y cómo comprobar los supuestos básicos en <a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a>. Solo es importante conocer que se puede realizar con diversos estadísticos de prueba, entre los que destacan</p>
+<ol type="1">
+<li>La traza de Pillai: Contenida en el intervalo <span class="math inline">\([0,1]\)</span>, donde valores cercanos a 1 sugieren diferencias en al menos uno de los grupos en el espacio multivariado. Este es el estadístico más robusto a la violación de los supuestos del MANOVA (normalidad multivariada y homogeneidad de las matrices de covarianza).</li>
+<li>La <span class="math inline">\(\lambda\)</span> de Wilk. También contenida en el intervalo <span class="math inline">\([0,1]\)</span>, aunque aquí son los valores más cercanos a 0 los que sugieren las diferencias. Si se cumplen todos los supuestos, esta es la prueba más relacionada con el criterio de la razón de verosimilitud (más sobre esto en <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>).</li>
+</ol>
+<p>Y que el procedimiento <span class="math inline">\(post-hoc\)</span> tiene dos pasos:</p>
+<ol type="1">
+<li>Un ANOVA por cada variable dependiente.</li>
+<li>Una prueba HSD de Tukey en los ANOVAs significativos.</li>
+</ol>
+<section id="implementación" class="level3" data-number="16.5.1">
+<h3 data-number="16.5.1" class="anchored" data-anchor-id="implementación"><span class="header-section-number">16.5.1</span> Implementación</h3>
+<p>La implementación de la prueba en <code>R</code> tiene un paso muy engorroso, especialmente en casos con muchísimas variables: hay que seleccionar manualmente las columnas con las variables dependientes y unirlas con la función <code>cbind</code>. Podemos aplicar la prueba con la función <code>car::Manova</code>, la cual recibe un modelo ajustado con la función <code>lm</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>manova_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">cbind</span>(bill_length_mm,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                         bill_depth_mm,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                         flipper_length_mm,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                         body_mass_g)<span class="sc">~</span>species,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> penguins)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Manova</span>(manova_model, <span class="at">test.statistic =</span> <span class="st">"Wilks"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Type II MANOVA Tests: Wilks test statistic
+        Df test stat approx F num Df den Df    Pr(&gt;F)    
+species  2  0.018785   528.87      8    672 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>O también con la función <code>manova</code> de <code>R</code> base:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>res_manova <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(bill_length_mm,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                           bill_depth_mm,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                           flipper_length_mm,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                           body_mass_g)<span class="sc">~</span>species,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">data =</span> penguins)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res_manova)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Df Pillai approx F num Df den Df    Pr(&gt;F)    
+species     2 1.6366   379.49      8    674 &lt; 2.2e-16 ***
+Residuals 339                                            
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Posteriormente podemos utilizar este objeto para realizar un ANOVA por variable. Nuevamente, ¿es necesario corregir los valores de p?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(res_manova)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Response bill_length_mm :
+             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+species       2 7194.3  3597.2   410.6 &lt; 2.2e-16 ***
+Residuals   339 2969.9     8.8                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+ Response bill_depth_mm :
+             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+species       2 903.97  451.98  359.79 &lt; 2.2e-16 ***
+Residuals   339 425.87    1.26                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+ Response flipper_length_mm :
+             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+species       2  52473 26236.6   594.8 &lt; 2.2e-16 ***
+Residuals   339  14953    44.1                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+ Response body_mass_g :
+             Df    Sum Sq  Mean Sq F value    Pr(&gt;F)    
+species       2 146864214 73432107  343.63 &lt; 2.2e-16 ***
+Residuals   339  72443483   213698                      
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+2 observations deleted due to missingness</code></pre>
+</div>
+</div>
+<p>Y por último aplicamos una prueba post-hoc HSD de Tukey para cada variable (solo con la primera por simplicidad):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(bill_length_mm<span class="sc">~</span>species, <span class="at">data =</span> num_data))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = bill_length_mm ~ species, data = num_data)
+
+$species
+                      diff       lwr        upr     p adj
+Chinstrap-Adelie 10.042433  9.024859 11.0600064 0.0000000
+Gentoo-Adelie     8.713487  7.867194  9.5597807 0.0000000
+Gentoo-Chinstrap -1.328945 -2.381868 -0.2760231 0.0088993</code></pre>
+</div>
+</div>
+<p>Ahora sí, podemos construir un gráfico de acompañamiento. Podemos construir un gráfico de interacción para cada variable. Hacerlo a mano puede resultar extremadamente tedioso, así que hagámoslos con un ciclo <code>for</code>. Primero, creemos objetos con la información básica que vamos a necesitar: los nombres de las variables, una lista vacía para llenar, y un espacio gráfico con los elementos que se reutilizan en todos los casos para evitar repeticiones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nombres de las variables</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>var_names <span class="ot">&lt;-</span> <span class="fu">colnames</span>(num_data)[<span class="fu">colnames</span>(num_data)<span class="sc">!=</span><span class="st">"species"</span>]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista vacía</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plot_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializamos el espacio gráfico base</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> num_data,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">aes</span>(<span class="at">x =</span> species,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> species)) <span class="sc">+</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>() </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Luego aplicamos el ciclo <code>for</code>. Como en este caso tenemos los nombres de columnas en un vector de cadenas de caracter necesitamos de dos pasos: convertir la cadena de caracteres a un símboo con la función <code>sym()</code> y luego quitarle las comillas con el operador <code>!!</code> dentro de <code>aes</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Para cada variable:</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (variable <span class="cf">in</span> var_names){</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  plot_var <span class="ot">&lt;-</span> <span class="fu">sym</span>(variable)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  plot_list[[variable]] <span class="ot">&lt;-</span> base_plot <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">!!</span>plot_var),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="sc">!!</span>plot_var),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> variable)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Luego podemos graficarlas todas juntas con la función <code>GridExtra::grid.arrange()</code>, solo que hay que “forzarla” utilizando la función <code>do.call(FUN, args)</code> para evitar un error:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do.call</span>(gridExtra<span class="sc">::</span>grid.arrange, <span class="at">args =</span> plot_list)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Otra forma sería con <code>facet_wrap</code>, tratando las variables como si fueran variables de agrupamiento (¿te animas a programarlo?), pero otra manera, tal vez más sencilla de representar toda esta información en un solo panel es un gráfico de coordenadas paralelas:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>parcoord_plot <span class="ot">&lt;-</span> <span class="fu">ggparcoord</span>(<span class="at">data =</span> num_data,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">groupColumn =</span> <span class="dv">5</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">showPoints =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scale =</span> <span class="st">"std"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">order =</span> <span class="st">"anyClass"</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">alphaLines =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Gráfico de coordenadas paralelas"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">subtitle =</span> <span class="st">"Valores estandarizados"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">caption =</span> <span class="st">"Datos: Iris"</span>) <span class="sc">+</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Especie"</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>parcoord_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="análisis-permutacional-multivariado-de-la-varianza" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="análisis-permutacional-multivariado-de-la-varianza"><span class="header-section-number">16.6</span> Análisis Permutacional Multivariado de la Varianza</h2>
+<p>Vamos a cerrar este capítulo con la alternativa no paramétrica al MANOVA: el Análisis Permutacional Multivariado de la Varianza (MANOVA). En este análisis se hace una partición geométrica del espacio multivariado; es decir, es una prueba basada en distancias. Además, es una prueba basada en un análisis permutacional, donde “revuelve” las etiquetas de la matriz de distancias.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Te recomiendo visitar <a href="bit.ly/permutation_analysis">este sitio web</a> para que te familiarices con los análisis permutacionales de una manera visual.</p>
+</div>
+</div>
+<p>La prueba trabaja en tres pasos:</p>
+<ol type="1">
+<li><p>Calcula un valor de <span class="math inline">\(F = \frac{SS_A}{SS_R}\cdot \left[\frac{N-g}{g-1} \right]\)</span> para el acomodo original de los datos.</p></li>
+<li><p>Permuta las etiquetas de la matriz de distancias <span class="math inline">\(k\)</span> veces, calculando un valor de <span class="math inline">\(F\)</span> para cada permutación. Esto permite “crear” una distribución empírica con todas las <span class="math inline">\(F\)</span>.</p></li>
+<li><p>Calcula el valor de p comparando la F observada vs.&nbsp;la distribución “creada”.</p></li>
+</ol>
+<p>Debido a la naturaleza permutacional del análisis es muy importante que tengamos factores balanceados; <em>i.e.</em>, que todos los factores tengan aproximadamente la misma cantidad de observaciones. La función que utilizaremos (<code>adonis2</code>) compensa esta parte, pero tampoco hay que abusar, y esto me lleva a la implementación.</p>
+<section id="implementación-1" class="level3" data-number="16.6.1">
+<h3 data-number="16.6.1" class="anchored" data-anchor-id="implementación-1"><span class="header-section-number">16.6.1</span> Implementación</h3>
+<p>Lo primero, evidentemente, es calcular la matriz de distancias pero, al igual que con el análisis clúster, es importante que todas nuestras variables estén en la misma escala:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escalado de los datos</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>scaled_data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">scale</span>(num_data[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Objeto con los niveles de agrupamiento, anidados o no</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> num_data<span class="sc">$</span>species</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo de la matriz de distancias</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">dist</span>(scaled_data,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"euclidean"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Luego aplicamos el PERMANOVA</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>perm_res <span class="ot">&lt;-</span> <span class="fu">adonis2</span>(dist_mat<span class="sc">~</span>species,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> scaled_data,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">permutations =</span> <span class="dv">999</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>perm_res</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["SumOfSqs"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"966.895","3":"0.7088673","4":"412.7087","5":"0.001","_rn_":"species"},{"1":"339","2":"397.105","3":"0.2911327","4":"NA","5":"NA","_rn_":"Residual"},{"1":"341","2":"1364.000","3":"1.0000000","4":"NA","5":"NA","_rn_":"Total"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Rechazamos la hipótesis de nulidad, y aprendimos que hay diferencias entre las medias multivariadas de al menos un par de especies. El gráfico de acompañamiento para esta prueba es el resultado de un análisis de coordenadas principales (un PCA, pero con cualquier medida de distancia, no solo Euclidiana), o un NMDS. Dado que el análisis lo hicimos con una matriz de distancias euclidianas podemos también hacer un gráfico de PCA:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dist_pca <span class="ot">&lt;-</span> FactoMineR<span class="sc">::</span><span class="fu">PCA</span>(scaled_data,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">graph =</span> F,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ncp =</span> <span class="fu">length</span>(num_data),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scale.unit =</span> F)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>factoextra<span class="sc">::</span><span class="fu">fviz_pca_ind</span>(dist_pca,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">geom.ind =</span> <span class="st">"point"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">col.ind =</span> species,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">addEllipses =</span> T,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>),</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">legend.title =</span> <span class="st">"Especies"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Como era de esperarse hubo diferencias muy marcadas, principalmente en los pingüinos Gentoo pero ¿en qué variables? No existe una prueba <em>post-hoc</em> como tal para el PERMANOVA, pero podemos hacer un PERMANOVA para cada par de especies (por último, ¿es necesario corregir los valores de p de estos PERMANOVAs?) con la función <code>pairwiseAdonis::pairwise.adonis2</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pw_adonis <span class="ot">&lt;-</span> <span class="fu">pairwise.adonis2</span>(<span class="at">x =</span> dist_mat<span class="sc">~</span>species,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> <span class="fu">cbind</span>(scaled_data, species))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>pw_adonis</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$parent_call
+[1] "dist_mat ~ species , strata = Null , permutations 999"
+
+$Adelie_vs_Gentoo
+          Df SumOfSqs      R2      F Pr(&gt;F)    
+species    1   823.01 0.72176 705.58  0.001 ***
+Residual 272   317.27 0.27824                  
+Total    273  1140.28 1.00000                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+$Adelie_vs_Chinstrap
+          Df SumOfSqs      R2      F Pr(&gt;F)    
+species    1   166.95 0.39664 142.65  0.001 ***
+Residual 217   253.95 0.60336                  
+Total    218   420.90 1.00000                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+$Gentoo_vs_Chinstrap
+          Df SumOfSqs    R2      F Pr(&gt;F)    
+species    1   359.23 0.617 304.48  0.001 ***
+Residual 189   222.99 0.383                  
+Total    190   582.21 1.000                  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+attr(,"class")
+[1] "pwadstrata" "list"      </code></pre>
+</div>
+</div>
+<p>Y luego iríamos por cada par de especies viendo entre qué variables están las diferencias. ¿Engorroso? Lo que le sigue, pero hay que hacerlo si te interesa saber en qué variables están las diferencias, caso contrario puedes saltarte esta útlima parte y solo reportar los resultados de los PERMANOVAs para cada par de especies.</p>
+<p>Esto es todo para esta sesión. Espero que haya sido de tu agrado y que te sea útil en algún momento. En la siguiente sesión volveremos al aprendizaje automatizado, esta vez para hablar de algo que podemos aplicar en vez de los MANOVAs: la clasificación.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-KingEckersley_2019" class="csl-entry" role="doc-biblioentry">
+King AP, Eckersley RJ. 2019. Chapter 8 - Inferential Statistics V: Multiple and Multivariate Hypothesis Testing. In: King AP, Eckersley RJ eds. <em>Statistics for Biomedical Engineers and Scientists</em>. Academic Press, 173-199. DOI: <a href="https://doi.org/10.1016/B978-0-08-102939-8.00017-7">https://doi.org/10.1016/B978-0-08-102939-8.00017-7</a>.
+</div>
+<div id="ref-Perneger_1998" class="csl-entry" role="doc-biblioentry">
+Perneger TV. 1998. What’s wrong with Bonferroni adjustments. <em>BMJ</em> 316:1236-1238. DOI: <a href="https://doi.org/10.1136/bmj.316.7139.1236">10.1136/bmj.316.7139.1236</a>.
+</div>
+</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
