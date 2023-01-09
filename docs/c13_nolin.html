@@ -625,52 +625,55 @@ Tip
 <p>¿Qué nos dice este gráfico? En pocas palabras, la forma de la distribución de la verosimilitud de nuestro parámetro, en términos de <span class="math inline">\(\tau\)</span>, que representa el valor del estadístico <span class="math inline">\(t\)</span> a cada punto, donde el valor de <span class="math inline">\(t\)</span> se calcula como la raiz cuadrada del cambio en la suma de cuadrados, dividido por el error estándar residual. ¿En Español? Entre más grande sea <span class="math inline">\(\tau\)</span>, más nos alejamos del punto con máxima verosimilitud (<span class="math inline">\(\tau = 0\)</span>). Piensa en este gráfico como un gráfico de densidad invertido.</p>
 <p>Utilicemos entonces la función <code>boot_nls</code> de la librería <code>nlraa</code> para hacer el muestreo de nuestros parámetros, y utilicemos la función <code>car::Confint</code> para obtener sus intervalos de confianza:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>boot_pars <span class="ot">&lt;-</span> nlraa<span class="sc">::</span><span class="fu">boot_nls</span>(vb_jaws)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Confint</span>(boot_pars, <span class="at">type =</span> <span class="st">"perc"</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">Par =</span> <span class="fu">names</span>(vb_coef), <span class="at">CI =</span> boot_ci)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>boot_pars <span class="ot">&lt;-</span> nlraa<span class="sc">::</span><span class="fu">boot_nls</span>(vb_jaws)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of times model fit did not converge 1 out of 999 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">Confint</span>(boot_pars, <span class="at">type =</span> <span class="st">"perc"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">Par =</span> <span class="fu">names</span>(vb_coef), <span class="at">CI =</span> boot_ci)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["Par"],"name":[1],"type":["chr"],"align":["left"]},{"label":["CI.2.5.."],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI.97.5.."],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"L","2":"106.98471697","3":"123.8955842"},{"1":"K","2":"0.07938838","3":"0.1767774"},{"1":"t","2":"-1.47599737","3":"1.6445674"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Par"],"name":[1],"type":["chr"],"align":["left"]},{"label":["CI.2.5.."],"name":[2],"type":["dbl"],"align":["right"]},{"label":["CI.97.5.."],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"L","2":"107.3948770","3":"124.0382170"},{"1":"K","2":"0.0795085","3":"0.1740666"},{"1":"t","2":"-1.7968894","3":"1.5334782"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>Y podemos utilizar estas estimaciones para graficar nuestros IC:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>boot_inf <span class="ot">&lt;-</span> boot_ci[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>boot_ci[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>boot_ci[<span class="dv">3</span>,<span class="dv">1</span>])))</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>boot_sup <span class="ot">&lt;-</span> boot_ci[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>boot_ci[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>boot_ci[<span class="dv">3</span>,<span class="dv">2</span>])))</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>boot_plot <span class="ot">&lt;-</span> vb_plot <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> jaws<span class="sc">$</span>boot_inf,</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ymax =</span> jaws<span class="sc">$</span>boot_sup,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">alpha =</span> <span class="fl">0.5</span>),</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fill =</span> <span class="st">"grey70"</span>,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"IC: Bootstrap"</span>)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>boot_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>boot_inf <span class="ot">&lt;-</span> boot_ci[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>boot_ci[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>boot_ci[<span class="dv">3</span>,<span class="dv">1</span>])))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>boot_sup <span class="ot">&lt;-</span> boot_ci[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>boot_ci[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>boot_ci[<span class="dv">3</span>,<span class="dv">2</span>])))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>boot_plot <span class="ot">&lt;-</span> vb_plot <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> jaws<span class="sc">$</span>boot_inf,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ymax =</span> jaws<span class="sc">$</span>boot_sup,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">alpha =</span> <span class="fl">0.5</span>),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fill =</span> <span class="st">"grey70"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"IC: Bootstrap"</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>boot_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>En este caso particular, los resultados son similares a los obtenidos utilizando la función <code>confint</code>, solo que los de <code>confint</code> reflejan una “menor” incertidumbre en la estimación. En este caso particular, es importante considerar la asimetría en el perfil de verosimilitud de <span class="math inline">\(t_0\)</span>, por lo que yo preferiría los IC estimados con bootstrap:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>vb_ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(vb_jaws)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>vb_ci <span class="ot">&lt;-</span> <span class="fu">confint</span>(vb_jaws)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Waiting for profiling to be done...</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>inf <span class="ot">&lt;-</span> vb_ci[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>vb_ci[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>vb_ci[<span class="dv">3</span>,<span class="dv">1</span>])))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>sup <span class="ot">&lt;-</span> vb_ci[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>vb_ci[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>vb_ci[<span class="dv">3</span>,<span class="dv">2</span>])))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>ci_plot <span class="ot">&lt;-</span> vb_plot <span class="sc">+</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> jaws<span class="sc">$</span>inf,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">ymax =</span> jaws<span class="sc">$</span>sup,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.5</span>),</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> <span class="st">"grey70"</span>,</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="st">"IC: Perfil de verosimilitud"</span>)</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>boot_plot <span class="sc">+</span> ci_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Modelo VB y sus IC"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>inf <span class="ot">&lt;-</span> vb_ci[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>vb_ci[<span class="dv">2</span>,<span class="dv">1</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>vb_ci[<span class="dv">3</span>,<span class="dv">1</span>])))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>jaws<span class="sc">$</span>sup <span class="ot">&lt;-</span> vb_ci[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span>vb_ci[<span class="dv">2</span>,<span class="dv">2</span>]<span class="sc">*</span>(jaws<span class="sc">$</span>age<span class="sc">-</span>vb_ci[<span class="dv">3</span>,<span class="dv">2</span>])))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>ci_plot <span class="ot">&lt;-</span> vb_plot <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> jaws<span class="sc">$</span>inf,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">ymax =</span> jaws<span class="sc">$</span>sup,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.5</span>),</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fill =</span> <span class="st">"grey70"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">subtitle =</span> <span class="st">"IC: Perfil de verosimilitud"</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>boot_plot <span class="sc">+</span> ci_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Modelo VB y sus IC"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -680,12 +683,12 @@ Tip
 <h2 data-number="13.6" class="anchored" data-anchor-id="relación-talla-peso"><span class="header-section-number">13.6</span> Relación Talla-Peso</h2>
 <p>En el caso anterior modelamos la tasa de crecimento individual (aunque puede ser cualquier otro crecimiento), pero otra aplicación interesante es modelar la relación talla-peso de alguna especie. Aunque esta sigue un modelo potencial sumamente simple, sirve para ejemplificar un par de cosas y aproximaciones. Para este ejemplo utilizaremos los datos <code>RuffeSLRH92</code> contenidos en la librería <code>FSAdata</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ruffe <span class="ot">&lt;-</span> FSAdata<span class="sc">::</span>RuffeSLRH92[, <span class="fu">c</span>(<span class="st">"length"</span>,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"weight"</span>)]</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminamos posibles NA</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>ruffe <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(ruffe)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ruffe) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lt"</span>, <span class="st">"wt"</span>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ruffe)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ruffe <span class="ot">&lt;-</span> FSAdata<span class="sc">::</span>RuffeSLRH92[, <span class="fu">c</span>(<span class="st">"length"</span>,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"weight"</span>)]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminamos posibles NA</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>ruffe <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(ruffe)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ruffe) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"lt"</span>, <span class="st">"wt"</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ruffe)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -697,14 +700,14 @@ Tip
 </div>
 <p>Grafiquemos estos datos, pero primero reflexionemos un poco. ¿Qué tiene más sentido? ¿Que el peso dependa de la longitud? o, caso contrario, ¿que la longitud dependa del peso? Esta pregunta sobre qué variable depende de cuál es en apariencia trivial, pero que siempre debemos de plantearnos ante cualquier problema de regresión. Puedes ajustar tu modelo en ambos sentidos, pero ¿tiene sentido que un organismo crezca en longitud porque incrementó su peso? Habiendo definido eso, pongamos la talla (<code>lt</code>) en el eje x y el peso (<code>wt</code>) en el eje y:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ruffe, <span class="fu">aes</span>(<span class="at">x =</span> lt, <span class="at">y =</span> wt)) <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>,</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación talla/peso"</span>,</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>ruffe_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ruffe, <span class="fu">aes</span>(<span class="at">x =</span> lt, <span class="at">y =</span> wt)) <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación talla/peso"</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>ruffe_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -721,8 +724,8 @@ log(W_i) = log(\alpha) + \beta*log(L_i) + \epsilon_i
 \]</span></p>
 <p>Esto simplifica mucho el problema de regresión, pues hace el error aditivo y estabiliza las varianzas del modelo por los logaritmos y, sobre todo, nos permite aplicar la RLS que ya conocemos. De hecho, este era el modo en el cuál se aplicaban antes las regresiones no lineales: linealizar la ecuación y luego utilizar RLS (o RLM) para estimar los coeficientes. Luego, re-convertir los coeficientes transformados (<em>e.g.</em> <span class="math inline">\(log(\alpha)\)</span>) para interpretar adecuadamente sus valores. Un proceso que se vuelve más engorroso conforme incrementa la complejidad (intenta hacerlo con el modelo VB), además de que no siempre es posible alcanzar un modelo lineal. Afortunadamente, podemos echar mano de las computadoras para no tener que resolverlo de esta manera. Apliquemos entonces el modelo potencial de relación talla/peso por ambas vías. Primero, el modelo linealizado:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ruffe_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wt)<span class="sc">~</span><span class="fu">log</span>(lt), <span class="at">data =</span> ruffe)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ruffe_lm)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ruffe_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(wt)<span class="sc">~</span><span class="fu">log</span>(lt), <span class="at">data =</span> ruffe)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ruffe_lm)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -746,38 +749,38 @@ F-statistic: 6.678e+04 on 1 and 734 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>Si graficamos este modelo directamente vamos a tener un problema:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fitted <span class="ot">&lt;-</span> ruffe_lm<span class="sc">$</span>fitted.values</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"#ff7f0e"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>fitted <span class="ot">&lt;-</span> ruffe_lm<span class="sc">$</span>fitted.values</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"#ff7f0e"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Habrá entonces que re-convertir para pasar al espacio original de nuestro modelo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fitted_rec <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(ruffe_lm)[<span class="dv">1</span>])<span class="sc">*</span>ruffe<span class="sc">$</span>lt<span class="sc">^</span><span class="fu">coef</span>(ruffe_lm)[<span class="dv">2</span>]</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted_rec),</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"#ff7f0e"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fitted_rec <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">coef</span>(ruffe_lm)[<span class="dv">1</span>])<span class="sc">*</span>ruffe<span class="sc">$</span>lt<span class="sc">^</span><span class="fu">coef</span>(ruffe_lm)[<span class="dv">2</span>]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fitted_rec),</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"#ff7f0e"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Como te darás cuenta, el método funciona, pero es un poco convolucionado. Ajustemos ahora el modelo potencial con la función <code>nls</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ruffe_pot <span class="ot">&lt;-</span> <span class="fu">nls</span>(wt<span class="sc">~</span>A<span class="sc">*</span>lt<span class="sc">^</span>{B},</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> ruffe,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">start =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="fl">0.05</span>,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">B =</span> <span class="dv">3</span>))</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>ruffe<span class="sc">$</span>pot_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(ruffe_pot, ruffe<span class="sc">$</span>lt)</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">data =</span> ruffe, <span class="fu">aes</span>(<span class="at">y =</span> pot_pred),</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"#ff7f0e"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ruffe_pot <span class="ot">&lt;-</span> <span class="fu">nls</span>(wt<span class="sc">~</span>A<span class="sc">*</span>lt<span class="sc">^</span>{B},</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> ruffe,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">start =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="fl">0.05</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">B =</span> <span class="dv">3</span>))</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>ruffe<span class="sc">$</span>pot_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(ruffe_pot, ruffe<span class="sc">$</span>lt)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>ruffe_plot <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="at">data =</span> ruffe, <span class="fu">aes</span>(<span class="at">y =</span> pot_pred),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"#ff7f0e"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Mucho más simple, ¿no? Veamos nuestros coeficientes:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ruffe_pot)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ruffe_pot)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           A            B 
 3.213069e-05 2.813585e+00 </code></pre>
@@ -785,12 +788,12 @@ F-statistic: 6.678e+04 on 1 and 734 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>Y comparémoslos con los coeficientes del modelo lineal:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(ruffe_lm)[<span class="dv">1</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(ruffe_lm)[<span class="dv">1</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> (Intercept) 
 1.867349e-05 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ruffe_lm)[<span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ruffe_lm)[<span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> log(lt) 
 2.922466 </code></pre>
@@ -798,7 +801,7 @@ F-statistic: 6.678e+04 on 1 and 734 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <p>Hay ligeras diferencias en las estimaciones, lo cual es muy seguramente debido al cambio a escala logarítmica de los datos. ¿Cuál utilizar? Cualquiera de las aproximaciones es correcta, solo ten en presente que el utilizar una RLS implica jalar todos sus supuestos, por lo que hay que verificar el modelo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(ruffe_lm)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(ruffe_lm)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c13_nolin_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -813,9 +816,9 @@ F-statistic: 6.678e+04 on 1 and 734 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li>Seleccionar una observación por parámetro. En nuestro caso, tenemos 2: <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>, por lo que seleccionaremos dos individuos de nuestra base de datos. Una idea puede ser seleccionar los extremos en <span class="math inline">\(x\)</span>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>min_ruffe <span class="ot">&lt;-</span> <span class="fu">which.min</span>(ruffe<span class="sc">$</span>lt)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>max_ruffe <span class="ot">&lt;-</span> <span class="fu">which.max</span>(ruffe<span class="sc">$</span>lt)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>ruffe[min_ruffe,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>min_ruffe <span class="ot">&lt;-</span> <span class="fu">which.min</span>(ruffe<span class="sc">$</span>lt)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>max_ruffe <span class="ot">&lt;-</span> <span class="fu">which.max</span>(ruffe<span class="sc">$</span>lt)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>ruffe[min_ruffe,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -824,7 +827,7 @@ F-statistic: 6.678e+04 on 1 and 734 DF,  p-value: &lt; 2.2e-16</code></pre>
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>ruffe[max_ruffe,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>ruffe[max_ruffe,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -857,7 +860,7 @@ log(0.1) = log(0.05) + B*13 \\
 B = \frac{log(0.1)}{13} - log(0.05)
 \]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>((<span class="fu">log</span>(<span class="fl">0.1</span>)<span class="sc">/</span><span class="dv">13</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="fl">0.05</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>((<span class="fu">log</span>(<span class="fl">0.1</span>)<span class="sc">/</span><span class="dv">13</span>)<span class="sc">-</span><span class="fu">log</span>(<span class="fl">0.05</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
@@ -889,8 +892,8 @@ Nota
 </div>
 <p>Ejemplifiquemos una regresión polinomial de orden dos con el ejemplo de los datos <code>jaws</code>. Hacerlo es extremadamente sencillo, solo tenemos que añadir la función <code>poly(x, degree)</code> a nuestra <code>formula</code> en <code>lm()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>jaws_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(bone<span class="sc">~</span><span class="fu">poly</span>(age, <span class="at">degree =</span> <span class="dv">2</span>), <span class="at">data =</span> jaws)</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jaws_poly)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>jaws_poly <span class="ot">&lt;-</span> <span class="fu">lm</span>(bone<span class="sc">~</span><span class="fu">poly</span>(age, <span class="at">degree =</span> <span class="dv">2</span>), <span class="at">data =</span> jaws)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jaws_poly)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -923,16 +926,16 @@ bone = 93.98 + 182.01*age^1 - 118.95*age^2 + e
 \]</span></p>
 <p>Podemos añadir este ajuste al gráfico:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>poly_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> y<span class="sc">~</span><span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">2</span>),</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> T,</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Modelo polinomial (2)"</span>)</span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> poly_plot <span class="sc">+</span></span>
-<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>poly_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> y<span class="sc">~</span><span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">2</span>),</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> T,</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Modelo polinomial (2)"</span>)</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> poly_plot <span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
 </div>
@@ -942,16 +945,16 @@ bone = 93.98 + 182.01*age^1 - 118.95*age^2 + e
 </div>
 <p>El ajuste es mejor que el modelo lineal, pero no tiene absolutamente ningún sentido biológico que la longitud de la mandíbula disminuya después de que los animales cumplan 35 años. ¿Qué pasa con un polinomio de tercer orden? Veámoslo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>poly_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> y<span class="sc">~</span><span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">3</span>),</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> T,</span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Modelo polinomial (3)"</span>)</span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> poly_plot <span class="sc">+</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>poly_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">formula =</span> y<span class="sc">~</span><span class="fu">poly</span>(x, <span class="at">degree =</span> <span class="dv">3</span>),</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> T,</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Modelo polinomial (3)"</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> poly_plot <span class="sc">+</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
 </div>
@@ -967,8 +970,8 @@ bone = 93.98 + 182.01*age^1 - 118.95*age^2 + e
 <p>LOESS: <strong>Locally Estimated Scatterplot Smoothing</strong>; es decir, es un suavizado estimado localmente. ¿A qué nos referimos con suavizado? A que vamos a tratar de encontrar una curva que “suavice” (minimice) los “movimientos” a través de nuestros datos. El suavizado LOESS se construye haciendo un gran número de lineas de regresión (de orden dos o uno) a través de una ventana que se mueve a través del eje <span class="math inline">\(x\)</span>. Es decir, va a partir el eje <span class="math inline">\(x\)</span> en intervalos y ajustar una regresión para cada intervalo, luego el modelo final resulta de unirlas todas. Entre más grande sea la ventana, más “suavizada” estará la curva, de modo que si la ventana es del tamaño de todo el eje <span class="math inline">\(x\)</span> tendremos una regresión lineal simple. Si es muy pequeña, tendremos una curva que pasará por todos los puntos.</p>
 <p>Apliquemos ahora LOESS a los datos <code>jaws</code>. La salida aquí es más críptica que la de la regresión polinomial. No tenemos ninguna prueba de hipótesis. Es más, no tenemos ningún parámetro. En este sentido la regresión (o mejor dicho suavizado) LOESS es una forma de <strong>regresión no paramétrica</strong>, pero eso no quiera decir que no haya forma de controlar el ajuste. De hecho, podemos cambiar todos los elementos que aparecen en la zona de <code>Control settings</code>, e incluso podríamos optimizarlos con validación cruzada, pero más de esto en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>jaws_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(bone<span class="sc">~</span>age, <span class="at">data =</span> jaws)</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jaws_loess)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>jaws_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(bone<span class="sc">~</span>age, <span class="at">data =</span> jaws)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(jaws_loess)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 loess(formula = bone ~ age, data = jaws)
@@ -990,14 +993,14 @@ drop.square:  FALSE </code></pre>
 </div>
 <p>¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, <code>degree</code>) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. El error siguió una distribución normal (<code>family: gaussian</code>), los datos fueron “normalizados” (más de esto en el <a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a>). Tenemos un “número equivalente de parámetros”, que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más “bronco”:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>loess_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>,</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"LOESS"</span>)</span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> loess_plot <span class="sc">+</span></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>loess_plot <span class="ot">&lt;-</span> jaws_plot <span class="sc">+</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>,</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> <span class="st">"#ff7f0e"</span>,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"LOESS"</span>)</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>lm_plot <span class="sc">+</span> vb_plot <span class="sc">+</span> loess_plot <span class="sc">+</span></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Relación long. mandíbula ~ edad"</span>,</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: JAWS"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'
 `geom_smooth()` using formula 'y ~ x'</code></pre>

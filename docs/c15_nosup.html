@@ -1477,45 +1477,54 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dist_nmds, <span class="at">distance =</span> <span class="st">"euclidean"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Run 0 stress 0.1033851 
-Run 1 stress 0.1033851 
-... Procrustes: rmse 3.039934e-05  max resid 8.160771e-05 
-... Similar to previous best
+Run 1 stress 0.1642917 
 Run 2 stress 0.1033851 
-... Procrustes: rmse 1.909903e-05  max resid 6.101958e-05 
+... Procrustes: rmse 4.659695e-05  max resid 0.0001475145 
 ... Similar to previous best
-Run 3 stress 0.1708132 
+Run 3 stress 0.1033851 
+... Procrustes: rmse 6.31604e-05  max resid 0.000196676 
+... Similar to previous best
 Run 4 stress 0.1188198 
-Run 5 stress 0.1033851 
-... Procrustes: rmse 1.264508e-05  max resid 3.829567e-05 
+Run 5 stress 0.2240351 
+Run 6 stress 0.1033851 
+... New best solution
+... Procrustes: rmse 1.055361e-06  max resid 2.276006e-06 
 ... Similar to previous best
-Run 6 stress 0.1033852 
-... Procrustes: rmse 0.0001746469  max resid 0.000552805 
+Run 7 stress 0.1033852 
+... Procrustes: rmse 3.562498e-05  max resid 6.360059e-05 
 ... Similar to previous best
-Run 7 stress 0.1890348 
-Run 8 stress 0.1188198 
-Run 9 stress 0.1642917 
+Run 8 stress 0.1033851 
+... Procrustes: rmse 4.056087e-05  max resid 0.0001271668 
+... Similar to previous best
+Run 9 stress 0.2220691 
 Run 10 stress 0.1033851 
-... Procrustes: rmse 9.674116e-05  max resid 0.0003078617 
+... Procrustes: rmse 4.306424e-05  max resid 0.0001367772 
 ... Similar to previous best
-Run 11 stress 0.1188198 
-Run 12 stress 0.1940923 
+Run 11 stress 0.1033851 
+... Procrustes: rmse 5.221152e-05  max resid 0.0001657535 
+... Similar to previous best
+Run 12 stress 0.1188198 
 Run 13 stress 0.1033851 
-... New best solution
-... Procrustes: rmse 2.32831e-06  max resid 5.291237e-06 
+... Procrustes: rmse 6.973506e-05  max resid 0.0002205437 
 ... Similar to previous best
-Run 14 stress 0.1642917 
-Run 15 stress 0.1188198 
-Run 16 stress 0.1188198 
-Run 17 stress 0.2172249 
-Run 18 stress 0.1033852 
-... Procrustes: rmse 0.0001346401  max resid 0.0004266969 
+Run 14 stress 0.2068559 
+Run 15 stress 0.1033851 
+... Procrustes: rmse 0.0001164519  max resid 0.0003697121 
 ... Similar to previous best
-Run 19 stress 0.1962616 
+Run 16 stress 0.1033851 
+... Procrustes: rmse 8.811476e-05  max resid 0.0002803208 
+... Similar to previous best
+Run 17 stress 0.1033851 
+... Procrustes: rmse 9.793578e-05  max resid 0.0003105626 
+... Similar to previous best
+Run 18 stress 0.1188198 
+Run 19 stress 0.1033851 
+... Procrustes: rmse 3.247868e-05  max resid 0.0001030308 
+... Similar to previous best
 Run 20 stress 0.1033851 
-... New best solution
-... Procrustes: rmse 5.658157e-06  max resid 1.739445e-05 
+... Procrustes: rmse 1.262331e-05  max resid 3.234731e-05 
 ... Similar to previous best
-*** Best solution repeated 1 times</code></pre>
+*** Best solution repeated 11 times</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mds_dims <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">NMDS1 =</span> mds<span class="sc">$</span>points[,<span class="dv">1</span>], <span class="at">NMDS2 =</span> mds<span class="sc">$</span>points[,<span class="dv">2</span>])</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1540,7 +1549,7 @@ Run 20 stress 0.1033851
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293772","2":"0.5586890","3":"0.9128741","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471230","2":"-0.3208707","3":"0.8744883","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293911","2":"-0.5586684","3":"0.7176460","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517456","2":"-0.3068882","3":"0.6989938","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045867","2":"0.4262897","3":"0.6989238","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862159","2":"-0.6179519","3":"0.6977668","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293836","2":"0.5586796","3":"0.9128713","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471274","2":"-0.3208577","3":"0.8744853","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293997","2":"-0.5586557","3":"0.7176442","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517459","2":"-0.3068870","3":"0.6989922","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045797","2":"0.4263046","3":"0.6989299","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862187","2":"-0.6179484","3":"0.6977521","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
