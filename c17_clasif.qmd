@@ -270,6 +270,7 @@ Ahora optimicemos e interpretemos el modelo de bosques
 1. **Dividir los datos en datos de entrenamiento y prueba**. Para esto utilizaremos las funciones `rsample::initial_split()` y `rsample::training()`. Además, remuestrearemos los datos de entrenamiento para realizar la validación cruzada y optimizar los hiper-parámetros del modelo con la función `rsample::vfold_cv()`
 
 ```{r}
+set.seed(0)
 # Dividimos los datos
 peng_split <- rsample::initial_split(peng_data)
 
@@ -346,6 +347,7 @@ En este punto no hemos entrenado el modelo, solo le hemos dicho a `tidymodels` c
     2. Entrenar el modelo, lo cual podemos hacer con fuerza bruta, proponiendo una malla gigantesca de posibles valores, o podemos hacerlo de manera más eficiente escogiendo 20 puntos aleatorios para guiar la búsqueda. Hagamos lo segundo:
     
 ```{r}
+set.seed(123)
 # Asignar 8 núcleos para la computación en paralelo
 # Revisa cuántos puedes disponer tú (más o menos)
 doParallel::registerDoParallel(cores = 8)
@@ -434,6 +436,8 @@ final_rf
 9. **Revisar importancia de variables**. ¿Qué podemos aprender de este modelo? Las variables más importante para la clasificación son la longitud del culmen, seguida de la longitud de la aleta. ¿Tienen sentido biológico estos resultados? Esa es una discusión para otro momento, pues solo tomamos estos datos para ejemplificar la implementación de los bosques aleatorios.
 
 ```{r}
+#| fig-cap: Importancia de variables del bosque aleatorio
+#| label: fig-varimp
 # Graficar la importancia de variables
 
 # Pasa el modelo final
@@ -486,7 +490,7 @@ En la función `roc_curve` del objeto `rf_auc` estamos pasando un vector con tre
 
 11. **Elaborar el reporte** ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a @EnriquezGarciaetal_2022 para ver cómo describir el método, pero los resultados podemos resumirlos como:
 
-> El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 0.99 en los datos de entrenamiento). Las variables más importantes para la clasificación fueron la longitud del culmen ($\approx 14\%$), seguida de la longitud de la aleta ($\approx 12.5\%$). El bosque aleatorio optimizado estuvo compuesto por 700 árboles, cada uno formado con un predictor (`mtry`), considerando al menos 5 observaciones para poder hacer una división (`n_min`).
+> El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 0.99 en los datos de entrenamiento). Las variables más importantes para la clasificación fueron la longitud del culmen ($\approx 17\%$), seguida de la longitud de la aleta ($\approx 12.5\%$; @fig-varimp). El bosque aleatorio optimizado estuvo compuesto por 800 árboles, cada uno formado con un predictor (`mtry`), considerando al menos 5 observaciones para poder hacer una división (`n_min`).
 
 Esto fue todo para este (espero) motivante capítulo, donde entramos de lleno al mundo del aprendizaje supervisado. Me hubiera gustado darte un poco menos de teoría, pero aplicar modelos de aprendizaje automatizado es algo que requiere que pongamos muchísima atención a qué es lo que hacemos en cada paso y por qué, pues es muy fácil que resbalemos y que terminemos presumiendo un modelo sobreajustado. Voy a confirmar tus sospechas: también hay que verificar que nuestras regresiones no estén sobreajustadas, pero eso lo dejamos para la siguiente sesión.
 
