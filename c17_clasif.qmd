@@ -309,7 +309,11 @@ peng_juiced <- peng_prep |> juice()
         - `mtry` (el número máximo de predictores por árbol)
         - `min_n` (el número de observaciones necesarias para seguir dividiendo los datos)
         - `trees` (el número de árboles en el ensemble). 
-    - Después especificamos que es un bosque para clasificación, y por último le indicamos que utilice la librería `ranger` para construir el bosque:
+    - Después especificamos que es un bosque para clasificación con `set_mode`, y por último le indicamos en `set_engine` que utilice la librería `ranger` para construir el bosque:
+    
+:::{.callout-note}
+Una lista completa de todos los tipos de modelos la puedes encontrar en la [documentación correspondiente](https://www.tidymodels.org/find/parsnip/) de `tidymodels`.
+:::
 
 ```{r}
 # Especificar el modelo
@@ -363,23 +367,28 @@ tune_res <- tune_grid(tune_wf,
     3. `trees` con alrededor de 1000.
 
 ```{r}
-# Graficar los valores de AUC de validación cruzada
-# Recuperar los valores
-tune_res |> collect_metrics() |>
-            # Quedarnos solo con los AUC
-            filter(.metric == "roc_auc") |>
-            # Extraer las columnas con las medidas
-            select(mean, min_n, mtry, trees) |>
-            # Poner la malla en formato largo
-            pivot_longer(min_n:trees,
-                         values_to = "value",
-                         names_to = "parameter") |>
-            # Graficar con `ggplot`
-            ggplot(aes(value, mean, color = parameter)) +
-            geom_point(show.legend = F) +
-            facet_wrap(~parameter, scales = "free_x") +
-            labs(y = "AUC") +
-            theme_bw()
+plot_rf_cv <- function(tune_res){
+  # Graficar los valores de AUC de validación cruzada
+  # Recuperar los valores
+  tune_res |> collect_metrics() |>
+              # Quedarnos solo con los AUC
+              filter(.metric == "roc_auc") |>
+              # Extraer las columnas con las medidas
+              select(mean, min_n, mtry, trees) |>
+              # Poner la malla en formato largo
+              pivot_longer(min_n:trees,
+                           values_to = "value",
+                           names_to = "parameter") |>
+              # Graficar con `ggplot`
+              ggplot(aes(value, mean, color = parameter)) +
+              geom_point(show.legend = F) +
+              facet_wrap(~parameter, scales = "free_x") +
+              labs(y = "AUC") +
+              theme_bw()
+}
+
+plot_rf_cv(tune_res)
+
 ```
 
 :::{.callout-note}
@@ -403,17 +412,7 @@ tune2_res <- tune_grid(tune_wf,
                        grid = rf_grid)
 
 # Obtener y graficar los resultados
-tune2_res |> collect_metrics() |>
-             filter(.metric == "roc_auc") |>
-             select(mean, min_n, mtry, trees) |>
-             pivot_longer(min_n:trees,
-                          values_to = "value",
-                          names_to = "parameter") |>
-             ggplot(aes(value, mean, color = parameter)) +
-             geom_point(show.legend = F) +
-             facet_wrap(~parameter, scales = "free_x") +
-             labs(y = "AUC") +
-             theme_bw()
+plot_rf_cv(tune2_res)
 ```
 
 8. **Seleccionar el mejor modelo**. Con el código anterior optimizamos lo más posible los hiper-parámetros, ahora toca seleccionar la mejor combinación de hiperparámetros.
@@ -454,6 +453,10 @@ final_rf |>
   labs(title = "Importancia de variables",
        y = element_blank())
 ```
+
+:::{.callout-note}
+Si pones atención te darás cuenta de que estamos obteniendo la importancia de variables utilizando permutaciones, esto es porque es una manera más robusta de obtenerlas que solo utilizando Gini; sin embargo, estas no son las únicas. Tenemos algunas alternativas como valores Shapely, explicaciones SHAP o LIME que tienen algunas ventajas importantes. Desafortunadamente, SHAP y LIME no están implementados en `R`, solo en `Python`
+:::
 
 10. Muy importante, **verificar que el modelo no esté sobreajustado**. Para esto vamos a crear un último flujo de trabajo, y después ajustar una última vez. ¿Por qué? Porque nuestros modelos hasta ahora se entrenaron en 10 subconjuntos de nuestros datos de entrenamiento (validación cruzada). Para este último ajuste usaremos la función `last_fit()`, la cual ajusta el modelo final en todos los datos de entrenamiento y evalúa en los datos de prueba. Los valores de ROC-AUC y de exactitud son muy buenos, pero además en línea con lo que esperábamos de la optimización (AUC > 0.995), lo cual quiere decir que el modelo no está sobre-ajustado, sino que es muy bueno.
 
