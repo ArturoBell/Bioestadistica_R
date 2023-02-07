@@ -11,25 +11,8 @@ library(visreg)
 library(pscl)
 library(MASS)
 library(MuMIn)
+library(tidymodels)
 ```
-
-## Funciones personalizadas
-
-```{r}
-# Tema personalizado
-blank_theme <- function(){
-  theme(panel.grid.minor = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.background = element_blank(),
-        axis.line = element_blank(),
-        aspect.ratio = 1/1.61,
-        axis.ticks = element_blank(),
-        text = element_text(colour = "gray50"),
-        legend.position = "none"
-        )
-}
-```
-
 
 ## Problemas familiares
 
@@ -43,12 +26,15 @@ La modificación puede ser tan "simple" (al menos en términos de intuición) co
 - **Selección de modelos**; *i.e.*, cómo seleccionar el mejor de un conjunto de modelos candidatos.
 - **Regresiones para clases**: Regresión logística binomial y multinomial.
 
-
-**OJO: Por practicidad obviaré la división datos de entrenamiento-prueba; sin embargo, es algo que SIEMPRE se debe de tener en cuenta**
+:::{.callout.important}
+:::{.callout-warning}
+**OJO: Por practicidad vamos a aplicar los GLMs con `R` base. Puedes también aplicar GLMs penalizados utilizando básicamente la misma estructura que vimos en el @sec-rlm**. ¿Por qué no utilizar `tidymodels`? Podría verme elegante y decirte que porque ya conocemos el flujo básico de trabajo de `tidymodels` y las ventajas que nos ofrece, pero la realidad es otra: la implementación de GLMs en `tidymodels` es bastante limitada aún. Prefiero que entonces nos enfoquemos hoy en la intuición de los GLMs y cómo interpretarlos adecuadamente, más que enfocarnos en la parte técnica. Si tienes dudas sobre el uso de `tidymodels` te recomiendo que revises @KuhnSilge_2022. Es un [libro web](https://www.tmwr.org) que habla justo sobre los detalles del uso de `tidymodels`. Recuerda también revisar la propia documentación de [`tidymodels`](https://www.tidymodels.org/).
+:::
+:::
 
 ## Regresiones robustas
 
-La idea de una regresión robusta la revisamos en la sesión de [RLS](https://arturobell.github.io/Bioestadistica_R/c08_rls.html); es decir, utilizar una distribución con colas más altas que una distribución normal para poder contender con el efecto de puntos extremos, pero expandamos esa idea. ¿Qué significa el "peso" de las colas de una distribución? Qué tanta densidad (o masa, para distribuciones discretas) de probabilidad está acumulada lejos de la tendencia central. En palabras más sencillas, una distribución con colas ligeras como la normal *piensa* que la **probabilidad** de tener **valores lejos** de la tendencia **central** es **muy baja**; por lo tanto, **consiidera "todos" los datos** como **igual** de importantes y *reacciona* moviendo la estimación. ¿No me crees? Veamos un caso extremo, utilizando el tercer conjunto de datos de el [*cuarteto de Anscombe*](https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe):
+La idea de una regresión robusta la revisamos en el @sec-rls; es decir, utilizar una distribución con colas más altas que una distribución normal para poder contender con el efecto de puntos extremos, pero expandamos esa idea. ¿Qué significa el "peso" de las colas de una distribución? Qué tanta densidad (o masa, para distribuciones discretas) de probabilidad está acumulada lejos de la tendencia central. En palabras más sencillas, una distribución con colas ligeras como la normal *piensa* que la **probabilidad** de tener **valores lejos** de la tendencia **central** es **muy baja**; por lo tanto, **consiidera "todos" los datos** como **igual** de importantes y *reacciona* moviendo la estimación. ¿No me crees? Veamos un caso extremo, utilizando el tercer conjunto de datos de el [*cuarteto de Anscombe*](https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe):
 
 ```{r}
 # Almacenados en R como anscombe
@@ -57,7 +43,7 @@ ansc$x <- scale(ansc$x, center = TRUE, scale = FALSE)
 ggplot(data = ansc, aes(x = x, y = y, color = conjunto)) +
   geom_point() +
   facet_wrap(~conjunto) +
-  blank_theme() +
+  theme_bw() +
   labs(title = "Cuarteto de Anscombe") +
   scale_color_manual(values = c("gray70", "gray70", "#1f77b4", "gray70"))
 ```
@@ -68,7 +54,7 @@ Si vemos su distribución de `y` notaremos que no es *exactamente* normal, debid
 ansc_iii = ansc[ansc$conjunto == "III",]
 ggplot(data = ansc_iii, aes(x = y)) +
   geom_density(color = "#1f77b4", fill = NA) +
-  blank_theme() +
+  theme_bw() +
   labs(title = "Densidad de y del conjunto III de Anscombe")
 ```
 
@@ -88,7 +74,7 @@ ggplot(data = ansc_iii,
   geom_smooth(method = "lm",
               color = "gray50",
               fill = NA) +
-  blank_theme() +
+  theme_bw() +
   labs(title = "RLS con supuesto de normalidad")
 ```
 
@@ -139,17 +125,17 @@ ggplot(data = ansc_iii,
 En este caso el punto extremo ya no influenció la estimación de la regresión, lo cual en la mayoría de los casos es algo deseable. Aunque esta es una forma de realizar una regresión robusta, existen otras. Una de ellas es modificar la función de pérdida, como por ejemplo con la Regresión con pérdida Huber. Los detalles matemáticos los dejaré para tu investigación, lo realmente importante es entender que los errores (residuales) son ponderados diferencialmente en función de su magnitud; es decir, se resta importancia a aquellos residuales que sean grandes y, de hecho, si están por encima de cierto límite, son descartados por completo. Su implementación es sumamente sencilla, pues lo único que tenemos que hacer es modificar `lm` por la función `rlm` de la librería `MASS`:
 
 ```{r}
-rr.huber <- MASS::rlm(y~x, data = ansc_iii)
-summary(rr.huber)
+rr_huber <- MASS::rlm(y~x, data = ansc_iii)
+summary(rr_huber)
 ```
 
 ¿Notas algo interesante? Los resultados son los mismos que en la regresión t de Student, aunque aquí podemos ver la ponderación dada a cada punto:
 
 ```{r}
-hweights <- data.frame(x = ansc_iii$x,
-                       resid = rr.huber$residuals,
-                       weight = rr.huber$w)
-hweights
+h_weights <- data.frame(x = ansc_iii$x,
+                        resid = rr_huber$residuals,
+                        weight = rr_huber$w)
+h_weights
 ```
 
 Gráficamente:
@@ -164,7 +150,7 @@ ggplot(data = ansc_iii,
   geom_smooth(method = "lm",
               color = "gray50",
               fill = NA) +
-  geom_point(aes(color = hweights$weight)) +
+  geom_point(aes(color = h_weights$weight)) +
   labs(title = "Regresión robusta",
        subtitle = "OLS (gris) vs. Huber (naranja)") +
   scale_color_gradient(name = "Peso",
@@ -173,13 +159,13 @@ ggplot(data = ansc_iii,
   theme_bw()
 ```
 
-Como era de esperarse, los resultados son los mismos que los de la regresión *t* de Student. En la definición de un GLM tenemos tres elementos importantes:
+Como era de esperarse, los resultados son los mismos que los de la regresión *t* de Student. ¿Qué tiene que ver esto con los modelos lineales generalizados? Veamos primero los tres elementos clave que definen un GLM:
 
 1. El modelo lineal, que es el mismo en ambos casos.
 2. Una familia para el error, que no modificamos en la regresión Huber; sin embargo la familia sería Gaussiana (Normal).
 3. Una función de enlace (o enlace inverso), que en ambos casos sería una función de identidad; es decir, ninguna modificación para pasar de nuestros datos a la distribución del error.
 
-Es decir, que en un sentido amplio, ambas aproximaciones son GLMs, aunque usualmente nos referimos a GLMs cuando la distribución del error es diferente a una distribución normal. ¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
+Es decir, en un sentido amplio, ambas aproximaciones son GLMs, aunque usualmente nos referimos a GLMs cuando la distribución del error es diferente a una distribución normal. ¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
 
 ## Funciones de enlace
 
@@ -190,7 +176,8 @@ En un GLM con una función de enlace tendríamos la siguiente estructura para nu
 $$
 f(y) = \beta_0 + \beta_1*x
 $$
-Es decir, modificamos la salida ($y$) de nuestro modelo lineal utilizando una función $y$. Si es una función logarítmica, por ejemplo, se vería de la siguiente manera:
+
+Es decir, modificamos la salida ($y$) de nuestro modelo lineal utilizando una función $f$. Si es una función logarítmica, por ejemplo, se vería de la siguiente manera:
 
 $$
 log(y) = \beta_0 + \beta_1*x
@@ -198,11 +185,11 @@ $$
 
 Pero obtendríamos exactamente lo mismo si utilizamos un poco de álgebra y resolvemos para $y$, aplicando un exponencial a ambos lados de la igualdad:
 
-$$
+\begin{align*}
 e^{log(y))} = e^{(\beta_0 + \beta_1*x)} \\
 \therefore \\
 y = e^{(\beta_0 + \beta_1 *x)}
-$$
+\end{align*}
 
 El apelativo "inversa" es simplemente para indicar el lado dónde se está aplicando el enlace. Habiendo dicho esto, vayamos a una de las aplicaciones más comunes para GLM: la regresión para conteos.
 
@@ -214,10 +201,10 @@ Te preguntarás qué tienen de especial los conteos, y la respuesta es muy simpl
 
 Muy posiblemente esto te suene a **ensayos de Bernoulli** o ejercicios con distribuciones **Poisson** (¿cuántos autos rojos pasan en una hora por un punto determinado?, por ejemplo). Pues justamente podemos utilizar esa misma distribución (Poisson). Esta distribución tiene un par de peculiaridades. La primera es que asume que los eventos ocurren de manera independiente entre sí, a un intervalo fijo de espacio o tiempo. La segunda es que su único parámetro ($\lambda$) representa tanto la media como la varianza de la distribución (más adelante hablaremos de las implicaciones de esto), por lo que DEBE ser positivo. ¿El problema? Nuestros residuales pueden ser negativos. ¿Qué podemos hacer? Aplicar una función de enlace inverso que nos permita restringir nuestro predictor a valores positivos, justo como la función exponencial, por lo que nuestro modelo se expresaría de la siguiente forma:
 
-$$
+\begin{align*}
 \lambda = e^{(\beta_0 + \beta_1*x)} \\
 y \sim Poisson(\lambda)
-$$
+\end{align*}
 
 Para aplicarlo resolvamos un problema en el cuál trataremos de **predecir** el número de peces capturados en un lago por un pescador, considerando el número de hijos y si llevan o no un camper:
 
@@ -226,18 +213,18 @@ csvurl <- "https://stats.idre.ucla.edu/stat/data/fish.csv"
 fish <- read.csv(csvurl)[,c("child", "camper", "count")]
 head(fish)
 ```
-Exploremos nuestros datos. Al tratarse de una variable discreta podemos, sin ningún problema, utilizar un gráfico de frecuencias:
+Exploremos nuestros datos. Al tratarse de una variable discreta podemos, sin ningún problema, utilizar un gráfico de frecuencias (¿cuál otro utilizarías?):
 
 ```{r}
 ggplot(aes(x = count), data = fish) +
   geom_bar(stat = "count", color = NA, fill = "dodgerblue4") +
-  blank_theme() +
+  theme_bw() +
   labs(title = "Frecuencia de peces capturados en un lago",
        x = element_blank(),
        y = element_blank())
 ```
 
-¿Qué otro gráfico utilizarías? Por otra parte, habrás notado un par de cosas: a) hay una gran cantidad de ceros y b) tenemos algunos puntos "extremos"; *i.e.*, algunos pescadores que tuvieron demasiada suerte y que capturaron demasiados peces en comparación con el resto. Este tipo de distribuciones no son extrañas en la naturaleza, y tienen un par de bemoles de los cuales hablaremos después. Por lo pronto, construyamos nuestro GLM. Para ello utilizaremos la función `glm` de R base, cuyo uso es sumamente similar al de la función `lm`, salvo que indicaremos la familia como un argumento adicional:
+Por otra parte, habrás notado un par de cosas: a) hay una gran cantidad de ceros y b) tenemos algunos puntos "extremos"; *i.e.*, algunos pescadores que tuvieron demasiada suerte y que capturaron demasiados peces en comparación con el resto. Este tipo de distribuciones no son extrañas en la naturaleza, y tienen un par de bemoles de los cuales hablaremos después. Por lo pronto, construyamos nuestro GLM. Podemos construirlo con la función `glm` de R base, cuyo uso es sumamente similar al de la función `lm`, salvo que indicaremos la familia como un argumento adicional:
 
 ```{r}
 poiss <- glm(count~., data = fish, family = "poisson")
@@ -247,11 +234,16 @@ summary(poiss)
 La salida es muy similar a otras que hemos visto. Cómo llamamos a la función glm, un descriptor de los residuales, los coeficientes con sus respectivas pruebas de nulidad (después hablaremos de su interpretación), seguidas de algunos elementos propios de la función `GLM`. Primero tenemos una nota sobre un parámetro de dispersión, que se asumió como 1. Esto quiere decir que estamos asumiendo que la media es igual a la varianza, lo cual podemos tomar solo como un recordatorio para que revisemos dicho supuesto. Después tenemos información sobre la devianza del modelo. Podemos utilizar la devianza residual para realizar una prueba de bondad de ajuste para el modelo global. Esta es la diferencia entre la devianza del modelo y la máxima devianza de un modelo ideal, donde los valores predichos son idénticos a los observados (devianza nula). Por lo tanto, buscamos valores pequeños de la devianza residual. Dicha prueba podemos realizarla de la siguiente manera:
 
 ```{r}
-with(poiss, cbind(res.deviance = deviance,
+with(data = poiss,
+     expr = cbind(res.deviance = deviance,
                   df = df.residual,
                   p = pchisq(deviance, df.residual,
                              lower.tail = F)))
 ```
+
+:::{.callout-note}
+La función `with(data, expr)` evalúa una expresión de `R` en un ambiente construido desde los datos. En el bloque de arriba nos ahorra el tener que extraeer manualmente `poiss$deviance` y `poiss$df.residual`.
+:::
 
 Tenemos un valor de p sumamente pequeño, lo cual sugiere que el modelo no se encuentra bien ajustado. ¿Alguna idea de por qué? Como te imaginarás, tiene que ver con la distribución de nuestros datos, eso que mencionamos sobre muchos ceros y algunos pescadores con mucha suerte. De hecho, cada una de estas características es un problema en sí mismo, así que abordemoslos uno por uno. Una pregunta que puedes estarte haciendo es ¿y la función de enlace? Va implícita en la familia. En este caso, es una función de enlace logarítmica, que es el equivalente a la función de enlace inverso que revisamos antes.
 
@@ -359,12 +351,16 @@ Pongamos atención solo a aquellos coeficientes con `count_`, pues son los que r
 2. Pendientes:
   - Child: El promedio de peces capturados disminuye 1-0.4 veces por cada hijo adicional.
   - Camper: Si el pescador tiene un camper, el promedio de peces capturados incrementa 2.2 veces.
-  
-**Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario aplicar el enlace para poder interpretarlos.**
 
-Para construir un gráfico podemos generar una línea con valores predichos o, mejor dicho, dos líneas: una para cada nivel de `camper` (en la sección de [Extras]() encontrarás cómo funcionan los predictores categóricos en modelos de regresión).
+:::{.callout-important}
+**Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario aplicar el enlace para poder interpretarlos.**
+:::
+
+Para construir un gráfico podemos generar una línea con valores predichos o, mejor dicho, dos líneas: una para cada nivel de `camper`:
 
 ```{r}
+#| warning: false
+
 fish$pred <- predict(zi_bineg, type = "response")
 
 ggplot(data = fish, aes(x = child, y = count,
@@ -377,12 +373,14 @@ ggplot(data = fish, aes(x = child, y = count,
   scale_color_discrete(name = "Camper",
                        labels = c("NO", "SI")) +
   scale_y_continuous(limits = c(0, 12),
-                     label = scales::label_comma(accuracy = 1))
+                     label = scales::label_comma(accuracy = 1)) +
+  theme_bw()
 ```
 
 O utilizando `visreg`:
 
 ```{r}
+#| warning: false
 
 partial_plots <- visreg::visreg(bineg,
                                 scale = "response",
@@ -390,7 +388,7 @@ partial_plots <- visreg::visreg(bineg,
                                 gg = TRUE)
 
 for (plt in partial_plots) {
-  plot(plt + blank_theme() +
+  plot(plt + theme_bw() +
          scale_y_continuous(limits = c(0, 12),
                             label = scales::label_comma(accuracy = 1)) +
          scale_x_discrete(limits = c(0, max(plt$data$x))) +
@@ -440,13 +438,13 @@ AICs
 
 ## Regresiones para clases
 
-En la sesión de [clasificación](https://arturobell.github.io/Bioestadistica_R/c14_clasificacion.html) hablamos sobre los problemas de clasificación, y aplicamos una **regresión logística**; sin embargo, no entramos en detalles. Aprovechemos, entonces, para revisar un poco más a profundidad la intuición detrás de ella.
+En el @sec-clasif hablamos sobre los problemas de clasificación, y aplicamos un bosque aleatorio, pero mencionamos que había otro clasificador llamado **regresión logística**, sin dar más detalles. Aprovechemos, entonces, para revisar un poco más a profundidad la intuición detrás de ella.
 
 ### Regresión logística binaria
 
-Cuando la revisamos anteriormente, definimos a la regresión logística como un modelo de RL al cual aplicaríamos una función logística, lo que nos permite restringir nuestra salida al intervalo $[0,1]$ y, por lo tanto, predecir la probabilidad de pertenencia a una clase dada. Esa definición es correcta para resumir lo más posible la técnica; sin embargo, los detalles son un poco más complejos.
+La **regresión logística** es un **modelo lineal** al cual aplicamos una **función logística**, lo que nos **permite** restringir nuestra salida al intervalo $[0,1]$ y, por lo tanto, **predecir la probabilidad de pertenencia a una clase dada**. Esa definición es correcta para resumir lo más posible la técnica; sin embargo, los detalles son un poco más complejos.
 
-La regresión logística forma parte de los GLMs; por lo tanto, consta de un predictor lineal, una familia de distribución del error y una función de enlace. La familia de distribución del error es **binomial**; es decir, está en términos de la **probabilidad de éxitos** vs. la probabilidad de fracasos. Es por esto que la regresión logística tradicional solo nos permite clasificar entre dos clases. Esto ya lo sabíamos, simplemente lo estamos formalizando, lo que tiene un poco más de detalles es la función de enlace: la **función logística**:
+La regresión logística forma parte de los GLMs; por lo tanto, consta de un predictor lineal, una familia de distribución del error y una función de enlace. La familia de distribución del error es **binomial**; es decir, está en términos de la **probabilidad de éxitos** vs. la probabilidad de fracasos. Es por esto que la regresión logística tradicional solo nos permite clasificar entre dos clases. Su función de enlace es la **función logit**:
 
 $$
 logit(z) = \frac{1}{1 + e^{-z}}
@@ -454,27 +452,31 @@ $$
 
 Esta función tiene la peculiaridad de que, independientemente de los valores de $z$ (el predictor lineal), el resultado siempre estará contenido entre 0 y 1, el cual es, convenientemente, el mismo que el dominio del parámetro $p$ de la distribución binomial (la probabilidad de éxito). Expresado matemáticamente:
 
-$$
-\theta = logistic(\alpha + \beta x)
-$$
-
-$$
+\begin{align*}
+\theta = logistic(\alpha + \beta x) \\
 y \sim Binom(\theta)
-$$
+\end{align*}
 
-Apliquemos entonces una regresión logística para clasificar entre `versicolor` y `virginica` de la base `iris`, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:
+Apliquemos entonces una regresión logística para clasificar entre `Adelie` y `Gentoo` de los pingüinos de Palmer, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:
 
 ```{r}
-iris_dat <- iris
-iris_dat <- subset(iris,
-                   Species == "versicolor" | Species == "virginica")
+# Copia de los datos originales
+peng_dat <- na.omit(palmerpenguins::penguins)
+# Mantener solo las especies de interés
+peng_dat <- subset(peng_dat,
+                   island == "Biscoe" | island == "Dream")
+
+peng_dat <- peng_dat |>
+            # Centrar las variables numéricas
+            mutate(across(where(is.numeric), ~c(scale(., scale = F)))) |>
+            # Eliminar covariables inútiles para la clasificación
+            dplyr::select(!c(species, sex, year))
 ```
 
-
-Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y que puedes también puedes entrenar los glm utilizando la función `caret::train()`. Por practicidad, hagámoslo directamente.
+Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y todos los demás pasos que vimos en el @sec-clasf:
 
 ```{r}
-logit_reg <- glm(Species~., data = iris_dat, family = "binomial")
+logit_reg <- glm(island~., data = peng_dat, family = "binomial")
 summary(logit_reg)
 ```
 
@@ -482,7 +484,7 @@ Y obtengámos los gráficos parciales, utilizando la función `visreg(mod, scale
 
 ```{r}
 partial_plots <- visreg::visreg(logit_reg, scale = "response",
-                                ylab = "P(Especie)",
+                                ylab = "P(Isla)",
                                 line.par = c(col = "dodgerblue4"),
                                 fill.par = c(fill = "gray90"),
                                 gg = TRUE)
@@ -490,22 +492,22 @@ partial_plots <- visreg::visreg(logit_reg, scale = "response",
 for (plt in partial_plots) {
   plot(plt +
          scale_y_continuous(n.breaks = 3,
-                            labels = c("versicolor", 0.5, "virginica")) +
+                            labels = c("Biscoe", 0.5, "Dream")) +
          theme_bw())
 }
 ```
 
-Esto ya lo conocíamos, pero ¿cómo interpretamos los coeficientes? Antes de pasar a eso, es necesario que pongamos atención al argumento `scale` de `visreg`, el cual indicamos como `response`. Esto lo que hizo fue poner nuestra salida en lo que nos interesa: la probabilidad de pertenencia a una especie, dadas las medidas de cada variable. Veamos qué pasa si retiramos ese argumento:
+¿Cómo interpretamos los coeficientes? Antes de pasar a eso, es necesario que pongamos atención al argumento `scale` de `visreg`, el cual indicamos como `response`. Esto lo que hizo fue poner nuestra salida en lo que nos interesa: la probabilidad de pertenencia a una especie, dadas las medidas de cada variable. Veamos qué pasa si retiramos ese argumento:
 
 ```{r}
-partial_plots <- visreg::visreg(logit_reg, ylab = "log-odds(Especie)", gg = TRUE)
+partial_plots <- visreg::visreg(logit_reg, ylab = "log-odds(Isla)", gg = TRUE)
 
 for (plt in partial_plots) {
-  plot(plt + blank_theme())
+  plot(plt + theme_bw())
 }
 ```
 
-Ahora nuestros gráficos están en la escala de nuestro modelo lineal; es decir, con `response` estamos introduciendo la función de enlace y graficando el GLM completo; sin embargo, esto no está presente en los coeficientes "crudos" arrojados por la función GLM, por lo que toca aplicar el álgebra correspondiente:
+Ahora nuestros gráficos están en la escala de nuestro modelo lineal; es decir, con `response` estamos introduciendo la función de enlace y graficando el GLM completo; sin embargo, esto no está presente en los coeficientes "crudos" arrojados por la función GLM, por lo que toca aplicar el álgebra correspondiente.
 
 El modelo básico es:
 
@@ -539,7 +541,11 @@ $$
 
 La cantidad $\frac{p(y = 1)}{1 - p(y = 1)}$ se conoce como los *odds*, que representan la probabilidad de éxito sobre la probabilidad de fracaso. Mientras que la probabilidad de obtener 2 al lanzar un dado es de 1/6, los *odds* para el mismo evento son $\frac{1/6}{5/6} \approx 0.2$, o un éxito a cinco fracasos. En una regresión logística, $\beta$ representa el incremento en *log-odds* por incremento unitario en $x$, no en la probabilidad de pertenencia a una clase, aunque la relación entre *odds* y probabilidad es monótona; es decir, conforme incrementa una, la otra también.
 
-### Regresión logística multinomial
+:::{.callout-tip}
+Si te interesa ver directamente el cambio en probabilidad por incremento unitario de las variables, puedes utilizar una pariente cercana: la regresión probit.
+:::
+
+### Regresión multinomial
 
 Al igual que en el caso anterior, simplemente extenderemos aquellos detalles que no se aterrizaron por completo, particularmente el utilizar una red neuronal como análogo a una regresión logística multinomial. Como acabamos de ver, una regresión logística binaria nos permite predecir la probabilidad de éxito; *i.e.*, de pertenecer a una sola clase. ¿Cómo lo extendemos a más de dos clases? Podemos construir modelos una clase vs. las demás, podemos utilizar una regresión **softmax**, o podemos utilizar una red neuronal. Una red neuronal está formada por capas, las cuales están conectadas entre sí tal cual neuronas:
 
@@ -555,32 +561,56 @@ Gráficamente:
 
 ![Neurona](https://miro.medium.com/max/346/1*dyeq4DKbXlNqPN6mnfN0vw.png)
 
-¿Suena familiar? Con solo una capa oculta y una función ($f$) de identidad tendríamos un modelo lineal cualquiera, solo que se ajusta mediante descenso estocástico de gradiente (fuera de esta discusión) en vez de mínimos cuadrados o máxima verosimilitud. Si esa función $f$ la hacemos una función sigmoide (logística), tenemos entonces una regresión logística para más de dos clases. En un sentido estricto, esta aproximación no es un GLM (no tenemos una familia de distribución del error), pero se puede considerar una generalización a más de dos clases. Algo importante a tener en cuenta es que al ajustar este modelo, R toma una clase como referencia, para la cual no otorga los coeficientes. En este caso, es setosa.
+¿Suena familiar? Con solo una capa oculta y una función ($f$) de identidad tendríamos un modelo lineal cualquiera, solo que se ajusta mediante descenso estocástico de gradiente (fuera de esta discusión) en vez de mínimos cuadrados o máxima verosimilitud. Si esa función $f$ la hacemos una función sigmoide (logística), tenemos entonces una regresión logística para más de dos clases. En un sentido estricto, esta aproximación no es un GLM (no tenemos una familia de distribución del error *per-se*), pero se puede considerar una generalización a más de dos clases. Desafortunadamente aquí tendré que romper la homogeneidad de la sesión e introducir `tidymodels`, porque hay un par de hiperparámetros a ajustar, pero no te preocupes, voy a asignar valores fijos para saltarnos el proceso de validación cruzada y optimización que ya conoces. Primero, hagamos una receta para preprocesar los datos:
 
 ```{r}
-logit_mult <- caret::train(form = Species~.,
-                          data = iris,
-                          method = "multinom",
-                          trace = F)
-summary(logit_mult)
+penguins_na <- na.omit(palmerpenguins::penguins)
+# Formación de la receta
+peng_rec <- recipe(island~.,
+                   data = penguins_na) |>
+            #update_role(island, role = "outcome") |> 
+            step_select(!c(species, sex, year)) |> 
+            step_normalize(all_numeric_predictors()) |> 
+            step_dummy(all_nominal_predictors())
+            
+# Obtener parámetros para preprocesar
+peng_prep <- peng_rec |> prep()
+
+# Preprocesar los datos
+peng_juiced <- peng_prep |> juice()
 ```
 
-¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son más "diferentes" entre nuestras clases, para lo cual podemos utilizar la función `VarImp`:
+Ahora especifiquemos el modelo. Aquí el argumento `penalty` especifica el grado de penalización del modelo, y `mixture` el tipo de penalización (Ridge o Lasso), tal y como vimos en las regresiones penalizadas en el @sec-rlm. De hecho, también utilizaremos la librería `glmnet`. Algo que no mencioné en ese capítulo fue que mixture puede tomar cualquier valor entre 0 y 1, y que cuando 0 < `mixture` < 1 tenemos un modelo de "red elástica". ¿Qué es eso? Simplemente una mezcla entre ambas penalizaciones donde, evidentemente, entre más nos acerquemos a 1 más "Lasso" será el modelo. Obviamente debemos de optimizar al menos uno de los dos, pero eso ya vimos como hacerlo ;).
 
 ```{r}
-caret::varImp(logit_mult, scale = F)
+#| message: false
+#| warning: false
+
+mnom_reg <- multinom_reg(penalty = 1,
+                         mixture = 0) |>
+            set_engine("glmnet")
+
+mnom_wf <- workflow() |>
+           add_recipe(peng_rec) |>
+           add_model(mnom_reg)
+
+mnom_fit <- mnom_wf |> fit(data = penguins_na)
+
+mnom_res <- mnom_fit |> extract_fit_parsnip()
+mnom_res |> tidy() |>
+  pivot_wider(names_from = term,
+              values_from = estimate)
 ```
 
-Esta importancia de variables está dada por la suma de **absolutos** de los coeficientes para una variable (ver lecturas recomendadas para más detalles). Una manera más fácil de interpretarlos es utilizando los valores escalados con respecto al valor máximo:
+Algo importante a tener en cuenta es que al ajustar este modelo tomamos una clase como referencia (igual que con un predictor categórico en @sec-rlm) y entonces esa no tiene coeficientes. ¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son "más diferentes" entre nuestras clases, para lo cual podemos utilizar `vip` como ya habíamos visto en el @sec-clasif:
 
 ```{r}
-caret::varImp(logit_mult)
+#| warning: false
+mnom_res |> vip::vip(geom = "point") +
+             geom_point(color = "deepskyblue3") +
+             theme_bw() +
+             labs(title = "Importancia de variables",
+                  y = element_blank())
 ```
 
-Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los únicos. Si te interesa modelar el tiempo entre eventos puedes utilizar un modelo Gamma, puedes cambiar la relación entre la media y la varianza de la regresión para conteos utilizando un modelo Quasi-Poisson en vez de un modelo con distribución binomial negativa (ver lecturas recomendadas), entre otros.
-
-## Despedida
-
-Con esto llegamos al final del curso. Espero que el contenido haya sido de tu agrado, que te hayas llevado algo y, sobre todo, que lo aprendido te sea útil. En este momento cuentas con bases sólidas para adentrarte más en cualquiera de los temas aquí vistos, e incluso incursionar en otros temas. Una recomendación personal es revisar un paradigma de inferencia diferente: la Inferencia Bayesiana. Si te agradó mi manera de explicar, te recomiendo ampliamente que esperes mi curso "Introducción a la Inferencia Bayesiana", que estará disponible también aquí en Dr. Plancton en los próximos meses. Te recomiendo también adentrarte más en el área del aprendizaje automatizado, pues es un mundo con un potencial enorme de aplicación a problemas biológicos. Si te interesaría un curso más enfocado a eso, házmelo saber y es posible organizarlo con algunos miembros del equipo de Dr. Plancton. Recuerda que siempre puedes contactarme en el servidor de Discord, y que siempre tendrás acceso a las actualizaciones que se hagan al curso.
-
-Te deseo lo mejor, hoy y siempre.
+Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los únicos. Si te interesa modelar el tiempo entre eventos puedes utilizar un modelo Gamma, puedes cambiar la relación entre la media y la varianza de la regresión para conteos utilizando un modelo Quasi-Poisson en vez de un modelo con distribución binomial negativa (ver lecturas recomendadas), entre otros. Puedes también, como vimos en el último ejemplo, aplicar GLMs penalizados utilizando `glmnet`, solo hay que especificar la familia correspondiente.
