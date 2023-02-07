@@ -334,6 +334,9 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -577,13 +580,12 @@ Importante
 <span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.line =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                  <span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>,</span>
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                  <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Montserrat"</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span>sds<span class="sc">$</span>xf, sds<span class="sc">$</span>xf))</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>uni_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>                  <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>                  ) <span class="sc">+</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span>sds<span class="sc">$</span>xf, sds<span class="sc">$</span>xf))</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>uni_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-normal" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -634,7 +636,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(v2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3546572</code></pre>
+<pre><code>[1] 0.002724471</code></pre>
 </div>
 </div>
 <p>Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas maneras de hacerlo. Comenzando con <code>R</code> base podemos utilizar la función<code>t.test(x, conf.level)</code>, donde <code>x</code> es el vector de observaciones y <code>conf.level</code> el nivel de confianza deseado:</p>
@@ -645,13 +647,13 @@ Advertencia
     One Sample t-test
 
 data:  v2
-t = 1.4203, df = 14, p-value = 0.1774
+t = 0.0085467, df = 14, p-value = 0.9933
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.1809017  0.8902162
+ -0.6809803  0.6864292
 sample estimates:
-mean of x 
-0.3546572 </code></pre>
+  mean of x 
+0.002724471 </code></pre>
 </div>
 </div>
 <p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\overline{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
@@ -672,8 +674,8 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Rmisc<span class="sc">::</span><span class="fu">CI</span>(<span class="at">x =</span> v2, <span class="at">ci =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     upper       mean      lower 
- 0.8902162  0.3546572 -0.1809017 </code></pre>
+<pre><code>       upper         mean        lower 
+ 0.686429202  0.002724471 -0.680980260 </code></pre>
 </div>
 </div>
 <p>Una alternativa más es utilizar la función <code>rcompanion::groupwiseMean(formula, data, conf, R)</code>, la cual tiene dos funcionalidades interesantes: i) permite calcular los IC para varios grupos, y ii) poder estimar los intervalos a partir de remuestreos Bootstrap. En esta función: <code>formula</code> es lo que vimos en la función <code>aggregate</code>, donde indicamos al mismo tiempo la variable numérica y la variable de agrupamiento, tal que: <code>var~grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> la amplitud de los intervalos y <code>R</code> el número de réplicas Bootstrap a realizar. Sustituyendo:</p>
@@ -686,7 +688,7 @@ Tip
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.355","4":"0.95","5":"-0.181","6":"0.89"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.00272","4":"0.95","5":"-0.681","6":"0.686"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -816,13 +818,13 @@ t = \frac{\overline{x}- \mu_0}{\frac{s}{\sqrt{n}}}
     One Sample t-test
 
 data:  v2
-t = 1.4203, df = 14, p-value = 0.1774
+t = 0.0085467, df = 14, p-value = 0.9933
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.1809017  0.8902162
+ -0.6809803  0.6864292
 sample estimates:
-mean of x 
-0.3546572 </code></pre>
+  mean of x 
+0.002724471 </code></pre>
 </div>
 </div>
 <p>Ahora sí podemos revisar la salida completa. La primera línea nos dice el tipo de prueba <span class="math inline">\(t\)</span> que estamos aplicando. En este caso pasamos un solo vector, por lo que la prueba a aplicar es para una sola muestra. La segunda línea nos da el nombre de los datos. La tercera nos da los resultados de la prueba: el valor del estadístico <span class="math inline">\(t\)</span>, los grados de libertad <code>d.f.</code> (degrees of freedoom) y el valor de p (<code>p-value</code>), mientras que la cuarta nos da la hipótesis alternativa que estamos evaluando (la nula no cambia, ¿o sí?) ¿Contra qué valor está contrastando? Por defecto contra 0 (podemos cambiarlo con el argumento <code>mu</code>).</p>
@@ -855,13 +857,13 @@ Importante
     One Sample t-test
 
 data:  v2
-t = 1.4203, df = 14, p-value = 0.9113
+t = 0.0085467, df = 14, p-value = 0.5033
 alternative hypothesis: true mean is less than 0
 95 percent confidence interval:
-      -Inf 0.7944611
+      -Inf 0.5641864
 sample estimates:
-mean of x 
-0.3546572 </code></pre>
+  mean of x 
+0.002724471 </code></pre>
 </div>
 </div>
 <p>Aquí, además de la hipótesis alternativa, hay dos cambios que es importante notar: el valor de p y el intervalo de confianza. Empecemos con el segundo, donde tenemos [-Inf, 0.099]. Esto no es ningún error. Simple y sencillamente refleja nuestra hipótesis alternativa: Si la media es menor no tiene caso que consideremos la cola izquierda, por lo que el límite inferior se va a -Inf, mientras que el límite superior se reduce a 0.099. Compara ese valor de 0.099 con el resultado de la prueba de dos colas. ¿Qué notas? Es exactamente la mitad. Estos intervalos de confianza son simétricos, por lo que si solo estamos considerando un lado es lógico que la amplitud se reduzca a la mitad y eso me lleva al otro cambio: el valor de p.&nbsp;También es exactamente la mitad del que nos dio la prueba para dos colas, y es por la misma razón, estamos considerando la mitad del área bajo la curva. Pero aquí hay una advertencia muy, pero muy importante:</p>

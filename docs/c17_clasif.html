@@ -334,6 +334,9 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -859,9 +862,22 @@ Nota
 <li><code>min_n</code> (el número de observaciones necesarias para seguir dividiendo los datos)</li>
 <li><code>trees</code> (el número de árboles en el ensemble).</li>
 </ul></li>
-<li>Después especificamos que es un bosque para clasificación, y por último le indicamos que utilice la librería <code>ranger</code> para construir el bosque:</li>
+<li>Después especificamos que es un bosque para clasificación con <code>set_mode</code>, y por último le indicamos en <code>set_engine</code> que utilice la librería <code>ranger</code> para construir el bosque:</li>
 </ul></li>
 </ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una lista completa de todos los tipos de modelos la puedes encontrar en la <a href="https://www.tidymodels.org/find/parsnip/">documentación correspondiente</a> de <code>tidymodels</code>.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificar el modelo</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Los hiperparámetros van a ser ajustados</span></span>
@@ -939,23 +955,27 @@ Nota
 </ol></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar los valores de AUC de validación cruzada</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Recuperar los valores</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>tune_res <span class="sc">|&gt;</span> <span class="fu">collect_metrics</span>() <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Quedarnos solo con los AUC</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extraer las columnas con las medidas</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(mean, min_n, mtry, trees) <span class="sc">|&gt;</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Poner la malla en formato largo</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(min_n<span class="sc">:</span>trees,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"parameter"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Graficar con `ggplot`</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, mean, <span class="at">color =</span> parameter)) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"AUC"</span>) <span class="sc">+</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_rf_cv <span class="ot">&lt;-</span> <span class="cf">function</span>(tune_res){</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Graficar los valores de AUC de validación cruzada</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Recuperar los valores</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  tune_res <span class="sc">|&gt;</span> <span class="fu">collect_metrics</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>              <span class="co"># Quedarnos solo con los AUC</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>              <span class="co"># Extraer las columnas con las medidas</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(mean, min_n, mtry, trees) <span class="sc">|&gt;</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>              <span class="co"># Poner la malla en formato largo</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pivot_longer</span>(min_n<span class="sc">:</span>trees,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                           <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                           <span class="at">names_to =</span> <span class="st">"parameter"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>              <span class="co"># Graficar con `ggplot`</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>              <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, mean, <span class="at">color =</span> parameter)) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>              <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"AUC"</span>) <span class="sc">+</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme_bw</span>()</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_rf_cv</span>(tune_res)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c17_clasif_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -993,17 +1013,7 @@ Nota
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">grid =</span> rf_grid)</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener y graficar los resultados</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>tune2_res <span class="sc">|&gt;</span> <span class="fu">collect_metrics</span>() <span class="sc">|&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"roc_auc"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">select</span>(mean, min_n, mtry, trees) <span class="sc">|&gt;</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">pivot_longer</span>(min_n<span class="sc">:</span>trees,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                          <span class="at">values_to =</span> <span class="st">"value"</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                          <span class="at">names_to =</span> <span class="st">"parameter"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ggplot</span>(<span class="fu">aes</span>(value, mean, <span class="at">color =</span> parameter)) <span class="sc">+</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>parameter, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"AUC"</span>) <span class="sc">+</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_rf_cv</span>(tune2_res)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c17_clasif_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1063,6 +1073,19 @@ Computational engine: ranger </code></pre>
 <p></p><figcaption class="figure-caption">Figura&nbsp;17.12: Importancia de variables del bosque aleatorio</figcaption><p></p>
 </figure>
 </div>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si pones atención te darás cuenta de que estamos obteniendo la importancia de variables utilizando permutaciones, esto es porque es una manera más robusta de obtenerlas que solo utilizando Gini; sin embargo, estas no son las únicas. Tenemos algunas alternativas como valores Shapely, explicaciones SHAP o LIME que tienen algunas ventajas importantes. Desafortunadamente, SHAP y LIME no están implementados en <code>R</code>, solo en <code>Python</code></p>
 </div>
 </div>
 <ol start="10" type="1">

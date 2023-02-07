@@ -334,6 +334,9 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -969,37 +972,6 @@ attr(,"legend")
 <p>Otra alternativa es utilizar la función <code>chart.Correlation(data, histogram)</code> de la librería <code>PerformanceAnalytics</code>, en la cual se muestran todos resultados en una misma gráfica:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>PerformanceAnalytics<span class="sc">::</span><span class="fu">chart.Correlation</span>(mydata, <span class="at">histogram =</span> T, <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter
-
-Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1019,10 +991,10 @@ Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
 <p>Donde <span class="math inline">\(\mu\)</span> representa el vector de medias de cada variable y <span class="math inline">\(\Sigma\)</span> la matriz de covarianzas.</p>
 <p>Al realizar esta prueba vemos que la distribución Mv observada tiene una curtosis adecuada, aunque se encuentra fuertemente sesgada. Si analizamos los datos univariados vemos que en apariencia 2/6 variables presentan normalidad univariada.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mvntest <span class="ot">&lt;-</span> MVN<span class="sc">::</span><span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"mardia"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mardia_test <span class="ot">&lt;-</span> mvntest<span class="sc">$</span>multivariateNormality</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>unitest <span class="ot">&lt;-</span> mvntest<span class="sc">$</span>univariateNormality</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>mardia_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mvntest <span class="ot">&lt;-</span> MVN<span class="sc">::</span><span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"mardia"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mardia_test <span class="ot">&lt;-</span> mvntest<span class="sc">$</span>multivariateNormality</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>unitest <span class="ot">&lt;-</span> mvntest<span class="sc">$</span>univariateNormality</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mardia_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1031,7 +1003,7 @@ Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>unitest</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>unitest</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1047,12 +1019,12 @@ Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
 <p>Si observamos con atención los valores de p, veremos que hay algunos que se encuentran cercanos al umbral de 0.05 por lo que un análisis a partir de los cuantiles de la distribución puede ser una alternativa más informativa. Para ello podemos utilizar la prueba de Henze-Zirkler. Esta prueba considera una hipótesis compuesta, en la cual <em>la distribución de X es una distribución normal no degenerada</em>, cuyos resultados son consistentes contra cualquier distribución alternativa no normal (por ello compuesta). La representación está dada en términos de <span class="math inline">\(L^2\)</span> (Distancia de Mahalanobis, más adelante hablaremos sobre medidas de distancia). Al ser una prueba de bondad de ajuste (observado vs.&nbsp;esperado), el estadístico de prueba sigue una distribución <span class="math inline">\(\chi^2\)</span> (<a href="http://bit.ly/Henze_Zirkler">Henze y Zirkler 2007</a>).</p>
 <p>Aplicandola con <code>mvn()</code> vemos que también sugiere una falta de normalidad, lo cual podemos comprobar al ver el gráfico Cuantil-Cuantil</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hz_test <span class="ot">&lt;-</span> MVN<span class="sc">::</span><span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"hz"</span>,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">multivariatePlot =</span> <span class="st">"qq"</span>)<span class="sc">$</span>multivariateNormality</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hz_test <span class="ot">&lt;-</span> MVN<span class="sc">::</span><span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"hz"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">multivariatePlot =</span> <span class="st">"qq"</span>)<span class="sc">$</span>multivariateNormality</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>hz_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hz_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1064,45 +1036,45 @@ Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
 </div>
 <p>Ese gráfico, aunque informativo, puede trabajarse para hacerse más agradable a la vista utilizando ggplot2 utilizando la siguiente función personalizada creada a partir del código utilizado para la gráfica anterior:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Funciones personalizadas:</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraida de la función mvn(multivariatePlot = "qq") para un gráfico QQ</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># para normalidad multivariada utilizando la distancia de mahalanobis</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ji2_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Datos</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">dim</span>(mydata)[<span class="dv">1</span>] <span class="co"># número de datos</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">dim</span>(mydata)[<span class="dv">2</span>] <span class="co"># número de grupos</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Centramos los datos (a-µ(a)) sin escalarlos (sin dividir por su \sigma)</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  dif <span class="ot">&lt;-</span> <span class="fu">scale</span>(mydata, <span class="at">scale =</span> F)</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cálculo de la distancia de mahalanobis^2</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">diag</span>(dif <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">cov</span>(mydata), <span class="at">tol =</span> <span class="fl">1e-25</span>) <span class="sc">%*%</span> <span class="fu">t</span>(dif)) </span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">rank</span>(d) <span class="co"># Asignación de rangos a las distancias</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtención de los cuantiles teóricos según la distribución ji^2</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  ji2 <span class="ot">&lt;-</span>  <span class="fu">qchisq</span>((r <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span>n, p)</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reunimos los objetos en un data.frame para graficar con ggplot2</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  ji2_plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(d, ji2)</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Graficado</span></span>
-<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  ji2_qq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ji2_plot_data, <span class="fu">aes</span>(<span class="at">x =</span> d, <span class="at">y =</span> ji2)) <span class="sc">+</span> </span>
-<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
-<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>,</span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>,</span>
-<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> </span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">bquote</span>(<span class="st">"Gráfico QQ de"</span> <span class="sc">~</span><span class="er">~</span> {chi<span class="sc">^</span><span class="dv">2</span>} <span class="sc">~</span><span class="er">~</span> <span class="st">", g.l = "</span><span class="sc">~</span> .(p)),</span>
-<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">bquote</span>(<span class="st">"Distancia de Mahalanobis ("</span><span class="sc">~</span>{D<span class="sc">^</span><span class="dv">2</span>}<span class="sc">~</span><span class="st">") </span></span>
-<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="st">                                   vs. Cuantiles teóricos"</span>),</span>
-<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Basado en mvn(..., multivariatePlot == </span><span class="sc">\"</span><span class="st">qq</span><span class="sc">\"</span><span class="st">)"</span></span>
-<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ji2_qq)</span>
-<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Funciones personalizadas:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraida de la función mvn(multivariatePlot = "qq") para un gráfico QQ</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># para normalidad multivariada utilizando la distancia de mahalanobis</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ji2_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Datos</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">dim</span>(mydata)[<span class="dv">1</span>] <span class="co"># número de datos</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">dim</span>(mydata)[<span class="dv">2</span>] <span class="co"># número de grupos</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Centramos los datos (a-µ(a)) sin escalarlos (sin dividir por su \sigma)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  dif <span class="ot">&lt;-</span> <span class="fu">scale</span>(mydata, <span class="at">scale =</span> F)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cálculo de la distancia de mahalanobis^2</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">diag</span>(dif <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">cov</span>(mydata), <span class="at">tol =</span> <span class="fl">1e-25</span>) <span class="sc">%*%</span> <span class="fu">t</span>(dif)) </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">rank</span>(d) <span class="co"># Asignación de rangos a las distancias</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtención de los cuantiles teóricos según la distribución ji^2</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  ji2 <span class="ot">&lt;-</span>  <span class="fu">qchisq</span>((r <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span>n, p)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reunimos los objetos en un data.frame para graficar con ggplot2</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  ji2_plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(d, ji2)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Graficado</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  ji2_qq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ji2_plot_data, <span class="fu">aes</span>(<span class="at">x =</span> d, <span class="at">y =</span> ji2)) <span class="sc">+</span> </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>,</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">bquote</span>(<span class="st">"Gráfico QQ de"</span> <span class="sc">~</span><span class="er">~</span> {chi<span class="sc">^</span><span class="dv">2</span>} <span class="sc">~</span><span class="er">~</span> <span class="st">", g.l = "</span><span class="sc">~</span> .(p)),</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">bquote</span>(<span class="st">"Distancia de Mahalanobis ("</span><span class="sc">~</span>{D<span class="sc">^</span><span class="dv">2</span>}<span class="sc">~</span><span class="st">") </span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="st">                                   vs. Cuantiles teóricos"</span>),</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Basado en mvn(..., multivariatePlot == </span><span class="sc">\"</span><span class="st">qq</span><span class="sc">\"</span><span class="st">)"</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ji2_qq)</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>qqjiplot <span class="ot">&lt;-</span> <span class="fu">ji2_plot</span>(mydata) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>qqjiplot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>qqjiplot <span class="ot">&lt;-</span> <span class="fu">ji2_plot</span>(mydata) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>qqjiplot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1113,8 +1085,8 @@ Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
 <p>Esta prueba es una extensión multivariada de la prueba por excelencia para la normalidad univariada: la prueba de Shapiro-Wilk’s. Originalmente propuesta en 1983, aunque fue corregida/ampliada por el mismo autor en 1992 (<a href="http://bit.ly/Royston_otros">Royston vs.&nbsp;otras</a>). Funciona mejor para muestras pequeñas, aunque no se recomienda emplearla con menos de 3 observaciones o con más de 2000.</p>
 <p>Su implementación sigue la misma línea que los casos anteriores. Si analizamos el valor de p, veremos que se encuentra en el límite de la significancia a un <span class="math inline">\(\alpha = 0.05\)</span>; sin embargo, si consideramos también el gráfico QQ que elaboramos anteriormente, no podemos asumir que esas desviaciones sean despreciables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>royston_test <span class="ot">&lt;-</span> <span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"royston"</span>)<span class="sc">$</span>multivariateNormality</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>royston_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>royston_test <span class="ot">&lt;-</span> <span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"royston"</span>)<span class="sc">$</span>multivariateNormality</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>royston_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1131,20 +1103,20 @@ Warning in par(usr): argument 1 does not name a graphical parameter</code></pre>
 <p>Conforme vayamos avanzando en el curso veremos que, entre los supuestos de algunas pruebas, vamos a encontrar el de “igualdad de dispersiones multivariadas”; <em>i.e.</em>, igualdad de matrices de covarianza. Una alternativa es utilizar la prueba de <span class="citation" data-cites="Anderson_2005">Anderson (<a href="references.html#ref-Anderson_2005" role="doc-biblioref">2005</a>)</span>, la cual es un análogo multivariado a la prueba de Levene para la homogeneidad de varianzas. La prueba de hipótesis está basada en distancias no euclidianas entre los grupos (<em>i.e.</em>, no utiliza el teorema de Pitágoras :( ). Un dato curioso es que este método también se ha utilizado para evaluar la diversidad <span class="math inline">\(\beta\)</span> de una comunidad.</p>
 <p>Para su implementación en R utilizaremos la función <code>betadisper</code> de la librería <code>vegan</code>. Al ser un método basado en distancias, primero habrá que transformar los datos a una matriz de distancias utilizando alguna de las funciones <code>dist</code>, <code>betadiver</code> o <code>vegdist</code>. Necesitamos, además, establecer los grupos a utilizar.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">vegdist</span>(mydata, <span class="at">method =</span> <span class="st">"bray"</span>, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"median"</span>))</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.character</span>(mtcars<span class="sc">$</span>cyl)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Por fines prácticos no se muestra,</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ya que calcula una distancia entre cada par de instancias o grupos,</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># resultando en matrices sumamente grandes</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#dist.mat</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">vegdist</span>(mydata, <span class="at">method =</span> <span class="st">"bray"</span>, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"median"</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.character</span>(mtcars<span class="sc">$</span>cyl)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Por fines prácticos no se muestra,</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ya que calcula una distancia entre cada par de instancias o grupos,</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># resultando en matrices sumamente grandes</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#dist.mat</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora utilizaremos la función <code>betadisper</code> para comprobar la homogeneidad de dispersiones entre los distintos cilindros. Esta prueba únicamente genera el espacio multivariado para realizar la prueba, realizando un ACP para reducir la dimensionalidad de la base de datos y estimar las distancias a la mediana de cada uno de los grupos establecidos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar el procedimiento</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>disp_mv <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">betadisper</span>(dist_mat,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">group =</span> groups, <span class="at">type =</span> <span class="st">"median"</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>disp_mv</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar el procedimiento</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>disp_mv <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">betadisper</span>(dist_mat,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">group =</span> groups, <span class="at">type =</span> <span class="st">"median"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>disp_mv</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Homogeneity of multivariate dispersions
@@ -1166,8 +1138,8 @@ Eigenvalues for PCoA axes:
 </div>
 <p>Si realizamos la prueba de hipótesis vemos que, al parecer, las dispersiones multiviariadas son similares entre los 3 grupos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prueba de hipótesis</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(disp_mv)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prueba de hipótesis</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(disp_mv)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1179,17 +1151,17 @@ Eigenvalues for PCoA axes:
 </div>
 <p>Ahora veamos las dispersiones gráficamente:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Análisis gráfico</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(disp_mv, <span class="at">ellipse =</span> T, <span class="at">hull =</span> F)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Análisis gráfico</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(disp_mv, <span class="at">ellipse =</span> T, <span class="at">hull =</span> F)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Al analizar el gráfico vemos que las dispersiones son similares; sin embargo, pareciera que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, en tonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (<code>TukeyHSD</code>). Los resultados sugieren que las dispersiones con un <span class="math inline">\(\alpha = 0.05\)</span> son similares, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mod_HSD <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(disp_mv)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>mod_HSD <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(mod_HSD<span class="sc">$</span>group, <span class="at">comp =</span> <span class="fu">dimnames</span>(mod_HSD<span class="sc">$</span>group)[[<span class="dv">1</span>]])</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>mod_HSD</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mod_HSD <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(disp_mv)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mod_HSD <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(mod_HSD<span class="sc">$</span>group, <span class="at">comp =</span> <span class="fu">dimnames</span>(mod_HSD<span class="sc">$</span>group)[[<span class="dv">1</span>]])</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>mod_HSD</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1201,49 +1173,49 @@ Eigenvalues for PCoA axes:
 </div>
 <p>Al igual que en el caso anterior podemos utilizar <code>ggplot</code> para personalizar el gráfico:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>hsd_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mod_HSD, </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x =</span> comp)) <span class="sc">+</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> diff), </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size =</span> <span class="dv">4</span>, </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.7</span>)<span class="sc">+</span> </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Diferencias en dispersión multivariada e IC"</span>,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="st">"Prueba HSD de Tukey"</span>,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="st">"Grupos"</span>,</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="dv">0</span><span class="fl">+0.005</span>, </span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="dv">0</span>),</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr),</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr)<span class="sc">-</span><span class="fl">0.005</span>, </span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr),<span class="dv">2</span>)),</span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr),</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr)<span class="sc">-</span><span class="fl">0.005</span>, </span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr),<span class="dv">2</span>)),</span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p = "</span>, <span class="fu">round</span>(p.adj,<span class="dv">2</span>)), <span class="at">y =</span> <span class="dv">0</span>),</span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>                       <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nudge_y =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr)<span class="sc">+</span><span class="fl">0.005</span>, <span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>            </span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>hsd_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>hsd_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mod_HSD, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x =</span> comp)) <span class="sc">+</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> diff), </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.7</span>)<span class="sc">+</span> </span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Diferencias en dispersión multivariada e IC"</span>,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="st">"Prueba HSD de Tukey"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="st">"Grupos"</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="dv">0</span><span class="fl">+0.005</span>, </span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="dv">0</span>),</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr),</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr)<span class="sc">-</span><span class="fl">0.005</span>, </span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr),<span class="dv">2</span>)),</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr),</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr)<span class="sc">-</span><span class="fl">0.005</span>, </span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr),<span class="dv">2</span>)),</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p = "</span>, <span class="fu">round</span>(p.adj,<span class="dv">2</span>)), <span class="at">y =</span> <span class="dv">0</span>),</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>                       <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nudge_y =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr)<span class="sc">+</span><span class="fl">0.005</span>, <span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>hsd_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1264,25 +1236,25 @@ Eigenvalues for PCoA axes:
 <p>¿Cuál utilizar? Dependerá de nuestros objetivos para hacerla, lo cual me lleva al punto de que: <strong>NINGUNA transformación debe de ser aplicada sin cuidado</strong>. Hay que tener en cuenta que, aunque no se cambie la distribución de los datos, el análisis ya no se realiza sobre los datos originales, lo cual puede causar errores de interpretación. Con esto no quiero decir que las transformaciones sean malas, solo que hay que emplearlas con una justificación y asegurarnos de re-transformar los datos antes de hacer inferencias.</p>
 <p>Veamos algunas de las transformaciones más comunes y cuáles son sus consecuencias en los datos. Para ello, consideremos estos datos sin transformar, los cuales están altamente sesgados y, en consecuencia, bastante alejados de la normalidad:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de graficado</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>kdeplots <span class="ot">&lt;-</span> <span class="cf">function</span>(data, aes){</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  kdeplots <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, aes) <span class="sc">+</span> </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_density</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Conteo de peces"</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Gráfico de densidad con datos y distrintas transformaciones"</span>,</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos: http://bit.ly/comm_transf"</span>,</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(kdeplots)</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="dv">1</span>, <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">13</span>, <span class="dv">20</span>, <span class="dv">150</span>, <span class="dv">9</span>, <span class="dv">28</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">43</span>),</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">transf =</span> <span class="st">"originales"</span>)</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf))</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de graficado</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>kdeplots <span class="ot">&lt;-</span> <span class="cf">function</span>(data, aes){</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  kdeplots <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, aes) <span class="sc">+</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_density</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Conteo de peces"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Gráfico de densidad con datos y distrintas transformaciones"</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos: http://bit.ly/comm_transf"</span>,</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(kdeplots)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="dv">1</span>, <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">13</span>, <span class="dv">20</span>, <span class="dv">150</span>, <span class="dv">9</span>, <span class="dv">28</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">43</span>),</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">transf =</span> <span class="st">"originales"</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf))</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1291,11 +1263,11 @@ Eigenvalues for PCoA axes:
 <h3 data-number="14.9.1" class="anchored" data-anchor-id="estandarización"><span class="header-section-number">14.9.1</span> Estandarización</h3>
 <p>Veamos el efecto de estandarizar los datos; es decir, utilizar la distribución Z. La <strong>estandarización consiste en centrar la variable (restarle su media) y dividirla entre su desviación estándar</strong>. El resultado es la misma distribución, aunque los datos ahora se encuentran escalados e indican a cuantas SD de la media se encuentra cada punto.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df, <span class="fu">data.frame</span>(<span class="at">datos =</span> (df<span class="sc">$</span>datos<span class="sc">-</span><span class="fu">mean</span>(df<span class="sc">$</span>datos))<span class="sc">/</span><span class="fu">sd</span>(df<span class="sc">$</span>datos),</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">transf =</span> <span class="st">"Z"</span>))</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span> </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df, <span class="fu">data.frame</span>(<span class="at">datos =</span> (df<span class="sc">$</span>datos<span class="sc">-</span><span class="fu">mean</span>(df<span class="sc">$</span>datos))<span class="sc">/</span><span class="fu">sd</span>(df<span class="sc">$</span>datos),</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">transf =</span> <span class="st">"Z"</span>))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span> </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1305,10 +1277,10 @@ Eigenvalues for PCoA axes:
 <h3 data-number="14.9.2" class="anchored" data-anchor-id="transformación-logarítmica"><span class="header-section-number">14.9.2</span> Transformación logarítmica</h3>
 <p>Posiblemente la transformación más conocida, utilizada y, en consecuencia, abusada. Se realiza aplicando la ecuación <span class="math inline">\(X_{log} = log_n(X)\)</span>. (OJO: si hay ceros será <span class="math inline">\(X_{log} = log_n(X+1)\)</span>, ya que el logaritmo de 0 no existe). Esta transformación cambia notablemente la distribución de los datos, acercándolos a una forma de campana. ¿Cuándo aplicarla? Cuando querramos forzar nuestros datos a una distribución normal para cumplir con los supuestos de alguna prueba paramétrica, linealizar los datos y, equivocadamente, ponerlos en la misma escala que otra variable. Con excepción del último caso, cualquiera de las formas está matemáticamente justificada, solo hay que tener en consideración que los datos no son los originales y que pueden no representar adecuadamente nuestro muestreo. Otro caso en el cual es válido utilizarlo es si queremos ver cuál es cuando tenemos distintos factores y nuestra variable de respuesta es el resultado de su interacción (producto) tal que <span class="math inline">\(Y = a \times b \times c \times d\times ... \times z\)</span> (efecto multiplicativo y no aditivo), ya que el resultado es una distribución con forma log-normal que no es posible capturar con los datos originales. Su re-transformación es <span class="math inline">\(n^{X_{log}}\)</span>. Salvo en el último caso, recomiendo contrastar los resultados con una prueba no paramétrica utilizando los datos originales y ver cuáles son las diferencias.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">log</span>(df<span class="sc">$</span>datos), <span class="at">transf =</span> <span class="st">"log(x)"</span>))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">log</span>(df<span class="sc">$</span>datos), <span class="at">transf =</span> <span class="st">"log(x)"</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1318,10 +1290,10 @@ Eigenvalues for PCoA axes:
 <h3 data-number="14.9.3" class="anchored" data-anchor-id="raíz-cuadrada"><span class="header-section-number">14.9.3</span> Raíz cuadrada</h3>
 <p>Otra transformación muy empleada, consiste en en obtener la raíz cuadrada de cada uno de los datos (<span class="math inline">\(\sqrt{X}\)</span>, OJO: si hay valores negativos no se puede utilizar, hay que pasarlos a valores absolutos o añadir una constante para volverlos positivos). Veamos su efecto en la distribución. En este caso el cambio en la forma no es tan agresivo, y la consecuencia es únicamente que las diferencias entre los valores más altos y los más pequeños se redujo. Su re-transformación es: <span class="math inline">\(\sqrt{x}^2\)</span>. Su uso más común es con datos de conteo (abundancias, bacterias en una caja petri, etc.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">sqrt</span>(df<span class="sc">$</span>datos), <span class="at">transf =</span> <span class="st">"sqrt(x)"</span>))</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">sqrt</span>(df<span class="sc">$</span>datos), <span class="at">transf =</span> <span class="st">"sqrt(x)"</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c14_intromv_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>

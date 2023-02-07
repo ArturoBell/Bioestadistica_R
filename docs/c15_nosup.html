@@ -334,6 +334,9 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -543,12 +546,25 @@ Nota
 </section>
 <section id="hablemos-de-distancias" class="level3" data-number="15.3.3">
 <h3 data-number="15.3.3" class="anchored" data-anchor-id="hablemos-de-distancias"><span class="header-section-number">15.3.3</span> Hablemos de distancias</h3>
-<p>Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que <strong>la medida de distancia que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis</strong>. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la <a href="#fig-geometries">Figura&nbsp;<span>15.9</span></a> tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma resultante es diferente porque el espacio geométrico es diferente:</p>
+<p>Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que <strong>la medida de distancia/disimilaridad que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis</strong>. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la <a href="#fig-geometries">Figura&nbsp;<span>15.9</span></a> tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:</p>
 <div id="fig-geometries" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/geometries.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figura&nbsp;15.9: Formas de los espacios geométricos definidos por las distancias Euclidiana, Manhattan y Chebyshev. Las tres son casos especiales de la distancia Minkowski, con diferentes valores de <span class="math inline">\(r\)</span></figcaption><p></p>
 </figure>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es lo mismo una medida de distancia que una de disimilaridad? Sí y no. Desde el punto de vista práctico, sí, ambas nos permiten darnos una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una <strong>distancia</strong> cumple con la <strong>desigualdad triangular</strong>, mientras que una disimilaridad no. ¿Qué es la desigualdad triangular? Que <strong>la distancia más corta entre dos puntos es una linea recta</strong>. En una disimilaridad esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?</p>
+</div>
 </div>
 <p>Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilaridades funcionen mejor en ciertos casos y peor en otros. <span class="citation" data-cites="Shirkhorshidietal_2015">Shirkhorshidi, Aghabozorgi &amp; Wah (<a href="references.html#ref-Shirkhorshidietal_2015" role="doc-biblioref">2015</a>)</span> compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:</p>
 <div id="fig-distances" class="quarto-figure quarto-figure-center anchored">
@@ -980,6 +996,19 @@ Nota
 </div>
 </div>
 <p>Esto evidencía gradientes en cada variable, algunos positivos (<code>Temp</code>, <code>NH4</code>, por ejemplo) y algunos negativos (<em>e.g.</em>, <code>NO3</code>, <code>OD</code>). ¿Qué quiere decir esto? Bueno, esa interpretación ya depende del conocimiento que tengamos del área (tanto del conocimiento como del área geográfica).</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es esta la única manera de estimar el número de grupos? No.&nbsp;Puedes seleccionar solo una de estas medidas (incluso puedes hacerlo dentro de <code>NbClust</code> con el argumento <code>index</code>), pero también puedes utilizar la librería <code>pvclust</code>. Su funcionamiento es demasiado rebuscado para describirlo en una nota, pero puedes ver la <a href="https://github.com/shimo-lab/pvclust">documentación correspondiente</a>.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="reducción-de-la-dimensionalidad" class="level2" data-number="15.4">
@@ -1276,7 +1305,9 @@ largo    | -0.650  6.870  0.422 |  0.357  2.755  0.128 |  0.220  1.720  0.048 |<
 <p>La salida es bastante extensa, pero lo que realmente nos interesa es lo que aparece en <code>Eigenvalues</code>: La varianza de cada componente, el porcentaje de la varianza total que representa, y cuánta varianza se ha acumulado hasta ese componente, pero siempre es mejor ver los resultados de manera gráfica con algunas funciones de la librería <code>factoextra</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>factoextra<span class="sc">::</span><span class="fu">fviz_pca_var</span>(biom_pca, <span class="at">col.var =</span> <span class="st">"coord"</span>,</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#E7B800"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#FC4E07"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1393,31 +1424,33 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para la estimación de los CP óptimos:</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>evplot <span class="ot">&lt;-</span> <span class="cf">function</span>(ev){</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Author: </span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Broken stick model (MacArthur 1957)</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>      n <span class="ot">&lt;-</span> <span class="fu">length</span>(ev)</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>      bsm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">j=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n), <span class="at">p=</span><span class="dv">0</span>)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>n </span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) bsm<span class="sc">$</span>p[i] <span class="ot">&lt;-</span> bsm<span class="sc">$</span>p[i<span class="dv">-1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>(n <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> i))</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>bsm<span class="sc">$</span>p<span class="sc">/</span>n</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot eigenvalues and % of variation for each axis</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(ev, <span class="at">main=</span><span class="st">"Eigenvalues"</span>, <span class="at">col=</span><span class="st">"bisque"</span>, <span class="at">las=</span><span class="dv">2</span>)</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(ev), <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="st">"Average eigenvalue"</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(<span class="fu">t</span>(<span class="fu">cbind</span>(<span class="dv">100</span><span class="sc">*</span>ev<span class="sc">/</span><span class="fu">sum</span>(ev), bsm<span class="sc">$</span>p[n<span class="sc">:</span><span class="dv">1</span>])), <span class="at">beside=</span><span class="cn">TRUE</span>, </span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">main=</span><span class="st">"% variation"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">las=</span><span class="dv">2</span>)</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"% eigenvalue"</span>, <span class="st">"Broken stick model"</span>), </span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">pch=</span><span class="dv">15</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">bty=</span><span class="st">"n"</span>)</span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">par</span>(op)</span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los eigenvalores</span></span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>ev <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(eig_val)<span class="sc">$</span>eigenvalue</span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignamos nombres a los valores</span></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ev) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"CP"</span>,<span class="fu">seq_along</span>(ev), <span class="st">""</span>)</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficamos con la función personalizada</span></span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">evplot</span>(ev)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Author:</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Broken stick model (MacArthur 1957)</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>      n <span class="ot">&lt;-</span> <span class="fu">length</span>(ev)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>      bsm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">j=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n), <span class="at">p=</span><span class="dv">0</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>n </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) bsm<span class="sc">$</span>p[i] <span class="ot">&lt;-</span> bsm<span class="sc">$</span>p[i<span class="dv">-1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>(n <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> i))</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>bsm<span class="sc">$</span>p<span class="sc">/</span>n</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot eigenvalues and % of variation for each axis</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>      op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(ev, <span class="at">main=</span><span class="st">"Eigenvalues"</span>, <span class="at">col=</span><span class="st">"bisque"</span>, <span class="at">las=</span><span class="dv">2</span>)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(ev), <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="st">"Average eigenvalue"</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(<span class="fu">t</span>(<span class="fu">cbind</span>(<span class="dv">100</span><span class="sc">*</span>ev<span class="sc">/</span><span class="fu">sum</span>(ev), bsm<span class="sc">$</span>p[n<span class="sc">:</span><span class="dv">1</span>])), <span class="at">beside=</span><span class="cn">TRUE</span>, </span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">main=</span><span class="st">"% variation"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">las=</span><span class="dv">2</span>)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"% eigenvalue"</span>, <span class="st">"Broken stick model"</span>), </span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">pch=</span><span class="dv">15</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">bty=</span><span class="st">"n"</span>)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">par</span>(op)</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los eigenvalores</span></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>ev <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(eig_val)<span class="sc">$</span>eigenvalue</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignamos nombres a los valores</span></span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ev) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"CP"</span>,<span class="fu">seq_along</span>(ev), <span class="st">""</span>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficamos con la función personalizada</span></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="fu">evplot</span>(ev)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1477,54 +1510,47 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dist_nmds, <span class="at">distance =</span> <span class="st">"euclidean"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Run 0 stress 0.1033851 
-Run 1 stress 0.1642917 
-Run 2 stress 0.1033851 
-... Procrustes: rmse 4.659695e-05  max resid 0.0001475145 
+Run 1 stress 0.1033851 
+... Procrustes: rmse 3.367313e-05  max resid 0.0001055005 
 ... Similar to previous best
-Run 3 stress 0.1033851 
-... Procrustes: rmse 6.31604e-05  max resid 0.000196676 
+Run 2 stress 0.2045701 
+Run 3 stress 0.1188198 
+Run 4 stress 0.1033851 
+... Procrustes: rmse 1.880365e-05  max resid 5.986799e-05 
 ... Similar to previous best
-Run 4 stress 0.1188198 
-Run 5 stress 0.2240351 
+Run 5 stress 0.1188198 
 Run 6 stress 0.1033851 
-... New best solution
-... Procrustes: rmse 1.055361e-06  max resid 2.276006e-06 
+... Procrustes: rmse 0.0001072  max resid 0.0003376428 
 ... Similar to previous best
-Run 7 stress 0.1033852 
-... Procrustes: rmse 3.562498e-05  max resid 6.360059e-05 
+Run 7 stress 0.2068559 
+Run 8 stress 0.1188198 
+Run 9 stress 0.1033851 
+... Procrustes: rmse 5.582229e-05  max resid 0.0001768821 
 ... Similar to previous best
-Run 8 stress 0.1033851 
-... Procrustes: rmse 4.056087e-05  max resid 0.0001271668 
-... Similar to previous best
-Run 9 stress 0.2220691 
 Run 10 stress 0.1033851 
-... Procrustes: rmse 4.306424e-05  max resid 0.0001367772 
+... Procrustes: rmse 7.531256e-05  max resid 0.0002389197 
 ... Similar to previous best
-Run 11 stress 0.1033851 
-... Procrustes: rmse 5.221152e-05  max resid 0.0001657535 
+Run 11 stress 0.1893902 
+Run 12 stress 0.1033851 
+... Procrustes: rmse 8.915106e-05  max resid 0.0002830894 
 ... Similar to previous best
-Run 12 stress 0.1188198 
 Run 13 stress 0.1033851 
-... Procrustes: rmse 6.973506e-05  max resid 0.0002205437 
+... Procrustes: rmse 9.300272e-05  max resid 0.0002961369 
 ... Similar to previous best
-Run 14 stress 0.2068559 
-Run 15 stress 0.1033851 
-... Procrustes: rmse 0.0001164519  max resid 0.0003697121 
-... Similar to previous best
-Run 16 stress 0.1033851 
-... Procrustes: rmse 8.811476e-05  max resid 0.0002803208 
-... Similar to previous best
+Run 14 stress 0.1188198 
+Run 15 stress 0.2027265 
+Run 16 stress 0.1188198 
 Run 17 stress 0.1033851 
-... Procrustes: rmse 9.793578e-05  max resid 0.0003105626 
+... Procrustes: rmse 6.035583e-05  max resid 0.0001845056 
 ... Similar to previous best
-Run 18 stress 0.1188198 
+Run 18 stress 0.1033851 
+... Procrustes: rmse 9.378517e-05  max resid 0.0002980251 
+... Similar to previous best
 Run 19 stress 0.1033851 
-... Procrustes: rmse 3.247868e-05  max resid 0.0001030308 
+... Procrustes: rmse 8.734717e-06  max resid 2.761289e-05 
 ... Similar to previous best
-Run 20 stress 0.1033851 
-... Procrustes: rmse 1.262331e-05  max resid 3.234731e-05 
-... Similar to previous best
-*** Best solution repeated 11 times</code></pre>
+Run 20 stress 0.2137542 
+*** Best solution repeated 10 times</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mds_dims <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">NMDS1 =</span> mds<span class="sc">$</span>points[,<span class="dv">1</span>], <span class="at">NMDS2 =</span> mds<span class="sc">$</span>points[,<span class="dv">2</span>])</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1549,7 +1575,7 @@ Run 20 stress 0.1033851
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293836","2":"0.5586796","3":"0.9128713","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471274","2":"-0.3208577","3":"0.8744853","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293997","2":"-0.5586557","3":"0.7176442","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517459","2":"-0.3068870","3":"0.6989922","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045797","2":"0.4263046","3":"0.6989299","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862187","2":"-0.6179484","3":"0.6977521","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293852","2":"0.5586772","3":"0.9128702","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471282","2":"-0.3208554","3":"0.8744866","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8294013","2":"-0.5586533","3":"0.7176446","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517470","2":"-0.3068838","3":"0.6989932","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045784","2":"0.4263073","3":"0.6989308","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862156","2":"-0.6179523","3":"0.6977507","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>

@@ -333,6 +333,9 @@ div.csl-indent {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -902,13 +905,8 @@ Levels: a b c d e</code></pre>
 <h2 data-number="3.7" class="anchored" data-anchor-id="operaciones-comunes"><span class="header-section-number">3.7</span> Operaciones comunes</h2>
 <p>Como ya vimos, no siempre vamos a obtener la información en el formato que necesitamos. Aunque podemos solventar algunas de estas carencias durante la carga de los archivos, a veces necesitamos “masajear” los datos o “manipularlos” para llevarlos a lo que las funciones que nos interesan nos piden. Tomemos como ejemplo los datos de la hoja número 1 del archivo <code>datos2.xlsx</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>datos3 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"datos/datos2.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>New names:
-• `Lp14-C` -&gt; `Lp14-C...94`
-• `Lp14-C` -&gt; `Lp14-C...109`</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos3)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>datos3 <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"datos/datos2.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos3)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -922,113 +920,12 @@ Levels: a b c d e</code></pre>
 <h3 data-number="3.7.1" class="anchored" data-anchor-id="transposición"><span class="header-section-number">3.7.1</span> Transposición</h3>
 <p>En estos datos las presas están en los renglones, y los individuos de los depredadores en las columnas. Aunque esta disposición no tiene fundamentalmente nada de malo, normalmente las instancias (observaciones individuales/réplicas) están en los renglones, y las variables (presas) en las columnas. Es necesario entonces <strong>tranponer</strong> los datos. Esto lo podemos hacer de manera sencilla con la función <code>t()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">t</span>(datos3))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">t</span>(datos3))[, <span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      [,1]              [,2]          [,3]           [,4]       
-Prey  "Alpheus_lottini" "Alpheus_spp" "Alpheus_umbo" "Amphipods"
-Cu1-C "0"               "0"           "0"            "0"        
-Cu2-C "0"               "4"           "0"            "0"        
-Cu3-C "0"               "0"           "0"            "0"        
-Cz1-C " 0"              " 0"          " 0"           " 6"       
-Ar1-C "0"               "0"           "0"            "0"        
-      [,5]                [,6]               [,7]                   
-Prey  "Apogon_retrosella" "Appendicularians" "Axoclinus_nigricaudis"
-Cu1-C "0"                 "0"                "0"                    
-Cu2-C "0"                 "0"                "0"                    
-Cu3-C "0"                 "0"                "0"                    
-Cz1-C " 0"                " 0"               " 0"                   
-Ar1-C "0"                 "0"                "0"                    
-      [,8]                   [,9]           [,10]                            
-Prey  "Bittium_cerralvoense" "Chaetognaths" "Cirripedia_Chthamalus_anisopoma"
-Cu1-C "0"                    "0"            "0"                              
-Cu2-C "0"                    "0"            "0"                              
-Cu3-C "0"                    "0"            "0"                              
-Cz1-C " 0"                   " 0"           " 0"                             
-Ar1-C "0"                    "0"            "0"                              
-      [,11]                           [,12]                               
-Prey  "Cladocerans_Penila_avirostris" "Cladocerans_Pseudovadne_tergestina"
-Cu1-C "0"                             "0"                                 
-Cu2-C "0"                             "0"                                 
-Cu3-C "0"                             "0"                                 
-Cz1-C " 0"                            " 0"                                
-Ar1-C "0"                             "0"                                 
-      [,13]                     [,14]                        [,15]            
-Prey  "Copepods_Acartia_clausi" "Copepods_Calanus_pacificus" "Epitonium_canna"
-Cu1-C "9"                       "0"                          "0"              
-Cu2-C "0"                       "0"                          "0"              
-Cu3-C "0"                       "0"                          "0"              
-Cz1-C " 8"                      " 0"                         " 0"             
-Ar1-C "0"                       "0"                          "0"              
-      [,16]       [,17]          [,18]                     [,19]     
-Prey  "Fish_eggs" "foraminifera" "Gnathophyllum_panamense" "Hidrozoa"
-Cu1-C "0"         "0"            "0"                       "0"       
-Cu2-C "0"         "0"            "2"                       "0"       
-Cu3-C "0"         "0"            "0"                       "0"       
-Cz1-C "13"        " 0"           " 0"                      " 0"      
-Ar1-C "0"         "0"            "0"                       "0"       
-      [,20]            [,21]                         [,22]                    
-Prey  "Ichtyoplankton" "Larvae_crustaceans_megalopa" "larvae_crustaceans_zoea"
-Cu1-C "6"              "0"                           "0"                      
-Cu2-C "0"              "0"                           "0"                      
-Cu3-C "0"              "0"                           "0"                      
-Cz1-C " 0"             " 0"                          " 0"                     
-Ar1-C "0"              "0"                           "0"                      
-      [,23]                [,24]                 [,25]   [,26]               
-Prey  "Liomera_cinctimana" "Litiopa_melanostoma" "Mysid" "Mytella_arciformis"
-Cu1-C "0"                  "0"                   "0"     "0"                 
-Cu2-C "0"                  "0"                   "0"     "0"                 
-Cu3-C "0"                  "0"                   "0"     "0"                 
-Cz1-C " 0"                 " 0"                  " 0"    " 0"                
-Ar1-C "0"                  "0"                   "0"     "0"                 
-      [,27]                 [,28]                 [,29]                
-Prey  "Mytella_tumbezensis" "Nanocassiope_polita" "Nyctiphanes_simplex"
-Cu1-C "0"                   "0"                   "0"                  
-Cu2-C "0"                   "0"                   "0"                  
-Cu3-C "0"                   "0"                   "0"                  
-Cz1-C " 0"                  " 0"                  " 0"                 
-Ar1-C "0"                   "0"                   "0"                  
-      [,30]       [,31]      [,32]             [,33]               
-Prey  "Ostracods" "Otoliths" "Palaemon_ritter" "Panopeus_purpureus"
-Cu1-C "0"         "0"        "0"               "0"                 
-Cu2-C "0"         "0"        "0"               "0"                 
-Cu3-C "0"         "0"        "2"               "0"                 
-Cz1-C " 0"        " 0"       " 0"              " 0"                
-Ar1-C "0"         "0"        "0"               "0"                 
-      [,34]                      [,35]              [,36]           
-Prey  "Parviturbo_acuticostatus" "Parviturbo_erici" "Parviturbo_spp"
-Cu1-C "0"                        "0"                "0"             
-Cu2-C "0"                        "0"                "0"             
-Cu3-C "0"                        "0"                "0"             
-Cz1-C " 0"                       " 0"               " 0"            
-Ar1-C "0"                        "0"                "0"             
-      [,37]       [,38]              [,39]                   [,40]            
-Prey  "Pteropods" "Quadrella_nitida" "Tagelus_californianus" "Tegula_globulus"
-Cu1-C "0"         "0"                "0"                     "0"              
-Cu2-C "0"         "0"                "0"                     "0"              
-Cu3-C "0"         "0"                "0"                     "0"              
-Cz1-C " 0"        " 0"               " 0"                    " 0"             
-Ar1-C "0"         "0"                "0"                     "0"              
-      [,41]            [,42]           [,43]                [,44]             
-Prey  "Tegula_mariana" "Tellina_coani" "Trapezia_bidentata" "Trapezia_formosa"
-Cu1-C "0"              "0"             "0"                  "0"               
-Cu2-C "0"              "0"             "0"                  "0"               
-Cu3-C "0"              "0"             "0"                  "0"               
-Cz1-C " 0"             " 0"            " 0"                 " 0"              
-Ar1-C "2"              "0"             "0"                  "0"               
-      [,45]          [,46]              [,47]          [,48]     
-Prey  "Trapezia_spp" "Ulva_dactylifera" "Ulva_lactuca" "Ulva_spp"
-Cu1-C "0"            "0"                "0"            "0"       
-Cu2-C "0"            "0"                "0"            "0"       
-Cu3-C "0"            "0"                "0"            "0"       
-Cz1-C " 0"           " 0"               " 0"           " 0"      
-Ar1-C "0"            "0"                "0"            "0"       
-      [,49]                                
-Prey  "UOM (Unidentified Organic Material)"
-Cu1-C "0"                                  
-Cu2-C "0"                                  
-Cu3-C "0"                                  
-Cz1-C " 0"                                 
-Ar1-C "0"                                  </code></pre>
+<pre><code>          Prey          Cu1-C          Cu2-C          Cu3-C          Cz1-C 
+"Alpheus_umbo"            "0"            "0"            "0"           " 0" 
+         Ar1-C 
+           "0" </code></pre>
 </div>
 </div>
 <p>Esto logró nuestro objetivo, aunque con un pequeño gran problema: toda la información es texto. ¿Por qué? Resulta que las columnas solo pueden contener datos de un solo tipo, por lo que al tener el texto de las especies presa todas las columnas son transformadas a cadenas de caracter. ¿Qué podemos hacer? Transponer los datos en tres pasos.</p>
@@ -1037,14 +934,14 @@ Ar1-C "0"                                  </code></pre>
 <h3 data-number="3.7.2" class="anchored" data-anchor-id="rebanadas-slices"><span class="header-section-number">3.7.2</span> “Rebanadas” (slices)</h3>
 <p>El primer paso es separar los nombres de las presas de los datos de los depredadores:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>prey <span class="ot">&lt;-</span> datos3<span class="sc">$</span>Prey</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(prey)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>prey <span class="ot">&lt;-</span> datos3<span class="sc">$</span>Prey</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(prey)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Alpheus_lottini"   "Alpheus_spp"       "Alpheus_umbo"     
 [4] "Amphipods"         "Apogon_retrosella" "Appendicularians" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> datos3[,<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(datos3)]</span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(counts)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> datos3[,<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(datos3)]</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(counts)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1056,37 +953,11 @@ Ar1-C "0"                                  </code></pre>
 </div>
 <p>Transponer la matriz de conteos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>countst <span class="ot">&lt;-</span> <span class="fu">t</span>(counts)</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>countst <span class="ot">&lt;-</span> <span class="fu">t</span>(counts)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)[,<span class="dv">10</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
-Cu1-C    0    0    0    0    0    0    0    0    0     0     0     0     9
-Cu2-C    0    4    0    0    0    0    0    0    0     0     0     0     0
-Cu3-C    0    0    0    0    0    0    0    0    0     0     0     0     0
-Cz1-C    0    0    0    6    0    0    0    0    0     0     0     0     8
-Ar1-C    0    0    0    0    0    0    0    0    0     0     0     0     0
-Ps1-C    0    0    0    0    0    0    0    0    0     0     0     0     0
-      [,14] [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25]
-Cu1-C     0     0     0     0     0     0     6     0     0     0     0     0
-Cu2-C     0     0     0     0     2     0     0     0     0     0     0     0
-Cu3-C     0     0     0     0     0     0     0     0     0     0     0     0
-Cz1-C     0     0    13     0     0     0     0     0     0     0     0     0
-Ar1-C     0     0     0     0     0     0     0     0     0     0     0     0
-Ps1-C     0     0     0     0     0     0     0     0     0     0     0     0
-      [,26] [,27] [,28] [,29] [,30] [,31] [,32] [,33] [,34] [,35] [,36] [,37]
-Cu1-C     0     0     0     0     0     0     0     0     0     0     0     0
-Cu2-C     0     0     0     0     0     0     0     0     0     0     0     0
-Cu3-C     0     0     0     0     0     0     2     0     0     0     0     0
-Cz1-C     0     0     0     0     0     0     0     0     0     0     0     0
-Ar1-C     0     0     0     0     0     0     0     0     0     0     0     0
-Ps1-C     0     0     0    15     0     0     0     0     0     0     0     0
-      [,38] [,39] [,40] [,41] [,42] [,43] [,44] [,45] [,46] [,47] [,48] [,49]
-Cu1-C     0     0     0     0     0     0     0     0     0     0     0     0
-Cu2-C     0     0     0     0     0     0     0     0     0     0     0     0
-Cu3-C     0     0     0     0     0     0     0     0     0     0     0     0
-Cz1-C     0     0     0     0     0     0     0     0     0     0     0     0
-Ar1-C     0     0     0     2     0     0     0     0     0     0     0     0
-Ps1-C     0     0     0     0     0     0     0     0     0     0     0     0</code></pre>
+<pre><code>Cu1-C Cu2-C Cu3-C Cz1-C Ar1-C Ps1-C 
+    0     0     0     0     0     0 </code></pre>
 </div>
 </div>
 </section>
@@ -1094,107 +965,11 @@ Ps1-C     0     0     0     0     0     0     0     0     0     0     0     0</c
 <h3 data-number="3.7.3" class="anchored" data-anchor-id="cambiar-nombres-de-columnas"><span class="header-section-number">3.7.3</span> Cambiar nombres de columnas</h3>
 <p>Para acceder o asignar los nombres de las columnas o renglones de arreglos bidimensionales podemos utilizar los <strong>atributos</strong> <code>colnames(data)</code> y <code>rownames(data)</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(countst) <span class="ot">&lt;-</span> prey</span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(countst) <span class="ot">&lt;-</span> prey</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)[,<span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Alpheus_lottini Alpheus_spp Alpheus_umbo Amphipods Apogon_retrosella
-Cu1-C               0           0            0         0                 0
-Cu2-C               0           4            0         0                 0
-Cu3-C               0           0            0         0                 0
-Cz1-C               0           0            0         6                 0
-Ar1-C               0           0            0         0                 0
-Ps1-C               0           0            0         0                 0
-      Appendicularians Axoclinus_nigricaudis Bittium_cerralvoense Chaetognaths
-Cu1-C                0                     0                    0            0
-Cu2-C                0                     0                    0            0
-Cu3-C                0                     0                    0            0
-Cz1-C                0                     0                    0            0
-Ar1-C                0                     0                    0            0
-Ps1-C                0                     0                    0            0
-      Cirripedia_Chthamalus_anisopoma Cladocerans_Penila_avirostris
-Cu1-C                               0                             0
-Cu2-C                               0                             0
-Cu3-C                               0                             0
-Cz1-C                               0                             0
-Ar1-C                               0                             0
-Ps1-C                               0                             0
-      Cladocerans_Pseudovadne_tergestina Copepods_Acartia_clausi
-Cu1-C                                  0                       9
-Cu2-C                                  0                       0
-Cu3-C                                  0                       0
-Cz1-C                                  0                       8
-Ar1-C                                  0                       0
-Ps1-C                                  0                       0
-      Copepods_Calanus_pacificus Epitonium_canna Fish_eggs foraminifera
-Cu1-C                          0               0         0            0
-Cu2-C                          0               0         0            0
-Cu3-C                          0               0         0            0
-Cz1-C                          0               0        13            0
-Ar1-C                          0               0         0            0
-Ps1-C                          0               0         0            0
-      Gnathophyllum_panamense Hidrozoa Ichtyoplankton
-Cu1-C                       0        0              6
-Cu2-C                       2        0              0
-Cu3-C                       0        0              0
-Cz1-C                       0        0              0
-Ar1-C                       0        0              0
-Ps1-C                       0        0              0
-      Larvae_crustaceans_megalopa larvae_crustaceans_zoea Liomera_cinctimana
-Cu1-C                           0                       0                  0
-Cu2-C                           0                       0                  0
-Cu3-C                           0                       0                  0
-Cz1-C                           0                       0                  0
-Ar1-C                           0                       0                  0
-Ps1-C                           0                       0                  0
-      Litiopa_melanostoma Mysid Mytella_arciformis Mytella_tumbezensis
-Cu1-C                   0     0                  0                   0
-Cu2-C                   0     0                  0                   0
-Cu3-C                   0     0                  0                   0
-Cz1-C                   0     0                  0                   0
-Ar1-C                   0     0                  0                   0
-Ps1-C                   0     0                  0                   0
-      Nanocassiope_polita Nyctiphanes_simplex Ostracods Otoliths
-Cu1-C                   0                   0         0        0
-Cu2-C                   0                   0         0        0
-Cu3-C                   0                   0         0        0
-Cz1-C                   0                   0         0        0
-Ar1-C                   0                   0         0        0
-Ps1-C                   0                  15         0        0
-      Palaemon_ritter Panopeus_purpureus Parviturbo_acuticostatus
-Cu1-C               0                  0                        0
-Cu2-C               0                  0                        0
-Cu3-C               2                  0                        0
-Cz1-C               0                  0                        0
-Ar1-C               0                  0                        0
-Ps1-C               0                  0                        0
-      Parviturbo_erici Parviturbo_spp Pteropods Quadrella_nitida
-Cu1-C                0              0         0                0
-Cu2-C                0              0         0                0
-Cu3-C                0              0         0                0
-Cz1-C                0              0         0                0
-Ar1-C                0              0         0                0
-Ps1-C                0              0         0                0
-      Tagelus_californianus Tegula_globulus Tegula_mariana Tellina_coani
-Cu1-C                     0               0              0             0
-Cu2-C                     0               0              0             0
-Cu3-C                     0               0              0             0
-Cz1-C                     0               0              0             0
-Ar1-C                     0               0              2             0
-Ps1-C                     0               0              0             0
-      Trapezia_bidentata Trapezia_formosa Trapezia_spp Ulva_dactylifera
-Cu1-C                  0                0            0                0
-Cu2-C                  0                0            0                0
-Cu3-C                  0                0            0                0
-Cz1-C                  0                0            0                0
-Ar1-C                  0                0            0                0
-Ps1-C                  0                0            0                0
-      Ulva_lactuca Ulva_spp UOM (Unidentified Organic Material)
-Cu1-C            0        0                                   0
-Cu2-C            0        0                                   0
-Cu3-C            0        0                                   0
-Cz1-C            0        0                                   0
-Ar1-C            0        0                                   0
-Ps1-C            0        0                                   0</code></pre>
+<pre><code>Cu1-C Cu2-C Cu3-C Cz1-C Ar1-C Ps1-C 
+    0     0     0     0     0     0 </code></pre>
 </div>
 </div>
 </section>
@@ -1202,8 +977,8 @@ Ps1-C            0        0                                   0</code></pre>
 <h3 data-number="3.7.4" class="anchored" data-anchor-id="transformaciones"><span class="header-section-number">3.7.4</span> Transformaciones</h3>
 <p>El resultado de las operaciones anteriores es una matriz; sin embargo, podemos pasarlo a un data.frame:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>countst <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(countst)</span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>countst <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(countst)</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1218,9 +993,9 @@ Ps1-C            0        0                                   0</code></pre>
 <h3 data-number="3.7.5" class="anchored" data-anchor-id="añadir-vectores-como-columnas"><span class="header-section-number">3.7.5</span> Añadir vectores como columnas</h3>
 <p>Ahora tenemos un data.frame; sin embargo, tenemos las claves como nombres de los renglones y, según qué querramos realizar, podemos necesitar que estas formen su propia columna. Una forma de hacerlo es: 1) extraer los nombres de los renglones y 2) añadirlos como una columna adicional:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>keys <span class="ot">&lt;-</span> <span class="fu">rownames</span>(countst)</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>countst <span class="ot">&lt;-</span> <span class="fu">cbind</span>(keys, countst)</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>keys <span class="ot">&lt;-</span> <span class="fu">rownames</span>(countst)</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>countst <span class="ot">&lt;-</span> <span class="fu">cbind</span>(keys, countst)</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(countst)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1236,8 +1011,8 @@ Ps1-C            0        0                                   0</code></pre>
 <h2 data-number="3.8" class="anchored" data-anchor-id="operadores-lógicos"><span class="header-section-number">3.8</span> Operadores lógicos</h2>
 <p>Los operadores lógicos nos sirven para hacer comparaciones y obtener un resultado booleano (T o F). Los más comunes son: 1. cond1<strong>|</strong>cond2: Condicional “O”. T si se cumple <strong>alguna</strong> de las dos condiciones</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> 5L</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.integer</span>(c)<span class="sc">|</span><span class="fu">is.double</span>(c)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> 5L</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.integer</span>(c)<span class="sc">|</span><span class="fu">is.double</span>(c)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -1246,7 +1021,7 @@ Ps1-C            0        0                                   0</code></pre>
 <li>cond1<strong>&amp;</strong>cond2: Condicional “Y”. T si se cumplen ambas condiciones</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.integer</span>(c)<span class="sc">&amp;</span>(c<span class="sc">&gt;</span><span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.integer</span>(c)<span class="sc">&amp;</span>(c<span class="sc">&gt;</span><span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -1255,11 +1030,11 @@ Ps1-C            0        0                                   0</code></pre>
 <li><strong>&lt;, &gt;</strong>: Comparaciones, menor qué o mayor qué</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c<span class="sc">&lt;</span><span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c<span class="sc">&lt;</span><span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c<span class="sc">&gt;</span><span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(c<span class="sc">&gt;</span><span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -1269,7 +1044,7 @@ Ps1-C            0        0                                   0</code></pre>
 <li><strong>a!=b</strong>: Desigualdad, T si a es diferente de b</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>c<span class="sc">!=</span><span class="dv">5</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>c<span class="sc">!=</span><span class="dv">5</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -1290,9 +1065,9 @@ Ps1-C            0        0                                   0</code></pre>
 </ol>
 <p>Como muchas otras cosas, es más fácil entenderlo utilizando algunos ejemplos. El primero de ellos es simplemente imprimir la secuencia de números del 1 al 10. Aunque podemos escribir 10 veces la función print e ir cambiando el número, es mucho más sencillo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
-<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1
 [1] 2
@@ -1308,9 +1083,9 @@ Ps1-C            0        0                                   0</code></pre>
 </div>
 <p>¿Qué fue lo que hizo la computadora? Utilizó la función print() para mostrarnos el contenido de i, el cuál es el iésimo elemento de la secuencia 1:10. En otras palabras, si es la segunda vuelta que da, imprimirá el número 2, si es la séptima imprimirá 7, y así hasta que termine con todos los elementos en la secuencia. Ahora, sumemos 2 a cada número de la secuencia:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i<span class="sc">+</span><span class="dv">2</span>)</span>
-<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(i<span class="sc">+</span><span class="dv">2</span>)</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3
 [1] 4
@@ -1349,59 +1124,13 @@ Ps1-C            0        0                                   0</code></pre>
 <p>Esta es la función “madre” de las demás, la cual opera sobre arreglos. Para simplicidad, vamos a limitarnos a arreglos bi-dimensionales como las matrices o data.frames. La sintaxis para su uso es <code>apply(X, MARGIN, FUN, ...)</code>, donde <code>X</code> es el arreglo, <code>MARGIN</code> es el márgen sobre el cuál va a actuar la función; es decir, si queremos que la aplique a cada renglón (<code>MARGIN = 1</code>) o a cada columna (<code>MARGIN = 2</code>), y <code>FUN</code> es el nombre de la función a aplicar (puede ser cualquiera, incluso una función definida por nosotros).</p>
 <p>Podemos pensar en obtener la suma o el promedio de cada columna de nuestro data.frame con las presas utilizando un ciclo, o podemos utilizar <code>apply</code>, tal que:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>sums <span class="ot">&lt;-</span> <span class="fu">apply</span>(datos2[,<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(datos2)], <span class="dv">2</span>, sum)</span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>sums</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>sums <span class="ot">&lt;-</span> <span class="fu">apply</span>(datos2[,<span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(datos2)], <span class="dv">2</span>, sum)</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sums)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                    Alpheus_lottini                         Alpheus_spp 
-                                  4                                  12 
-                       Alpheus_umbo                           Amphipods 
-                                  9                                  44 
-                  Apogon_retrosella                    Appendicularians 
-                                  5                                   5 
-              Axoclinus_nigricaudis                Bittium_cerralvoense 
-                                  2                                  35 
-                       Chaetognaths     Cirripedia_Chthamalus_anisopoma 
-                                 50                                   5 
-      Cladocerans_Penila_avirostris  Cladocerans_Pseudovadne_tergestina 
-                                 34                                 171 
-            Copepods_Acartia_clausi          Copepods_Calanus_pacificus 
-                                390                                  50 
-                    Epitonium_canna                           Fish_eggs 
-                                  3                                  96 
-                       foraminifera             Gnathophyllum_panamense 
-                                205                                  11 
-                           Hidrozoa                      Ichtyoplankton 
-                                  1                                 153 
-        Larvae_crustaceans_megalopa             larvae_crustaceans_zoea 
-                                 22                                  17 
-                 Liomera_cinctimana                 Litiopa_melanostoma 
-                                 13                                  13 
-                              Mysid                  Mytella_arciformis 
-                                  5                                   2 
-                Mytella_tumbezensis                 Nanocassiope_polita 
-                                  1                                   2 
-                Nyctiphanes_simplex                           Ostracods 
-                                549                                  76 
-                           Otoliths                     Palaemon_ritter 
-                                  2                                   2 
-                 Panopeus_purpureus            Parviturbo_acuticostatus 
-                                  4                                   1 
-                   Parviturbo_erici                      Parviturbo_spp 
-                                  3                                   2 
-                          Pteropods                    Quadrella_nitida 
-                                  8                                   1 
-              Tagelus_californianus                     Tegula_globulus 
-                                  2                                  22 
-                     Tegula_mariana                       Tellina_coani 
-                                 20                                   3 
-                 Trapezia_bidentata                    Trapezia_formosa 
-                                  2                                   6 
-                       Trapezia_spp                    Ulva_dactylifera 
-                                  4                                  35 
-                       Ulva_lactuca                            Ulva_spp 
-                                158                                  78 
-UOM (Unidentified Organic Material) 
-                                 20 </code></pre>
+<pre><code>  Alpheus_lottini       Alpheus_spp      Alpheus_umbo         Amphipods 
+                4                12                 9                44 
+Apogon_retrosella  Appendicularians 
+                5                 5 </code></pre>
 </div>
 </div>
 </section>
@@ -1409,7 +1138,7 @@ UOM (Unidentified Organic Material)
 <h4 data-number="3.9.2.2" class="anchored" data-anchor-id="aggregate"><span class="header-section-number">3.9.2.2</span> <code>aggregate()</code></h4>
 <p>Otra función extremadamente útil es la función <code>aggregate()</code>. Esta función nos permite aplicar una función a distintos grupos. Un escenario clásico es obtener el promedio de una variable para cada grupo, por ejemplo el promedio de conteos de quetognatos. La forma “tradicional” es: <code>aggregate(x, by, FUN)</code>, donde <code>x</code> es el objeto R a agrupar, <code>by</code> es una lista con los grupos y <code>FUN</code> es la función a aplicar; sin embargo, podemos utilizar una notación más compacta utilizando una <code>formula</code>: <code>aggregate(forumla, data, FUN)</code>. Las fórmulas en R son objetos sumamente útiles y que se utilizan para una gran diversidad de cosas. Su estructura es: <code>Y ~ X</code>, y se lee “Y con respecto a X”. En nuestro caso particular:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(Chaetognaths<span class="sc">~</span>sp, <span class="at">data =</span> datos1, <span class="at">FUN =</span> mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(Chaetognaths<span class="sc">~</span>sp, <span class="at">data =</span> datos1, <span class="at">FUN =</span> mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1425,28 +1154,38 @@ UOM (Unidentified Organic Material)
 <h3 data-number="3.9.3" class="anchored" data-anchor-id="condicionales"><span class="header-section-number">3.9.3</span> Condicionales</h3>
 <p>Ok, ahora conocemos una manera de aplicar una función a una serie de elementos, pero que pasa si queremos aplicarla de manera condicionada; es decir, si queremos solo imprimir los números mayores a 5, por ejemplo. Eso es justo de lo que se tratan los condicionales, particularmente <code>if</code>, <code>else</code>, e <code>ifelse</code>. La lógica detrás de ellos es sumanmente simple: si se cumple una condición, realiza una acción, si no se cumple, realiza otra (o no realices nada). Comencemos con <code>if</code>. Su estructura es: <code>if(condition){action T}</code>, que notarás es básicamente la descripción que dimos, solo que sin una acción en caso de que no se cumpla la condición. Un ejemplo sería proporcionar un número y que nos diga si es mayor a 5:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">6</span></span>
-<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x<span class="sc">&gt;</span><span class="dv">5</span>) {<span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x<span class="sc">&gt;</span><span class="dv">5</span>) {<span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "x es mayor a 5"</code></pre>
 </div>
 </div>
 <p>¿Y si no se cumple la condición? Veamos qué pasa:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x<span class="sc">&gt;</span><span class="dv">5</span>) {<span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x<span class="sc">&gt;</span><span class="dv">5</span>) {<span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>R no nos da ninguna salida, pues no sabe qué hacer. Una forma de decirle es utilizando el complemento de if, <code>else</code>, que nos permite establecer una acción secundaria:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x<span class="sc">&gt;</span><span class="dv">5</span>) {<span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)</span>
-<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{<span class="fu">print</span>(<span class="st">"x no es mayor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x<span class="sc">&gt;</span><span class="dv">5</span>) {<span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{<span class="fu">print</span>(<span class="st">"x no es mayor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "x no es mayor a 5"</code></pre>
 </div>
 </div>
 <p>Una notación mucho más compacta para este tipo de casos es utilizar la función <code>ifelse(condition, action T, action F)</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="dv">5</span>,</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">"x es mayor a 5"</span>,</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">"x no es mayor a 5"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "x no es mayor a 5"</code></pre>
+</div>
+</div>
+<p>El resultado fue el mismo que el anterior, pero qué pasa si tenemos más de dos escenarios, que, por ejemplo, nos interesara decir si el número es mayor, menor o igual a 5. Veamos primero lo que sucede si establecemos que x sea 5:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="dv">5</span>,</span>
 <span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">"x es mayor a 5"</span>,</span>
 <span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">"x no es mayor a 5"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1454,42 +1193,32 @@ UOM (Unidentified Organic Material)
 <pre><code>[1] "x no es mayor a 5"</code></pre>
 </div>
 </div>
-<p>El resultado fue el mismo que el anterior, pero qué pasa si tenemos más de dos escenarios, que, por ejemplo, nos interesara decir si el número es mayor, menor o igual a 5. Veamos primero lo que sucede si establecemos que x sea 5:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x <span class="sc">&gt;</span> <span class="dv">5</span>,</span>
-<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">"x es mayor a 5"</span>,</span>
-<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>       <span class="st">"x no es mayor a 5"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "x no es mayor a 5"</code></pre>
-</div>
-</div>
 <p>La computadora no hizo nada mal, 5 no es mayor a 5. En otros lenguajes de programación añadiríamos una estructura llamada <code>elif</code>, pero en <code>R</code> solo hay que añadir otro(s) <code>if</code>. Mientras que <code>else</code> aplica para todos los casos donde la condición no se cumpla, estos <code>if</code> secundarios nos permiten establecer condiciones adicionales para cuando la condición principal no se cumpla. Volviendo a nuestro problema con x = 5:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
-<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)</span>
-<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">5</span>) {</span>
-<span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"x es 5"</span>)</span>
-<span id="cb120-8"><a href="#cb120-8" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{<span class="fu">print</span>(<span class="st">"x es menor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)</span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (x <span class="sc">==</span> <span class="dv">5</span>) {</span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"x es 5"</span>)</span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{<span class="fu">print</span>(<span class="st">"x es menor a 5"</span>)}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "x es menor a 5"</code></pre>
 </div>
 </div>
 <p>Ahora sí cubrimos todas nuestras bases para este problema de comparación. Como te imaginarás, el siguiente paso lógico es mezclar <code>for</code> e <code>if</code> o, mejor dicho, anidarlos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> x) {</span>
-<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
-<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)</span>
-<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">==</span> <span class="dv">5</span>) {</span>
-<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x es 5"</span>)</span>
-<span id="cb122-9"><a href="#cb122-9" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{<span class="fu">print</span>(<span class="st">"x es menor a 5"</span>)}</span>
-<span id="cb122-10"><a href="#cb122-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> x) {</span>
+<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">5</span>) {</span>
+<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x es mayor a 5"</span>)</span>
+<span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (i <span class="sc">==</span> <span class="dv">5</span>) {</span>
+<span id="cb120-8"><a href="#cb120-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x es 5"</span>)</span>
+<span id="cb120-9"><a href="#cb120-9" aria-hidden="true" tabindex="-1"></a>  }<span class="cf">else</span>{<span class="fu">print</span>(<span class="st">"x es menor a 5"</span>)}</span>
+<span id="cb120-10"><a href="#cb120-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "x es menor a 5"
 [1] "x es menor a 5"
@@ -1510,14 +1239,14 @@ UOM (Unidentified Organic Material)
 </div>
 <p>Con esto también quiero decir que podemos anidar ciclos <code>for</code>, tal que:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
-<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">:</span><span class="dv">105</span></span>
-<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> x) {</span>
-<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> y) {</span>
-<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">c</span>(i,j))</span>
-<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">:</span><span class="dv">105</span></span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> x) {</span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> y) {</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">c</span>(i,j))</span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]   1 100
 [1]   1 101
@@ -1565,21 +1294,21 @@ UOM (Unidentified Organic Material)
 <li>Combina el ciclo <code>for</code> anidado del último ejemplo con un condicional, en el cuál se imprima si la suma de ambos números (i, j) es mayor, menor o igual a 105.</li>
 <li>Ejecuta el siguiente código y responde ¿qué hace cada línea? Recuerda que ante la duda siempre puedes revisar la ayuda de las funciones.</li>
 </ol>
-<div class="sourceCode" id="cb126"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"ggtext"</span>, <span class="st">"Rmisc"</span>, <span class="st">"rcompanion"</span>,</span>
-<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"gap"</span>, <span class="st">"brms"</span>, <span class="st">"stats4"</span>, <span class="st">"Metrics"</span>,</span>
-<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">"performance"</span>, <span class="st">"ggdendro"</span>, <span class="st">"dendextend"</span>,</span>
-<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">"factoextra"</span>, <span class="st">"cluster"</span>, <span class="st">"NbClust"</span>,</span>
-<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"FactoMineR"</span>, <span class="st">"MASS"</span>, <span class="st">"klaR"</span>, <span class="st">"vegan"</span>,</span>
-<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"tidymodels"</span>, <span class="st">"MVN"</span>, <span class="st">"Hotelling"</span>,</span>
-<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"gridExtra"</span>, <span class="st">"GGally"</span>, <span class="st">"car"</span>, <span class="st">"FSA"</span>,</span>
-<span id="cb126-9"><a href="#cb126-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">"randomcoloR"</span>, <span class="st">"gganimate"</span>, <span class="st">"reshape2"</span>,</span>
-<span id="cb126-10"><a href="#cb126-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">"DescTools"</span>, <span class="st">"PerformanceAnalytics"</span>,</span>
-<span id="cb126-11"><a href="#cb126-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">"corrplot"</span>, <span class="st">"ggrepel"</span>, <span class="st">"pROC"</span>, <span class="st">"RCurl"</span>,</span>
-<span id="cb126-12"><a href="#cb126-12" aria-hidden="true" tabindex="-1"></a>          <span class="st">"glmnet"</span>, <span class="st">"pcsl"</span>, <span class="st">"MuMIn"</span>, <span class="st">"nlraa"</span>)</span>
-<span id="cb126-13"><a href="#cb126-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb126-14"><a href="#cb126-14" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(pkgs, <span class="at">dependencies =</span> T)</span>
-<span id="cb126-15"><a href="#cb126-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"ggtext"</span>, <span class="st">"Rmisc"</span>, <span class="st">"rcompanion"</span>,</span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"gap"</span>, <span class="st">"brms"</span>, <span class="st">"stats4"</span>, <span class="st">"Metrics"</span>,</span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">"performance"</span>, <span class="st">"ggdendro"</span>, <span class="st">"dendextend"</span>,</span>
+<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">"factoextra"</span>, <span class="st">"cluster"</span>, <span class="st">"NbClust"</span>,</span>
+<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"FactoMineR"</span>, <span class="st">"MASS"</span>, <span class="st">"klaR"</span>, <span class="st">"vegan"</span>,</span>
+<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">"tidymodels"</span>, <span class="st">"MVN"</span>, <span class="st">"Hotelling"</span>,</span>
+<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">"gridExtra"</span>, <span class="st">"GGally"</span>, <span class="st">"car"</span>, <span class="st">"FSA"</span>,</span>
+<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">"randomcoloR"</span>, <span class="st">"gganimate"</span>, <span class="st">"reshape2"</span>,</span>
+<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a>          <span class="st">"DescTools"</span>, <span class="st">"PerformanceAnalytics"</span>,</span>
+<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a>          <span class="st">"corrplot"</span>, <span class="st">"ggrepel"</span>, <span class="st">"pROC"</span>, <span class="st">"RCurl"</span>,</span>
+<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a>          <span class="st">"glmnet"</span>, <span class="st">"pcsl"</span>, <span class="st">"MuMIn"</span>, <span class="st">"nlraa"</span>)</span>
+<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-14"><a href="#cb124-14" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(pkgs, <span class="at">dependencies =</span> T)</span>
+<span id="cb124-15"><a href="#cb124-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
