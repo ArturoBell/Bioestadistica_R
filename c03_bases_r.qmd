@@ -339,6 +339,7 @@ head(datos2)
 Como ya vimos, no siempre vamos a obtener la información en el formato que necesitamos. Aunque podemos solventar algunas de estas carencias durante la carga de los archivos, a veces necesitamos "masajear" los datos o "manipularlos" para llevarlos a lo que las funciones que nos interesan nos piden. Tomemos como ejemplo los datos de la hoja número 1 del archivo `datos2.xlsx`:
 
 ```{r}
+#| message: false
 datos3 <- readxl::read_xlsx("datos/datos2.xlsx", sheet = 1)
 head(datos3)
 ```
@@ -348,7 +349,7 @@ head(datos3)
 En estos datos las presas están en los renglones, y los individuos de los depredadores en las columnas. Aunque esta disposición no tiene fundamentalmente nada de malo, normalmente las instancias (observaciones individuales/réplicas) están en los renglones, y las variables (presas) en las columnas. Es necesario entonces **tranponer** los datos. Esto lo podemos hacer de manera sencilla con la función `t()`:
 
 ```{r}
-head(t(datos3))
+head(t(datos3))[, 3]
 ```
 
 Esto logró nuestro objetivo, aunque con un pequeño gran problema: toda la información es texto. ¿Por qué? Resulta que las columnas solo pueden contener datos de un solo tipo, por lo que al tener el texto de las especies presa todas las columnas son transformadas a cadenas de caracter. ¿Qué podemos hacer? Transponer los datos en tres pasos.
@@ -368,7 +369,7 @@ Transponer la matriz de conteos:
 
 ```{r}
 countst <- t(counts)
-head(countst)
+head(countst)[,10]
 ```
 
 ### Cambiar nombres de columnas
@@ -377,7 +378,7 @@ Para acceder o asignar los nombres de las columnas o renglones de arreglos bidim
 
 ```{r}
 colnames(countst) <- prey
-head(countst)
+head(countst)[,3]
 ```
 
 ### Transformaciones
@@ -489,7 +490,7 @@ Podemos pensar en obtener la suma o el promedio de cada columna de nuestro data.
 
 ```{r}
 sums <- apply(datos2[,2:ncol(datos2)], 2, sum)
-sums
+head(sums)
 ```
 
 #### `aggregate()`
