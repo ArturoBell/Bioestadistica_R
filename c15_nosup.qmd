@@ -92,9 +92,13 @@ Como ves en la figura @fig-dendro, nuestro dendrograma está compuesto por algun
 
 ### Hablemos de distancias
 
-Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que **la medida de distancia que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis**. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la @fig-geometries tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma resultante es diferente porque el espacio geométrico es diferente:
+Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que **la medida de distancia/disimilaridad que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis**. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la @fig-geometries tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:
 
 ![Formas de los espacios geométricos definidos por las distancias Euclidiana, Manhattan y Chebyshev. Las tres son casos especiales de la distancia Minkowski, con diferentes valores de $r$](imgs/geometries.png){#fig-geometries}
+
+:::{.callout-note}
+¿Es lo mismo una medida de distancia que una de disimilaridad? Sí y no. Desde el punto de vista práctico, sí, ambas nos permiten darnos una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una **distancia** cumple con la **desigualdad triangular**, mientras que una disimilaridad no. ¿Qué es la desigualdad triangular? Que **la distancia más corta entre dos puntos es una linea recta**. En una disimilaridad esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?
+:::
 
 Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilaridades funcionen mejor en ciertos casos y peor en otros. @Shirkhorshidietal_2015 compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:
 
@@ -390,6 +394,10 @@ aggregate(clust_filt, by = list(n_gps$Best.partition), FUN = mean)
 
 Esto evidencía gradientes en cada variable, algunos positivos (`Temp`, `NH4`, por ejemplo) y algunos negativos (*e.g.*, `NO3`, `OD`). ¿Qué quiere decir esto? Bueno, esa interpretación ya depende del conocimiento que tengamos del área (tanto del conocimiento como del área geográfica).
 
+:::{.callout-note}
+¿Es esta la única manera de estimar el número de grupos? No. Puedes seleccionar solo una de estas medidas (incluso puedes hacerlo dentro de `NbClust` con el argumento `index`), pero también puedes utilizar la librería `pvclust`. Su funcionamiento es demasiado rebuscado para describirlo en una nota, pero puedes ver la [documentación correspondiente](https://github.com/shimo-lab/pvclust).
+:::
+
 ## Reducción de la dimensionalidad
 
 Hablemos ahora de la otra parte del aprendizaje no supervisado: la reducción de la dimensionalidad. Una manera "sencilla" de entenderla es lo que pasa cuando nosotros nos ponemos al sol (somos tridimensionales) y vemos nuestra sombra (un plano): perdemos los detalles más finos, pero nuestra estructura general se mantiene. Con nuestros datos multidimensionales haremos algo similar (@fig-dimred): proyectar datos multidimensionales a un espacio con menos dimensiones (usualmente una o dos).
@@ -496,7 +504,9 @@ La salida es bastante extensa, pero lo que realmente nos interesa es lo que apar
 
 ```{r}
 factoextra::fviz_pca_var(biom_pca, col.var = "coord",
-                         gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+                         gradient.cols = c("#00AFBB",
+                                           "#E7B800",
+                                           "#FC4E07"))
 ```
 
 En este gráfico tenemos representada la importancia de variables (carga factorial) para cada componente principal. Entre más larga (y naranja) sea la flecha, mayor es su importancia. Entre más horizontal esté, más contribuye al componente principal representado en el eje $x$, y entre más vertical esté, más contribuye al componente principal puesto en el eje $y$, y la dirección de la relación con el CP está dada por el signo. En nuestro ejemplo, las variables `abiert`, `boca`, `arriba`, `mandib` y `cabez` están positivamente relacionadas con el CP1, pero negativamente relacionadas con el CP2; es decir, entre más grande sea la longitud de la mandíbula, por ejemplo, más grande será la coordenada en el CP1, pero también se hará más pequeña en el CP2. Otra forma de ver estos resultados es tratarlos como si fueran una matriz de correlaciones:
@@ -559,15 +569,17 @@ fviz_eig(biom_pca, addlabels = T)
 ```{r}
 # Función para la estimación de los CP óptimos:
 evplot <- function(ev){
-    # Author: 
+    # Author:
+  
     # Broken stick model (MacArthur 1957)
       n <- length(ev)
       bsm <- data.frame(j=seq(1:n), p=0)
       bsm$p[1] <- 1/n 
       for (i in 2:n) bsm$p[i] <- bsm$p[i-1] + (1/(n + 1 - i))
       bsm$p <- 100*bsm$p/n
+      
     # Plot eigenvalues and % of variation for each axis
-      op <- par(mfrow=c(2,1))
+      op <- par(mfrow=c(2,1), mar = c(1,1,1,1))
       barplot(ev, main="Eigenvalues", col="bisque", las=2)
         abline(h=mean(ev), col="red")
         legend("topright", "Average eigenvalue", lwd=1, col=2, bty="n")
