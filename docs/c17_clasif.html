@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -334,9 +334,11 @@ div.csl-indent {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -422,7 +424,7 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Figura&nbsp;17.2: Clasificación de imágenes de elefantes y jirafas.</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -442,7 +444,7 @@ Importante
 <p></p><figcaption class="figure-caption">Figura&nbsp;17.3: Comparación de clasificadores</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -483,7 +485,7 @@ Advertencia
 <p></p><figcaption class="figure-caption">Figura&nbsp;17.6: Tres modelos ajustados a un conjunto de datos: a) un modelo cuadrático que captura adecuadamente la relación entre las variables, no predice exactamente ningún punto, pero tampoco hay casos que estén extremadamente lejos (ajuste óptimo); b) un modelo lineal que no es suficiente para capturar adecuadamente la relación entre las variables (subajustado); y c) un modelo polinomial de orden n-1 que memorizó a la perfección los datos de entrenamiento, pero al que si se le da un dato fuera de ellos no podrá predecir adecuadamente (sobreajustado).</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -503,7 +505,7 @@ Nota
 <p></p><figcaption class="figure-caption">Figura&nbsp;17.7: Relación entre el desempeño de un modelo en realción a su complejidad, evaluado en datos de entrenamiento y en datos de prueba. A mayor complejidad incrementa el desempeño en los datos de entrenamiento, pero no es así con datos que no ha visto.</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -526,7 +528,7 @@ Advertencia
 </figure>
 </div>
 <p>Lo que conseguimos con esto es una evaluación más robusta del desempeño de nuestro modelo, pues ya estamos viendo qué pasa con distintas combinaciones de datos vistos/no vistos. Pudiera llegar a suceder que tenemos mucha suerte y que la partición original se preste para obtener buenas métricas, o tener muy mala suerte y que se preste para tener malas métricas. Y para acabar de “redondear” lo escépticos que somos con nuestro modelo, después de haber probado con distintos <span class="math inline">\(k\)</span> sub-conjuntos (k-folds), lo volvemos a probar con los datos de prueba originales (hay quien los denomina en este contexto datos de validación).</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -539,7 +541,7 @@ Nota
 <p>Así como no muestreamos solo un individuo para hacer inferencias, tampoco consideramos una sola partición entrenamiento prueba. ¿Cuántas sub-divisiones debemos de hacer? Pueden ser tan pocas como 5, o tantas como n-1, pero un “estándar” (más bien una convención por comodidad) es que la validación cruzada sea de orden 10 (10 k-folds).</p>
 </div>
 </div>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -566,7 +568,7 @@ Importante
 </figure>
 </div>
 <p>¿Qué cliente salta a la vista? Espero que me digas que el 11125, pues la única razón por la que el cliente está en el registro es porque compró algo de joyería. Nada más. <strong>Esto hace que nuestro modelo aprenda algo, pero ese algo es una peculiaridad y no algo relevante sobre lo modelado</strong>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -702,7 +704,7 @@ Nota
 <section id="árboles-de-decisión-y-ensambles" class="level2" data-number="17.6">
 <h2 data-number="17.6" class="anchored" data-anchor-id="árboles-de-decisión-y-ensambles"><span class="header-section-number">17.6</span> Árboles de decisión y ensambles</h2>
 <p>En la primera versión del curso hablé sobre clasificadores “tradicionales” que se han empleado en el área de la biología (regresión logística y análisis de funciones discriminantes lineales), pero creo que vale la pena hablar de algunas alternativas con márgenes de decisión más flexibles y que son casi igual de interpretables.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -725,7 +727,7 @@ Nota
 <p></p><figcaption class="figure-caption">Figura&nbsp;17.11: ¿Surfear o no? He ahí el dilema</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -828,7 +830,7 @@ Nota
 <li>El objeto <code>peng_prep</code> sigue los pasos que definimos para el procesamiento de los datos (por eso receta) y obtiene los parámetros que se van a utilizar, mientras que <code>peng_juiced</code> contiene los datos ya procesados.</li>
 </ul></li>
 </ol>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -865,7 +867,7 @@ Nota
 <li>Después especificamos que es un bosque para clasificación con <code>set_mode</code>, y por último le indicamos en <code>set_engine</code> que utilice la librería <code>ranger</code> para construir el bosque:</li>
 </ul></li>
 </ol>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -889,7 +891,7 @@ Nota
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Se va a resolver con la librería ranger</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">set_engine</span>(<span class="st">"ranger"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -913,7 +915,7 @@ Nota
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Entrena el modelo</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(tune_spec)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -980,7 +982,7 @@ Nota
 <p><img src="c17_clasif_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1075,7 +1077,7 @@ Computational engine: ranger </code></pre>
 </div>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1127,7 +1129,7 @@ Nota
 <p><img src="c17_clasif_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1278,6 +1280,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

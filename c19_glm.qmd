@@ -473,7 +473,7 @@ peng_dat <- peng_dat |>
             dplyr::select(!c(species, sex, year))
 ```
 
-Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y todos los demás pasos que vimos en el @sec-clasf:
+Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y todos los demás pasos que vimos en el @sec-clasif:
 
 ```{r}
 logit_reg <- glm(island~., data = peng_dat, family = "binomial")

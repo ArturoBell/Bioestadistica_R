@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -248,9 +248,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -286,7 +288,7 @@ ul.task-list li input[type="checkbox"] {
 <p>¡Hola! En esta primera clase del curso Bioestadística Aplicada con R y RStudio abriremos con la relación emergente entre la biología y la ciencia de datos.</p>
 <p>Para comenzar, hablaremos un poco sobre lo que conocemos como estadística. El origen de esta disciplina se encuentra en la necesidad de los gobiernos de conocer cuál es el estado de su población, de ahí su raíz etimológica “relativo al Estado”. Sin embargo, en la actualidad, existen diversas definiciones y opiniones sobre lo que representa. Hay quienes mencionan que es la primera de las ciencias inexactas, mientras otras personas la consideran como la ciencia que nos permite cambiar nuestras ideas ante la incertidumbre. Si bien es cierto que estas visiones son en apariencia muy diferentes, ambas son perspectivas bastante válidas: la primera hace referencia a la relativa facilidad con la que se pueden manipular los datos o las pruebas (intencionalmente o no) para llegar al resultado que nosotros deseemos y la segunda a que nos permite tomar decisiones aún sin conocer en su totalidad un fenómeno. Si deseas leer sobre algunos mitos y realidades de la estadística, sigue <a href="https://bit.ly/3kJ12Pz">este enlace</a>.</p>
 <p>Una definición más formal es la de la Real Academia de la Lengua Española: “Rama de la matemática que utiliza <strong>grandes conjuntos de datos</strong> numéricos para obtener <strong>inferencias</strong> basadas en el cálculo de <strong>probabilidades</strong>”. De esta definición podemos retomar algunas ideas claves: la primera es que es una rama de la matemática, por lo cual nuestra resolución de problemas debe basarse en un razonamiento lógico bajo la cobertura de las matemáticas, por lo que los procedimientos y resultados deben de ser expresados sin ambigüedades. La siguiente es que requiere de grandes conjuntos de datos, lo cual hace referencia a un tema que será abordado más adelante en el curso: la representatividad. Por último, podemos también reconocer su objetivo, el cual es permitirnos obtener conclusiones a partir de este conjunto de datos. A partir de esta definición podemos considerar a la bioestadística como la aplicación de la estadística a problemas biológicos, desde la estimación del tamaño poblacional de una especie, comparaciones de tallas entre sitios de muestreo, modelar el crecimiento corporal, entre muchas otras.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -414,6 +416,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -334,9 +334,11 @@ div.csl-indent {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -400,7 +402,7 @@ div.csl-indent {
 <li><span class="math inline">\(H_1: \mu_2 ≠ \mu_2; \overline{X_A} ≠ \overline{X_C}\)</span></li>
 </ul>
 <p>Entonces, es un juego porque hay más de una, y representan un <strong>escenario de igualdad o de diferencia</strong>. Por cada juego de hipótesis hay <strong>al menos una hipótesis de nulidad (<span class="math inline">\(H_0\)</span>) y una hipótesis alternativa (<span class="math inline">\(H_1\)</span>)</strong>. ¿Cómo llegamos a estas hipótesis y qué representan? Bien, es ahí donde debemos de hablar de las <strong>pruebas de significancia estadística</strong>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -493,7 +495,7 @@ Nota
 <li>Error de tipo I (<span class="math inline">\(\alpha\)</span>): Probabilidad de aceptar la hipótesis aternativa siendo falsa.</li>
 <li>Error de tipo II (<span class="math inline">\(\beta\)</span>): Probabilidad de aceptar la hipótesis nula siendo falsa.</li>
 </ul>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -527,7 +529,7 @@ Advertencia
 <p>¿Qué es entonces? Retrocedamos un poco a nuestro ejemplo de la exploración espacial. Partíamos del supuesto (decisión por defecto) de que no hay vida en ningún planeta, y que nuestra evidencia debe de ridiculizar a nuestra hipótesis de nulidad para que presionemos el botón de que sí hay vida en el planeta. En nuestras <strong>pruebas de significancia</strong> es exactamente lo mismo. <strong>Partimos del supuesto de que no hay un efecto (o diferencia) significativa</strong>. Esto lo representamos con un <strong>modelo teórico de distribución de probabilidades</strong>, el cuál representa <strong>un universo donde la hipótesis nula siempre es verdadera</strong>. Es decir, esta distribución teórica de probabilidades son todos los casos en los cuales NO existe ningún efecto o diferencia entre nada. Un mundo gris y aburrido, vamos.</p>
 <p>En este escenario entonces nosotros buscamos evidencia que nos haga cambiar de opinión, y lo evaluamos en términos probabilísticos lo evaluamos como la <strong>probabilidad de que el modelo teórico haya generado los datos</strong> que estamos viendo. ¿A que esto tiene más sentido que solo la regla de decisión?</p>
 <p>Ahora puede que te preguntes: ¿de dónde sale esta probabilidad? Pues está definida por un <strong>estadístico de prueba</strong>. Tomando nuestros datos vamos a calcular el valor que les corresponde según la función del modelo teórico. Luego, vamos a obtener la <strong>probabildiad de encontrar, de forma aleatoria, ese valor, o uno con la misma probabilidad, o una menor</strong>. Ahora bien, si recuerdas algo de la sesión de probabilidad puede que esta última definición no te cuadre, y es que si tenemos una distribución continua no podemos buscar la probabilidad individual de un valor, por lo que la reformulamos como <strong>la probabilidad de encontrar otro valor al menos igual de grande</strong>, y esto es lo que conocemos como el <strong>nivel de significancia</strong>.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -605,7 +607,7 @@ Importante
 <p>Los intervalos de confianza, como recordarás que mencionamos someramente en el <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de “certeza” alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.</p>
 <p>Entonces, ¿qué son los intervalos de confianza? Son una referencia de la “certeza” que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación <span class="math inline">\(\overline{x} ± SD\)</span>, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que <span class="math inline">\(\overline{x}; [IC_i, IC_s]\)</span>, donde <span class="math inline">\(IC_i\)</span> representa el límite inferior del intervalo de confianza e <span class="math inline">\(IC_s\)</span> el límite superior.</p>
 <p>Estos límites indican entre dónde y dónde (o, mejor dicho, entre qué valores) se puede encontrar la estimación. Si son equivalentes al valor de p, entonces siguen también un modelo teórico de distribución de probabilidades, y su amplitud está dada por un porcentaje de esa distribución (igual que en la zona de no rechazo de una hipótesis de nulidad).</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -636,7 +638,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(v2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.002724471</code></pre>
+<pre><code>[1] 0.4428981</code></pre>
 </div>
 </div>
 <p>Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas maneras de hacerlo. Comenzando con <code>R</code> base podemos utilizar la función<code>t.test(x, conf.level)</code>, donde <code>x</code> es el vector de observaciones y <code>conf.level</code> el nivel de confianza deseado:</p>
@@ -647,17 +649,17 @@ Advertencia
     One Sample t-test
 
 data:  v2
-t = 0.0085467, df = 14, p-value = 0.9933
+t = 2.9845, df = 14, p-value = 0.00985
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.6809803  0.6864292
+ 0.1246102 0.7611859
 sample estimates:
-  mean of x 
-0.002724471 </code></pre>
+mean of x 
+0.4428981 </code></pre>
 </div>
 </div>
 <p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\overline{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -674,8 +676,8 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Rmisc<span class="sc">::</span><span class="fu">CI</span>(<span class="at">x =</span> v2, <span class="at">ci =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       upper         mean        lower 
- 0.686429202  0.002724471 -0.680980260 </code></pre>
+<pre><code>    upper      mean     lower 
+0.7611859 0.4428981 0.1246102 </code></pre>
 </div>
 </div>
 <p>Una alternativa más es utilizar la función <code>rcompanion::groupwiseMean(formula, data, conf, R)</code>, la cual tiene dos funcionalidades interesantes: i) permite calcular los IC para varios grupos, y ii) poder estimar los intervalos a partir de remuestreos Bootstrap. En esta función: <code>formula</code> es lo que vimos en la función <code>aggregate</code>, donde indicamos al mismo tiempo la variable numérica y la variable de agrupamiento, tal que: <code>var~grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> la amplitud de los intervalos y <code>R</code> el número de réplicas Bootstrap a realizar. Sustituyendo:</p>
@@ -688,7 +690,7 @@ Tip
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.00272","4":"0.95","5":"-0.681","6":"0.686"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.443","4":"0.95","5":"0.125","6":"0.761"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -699,7 +701,7 @@ Tip
 <li>En <code>data</code> pasamos nuestro vector como un <code>data.frame</code> utilizando <code>as.data.frame(v2)</code>.</li>
 <li>En <code>R</code> pasamos <code>NA</code> para indicar que NO queremos que los IC se estimen utilizando réplicas Bootstrap.</li>
 </ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -732,7 +734,7 @@ Nota
 </figure>
 </div>
 <p>Aquí tenemos dos estudios que, en realidad, dieron resultados equivalentes o, cuando menos, que no están en conflicto uno con el otro. El estudio azul tuvo el mismo efecto positivo promedio que el rojo, aunque con un IC mucho más angosto y, en consecuencia, un valor de p “signficativo” (pequeño). El estudio rojo, por el contrario tiene un intervalo de confianza mucho más amplios que incluyeron el 0 y, consecuentemente, un valor de p “no significativo”. ¿Cuál sería la forma correcta de interpretar estos resultados? Primero, no descartar al estudio rojo o tacharlo de “no significativo”. Mejor, pensemos en los IC como intervalos de compatibilidad, describamos los resultados en función de las consecuencias de estos intervalos, con especial énfasis en la estimación puntual, pues es la más compatible con los datos. La razón de esto es que, por puro efecto del azar, el estudio azul podría replicar exactamente el mismo estudio y esta vez obteer un IC similar al rojo o viceversa.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -772,7 +774,7 @@ Advertencia
 </div>
 </div>
 <p>Obtenemos exactamente el mismo resultado que antes, pues retiramos la media del conjunto de datos original. Eso son los <strong>grados de libertad</strong>: <strong>el número de observaciones independientes de la media</strong>, tal que <span class="math inline">\(\nu = n - 1\)</span>. Es sumamente importante que tengas presente este concepto, pues un montón de pruebas involucran grados de libertad.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -791,7 +793,7 @@ Nota
 <li>Muestras independientes; es decir que la observación <span class="math inline">\(x_i\)</span> sea independiente de la observación <span class="math inline">\(x_j\)</span>, que es diferente de tener muestras pareadas.</li>
 <li>Homogeneidad de varianzas.</li>
 </ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -818,18 +820,18 @@ t = \frac{\overline{x}- \mu_0}{\frac{s}{\sqrt{n}}}
     One Sample t-test
 
 data:  v2
-t = 0.0085467, df = 14, p-value = 0.9933
+t = 2.9845, df = 14, p-value = 0.00985
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.6809803  0.6864292
+ 0.1246102 0.7611859
 sample estimates:
-  mean of x 
-0.002724471 </code></pre>
+mean of x 
+0.4428981 </code></pre>
 </div>
 </div>
 <p>Ahora sí podemos revisar la salida completa. La primera línea nos dice el tipo de prueba <span class="math inline">\(t\)</span> que estamos aplicando. En este caso pasamos un solo vector, por lo que la prueba a aplicar es para una sola muestra. La segunda línea nos da el nombre de los datos. La tercera nos da los resultados de la prueba: el valor del estadístico <span class="math inline">\(t\)</span>, los grados de libertad <code>d.f.</code> (degrees of freedoom) y el valor de p (<code>p-value</code>), mientras que la cuarta nos da la hipótesis alternativa que estamos evaluando (la nula no cambia, ¿o sí?) ¿Contra qué valor está contrastando? Por defecto contra 0 (podemos cambiarlo con el argumento <code>mu</code>).</p>
 <p>¿Cómo reportamos estos resultados? “La media no fue signficativamente diferente de 0 (<span class="math inline">\(t = -1.29\)</span>, <span class="math inline">\(d.f. = 14\)</span>, <span class="math inline">\(p = 0.21 &gt; \alpha = 0.05\)</span>).</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -857,17 +859,17 @@ Importante
     One Sample t-test
 
 data:  v2
-t = 0.0085467, df = 14, p-value = 0.5033
+t = 2.9845, df = 14, p-value = 0.9951
 alternative hypothesis: true mean is less than 0
 95 percent confidence interval:
-      -Inf 0.5641864
+      -Inf 0.7042777
 sample estimates:
-  mean of x 
-0.002724471 </code></pre>
+mean of x 
+0.4428981 </code></pre>
 </div>
 </div>
 <p>Aquí, además de la hipótesis alternativa, hay dos cambios que es importante notar: el valor de p y el intervalo de confianza. Empecemos con el segundo, donde tenemos [-Inf, 0.099]. Esto no es ningún error. Simple y sencillamente refleja nuestra hipótesis alternativa: Si la media es menor no tiene caso que consideremos la cola izquierda, por lo que el límite inferior se va a -Inf, mientras que el límite superior se reduce a 0.099. Compara ese valor de 0.099 con el resultado de la prueba de dos colas. ¿Qué notas? Es exactamente la mitad. Estos intervalos de confianza son simétricos, por lo que si solo estamos considerando un lado es lógico que la amplitud se reduzca a la mitad y eso me lleva al otro cambio: el valor de p.&nbsp;También es exactamente la mitad del que nos dio la prueba para dos colas, y es por la misma razón, estamos considerando la mitad del área bajo la curva. Pero aquí hay una advertencia muy, pero muy importante:</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -907,7 +909,7 @@ t = \frac{\overline{x_1} - \overline{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n
 sp = \sqrt{\frac{(n_1 - 1)s_{x_1}^2 + (n_2 - 1)s_{x_2}^2}{n_1 + n_2 -2}}
 \]</span></p>
 <p>Afortunadamente para implementarla en <code>R</code> solo vamos a utilizar la función <code>t.test(formula, data)</code> que ya conocíamos, solo que añadiremos dos argumentos adicionales: <code>var.equal = T</code> y <code>paired = F</code>. <code>var.equal</code> hace referencia al supuesto de homogeneidad de varianzas que mencionamos antes. Si no se cumple podemos pasar <code>var.equal = F</code> y entonces se aplicará la prueba <span class="math inline">\(t\)</span> de Welch, la cual modifica el modo en el que se estima la varianza mancomunada y permite contender con varianzas desiguales. <code>paired</code>, por otra parte, define si es una prueba para muestras independientes (<code>F</code>) o muestras dependientes (pareadas, <code>T</code>). Esto último lo veremos más adelante.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1076,7 +1078,7 @@ mean of x
 <h2 data-number="9.8" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">9.8</span> Ejercicio</h2>
 <p>En esta sesión hay dos ejercicios:</p>
 <ol type="1">
-<li><p>Carga el archivo <code>Datos1.csv</code> (ojo con los nombres de las columnas al cargarlo) y realiza la estimación de la media, la desviación estándar y los intervalos de confianza (calquiera de las formas) para al menos 3 tamaños de muestra diferentes (considera que tienes la población completa). El objetivo es que veas y describas cómo cambian tanto la estimación puntual como la amplitud de los intervalos de confianza al incrementar el tamaño de muestra. Puedes utilizar cualquiera de las variables <code>LT</code> o <code>PT</code>.</p></li>
+<li><p>Carga el archivo <code>Datos1 2.csv</code> (ojo con los nombres de las columnas al cargarlo) y realiza la estimación de la media, la desviación estándar y los intervalos de confianza (calquiera de las formas) para al menos 3 tamaños de muestra diferentes (considera que tienes la población completa). El objetivo es que veas y describas cómo cambian tanto la estimación puntual como la amplitud de los intervalos de confianza al incrementar el tamaño de muestra. Puedes utilizar cualquiera de las variables <code>LT</code> o <code>PT</code>.</p></li>
 <li><p>Realiza la prueba t con los datos de la hoja 1 del archivo <code>datos_t.xlsx</code>, la cual contiene datos de dos muestras independientes. La tarea consiste en cargar los datos, realizar la prueba y presentar un gráfico en el que se reporten los resultados.</p></li>
 </ol>
 
@@ -1189,6 +1191,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

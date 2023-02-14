@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -334,9 +334,11 @@ div.csl-indent {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -434,7 +436,7 @@ div.csl-indent {
 </figure>
 </div>
 <p>Por muy inverosímil que esto pueda parecernos, lo cierto es que este tipo de relaciones altas entre variables que no están relacionadas existen y en ocasiones puede ser muy difícil identificar si en efecto la relación es causal, casual, o si obedece a que ambas dependen de una tercera variable latente (no observada). Sobre este tema te recomiendo el artículo de <span class="citation" data-cites="Hoferetal_2004">Höfer, Przyrembel &amp; Verleger (<a href="references.html#ref-Hoferetal_2004" role="doc-biblioref">2004</a>)</span> sobre la <a href="https://bit.ly/t_stork">“teoría de la cigüeña”</a>, el de <span class="citation" data-cites="Haig_2010">Haig (<a href="references.html#ref-Haig_2010" role="doc-biblioref">2010</a>)</span> sobre <a href="https://bit.ly/spur_det">qué es una correlación espuria</a> y también revisar esta página de internet <a href="https://bit.ly/spur_corrs">con otras correlaciones curiosas</a>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -466,7 +468,7 @@ Nota
 </section>
 <section id="muestreemos-orcas" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="muestreemos-orcas"><span class="header-section-number">7.4</span> Muestreemos orcas</h2>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -510,7 +512,7 @@ Nota
 <p></p><figcaption class="figure-caption">Figura&nbsp;7.4: De individuo a población.</figcaption><p></p>
 </figure>
 </div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -575,7 +577,7 @@ Tip
 </figure>
 </div>
 <p>Posiblemente esos términos de <em>no confiable</em> o <em>inválido</em> te suenen alarmantes. La clave para poder contender con ellos es a) saber que existen y b) ser conscientes de su magnitud. Si sabemos qué tanto estamos subestimando por la diferencia de alturas de 10 a 11 m, podemos corregir el valor. Si sabemos cuál es la distribución del error de medición del altímetro, podemos modelarlo (la inferencia Bayesiana se presta muy bien para eso). ¿Con eso quiero decir que entonces no hay que cuidar estos detalles? PARA NADA, por el contrario, hay que cuidarlos tanto que hay que saber cómo remediarlos o incluirlos en nuestros análisis de datos.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -630,11 +632,11 @@ Advertencia
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1000</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ind</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 501</code></pre>
+<pre><code>[1] 946</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pobl<span class="sc">$</span>lt[ind]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.298935</code></pre>
+<pre><code>[1] 8.213015</code></pre>
 </div>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente “aleatoria”, en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros quienes lo hacemos):</p>
@@ -642,7 +644,7 @@ Advertencia
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">sample</span>(pobl<span class="sc">$</span>lt, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9.574217 8.156963 9.546423 8.091846 8.189099 9.794824</code></pre>
+<pre><code>[1] 9.557771 8.250653 9.600082 8.281435 8.183535 8.451559</code></pre>
 </div>
 </div>
 <p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento <code>replace = FALSE</code>. Con esto lo que hicimos fue un <strong>muestreo sin reemplazo</strong>; es decir, una vez que un individuo fue medido se “retiró” de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. Por otra parte, el <strong>muestreo con reemplazo</strong> es útil en otro tipo de situaciones, por ejemplo cuando queremos aproximar frecuencias a largo plazo como hicimos en la sesión anterior.</p>
@@ -656,7 +658,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.958052</code></pre>
+<pre><code>[1] 8.817829</code></pre>
 </div>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para ver en dónde quedó:</p>
@@ -857,6 +859,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

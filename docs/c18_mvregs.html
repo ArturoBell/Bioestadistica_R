@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -334,9 +334,11 @@ div.csl-indent {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -407,7 +409,7 @@ Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdots + \beta_nX_n + \epsilon
 <p><span class="math display">\[
 Y = \alpha + X\cdot\beta + \epsilon
 \]</span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -506,7 +508,7 @@ Nota
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -593,7 +595,7 @@ F-statistic: 548.4 on 7 and 3312 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="c18_mvregs_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -637,7 +639,7 @@ Tip
 </div>
 </div>
 <p>El RMSE es mayor en los datos de prueba que en los de entrenamiento (2.35 vs.&nbsp;2.18), mientras que el <span class="math inline">\(R^2\)</span> es mayor en los datos de entrenamiento (0.53 vs.&nbsp;0.48). En cualquiera de los casos no tenemos una diferencia particularmente grande, por lo que no podemos asegurar que el modelo se encuentre sobreajustado (la diferencia es del 5-7% con respecto a los datos de entrenamiento) y podemos decir que el modelo generaliza “bien”. ¿Por qué “bien”? Porque el valor de <span class="math inline">\(R^2\)</span> no es precisamente alentador, pero no hay una diferencia grande entre los datos entre los que fue entrenado y datos que nunca vio; es decir, el modelo está sub ajustado y utilizarlo para predicciones sería arriesgado.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -671,7 +673,7 @@ Edad = \alpha + \dots + (\beta_3 + \beta_4)*Peso + \dots
 \]</span></p>
 <p>Resulta entonces que es la suma de <span class="math inline">\(\beta_3\)</span> y <span class="math inline">\(\beta_4\)</span> la que afecta a <span class="math inline">\(Edad\)</span>, y no sus valores separados. Dicho de otra manera, podemos hacer una de ellas cada vez más pequeña, siempre que tengamos la otra. En la práctica, entonces, no tenemos dos variables y, por lo tanto, tampoco tenemos dos parámetros. Un caso extremo como este, con una correlación prefecta, nos lleva a un modelo indeterminado; es decir, <span class="math inline">\(\beta\)</span> podría tomar cualquier valor en el intervalo <span class="math inline">\((-\infty, \infty)\)</span>. Este no es nuestro caso, pero es la razón de ser del “variables independientes”.</p>
 <p>¿Qué implicaciones tiene esto? Depende de cuál sea nuestro interés. Si nos interesa solamente la predicción, ninguna, pues esa correlación entre los parámetros es solamente una consecuencia de nuestros datos y el modelo. La historia cambia si nos interesa explicar el modelo, pues <strong>en un modelo de RLM cada parámetro tiene sentido solo en el contexto de los otros</strong>. Como te imaginarás, y como vimos arriba, en el mundo real las correlaciones entre los predictores no son extrañas. ¿Qué tan fuerte debe de ser la correlación entre dos o más variables para ser un problema? <span class="math inline">\(r = 0.85\)</span>. Nah, mentira, para variar no hay un criterio o número mágico, pero podemos revisar el <strong>Factor de Inflación de la Varianza (VIF)</strong>.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -757,7 +759,7 @@ Y = \alpha + (\beta_1 + \beta_3*x2)*x1 + \beta_2*x_2
 <p><span class="math display">\[
 Y = \alpha + \beta_1*x_1 + (\beta_2 + \beta_3*x1)*x_2
 \]</span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -925,7 +927,7 @@ F-statistic: 41.17 on 127 and 3192 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>¡Tenemos un montón de parámetros! No solo eso, sino que coeficientes que antes eran significativos ya no lo son. Pensemos por un momento en lo que hicimos. Si estos términos de interacción corresponden con los productos de las variables involucradas son, entonces, altamente colineales con las variables originales. ¿Importa esto para la predicción? Para nada. Si pones atención, tanto el <span class="math inline">\(R^2\)</span> como el RSE son mejores que en el modelo de efectos de primer orden (principales).</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -939,7 +941,7 @@ Tip
 </div>
 </div>
 <p>Esto último me lleva a hablar de algo sumamente importante para cualquier modelo de aprendizaje automatizado: la <strong>selección de variables</strong>:</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -949,7 +951,7 @@ Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -965,7 +967,7 @@ Advertencia
 </div>
 </div>
 <p>En nuestro ejemplo tenemos <code>P_e</code>, <code>P_sc</code>, <code>P_v</code>, <code>P_c</code>, que todas indican lo mismo: la masa del individuo, solo que vista de distintas materas. Con la longitud y el diámetro tenemos una historia similar, y tenemos además la correlación inherente entre todas por que representan la talla de un organismo: un abulón más largo seguramente tendrá valores más altos en casi todas las demás variables.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -993,7 +995,7 @@ RSS_{Ridge}(\beta_j, \beta_0) = \sum_{i=1}^n(y_i-(\beta_j*x_i+\beta_0))^2+\alpha
 <p><span class="math display">\[
 RSS_{Lasso}(\beta_j, \beta_0) = \sum_{i=1}^n(y_i-(\beta_j*x_i+\beta_0))^2+\alpha*\sum_{j=1}^p|\beta_j|
 \]</span></p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1047,7 +1049,7 @@ y = \alpha' - \beta' \overline{x} + \beta'x + \epsilon
 <span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocesar los datos</span></span>
 <span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>abulon_juiced <span class="ot">&lt;-</span> abulon_prep <span class="sc">|&gt;</span> <span class="fu">juice</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1115,11 +1117,15 @@ Advertencia
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_optim_res</span>(tune_ridge, <span class="at">cv_order =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="c18_mvregs_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1136,24 +1142,24 @@ Nota
 <li><strong>Finalizar el ajuste</strong>: No hubo mucho efecto de la penalización, por lo que podemos directamente seleccionar el mejor modelo:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tune_ridge, <span class="st">"rmse"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>final_ridge <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(tune_wf,</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                                 best_rmse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tune_ridge, <span class="st">"rmse"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>final_ridge <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(tune_wf,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                                 best_rmse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="8" type="1">
 <li><strong>Revisar la importancia de variables</strong>. Ya sabemos que este modelo lineal no es precisamente bueno, pero igual revisemos la importancia de variables. Vu</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> final_ridge <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">fit</span>(abulon_data)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>final_res <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> <span class="fu">extract_fit_parsnip</span>()</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>final_res <span class="sc">|&gt;</span> <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"deepskyblue3"</span>) <span class="sc">+</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Importancia de variables"</span>,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> final_ridge <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">fit</span>(abulon_data)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>final_res <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> <span class="fu">extract_fit_parsnip</span>()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>final_res <span class="sc">|&gt;</span> <span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"point"</span>) <span class="sc">+</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"deepskyblue3"</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Importancia de variables"</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c18_mvregs_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1162,16 +1168,16 @@ Nota
 <li><strong>Revisar la capacidad de generalización</strong>: Al igual que en la RLM no penalizada/regularizada, obtengamos las medidas de bondad de ajuste con los datos de prueba. En este caso no fueron muy diferentes de la RLM no penalizada, lo cual tiene todo el sentido del mundo: no tenemos una regularización muy fuerte.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predecir edades en los datos</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>abulon_test[<span class="st">"pred_ridge"</span>] <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_res, abulon_test)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular rmse y r2 y juntar los resultados</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>abulon_test <span class="sc">|&gt;</span> yardstick<span class="sc">::</span><span class="fu">rmse</span>(<span class="at">truth =</span> Edad,</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">estimate =</span> pred),</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>abulon_test <span class="sc">|&gt;</span> yardstick<span class="sc">::</span><span class="fu">rsq</span>(<span class="at">truth =</span> Edad,</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">estimate =</span> pred)</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predecir edades en los datos</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>abulon_test[<span class="st">"pred_ridge"</span>] <span class="ot">&lt;-</span> <span class="fu">predict</span>(final_res, abulon_test)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular rmse y r2 y juntar los resultados</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>abulon_test <span class="sc">|&gt;</span> yardstick<span class="sc">::</span><span class="fu">rmse</span>(<span class="at">truth =</span> Edad,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">estimate =</span> pred),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>abulon_test <span class="sc">|&gt;</span> yardstick<span class="sc">::</span><span class="fu">rsq</span>(<span class="at">truth =</span> Edad,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">estimate =</span> pred)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1185,7 +1191,7 @@ Nota
 <li>Por curiosidad, ¿cómo quedaron nuestros coeficientes?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>final_res <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>final_res <span class="sc">|&gt;</span> <span class="fu">tidy</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1200,32 +1206,32 @@ Nota
 <h4 data-number="18.2.2.3" class="anchored" data-anchor-id="regresión-lasso"><span class="header-section-number">18.2.2.3</span> Regresión Lasso</h4>
 <p>Veamos ahora qué pasa con la regresión Lasso. Los pasos son los mismos, por lo que resumiré el código en bloques que lleguen hasta salidas de interés. Vamos a trabajar con los mismos datos, entonces podemos reutilizar tanto nuestras divisiones de validación cruzada como la receta para preprocesar los datos. La especificación del modelo es sumamente sencilla, solamente hay que cambiar el argumento <code>mixture = 1</code> en <code>linear_reg</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificación del modelo Lasso</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizar el término de penalización</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>lasso_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">penalty =</span> <span class="fu">tune</span>(),</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Flujo de trabajo para el modelo Lasso</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>tune_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_recipe</span>(abulon_rec) <span class="sc">|&gt;</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(lasso_spec)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de hiperparámetros</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>(<span class="at">cores =</span> <span class="dv">8</span>)</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>tune_lasso <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">resamples =</span> abulon_cv,</span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">grid =</span> <span class="dv">50</span>)</span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados de validación cruzada</span></span>
-<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_optim_res</span>(tune_lasso, <span class="at">cv_order =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Especificación del modelo Lasso</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Optimizar el término de penalización</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>lasso_spec <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">penalty =</span> <span class="fu">tune</span>(),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Flujo de trabajo para el modelo Lasso</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>tune_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_recipe</span>(abulon_rec) <span class="sc">|&gt;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(lasso_spec)</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de hiperparámetros</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>(<span class="at">cores =</span> <span class="dv">8</span>)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>tune_lasso <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">resamples =</span> abulon_cv,</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">grid =</span> <span class="dv">50</span>)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados de validación cruzada</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_optim_res</span>(tune_lasso, <span class="at">cv_order =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c18_mvregs_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Curiosamente los resultados de la validación cruzada son sumamente similares a los de la regresión Ridge, en el sentido de que las penalizaciones que maximizan la bondad de ajuste son bastante pequeñas. ¿Qué sucede? Que este problema es demasiado complejo para un modelo lineal. Si vuelves a los gráficos diagnósticos de la regresión, especialmente al de residuales/linealidad, es más que obvio que el supuesto que tiene el mismo nombre que el modelo no se cumple, entonces buscar mejorar ese modelo solo quitando o metiendo variables es un sinsentido. Hagamos algo más productivo y utilicemos el modelo con todas las interacciones. Aquí sí que hay que regresar a modificar la receta original o, mejor dicho, añadirle un paso adicional con <code>step_interact(terms = ~RHS)</code>, donde <code>RHS</code> es el lado derecho de la fórmula que incluye los términos de interaccón:</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1239,54 +1245,54 @@ Advertencia
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Receta para centrar los predictores</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>abulon_inter_rec <span class="ot">&lt;-</span> abulon_rec <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">step_interact</span>(<span class="at">terms =</span> <span class="sc">~</span>L_o<span class="sc">*</span>D_o<span class="sc">*</span>A_o<span class="sc">*</span>P_e<span class="sc">*</span>P_sc<span class="sc">*</span>P_v<span class="sc">*</span>P_c)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener parámetros para preprocesar</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>abulon_prep <span class="ot">&lt;-</span> abulon_inter_rec <span class="sc">|&gt;</span> <span class="fu">prep</span>() </span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocesar los datos</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>abulon_juiced <span class="ot">&lt;-</span> abulon_prep <span class="sc">|&gt;</span> <span class="fu">juice</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Receta para centrar los predictores</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>abulon_inter_rec <span class="ot">&lt;-</span> abulon_rec <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">step_interact</span>(<span class="at">terms =</span> <span class="sc">~</span>L_o<span class="sc">*</span>D_o<span class="sc">*</span>A_o<span class="sc">*</span>P_e<span class="sc">*</span>P_sc<span class="sc">*</span>P_v<span class="sc">*</span>P_c)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener parámetros para preprocesar</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>abulon_prep <span class="ot">&lt;-</span> abulon_inter_rec <span class="sc">|&gt;</span> <span class="fu">prep</span>() </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocesar los datos</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>abulon_juiced <span class="ot">&lt;-</span> abulon_prep <span class="sc">|&gt;</span> <span class="fu">juice</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora sí, ajustemos el flujo de trabajo para incluir esta receta, y optimicemos el modelo Lasso:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Flujo de trabajo para el modelo Lasso</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>tune_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_recipe</span>(abulon_inter_rec) <span class="sc">|&gt;</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(lasso_spec)</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de hiperparámetros</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>(<span class="at">cores =</span> <span class="dv">8</span>)</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>tune_lasso <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">resamples =</span> abulon_cv,</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">grid =</span> <span class="dv">50</span>)</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados de validación cruzada</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_optim_res</span>(tune_lasso, <span class="at">cv_order =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Flujo de trabajo para el modelo Lasso</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>tune_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_recipe</span>(abulon_inter_rec) <span class="sc">|&gt;</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(lasso_spec)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste de hiperparámetros</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>doParallel<span class="sc">::</span><span class="fu">registerDoParallel</span>(<span class="at">cores =</span> <span class="dv">8</span>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>tune_lasso <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(tune_wf,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">resamples =</span> abulon_cv,</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">grid =</span> <span class="dv">50</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados de validación cruzada</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_optim_res</span>(tune_lasso, <span class="at">cv_order =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c18_mvregs_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Como ya habíamos mencionado, un modelo lineal no es suficiente para describir adecuadamente estos datos, incluso en un modelo Lasso con interacciones. ¿Cómo sabemos que funcionó como debía? Podemos buscar los coeficientes que son EXACTAMENTE 0. Por practicidad solo veamos el número de casos en los que se cumple esta igualdad, que fue de 62 de 128 coeficientes del modelo con todas las interacciones sin penalización.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tune_lasso, <span class="st">"rmse"</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>final_lasso <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(tune_wf,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                                 best_rmse)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> final_lasso <span class="sc">|&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">fit</span>(abulon_data)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>fit_res <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> <span class="fu">extract_fit_parsnip</span>()</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>fit_res <span class="sc">|&gt;</span> <span class="fu">tidy</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(estimate <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(term)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>best_rmse <span class="ot">&lt;-</span> <span class="fu">select_best</span>(tune_lasso, <span class="st">"rmse"</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>final_lasso <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(tune_wf,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                                 best_rmse)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>final_fit <span class="ot">&lt;-</span> final_lasso <span class="sc">|&gt;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">fit</span>(abulon_data)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>fit_res <span class="ot">&lt;-</span> final_fit <span class="sc">|&gt;</span> <span class="fu">extract_fit_parsnip</span>()</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>fit_res <span class="sc">|&gt;</span> <span class="fu">tidy</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(estimate <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(term)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"D_o_x_A_o"},{"1":"P_e_x_P_sc"},{"1":"D_o_x_P_v"},{"1":"D_o_x_P_c"},{"1":"L_o_x_D_o_x_A_o"},{"1":"A_o_x_P_e_x_P_sc"},{"1":"D_o_x_A_o_x_P_v"},{"1":"P_e_x_P_sc_x_P_v"},{"1":"L_o_x_P_e_x_P_c"},{"1":"D_o_x_P_sc_x_P_c"},{"1":"P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e"},{"1":"L_o_x_D_o_x_P_e_x_P_sc"},{"1":"L_o_x_A_o_x_P_sc_x_P_v"},{"1":"D_o_x_P_e_x_P_sc_x_P_v"},{"1":"L_o_x_D_o_x_P_e_x_P_c"},{"1":"L_o_x_A_o_x_P_sc_x_P_c"},{"1":"D_o_x_A_o_x_P_sc_x_P_c"},{"1":"D_o_x_P_e_x_P_sc_x_P_c"},{"1":"L_o_x_A_o_x_P_v_x_P_c"},{"1":"L_o_x_P_e_x_P_v_x_P_c"},{"1":"D_o_x_P_sc_x_P_v_x_P_c"},{"1":"A_o_x_P_sc_x_P_v_x_P_c"},{"1":"P_e_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_A_o_x_P_e_x_P_sc_x_P_v"},{"1":"D_o_x_A_o_x_P_e_x_P_sc_x_P_v"},{"1":"L_o_x_D_o_x_A_o_x_P_sc_x_P_c"},{"1":"L_o_x_A_o_x_P_e_x_P_sc_x_P_c"},{"1":"D_o_x_A_o_x_P_e_x_P_sc_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_P_e_x_P_v_x_P_c"},{"1":"L_o_x_A_o_x_P_e_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_A_o_x_P_sc_x_P_v_x_P_c"},{"1":"D_o_x_A_o_x_P_sc_x_P_v_x_P_c"},{"1":"A_o_x_P_e_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e_x_P_sc_x_P_v_x_P_c"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["term"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"D_o"},{"1":"D_o_x_A_o"},{"1":"D_o_x_P_v"},{"1":"A_o_x_P_v"},{"1":"P_e_x_P_c"},{"1":"L_o_x_D_o_x_A_o"},{"1":"L_o_x_P_e_x_P_sc"},{"1":"D_o_x_P_e_x_P_sc"},{"1":"A_o_x_P_e_x_P_sc"},{"1":"L_o_x_A_o_x_P_v"},{"1":"D_o_x_A_o_x_P_v"},{"1":"D_o_x_P_e_x_P_v"},{"1":"P_e_x_P_sc_x_P_v"},{"1":"L_o_x_D_o_x_P_c"},{"1":"L_o_x_A_o_x_P_c"},{"1":"L_o_x_P_e_x_P_c"},{"1":"L_o_x_P_sc_x_P_c"},{"1":"D_o_x_P_sc_x_P_c"},{"1":"L_o_x_P_v_x_P_c"},{"1":"A_o_x_P_v_x_P_c"},{"1":"P_e_x_P_v_x_P_c"},{"1":"P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e"},{"1":"L_o_x_D_o_x_P_e_x_P_v"},{"1":"L_o_x_A_o_x_P_e_x_P_v"},{"1":"D_o_x_A_o_x_P_e_x_P_v"},{"1":"L_o_x_D_o_x_P_sc_x_P_v"},{"1":"L_o_x_A_o_x_P_sc_x_P_v"},{"1":"L_o_x_P_e_x_P_sc_x_P_v"},{"1":"D_o_x_P_e_x_P_sc_x_P_v"},{"1":"L_o_x_D_o_x_P_e_x_P_c"},{"1":"L_o_x_A_o_x_P_e_x_P_c"},{"1":"L_o_x_A_o_x_P_sc_x_P_c"},{"1":"D_o_x_A_o_x_P_sc_x_P_c"},{"1":"L_o_x_P_e_x_P_sc_x_P_c"},{"1":"D_o_x_P_e_x_P_sc_x_P_c"},{"1":"L_o_x_A_o_x_P_v_x_P_c"},{"1":"L_o_x_P_e_x_P_v_x_P_c"},{"1":"D_o_x_P_e_x_P_v_x_P_c"},{"1":"A_o_x_P_e_x_P_v_x_P_c"},{"1":"D_o_x_P_sc_x_P_v_x_P_c"},{"1":"A_o_x_P_sc_x_P_v_x_P_c"},{"1":"P_e_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e_x_P_sc"},{"1":"L_o_x_A_o_x_P_e_x_P_sc_x_P_v"},{"1":"D_o_x_A_o_x_P_e_x_P_sc_x_P_v"},{"1":"L_o_x_D_o_x_A_o_x_P_sc_x_P_c"},{"1":"L_o_x_D_o_x_P_e_x_P_sc_x_P_c"},{"1":"D_o_x_A_o_x_P_e_x_P_sc_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_P_e_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_A_o_x_P_sc_x_P_v_x_P_c"},{"1":"D_o_x_A_o_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_P_e_x_P_sc_x_P_v_x_P_c"},{"1":"D_o_x_P_e_x_P_sc_x_P_v_x_P_c"},{"1":"A_o_x_P_e_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_A_o_x_P_e_x_P_sc_x_P_v_x_P_c"},{"1":"D_o_x_A_o_x_P_e_x_P_sc_x_P_v_x_P_c"},{"1":"L_o_x_D_o_x_A_o_x_P_e_x_P_sc_x_P_v_x_P_c"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -1305,7 +1311,7 @@ Advertencia
 <h3 data-number="18.2.3" class="anchored" data-anchor-id="predictores-categóricos"><span class="header-section-number">18.2.3</span> Predictores categóricos</h3>
 <p>Lo sé, lo sé, ya fue mucho en esta sesión, pero esto es muy importante. Usualmente nos enseñan que en una regresión lineal múltiple utilizamos predictores numéricos o, cuando menos, ordinales. Y esto es verdad, pero no quiere decir que no podamos hacerle manita de puerco al modelo lineal para incluir predictores categóricos o, tal vez mejor dicho, engañarlo. El proceso es sumamente sencillo, lo único que tenemos que hacer es codificar nuestras variables categóricas en 0 y 1. Nuestros datos de abulones no tienen esta información, así que retomemos los datos de pingüinos de Palmer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(penguins)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(penguins)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [344 × 7] (S3: tbl_df/tbl/data.frame)
  $ species          : Factor w/ 3 levels "Adelie","Chinstrap",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -1331,8 +1337,8 @@ masa = \alpha + \beta*Sexo + \epsilon
 </ul>
 <p>¿Qué ganamos con esto? Hagamos rápidamente el ejercicio de regresión y veamos los resultados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>lm_m_sex <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>sex, <span class="at">data =</span> penguins)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_m_sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>lm_m_sex <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>sex, <span class="at">data =</span> penguins)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_m_sex)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1357,9 +1363,9 @@ F-statistic: 72.96 on 1 and 331 DF,  p-value: 4.897e-16</code></pre>
 </div>
 <p>Tenemos nuestro intercepto, que sabemos que es la ordenada al origen, y tenemos también una pendiente, que ahora no es solo <code>sex</code>, sino <code>sexmale</code>. ¿Te das alguna idea de qué representan en términos de nuestros datos? Regresa a cómo es que codificamos las variables, y piensa en por qué la pendiente está como <code>sexmale</code>. Tal vez un gráfico de dispersión te de una pista:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">na.omit</span>(penguins), <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">na.omit</span>(penguins), <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c18_mvregs_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1367,18 +1373,18 @@ F-statistic: 72.96 on 1 and 331 DF,  p-value: 4.897e-16</code></pre>
 <p>Si imaginas una línea que conecte el centro de ambas columnas de puntos salta que <strong>la pendiente representa la diferencia en la variable dependiente entre ambas categorías</strong>. ¿Recuerdas que dije que era arbitrario el cómo asignamos la codificación? En este caso <code>R</code> la realiza de forma alfabética: <code>female</code> va antes que <code>male</code>, por lo tanto son 0 y 1. ¿Y el intercepto? Este no es tan evidente, pero representa la media del grupo 0. ¿Por qué representan eso? Recuerda las definiciones que dimos en el <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a>: - La pendiente es la tasa de cambio de <span class="math inline">\(x\)</span> a <span class="math inline">\(y\)</span>; es decir, cuántas unidades nos movemos en el eje <span class="math inline">\(y\)</span> por cambio unitario en <span class="math inline">\(x\)</span>. En nuestros pingüinos nos movemos, en promedio, 683 g al “pasar” de hembras a machos. - El intercepto es el punto donde la recta corta al eje <span class="math inline">\(y\)</span>; es decir, el punto donde <span class="math inline">\(x\)</span> = 0, por lo que si uno de nuestros grupos es 0, el intercepto representa su promedio. En nuestros pingüinos, entonces, la masa promedio de las hembras es de 3862 g.</p>
 <p>¿No me crees? Comprobemos ambas cosas. Primero calculemos la masa promedio de las hembras:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>female_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span>],</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>female_mass</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>female_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span>],</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>female_mass</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3862.273</code></pre>
 </div>
 </div>
 <p>Ahora la masa promedio de los machos, y obtengamos la diferencia. La pendiente es positiva, por lo que a la masa de los machos le restaremos la masa de las hembras:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>male_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span>],</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">na.rm =</span> T)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>male_mass <span class="sc">-</span> female_mass</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>male_mass <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span>],</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">na.rm =</span> T)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>male_mass <span class="sc">-</span> female_mass</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 683.4118</code></pre>
 </div>
@@ -1418,8 +1424,8 @@ masa = \alpha + \beta*Especie + \epsilon
 </ol>
 <p>¡NO! Si hacemos eso estamos indicando que la variable Isla es categórica ordinal, de modo que Adelie &lt; Chinstrap &lt; Gentoo. Aunque en el caso binario en cierta forma hicimos lo mismo, no importa, pues ya vimos que solamente estamos describiendo la diferencia entre ambos niveles y en realidad se mantiene que ambas categorías tienen la misma importancia (por ello es una variable nominal). ¿Cómo lo hacemos entonces cuando tenemos más de dos predictores? Al igual que en el caso anterior ajustemos el modelo lineal:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>lm_m_sp <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>species, <span class="at">data =</span> penguins)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_m_sp)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>lm_m_sp <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>species, <span class="at">data =</span> penguins)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_m_sp)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1451,32 +1457,32 @@ F-statistic: 343.6 on 2 and 339 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 <p>Al igual que en el caso anterior, una de ellas sirve de “referencia”. Igual que en el caso anterior, <code>R</code> toma como referencia la primera en orden alfabético. Es decir, el intercepto es el promedio de Adelie:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>mean_Adelie <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Adelie"</span>],</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>mean_Adelie</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>mean_Adelie <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Adelie"</span>],</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>mean_Adelie</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3700.662</code></pre>
 </div>
 </div>
 <p>Y entonces sí, siguiendo la lógica del caso binario, las pendientes son la diferencia entre el nivel de diferencia y el nivel de la pendiente correspondiente. Para Chinstrap:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mean_Chinstrap <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Chinstrap"</span>],</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>mean_Chinstrap <span class="sc">-</span> mean_Adelie</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>mean_Chinstrap <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Chinstrap"</span>],</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>mean_Chinstrap <span class="sc">-</span> mean_Adelie</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 32.42598</code></pre>
 </div>
 </div>
 <p>Para Gentoo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>mean_Gentoo <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Gentoo"</span>],</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>mean_Gentoo <span class="sc">-</span> mean_Adelie</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>mean_Gentoo <span class="ot">&lt;-</span> <span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g[penguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Gentoo"</span>],</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">na.rm =</span> T)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>mean_Gentoo <span class="sc">-</span> mean_Adelie</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1375.354</code></pre>
 </div>
 </div>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1607,6 +1613,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

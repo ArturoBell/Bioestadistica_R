@@ -495,11 +495,11 @@ head(sums)
 
 #### `aggregate()`
 
-Otra función extremadamente útil es la función `aggregate()`. Esta función nos permite aplicar una función a distintos grupos. Un escenario clásico es obtener el promedio de una variable para cada grupo, por ejemplo el promedio de conteos de quetognatos. La forma "tradicional" es: `aggregate(x, by, FUN)`, donde `x` es el objeto R a agrupar, `by` es una lista con los grupos y `FUN` es la función a aplicar; sin embargo, podemos utilizar una notación más compacta utilizando una `formula`: `aggregate(forumla, data, FUN)`. Las fórmulas en R son objetos sumamente útiles y que se utilizan para una gran diversidad de cosas. Su estructura es: `Y ~ X`, y se lee "Y con respecto a X". En nuestro caso particular:
+Otra función extremadamente útil es la función `aggregate()`. Esta función nos permite aplicar una función a distintos grupos. Un escenario clásico es obtener el promedio de una variable para cada grupo, por ejemplo el promedio de conteos de quetognatos. La forma "tradicional" es: `aggregate(x, by, FUN)`, donde `x` es el objeto R a agrupar, `by` es una lista con los grupos y `FUN` es la función a aplicar; sin embargo, podemos utilizar una notación más compacta utilizando una `formula`: `aggregate(forumla, data, FUN)`. Las fórmulas en R son objetos sumamente útiles y que se utilizan para una gran diversidad de cosas. Su estructura es: `Y ~ X`, y se lee "Y con respecto a X". En nuestro caso particular para obtener los conteos promedio de la presa 28:
 
 
 ```{r}
-aggregate(Chaetognaths~sp, data = datos1, FUN = mean)
+aggregate(Prey_28~sp, data = datos1, FUN = mean)
 ```
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -248,9 +248,11 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -297,7 +299,7 @@ ul.task-list li input[type="checkbox"] {
 <li><p><code>macOS</code>: Si aparece un mensaje diciendo que el programa proviene de un desarrollador no identificado, no te preocupes, simplemente entra a <code>Preferencias del sistema -&gt; Seguridad y privacidad</code>. Cerca del final de la ventana te aparecerá un mensaje diciendo que “macOS evitó la instalación de R […]”. Simplemente da click en el botón “Instalar de todas maneras”. Si no está disponible, da click en el candado de la parte inferior, ingresa tu contraseña, da click en el botón “Instalar de todas maneras” y prosigue con la instalación. Una vez terminada la instalación, puedes volver a la ventana de seguridad y privacidad y volver a cerrar el candado.</p></li>
 <li><p><code>Windows</code>: Si aparece un mensaje diciendo que no se tienen los permisos necesarios para ejecutar el programa, cierra el mensaje, da click derecho sobre el archivo en cuestión -&gt; Ejecutar como administrador. Aparecerá una ventana diciendo que X programa desea hacer modificaciones en el sistema y preguntando si aceptas, da click en aceptar.</p></li>
 </ul>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -316,7 +318,7 @@ Advertencia
 <p>Simplemente da click en el enlace al servidor más cercano a tu ubicación, por ejemplo <a href="https://cran.itam.mx/">https://cran.itam.mx/</a>.</p>
 <p>Después simplemente descarga la versión que corresponde a tu sistema operativo.</p>
 <p>Independientemente del sistema operativo que utilices, la instalación consiste en ejecutar el instalador y seguir los pasos indicados en su ventana, dando click en aceptar y continuar según sea necesario.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -333,7 +335,7 @@ Importante
 <section id="rstudio" class="level2">
 <h2 class="anchored" data-anchor-id="rstudio">RStudio</h2>
 <p>Una vez instalado R podemos instalar <code>RStudio</code>. Más adelante veremos cuál es la diferencia entre ambos, pero por el momento piensa en <code>RStudio</code> como una ventana para <code>R</code>. Primero, dirígete a <a href="https://posit.co/download/rstudio-desktop/">https://posit.co/download/rstudio-desktop/</a>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -352,7 +354,7 @@ Nota
 <section id="quarto-y-tinytex" class="level2">
 <h2 class="anchored" data-anchor-id="quarto-y-tinytex">Quarto y tinytex</h2>
 <p>Con estas dos instalaciones sería más que suficiente para empezar a trabajar; sin embargo, podemos ir más allá y utilizar <code>RStudio</code> para crear reportes, artículos científicos, libros (incluyendo tesis), páginas web, presentaciones, y más. Esto solía (y puede) hacerse con librerías como <code>rmarkdown</code>, <code>distilled</code> o <code>bookdown</code>; sin embargo, tenemos la siguiente generación: <code>Quarto</code>. En el curso veremos una introducción para hacer reportes y, de hecho, este material fue escrito en documentos <code>Quarto</code>. Al igual que en los casos anteriores, dirígete a la <a href="https://quarto.org/docs/get-started/">página de descargas</a> y descarga e instala la versión correspondiente a tu sistema operativo.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -475,6 +477,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

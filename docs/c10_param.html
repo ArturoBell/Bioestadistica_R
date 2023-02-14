@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-99.9.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -315,9 +315,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">Despedida</span>
-  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
@@ -394,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="por-qué-paramétricas" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="por-qué-paramétricas"><span class="header-section-number">10.3</span> ¿Por qué paramétricas?</h2>
 <p>Lo primero que tenemos que abordar es ¿por qué se les conoce como pruebas paramétricas? Porque las inferencias que vamos a realizar son sobre los <strong>parámetros poblacionales</strong>, usualmente la media (<span class="math inline">\(\mu\)</span>) y la varianza (<span class="math inline">\(\sigma\)</span>). Ejemplos de pruebas paramétricas tenemos muchos, entre los más famosos tenemos la <span class="math inline">\(t\)</span> de Student que revisamos en la sesión anterior, los análisis de la varianza (ANOVAs) que revisaremos en esta sesión, la correlación de Pearson y la regresión lineal que veremos en la siguiente, entre otros.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -949,7 +951,7 @@ alternative hypothesis: two-sided</code></pre>
 <span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">25</span>))</span>
 <span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>entre_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 90 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 90 rows containing non-finite values (`stat_density()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="c10_param_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
@@ -961,7 +963,7 @@ alternative hypothesis: two-sided</code></pre>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">#           height = 5, width = 5*1.6, pointsize = 20)</span></span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(entre_plot, dentro_plot)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 90 rows containing non-finite values (stat_density).</code></pre>
+<pre><code>Warning: Removed 90 rows containing non-finite values (`stat_density()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="c10_param_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
@@ -1039,7 +1041,7 @@ Bartlett's K-squared = 0.4309, df = 1, p-value = 0.5115</code></pre>
 </section>
 <section id="anova-de-una-sola-vía" class="level3" data-number="10.6.2">
 <h3 data-number="10.6.2" class="anchored" data-anchor-id="anova-de-una-sola-vía"><span class="header-section-number">10.6.2</span> ANOVA de una sola vía</h3>
-<p>Habiendo revisado los conceptos básicos detrás del ANOVA, podemos pasar a aplicar algunos modelos. El más sencillo es el ANOVA de una sola vía, el cual es el caso más sencillo; es decir, comparamos una sola variable numérica entre los niveles de un solo factor (pesos finales para tres alimentos distintos, por ejemplo). Para ejemplificarlo utilizaremos la base <code>datos1</code> que se trabajó para la tarea de Intervalos de confianza, con una columna extra: id, el cual es un identificador para cada individuo. Esta columna fue añadida únicamente para ejemplificar un caso de ANOVA posterior. En este ejemplo, compararemos los pesos totales entre los tres periodos (OJO: este es un diseño para un ANOVA factorial, únicamente lo utilizaremos como ejemplo).</p>
+<p>Habiendo revisado los conceptos básicos detrás del ANOVA, podemos pasar a aplicar algunos modelos. El más sencillo es el ANOVA de una sola vía, el cual es el caso más sencillo; es decir, comparamos una sola variable numérica entre los niveles de un solo factor (pesos finales para tres alimentos distintos, por ejemplo). Para ejemplificarlo utilizaremos la base <code>datos1 2.csv</code> que se trabajó para la tarea de Intervalos de confianza, con una columna extra: id, el cual es un identificador para cada individuo. Esta columna fue añadida únicamente para ejemplificar un caso de ANOVA posterior. En este ejemplo, compararemos los pesos totales entre los tres periodos (OJO: este es un diseño para un ANOVA factorial, únicamente lo utilizaremos como ejemplo).</p>
 <p>El primer paso es, evidentemente, cargar la base de datos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/Datos1 2.csv"</span>, <span class="at">header =</span> F, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
@@ -1089,7 +1091,7 @@ Bartlett's K-squared = 0.4309, df = 1, p-value = 0.5115</code></pre>
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 22 rows containing non-finite values (stat_ydensity).</code></pre>
+<pre><code>Warning: Removed 22 rows containing non-finite values (`stat_ydensity()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="c10_param_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
@@ -1128,7 +1130,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 <section id="prueba-post-hoc" class="level4" data-number="10.6.2.3">
 <h4 data-number="10.6.2.3" class="anchored" data-anchor-id="prueba-post-hoc"><span class="header-section-number">10.6.2.3</span> Prueba post-hoc</h4>
 <p>El último paso es aplicar la prueba post-hoc. Esta prueba se construye a partir de la distribución de rangos estudentizados, y fue diseñada para evitar el conflicto entre el <span class="math inline">\(\alpha\)</span> y el número de comparaciones, por lo que la interpretación del valor de p es directa (sin correcciones).</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1163,7 +1165,7 @@ F-M 0.3427341 0.2967181 0.3887501     0</code></pre>
 <section id="anova-de-dos-vías" class="level3" data-number="10.6.3">
 <h3 data-number="10.6.3" class="anchored" data-anchor-id="anova-de-dos-vías"><span class="header-section-number">10.6.3</span> ANOVA de dos vías</h3>
 <p>Si una vía es a un factor, dos vías es a dos factores. En este análisis compararemos el efecto de ambos factores simultáneamente, pero de manera independiente; es decir, aunque se hará la comparación para ambos, no se considerará la interacción entre ellos.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1267,7 +1269,7 @@ F-M 0.3354316 0.2892891 0.3815741     0</code></pre>
 <span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 22 rows containing non-finite values (stat_ydensity).</code></pre>
+<pre><code>Warning: Removed 22 rows containing non-finite values (`stat_ydensity()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="c10_param_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
@@ -1422,7 +1424,7 @@ F:B-M:B  0.28483776  0.20498324  0.36469228 6.306067e-14</code></pre>
 </div>
 </div>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1518,6 +1520,68 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>ggpubr<span class="sc">::</span><span class="fu">ggqqplot</span>(estima2, <span class="st">"estima"</span>, <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span></span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(tiempo<span class="sc">~</span>treatment, <span class="at">labeller =</span> <span class="st">"label_both"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?
+The following aesthetics were dropped during statistical transformation: sample
+ℹ This can happen when ggplot fails to infer the correct grouping structure in
+  the data.
+ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+  variable into a factor?</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="c10_param_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid" width="420"></p>
 </div>
@@ -1527,10 +1591,10 @@ Advertencia
 <h5 data-number="10.6.5.2.2" class="anchored" data-anchor-id="aplicación-del-anova-3"><span class="header-section-number">10.6.5.2.2</span> Aplicación del ANOVA</h5>
 <p>Utilizaremos la misma estructura que en el caso anterior; la unica diferencia es que al argumento <code>within</code> le pasaremos un vector con dos factores:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>anova_rep2 <span class="ot">&lt;-</span> <span class="fu">anova_test</span>(<span class="at">data =</span> estima2,</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">dv =</span> estima, <span class="at">wid =</span> id,</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">within =</span> <span class="fu">c</span>(treatment, tiempo))</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_anova_table</span>(anova_rep2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>anova_rep2 <span class="ot">&lt;-</span> <span class="fu">anova_test</span>(<span class="at">data =</span> estima2,</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">dv =</span> estima, <span class="at">wid =</span> id,</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">within =</span> <span class="fu">c</span>(treatment, tiempo))</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">get_anova_table</span>(anova_rep2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1549,18 +1613,18 @@ Advertencia
 <li>Efecto principal simple; es decir, un modelo de una vía de la primera variable para cada nivel de la segunda. Debido a que hacerlo a mano es un poco tedioso, encadenemos el proceso:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>anova_rep2_post1 <span class="ot">&lt;-</span> estima2 <span class="sc">|&gt;</span> </span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Agrupa la base por cada nivel de tiempo</span></span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">group_by</span>(tiempo) <span class="sc">|&gt;</span></span>
-<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># ANOVA de medidas repetidas para cada nivel</span></span>
-<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">anova_test</span>(<span class="at">dv =</span> estima, <span class="at">wid =</span> id, </span>
-<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">within =</span> treatment) <span class="sc">|&gt;</span></span>
-<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Extrae los resultados</span></span>
-<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">get_anova_table</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Ajusta los valores de p</span></span>
-<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">adjust_pvalue</span>(<span class="at">method =</span> <span class="st">"bonferroni"</span>)</span>
-<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>anova_rep2_post1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>anova_rep2_post1 <span class="ot">&lt;-</span> estima2 <span class="sc">|&gt;</span> </span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Agrupa la base por cada nivel de tiempo</span></span>
+<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">group_by</span>(tiempo) <span class="sc">|&gt;</span></span>
+<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># ANOVA de medidas repetidas para cada nivel</span></span>
+<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">anova_test</span>(<span class="at">dv =</span> estima, <span class="at">wid =</span> id, </span>
+<span id="cb90-6"><a href="#cb90-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">within =</span> treatment) <span class="sc">|&gt;</span></span>
+<span id="cb90-7"><a href="#cb90-7" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Extrae los resultados</span></span>
+<span id="cb90-8"><a href="#cb90-8" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">get_anova_table</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb90-9"><a href="#cb90-9" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># Ajusta los valores de p</span></span>
+<span id="cb90-10"><a href="#cb90-10" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">adjust_pvalue</span>(<span class="at">method =</span> <span class="st">"bonferroni"</span>)</span>
+<span id="cb90-11"><a href="#cb90-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb90-12"><a href="#cb90-12" aria-hidden="true" tabindex="-1"></a>anova_rep2_post1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1574,11 +1638,11 @@ Advertencia
 <li>Aplicar una prueba t de Student para datos dependientes en los términos significativos. Debido a que tratamiento tiene solo dos niveles, realizar este proceso es redundante; de hecho, los valores de p serán iguales a los mostrados atrás; sin embargo, hagámoslo con fines demostrativos:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>pwt_2 <span class="ot">&lt;-</span> estima2 <span class="sc">|&gt;</span></span>
-<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">group_by</span>(tiempo) <span class="sc">|&gt;</span></span>
-<span id="cb90-3"><a href="#cb90-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pairwise_t_test</span>(estima<span class="sc">~</span>treatment, <span class="at">paired =</span> T,</span>
-<span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span>
-<span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>pwt_2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>pwt_2 <span class="ot">&lt;-</span> estima2 <span class="sc">|&gt;</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">group_by</span>(tiempo) <span class="sc">|&gt;</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">pairwise_t_test</span>(estima<span class="sc">~</span>treatment, <span class="at">paired =</span> T,</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>pwt_2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1691,6 +1755,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
