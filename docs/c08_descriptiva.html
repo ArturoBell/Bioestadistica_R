@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bioestadística Aplicada con R y RStudio - 8&nbsp; Estadística descriptiva</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./c09_ph0.html" rel="next">
+<link href="./s03_basics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestadística Aplicada con R y RStudio</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#descripciones-o-exploraciones" id="toc-descripciones-o-exploraciones" class="nav-link active" data-scroll-target="#descripciones-o-exploraciones"><span class="toc-section-number">8.1</span>  Descripciones o exploraciones</a></li>
+  <li><a href="#medidas-de-tendencia-central" id="toc-medidas-de-tendencia-central" class="nav-link" data-scroll-target="#medidas-de-tendencia-central"><span class="toc-section-number">8.2</span>  Medidas de tendencia central</a>
+  <ul class="collapse">
+  <li><a href="#media" id="toc-media" class="nav-link" data-scroll-target="#media"><span class="toc-section-number">8.2.1</span>  Media</a></li>
+  <li><a href="#mediana" id="toc-mediana" class="nav-link" data-scroll-target="#mediana"><span class="toc-section-number">8.2.2</span>  Mediana</a></li>
+  <li><a href="#moda" id="toc-moda" class="nav-link" data-scroll-target="#moda"><span class="toc-section-number">8.2.3</span>  Moda</a></li>
+  </ul></li>
+  <li><a href="#medidas-de-dispersión" id="toc-medidas-de-dispersión" class="nav-link" data-scroll-target="#medidas-de-dispersión"><span class="toc-section-number">8.3</span>  Medidas de dispersión</a>
+  <ul class="collapse">
+  <li><a href="#desviación-estándar-y-varianza" id="toc-desviación-estándar-y-varianza" class="nav-link" data-scroll-target="#desviación-estándar-y-varianza"><span class="toc-section-number">8.3.1</span>  Desviación estándar y Varianza</a></li>
+  <li><a href="#coeficiente-de-variación" id="toc-coeficiente-de-variación" class="nav-link" data-scroll-target="#coeficiente-de-variación"><span class="toc-section-number">8.3.2</span>  Coeficiente de variación</a></li>
+  <li><a href="#error-estándar" id="toc-error-estándar" class="nav-link" data-scroll-target="#error-estándar"><span class="toc-section-number">8.3.3</span>  Error estándar</a></li>
+  </ul></li>
+  <li><a href="#gráficos" id="toc-gráficos" class="nav-link" data-scroll-target="#gráficos"><span class="toc-section-number">8.4</span>  Gráficos</a>
+  <ul class="collapse">
+  <li><a href="#gráfico-de-frecuencias" id="toc-gráfico-de-frecuencias" class="nav-link" data-scroll-target="#gráfico-de-frecuencias"><span class="toc-section-number">8.4.1</span>  Gráfico de frecuencias</a></li>
+  <li><a href="#gráfico-de-densidad" id="toc-gráfico-de-densidad" class="nav-link" data-scroll-target="#gráfico-de-densidad"><span class="toc-section-number">8.4.2</span>  Gráfico de densidad</a></li>
+  <li><a href="#gráfico-de-cajas-y-bigotes" id="toc-gráfico-de-cajas-y-bigotes" class="nav-link" data-scroll-target="#gráfico-de-cajas-y-bigotes"><span class="toc-section-number">8.4.3</span>  Gráfico de cajas y bigotes</a></li>
+  <li><a href="#gráfico-de-violín" id="toc-gráfico-de-violín" class="nav-link" data-scroll-target="#gráfico-de-violín"><span class="toc-section-number">8.4.4</span>  Gráfico de violín</a></li>
+  <li><a href="#gráfico-de-dispersión" id="toc-gráfico-de-dispersión" class="nav-link" data-scroll-target="#gráfico-de-dispersión"><span class="toc-section-number">8.4.5</span>  Gráfico de dispersión</a></li>
+  <li><a href="#gráfico-de-densidad-bivariado" id="toc-gráfico-de-densidad-bivariado" class="nav-link" data-scroll-target="#gráfico-de-densidad-bivariado"><span class="toc-section-number">8.4.6</span>  Gráfico de densidad bivariado</a></li>
+  <li><a href="#heatmaps" id="toc-heatmaps" class="nav-link" data-scroll-target="#heatmaps"><span class="toc-section-number">8.4.7</span>  Heatmaps</a></li>
+  <li><a href="#gráfico-de-contornos" id="toc-gráfico-de-contornos" class="nav-link" data-scroll-target="#gráfico-de-contornos"><span class="toc-section-number">8.4.8</span>  Gráfico de contornos</a></li>
+  <li><a href="#otros-gráficos" id="toc-otros-gráficos" class="nav-link" data-scroll-target="#otros-gráficos"><span class="toc-section-number">8.4.9</span>  Otros gráficos</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-descriptiva" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>En la sesión de visualización hablamos de que hay una gran cantidad de formas en las cuales podemos describir el mundo que nos rodea. Una imágen habla más que mil palabras, y es una forma de resumir nuestros datos; sin embargo, está lejos de ser la única y, de hecho, por lo general buscamos que el gráfico acompañe a un resumen numérico, en forma de un solo valor o índice. A los seres humanos nos gusta la simpleza, después de todo. Bueno, de eso es de lo que vamos a hablar hoy.</p>
+<section id="descripciones-o-exploraciones" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="descripciones-o-exploraciones"><span class="header-section-number">8.1</span> Descripciones o exploraciones</h2>
+<p>Ya fuimos a campo o al laboratorio, realizamos nuestro muestreo o experimiento, y tenemos nuestros datos. ¿Ya podemos empezar a hacer pruebas de significancia y regresiones, no? Técnicamente sí, pero paremos nuestro tren y no querramos correr antes de saber caminar. Al momento de realizar el análisis de nuestros datos es “sano” que nos familiaricemos con ellos antes de realizar cualquier proceso de estadística inferencial. El objetivo de la estadística descriptiva es, como el nombre indica, <strong>describir la información contenida en los datos</strong>, para lo cual utiliza métodos que resumen la información: medidas de tendencia central/dispersión y gráficos. ¿Por qué es importante? Nos permite familiarizarnos con la información con la que contamos, ya sea para identificar patrones, seleccionar variables importantes, visualizar inconsistencias en los datos, detectar anomalías y mucho más. Notarás conforme avancemos en el curso que la visualización de nuestros datos juega un papel importantísimo durante la interpretación, pero empecemos desde abajo.</p>
+<p>Estoy seguro de que algunos de los conceptos que revisaremos en esta sesión los has revisado ya con anterioridad, por lo que no te haré el cuento largo, sino que me enfocaré más en las peculiaridades de cada una de las medidas y gráficos, en qué escenarios son útiles, cuándo no lo son tanto y lo enlazaremos con temas que veremos más adelante.</p>
+</section>
+<section id="medidas-de-tendencia-central" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="medidas-de-tendencia-central"><span class="header-section-number">8.2</span> Medidas de tendencia central</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Comencemos hablando con lo que, por lo general, es nuestro mayor interés: hacia dónde tienden nuestros datos. Para ello tenemos algunas <strong>medidas de tendencia central</strong>; es decir, literalmente describimos nuestros datos a partir de dónde se acumulan más.</p>
+<section id="media" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="media"><span class="header-section-number">8.2.1</span> Media</h3>
+<p>La primera de estas medidas es, posiblemente, la más común de todas: <strong>la media</strong> o el promedio. En su forma más simple; es decir, la media <strong>aritmética</strong> la obtenemos sumando todos nuestros datos y dividiéndolos entre su número:</p>
+<p><span class="math display">\[
+\overline{x} = \frac{\sum_{i = 1}^n x_i}{n}
+\]</span></p>
+<p>Esto es conocimiento general, y es algo con lo que todos los estudiantes somos torturados eventualmente. Bueno, más que recordar cómo calcularlo e implementarlo en R (<code>mean(x)</code>, donde <code>x</code> es un vector de observaciones), pensemos en qué representa. La media es, literalmente, un indicador de hacia qué valor se están acumulando nuestros datos, tal y como si colgáramos cosas en un tendedero (házme un favor y piensa en que el siguiente gráfico está invertido verticalmente):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">0</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plot1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> x, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(x<span class="sc">$</span>x),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">color =</span> <span class="st">"dodgerblue4"</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plot1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En este caso, la mayor parte de nuestros datos están acumulados alrededor de 0. ¿Qué crees que pase si añadimos otros 20 datos, esta vez acumulados en 5? Veámos el cambio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(x, <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">5</span>)))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plot2 <span class="ot">&lt;-</span> plot1 <span class="sc">+</span>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> x),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">data =</span> x2,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">color =</span> <span class="st">"firebrick"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plot2 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(x2<span class="sc">$</span>x),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Como era de esperarse, la media se “jaló” a la derecha, y de manera bastante notable. Esos 5 valores extremos tuvieron un peso bastante importante. Literalmente fue como si hubiéramos colgado cinco cosas más en nuestro tendedero, pero alejadas de la ropa que colgamos en un inicio. Aunque la media es una manera muy efectiva de resumir nuestros datos, esto solo es cierto si estos se parecen a una distribución normal (en la sesión de técnicas paramétricas hablaremos duro y tendido con respecto a esto), pero si no, como en nuestro caso con los nuevos valores, es necesario buscar una alternativa.</p>
+<section id="media-ponderada" class="level4" data-number="8.2.1.1">
+<h4 data-number="8.2.1.1" class="anchored" data-anchor-id="media-ponderada"><span class="header-section-number">8.2.1.1</span> Media ponderada</h4>
+<p>Una de ellas es una modificación a la media, en la cuál cada valor tiene su propia ponderación o su propia importancia. Esa es la media con la que más padecemos los estudiantes de secundaria hacia arriba, pues el examen tiene una ponderación distinta a las tareas, por ejemplo. En mi caso personal, era un tormento cuando se ponderaba más las tareas que el examen, pero eso es otra historia. ¿Por qué es importante? Porque podemos utilizarla para “regresar” nuestra media a su lugar; de hecho, esta es la base fundamental detrás de las regresiones robustas, en donde el peso de cada observación disminuye según incrementa su distancia de 0:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pesos: fracción de la distancia máxima a 0</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">abs</span>(<span class="dv">0</span> <span class="sc">-</span> x2<span class="sc">$</span>x))<span class="sc">/</span><span class="fu">abs</span>(<span class="dv">0</span> <span class="sc">-</span> x2<span class="sc">$</span>x)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Media ponderada</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>wmean <span class="ot">&lt;-</span> <span class="fu">weighted.mean</span>(x2<span class="sc">$</span>x, w)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plot2 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> wmean,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="media-geométrica" class="level4" data-number="8.2.1.2">
+<h4 data-number="8.2.1.2" class="anchored" data-anchor-id="media-geométrica"><span class="header-section-number">8.2.1.2</span> Media geométrica</h4>
+<p>Esta es menos conocida, y representa el promedio de porcentajes, razones o <strong>tasas de crecimiento</strong>. Se expresa como la raiz n-ésima del producto de los n valores:</p>
+<p><span class="math display">\[MG = \sqrt[n]{\Pi_i^nx_i}\]</span></p>
+<p>Pensemos en que estimamos la tasa de crecimiento poblacional (<span class="math inline">\(\lambda\)</span>) anual de ballenas jorobadas en tres años seguidos, a partir de un modelo de marca-recaptura, y los valores que obtuvimos fueron 1.03, 0.98, 1.4, 0.94:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>lamb <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.03</span>, <span class="fl">0.98</span>, <span class="fl">1.4</span>, <span class="fl">0.94</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prod</span>(lamb)<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="fu">length</span>(lamb))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.073569</code></pre>
+</div>
+</div>
+<p>Es decir, el crecimiento poblacional promedio fue del 7%.</p>
+<p>Otra manera de calcularla es:</p>
+<p><span class="math display">\[
+MG = e^\overline{log(\lambda)}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">mean</span>(<span class="fu">log</span>(lamb)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.073569</code></pre>
+</div>
+</div>
+<p>¿Te animas a encontrar la igualdad matemática?</p>
+</section>
+</section>
+<section id="mediana" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="mediana"><span class="header-section-number">8.2.2</span> Mediana</h3>
+<p>Una alternativa más es la mediana. A diferencia de la media, que “busca” hacia donde se están acumulando los datos, la mediana nos indica exactamente que valor se encuentra en el <strong>centro</strong> de nuestra base de datos. Si partimos nuestra base de datos en 100 partes iguales (100%), cada parte representa un <strong>cuantil</strong> (1%). Cada diez cuantiles tenemos un <strong>decil</strong>, cada 25 cuantiles tenemos un <strong>cuartil</strong> (cuartiles 25%, 50% y 75%), y en el cuartil 50 tenemos la <strong>mediana</strong>. Esta es, entonces, mucho menos sensible a valores extremos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot2 <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(x2<span class="sc">$</span>x),</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La estimación no es exactamente la misma que la media de los datos originales o de la media ponderada según su distancia a 0; sin embargo, el efecto es notablemente menor que con la media tradicional. Esta resistencia a valores extremos es lo que hace que las técnicas <strong>no paramétricas</strong> estén basadas en la mediana, en vez de la media.</p>
+</section>
+<section id="moda" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="moda"><span class="header-section-number">8.2.3</span> Moda</h3>
+<p>La moda corresponde al valor que más se repite en un conjunto de datos. Con datos continuos en el sentido estricto no existe; sin embargo, en muchos casos sí que podemos tener repetidos dependiendo de la escala y la precisión de nuestro instrumento. Otra manera de calcularla es discretizando nuestros datos y encontrar el intervalo más frecuente. Una propiedad interesante de la moda es que su valor corresponde con el valor que tiene la mayor probabilidad dentro de la distribución, por lo que puede ser útil en ciertos casos de Inferencia Bayesiana. Para calcularla podemos utilizar la función <code>Mode(x)</code> de la librería <code>DescTools</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>letmode <span class="ot">&lt;-</span> DescTools<span class="sc">::</span><span class="fu">Mode</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>letmode</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a"
+attr(,"freq")
+[1] 2</code></pre>
+</div>
+</div>
+<p>A lo largo de este curso no aplicaremos la moda, solo la agregué para que la tengas presente.</p>
+</section>
+</section>
+<section id="medidas-de-dispersión" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="medidas-de-dispersión"><span class="header-section-number">8.3</span> Medidas de dispersión</h2>
+<p>Al igual que en el caso anterior, repasaremos rápidamente las medidas de dispersión, con el objetivo de explorar la intuición detrás de ellas y su relación con otros conceptos que revisaremos más adelante. Independientemente de cuál utilicemos, todas las medidas de dispersión indican justamente eso, qué tan grande es la variabilidad de una distribución, ya sea de nuestros datos o la distribución muestral del parámetro que estemos estimando.</p>
+<section id="desviación-estándar-y-varianza" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="desviación-estándar-y-varianza"><span class="header-section-number">8.3.1</span> Desviación estándar y Varianza</h3>
+<p>En pocas palabras, la varianza es una medida de la dispersión promedio de los datos; es decir, cuál es <strong>el área</strong> promedio que abarca la dispersión de los datos. En la sección de Multivariado vamos a ver cuál es la relación entre la varianza y la covarianza, a entender a la varianza como un caso especial de la covarianza y ver de dónde sale esa <strong>suma de cuadrados</strong>. Esto último también me lleva a que cada que leas <strong>suma de cuadrados</strong> pienses en una medida de dispersión o en la varianza de los datos.</p>
+<p><span class="math display">\[
+\sigma^2 = \frac{\sum{(x_i - \mu)^2}}{N}
+\]</span></p>
+<p>La desviación estándar, por otra parte, es simplemente la raíz cuadrada de la varianza. Si la varianza representa un área, la desviación estándar representa una <strong>distancia</strong>, la distancia promedio que existe entre cada uno de los datos y la media. Estas dos medidas (la desviación estándar y la varianza) son sumamente útiles y utilizadas en los procesos estadísticos; de hecho, junto con la media, son los principales <strong>parámetros poblacionales</strong> que usualmente queremos estimar a partir de nuestra muestra. Una aclaración es que la ecuación de arriba es para calcular la <strong>varianza poblacional</strong>, mientras que si queremos calcular la <strong>varianza muestral</strong> aplicaremos una corrección con los grados de libertad (que definiremos más adelante)</p>
+<p><span class="math display">\[
+s^2 = \frac{\sum(x_i - \overline{x})^2}{N-1}
+\]</span></p>
+<p>Esta <strong>varianza muestral</strong> se considera un estimador insesgado de la <strong>varianza poblacional</strong>.</p>
+<section id="estimadores" class="level4" data-number="8.3.1.1">
+<h4 data-number="8.3.1.1" class="anchored" data-anchor-id="estimadores"><span class="header-section-number">8.3.1.1</span> Estimadores</h4>
+<p>Este es un buen momento para hablar de los estimadores. ¿Qué es un estimador? Una medida que utilizaremos para estimar un parámetro poblacional. Evidentemente, no puede ser cualquier número ni cualquier medida, debe de tener ciertas características. Particularmente:</p>
+<ol type="1">
+<li>Insesgado: Es decir, que la media de la <strong>distribución del estimador</strong> sea igual al parámetro. De nuevo, en la sesión de técnicas paramétricas vamos a hablar sobre distribuciones muestrales, el teorema del límite central y su implicación para el supuesto de normalidad que a veces puede ser un dolor de cabeza. Por lo pronto entiende que “la media de la distribución del estimador” hace referencia a que, si hicieramos una cierta cantidad de muestreos y calculamos algún parámetro para cada muestreo, el promedio de esas estimaciones debe ser igual al parámetro poblacional.</li>
+<li>Consistencia: Es la propiedad en la que un estimador se aproxima al valor del parámetro conforme incrementa el tamaño de muestra, lo cual también tiene que ver con el teorema del límite central que revisaremos más adelante.</li>
+<li>Eficiencia: La estimación tiene el error estándar más pequeño cuando se compara con otro estimador. Por ejemplo, en una distribución Normal, la media y la mediana son prácticamente iguales; sin embargo, el error estándar de la media es <span class="math inline">\(\frac{\sigma}{\sqrt{n}}\)</span>, mientras que el de la mediana es <span class="math inline">\(\approx 1.25\)</span> veces ese valor.</li>
+<li>Suficiencia: El estimador es, por sí mismo, capaz de transmitir toda la información disponible en la muestra sobre el valor del parámetro.</li>
+</ol>
+<p>Por estas 4 razones es que la mayor parte de nuestras inferencias están en relación a la <strong>media poblacional</strong>, estimada a partir de la <strong>media muestral</strong>. La mediana no se considera un buen estimador de la media poblacional si la distribución no es simétrica, pues, como vimos arriba, está sesgada en relación a la media poblacional. Por otra parte, su error estándar es mayor que el error estándar de la media (en términos de sus distribuciones muestrales), ni utiliza todos los datos (solo el cuantil 50).</p>
+</section>
+</section>
+<section id="coeficiente-de-variación" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="coeficiente-de-variación"><span class="header-section-number">8.3.2</span> Coeficiente de variación</h3>
+<p>El coeficiente de variación, también conocido como la desviación estándar relativa, es la relación que existe entre la desviación estándar y la media de los datos, tal que:</p>
+<p><span class="math display">\[
+CV = \frac{\sigma}{\mu}*100
+\]</span></p>
+<p>Este es especialmente útil cuando queremos comparar las dispersiones de dos cosas que están en distinta escala, o expresar en un porcentaje qué tan grande es nuestra variabilidad en relación a nuestra estimación. Si hacemos una estimación de tamaño poblacional de 1000 individuos, con un coeficiente de variación del 50% quiere decir que nuestra variabilidad es de la mitad de nuestra estimación.</p>
+</section>
+<section id="error-estándar" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="error-estándar"><span class="header-section-number">8.3.3</span> Error estándar</h3>
+<p>Esta medida es especialmente útil en la estimación de los intervalos de confianza de cualquier parámetro, y representa la desviación estándar de su distribución muestral, el cuál podemos estimar como:</p>
+<p><span class="math display">\[
+\sigma_{\overline{x}} \approx \frac{\sigma_x}{\sqrt{n}}
+\]</span></p>
+<p>Normalmente nosotros no estimaremos o interpretaremos esta medida, sino que iremos directamente a los <strong>intervalos de confianza</strong> para expresar la incertidumbre alrededor de nuestras estimaciones.</p>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué son los intervalos de confianza? Son una medida de la incertidumbre en la estimación de nuestro parámetro de interés, pero hablaremos de ellos más a detalle en las siguientes sesiones.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="gráficos" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">8.4</span> Gráficos</h2>
+<p>En la sesión de visualización vimos las consideraciones que debemos de tener en cuenta para hacer una visualización efectiva, pero no hablamos de los tipos de gráficos que podemos realizar. En esta sesión, entonces, no entraremos a ver los detalles de la visualización, simplemente hablaremos de los gráficos más comunes, en qué escenarios son útiles y cómo construirlos utilizando <code>ggplot2</code>. Para esta parte utilizaremos datos de biometrías de pinguinos, contenidos en la librería <code>palmerpenguins</code></p>
+<section id="gráfico-de-frecuencias" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="gráfico-de-frecuencias"><span class="header-section-number">8.4.1</span> Gráfico de frecuencias</h3>
+<p>También nombrado a veces histograma. Es, posiblemente, el gráfico más sencillo de todos, pues lo único que hacemos es poner una barra a la altura del número de individuos que hay en una clase o intervalo. Para construirlo en <code>ggplot2</code> utilizaremos la capa <code>geom_histogram</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"dodgerblue4"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Si tenemos más de un grupo y queremos ver todas las distribuciones de frecuencia podemos pasar el argumento <code>fill</code> dentro de los argumentos de estética (<code>aes()</code>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Habrás notado que <code>ggplot2</code> nos dio una notificación con respecto al número de intervalos (cajas) utilizados para estimar las frecuencias, en particular que utilizó 30. Podemos seleccionar una cantidad manualmente, por ejemplo 100, y especificarla con el argumento <code>bins</code>, o especificar la amplitud del intervalo con el argumento <code>binwidth</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿El problema? ¿Cómo sabemos cuántos intervalos utilizar? Si ya hay intervalos establecidos, por ejemplo longitudes para estados de madurez sexual, podemos establecer esos intervalos, pero si nuestra distribución es continua podemos utilizar una mejor alternativa.</p>
+</section>
+<section id="gráfico-de-densidad" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="gráfico-de-densidad"><span class="header-section-number">8.4.2</span> Gráfico de densidad</h3>
+<p>Los gráficos de densidad nos permiten, justamente, representar gráficamente la distribución de una variable continua. Recordarás de la clase de probabilidad que la probabilidad de un valor continuo es <em>teóricamente</em> 0, pero podemos estimar la densidad de probabilidad de un punto determinado si hacemos el intervalo infinitesimalmente pequeño, y es esto lo que representa un gráfico de densidad. Piensa en él como una versión suavizada de un gráfico de frecuencias:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="cn">NA</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_density()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Eso se ve bastante mejor, pues ya no tenemos la incertidumbre de cuántas “cajas” formar para encajonar nuestros datos, pero no es lo más adecuado para comparar distribuciones de manera gráfica. Afortunadamente, también tenemos alternativas para eso.</p>
+</section>
+<section id="gráfico-de-cajas-y-bigotes" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="gráfico-de-cajas-y-bigotes"><span class="header-section-number">8.4.3</span> Gráfico de cajas y bigotes</h3>
+<p>Una es el clásico gráfico de cajas y bigotes, en el cuál hay (por grupo) un indicador (punto, línea horizontal o muesca) de la tendencia central (media, mediana), una caja que indica una medida de dispersión (desviación estándar, rango intercuantil, error estándar) y dos “bigotes” (líneas verticales) que indican los límites “aceptables” de la distribución. Adicionalmente tenemos puntos “libres” que indican valores extremos. En <code>ggplot2</code> podemos construirlos con la capa <code>geom_boxplot</code>, siempre que especifiquemos en <code>aes()</code> una variable de agrupamiento para <code>x</code>, la variable de la que queremos ver el interés en <code>y</code> y, opcionalmente, un argumento de color que corresponda con los grupos en <code>x</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_length_mm,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Infortunadamente perdemos mucha información si lo comparamos con el gráfico de densidad. Si tan solo hubiera una manera de mezclarnos… ¡Espera! Sí que la hay.</p>
+</section>
+<section id="gráfico-de-violín" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="gráfico-de-violín"><span class="header-section-number">8.4.4</span> Gráfico de violín</h3>
+<p>Los gráficos de violín son, justamente, una alternativa más “fina” a los gráficos de cajas y bigotes, en los cuales podemos mostrar la distribución completa de cada grupo. En <code>ggplot2</code> utilizaremos la capa <code>geom_violin</code>, que requiere exactamente la misma información que el gráfico de caja y bigotes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_length_mm,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="cn">NA</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Afortunadamente, uno no está peleado con el otro, y podemos añadir la información resumida disponible en el gráfico de cajas y bigotes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> bill_length_mm,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">width =</span> <span class="fl">0.1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_ydensity()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Con estos gráficos vemos la relación entre una variable categórica y una variable numérica, pero ¿qué pasa si tenemos dos variables numéricas?</p>
+</section>
+<section id="gráfico-de-dispersión" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="gráfico-de-dispersión"><span class="header-section-number">8.4.5</span> Gráfico de dispersión</h3>
+<p>El gráfico más básico es el gráfico de dispersión. Simplemente es un gráfico de las coordenadas dadas por una variable <code>x</code> con respecto a una variable <code>y</code>. En <code>ggplot2</code> utilizaremos la capa <code>geom_point</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"dodgerblue4"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Al igual que en el gráfico de frecuencias, podemos colorear los puntos según una variable categórica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> species))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>E, incluso, según una variable continua:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> body_mass_g))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Y si no me interesa ver todos los puntos, sino las distribuciones bivariadas? También tenemos alternativas.</p>
+</section>
+<section id="gráfico-de-densidad-bivariado" class="level3" data-number="8.4.6">
+<h3 data-number="8.4.6" class="anchored" data-anchor-id="gráfico-de-densidad-bivariado"><span class="header-section-number">8.4.6</span> Gráfico de densidad bivariado</h3>
+<p>Podemos utilizar un gráfico de densidad bivariado, el cual muestra contornos correspondientes a la densidad de los puntos. Su interpretación es exactamente igual a un mapa topográfico. Los contornos más pequeños representan la mayor densidad, mientras que los más grandes una menor densidad.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> bill_length_mm)) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density2d</span>(<span class="fu">aes</span>(<span class="at">color =</span> species))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing non-finite values (`stat_density2d()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="heatmaps" class="level3" data-number="8.4.7">
+<h3 data-number="8.4.7" class="anchored" data-anchor-id="heatmaps"><span class="header-section-number">8.4.7</span> Heatmaps</h3>
+<p>¿Y si mis dos variables son discretas? No temas, para eso tenemos <strong>heatmaps</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> island)) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">fill =</span> <span class="st">"dodgerblue4"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"dodgerblue4"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Si tienes una variable adicional (pueden ser frecuencias o alguna variable continua) puedes agregarla con el argumento fill dentro de aes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> species,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> island)) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="fu">aes</span>(<span class="at">fill =</span> bill_length_mm))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Hay algún equivalente para tres variables numéricas? Por supuesto.</p>
+</section>
+<section id="gráfico-de-contornos" class="level3" data-number="8.4.8">
+<h3 data-number="8.4.8" class="anchored" data-anchor-id="gráfico-de-contornos"><span class="header-section-number">8.4.8</span> Gráfico de contornos</h3>
+<p>Podemos generar un gráfico de contornos, utilizando la capa <code>geom_contour</code>. OJO: para esta hay que hacer cierto procesamiento de los datos, en el sentido que hay que generar una malla uniforme de coordenadas x, y, z. Esto queda fuera de la discusión por este momento, pero lo revisitaremos cuando grafiquemos la zona de decisión de un análisis de funciones discriminantes lineales en la sesión de clasificación.</p>
+</section>
+<section id="otros-gráficos" class="level3" data-number="8.4.9">
+<h3 data-number="8.4.9" class="anchored" data-anchor-id="otros-gráficos"><span class="header-section-number">8.4.9</span> Otros gráficos</h3>
+<p>Estos gráficos están lejos de ser los únicos a nuestra disposición. Para comparar distribuciones también tenemos <em>forest plots</em> o <em>ridgelines</em>. Si queremos ver la relación entre más de dos variables, considerando cada individuo, podemos utilizar gráficos de coordenadas paralelas, para lo cual utilizaremos la función <code>ggparcord</code> de la librería <code>GGally</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>GGally<span class="sc">::</span><span class="fu">ggparcoord</span>(<span class="at">data =</span> penguins,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">groupColumn =</span> <span class="st">"species"</span>,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">columns =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c08_descriptiva_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Y muchos otros más que no tendríamos tiempo de revisar en una sola sesión, cada uno con un uso particular. Algunos de ellos los veremos durante el curso, mientras que algunas otras alternativas las puedes encontrar en <a href="https://www.d3-graph-gallery.com">este enlace</a>. También es importante mencionar que R base y <code>ggplot2</code> no son las únicas librerías para generar gráficos en R. Podemos utilizar <a href="https://www.d3-graph-gallery.com">D3</a> o <a href="https://plotly.com">plotly</a>, por ejemplo, para generar no solo otro tipo de gráficos, sino también hacerlos interactivos.</p>
+<p>Esto sería todo para esta sesión. Espero que haya sido un buen recordatorio y que te sea de utilidad en algún futuro.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./s03_basics.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Técnicas básicas</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./c09_ph0.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bioestadística Aplicada con R y RStudio - 14&nbsp; Técnicas multivariadas: Introducción</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./c15_nosup.html" rel="next">
+<link href="./s04_mv.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestadística Aplicada con R y RStudio</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">14.1</span>  Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">14.2</span>  Introducción</a>
+  <ul class="collapse">
+  <li><a href="#álgebra-lineal" id="toc-álgebra-lineal" class="nav-link" data-scroll-target="#álgebra-lineal"><span class="toc-section-number">14.2.1</span>  Álgebra lineal</a></li>
+  </ul></li>
+  <li><a href="#de-sigma-a-sigma-la-matriz-de-covarianzas" id="toc-de-sigma-a-sigma-la-matriz-de-covarianzas" class="nav-link" data-scroll-target="#de-sigma-a-sigma-la-matriz-de-covarianzas"><span class="toc-section-number">14.3</span>  De <span class="math inline">\(\sigma\)</span> a <span class="math inline">\(\Sigma\)</span>: La matriz de covarianzas</a></li>
+  <li><a href="#matriz-de-correlación" id="toc-matriz-de-correlación" class="nav-link" data-scroll-target="#matriz-de-correlación"><span class="toc-section-number">14.4</span>  Matriz de correlación</a></li>
+  <li><a href="#matrices-de-covarianza-y-corrlación-en-r" id="toc-matrices-de-covarianza-y-corrlación-en-r" class="nav-link" data-scroll-target="#matrices-de-covarianza-y-corrlación-en-r"><span class="toc-section-number">14.5</span>  Matrices de covarianza y corrlación en <code>R</code></a></li>
+  <li><a href="#normalidad-multivariada" id="toc-normalidad-multivariada" class="nav-link" data-scroll-target="#normalidad-multivariada"><span class="toc-section-number">14.6</span>  Normalidad multivariada</a>
+  <ul class="collapse">
+  <li><a href="#prueba-de-mardia-1970" id="toc-prueba-de-mardia-1970" class="nav-link" data-scroll-target="#prueba-de-mardia-1970"><span class="toc-section-number">14.6.1</span>  Prueba de Mardia (1970)</a></li>
+  <li><a href="#prueba-de-henze-zirkler" id="toc-prueba-de-henze-zirkler" class="nav-link" data-scroll-target="#prueba-de-henze-zirkler"><span class="toc-section-number">14.6.2</span>  Prueba de Henze-Zirkler</a></li>
+  <li><a href="#prueba-de-royston" id="toc-prueba-de-royston" class="nav-link" data-scroll-target="#prueba-de-royston"><span class="toc-section-number">14.6.3</span>  Prueba de Royston</a></li>
+  </ul></li>
+  <li><a href="#igualdad-de-dispersiones-multivariadas" id="toc-igualdad-de-dispersiones-multivariadas" class="nav-link" data-scroll-target="#igualdad-de-dispersiones-multivariadas"><span class="toc-section-number">14.7</span>  Igualdad de dispersiones multivariadas</a></li>
+  <li><a href="#implicaciones-analíticas-de-la-multidimensionalidad" id="toc-implicaciones-analíticas-de-la-multidimensionalidad" class="nav-link" data-scroll-target="#implicaciones-analíticas-de-la-multidimensionalidad"><span class="toc-section-number">14.8</span>  Implicaciones analíticas de la multidimensionalidad</a></li>
+  <li><a href="#transformaciones-o-deformaciones" id="toc-transformaciones-o-deformaciones" class="nav-link" data-scroll-target="#transformaciones-o-deformaciones"><span class="toc-section-number">14.9</span>  Transformaciones o deformaciones</a>
+  <ul class="collapse">
+  <li><a href="#estandarización" id="toc-estandarización" class="nav-link" data-scroll-target="#estandarización"><span class="toc-section-number">14.9.1</span>  Estandarización</a></li>
+  <li><a href="#transformación-logarítmica" id="toc-transformación-logarítmica" class="nav-link" data-scroll-target="#transformación-logarítmica"><span class="toc-section-number">14.9.2</span>  Transformación logarítmica</a></li>
+  <li><a href="#raíz-cuadrada" id="toc-raíz-cuadrada" class="nav-link" data-scroll-target="#raíz-cuadrada"><span class="toc-section-number">14.9.3</span>  Raíz cuadrada</a></li>
+  </ul></li>
+  <li><a href="#aprendizaje-automatizado" id="toc-aprendizaje-automatizado" class="nav-link" data-scroll-target="#aprendizaje-automatizado"><span class="toc-section-number">14.10</span>  Aprendizaje Automatizado</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-intro-mv" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="librerías" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">14.1</span> Librerías</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(PerformanceAnalytics)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MVN)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="introducción" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">14.2</span> Introducción</h2>
+<p>En esta sección final del curso vamos a abordar problemas que se tornan sumamente complejos, pues estaremos lidiando con más de dos variables a la vez. Esto usualmente deriva de que una variable sola no es suficientemene informativa, o de que el fenómeno analizado es el resultado de la “interacción” de distintas variables. De cualquier manera, esto nos lleva a tener múltiples mediciones de distintas instancias.</p>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En esta sección nos vamos a referir a una <strong>instancia</strong> como un <strong>conjunto de mediciones de distintas variables de una misma unidad observacional</strong>. Pueden ser distintas morfometrías de un mismo cráneo, o mediciones satelitales de distintas variables ambientales en una coordenada dada (<a href="#fig-mvexamples">Figura&nbsp;<span>14.1</span></a>).</p>
+<div id="fig-mvexamples" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/mvexamples.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.1: Ejemplos de problemas multivariados.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Al momento de añadir nuevas variables vamos a modificar también el cómo trabajamos con nuestros datos. Mientras que con análisis uni o bivariados podíamos tener bases de datos en formato corto (una columna para cada grupo) o largo (una columna con la variable de respuesta y otra con la de agrupamiento), aquí vamos a tener <strong>matrices</strong> de datos, en donde cada renglón es una instancia (individuo, unidad muestral), y cada columna representa una variable o un atributo diferente:</p>
+<div id="fig-datamat" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/datamat.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.2: De columnas a matrices.</figcaption><p></p>
+</figure>
+</div>
+<section id="álgebra-lineal" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="álgebra-lineal"><span class="header-section-number">14.2.1</span> Álgebra lineal</h3>
+<p>Esto me lleva a un (tal vez) tedioso recordatorio o una (tal vez) tediosa explicación sobre el álgebra lineal. ¿La razón? El tratar con cada columna por separado no solo es extremadamente ineficiente, sino que también nos lleva a incrementar la probabilidad de cometer errores de tipo I si nos ponemos a hacer pruebas uni o bivariadas para cada par de columnas (hablaremos más de esto en el <a href="c16_mvcomps.html"><span>Capítulo&nbsp;16</span></a>), por lo que es mejor trabajar con todas las variables al mismo tiempo.</p>
+<div class="{callout-note}">
+<p>Vamos a ver muchas matrices, algunas muy extensas por incluir las operaciones aritméticas correspondientes. <strong>NO te preocupes</strong>, el objetivo es solo que añadas a tu breviario cultural de dónde salen las matrices de covarianza y correlación.</p>
+</div>
+<p>Sean dos matricesn <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, cada una con <span class="math inline">\(m = 3\)</span> renglones y <span class="math inline">\(n = 3\)</span> columnas:</p>
+<p><span class="math display">\[\begin{align*}
+A = \left[
+  \begin{matrix}
+  a_{1,1} &amp; a_{1,2} &amp; a_{1,3}\\
+  a_{2,1} &amp; a_{2,2} &amp; a_{2,3}\\
+  a_{3,1} &amp; a_{3,2} &amp; a_{3,3}\\
+  
+  \end{matrix}
+  \right] \\
+B = \left[
+  \begin{matrix}
+  b_{1,1} &amp; b_{1,2} &amp; b_{1,3}\\
+  b_{2,1} &amp; b_{2,2} &amp; b_{2,3}\\
+  b_{3,1} &amp; b_{3,2} &amp; b_{3,3}\\
+  
+  \end{matrix}
+  \right]
+\end{align*}\]</span></p>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En una matriz cada columna y cada renglón es un vector.</p>
+</div>
+</div>
+<p>Tal y como vimos en el <a href="c03_bases_r.html"><span>Capítulo&nbsp;3</span></a>, una de las operaciones más comunes al tratar con matrices es la <strong>transposición</strong> (denotada como <span class="math inline">\(^T\)</span>); es decir, que las columnas se vuelvan renglones, y que los renglones se vuelvan columnas, tal que <span class="math inline">\(A_{(m,n)} \Rightarrow A^T_{(n,m)}\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+A^T =
+\left[
+
+\begin{matrix}
+a_{1,1} &amp; a_{2,1} &amp; a_{3,1}\\
+a_{1,2} &amp; a_{2,2} &amp; a_{3,2}\\
+a_{1,3} &amp; a_{2,3} &amp; a_{3,3}\\
+
+\end{matrix}
+\right]\\
+B^T =
+\left[
+
+\begin{matrix}
+b_{1,1} &amp; b_{2,1} &amp; b_{3,1}\\
+b_{1,2} &amp; b_{2,2} &amp; b_{3,2}\\
+b_{1,3} &amp; b_{2,3} &amp; b_{3,3}\\
+
+\end{matrix}
+\right]
+\end{align*}\]</span></p>
+<p>También podemos querer hacer operaciones básicas. La suma y resta de matrices está dada por cada elemento, tal que <span class="math inline">\(S_{m,n} = (A_{m,n} \pm B_{m,n})\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+S = \left[
+\begin{matrix}
+(a_{1,1} \pm b_{1,1}) &amp;
+(a_{1,2} \pm b_{1,2}) &amp;
+(a_{1,3} \pm b_{1,3})
+\\
+(a_{2,1} \pm b_{2,1}) &amp;
+(a_{2,2} \pm b_{2,2}) &amp;
+(a_{2,3} \pm b_{2,3})
+\\
+(a_{3,1} \pm b_{3,1}) &amp;
+(a_{3,2} \pm b_{3,2}) &amp;
+(a_{3,3} \pm b_{3,3})
+\\
+
+
+\end{matrix}
+\right]
+\end{align*}\]</span></p>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para hacer una suma o resta de dos matrices es necesario que <span class="math inline">\((m_A,n_A) = (m_B,n_B)\)</span></p>
+</div>
+</div>
+<p>La multiplicación, desafortunadamente, no es tan simple. Aquí tenemos dos tipos de productos: el <strong>producto escalar (interno; <span class="math inline">\(E_{m,n} = (A_m \cdot B_n)\)</span>)</strong> y el <strong>producto externo</strong>. Solo vamos a explicar el primero porque es el que nos interesa para los fines del curso. En este la operación está dada como <span class="math inline">\(E_{m,n} = \sum a_{m} \times b_n\)</span>; es decir, el valor de cada celda de la matriz es el resultado de sumar los productos de los valores de la columna <span class="math inline">\(m\)</span> por los valores del renglón <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+E = \left[
+\begin{matrix}
+(
+(a_{1,1} \times b_{1,1}) +  
+(a_{1,2} \times b_{2,1}) +
+(a_{1,3} \times b_{3,1})
+)&amp;
+(
+(a_{1,1} \times b_{1,2}) +  
+(a_{1,2} \times b_{2,2}) +
+(a_{1,3} \times b_{3,2})
+)&amp;
+(
+(a_{1,1} \times b_{1,3}) +  
+(a_{1,2} \times b_{2,3}) +
+(a_{1,3} \times b_{3,3})
+)\\
+(
+(a_{2,1} \times b_{1,1}) +  
+(a_{2,2} \times b_{2,1}) +
+(a_{2,3} \times b_{3,1})
+)&amp;
+(
+(a_{2,1} \times b_{1,2}) +  
+(a_{2,2} \times b_{2,2}) +
+(a_{2,3} \times b_{3,2})
+)&amp;
+(
+(a_{2,1} \times b_{1,3}) +  
+(a_{2,2} \times b_{2,3}) +
+(a_{2,3} \times b_{3,3})
+)\\
+(
+(a_{3,1} \times b_{1,1}) +  
+(a_{3,2} \times b_{2,1}) +
+(a_{3,3} \times b_{3,1})
+)&amp;
+(
+(a_{3,1} \times b_{1,2}) +  
+(a_{3,2} \times b_{2,2}) +
+(a_{3,3} \times b_{3,2})
+)&amp;
+(
+(a_{3,1} \times b_{1,3}) +  
+(a_{3,2} \times b_{2,3}) +
+(a_{3,3} \times b_{3,3})
+)\\
+\end{matrix}
+\right]
+\end{align*}\]</span></p>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Debido a que estamos multiplicando los renglones (<span class="math inline">\(m\)</span>) de una matriz por las columnas (<span class="math inline">\(n\)</span>) de la otra, es necesario que <span class="math inline">\(m_A = n_B\)</span>.</p>
+</div>
+</div>
+<p>¿Para qué puse todos esos chorizos de operaciones matriciales? Créeme que no fue para presumir que puedo escribir matrices en LaTeX/Markdown, sino porque son la base de (posiblemente) las estructuras más importantes para las técnicas multivariadas: las matrices de covarianzas y de correlación.</p>
+</section>
+</section>
+<section id="de-sigma-a-sigma-la-matriz-de-covarianzas" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="de-sigma-a-sigma-la-matriz-de-covarianzas"><span class="header-section-number">14.3</span> De <span class="math inline">\(\sigma\)</span> a <span class="math inline">\(\Sigma\)</span>: La matriz de covarianzas</h2>
+<p>Empecemos por la covarianza pues, como recordarás del <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a>, la correlación es solo un cociente de la covarianza y, de hecho, comenzemos recordando qué es matemáticamente la covarianza entre dos variables: la esperanza matemática (<span class="math inline">\(E\)</span>; el promedio, vamos) del producto de la diferencia de cada valor de cada variable menos la media de la variable:</p>
+<p><span class="math display">\[
+Cov(x,y) = E[(x-\mu_x)(y-\mu_y)]
+\]</span></p>
+<p>Si la covarianza de <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> es el producto de <strong>centrar</strong> (retirarle la media) a cada variable, podemos ver a la varianza como la covarianza de una variable con respecto a sí misma:</p>
+<p><span class="math display">\[
+Cov(y,y) = Var(y) = \sigma^2(y) \Rightarrow E[(y-\mu_y)(y-\mu_{y})] = E[(y-\mu_y)^2]
+\]</span> Estos son las covarianzas y varianzas poblacionales, pero recordarás que nosotros trabajamos con las varianzas (y por extensión covarianzas) muestrales, lo que se vería como:</p>
+<p><span class="math display">\[\begin{align*}
+s^2 = cov(y,y) = \frac{\sum_i^n(y_i-\bar{y})^2}{n-1} \\
+cov(x,y) = \frac{\sum_i^n(x_i-\bar{x})(y_i-\bar{y})}{n-1}
+\end{align*}\]</span></p>
+<p>Al ser esto así podemos entonces calcular, al mismo tiempo, todas las covarianzas y varianzas. ¿Cómo? Siguiendo tres pasos:</p>
+<ol type="1">
+<li>Centrar la matriz (<span class="math inline">\(a_{m,n}-\bar{a}_n\)</span>)</li>
+<li>Multiplicar su transpuesta por la matriz original (<span class="math inline">\(C^T_A \cdot C_A\)</span>):</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recuerda que para realizar el producto interno de dos matrices necesitamos que <span class="math inline">\(m_a = n_b\)</span>, por lo que el orden de la multiplicación debe de ser, forzosamente, <span class="math inline">\(C^T_A \cdot C_A\)</span>; es decir, la transpuesta por la original</p>
+</div>
+</div>
+<p><span class="math display">\[\begin{align*}
+C^T_A =
+\left[
+
+\begin{matrix}
+(a_{1,1} - \bar{a}_1) &amp;
+(a_{2,1} - \bar{a}_1)
+\\
+(a_{1,2} - \bar{a}_2) &amp;
+(a_{2,2} - \bar{a}_2)
+\\
+
+\end{matrix}
+\right]
+
+\cdot
+
+C_A =
+
+\left[
+\begin{matrix}
+(a_{1,1} - \bar{a}_1) &amp;
+(a_{1,2} - \bar{a}_2)
+\\
+(a_{2,1} - \bar{a}_1) &amp;
+(a_{2,2} - \bar{a}_2)
+\\
+
+\end{matrix}
+\right]
+
+=
+\end{align*}\]</span></p>
+<p><span class="math display">\[\begin{align*}
+=
+\left[
+
+\begin{matrix}
+
+[((a_{1,1} - \bar{a}_1)
+\times
+(a_{1,1} - \bar{a}_1))
++
+((a_{2,1} - \bar{a}_1)
+\times
+(a_{2,1} - \bar{a}_1))]
+
+&amp;
+
+[((a_{1,1} - \bar{a}_1)
+\times
+(a_{1,2} - \bar{a}_2))
++
+((a_{2,1} - \bar{a}_1)
+\times
+(a_{2,2} - \bar{a}_2))]
+
+\\
+[((a_{1,2} - \bar{a}_2)
+\times
+(a_{1,1} - \bar{a}_1))
++
+((a_{2,2} - \bar{a}_2)
+\times
+(a_{2,1} - \bar{a}_1))]  
+
+&amp;
+
+[((a_{1,2} - \bar{a}_2)
+\times
+(a_{1,2} - \bar{a}_2))
++
+((a_{2,2} - \bar{a}_2)
+\times
+(a_{2,2} - \bar{a}_2))]
+\\
+
+\end{matrix}
+\right]
+\end{align*}\]</span></p>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si pones atención a las celdas que están en la <strong>diagonal</strong> te darás cuenta de que los productos que conforman la suma son iguales, por lo que podemos simplificarlos como como productos cuadráticos.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Multiplicar por <span class="math inline">\(\frac{1}{m-1}\)</span>, para completar nuestra varianza muestral; es decir, vamos a dividir cada elemento de nuestra matriz sobre el número de observaciones (renglones) que tenemos menos uno (grados de libertad):</li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+=
+\left[
+
+\begin{matrix}
+
+[(a_{1,1}-\bar{a}_1)^2+(a_{2,1}-\bar{a}_1)^2]
+
+&amp;
+
+[((a_{1,1} - \bar{a}_1)
+\times
+(a_{1,2} - \bar{a}_2))
++
+((a_{2,1} - \bar{a}_1)
+\times
+(a_{2,2} - \bar{a}_2))]
+
+\\
+[((a_{1,2} - \bar{a}_2)
+\times
+(a_{1,1} - \bar{a}_1))
++
+((a_{2,2} - \bar{a}_2)
+\times
+(a_{2,1} - \bar{a}_1))]  
+
+&amp;
+
+[(a_{1,2}-\bar{a}_2)^2+(a_{2,2}-\bar{a}_2)^2]
+\\
+
+\end{matrix}
+\right]
+
+\cdot \frac{1}{2-1}
+\end{align*}\]</span></p>
+<p>Si simplificamos todo esto, tenemos nuestra matriz de covarianzas:</p>
+<p><span class="math display">\[\begin{align*}
+\Sigma = \left[
+\begin{matrix}
+s^2(x) &amp; cov(x,y) \\
+cov(x,y) &amp; s^2(y)
+\end{matrix}
+\right]
+\end{align*}\]</span></p>
+</section>
+<section id="matriz-de-correlación" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="matriz-de-correlación"><span class="header-section-number">14.4</span> Matriz de correlación</h2>
+<p>Ahora recordemos que la correlación entre dos variables es el resultado de dividir su covarianza entre el producto de sus desviaciones estándar (que ez la raíz cuadrada de la varianza), tal que:</p>
+<p><span class="math display">\[
+cor(x,y) = \frac{cov(x,y)}{\sigma_x \sigma_y} = \frac{\sum X_cY_c}{\sqrt{\sum X^2_c \sum Y^2_c}}
+\]</span></p>
+<p>Partiendo de esta definición, calcular la matriz de correlación también se reduce a tres pasos:</p>
+<ol type="1">
+<li>Centrar y estandarizar la matriz; es decir, a cada valor le vamos a restar la media de su columna y lo vamos a dividir entre la desviación estándar de su columna <span class="math inline">\(\left(\frac{a_{m,n}-\bar{a}_n}{\sigma_n} \right)\)</span>.</li>
+<li>Multiplicar la matriz transpuesta por la matriz original (<span class="math inline">\(E_A^T \cdot E_A\)</span>).</li>
+<li>Multiplicar por <span class="math inline">\(\frac{1}{m}\)</span></li>
+</ol>
+<p><span class="math display">\[\begin{align*}
+
+E^T_A =
+\left[
+\begin{matrix}
+\frac{a_{1,1} - \bar{a}_1}{\sigma_1} &amp;
+\frac{a_{2,1} - \bar{a}_1}{\sigma_1}
+\\
+\frac{a_{1,2} - \bar{a}_2}{\sigma_2} &amp;
+\frac{a_{2,2} - \bar{a}_1}{\sigma_2}
+\\
+
+\end{matrix}
+\right]
+
+\cdot
+
+E_A =
+
+\left[
+\begin{matrix}
+\frac{a_{1,1} - \bar{a}_1}{\sigma_1} &amp;
+\frac{a_{1,2} - \bar{a}_2}{\sigma_2}
+\\
+\frac{a_{2,1} - \bar{a}_1}{\sigma_1} &amp;
+\frac{a_{2,2} - \bar{a}_2}{\sigma_2}
+\\
+
+\end{matrix}
+\right]
+
+\cdot \frac{1}{2}
+
+= \\
+
+r =
+\left[
+\begin{matrix}
+1 &amp; cor(x,y) \\
+cor(x,y) &amp; 1
+\end{matrix}
+\right]
+\end{align*}\]</span></p>
+<p>Y con esto tenemos nuestra matriz de correlaciones.</p>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si te das cuenta, el orden de los pasos permite que aprovechemos las características del producto matricial interno para poder estimar todas las covarianzas o correlaciones “juntas”. Si bien es cierto que a mano puede sonar a que no hay mucha diferencia, esto simplifica mucho las cosas cuando empezamos a escalar en los procedimientos.</p>
+</div>
+</div>
+</section>
+<section id="matrices-de-covarianza-y-corrlación-en-r" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="matrices-de-covarianza-y-corrlación-en-r"><span class="header-section-number">14.5</span> Matrices de covarianza y corrlación en <code>R</code></h2>
+<p>Afortunadamente para nosotros, para obtener estas matrices en <code>R</code> utilizaremos las mismas funciones que para el cálculo individual (y por consiguiente podremos calcular también la <span class="math inline">\(\rho\)</span> de Spearman). Utilicemos como ejemplo la base de datos <code>mtcars</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mpg"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["cyl"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["disp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["hp"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["drat"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["wt"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["qsec"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["vs"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["am"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["gear"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["carb"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.620","7":"16.46","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4"},{"1":"21.0","2":"6","3":"160","4":"110","5":"3.90","6":"2.875","7":"17.02","8":"0","9":"1","10":"4","11":"4","_rn_":"Mazda RX4 Wag"},{"1":"22.8","2":"4","3":"108","4":"93","5":"3.85","6":"2.320","7":"18.61","8":"1","9":"1","10":"4","11":"1","_rn_":"Datsun 710"},{"1":"21.4","2":"6","3":"258","4":"110","5":"3.08","6":"3.215","7":"19.44","8":"1","9":"0","10":"3","11":"1","_rn_":"Hornet 4 Drive"},{"1":"18.7","2":"8","3":"360","4":"175","5":"3.15","6":"3.440","7":"17.02","8":"0","9":"0","10":"3","11":"2","_rn_":"Hornet Sportabout"},{"1":"18.1","2":"6","3":"225","4":"105","5":"2.76","6":"3.460","7":"20.22","8":"1","9":"0","10":"3","11":"1","_rn_":"Valiant"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora estimemos ambas matrices:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de covarianzas</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cov_mat <span class="ot">&lt;-</span> <span class="fu">cov</span>(mtcars)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de correlación</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(mtcars)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Las imprimimos en pantalla</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>cov_mat</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             mpg         cyl        disp          hp         drat          wt
+mpg    36.324103  -9.1723790  -633.09721 -320.732056   2.19506351  -5.1166847
+cyl    -9.172379   3.1895161   199.66028  101.931452  -0.66836694   1.3673710
+disp -633.097208 199.6602823 15360.79983 6721.158669 -47.06401915 107.6842040
+hp   -320.732056 101.9314516  6721.15867 4700.866935 -16.45110887  44.1926613
+drat    2.195064  -0.6683669   -47.06402  -16.451109   0.28588135  -0.3727207
+wt     -5.116685   1.3673710   107.68420   44.192661  -0.37272073   0.9573790
+qsec    4.509149  -1.8868548   -96.05168  -86.770081   0.08714073  -0.3054816
+vs      2.017137  -0.7298387   -44.37762  -24.987903   0.11864919  -0.2736613
+am      1.803931  -0.4657258   -36.56401   -8.320565   0.19015121  -0.3381048
+gear    2.135685  -0.6491935   -50.80262   -6.358871   0.27598790  -0.4210806
+carb   -5.363105   1.5201613    79.06875   83.036290  -0.07840726   0.6757903
+             qsec           vs           am        gear        carb
+mpg    4.50914919   2.01713710   1.80393145   2.1356855 -5.36310484
+cyl   -1.88685484  -0.72983871  -0.46572581  -0.6491935  1.52016129
+disp -96.05168145 -44.37762097 -36.56401210 -50.8026210 79.06875000
+hp   -86.77008065 -24.98790323  -8.32056452  -6.3588710 83.03629032
+drat   0.08714073   0.11864919   0.19015121   0.2759879 -0.07840726
+wt    -0.30548161  -0.27366129  -0.33810484  -0.4210806  0.67579032
+qsec   3.19316613   0.67056452  -0.20495968  -0.2804032 -1.89411290
+vs     0.67056452   0.25403226   0.04233871   0.0766129 -0.46370968
+am    -0.20495968   0.04233871   0.24899194   0.2923387  0.04637097
+gear  -0.28040323   0.07661290   0.29233871   0.5443548  0.32661290
+carb  -1.89411290  -0.46370968   0.04637097   0.3266129  2.60887097</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cor_mat</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            mpg        cyl       disp         hp        drat         wt
+mpg   1.0000000 -0.8521620 -0.8475514 -0.7761684  0.68117191 -0.8676594
+cyl  -0.8521620  1.0000000  0.9020329  0.8324475 -0.69993811  0.7824958
+disp -0.8475514  0.9020329  1.0000000  0.7909486 -0.71021393  0.8879799
+hp   -0.7761684  0.8324475  0.7909486  1.0000000 -0.44875912  0.6587479
+drat  0.6811719 -0.6999381 -0.7102139 -0.4487591  1.00000000 -0.7124406
+wt   -0.8676594  0.7824958  0.8879799  0.6587479 -0.71244065  1.0000000
+qsec  0.4186840 -0.5912421 -0.4336979 -0.7082234  0.09120476 -0.1747159
+vs    0.6640389 -0.8108118 -0.7104159 -0.7230967  0.44027846 -0.5549157
+am    0.5998324 -0.5226070 -0.5912270 -0.2432043  0.71271113 -0.6924953
+gear  0.4802848 -0.4926866 -0.5555692 -0.1257043  0.69961013 -0.5832870
+carb -0.5509251  0.5269883  0.3949769  0.7498125 -0.09078980  0.4276059
+            qsec         vs          am       gear        carb
+mpg   0.41868403  0.6640389  0.59983243  0.4802848 -0.55092507
+cyl  -0.59124207 -0.8108118 -0.52260705 -0.4926866  0.52698829
+disp -0.43369788 -0.7104159 -0.59122704 -0.5555692  0.39497686
+hp   -0.70822339 -0.7230967 -0.24320426 -0.1257043  0.74981247
+drat  0.09120476  0.4402785  0.71271113  0.6996101 -0.09078980
+wt   -0.17471588 -0.5549157 -0.69249526 -0.5832870  0.42760594
+qsec  1.00000000  0.7445354 -0.22986086 -0.2126822 -0.65624923
+vs    0.74453544  1.0000000  0.16834512  0.2060233 -0.56960714
+am   -0.22986086  0.1683451  1.00000000  0.7940588  0.05753435
+gear -0.21268223  0.2060233  0.79405876  1.0000000  0.27407284
+carb -0.65624923 -0.5696071  0.05753435  0.2740728  1.00000000</code></pre>
+</div>
+</div>
+<p>Veámos la matriz de correlaciones gráficamente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>corrplot<span class="sc">::</span><span class="fu">corrplot</span>(cor_mat, <span class="at">method =</span> <span class="st">"ellipse"</span>, <span class="at">type =</span> <span class="st">"upper"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Ahora utilicemos una función que, en un solo paso, computará la matriz de correlación, realizará una prueba de significancia para cada una y además nos presentará la matriz de manera gráfica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Descarga la función desde esa url y la carga en memoria</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"http://www.sthda.com/upload/rquery_cormat.r"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Para fines prácticos se extrae un subconjunto de las columnas</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mtcars[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>)] </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Se aplica la función</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rquery.cormat</span>(mydata)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$r
+        hp  disp    wt  qsec  mpg drat
+hp       1                            
+disp  0.79     1                      
+wt    0.66  0.89     1                
+qsec -0.71 -0.43 -0.17     1          
+mpg  -0.78 -0.85 -0.87  0.42    1     
+drat -0.45 -0.71 -0.71 0.091 0.68    1
+
+$p
+          hp    disp      wt  qsec     mpg drat
+hp         0                                   
+disp 7.1e-08       0                           
+wt   4.1e-05 1.2e-11       0                   
+qsec 5.8e-06   0.013    0.34     0             
+mpg  1.8e-07 9.4e-10 1.3e-10 0.017       0     
+drat    0.01 5.3e-06 4.8e-06  0.62 1.8e-05    0
+
+$sym
+     hp disp wt qsec mpg drat
+hp   1                       
+disp ,  1                    
+wt   ,  +    1               
+qsec ,  .       1            
+mpg  ,  +    +  .    1       
+drat .  ,    ,       ,   1   
+attr(,"legend")
+[1] 0 ' ' 0.3 '.' 0.6 ',' 0.8 '+' 0.9 '*' 0.95 'B' 1</code></pre>
+</div>
+</div>
+<p>Otra alternativa es utilizar la función <code>chart.Correlation(data, histogram)</code> de la librería <code>PerformanceAnalytics</code>, en la cual se muestran todos resultados en una misma gráfica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>PerformanceAnalytics<span class="sc">::</span><span class="fu">chart.Correlation</span>(mydata, <span class="at">histogram =</span> T, <span class="at">pch =</span> <span class="dv">19</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Un comentario final al respecto de estas matrices es que, además de ser la base de las técnicas multivariadas, nos permiten evaluar la asociación entre nuestras variables sin comprometer un modelo predictivo, a la vez que nos permitirán hacer un filtrado de nuestras variables para evitar autocorrelaciones o incluir variables poco informativas, aunque de esto hablaremos más adelante.</p>
+</section>
+<section id="normalidad-multivariada" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="normalidad-multivariada"><span class="header-section-number">14.6</span> Normalidad multivariada</h2>
+<p>Para analizar si nuestros datos multivariados se ajustan a una distribución normal multivariada utilizaremos la librería <code>MVN</code>, cuya función <code>mvn(data, mvnTest, multivariatePlot)</code> nos permite realizar una serie de pruebas tanto multi como univariadas:</p>
+<section id="prueba-de-mardia-1970" class="level3" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="prueba-de-mardia-1970"><span class="header-section-number">14.6.1</span> Prueba de Mardia (1970)</h3>
+<p>Consiste en analizar si los momentos de la distribución Mv de los datos difieren de los esperados de una distribución Normal Mv (<a href="http://bit.ly/mardia_test">Mardia 1970</a>), las hipótesis nulas son:</p>
+<ol type="1">
+<li><span class="math inline">\(H_0: S_{obs} = S_{NMv_{µ, \Sigma}}\)</span></li>
+<li><span class="math inline">\(H_0: K_{obs} = K_{NMv_{µ, \Sigma}}\)</span></li>
+</ol>
+<p>Donde <span class="math inline">\(\mu\)</span> representa el vector de medias de cada variable y <span class="math inline">\(\Sigma\)</span> la matriz de covarianzas.</p>
+<p>Al realizar esta prueba vemos que la distribución Mv observada tiene una curtosis adecuada, aunque se encuentra fuertemente sesgada. Si analizamos los datos univariados vemos que en apariencia 2/6 variables presentan normalidad univariada.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mvntest <span class="ot">&lt;-</span> MVN<span class="sc">::</span><span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"mardia"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mardia_test <span class="ot">&lt;-</span> mvntest<span class="sc">$</span>multivariateNormality</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>unitest <span class="ot">&lt;-</span> mvntest<span class="sc">$</span>univariateNormality</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>mardia_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Test"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Statistic"],"name":[2],"type":["fct"],"align":["left"]},{"label":["p value"],"name":[3],"type":["fct"],"align":["left"]},{"label":["Result"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Mardia Skewness","2":"77.6519454787057","3":"0.0293424460277968","4":"NO"},{"1":"Mardia Kurtosis","2":"0.241701622075929","3":"0.80901137258975","4":"YES"},{"1":"MVN","2":"NA","3":"NA","4":"NO"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>unitest</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Test"],"name":[1],"type":["I<chr>"],"align":["right"]},{"label":["Variable"],"name":[2],"type":["I<chr>"],"align":["right"]},{"label":["Statistic"],"name":[3],"type":["I<chr>"],"align":["right"]},{"label":["p value"],"name":[4],"type":["I<chr>"],"align":["right"]},{"label":["Normality"],"name":[5],"type":["I<chr>"],"align":["right"]}],"data":[{"1":"Anderson-Darling","2":"mpg","3":"0.5797","4":"0.1207","5":"YES","_rn_":"1"},{"1":"Anderson-Darling","2":"disp","3":"0.8745","4":"0.0221","5":"NO","_rn_":"2"},{"1":"Anderson-Darling","2":"hp","3":"0.7077","4":"0.0584","5":"YES","_rn_":"3"},{"1":"Anderson-Darling","2":"drat","3":"0.7180","4":"0.0550","5":"YES","_rn_":"4"},{"1":"Anderson-Darling","2":"wt","3":"0.6091","4":"0.1038","5":"YES","_rn_":"5"},{"1":"Anderson-Darling","2":"qsec","3":"0.2363","4":"0.7693","5":"YES","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="prueba-de-henze-zirkler" class="level3" data-number="14.6.2">
+<h3 data-number="14.6.2" class="anchored" data-anchor-id="prueba-de-henze-zirkler"><span class="header-section-number">14.6.2</span> Prueba de Henze-Zirkler</h3>
+<p>Si observamos con atención los valores de p, veremos que hay algunos que se encuentran cercanos al umbral de 0.05 por lo que un análisis a partir de los cuantiles de la distribución puede ser una alternativa más informativa. Para ello podemos utilizar la prueba de Henze-Zirkler. Esta prueba considera una hipótesis compuesta, en la cual <em>la distribución de X es una distribución normal no degenerada</em>, cuyos resultados son consistentes contra cualquier distribución alternativa no normal (por ello compuesta). La representación está dada en términos de <span class="math inline">\(L^2\)</span> (Distancia de Mahalanobis, más adelante hablaremos sobre medidas de distancia). Al ser una prueba de bondad de ajuste (observado vs.&nbsp;esperado), el estadístico de prueba sigue una distribución <span class="math inline">\(\chi^2\)</span> (<a href="http://bit.ly/Henze_Zirkler">Henze y Zirkler 2007</a>).</p>
+<p>Aplicandola con <code>mvn()</code> vemos que también sugiere una falta de normalidad, lo cual podemos comprobar al ver el gráfico Cuantil-Cuantil</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>hz_test <span class="ot">&lt;-</span> MVN<span class="sc">::</span><span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"hz"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">multivariatePlot =</span> <span class="st">"qq"</span>)<span class="sc">$</span>multivariateNormality</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>hz_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Test"],"name":[1],"type":["chr"],"align":["left"]},{"label":["HZ"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["MVN"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Henze-Zirkler","2":"1.046162","3":"0.001459679","4":"NO"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ese gráfico, aunque informativo, puede trabajarse para hacerse más agradable a la vista utilizando ggplot2 utilizando la siguiente función personalizada creada a partir del código utilizado para la gráfica anterior:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Funciones personalizadas:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraida de la función mvn(multivariatePlot = "qq") para un gráfico QQ</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># para normalidad multivariada utilizando la distancia de mahalanobis</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>ji2_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(df){</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Datos</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">dim</span>(mydata)[<span class="dv">1</span>] <span class="co"># número de datos</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">dim</span>(mydata)[<span class="dv">2</span>] <span class="co"># número de grupos</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Centramos los datos (a-µ(a)) sin escalarlos (sin dividir por su \sigma)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  dif <span class="ot">&lt;-</span> <span class="fu">scale</span>(mydata, <span class="at">scale =</span> F)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Cálculo de la distancia de mahalanobis^2</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> <span class="fu">diag</span>(dif <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">cov</span>(mydata), <span class="at">tol =</span> <span class="fl">1e-25</span>) <span class="sc">%*%</span> <span class="fu">t</span>(dif)) </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  r <span class="ot">&lt;-</span> <span class="fu">rank</span>(d) <span class="co"># Asignación de rangos a las distancias</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtención de los cuantiles teóricos según la distribución ji^2</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  ji2 <span class="ot">&lt;-</span>  <span class="fu">qchisq</span>((r <span class="sc">-</span> <span class="fl">0.5</span>)<span class="sc">/</span>n, p)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reunimos los objetos en un data.frame para graficar con ggplot2</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  ji2_plot_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(d, ji2)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Graficado</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  ji2_qq <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ji2_plot_data, <span class="fu">aes</span>(<span class="at">x =</span> d, <span class="at">y =</span> ji2)) <span class="sc">+</span> </span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                        <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>,</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>                        <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">bquote</span>(<span class="st">"Gráfico QQ de"</span> <span class="sc">~</span><span class="er">~</span> {chi<span class="sc">^</span><span class="dv">2</span>} <span class="sc">~</span><span class="er">~</span> <span class="st">", g.l = "</span><span class="sc">~</span> .(p)),</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">bquote</span>(<span class="st">"Distancia de Mahalanobis ("</span><span class="sc">~</span>{D<span class="sc">^</span><span class="dv">2</span>}<span class="sc">~</span><span class="st">") </span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="st">                                   vs. Cuantiles teóricos"</span>),</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Basado en mvn(..., multivariatePlot == </span><span class="sc">\"</span><span class="st">qq</span><span class="sc">\"</span><span class="st">)"</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ji2_qq)</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>qqjiplot <span class="ot">&lt;-</span> <span class="fu">ji2_plot</span>(mydata) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>qqjiplot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="prueba-de-royston" class="level3" data-number="14.6.3">
+<h3 data-number="14.6.3" class="anchored" data-anchor-id="prueba-de-royston"><span class="header-section-number">14.6.3</span> Prueba de Royston</h3>
+<p>Esta prueba es una extensión multivariada de la prueba por excelencia para la normalidad univariada: la prueba de Shapiro-Wilk’s. Originalmente propuesta en 1983, aunque fue corregida/ampliada por el mismo autor en 1992 (<a href="http://bit.ly/Royston_otros">Royston vs.&nbsp;otras</a>). Funciona mejor para muestras pequeñas, aunque no se recomienda emplearla con menos de 3 observaciones o con más de 2000.</p>
+<p>Su implementación sigue la misma línea que los casos anteriores. Si analizamos el valor de p, veremos que se encuentra en el límite de la significancia a un <span class="math inline">\(\alpha = 0.05\)</span>; sin embargo, si consideramos también el gráfico QQ que elaboramos anteriormente, no podemos asumir que esas desviaciones sean despreciables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>royston_test <span class="ot">&lt;-</span> <span class="fu">mvn</span>(mydata, <span class="at">mvnTest =</span> <span class="st">"royston"</span>)<span class="sc">$</span>multivariateNormality</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>royston_test</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Test"],"name":[1],"type":["chr"],"align":["left"]},{"label":["H"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["p value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["MVN"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Royston","2":"6.680718","3":"0.04965041","4":"NO"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="igualdad-de-dispersiones-multivariadas" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="igualdad-de-dispersiones-multivariadas"><span class="header-section-number">14.7</span> Igualdad de dispersiones multivariadas</h2>
+<p>Conforme vayamos avanzando en el curso veremos que, entre los supuestos de algunas pruebas, vamos a encontrar el de “igualdad de dispersiones multivariadas”; <em>i.e.</em>, igualdad de matrices de covarianza. Una alternativa es utilizar la prueba de <span class="citation" data-cites="Anderson_2005">Anderson (<a href="references.html#ref-Anderson_2005" role="doc-biblioref">2005</a>)</span>, la cual es un análogo multivariado a la prueba de Levene para la homogeneidad de varianzas. La prueba de hipótesis está basada en distancias no euclidianas entre los grupos (<em>i.e.</em>, no utiliza el teorema de Pitágoras :( ). Un dato curioso es que este método también se ha utilizado para evaluar la diversidad <span class="math inline">\(\beta\)</span> de una comunidad.</p>
+<p>Para su implementación en R utilizaremos la función <code>betadisper</code> de la librería <code>vegan</code>. Al ser un método basado en distancias, primero habrá que transformar los datos a una matriz de distancias utilizando alguna de las funciones <code>dist</code>, <code>betadiver</code> o <code>vegdist</code>. Necesitamos, además, establecer los grupos a utilizar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">vegdist</span>(mydata, <span class="at">method =</span> <span class="st">"bray"</span>, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"median"</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.character</span>(mtcars<span class="sc">$</span>cyl)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Por fines prácticos no se muestra,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ya que calcula una distancia entre cada par de instancias o grupos,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># resultando en matrices sumamente grandes</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#dist.mat</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ahora utilizaremos la función <code>betadisper</code> para comprobar la homogeneidad de dispersiones entre los distintos cilindros. Esta prueba únicamente genera el espacio multivariado para realizar la prueba, realizando un ACP para reducir la dimensionalidad de la base de datos y estimar las distancias a la mediana de cada uno de los grupos establecidos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar el procedimiento</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>disp_mv <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">betadisper</span>(dist_mat,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">group =</span> groups, <span class="at">type =</span> <span class="st">"median"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>disp_mv</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Homogeneity of multivariate dispersions
+
+Call: vegan::betadisper(d = dist_mat, group = groups, type = "median")
+
+No. of Positive Eigenvalues: 18
+No. of Negative Eigenvalues: 13
+
+Average distance to median:
+      4       6       8 
+0.09587 0.06171 0.08251 
+
+Eigenvalues for PCoA axes:
+(Showing 8 of 31 eigenvalues)
+   PCoA1    PCoA2    PCoA3    PCoA4    PCoA5    PCoA6    PCoA7    PCoA8 
+1.392690 0.091453 0.040689 0.037914 0.025951 0.009016 0.007642 0.004007 </code></pre>
+</div>
+</div>
+<p>Si realizamos la prueba de hipótesis vemos que, al parecer, las dispersiones multiviariadas son similares entre los 3 grupos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prueba de hipótesis</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(disp_mv)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Mean Sq"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F value"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"0.00499152","3":"0.00249576","4":"1.238726","5":"0.3046332","_rn_":"Groups"},{"1":"29","2":"0.05842862","3":"0.00201478","4":"NA","5":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Ahora veamos las dispersiones gráficamente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Análisis gráfico</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(disp_mv, <span class="at">ellipse =</span> T, <span class="at">hull =</span> F)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Al analizar el gráfico vemos que las dispersiones son similares; sin embargo, pareciera que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, en tonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (<code>TukeyHSD</code>). Los resultados sugieren que las dispersiones con un <span class="math inline">\(\alpha = 0.05\)</span> son similares, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>mod_HSD <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(disp_mv)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>mod_HSD <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(mod_HSD<span class="sc">$</span>group, <span class="at">comp =</span> <span class="fu">dimnames</span>(mod_HSD<span class="sc">$</span>group)[[<span class="dv">1</span>]])</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>mod_HSD</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["diff"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["lwr"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["upr"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["p.adj"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["comp"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.03415902","2":"-0.08775592","3":"0.01943787","4":"0.2727664","5":"6-4","_rn_":"6-4"},{"1":"-0.01335766","2":"-0.05802174","3":"0.03130642","4":"0.7427965","5":"8-4","_rn_":"8-4"},{"1":"0.02080137","2":"-0.03051376","3":"0.07211649","4":"0.5820846","5":"8-6","_rn_":"8-6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Al igual que en el caso anterior podemos utilizar <code>ggplot</code> para personalizar el gráfico:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>hsd_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mod_HSD, </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x =</span> comp)) <span class="sc">+</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> diff), </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.7</span>)<span class="sc">+</span> </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">colour =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span> </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Diferencias en dispersión multivariada e IC"</span>,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="st">"Prueba HSD de Tukey"</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="st">"Grupos"</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="dv">0</span><span class="fl">+0.005</span>, </span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="dv">0</span>),</span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr),</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr)<span class="sc">-</span><span class="fl">0.005</span>, </span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr),<span class="dv">2</span>)),</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr),</span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>                       <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a>            <span class="fu">annotate</span>(<span class="st">"text"</span>,</span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>                     <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr)<span class="sc">-</span><span class="fl">0.005</span>, </span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> <span class="fu">as.character</span>(<span class="fu">round</span>(<span class="fu">min</span>(mod_HSD<span class="sc">$</span>lwr),<span class="dv">2</span>)),</span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colour =</span> <span class="st">"firebrick"</span></span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>                     ) <span class="sc">+</span></span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"p = "</span>, <span class="fu">round</span>(p.adj,<span class="dv">2</span>)), <span class="at">y =</span> <span class="dv">0</span>),</span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>                       <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nudge_y =</span> <span class="fu">max</span>(mod_HSD<span class="sc">$</span>upr)<span class="sc">+</span><span class="fl">0.005</span>, <span class="at">colour =</span> <span class="st">"gray50"</span>)</span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>hsd_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="implicaciones-analíticas-de-la-multidimensionalidad" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="implicaciones-analíticas-de-la-multidimensionalidad"><span class="header-section-number">14.8</span> Implicaciones analíticas de la multidimensionalidad</h2>
+<p>Es importante mencionar que <strong>entre más incrementemos la dimensionalidad de nuestro problema, más difícil será resumir en un solo resultado las pruebas de nuestros análisis</strong> y, en consecuencia, deberemos de considerar distintas técnicas/estrategias que analicen nuestros datos desde distintas perspectivas antes de emitir un juicio o extraer conclusiones. Por esta razón, es sumamente importante que realicemos una selección de variables de manera rigurosa antes de comenzar nuestro análisis, ya que incluir variables innecesariamente únicamente incrementará la varianza de los datos sin aportarnos ninguna información adicional, causando desviaciones de la normalidad, modelos complejos sobre o infra ajustados y pérdidas de poder estadístico.</p>
+<p>En cuanto a la normalidad, es importante mencionar que si nuestros datos en realidad no se ajustan, o se encuentran fuertemente desviados de la normalidad, las conclusiones que extraigamos serán únicamente sobre la tendencia más general de nuestros datos (Revisar: desigualdad/teorema de Chebyshev) y, en consecuencia, pueden no ser una representación completa de nuestras muestras. Si esto es importante o no, dependerá de nuesta pregunta de investigación y qué tan fino querramos que sea el análisis.</p>
+</section>
+<section id="transformaciones-o-deformaciones" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="transformaciones-o-deformaciones"><span class="header-section-number">14.9</span> Transformaciones o deformaciones</h2>
+<p>Habiendo tocado el tema de la estandarización, hablemos también del resto de transformaciones. En general, podemos considerar que existen <strong>dos tipos de transformaciones</strong>:</p>
+<ol type="1">
+<li>Aquellas que <strong>afectan la distribución de los datos</strong> (<em>e.g.</em>, logarítmica)</li>
+<li>Aquellas que simplemente <strong>cambian los límites de la distribución original</strong> (<em>e.g.</em>, MinMax)</li>
+</ol>
+<p>¿Cuál utilizar? Dependerá de nuestros objetivos para hacerla, lo cual me lleva al punto de que: <strong>NINGUNA transformación debe de ser aplicada sin cuidado</strong>. Hay que tener en cuenta que, aunque no se cambie la distribución de los datos, el análisis ya no se realiza sobre los datos originales, lo cual puede causar errores de interpretación. Con esto no quiero decir que las transformaciones sean malas, solo que hay que emplearlas con una justificación y asegurarnos de re-transformar los datos antes de hacer inferencias.</p>
+<p>Veamos algunas de las transformaciones más comunes y cuáles son sus consecuencias en los datos. Para ello, consideremos estos datos sin transformar, los cuales están altamente sesgados y, en consecuencia, bastante alejados de la normalidad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de graficado</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>kdeplots <span class="ot">&lt;-</span> <span class="cf">function</span>(data, aes){</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  kdeplots <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data, aes) <span class="sc">+</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_density</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Conteo de peces"</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Gráfico de densidad con datos y distrintas transformaciones"</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos: http://bit.ly/comm_transf"</span>,</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(kdeplots)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="dv">1</span>, <span class="dv">13</span>, <span class="dv">2</span>, <span class="dv">13</span>, <span class="dv">20</span>, <span class="dv">150</span>, <span class="dv">9</span>, <span class="dv">28</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">43</span>),</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">transf =</span> <span class="st">"originales"</span>)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf))</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="estandarización" class="level3" data-number="14.9.1">
+<h3 data-number="14.9.1" class="anchored" data-anchor-id="estandarización"><span class="header-section-number">14.9.1</span> Estandarización</h3>
+<p>Veamos el efecto de estandarizar los datos; es decir, utilizar la distribución Z. La <strong>estandarización consiste en centrar la variable (restarle su media) y dividirla entre su desviación estándar</strong>. El resultado es la misma distribución, aunque los datos ahora se encuentran escalados e indican a cuantas SD de la media se encuentra cada punto.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df, <span class="fu">data.frame</span>(<span class="at">datos =</span> (df<span class="sc">$</span>datos<span class="sc">-</span><span class="fu">mean</span>(df<span class="sc">$</span>datos))<span class="sc">/</span><span class="fu">sd</span>(df<span class="sc">$</span>datos),</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">transf =</span> <span class="st">"Z"</span>))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span> </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="transformación-logarítmica" class="level3" data-number="14.9.2">
+<h3 data-number="14.9.2" class="anchored" data-anchor-id="transformación-logarítmica"><span class="header-section-number">14.9.2</span> Transformación logarítmica</h3>
+<p>Posiblemente la transformación más conocida, utilizada y, en consecuencia, abusada. Se realiza aplicando la ecuación <span class="math inline">\(X_{log} = log_n(X)\)</span>. (OJO: si hay ceros será <span class="math inline">\(X_{log} = log_n(X+1)\)</span>, ya que el logaritmo de 0 no existe). Esta transformación cambia notablemente la distribución de los datos, acercándolos a una forma de campana. ¿Cuándo aplicarla? Cuando querramos forzar nuestros datos a una distribución normal para cumplir con los supuestos de alguna prueba paramétrica, linealizar los datos y, equivocadamente, ponerlos en la misma escala que otra variable. Con excepción del último caso, cualquiera de las formas está matemáticamente justificada, solo hay que tener en consideración que los datos no son los originales y que pueden no representar adecuadamente nuestro muestreo. Otro caso en el cual es válido utilizarlo es si queremos ver cuál es cuando tenemos distintos factores y nuestra variable de respuesta es el resultado de su interacción (producto) tal que <span class="math inline">\(Y = a \times b \times c \times d\times ... \times z\)</span> (efecto multiplicativo y no aditivo), ya que el resultado es una distribución con forma log-normal que no es posible capturar con los datos originales. Su re-transformación es <span class="math inline">\(n^{X_{log}}\)</span>. Salvo en el último caso, recomiendo contrastar los resultados con una prueba no paramétrica utilizando los datos originales y ver cuáles son las diferencias.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">log</span>(df<span class="sc">$</span>datos), <span class="at">transf =</span> <span class="st">"log(x)"</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="raíz-cuadrada" class="level3" data-number="14.9.3">
+<h3 data-number="14.9.3" class="anchored" data-anchor-id="raíz-cuadrada"><span class="header-section-number">14.9.3</span> Raíz cuadrada</h3>
+<p>Otra transformación muy empleada, consiste en en obtener la raíz cuadrada de cada uno de los datos (<span class="math inline">\(\sqrt{X}\)</span>, OJO: si hay valores negativos no se puede utilizar, hay que pasarlos a valores absolutos o añadir una constante para volverlos positivos). Veamos su efecto en la distribución. En este caso el cambio en la forma no es tan agresivo, y la consecuencia es únicamente que las diferencias entre los valores más altos y los más pequeños se redujo. Su re-transformación es: <span class="math inline">\(\sqrt{x}^2\)</span>. Su uso más común es con datos de conteo (abundancias, bacterias en una caja petri, etc.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">datos =</span> <span class="fu">sqrt</span>(df<span class="sc">$</span>datos), <span class="at">transf =</span> <span class="st">"sqrt(x)"</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">kdeplots</span>(df2, <span class="fu">aes</span>(datos, <span class="at">color =</span> transf)) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>transf, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c14_intromv_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="aprendizaje-automatizado" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="aprendizaje-automatizado"><span class="header-section-number">14.10</span> Aprendizaje Automatizado</h2>
+<p>Ahora hablemos sobre la diferencia entre estadística multivariada y aprendizaje automatizado. Hasta este momento la mayor parte de nuestros problemas han consistido en tener unos datos, encasillarlos en un conjunto de reglas utilizando programación o pruebas de significancia estadística para obtener una respuesta (<em>e.g.</em>, “las medias de los grupos fueron diferentes; <a href="#fig-tparadigm">Figura&nbsp;<span>14.3</span></a>); sin embargo, vimos en los <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> y <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a> que podemos decirle a la computadora que nos diga bajo qué reglas están jugando nuestros datos. Eso justamente es el <strong>aprendizaje automatizado</strong> <a href="#fig-supervised">Figura&nbsp;<span>14.4</span></a>, <a href="#fig-unsupervised">Figura&nbsp;<span>14.5</span></a>. Este <em>Machine Learning</em> es una parte de la estadística, en la cuál la computadora”aprende” a partir de ejemplos que nosotros le proporcionamos. En los temas de regresíon teníamos pares de datos <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span>, y le dijimos a la computadora que encontrara un conjunto de parámetros que permitieran transormar los valores de <span class="math inline">\(x\)</span> a los valores de <span class="math inline">\(y\)</span> con el menor error posible.</p>
+<div id="fig-tparadigm" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/tparadigm.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.3: Paradigma tradicional para resolver problemas.</figcaption><p></p>
+</figure>
+</div>
+<p>Dentro del aprendizaje automatizado tenemos dos categorías generales:</p>
+<ol type="1">
+<li><strong>Aprendizaje supervisado</strong>: Aquí se engloban las técnicas que, como nuestras regresiones, mapean los valores de nuestros predictores hacia los valores de la variable (o las variables) a predecir. Esta categoría se sub-divide en dos clases adicionales, que están definidas por las características de la variable dependiente:
+<ol type="a">
+<li><strong>Regresión</strong>: En esta la variable dependiente es una variable <strong>numérica</strong> (puede ser continua u ordinal). Tanto los modelos lineales como no lineales forman parte de esta clase de técnicas.</li>
+<li><strong>Clasificación</strong>: Si la regresión trabaja con variables numéricas (ordinales o continuas), la clasificación trabaja con variables <strong>nominales</strong> (algunas pueden trabajar con variables ordinales); es decir, lo que vamos a predecir son etiquetas de <strong>clases</strong> o grupos (de ahí “clasificación”). Tenemos una gran cantidad de algoritmos de clasificación, desde los más simples que suponen diferencias lineales entre las clases hasta algunos altamente complejos con grandes cantidades de parámetros como las redes neuronales convolucionales.</li>
+</ol></li>
+</ol>
+<div id="fig-supervised" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/supervised.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.4: Aprendizaje supervisado.</figcaption><p></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li><strong>Aprendizaje no supervisado</strong>: Aquí se engloban las técnicas o algoritmos que permiten extraer patrones ocultos en los datos. En el aprendizaje automatizado no tenemos una variable dependiente/de respuesta, solamente un conjunto de observaciones multivariadas de las cuales queremos extraer información que nos sea útil. Aquí también tenemos diversas clases, pero podemos resumirlas en dos:
+<ol type="a">
+<li><strong>Reducción de la dimensionalidad</strong>: Aquí el objetivo es poder “resumir” nuestros datos multivariados en solo una o dos valores, conservando la mayor cantidad de la información original. Aquí encontramos técnicas como los Ánálisis de Componentes Principales (PCA), Análisis de Coordenadas Principales (PCoA), Escalamiento Multidimensional No Métrico (NMDS). Si ya has tenido un acercamiento previo a estas técnicas puede que esto no te cuadre del todo, pues el NMDS (por ejemplo) es una técnica de ordenación. Y no estarías mal, pero en el proceso estamos reduciendo la dimensional original de los datos para poder realizar la ordenación. <strong>Nuestra entrada en estas técnicas es un conjunto de observaciones multivariadas, y la salida otro conjunto de observaciones compuesto por un menor número de variables</strong></li>
+<li><strong>Agrupamientos</strong>: El nombre lo dice todo, su objetivo es el formar grupos. ¿Cómo? Igual a como lo haríamos nosostros: juntando las instancias que más se parecen entre sí en un solo grupo, y mandando a las que no se parecen a otro grupo. <strong>Nuestra entrada es un conjunto de observaciones multivariadas, y la salida la agrupación a la que pertenece cada una</strong>.</li>
+</ol></li>
+</ol>
+<div id="fig-unsupervised" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/unsupervised.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14.5: Aprendizaje no supervisado.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué “supervisado” y “no supervisado”? Porque en el primero tenemos una función de pérdida (error) que podemos supervisar y optimizar para mejorar nuestras predicciones, mientras que en el segundo no.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aunque en la clasificación y en los agrupamientos estemos lidiando con grupos o clases, no son lo mismo. La clasificación es aprendizaje supervisado, la agrupación es aprendizaje no supervisado.</p>
+</div>
+</div>
+<p>Adicional a estas dos tenemos otras dos menos conocidas: el aprendizaje por refuerzo y el aprendizaje semi-supervisado, pero esos quedan fuera del alcance de este curso.</p>
+<p>Con esto terminamos esta sesión. Sé que estuvo fuertemente cargada de teoría y matemática, pero es necesario que tengas al menos una noción de dónde surgen las cosas. No es necesario que te las aprendas de memoria, o que sepas calcular las matrices a mano, solo que entiendas la lógica detrás de los procedimientos para que no abuses de ellos. Como recompensa por llegar hasta aquí, no hay ejercicio para esta sesión ;).</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Anderson_2005" class="csl-entry" role="doc-biblioentry">
+Anderson MJ. 2005. Distance-Based Tests for Homogeneity of Multivariate Dispersions. <em>Biometrics</em> 62:245-253. DOI: <a href="https://doi.org/10.1111/j.1541-0420.2005.00440.x">10.1111/j.1541-0420.2005.00440.x</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./s04_mv.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Técnicas Multivariadas</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./c15_nosup.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+  </div>
+</footer>
+
+
+
+</body></html>
