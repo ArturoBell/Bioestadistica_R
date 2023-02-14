@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-99.9.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Bioestadística Aplicada con R y RStudio - 2&nbsp; Aprendizaje No Supervisado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./c16_mvcomps.html" rel="next">
+<link href="./c14_intromv.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bioestadística Aplicada con R y RStudio</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">2.1</span>  Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">2.2</span>  Introducción</a></li>
+  <li><a href="#agrupamientos" id="toc-agrupamientos" class="nav-link" data-scroll-target="#agrupamientos"><span class="toc-section-number">2.3</span>  Agrupamientos</a>
+  <ul class="collapse">
+  <li><a href="#agrupamiento-jerárquico" id="toc-agrupamiento-jerárquico" class="nav-link" data-scroll-target="#agrupamiento-jerárquico"><span class="toc-section-number">2.3.1</span>  Agrupamiento jerárquico</a></li>
+  <li><a href="#el-dendrograma" id="toc-el-dendrograma" class="nav-link" data-scroll-target="#el-dendrograma"><span class="toc-section-number">2.3.2</span>  El dendrograma</a></li>
+  <li><a href="#hablemos-de-distancias" id="toc-hablemos-de-distancias" class="nav-link" data-scroll-target="#hablemos-de-distancias"><span class="toc-section-number">2.3.3</span>  Hablemos de distancias</a></li>
+  <li><a href="#métodos-de-unión" id="toc-métodos-de-unión" class="nav-link" data-scroll-target="#métodos-de-unión"><span class="toc-section-number">2.3.4</span>  Métodos de unión</a></li>
+  <li><a href="#cuántos-grupos" id="toc-cuántos-grupos" class="nav-link" data-scroll-target="#cuántos-grupos"><span class="toc-section-number">2.3.5</span>  ¿Cuántos grupos?</a></li>
+  <li><a href="#implementación" id="toc-implementación" class="nav-link" data-scroll-target="#implementación"><span class="toc-section-number">2.3.6</span>  Implementación</a></li>
+  <li><a href="#ejercicio-multivariado" id="toc-ejercicio-multivariado" class="nav-link" data-scroll-target="#ejercicio-multivariado"><span class="toc-section-number">2.3.7</span>  Ejercicio multivariado</a></li>
+  <li><a href="#cuántos-grupos-1" id="toc-cuántos-grupos-1" class="nav-link" data-scroll-target="#cuántos-grupos-1"><span class="toc-section-number">2.3.8</span>  ¿Cuántos grupos?</a></li>
+  </ul></li>
+  <li><a href="#reducción-de-la-dimensionalidad" id="toc-reducción-de-la-dimensionalidad" class="nav-link" data-scroll-target="#reducción-de-la-dimensionalidad"><span class="toc-section-number">2.4</span>  Reducción de la dimensionalidad</a>
+  <ul class="collapse">
+  <li><a href="#índice-multivariado-del-enso" id="toc-índice-multivariado-del-enso" class="nav-link" data-scroll-target="#índice-multivariado-del-enso"><span class="toc-section-number">2.4.1</span>  Índice Multivariado del ENSO</a></li>
+  <li><a href="#análisis-de-componentes-principales" id="toc-análisis-de-componentes-principales" class="nav-link" data-scroll-target="#análisis-de-componentes-principales"><span class="toc-section-number">2.4.2</span>  Análisis de componentes principales</a></li>
+  </ul></li>
+  <li><a href="#ordenación" id="toc-ordenación" class="nav-link" data-scroll-target="#ordenación"><span class="toc-section-number">2.5</span>  Ordenación</a>
+  <ul class="collapse">
+  <li><a href="#escalamiento-multidimensional-no-métrico-nmds" id="toc-escalamiento-multidimensional-no-métrico-nmds" class="nav-link" data-scroll-target="#escalamiento-multidimensional-no-métrico-nmds"><span class="toc-section-number">2.5.1</span>  Escalamiento Multidimensional No Métrico (NMDS)</a></li>
+  </ul></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">2.6</span>  Ejercicio</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-nosup" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="librerías" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">2.1</span> Librerías</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dendextend)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="introducción" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">2.2</span> Introducción</h2>
+<p>En el <a href="c14_intromv.html"><span>Capítulo&nbsp;1</span></a> hablamos de que en el aprendizaje no supervisado vamos a extraer patrones o grupos contenidos en los datos, lo cual podemos hacer mediante la reducción de la dimensionalidad o formando agrupaciones. Bueno, hablemos a fondo de ambas y veamos algunas técnicas.</p>
+</section>
+<section id="agrupamientos" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="agrupamientos"><span class="header-section-number">2.3</span> Agrupamientos</h2>
+<p>Empecemos por lo “sencillo”: formar agrupaciones. ¿Por qué las comillas? Para responder a esa pregunta pongamos un ejemplo. Observa la siguiente imagen y dime: ¿cuántos grupos formarías? ¿qué “bicho” entra en cuál grupo?</p>
+<div id="fig-arthropods" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/arthropods.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.1: Artrópodos a agrupar</figcaption><p></p>
+</figure>
+</div>
+<p>Una forma de hacerlo es poner a las mariposas/polillas en un grupo, los caracoles en otro, las arañas en otro y las abejas en otro:</p>
+<div id="fig-arthrogroups" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/arthrogroups.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.2: Artrópodos agrupados</figcaption><p></p>
+</figure>
+</div>
+<p>Fue bastante sencillo, ¿no? A los seres humanos no nos resulta especialmente complicado categorizar, pero para la computadora hay un total de 115,975 combinaciones de estas imágenes. ¿Cómo saber cuáles son las agrupaciones relevantes? Hay una gran variedad de técnicas: Agrupamientos jerárquicos, máquinas de soporte vectorial, k-medias (k-medianas o k-medioides), DBSCAN, T-SNE, entre otras, cada una con sus peculiaridades, ventajas y desventajas, dadas por la lógica con la que trabajan y, en consecuencia, con diversos niveles de “éxito” según los datos con los que estemos trabajando:</p>
+<div id="fig-clusteringalgorithms" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.3: Técnicas de agrupaciones en distintos juegos de datos sintéticos. Nota: los datos no tienen grupos “reales”, solo algunas formas interesantes (Tomado de la documentación de Scikit-Learn).</figcaption><p></p>
+</figure>
+</div>
+<section id="agrupamiento-jerárquico" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="agrupamiento-jerárquico"><span class="header-section-number">2.3.1</span> Agrupamiento jerárquico</h3>
+<p>De toda esta diversidad de técnicas hay una que se ha destacado en el área de la biología: el agrupamiento jerárquico, también llamado <strong>análisis clúster</strong>. Esta técnica tiene una lógica muy sencilla e intuitiva (lo cual es parte de la razón por la que sea tan popular): Calcula una distancia entre todos los pares de observaciones, forma un grupo con el par con la menor distancia y repite hasta que termines con todos los datos. Veamos cómo es esto paso a paso con unos datos de ejemplo:</p>
+<table class="table">
+<caption>Longitudes totales de algunas especies de cetáceos.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Especie</th>
+<th style="text-align: center;">Longitud total (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><em>Tursiops truncatus</em> (Tt)</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><em>Grampus griseus</em> (Gg)</td>
+<td style="text-align: center;">3.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><em>Globicephala macrorhyncus</em> (Gm)</td>
+<td style="text-align: center;">6.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><em>Orcinus orca</em> (Oo)</td>
+<td style="text-align: center;">7.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><em>Megaptera novaeangliae</em> (Mn)</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><em>Balaenoptera physalus</em> (Bp)</td>
+<td style="text-align: center;">20</td>
+</tr>
+</tbody>
+</table>
+<p>Entonces los pasos con los que agruparíamos estas especies, según su longitud total, son:</p>
+<ol type="1">
+<li>Calcular una matriz de distancias/disimilaridades. Literalmente ver qué tanto se parecen nuestras especies entre sí. ¿Cómo hacemos esto? Utilizando alguna medida de distancia o disimilaridad, pero dejemos el tema de la selección de la medida para después y utilicemos la distancia Euclidiana:</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué es la distancia Euclidiana? Es una medida basada en el famosísimo teorema de Pitágoras ((¿creías que no servía para nada?):</p>
+<p><span class="math display">\[D_{a,b} = \sqrt\sum_{i = 1}^n (q_i - p_i)^2\]</span></p>
+<div id="fig-pytheorem" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/pytheorem.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.4: Teorema de Pitágoras</figcaption><p></p>
+</figure>
+</div>
+<p>Esta medida de distancia representa también la geometría que utilizamos en el día a día, por lo que la interpretación en casos univariados es directa, representando las unidades de diferencia que hay entre una observación y otra.</p>
+</div>
+</div>
+<div id="fig-distmat1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/distmat1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.5: Matriz de distancias. Se calcula la distancia entre cada par de observaciones y se disponen todas en forma matricial. Está solo la diagonal inferior; es decir, solo los datos de la diagonal hacia abajo, pues la diagonal superior es una imagen especular de lo que está abajo.</figcaption><p></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li><p>Identificar el par con la menor distancia y formar un grupo con ellos. Esto corresponde al método de unión (agrupamiento o amalgamiento) simple o sencillo, en el que encontramos la menor distancia en la matriz, que corresponde a <code>Tt</code> y <code>Gg</code> (<span class="math inline">\(D = 0.6\)</span>), por lo que formamos un primer grupo <code>[Tt, Gg]</code>, el cual estará representado por el promedio de <code>Tt</code> y <code>Gg</code>: <code>3.3</code>.</p></li>
+<li><p>Volver a calcular la matriz de distancias/disimilaridades, sustituyendo las observaciones agrupadas por su grupo; es decir, ahora ya no vamos a incluir <code>Tt</code> y <code>Gg</code> en el cálculo de la matriz, sino que incluiremos <code>[Tt, Gg] = 3.3</code>:</p></li>
+</ol>
+<div id="fig-distmat2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/distmat2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.6: Matriz de distancias después de formar la primera agrupación entre [Tt, Gg]</figcaption><p></p>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>Repetir 2 y 3 hasta haber agrupado todas las observaciones.</li>
+</ol>
+<div id="fig-distmat3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/distmat3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.7: Agrupamiento jerárquico utilizando las distancias.</figcaption><p></p>
+</figure>
+</div>
+<p>Al final tenemos nuestro agrupamiento jerárquico <code>[[[Tt, Gg], [Gm, Oo]], [Mn, Bp]]</code>. ¿Por qué jerárquico? Porque tenemos grupos dentro de otros grupos. El grupo <code>[Tt, Gg]</code>, por ejemplo, forma parte de un grupo más grande, donde se une con el grupo <code>[Gm, Oo]</code> y este grupo de grupos, a su vez, es parte de otro grupo más grande, donde se une con <code>[Mn, Bp]</code>. Ahora bien, esta notación es compacta, pero puede ser muy incómoda de leer si tenemos una gran cantidad de datos, por lo que en su lugar utilizamos una estructura conocida como dendrograma.</p>
+</section>
+<section id="el-dendrograma" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="el-dendrograma"><span class="header-section-number">2.3.2</span> El dendrograma</h3>
+<p>Un <strong>dendrograma</strong> es una visualización de datos en la que se <strong>muestra al mismo tiempo las agrupaciones y las distancias a las que se unieron simulando el crecimiento de las ramas de un árbol</strong> por lo que podemos ver no solo quiénes forman qué grupos, sino que tan parecidos son los miembros de cada uno y qué tan diferentes son con los demás grupos. El dendrograma resultante de nuestro ejemplo es el siguiente:</p>
+<div id="fig-dendro" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/dendro.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.8: Dendrograma y cetáceos.</figcaption><p></p>
+</figure>
+</div>
+<p>Como ves en la figura <a href="#fig-dendro">Figura&nbsp;<span>2.8</span></a>, nuestro dendrograma está compuesto por algunas estructuras:</p>
+<ol type="1">
+<li><strong>Raíz</strong>: Es la distancia a la que se unen todos nuestros grupos. En nuestro ejemplo falta porque no tenemos un “grupo hermano”; es decir, un grupo que sea cercano a nuestras especies de cetáceos, pero que no sea un cetáceo. Podríamos incluir un hipopótamo, por ejemplo. Si tenemos ese grupo hermano podemos graficar la raíz, y entonces nuestro dendrograma estará enraizado, de lo contrario tenemos un dendrograma no enraizado. El árbol comienza a “crecer” desde este punto (un solo grupo) hasta tener separados todos los puntos en el conjunto de datos.</li>
+<li><strong>Ramas</strong>: Cada una de las líneas verticales del árbol. Indican el “flujo” de las similaridades, en el sentido de que seguirán extendiéndose hasta la distancia en la que se forme una nueva agrupación.</li>
+<li><strong>Nodo</strong>: Es el punto donde se unen dos ramas; es decir, el punto en el que se forma una nueva agrupación.</li>
+<li><strong>Hojas</strong>: Son las “ramas terminales”, que se puede entender como un grupo de ramas que representan cada una de las <strong>instancias</strong> que conforman la base de datos. Las instancias más parecidas son las contiguas, y el parecido disminuye conforme nos alejamos de cada punto.</li>
+<li><strong>Clúster</strong>: Es un conjunto de hojas. ¿Cómo lo definimos? Esa pregunta merece que le dediquemos tiempo, pero primero hablemos de otros dos conceptos que dictan la forma final de nuestro dendrograma.</li>
+</ol>
+</section>
+<section id="hablemos-de-distancias" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="hablemos-de-distancias"><span class="header-section-number">2.3.3</span> Hablemos de distancias</h3>
+<p>Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que <strong>la medida de distancia/disimilaridad que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis</strong>. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la <a href="#fig-geometries">Figura&nbsp;<span>2.9</span></a> tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:</p>
+<div id="fig-geometries" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/geometries.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.9: Formas de los espacios geométricos definidos por las distancias Euclidiana, Manhattan y Chebyshev. Las tres son casos especiales de la distancia Minkowski, con diferentes valores de <span class="math inline">\(r\)</span></figcaption><p></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es lo mismo una medida de distancia que una de disimilaridad? Sí y no. Desde el punto de vista práctico, sí, ambas nos permiten darnos una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una <strong>distancia</strong> cumple con la <strong>desigualdad triangular</strong>, mientras que una disimilaridad no. ¿Qué es la desigualdad triangular? Que <strong>la distancia más corta entre dos puntos es una linea recta</strong>. En una disimilaridad esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?</p>
+</div>
+</div>
+<p>Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilaridades funcionen mejor en ciertos casos y peor en otros. <span class="citation" data-cites="Shirkhorshidietal_2015">Shirkhorshidi, Aghabozorgi &amp; Wah (<a href="references.html#ref-Shirkhorshidietal_2015" role="doc-biblioref">2015</a>)</span> compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:</p>
+<div id="fig-distances" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/distances.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.10: Medidas de distancia y sus peculiaridades.</figcaption><p></p>
+</figure>
+</div>
+<p>¿Cuál utilizar? Como ves en la <a href="#fig-distances">Figura&nbsp;<span>2.10</span></a>, depende de la naturaleza de tus datos pero, por lo general, la distancia Euclidiana es un buen punto de partida.</p>
+</section>
+<section id="métodos-de-unión" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="métodos-de-unión"><span class="header-section-number">2.3.4</span> Métodos de unión</h3>
+<p>La otra cosa que debemos de decidir es el criterio bajo el cuál vamos a unir nuestros grupos. En el ejercicio con nuestros cetáceos utilizamos el método simple/sencillo, pero no es el único. En todos los métodos se busca minimizar algo, la diferencia es el qué se minimiza. Tomemos el siguiente problema, donde queremos unir el punto solitario con algo de los otros clústers:</p>
+<div id="fig-joining1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/joining1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.11: ¿Con quién voy?</figcaption><p></p>
+</figure>
+</div>
+<ol type="1">
+<li><strong>Simple</strong>: También llamado sencillo o método del “vecino más cercano”, en el que se <strong>minimiza la separación mínima entre clústers</strong>; es decir, vamos a calcular la matriz de distancias y <strong>formar una agrupación con los grupos que tengan los puntos con la menor distancia</strong>:</li>
+</ol>
+<div id="fig-joining2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/joining2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.12: ¿Con mi vecino más cercano?</figcaption><p></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li><strong>Completo</strong>: También lo puedes encontrar como el método del “vecino más lejano”, porque <strong>minimiza la separación máxima entre clústers</strong>; es decir, se calcula la matriz de distancias, se seleccionan los puntos de cada grupo entre los que se encuentra la distancia, y de esos se agrupan los que tengan la menor. ¿Rebuscado? Sin duda, pero gráficamente es más sencillo:</li>
+</ol>
+<div id="fig-joining3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/joining3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.13: ¿Con mi vecino más lejano?</figcaption><p></p>
+</figure>
+</div>
+<ol start="3" type="1">
+<li><strong>Centroide</strong>: Si en el método simple se minimiza la separación mínima entre clústers, y en el método completo la separación máxima, debe de haber un punto intermedio. <strong>El método del centroide minimiza la distancia entre los puntos centrales de los clústers</strong>:</li>
+</ol>
+<div id="fig-joining4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/joining4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.14: ¿Con mi vecino central?</figcaption><p></p>
+</figure>
+</div>
+<ol start="4" type="1">
+<li><p><strong>Promedio</strong>: En este se <strong>minimiza la distancia promedio entre clústers</strong>; es decir, calcula todas las distancias entre los puntos, obtiene el promedio de la distancia por cada par de grupos, y forma uno nuevo con los grupos/puntos que resultaron en la menor distancia promedio.</p></li>
+<li><p><strong>Ward</strong>: Este es un poco más abstracto, pues <strong>minimiza la suma de cuadrados del error (ESS) o, en otras palabras, la varianza</strong> de los grupos resultantes. Es decir que primero agrupa cada par de grupos disponible, calcula la varianza resultante y se queda con la agrupación que tenga la menor.</p></li>
+</ol>
+<p>¿Cómo decidir cuál utilizar? Este es un análisis no supervisado, por lo que no podemos utilizar algún criterio matemático para definir si nuestra selección de distancia/método de unión es la correcta. Lo que sí podemos hacer es ver si tienen sentido las agrupaciones resultantes, lo cual me lleva a la siguiente parte.</p>
+</section>
+<section id="cuántos-grupos" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="cuántos-grupos"><span class="header-section-number">2.3.5</span> ¿Cuántos grupos?</h3>
+<p>Ahora sí, ¿con qué magia obscura determinamos cuántos grupos tenemos y quién pertenece a cuál? La forma es muy sencilla desde el punto de vista práctico: <strong>seleccionar un nivel de corte</strong> en nuestro dendrograma; es decir, una distancia en la cual el árbol deja de exenderse, y el número de grupos está dado por el número de ramas inmediatamente debajo:</p>
+<div id="fig-dendrocut" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/dendrocut.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.15: Cortando el árbol. Las líneas horizontales representan algunos posibles niveles de corte, el número a su derecha el número de grupos resultantes. Los colores de las etiquetas de las hojas representan el resultado de formar 4 agrupaciones.</figcaption><p></p>
+</figure>
+</div>
+<p>Nuevamente, este es un análisis no supervisado, por lo que no tenemos etiquetas de grupos para evaluar el agrupamiento; sin embargo, podemos utilizar distintas medidas (30, de hecho) para estimar el nivel de corte. ¿Cuántas? 30, por ejemplo, y luego formar un ensamble; es decir, tomar el voto mayoritario; es decir, quedarnos con el número de agrupaciones que tenga el mayor número de “votantes”. El último “sello de garantía” de un análisis clúster es el <strong>coeficiente de correlación cofenética</strong>, el cuál es una medida de lo bien o mal representadas que están las distancias reales en el dendrograma.</p>
+</section>
+<section id="implementación" class="level3" data-number="2.3.6">
+<h3 data-number="2.3.6" class="anchored" data-anchor-id="implementación"><span class="header-section-number">2.3.6</span> Implementación</h3>
+<p>Realizar un agrupamiento jerárquico en <code>R</code> es bastante sencillo, únicamente debemos de tener nuestro data.frame cuyos nombres de renglones sean las etiquetas de nuestras instancias a agrupar, calcular las distancias con la función <code>dist(x, method)</code> y unir los grupos con la función <code>hclust(dist, method)</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">long =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">3.6</span>, <span class="fl">6.5</span>, <span class="fl">7.5</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">"Tt"</span>, <span class="st">"Gg"</span>, <span class="st">"Gm"</span>, <span class="st">"Oo"</span>, <span class="st">"Mn"</span>, <span class="st">"Bp"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">dist</span>(df1, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>hc_av <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mat, <span class="at">method =</span> <span class="st">"average"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Este objeto podemos graficarlo con <code>ggplot</code>, utilizando la librería <code>ggdendro</code>, lo cual nos da un dendrograma bastante sencillo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(hc_av, <span class="at">labels =</span> T) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Si bien es cierto que este dendrograma es “suficiente”, podemos personalizarlo utilizando la función <code>dendextend::set(object, what, value)</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos los agrupamientos a un dendrograma</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_av)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color a las ramas</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el ancho de las ramas</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"branches_lwd"</span>, <span class="dv">1</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de las etiquetas asumiendo 4 grupos</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"labels_col"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">118</span>, <span class="dv">186</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">123</span>, <span class="dv">118</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">255</span>, <span class="dv">147</span>, <span class="dv">0</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">181</span>, <span class="dv">23</span>, <span class="dv">0</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)), </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Con estas líneas añadimos las características visuales que queremos que tenga el dendrograma, pero falta graficarlo utilizando <code>ggplot</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gg_dend <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gg_dendro <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gg_dend,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">2.4</span>, <span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend))) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de especies de cetáceos"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Agrupamientos por longitud (método: promedio)"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia euclidiana"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos de bit.ly/clust_medium"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>gg_dendro</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si te das cuenta, solo indicamos en <code>set(dend, labels_col)</code> que tenemos cuatro grupos y pasamos un vector con cuatro colores, los cuales se asignaron en nuestro dendrograma. ¿Cómo supo <code>dendextend</code> quién iba en qué grupo? Recuerda que lo que buscamos es un nivel de corte en el dendrograma, por lo que solo hay una forma de agrupar los datos en la que tenemos cuatro grupos resultantes.</p>
+</div>
+</div>
+<p>Ahora bien, esta es una técnica bastante sencilla de implementar (la mayor parte del “engorro” la hicimos al graficar), pero eso no quiere decir que debamos utilizarla a diestra y siniestra sin tener cuidado de qué datos le damos a <code>R</code>. Es necesario que nuestras variables estén aproximadamente en la misma escala (unidades, decenas, milésimas, etc.), pues de lo contrario las variables con las magnitudes más grandes van a llevar un mayor peso durante la agrupación. Por otro lado, también hay que tener cuidado con variables que estén muy sesgadas, pues esa distribución va a modificar el cálculo de las distancias y, por lo tanto, los agrupamientos finales.</p>
+</section>
+<section id="ejercicio-multivariado" class="level3" data-number="2.3.7">
+<h3 data-number="2.3.7" class="anchored" data-anchor-id="ejercicio-multivariado"><span class="header-section-number">2.3.7</span> Ejercicio multivariado</h3>
+<p>Ya sabemos cómo funciona el análisis de ahrupamientos y también cómo implementarlo en <code>R</code>. ¿Qué falta? Aplicarlo con un conjunto de datos con más observaciones y variables. Para esto utilizaremos los datos <code>cluster.txt</code>, en los cuales tenemos mediciones de variables ambientales en distitntos sitios de muestreo, y nuestro objetivo es agrupar aquellos que tengan caracterísiticas similares. Si vemos el resumen de los datos podemos ver que hay diferencias sumamente importantes en las escalas de las variables, por lo que será necesario escalar los datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>clust_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/cluster.txt"</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>) <span class="co"># ¡OJO con row.names!</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clust_df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Temp            NH4             NO3              OD             Prof    
+ Min.   :16.90   Min.   :0.540   Min.   :0.400   Min.   :0.810   Min.   : 27  
+ 1st Qu.:18.20   1st Qu.:0.900   1st Qu.:1.830   1st Qu.:2.650   1st Qu.: 76  
+ Median :19.60   Median :0.980   Median :2.500   Median :3.800   Median :122  
+ Mean   :20.31   Mean   :1.047   Mean   :2.394   Mean   :4.103   Mean   :109  
+ 3rd Qu.:21.40   3rd Qu.:1.250   3rd Qu.:3.120   3rd Qu.:5.840   3rd Qu.:148  
+ Max.   :25.80   Max.   :1.570   Max.   :4.210   Max.   :8.010   Max.   :199  
+     Trans            Caud             SST              STD       
+ Min.   : 4.00   Min.   : 0.520   Min.   :   4.0   Min.   : 86.9  
+ 1st Qu.: 6.00   1st Qu.: 1.960   1st Qu.:  50.0   1st Qu.:101.5  
+ Median :10.00   Median : 5.580   Median : 134.0   Median :104.3  
+ Mean   :17.62   Mean   : 5.877   Mean   : 254.3   Mean   :108.7  
+ 3rd Qu.:18.00   3rd Qu.: 8.100   3rd Qu.: 298.7   3rd Qu.:113.7  
+ Max.   :56.00   Max.   :15.440   Max.   :1163.3   Max.   :137.7  
+      PO4             DBO5            DQO       
+ Min.   :0.000   Min.   :20.21   Min.   : 5.00  
+ 1st Qu.:0.250   1st Qu.:21.29   1st Qu.:16.00  
+ Median :0.400   Median :23.27   Median :32.00  
+ Mean   :0.391   Mean   :27.45   Mean   :32.52  
+ 3rd Qu.:0.600   3rd Qu.:32.62   3rd Qu.:50.00  
+ Max.   :0.870   Max.   :59.82   Max.   :62.00  </code></pre>
+</div>
+</div>
+<p>Además de las diferencias en órdenes de magnitud, tenemos otro problema no tan evidente: la distribución de <code>SST</code> se encuentra bastante sesgada, por lo que habrá que a) aplicar una transformación para “normalizar” los datos o b) retirarla del análisis. No sabemos a qué corresponde <code>SST</code>, por lo que no sabemos si las mediciones están bien o mal, por lo que es mejor errar por precavidos y retirarla del análisis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mask <span class="ot">&lt;-</span> <span class="fu">colnames</span>(clust_df)[<span class="fu">colnames</span>(clust_df) <span class="sc">!=</span> <span class="st">"SST"</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>clust_filt <span class="ot">&lt;-</span> clust_df[, mask]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(clust_filt)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Temp"  "NH4"   "NO3"   "OD"    "Prof"  "Trans" "Caud"  "STD"   "PO4"  
+[10] "DBO5"  "DQO"  </code></pre>
+</div>
+</div>
+<p>Ahora sí, podemos escalar todos nuestros datos. Si observamos el resumen es evidente que hay algunas otras variables que también están sesgadas; sin embargo, podemos utilizar una medida de distancia que contienda con este tipo de distribuciones para evitar una transformación más agresiva:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>clust_scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(clust_filt)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clust_scale)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Temp             NH4               NO3                OD         
+ Min.   :-1.315   Min.   :-1.8357   Min.   :-1.9515   Min.   :-1.4896  
+ 1st Qu.:-0.814   1st Qu.:-0.5326   1st Qu.:-0.5518   1st Qu.:-0.6573  
+ Median :-0.275   Median :-0.2430   Median : 0.1039   Median :-0.1370  
+ Mean   : 0.000   Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.0000  
+ 3rd Qu.: 0.418   3rd Qu.: 0.7343   3rd Qu.: 0.7108   3rd Qu.: 0.7859  
+ Max.   : 2.112   Max.   : 1.8926   Max.   : 1.7776   Max.   : 1.7675  
+      Prof             Trans              Caud               STD         
+ Min.   :-1.5885   Min.   :-0.8294   Min.   :-1.19044   Min.   :-1.4307  
+ 1st Qu.:-0.6393   1st Qu.:-0.7076   1st Qu.:-0.87045   1st Qu.:-0.4734  
+ Median : 0.2518   Median :-0.4640   Median :-0.06603   Median :-0.2898  
+ Mean   : 0.0000   Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000  
+ 3rd Qu.: 0.7555   3rd Qu.: 0.0232   3rd Qu.: 0.49395   3rd Qu.: 0.3266  
+ Max.   : 1.7435   Max.   : 2.3373   Max.   : 2.12502   Max.   : 1.9003  
+      PO4                DBO5              DQO          
+ Min.   :-1.45097   Min.   :-0.7880   Min.   :-1.43661  
+ 1st Qu.:-0.52313   1st Qu.:-0.6704   1st Qu.:-0.86246  
+ Median : 0.03358   Median :-0.4548   Median :-0.02734  
+ Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  
+ 3rd Qu.: 0.77585   3rd Qu.: 0.5631   3rd Qu.: 0.91217  
+ Max.   : 1.77792   Max.   : 3.5244   Max.   : 1.53851  </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recuerda que si trabajamos con datos estandarizados estamos escalando nuestros datos a valores de una distribución <code>Z</code>, los cuáles representan a cuántas desviaciones estándar estamos de la media.</p>
+</div>
+</div>
+<p>Ahora realicemso los agrupamientos utilizando la distancia Mahalanobis (que no es tan sensible a valores extremos) y el método de unión Ward.D2 (unión Ward con distancias cuadráticas) para minimizar la varianza intra-grupos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dist_mv1 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"mahalanobis"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>hc_mv1 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv1, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos a dendrograma</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dend_mv1 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv1)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de las ramas</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>dend_mv1 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv1, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el ancho de las ramas</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>dend.mv1 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv1, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficado</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>ggd1 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv1)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>ggd1_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd1, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv1)),</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                                      <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Mahalanobis"</span>,</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>ggd1_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Puedes decirme cuántos grupos hay? Veamos qué pasa si utilizamos la distancia Euclidiana:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dist_mv2 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hc_mv2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv2, <span class="at">method =</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformemos nuestro objeto a un dendrograma:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv2)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiemos el color a las ramas:</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>ggd2 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv2)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>ggd2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd2, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv2)),</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>,</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Y con la distancia Manhattan? Las agrupaciones resultantes son similares; sin embargo, las medidas de distancia son muy diferentes. Entonces, arbitrariamete, nos quedaremos con la distancia Euclidiana.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dist_mv3 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>hc_mv3 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv3, <span class="at">method =</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformemos nuestro objeto a un dendrograma:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv3)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiemos el color a las ramas:</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv3, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv3, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ggd3 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv3)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>ggd3_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd3, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv3)),</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                                             <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2)"</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Manhattan"</span>,</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>ggd3_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="cuántos-grupos-1" class="level3" data-number="2.3.8">
+<h3 data-number="2.3.8" class="anchored" data-anchor-id="cuántos-grupos-1"><span class="header-section-number">2.3.8</span> ¿Cuántos grupos?</h3>
+<p>Para calcular los 30 índices de los que podemos echar mano para estimar el número “óptimo” de agrupaciones utilizaremos la función <code>NbClust</code> de la librería con el mismo nombre. La salida de esta función nos dice el número de índices que proponen cada número de agrupamientos (4 propusieron 12, 11 propusieron 3, etc.) y una conclusión: “De acuerdo con la regla de la mayoría, el mejor número de clústers es 3”. Además de estos índices numéricos tenemos dos índices gráficos: Hubert y D. En ambos el número óptimo está dado por una “rodilla” (un punto de inflexión).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n_gps <span class="ot">&lt;-</span> NbClust<span class="sc">::</span><span class="fu">NbClust</span>(<span class="at">data =</span> clust_scale,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">diss =</span> dist_mv2,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">distance =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"ward.D2"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">index =</span> <span class="st">"all"</span>, <span class="at">max.nc =</span> <span class="dv">8</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>*** : The Hubert index is a graphical method of determining the number of clusters.
+                In the plot of Hubert index, we seek a significant knee that corresponds to a 
+                significant increase of the value of the measure i.e the significant peak in Hubert
+                index second differences plot. 
+ </code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>*** : The D index is a graphical method of determining the number of clusters. 
+                In the plot of D index, we seek a significant knee (the significant peak in Dindex
+                second differences plot) that corresponds to a significant increase of the value of
+                the measure. 
+ 
+******************************************************************* 
+* Among all indices:                                                
+* 4 proposed 2 as the best number of clusters 
+* 11 proposed 3 as the best number of clusters 
+* 1 proposed 5 as the best number of clusters 
+* 2 proposed 7 as the best number of clusters 
+* 5 proposed 8 as the best number of clusters 
+
+                   ***** Conclusion *****                            
+ 
+* According to the majority rule, the best number of clusters is  3 
+ 
+ 
+******************************************************************* </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Algunas peculiaridades a la cuáles poner atención: la función a) recibe los datos a agrupar (después de cualquier procesado); b) puede recibir o la matriz de distancias (<code>diss</code>) o calcularla internamente (<code>distance = "method"</code>); c) podemos decir qué índice queremos utilizar con el argumento <code>index</code> (todos con <code>index = "all"</code>); y d) hay que definir un número máximo de clústers a evaluar. Este número debe de ser lo suficientemente grande para permitir al algoritmo probar distintas cantidades de agrupaciones y lo suficientemente pequeño para seguir siendo interpretable. En este cso tenemos 21 sitios, por lo que tener 10 o más grupos pudiera ya no tener caso.</p>
+</div>
+</div>
+<p>Ya tenemos nuesro número de grupos (<span class="math inline">\(k = 3\)</span>), pero ¿podemos confiar en nuestro dendrograma? Calculemos el coeficiente de correlación cofenético:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ccc <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(hc_mv2)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlación entre distancias reales y graficadas</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ccofen <span class="ot">&lt;-</span> <span class="fu">cor</span>(dist_mv2, ccc, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ccofen</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6868661</code></pre>
+</div>
+</div>
+<p>Fue de prácticamente el 70%, que para nuestros objetivos es suficiente. Ahora veamos nuestros grupos en el dendrograma:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de nuestr</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"labels_col"</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">k =</span> <span class="dv">3</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">3</span>)          </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>ggd2 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv2)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ggd2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd2, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv2)),<span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Cómo podemos interpretar este dendrograma? Hay un montón de maneras, pero todas se reducen a ver cómo se relacionan estos grupos con las variables originales; es decir, <strong>no vamos a simplemente asumir que tenemos una zona alta, intermedia y baja del río solo porque en un grupo tengamos los primerios sitios, en otro los que le siguen, y en un último los faltantes</strong>. Esos son cuentos chinos. Una forma es revisar los centroides (promedios) de cada variable por cada grupo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(clust_filt, <span class="at">by =</span> <span class="fu">list</span>(n_gps<span class="sc">$</span>Best.partition), <span class="at">FUN =</span> mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Group.1"],"name":[1],"type":["int"],"align":["right"]},{"label":["Temp"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["NH4"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["NO3"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["OD"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Prof"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Trans"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Caud"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["STD"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["PO4"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["DBO5"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["DQO"],"name":[12],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"18.74000","3":"0.8040000","4":"2.200000","5":"6.152000","6":"79.4000","7":"43.400000","8":"1.240000","9":"92.6800","10":"0.5700000","11":"22.88600","12":"14.80000"},{"1":"2","2":"19.54545","3":"0.9763636","4":"2.915455","5":"4.460909","6":"126.0909","7":"9.272727","8":"6.105455","9":"105.2364","10":"0.2763636","11":"29.45909","12":"35.18182"},{"1":"3","2":"23.58000","3":"1.4460000","4":"1.440000","5":"1.266000","6":"101.0000","7":"10.200000","8":"10.012000","9":"132.4200","10":"0.4640000","11":"27.58400","12":"44.40000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Esto evidencía gradientes en cada variable, algunos positivos (<code>Temp</code>, <code>NH4</code>, por ejemplo) y algunos negativos (<em>e.g.</em>, <code>NO3</code>, <code>OD</code>). ¿Qué quiere decir esto? Bueno, esa interpretación ya depende del conocimiento que tengamos del área (tanto del conocimiento como del área geográfica).</p>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es esta la única manera de estimar el número de grupos? No.&nbsp;Puedes seleccionar solo una de estas medidas (incluso puedes hacerlo dentro de <code>NbClust</code> con el argumento <code>index</code>), pero también puedes utilizar la librería <code>pvclust</code>. Su funcionamiento es demasiado rebuscado para describirlo en una nota, pero puedes ver la <a href="https://github.com/shimo-lab/pvclust">documentación correspondiente</a>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="reducción-de-la-dimensionalidad" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="reducción-de-la-dimensionalidad"><span class="header-section-number">2.4</span> Reducción de la dimensionalidad</h2>
+<p>Hablemos ahora de la otra parte del aprendizaje no supervisado: la reducción de la dimensionalidad. Una manera “sencilla” de entenderla es lo que pasa cuando nosotros nos ponemos al sol (somos tridimensionales) y vemos nuestra sombra (un plano): perdemos los detalles más finos, pero nuestra estructura general se mantiene. Con nuestros datos multidimensionales haremos algo similar (<a href="#fig-dimred">Figura&nbsp;<span>2.16</span></a>): proyectar datos multidimensionales a un espacio con menos dimensiones (usualmente una o dos).</p>
+<div id="fig-dimred" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/dimred.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.16: Proyectando a menos dimensiones. En tres dimensiones solo vemos una nube de puntos de colores, en dos dimensiones vemos que están “agrupados”, mientras que en una sola tenemos un gradiente continuo.</figcaption><p></p>
+</figure>
+</div>
+<p>Infortunadamente para nosotros, el proceso de reducir dimensiones no es tan sencillo como ir poniendo las coordenadas de dimensiones enteras en 0, pero antes de entrar a ver el cómo, veamos el por qué, utilizando una de las aplicaciones más famosas: el índice multivariado del ENSO.</p>
+<section id="índice-multivariado-del-enso" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="índice-multivariado-del-enso"><span class="header-section-number">2.4.1</span> Índice Multivariado del ENSO</h3>
+<p>Si eres parte de alguna carrera de ciencias marinas es muy posible que hayas escuchado del fenómeno del Niño, si no, aprenderás algo interesante. Su nombre completo es <strong>“El Niño Oscilación del Sur”</strong> (El Niño Southern Oscilation, ENSO; <a href="#fig-ENSO">Figura&nbsp;<span>2.17</span></a>), y hace referencia a un fenómeno de <strong>variabilidad ambiental interanual que tiene una fase cálida (“El Niño”) y una fase fría (“La Niña”)</strong>.</p>
+<p>Durante la fase fría (condiciones “normales”) los vientos alisios soplan con fuerza del este al oeste en el ecuador, arrastrando consigo la capa superficial del océano y acumulando agua en las costas del Pacífico central occidental. Como sabrás, el ecuador recibe la mayor cantidad de calor solar, por lo que el agua arrastrada es agua caliente, haciendo que la termoclina sea más profunda en el occidente que en el oriente del Pacífico. Esto permite que haya una surgencia costera (emergimiento de agua profunda, rica en nutrientes, a la superficie) muy importante que sostiene pesquerías importantísimas en la corriente de Humboldt. Además, la radiación solar también hace que haya evaporación en el ecuador, por lo que el aire que circula vaya recogiendo humedad. Conforme este aire caliente va recogiendo humedad se va enfriando, perdiendo densidad, y comienza a ascender, lo cual se ve acelerado cuando choca con el continente en el Pacífico occidental. ¿Qué pasa cuando enfriamos aire húmedo rápidamente? Se forma condensación, lo cual se traduce en lluvias abundantes en esa zona. El aire entonces pierde toda su humedad, se enfría y la circulación en la atmósfera alta se invierte, por lo que hacia América viaja aire frío y seco (denso), lo cual ocasiona que descienda en América, reiniciando el ciclo. A este proceso se le conoce como celda de circulación de Walker, y como resultado tenemos una zona de baja presión en el Indo-Pacífico (sube aire) y una zona de alta presión (baja aire) cerca de América.</p>
+<p>Durante la fase cálida (“El Niño”) los vientos alisios se debilitan (en algunas zonas del Pacífico central el viento sopla en dirección contraria), por lo que el agua caliente que se había acumulado en el occidente se regresa a América, hundiendo la termoclina, lo que causa que la surgencia costera “recicle” el agua caliente superficial, en vez de subir agua fría, y que llueva en América (se “invierte” la celda de Walker).</p>
+<div id="fig-ENSO" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/ENSO.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.17: Fases cálida (“El Niño”) y fría (“La Niña”) del ENSO.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplifiqué la explicación del ENSO lo más que pude sin dejar demasiadas cosas del proceso en el tintero, pero el costo es que haya algunas imprecisiones en la explicación. Si te interesa este tema, te recomiendo que leas más al respecto. Entre tus lecturas te encontrarás el por qué de “El Niño”.</p>
+</div>
+</div>
+<p>Como te podrás imaginar, es un proceso sumamente complejo (de hecho comunica el Atlántico con el Pacífico, pero eso es otra historia) en el que se ven modificadas una gran cantidad de variables ambientales y cuyas consecuencias económicas son muy importantes (se modifica la pesca y la agricultura en prácticamente tres continentes). Podemos monitorear cada variable de manera individual, pero ¿no sería mejor poder resumirlas todas en un solo número? Pues eso fue lo que hicieron <span class="citation" data-cites="WolterTimlin_1998">Wolter &amp; Timlin (<a href="references.html#ref-WolterTimlin_1998" role="doc-biblioref">1998</a>)</span>, aplicando un Análisis de Componentes principales a seis variables (presión atmosférica a nivel del mar (P), componentes zonal (U) y meridional (V) del viento superficial, temperatura superficial del mar (S), temperatura superficial del aire (A), y la fracción total de nubes en el cielo (C)) en el Pacífico tropical, lo cual da lugar al Índice Multivariado del ENSO (<a href="#fig-MEI">Figura&nbsp;<span>2.18</span></a>).</p>
+<div id="fig-MEI" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/MEI.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.18: Índice Multivariado del ENSO (MEI) y las variables que lo construyen.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El índice que se utiliza ahora es la versión 2 del MEI, el cual considera la radiación de onda larga (OLR) en vez de la la temperatura superficial del aire y la fracción total de nubes en el cielo.</p>
+</div>
+</div>
+</section>
+<section id="análisis-de-componentes-principales" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="análisis-de-componentes-principales"><span class="header-section-number">2.4.2</span> Análisis de componentes principales</h3>
+<p>Espero que este ejemplo te haya motivado, pues el MEI es uno de los instrumentos más importantes en el monitoreo de las condiciones ambientales del Pacífico, así es que vamos a ver cómo funciona la técnica que lo origina: el análisis de componentes principales (PCA). Este análisis <strong>aproxima los datos utilizando una menor cantidad de variables (con <span class="math inline">\(\mu = 0\)</span> y <span class="math inline">\(\sigma = 1\)</span>), las cuales son ortogonales (independientes) entre sí</strong>. ¿Cómo hace esto? Respuesta corta: buscando la mejor proyección de los datos originales (<a href="#fig-datashadow">Figura&nbsp;<span>2.19</span></a>).</p>
+<div id="fig-datashadow" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/datashadow.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.19: Proyección de datos bivariados a una sola variable.</figcaption><p></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Vamos a ver un poco de los detalles matemáticos detrás del PCA. No te preocupes, solo es para expandir la noción detrás del PCA más allá de solo “buscar la mejor proyección de los datos originales”. Al igual que en el <span class="quarto-unresolved-ref">?sec-rls</span>, puedes quedarte para toda la explicación o saltar al corolario al final.</p>
+</div>
+</div>
+<p>Esa respuesta corta fue, tal vez, muy corta, así que entremos en más detalles. El PCA encuentra una de dos líneas: a) una línea que minimice el error promedio; b) una línea que maximice la distancia al origen (suma de cuadrados, <span class="math inline">\(SS\)</span>). Curiosamente, es más fácil encontrar la segunda línea utilizando un viejo conocido: el teorema de Pitágoras. Observa la <a href="#fig-pytheom">Figura&nbsp;<span>2.20</span></a>. Si hacemos la longitud de <span class="math inline">\(c\)</span> lo suficientemente grande, el valor de <span class="math inline">\(b\)</span> se hace más pequeño, ya que <span class="math inline">\(a\)</span> no se mueve.</p>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si lo que estamos encontrando es una línea que maximice la distancia al origen, y esta línea representa una suma de cuadrados, esa línea está capturando una <strong>porción de la varianza</strong> de los datos.</p>
+</div>
+</div>
+<div id="fig-pytheom" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/pytheom.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.20: Teorema de Pitágoras, de nuevo. Dado que ya tenemos la longitud de <span class="math inline">\(a\)</span>, dada por el dato en sí mismo, podemos encontrar una línea teórica que minimice <span class="math inline">\(b\)</span> (el error), o que maximice <span class="math inline">\(c\)</span> (la distancia al origen). Por facilidad, esta línea <span class="math inline">\(c\)</span> es la proyección de los datos.</figcaption><p></p>
+</figure>
+</div>
+<p>Esta nueva línea es nuestra proyección. En el espacio multivariado cada componente principal (CP) es una <strong>combinación lineal</strong> de nuestras variables originales, donde la pendiente de cada variable representa qué tanto contribuye esa variable a la varianza capturada por el CP. Después de haber encontrado esa primera línea vamos a girarla hasta que tenga una pendiente de 0º, el resultado es un nuevo eje (variable) llamado <strong>componente principal</strong> (CP).</p>
+<div id="fig-orthogonal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/orthogonal.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.21: Variables ortogonales</figcaption><p></p>
+</figure>
+</div>
+<p>Lo interesante es que si escalamos nuestra línea <span class="math inline">\(c^2\)</span> a que tenga una longitud de 1 tenemos un <strong>eigenvector</strong>, en donde las pendientes se convierten en proporciones que dan las <strong>cargas factoriales</strong> de cada variable a cada CP. Por otra parte, si <span class="math inline">\(c^2\)</span> es una suma de cuadrados es también el <strong>eigenvalor</strong> de cada CP, y la <span class="math inline">\(\sqrt{SS}\)</span> es su valor singular. Esto del valor singular es solo breviario cultural, lo que sí es importante es que tenemos una suma de cuadrados, tal y como tenemos en la definición de la varianza (<a href="c14_intromv.html"><span>Capítulo&nbsp;1</span></a>), por lo que si la dividimos entre los grados de libertad de la muestra podemos obtener la varianza capturada por ese CP. ¿Por qué por ese CP? ¿Recuerdas que mencioné en la definición de PCA que aproximamos los datos utilizando una menor cantidad de variables? Bueno, esta línea que encontramos es solo una de estas variables (llamadas CPs). El siguiente paso es trazar un nuevo eje (variable, CP) a exactamente 90º de la primera (<a href="#fig-orthogonal">Figura&nbsp;<span>2.21</span></a>), y después repetir el proceso hasta haber capturado toda la varianza. Ya que hicimos esto podemos estimar la <strong>porción de la varianza explicada por el CP</strong> dividiendo su varianza explicada entre la varianza total:</p>
+<p><span class="math display">\[
+\sigma^2_{PC_i} = \frac{SS}{n-1} \therefore \sigma^2_{T} = \sum_{i = 1}^k\sigma^2_{PC_i} \therefore \sigma^2_{exp_i} = \frac{\sigma^2_{PC_i}}{\sigma^2_T}
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué son los eigenvalores y eigenvectores? Las eigencosas son de las cosas más abstractas en el álgebra lineal, pero podemos resumirlas como que los <strong>eigenvalores son una medida de dispersión</strong>, mientras que los <strong>eigenvectores son una medida de dirección</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En resumen: el PCA es una técnica de reducción de dimensionalidad en la que los datos originales se aproximan mediante combinaciones lineales (componentes principales), las cuales son independientes (ortogonales) entre sí. Este procedimiento permite resumir los datos originales en una o dos variables que preservan la mayor cantidad de la varianza original posible.</p>
+</div>
+</div>
+<p>Después de esta vuelta (para algunos innecesaria), apliquemos el PCA.</p>
+<section id="implementación-1" class="level4" data-number="2.4.2.1">
+<h4 data-number="2.4.2.1" class="anchored" data-anchor-id="implementación-1"><span class="header-section-number">2.4.2.1</span> Implementación</h4>
+<p>Utilicemos una base de datos con una cantidad interesante de variables (31): <code>Medidas.txt</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>biom <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/Medidas.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biom)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["especie"],"name":[1],"type":["chr"],"align":["left"]},{"label":["furcal"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["base"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["radio"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["alto"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["gordo"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["angos"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["ojo"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["X1erarc"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["dist."],"name":[10],"type":["dbl"],"align":["right"]},{"label":["largo"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["cabez"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["hueso"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["mandib"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["hueso.1"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["arriba"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["cabeza"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["boca"],"name":[18],"type":["dbl"],"align":["right"]},{"label":["abiert"],"name":[19],"type":["dbl"],"align":["right"]},{"label":["cachete"],"name":[20],"type":["dbl"],"align":["right"]},{"label":["largo.1"],"name":[21],"type":["dbl"],"align":["right"]},{"label":["ancho"],"name":[22],"type":["dbl"],"align":["right"]},{"label":["orificio"],"name":[23],"type":["dbl"],"align":["right"]},{"label":["densi"],"name":[24],"type":["dbl"],"align":["right"]},{"label":["hocic"],"name":[25],"type":["dbl"],"align":["right"]},{"label":["interbr"],"name":[26],"type":["dbl"],"align":["right"]},{"label":["ojoatra"],"name":[27],"type":["dbl"],"align":["right"]},{"label":["proye"],"name":[28],"type":["dbl"],"align":["right"]},{"label":["base.1"],"name":[29],"type":["dbl"],"align":["right"]},{"label":["altura"],"name":[30],"type":["dbl"],"align":["right"]},{"label":["area"],"name":[31],"type":["dbl"],"align":["right"]},{"label":["Intesti"],"name":[32],"type":["dbl"],"align":["right"]}],"data":[{"1":"jordani","2":"0.2526797","3":"0.10061667","4":"0.07135591","5":"0.08175867","6":"0.05252905","7":"0.03927245","8":"0.02778630","9":"0.06405667","10":"0.03151705","11":"0.02934013","12":"0.08686808","13":"0.03140846","14":"0.03642927","15":"0.04959312","16":"0.02559842","17":"0.09003119","18":"0.03212929","19":"0.02339945","20":"0.03571555","21":"0.01673496","22":"0.04959312","23":"0.07389565","24":"0.8450980","25":"0.02559842","26":"0.01673496","27":"0.03998034","28":"0.01072387","29":"0.02045007","30":"0.06191435","31":"0.010999184","32":"0.2074997","_rn_":"1"},{"1":"jordani","2":"0.2755336","3":"0.09046226","4":"0.07084766","5":"0.06759937","6":"0.03721675","7":"0.03651683","8":"0.02516208","9":"0.05903833","10":"0.03447648","11":"0.03561786","12":"0.08108188","13":"0.03229352","14":"0.03511362","15":"0.04908543","16":"0.02588052","17":"0.08548461","18":"0.03300026","19":"0.02516208","20":"0.03158562","21":"0.01571263","22":"0.22628036","23":"0.05238807","24":"0.7781512","25":"0.02372164","26":"0.01717984","27":"0.02945498","28":"0.01128101","29":"0.01937140","30":"0.05891894","31":"0.009493388","32":"0.1954627","_rn_":"2"},{"1":"jordani","2":"0.2837123","3":"0.10535533","4":"0.08180539","5":"0.08115084","6":"0.04992248","7":"0.03706413","8":"0.02975261","9":"0.06332198","10":"0.03449477","11":"0.03235010","12":"0.08894108","13":"0.03342375","14":"0.03633849","15":"0.04610479","16":"0.02530587","17":"0.09785653","18":"0.03415428","19":"0.02530587","20":"0.03851178","21":"0.01474958","22":"0.03981055","23":"0.05537833","24":"0.8450980","25":"0.02456029","26":"0.01474958","27":"0.04139268","28":"0.01474958","29":"0.02156515","30":"0.04921802","31":"0.009025742","32":"0.2428124","_rn_":"3"},{"1":"jordani","2":"0.2799764","3":"0.10245821","4":"0.07398005","5":"0.07788678","6":"0.04977162","7":"0.03856340","8":"0.02851316","9":"0.05889579","10":"0.03736875","11":"0.03505251","12":"0.08111575","13":"0.03284891","14":"0.03500066","15":"0.04651213","16":"0.02486667","17":"0.09129002","18":"0.03356735","19":"0.02339945","20":"0.03998034","21":"0.01598810","22":"0.03621217","23":"0.04651213","24":"0.7781512","25":"0.02413368","26":"0.01523997","27":"0.04068709","28":"0.01298779","29":"0.01970959","30":"0.05657346","31":"0.008940661","32":"0.1903317","_rn_":"4"},{"1":"jordani","2":"0.2761582","3":"0.10179893","4":"0.06811582","5":"0.08054481","6":"0.04510146","7":"0.04139268","8":"0.02854056","9":"0.05962771","10":"0.03917421","11":"0.03800203","12":"0.08393510","13":"0.03387875","14":"0.03387875","15":"0.04383157","16":"0.02546045","17":"0.08729914","18":"0.03765197","19":"0.02391216","20":"0.03387875","21":"0.01529648","22":"0.02970693","23":"0.05413153","24":"0.9030900","25":"0.02313594","26":"0.01687573","27":"0.04064711","28":"0.01052396","29":"0.02235833","30":"0.06086491","31":"0.010215125","32":"0.1847450","_rn_":"5"},{"1":"jordani","2":"0.2806542","3":"0.10266234","4":"0.07842661","5":"0.07234182","6":"0.04139268","7":"0.03809005","8":"0.02972188","9":"0.06096002","10":"0.03131406","11":"0.03131406","12":"0.08739686","13":"0.03642927","14":"0.03476211","15":"0.04249823","16":"0.02632894","17":"0.10051414","18":"0.03642927","19":"0.02547654","20":"0.03726045","21":"0.01160568","22":"0.01983425","23":"0.04249823","24":"0.8450980","25":"0.02462248","26":"0.01336396","27":"0.04056938","28":"0.01859649","29":"0.02032675","30":"0.05697605","31":"0.007427699","32":"0.1675635","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>La primera columna tiene etiquetas de especies, las cuales no utilizaremos en este momento, por lo que podemos descartarla:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pca_data <span class="ot">&lt;-</span> biom[, <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(biom)]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     furcal            base             radio              alto        
+ Min.   :0.2527   Min.   :0.07088   Min.   :0.04408   Min.   :0.05319  
+ 1st Qu.:0.2716   1st Qu.:0.09108   1st Qu.:0.06748   1st Qu.:0.06709  
+ Median :0.2753   Median :0.09679   Median :0.07090   Median :0.07140  
+ Mean   :0.2757   Mean   :0.09645   Mean   :0.07048   Mean   :0.07116  
+ 3rd Qu.:0.2801   3rd Qu.:0.10142   3rd Qu.:0.07430   3rd Qu.:0.07534  
+ Max.   :0.3202   Max.   :0.11394   Max.   :0.08311   Max.   :0.09723  
+     gordo             angos              ojo             X1erarc       
+ Min.   :0.02679   Min.   :0.02996   Min.   :0.02142   Min.   :0.03485  
+ 1st Qu.:0.04139   1st Qu.:0.03465   1st Qu.:0.02451   1st Qu.:0.04332  
+ Median :0.04402   Median :0.03577   Median :0.02673   Median :0.05129  
+ Mean   :0.04405   Mean   :0.03616   Mean   :0.02740   Mean   :0.05158  
+ 3rd Qu.:0.04680   3rd Qu.:0.03745   3rd Qu.:0.02875   3rd Qu.:0.05899  
+ Max.   :0.05859   Max.   :0.04727   Max.   :0.08191   Max.   :0.07738  
+     dist.              largo              cabez             hueso        
+ Min.   :0.007179   Min.   :0.004202   Min.   :0.07311   Min.   :0.02857  
+ 1st Qu.:0.030485   1st Qu.:0.022402   1st Qu.:0.08476   1st Qu.:0.03236  
+ Median :0.035368   Median :0.029488   Median :0.08951   Median :0.03415  
+ Mean   :0.031366   Mean   :0.026533   Mean   :0.08860   Mean   :0.03488  
+ 3rd Qu.:0.038824   3rd Qu.:0.034574   3rd Qu.:0.09284   3rd Qu.:0.03582  
+ Max.   :0.048008   Max.   :0.051843   Max.   :0.09815   Max.   :0.10411  
+     mandib           hueso.1            arriba            cabeza       
+ Min.   :0.03141   Min.   :0.02348   Min.   :0.01855   Min.   :0.07118  
+ 1st Qu.:0.03598   1st Qu.:0.03917   1st Qu.:0.02546   1st Qu.:0.08309  
+ Median :0.03980   Median :0.04413   Median :0.02952   Median :0.08796  
+ Mean   :0.03923   Mean   :0.04498   Mean   :0.02946   Mean   :0.08890  
+ 3rd Qu.:0.04247   3rd Qu.:0.04995   3rd Qu.:0.03391   3rd Qu.:0.09483  
+ Max.   :0.04758   Max.   :0.08783   Max.   :0.03828   Max.   :0.10760  
+      boca             abiert           cachete           largo.1        
+ Min.   :0.02828   Min.   :0.01810   Min.   :0.02938   Min.   :0.008724  
+ 1st Qu.:0.03476   1st Qu.:0.02348   1st Qu.:0.03911   1st Qu.:0.012881  
+ Median :0.03830   Median :0.02531   Median :0.04308   Median :0.014240  
+ Mean   :0.03954   Mean   :0.02547   Mean   :0.04237   Mean   :0.014366  
+ 3rd Qu.:0.04368   3rd Qu.:0.02741   3rd Qu.:0.04508   3rd Qu.:0.015936  
+ Max.   :0.05552   Max.   :0.03248   Max.   :0.06553   Max.   :0.026475  
+     ancho            orificio           densi            hocic        
+ Min.   :0.00274   Min.   :0.01968   Min.   :0.6990   Min.   :0.01546  
+ 1st Qu.:0.02663   1st Qu.:0.03741   1st Qu.:0.7782   1st Qu.:0.02491  
+ Median :0.03031   Median :0.04381   Median :0.8451   Median :0.02929  
+ Mean   :0.03253   Mean   :0.04429   Mean   :0.8401   Mean   :0.02937  
+ 3rd Qu.:0.03447   3rd Qu.:0.05085   3rd Qu.:0.9031   3rd Qu.:0.03294  
+ Max.   :0.22628   Max.   :0.07390   Max.   :1.1139   Max.   :0.04922  
+    interbr            ojoatra            proye              base.1       
+ Min.   :0.007687   Min.   :0.02685   Min.   :0.007313   Min.   :0.01546  
+ 1st Qu.:0.014457   1st Qu.:0.03796   1st Qu.:0.013341   1st Qu.:0.02052  
+ Median :0.015776   Median :0.04050   Median :0.014982   Median :0.02238  
+ Mean   :0.016304   Mean   :0.04067   Mean   :0.016217   Mean   :0.02300  
+ 3rd Qu.:0.017609   3rd Qu.:0.04256   3rd Qu.:0.016613   3rd Qu.:0.02474  
+ Max.   :0.028804   Max.   :0.08124   Max.   :0.127873   Max.   :0.04476  
+     altura             area             Intesti      
+ Min.   :0.02514   Min.   :0.001431   Min.   :0.1295  
+ 1st Qu.:0.03815   1st Qu.:0.006723   1st Qu.:0.1774  
+ Median :0.04422   Median :0.009716   Median :0.1960  
+ Mean   :0.04474   Mean   :0.010638   Mean   :0.1980  
+ 3rd Qu.:0.04928   3rd Qu.:0.014274   3rd Qu.:0.2150  
+ Max.   :0.08398   Max.   :0.027268   Max.   :0.3246  </code></pre>
+</div>
+</div>
+<p>Apliquemos el Análisis de Componentes Principales:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aplicamos el PCA con los datos escalados y centrados</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>biom_pca <span class="ot">&lt;-</span> FactoMineR<span class="sc">::</span><span class="fu">PCA</span>(pca_data,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">graph =</span> F,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ncp =</span> <span class="fu">length</span>(pca_data),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scale.unit =</span> T) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Recordarás que el PCA está basado en el teorema de Pitágoras, por lo que es necesario que todas las variables estén en la misma escala. Podemos utilizar la función <code>scale()</code> como hicimos para el análisis clúster, o podemos indicarle a <code>R</code> que lo haga automáticamente si utilizamos la función <code>FactoMineR::PCA()</code> con el argumento <code>scale.unit</code>. Podemos ver los resultados de manera numérica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(biom_pca)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+FactoMineR::PCA(X = pca_data, scale.unit = T, ncp = length(pca_data),  
+     graph = F) 
+
+
+Eigenvalues
+                       Dim.1   Dim.2   Dim.3   Dim.4   Dim.5   Dim.6   Dim.7
+Variance               6.146   4.632   2.809   2.271   1.685   1.550   1.260
+% of var.             19.826  14.943   9.061   7.325   5.436   5.001   4.065
+Cumulative % of var.  19.826  34.769  43.829  51.154  56.590  61.591  65.655
+                       Dim.8   Dim.9  Dim.10  Dim.11  Dim.12  Dim.13  Dim.14
+Variance               1.108   1.059   0.966   0.845   0.756   0.727   0.628
+% of var.              3.574   3.416   3.117   2.725   2.440   2.344   2.025
+Cumulative % of var.  69.230  72.646  75.763  78.487  80.927  83.271  85.295
+                      Dim.15  Dim.16  Dim.17  Dim.18  Dim.19  Dim.20  Dim.21
+Variance               0.530   0.512   0.450   0.398   0.377   0.355   0.308
+% of var.              1.708   1.653   1.452   1.285   1.215   1.144   0.992
+Cumulative % of var.  87.003  88.656  90.108  91.393  92.608  93.752  94.745
+                      Dim.22  Dim.23  Dim.24  Dim.25  Dim.26  Dim.27  Dim.28
+Variance               0.285   0.266   0.208   0.193   0.168   0.143   0.133
+% of var.              0.920   0.858   0.671   0.622   0.543   0.462   0.428
+Cumulative % of var.  95.665  96.523  97.194  97.815  98.358  98.820  99.248
+                      Dim.29  Dim.30  Dim.31
+Variance               0.107   0.076   0.050
+% of var.              0.345   0.244   0.162
+Cumulative % of var.  99.593  99.838 100.000
+
+Individuals (the 10 first)
+             Dist    Dim.1    ctr   cos2    Dim.2    ctr   cos2    Dim.3    ctr
+1        |  6.196 | -1.768  0.489  0.081 |  2.830  1.663  0.209 |  2.494  2.129
+2        | 10.682 | -2.869  1.288  0.072 |  2.272  1.072  0.045 |  2.522  2.177
+3        |  4.520 | -2.199  0.757  0.237 |  1.517  0.478  0.113 |  0.853  0.249
+4        |  4.079 | -2.569  1.033  0.397 |  1.812  0.681  0.197 |  0.994  0.338
+5        |  4.642 | -2.728  1.165  0.345 |  2.026  0.852  0.190 |  1.343  0.618
+6        |  4.142 | -2.810  1.236  0.460 | -0.572  0.068  0.019 |  0.359  0.044
+7        |  3.740 | -1.366  0.292  0.133 |  1.066  0.236  0.081 |  0.765  0.200
+8        |  5.488 | -3.158  1.560  0.331 |  2.032  0.857  0.137 |  2.699  2.494
+9        |  4.753 | -2.983  1.392  0.394 |  1.637  0.556  0.119 |  1.324  0.600
+10       |  6.548 | -2.115  0.700  0.104 |  3.068  1.954  0.220 |  1.928  1.272
+           cos2  
+1         0.162 |
+2         0.056 |
+3         0.036 |
+4         0.059 |
+5         0.084 |
+6         0.008 |
+7         0.042 |
+8         0.242 |
+9         0.078 |
+10        0.087 |
+
+Variables (the 10 first)
+            Dim.1    ctr   cos2    Dim.2    ctr   cos2    Dim.3    ctr   cos2  
+furcal   | -0.174  0.494  0.030 |  0.113  0.275  0.013 | -0.221  1.732  0.049 |
+base     | -0.082  0.109  0.007 |  0.085  0.155  0.007 | -0.317  3.582  0.101 |
+radio    | -0.294  1.409  0.087 | -0.045  0.044  0.002 | -0.246  2.160  0.061 |
+alto     | -0.129  0.272  0.017 |  0.323  2.251  0.104 |  0.442  6.968  0.196 |
+gordo    |  0.243  0.959  0.059 |  0.256  1.414  0.065 |  0.496  8.744  0.246 |
+angos    | -0.193  0.608  0.037 |  0.422  3.838  0.178 |  0.162  0.930  0.026 |
+ojo      | -0.159  0.411  0.025 | -0.209  0.942  0.044 |  0.060  0.129  0.004 |
+X1erarc  | -0.764  9.497  0.584 |  0.282  1.715  0.079 | -0.005  0.001  0.000 |
+dist.    | -0.436  3.098  0.190 |  0.285  1.758  0.081 |  0.155  0.854  0.024 |
+largo    | -0.650  6.870  0.422 |  0.357  2.755  0.128 |  0.220  1.720  0.048 |</code></pre>
+</div>
+</div>
+<p>La salida es bastante extensa, pero lo que realmente nos interesa es lo que aparece en <code>Eigenvalues</code>: La varianza de cada componente, el porcentaje de la varianza total que representa, y cuánta varianza se ha acumulado hasta ese componente, pero siempre es mejor ver los resultados de manera gráfica con algunas funciones de la librería <code>factoextra</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>factoextra<span class="sc">::</span><span class="fu">fviz_pca_var</span>(biom_pca, <span class="at">col.var =</span> <span class="st">"coord"</span>,</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#E7B800"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#FC4E07"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En este gráfico tenemos representada la importancia de variables (carga factorial) para cada componente principal. Entre más larga (y naranja) sea la flecha, mayor es su importancia. Entre más horizontal esté, más contribuye al componente principal representado en el eje <span class="math inline">\(x\)</span>, y entre más vertical esté, más contribuye al componente principal puesto en el eje <span class="math inline">\(y\)</span>, y la dirección de la relación con el CP está dada por el signo. En nuestro ejemplo, las variables <code>abiert</code>, <code>boca</code>, <code>arriba</code>, <code>mandib</code> y <code>cabez</code> están positivamente relacionadas con el CP1, pero negativamente relacionadas con el CP2; es decir, entre más grande sea la longitud de la mandíbula, por ejemplo, más grande será la coordenada en el CP1, pero también se hará más pequeña en el CP2. Otra forma de ver estos resultados es tratarlos como si fueran una matriz de correlaciones:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>biom_pca_vars <span class="ot">&lt;-</span> factoextra<span class="sc">::</span><span class="fu">get_pca_var</span>(biom_pca)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>corrplot<span class="sc">::</span><span class="fu">corrplot</span>(biom_pca_vars<span class="sc">$</span>coord)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Por qué es esto importante? El PCA reduce las dimensiones tratando de preservar la mayor cantidad de varianza (covarianza) posible en cada PC. Una consecuencia es que los puntos más parecidos se acercarán más entre sí, mientras que los más alejados se alejarán más. A lo que esto nos lleva es a una forma de <strong>ordenación</strong>, entonces podemos graficar este nuevo espacio reducido y ver cómo quedan distribuidos nuestros datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(biom_pca,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom.ind =</span> <span class="st">"point"</span>, <span class="co"># Mostrar solo puntos (sin textos)</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.ind =</span> biom[,<span class="dv">1</span>], <span class="co"># Variable de agrupamiento</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="co"># Colores a utilizar</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="co"># Elipses de concentración</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">"Especies"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Aquí podemos ver que las especies <code>jordani</code> y <code>labarcae</code> se encuentran bien diferenciadas en el espacio multivariado, mientras que <code>consocium</code> tiene mediciones intermedias.</p>
+<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Algunas personas consideran el PCA como una técnica de ordenación; sin embargo, el objetivo no es ese, sino solo una consecuencia de reducir las dimensiones, tal y como vimos en la <a href="#fig-dimred">Figura&nbsp;<span>2.16</span></a>.</p>
+</div>
+</div>
+<p>¿Cómo están dadas las diferencias? Puedes volver al gráfico de variables del PCA y ver cómo apuntan las flechas. Por ejemplo, <code>labarcae</code> tiene medidas más grandes en <code>abiert</code>, <code>boca</code>, <code>arriba</code>, <code>mandib</code> y <code>cabez</code> que las otras dos. Una forma más directa sería graficar ambas cosas a la vez:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(biom_pca, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.ind =</span> biom<span class="sc">$</span>especie, <span class="at">palette =</span> <span class="st">"jco"</span>, </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="at">label =</span> <span class="st">"var"</span>,</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"black"</span>, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">legend.title =</span> <span class="st">"Especies"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En el <a href="c17_clasif.html"><span>Capítulo&nbsp;4</span></a> vamos a ver cómo aquí estamos dejando de lado la información más valiosa de toda la base de datos: las etiquetas de los grupos. ¿La razón? Aquí las estamos utilizando solo como una ayuda visual para la interpretación, más que como datos que informen nuestros análisis.</p>
+</div>
+</div>
+<p>Ahora bien, ya sabemos cómo interpretar nuestros componentes principales. La pregunta es, ¿capturan la suficiente información de la varianza?</p>
+</section>
+<section id="evaluación-de-los-componentes-principales" class="level4" data-number="2.4.2.2">
+<h4 data-number="2.4.2.2" class="anchored" data-anchor-id="evaluación-de-los-componentes-principales"><span class="header-section-number">2.4.2.2</span> Evaluación de los componentes principales</h4>
+<p>Regresemos a las varianzas explicadas por cada componente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>eig_val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(biom_pca)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>eig_val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       eigenvalue variance.percent cumulative.variance.percent
+Dim.1  6.14608922       19.8260942                    19.82609
+Dim.2  4.63221636       14.9426334                    34.76873
+Dim.3  2.80882601        9.0607291                    43.82946
+Dim.4  2.27068129        7.3247783                    51.15424
+Dim.5  1.68514008        5.4359358                    56.59017
+Dim.6  1.55020741        5.0006691                    61.59084
+Dim.7  1.26002881        4.0646091                    65.65545
+Dim.8  1.10797871        3.5741249                    69.22957
+Dim.9  1.05894728        3.4159590                    72.64553
+Dim.10 0.96627425        3.1170137                    75.76255
+Dim.11 0.84470657        2.7248599                    78.48741
+Dim.12 0.75624648        2.4395048                    80.92691
+Dim.13 0.72656100        2.3437452                    83.27066
+Dim.14 0.62761130        2.0245526                    85.29521
+Dim.15 0.52955055        1.7082276                    87.00344
+Dim.16 0.51240639        1.6529238                    88.65636
+Dim.17 0.45010263        1.4519440                    90.10830
+Dim.18 0.39821456        1.2845631                    91.39287
+Dim.19 0.37664998        1.2149999                    92.60787
+Dim.20 0.35475436        1.1443689                    93.75224
+Dim.21 0.30760753        0.9922823                    94.74452
+Dim.22 0.28534181        0.9204574                    95.66498
+Dim.23 0.26608062        0.8583246                    96.52330
+Dim.24 0.20787739        0.6705722                    97.19387
+Dim.25 0.19269314        0.6215908                    97.81546
+Dim.26 0.16829393        0.5428837                    98.35835
+Dim.27 0.14322652        0.4620210                    98.82037
+Dim.28 0.13259938        0.4277399                    99.24811
+Dim.29 0.10706999        0.3453871                    99.59350
+Dim.30 0.07572896        0.2442870                    99.83778
+Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
+</div>
+</div>
+<p>Las primeras dos dimensiones (los primeros dos CPs) capturan menos del 50% de la varianza total; por lo tanto, es prudente preguntarse cuántos CPs debemos de considerar. Una alternativa es el <strong>análisis gráfico de la varianza</strong> con un <strong>scree-plot</strong>. En este gráfico buscamos un punto de inflexión, el cuál indicaría el límite de los PCs representativos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(biom_pca, <span class="at">addlabels =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Dónde considerarías que está el primer punto de inflexión? Yo en el tercer o cuarto componente, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos aquellos CPs cuya varianza explicada sea superior al valor promedio. El segundo criterio es un modelo de repartición de recursos desarrollado en la ecología de comunidades: el modelo Broken-Stick [McArthur_1957], donde el recurso compartido es la varianza total, entonces consideraremos aquellos CPs que tengan una varianza explicada superior a la esperada según el modelo. Para graficar ambos criterios a la vez utilizaremos una función personalizada (<code>evplot</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para la estimación de los CP óptimos:</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>evplot <span class="ot">&lt;-</span> <span class="cf">function</span>(ev){</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Author:</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Broken stick model (MacArthur 1957)</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>      n <span class="ot">&lt;-</span> <span class="fu">length</span>(ev)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>      bsm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">j=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n), <span class="at">p=</span><span class="dv">0</span>)</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>n </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) bsm<span class="sc">$</span>p[i] <span class="ot">&lt;-</span> bsm<span class="sc">$</span>p[i<span class="dv">-1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>(n <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> i))</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>bsm<span class="sc">$</span>p<span class="sc">/</span>n</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot eigenvalues and % of variation for each axis</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>      op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(ev, <span class="at">main=</span><span class="st">"Eigenvalues"</span>, <span class="at">col=</span><span class="st">"bisque"</span>, <span class="at">las=</span><span class="dv">2</span>)</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(ev), <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="st">"Average eigenvalue"</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(<span class="fu">t</span>(<span class="fu">cbind</span>(<span class="dv">100</span><span class="sc">*</span>ev<span class="sc">/</span><span class="fu">sum</span>(ev), bsm<span class="sc">$</span>p[n<span class="sc">:</span><span class="dv">1</span>])), <span class="at">beside=</span><span class="cn">TRUE</span>, </span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">main=</span><span class="st">"% variation"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">las=</span><span class="dv">2</span>)</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"% eigenvalue"</span>, <span class="st">"Broken stick model"</span>), </span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">pch=</span><span class="dv">15</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">bty=</span><span class="st">"n"</span>)</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">par</span>(op)</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los eigenvalores</span></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>ev <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(eig_val)<span class="sc">$</span>eigenvalue</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignamos nombres a los valores</span></span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ev) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"CP"</span>,<span class="fu">seq_along</span>(ev), <span class="st">""</span>)</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficamos con la función personalizada</span></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="fu">evplot</span>(ev)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Bajo el criterio de Kaiser-Guttman consideraríamos 8 CPs, mientras que en el modelo de Broken-Stick consideraríamos únicamente 4. De cualquier modo, ambos criterios sugieren un número mayor al que yo consideré en el gráfico de la varianza. ¿Qué pasa entonces con nuestra interpretación original con respecto a la separación de las especies? Ya no es tan robusta, pero no significa que no sea válida. El MEI (v1), por ejemplo, es el primer componente principal y representa “solo” el 31% de la varianza total, pero aún así es útil para conocer en qué fase del fenómeno ENSO (y su intensidad) se encuentra un mes/año dado.</p>
+<p>Ahora bien, si la ordenación es solo una consecuencia de la reducción de la dimensionalidad, ¿tenemos alguna técnica donde el objetivo sea la ordenación?</p>
+</section>
+</section>
+</section>
+<section id="ordenación" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="ordenación"><span class="header-section-number">2.5</span> Ordenación</h2>
+<p>En una ordenación el objetivo es que las observaciones (instancias) que más se parezcan entre sí se mantengan lo más cercanas posible. Un ejemplo de esto, análogo al PCA, es el Escalamiento multidimensional no métrico (NMDS).</p>
+<section id="escalamiento-multidimensional-no-métrico-nmds" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="escalamiento-multidimensional-no-métrico-nmds"><span class="header-section-number">2.5.1</span> Escalamiento Multidimensional No Métrico (NMDS)</h3>
+<p>A diferencia del PCA en el cual es importante que las variables estén centradas y estandarizadas (o que las variables sean del mismo tipo; e.g., biometrías en distintas especies de peces), el Escalamiento Multidimensional No Métrico (NMDS) es una técnica más flexible al estar basada en órdenes de rangos (distancias) para la ordenación. Como resultado, puede aceptar una variedad mayor de tipos de datos. Otra diferencia es que en el ACP el objetivo primordial no es la ordenación, sino la reducción de la dimensionalidad, mientras que en NMDS sí se busca una ordenación.</p>
+<p><strong>El NMDS ordena los objetos según sus similitudes</strong>, y en el proceso representa el espacio en menos dimensiones. Esta técnica <strong>minimiza la deformación de las distancias</strong> (representada por el “estrés”). Todo eso suena muy bien, ¿hay algún bemol? Sí. Es un proceso iterativo; es decir, requiere de múltiples vueltas para llegar a una solución estable. Veamos entonces cómo funciona utilizando los siguientes datos tridimensionales:</p>
+<div id="fig-nmds1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/nmds1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.22: ¿Cómo nos ordenamos?</figcaption><p></p>
+</figure>
+</div>
+<ol type="1">
+<li>Calcular la matriz de distancias y asignarles un rango, donde a la menor distancia le corresponde 1.</li>
+</ol>
+<div id="fig-rankdist" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/rankdist.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.23: Matriz de distancias y sus rangos.</figcaption><p></p>
+</figure>
+</div>
+<ol start="2" type="1">
+<li>Proponer un acomodo “aleatorio” en el nuevo espacio con menos dimensiones. Digo “aleatorio” porque en realidad se siguen algunas heurísticas para comenzar desde un ordenamiento no tan alejado.</li>
+</ol>
+<div id="fig-nmds2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/nmds2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.24: Primer acomodo.</figcaption><p></p>
+</figure>
+</div>
+<ol start="3" type="1">
+<li>Volver a calcular la matriz de distancias y sus rangos y evaluar las diferencias. En este caso, la distancia entre A y B es demasiado grande, por lo que los acercamos en un nuevo acomodo:</li>
+</ol>
+<div id="fig-nmds3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imgs/nmds3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2.25: Segundo acomodo.</figcaption><p></p>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>Repetir la operación hasta que la <strong>diferencia entre la matriz de distancias y rangos originales con la representación</strong> sea mínima; es decir, minimizar el <strong>estrés</strong>. Como regla general, valores de estrés de 0-0.1 son considerados buenos; de 0.1-0.2, aceptables; de 0.2-0.3, altos; y con más de 0.3 se considera que la representación mostrada es “aleatoria”</li>
+</ol>
+<p>Para analizar este caso utilicemos los mismos datos del caso sitios (clúster):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de distancias</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dist_nmds <span class="ot">&lt;-</span> dist_mv2</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dist_nmds, <span class="at">distance =</span> <span class="st">"euclidean"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Run 0 stress 0.1033851 
+Run 1 stress 0.1033851 
+... Procrustes: rmse 6.525117e-05  max resid 0.0002061651 
+... Similar to previous best
+Run 2 stress 0.1033851 
+... Procrustes: rmse 5.502531e-06  max resid 1.157986e-05 
+... Similar to previous best
+Run 3 stress 0.1033851 
+... Procrustes: rmse 0.0001252853  max resid 0.0003980628 
+... Similar to previous best
+Run 4 stress 0.1033851 
+... Procrustes: rmse 2.745622e-05  max resid 8.616622e-05 
+... Similar to previous best
+Run 5 stress 0.1188198 
+Run 6 stress 0.1642917 
+Run 7 stress 0.2027265 
+Run 8 stress 0.2139949 
+Run 9 stress 0.1188198 
+Run 10 stress 0.1925188 
+Run 11 stress 0.1188198 
+Run 12 stress 0.1642917 
+Run 13 stress 0.1188198 
+Run 14 stress 0.3751682 
+Run 15 stress 0.1033851 
+... Procrustes: rmse 3.963516e-05  max resid 0.0001197702 
+... Similar to previous best
+Run 16 stress 0.1188198 
+Run 17 stress 0.1033851 
+... Procrustes: rmse 7.537842e-05  max resid 0.0002391825 
+... Similar to previous best
+Run 18 stress 0.1033851 
+... Procrustes: rmse 0.0001100975  max resid 0.0003495652 
+... Similar to previous best
+Run 19 stress 0.1033851 
+... Procrustes: rmse 0.0001003504  max resid 0.0003197301 
+... Similar to previous best
+Run 20 stress 0.1188198 
+*** Best solution repeated 8 times</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mds_dims <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">NMDS1 =</span> mds<span class="sc">$</span>points[,<span class="dv">1</span>], <span class="at">NMDS2 =</span> mds<span class="sc">$</span>points[,<span class="dv">2</span>])</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>mds_plot_data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mds_dims, clust_scale)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dado que pasamos <code>metaMDS(..., trace = T)</code>, <code>R</code> nos mostró los resultados de cada iteración. La iteración (<code>Run</code>) 0 es el acomodo inicial, y tuvo un estrés de 0.10. A partir de ahí comienza a mover los puntos y evaluar si es menor o peor utilizando una prueba de Procrstes, que compara si dos geometrías son diferentes o no. Al final, realizó 20 iteraciones, de las cuales 7 fueron la mejor solución. Este estrés de 0.10 es aceptable, por lo que podemos seguir con la interpretación, que es similar a lo que hicimos con el PCA:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los coef. de determinación de cada variable ~ NMDS (flechas)</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds, clust_scale)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>arrow <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(fit<span class="sc">$</span>vectors<span class="sc">$</span>arrows,</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">R =</span> fit<span class="sc">$</span>vectors<span class="sc">$</span>r,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">P =</span> fit<span class="sc">$</span>vectors<span class="sc">$</span>pvals)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>arrow[<span class="st">"Variable"</span>] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(arrow)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos aquellas que tengan una corr. significativamente diferente de 0</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>arrow_p <span class="ot">&lt;-</span> <span class="fu">subset</span>(arrow, P <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Ordenamos de manera descendente según su valor de R2</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>arrow_p <span class="ot">&lt;-</span> arrow_p[<span class="fu">order</span>(arrow_p<span class="sc">$</span>R, <span class="at">decreasing =</span> T), ]</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(arrow_p)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293852","2":"0.5586772","3":"0.9128702","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471282","2":"-0.3208554","3":"0.8744866","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8294013","2":"-0.5586533","3":"0.7176446","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517470","2":"-0.3068838","3":"0.6989932","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045784","2":"0.4263073","3":"0.6989308","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862156","2":"-0.6179523","3":"0.6977507","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>¿Cuál fue la variable más importante? Ahora veamos el NMDS resultante:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mds_plot_data[<span class="st">"group"</span>] <span class="ot">&lt;-</span> LETTERS[n_gps<span class="sc">$</span>Best.partition]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mds_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mds_plot_data, <span class="fu">aes</span>(NMDS1, NMDS2)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> group),</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_label_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">rownames</span>(clust_scale))) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_ellipse</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group), </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">type =</span> <span class="st">"t"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">geom =</span> <span class="st">"polygon"</span>, </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Escalamiento Multidimensional no métrico (NMDS)"</span>,</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">'Estrés ='</span>,<span class="fu">round</span>(mds<span class="sc">$</span>stress,<span class="dv">3</span>)),</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos: cluster.txt"</span>) <span class="sc">+</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"forestgreen"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"forestgreen"</span>, <span class="st">"black"</span>)) <span class="co">#+</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#             geom_segment(data = arrow_p,</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                          aes(x=0, y=0,</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                              xend = NMDS1, yend = NMDS2, lty = Variable),</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #Flechas escaladas según su R^2</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                          arrow = arrow(length = unit(.25, "cm")*arrow_p$R)</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                         )</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>mds_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Si lo comparas con el dendrograma te darás cuenta de que, efectivamente, los puntos de cada grupo son más cercanos entre sí que con los demás grupos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>El objetivo del NMDS NO es la formación de grupos</strong>. Al igual que en los gráficos del PCA, las etiquetas de los grupos son solo con fines de visualización.</p>
+</div>
+</div>
+<p>Con esto llegamos al final de esta sesión. Espero que la encuentres de utilidad, o cuando menos interesante.</p>
+</section>
+</section>
+<section id="ejercicio" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">2.6</span> Ejercicio</h2>
+<p>Aplica un ACP a esta misma base de datos.</p>
+<ol type="1">
+<li>¿Los datos deben de centrarse y estandarizarse?</li>
+<li>Realiza el ACP. ¿Cuántos CPs considerarías?</li>
+<li>¿Cuál es la varianza explicada entre los dos primeros componentes principales?</li>
+<li>¿Cuáles son las variables más imporantes para esos dos componentes?</li>
+<li>¿Hay diferencias en la ordenación con respecto a los otros dos métodos?</li>
+<li>Realizar las tres técnicas con las biometrías, y comparar sus resultados. (Opcional)</li>
+</ol>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-Shirkhorshidietal_2015" class="csl-entry" role="doc-biblioentry">
+Shirkhorshidi AS, Aghabozorgi S, Wah TY. 2015. A comparison study on similarity and dissimilarity measusres in clustering continuous data. <em>PLoS ONE</em> 10:e0144059. DOI: <a href="https://doi.org/10.1371/journal.pone.0144059">10.1371/journal.pone.0144059</a>.
+</div>
+<div id="ref-WolterTimlin_1998" class="csl-entry" role="doc-biblioentry">
+Wolter K, Timlin MS. 1998. <a href="">Measuring the strength of ENSO events: How does 1997/98 rank</a>. <em>Weather</em> 53:315-324.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./c14_intromv.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./c16_mvcomps.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2023, Dr.&nbsp;Plancton</div>
+  </div>
+</footer>
+
+
+
+</body></html>

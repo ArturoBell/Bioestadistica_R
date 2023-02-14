@@ -1,0 +1,60 @@
+# Preparación {.unnumbered}
+
+Antes de entrar al contenido del curso es necesario asegurarnos de que tengas instalados todos los programas y extensiones requeridos. Aunque los pasos son los mismos para todos los casos (*i.e.*, descargar el instalador, ejecutarlo, y dar click en aceptar/continuar), puedes (en raras ocasiones) encontrarte con algunos contratiempos que son específicos al sistema operativo en el que te encuentres:
+
+- `macOS`: Si aparece un mensaje diciendo que el programa proviene de un desarrollador no identificado, no te preocupes, simplemente entra a `Preferencias del sistema -> Seguridad y privacidad`. Cerca del final de la ventana te aparecerá un mensaje diciendo que "macOS evitó la instalación de R [...]". Simplemente da click en el botón "Instalar de todas maneras". Si no está disponible, da click en el candado de la parte inferior, ingresa tu contraseña, da click en el botón "Instalar de todas maneras" y prosigue con la instalación. Una vez terminada la instalación, puedes volver a la ventana de seguridad y privacidad y volver a cerrar el candado.
+
+- `Windows`: Si aparece un mensaje diciendo que no se tienen los permisos necesarios para ejecutar el programa, cierra el mensaje, da click derecho sobre el archivo en cuestión -> Ejecutar como administrador. Aparecerá una ventana diciendo que X programa desea hacer modificaciones en el sistema y preguntando si aceptas, da click en aceptar.
+
+::: {.callout-warning}
+En ambos casos se le están dando permisos de administrador al programa a instalar. En este caso estamos utilizando software legítimo, pero son opciones que debes de utilizar con sumo cuidado y siempre siendo consciente de la legítima procedencia del software que quieres instalar. Estoy obligado a decir que ni yo ni Dr. Plancton nos hacemos responsables por consecuencias derivadas del uso de estas funciones. Cerciórate siempre de utilizar instaladores descargados desde las páginas oficiales de los provedores del software.
+:::
+
+## R
+
+Evidentemente, lo primero que deberás instalar es R. Puedes encontrar el instalador de la versión más reciente para tu sistema operativo en [CRAN](https://cran.r-project.org/mirrors.html) (The Comprehensive R Archive Network). 
+
+
+Simplemente da click en el enlace al servidor más cercano a tu ubicación, por ejemplo [https://cran.itam.mx/](https://cran.itam.mx/).
+
+Después simplemente descarga la versión que corresponde a tu sistema operativo.
+
+Independientemente del sistema operativo que utilices, la instalación consiste en ejecutar el instalador y seguir los pasos indicados en su ventana, dando click en aceptar y continuar según sea necesario.
+
+:::{.callout-important}
+El material del curso fue desarrollado con la versión 4.2.1 "Funny-Looking Kid" de `R`. No puedo garantizar que el código funcione sin problemas con versiones previas.
+:::
+
+## RStudio
+
+Una vez instalado R podemos instalar `RStudio`. Más adelante veremos cuál es la diferencia entre ambos, pero por el momento piensa en `RStudio` como una ventana para `R`. Primero, dirígete a [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
+
+::: {.callout-note}
+¿Por qué el enlace para descargar `RStudio` es de `posit`? En octubre del 2022 la empresa se volvió `posit`. [Aquí](https://posit.co/blog/rstudio-is-now-posit/) puedes leer más al respecto, pero el resumen es que el nombre de la empresa cambió, pero el nombre de su ambiente integrado de desarrollo (IDE, `RStudio`) se mantendrá igual.
+:::
+
+En la sección *All Installers* ubica tu sistema operativo y descarga el instalador correspondiente
+
+Una vez descargado, ejecuta el instalador y sigue los pasos que aparecen en pantalla.
+
+## Quarto y tinytex
+
+Con estas dos instalaciones sería más que suficiente para empezar a trabajar; sin embargo, podemos ir más allá y utilizar `RStudio` para crear reportes, artículos científicos, libros (incluyendo tesis), páginas web, presentaciones, y más. Esto solía (y puede) hacerse con librerías como `rmarkdown`, `distilled` o `bookdown`; sin embargo, tenemos la siguiente generación: `Quarto`. En el curso veremos una introducción para hacer reportes y, de hecho, este material fue escrito en documentos `Quarto`. Al igual que en los casos anteriores, dirígete a la [página de descargas](https://quarto.org/docs/get-started/) y descarga e instala la versión correspondiente a tu sistema operativo.
+
+::: {.callout-important}
+NO verás un ejecutable (acceso directo) después de que se haya realizado la instalación. Para utilizar `Quarto` necesitaremos de a) la línea de comandos o b) una interfaz, que en nuestro caso es `RStudio`. Debajo de los enlaces de descarga hay más información sobre cómo utilizarlo, incluyendo detalles sobre su uso en `VS Code`, `Jupyter` y en un editor de textos (línea de comandos). Puedes explorarlos, aunque aquí verás los detalles correspondientes para `RStudio`.
+:::
+
+Adicional a `Quarto`, y si deseas exportar tus documentos a archivos PDF, es necesario instalar una distribución de `LaTeX`. Si ya cuentas con alguna, puedes saltarte este paso, de lo contrario puedes o realizar la instalación completa o simplemente instalar `TinyTeX` desde [aquí](https://yihui.org/tinytex/). Si optas por instalar `TinyTeX` y no tienes nada de experiencia con `R`, te recomiendo seguir los pasos de su página una vez que hayas pasado por el @sec-bases-r. No te preocupes, hay un recordatorio al final de la sesión. 
+
+## Instalaciones "opcionales"
+
+Adicionalmente, te recomiendo encarecidamente (por no decir te solicito) que instales, dependiendo de tu sistema operativo, algunas herramientas. Tienes la descripción de cada una, así como desde donde realizar su instalación:
+
+- `Windows`: `Rtools`. Esta es una serie de herramientas que nunca vas a ver cuando se utilicen, pero que son un dolor de cabeza si no cuentas con ellas y tienes la pésima fortuna de necesitar compilar un paquete desde su código fuente, o la dicha de querer publicar un paquete. A final de cuentas permiten justamente eso, administrar esas ejecuciones. Solía ser parte de la instalación de `R` en `Windows`, pero ya no es así, por lo que recomiendo la instales siguiendo las [instrucciones oficiales](https://cran.r-project.org/bin/windows/Rtools/) (selecciona la versión más nueva de Rtools disponible).
+
+- `macOS`: `XQuartz`. `R` es un lenguaje con un enfoque muy fuerte hacia la generación de gráficos, lo cual permite hacer visualizaciones de muy alta calidad. Desafortunadamente, algunas cosas se apoyan del sistema de ventanas `X.Org X Window System` y que, de no estar disponible, pueden dar algunos dolores de cabeza. `Apple` solía incluir una implementación en la aplicación `X11` en las versiones de OS X 10.5 a 10.7, pero ya no en sistemas más modernos. Es ahí donde entra el proyecto `XQuartz`. El instalador está disponible en la [página del proyecto](https://www.xquartz.org).
+
+- `macOS`: `Xcode Command Line Tools`. Si bien es cierto que `macOS` juega un papel importante en algunos círculos de desarrollo de software, no incluye algunas herramientas necesarias para el mismo objetivo que `Rtools` en `Windows`: compilar desde fuente. En este caso, hay dos formas de instalar lo que necesitamos, ambas provistas por `Apple`: a) instalar el entorno de desarrollo `Xcode` (40 GB) o, mi recomendación si no desarrollas aplicaciones para SOs de Apple, b) instalar las herramientas de línea de comando. `Xcode` lo puedes instalar directamente desde tu `App Store`, mientras que las herramientas de línea de comando desde el Terminal con el comando `xcode-select --install`. Puedes abrir el terminal utilizando `Spotlight` (`CMD + espacio`), o ejecutando su aplicación, ubicada en `Aplicaciones -> Utilidades`.
+
+Una vez instalado todo esto estás más que listo para avanzar con el programa del curso. Recuerda que si tuviste algún problema siempre puedes contactarme en el servidor de `Discord` del curso.

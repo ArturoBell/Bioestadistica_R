@@ -1,0 +1,41 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Bioestadística Aplicada con R y RStudio"
+  author:
+    - name: "Arturo Bell Enríquez-García"
+      affiliation: "Centro Interdisciplinario de Ciencias Marinas (IPN-CICIMAR)"
+  date: "10/25/2022"
+  chapters:
+    - index.qmd
+    - s0_preparacion.qmd
+    - part: s04_mv.qmd
+      chapters:
+        - c14_intromv.qmd
+        - c15_nosup.qmd
+        - c16_mvcomps.qmd
+        - c17_clasif.qmd
+        - c18_mvregs.qmd
+        - c19_glm.qmd
+    - s06_despedida.qmd
+    - references.qmd
+    
+  page-footer: "Copyright 2023, Dr. Plancton"
+
+bibliography: references.bib
+csl: peerj.csl
+lang: es
+
+format:
+  html:
+    df-print: paged
+    theme: cosmo
+#  pdf:
+#    documentclass: scrreprt
+
+# execute: 
+#   cache: true
+
+
