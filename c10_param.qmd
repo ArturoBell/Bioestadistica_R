@@ -1,6 +1,7 @@
 # Técnicas paramétricas {#sec-param}
 
 ## Librerías
+
 ```{r}
 #| message: false
 library(ggplot2)
@@ -9,6 +10,7 @@ library(gridExtra)
 library(rstatix)
 library(dplyr)
 library(ggpubr)
+library(patchwork)
 ```
 
 ## Introducción
@@ -188,7 +190,7 @@ dist_n30
 Un aspecto importante a considerar es la "Primera Propiedad Conocida" de la distribución normal: *dadas muestras aleatorias e independientes con N observaciones cada una (tomadas de una distribución normal), la distribución de medias muestreales es normal e insesgada (i.e., centrada en la media poblacional), independientemente del tamaño de N*. Por lo tanto, aún con un tamaño de muestra de 1 debería dar una distribución parecida a la normal. Comprobemos:
 
 ```{r}
-N = 1
+N <-  1
 datos <- data.frame(x = 1:1000, y = rnorm(1000))
 norm <- ggplot(data = datos, aes(y)) + 
         geom_density(fill = rgb(118,78,144,
@@ -354,6 +356,7 @@ norm_plot
 ¿Qué opinas? Apliquemos ahora las pruebas de normalidad:
 
 #### Prueba de Shapiro-Wilk
+
 La prueba más conocida para evaluar la normalidad de un conjunto de datos es la prueba de Shapiro-Wilk. Su estadístico de prueba (W) se calcula de una manera poco amigable, pero conceptualmente implica ordenar los valores de la muestra y evaluar las desviaciones (diferencias) con respecto a la media, la varianza y su covarianza (este concepto se retoma más adelante) esperadas. En pocas palabras, la covarianza indica cuánto cambia una variable (la media) con respecto a otra (la varianza). 
 
 ¿Qué tiene que ver la covarianza con el Supuesto de Normalidad? Tiene que ver con la Segunda Propiedad Conocida de la Distribución Normal, la cual establece que *Dadas observaciones aleatorias e independientes (de una distribución normal), la media muestral y la varianza muestral son independientes*. En otras palabras, cuando tomas una muestra y la usas para estimar tanto la media como la varianza de la población, qué tanto puedes equivocarte sobre la media es independiente de qué tanto puedes equivocarte sobre la varianza. Esta es una característica **única** de la distribución normal y es una de las razones por la que la prueba de S-W es de las más (por no decir la más) utilizada y recomendada, especialmente para muestras pequeñas. En algunos estudios de simulación como [este](http://www.ukm.my/jsm/pdf_files/SM-PDF-40-6-2011/15%20NorAishah.pdf) ha demostrado ser más sensible a las desviaciones de la normalidad que la prueba de Kolmogorov-Smirnov, aunque antes de explicarla apliquemos la prueba de S-W:
@@ -518,7 +521,7 @@ Visualizándolas como si de un cociente se tratara es posible darse cuenta cómo
 ```{r}
 #cairo_pdf("anova_plot.pdf", family = "Montserrat",
 #           height = 5, width = 5*1.6, pointsize = 20)
-gridExtra::grid.arrange(entre_plot, dentro_plot)
+entre_plot/dentro_plot
 #dev.off()
 ```
 
@@ -551,11 +554,11 @@ entre_plot2 <- ggplot(data = anov_sim2, aes(tot)) +
               xlim(c(5, 15))
 #cairo_pdf("anova_plot2.pdf", family = "Montserrat",
 #           height = 5, width = 5*1.6, pointsize = 20)
-gridExtra::grid.arrange(entre_plot2, dentro_plot2)
+entre_plot2/dentro_plot2
 #dev.off()
 ```
 
-### Supuesto de homogeneidad de Varianzas
+### Supuesto de Homogeneidad de Varianzas
 
 Como podrás imaginar, el que las varianzas de los grupos no sean homogéneas generará un sesgo al momento de calcular el cociente y, en consecuencia, el nivel de significancia de la prueba. Esto es lo que da origen al Supuesto de Homogeneidad de Varianzas. Existe una gran diversidad de pruebas, cada una con sus consideraciones, fortalezas y desventajas, pero analizaremos únicamente las (posiblemente) más conocidas.
 
@@ -592,45 +595,9 @@ df$Periodo <- factor(df$Periodo, levels = c("I", "M", "F"))
 head(df)
 ```
 
-#### Comprobación de supuestos
-
-El segundo paso es la comprobación de supuestos. Primero el de Normalidad. Tenemos varios grupos, por lo que las **pruebas de normalidad son para cada grupo**.
-
-```{r}
-#Normalidad
-## Data.frame a llenar
-norm <- data.frame(grupo = NA, W = NA, p = NA)
-
-## Niveles a probar:
-lvls <- levels(df$Periodo)
-
-for (i in seq_along(lvls)) {
-  temp <- shapiro.test(df$PT[df$Periodo == lvls[i]])
-  norm[i,] <- c(lvls[i], temp$statistic, temp$p.value)
-}
-norm
-```
-
-La prueba de S-W sugiere que no hay desviaciones significativas de la normalidad. Corroboremos con un gráfico de violín. Al parecer, los resultados son coherentes con la distribución de los datos.
-
-```{r}
-ggplot(data = df, aes(x = Periodo, y = PT, fill = Periodo)) +
-  geom_violin(alpha = 0.5, show.legend = F) +
-  labs(title = "Distribución de PT en los tres momentos de medición",
-       x = element_blank(),
-       y = element_blank()) +
-  theme_bw()
-```
-
-Ahora el supuesto de igualdad de varianzas, utilizando la prueba de Levene. Podemos concluir que las varianzas no son homogéneas, por lo que la recomendación sería recurrir a una prueba no paramétrica; sin embargo, sigamos con el ejercicio y escalando la complejidad del análisis antes de saltar apresuradamente a conclusiones.
-
-```{r}
-car::leveneTest(PT~Periodo, data = df)
-```
-
 #### Aplicación del ANOVA
 
-El siguiente paso es aplicar el ANOVA. El valor de p es bastante bajo, lo cual ridiculiza nuestra hipótesis de nulidad y concluimos que al menos un par de medias son significativamente diferentes entre sí (F(2, 155) = 574.3; p < 0.0001).
+El siguiente paso es aplicar el ANOVA. El valor de p es bastante bajo, lo cual ridiculiza nuestra hipótesis de nulidad y concluimos que al menos un par de medias son significativamente diferentes entre sí ($F_{2, 155} = 574.3; p < 0.0001$).
 
 ```{r}
 una_via <- aov(PT~Periodo, data = df)
@@ -641,7 +608,7 @@ Te has de preguntar, ¿las medias de qué grupos son diferentes? Eso no lo podem
 
 #### Prueba post-hoc
 
-El último paso es aplicar la prueba post-hoc. Esta prueba se construye a partir de la distribución de rangos estudentizados, y fue diseñada para evitar el conflicto entre el $\alpha$ y el número de comparaciones, por lo que la interpretación del valor de p es directa (sin correcciones).
+Esta prueba se construye a partir de la distribución de rangos estudentizados, y fue diseñada para evitar el conflicto entre el $\alpha$ y el número de comparaciones, por lo que la interpretación del valor de p es directa (sin correcciones).
 
 ::: {.callout-important}
 ¿Por qué no aplicar una prueba $t$ para cada par de grupos? Porque en ese caso inflaríamos nuestro $\alpha$. Hablaremos más de esta relación y algunas correcciones al valor de p en el @sec-mvcomps. Por el momento quédate con que cada prueba para comparar múltiples grupos (tipo ANOVA) tiene su prueba *post-hoc* que permite realizar comparaciones pareadas.
@@ -653,11 +620,65 @@ En este caso, el valor de p fue muy pequeño para las tres comparaciones, por lo
 TukeyHSD(una_via)
 ```
 
-Con esos 4 pasos terminamos nuestro ANOVA de una vía. Pasemos entonces al ANOVA de dos vías.
+#### Comprobación de supuestos: ANOVA como un modelo lineal
+
+El ANOVA es, en realidad, un modelo lineal disfrazado de otra cosa. Este "disfraz" se lo puso Ronald Fisher cuando desarrolló una prueba para estudiar genética y rendimientos de cultivos (el origen de las pruebas de hipótesis de nulidad); sin embargo, la regresión lineal surgió casi 100 años antes (en el siglo 19), gracias a que Legendré y Gauss quisieron predecir movimientos planetarios. Dejando el breviario cultural a un lado, hoy en día los resultados de un ANOVA son, justamente, un "maquillaje" que se aplica a una regresión lineal. Tan es así que podemos extraer coeficientes de nuestro objeto de ANOVA:
+
+```{r}
+una_via$coefficients
+```
+
+Comparemos estos con los coeficientes de un modelo lineal que tenga la misma fórmula que nuestro modelo ANOVA:
+
+```{r}
+lm(PT~Periodo, data = df)$coefficients
+```
+
+Como era de esperarse, son exactamente los mismos y, seguramente, en este punto te estés preguntando cómo es que ajustamos un modelo de regresión lineal si nuestros predictores son categóricos. Esa es una pregunta que dejaremos para otro momento, lo importante es que entonces **el supuesto de normalidad aplica sobre los residuales**, no sobre nuestros valores crudos. ¿Por qué? La explicación es bastante intuitiva: Un modelo perfecto tiene residuales exactamente iguales a 0; es decir, todas las diferencias entre los valores observados y predichos son iguales a 0. Evidentemente esto usualmente no sucede (más adelante veremos que debemos de desconfiar de un modelo con un error muy pequeño), pero esperamos que estos residuales estén mayormente acumulados alrededor de 0 o, en otras palabras, que tengamos muy pocos valores que se encuentren lejos de nuestra predicción. Apliquemos entonces una prueba de Shapiro-Wilk a nuestros residuales:
+
+```{r}
+shapiro.test(una_via$residuals)
+```
+
+¿Qué pasa con la homogeneidad de varianzas? En cualquier modelo (lineal o no), la homocedasticidad hace referencia a que la dispersión de los residuales sea homogénea a lo largo del intervalo del predictor; es decir, que no tengamos áreas donde el error sea más grande. Aquí nuestro predictor (el periodo) es categórico, por lo que tiene sentido evaluar si las varianzas de todos nuestros grupos son iguales. A final de cuentas, el que un grupo tenga una mayor dispersión va a causar que los residuales en ese grupo tengan una mayor dispersión. Comprobamos antes que nuestros residuales no son normales, por lo que podemos aplicar la prueba de Levene:
+
+```{r}
+car::leveneTest(PT~Periodo, data = df)
+```
+
+Nos llevamos una bastante desagradable sorpresa: nuestras varianzas no son homogéneas. Esto, como sabes, hace que el valor de p de nuestro ANOVA no sea confiable, pues las varianzas dentro de los grupos contribuyen de diferente manera a la varianza entre los grupos.
+
+::: {.callout-important}
+Esta última explicación seguramente te hizo preguntarte si la misma lógica no aplica también para la normalidad de cada grupo y la respuesta es "sí y no". Para explicarlo primero realicemos las pruebas de normalidad para cada uno de nuestros grupos, utilizando la función `shapiro_test` de `rstatix`:
+
+```{r}
+df |> group_by(Periodo) |> shapiro_test(PT)
+```
+
+Podemos considerar que la distribución de PT en cada grupo proviene de una distribución normal y, por lo tanto, que cumplimos con el supuesto de normalidad, ¿no? Pues no. En realidad, la distribución total de PT es una mezcla de tres distribuciones normales, pero la distribución de la variable en sí misma no necesariamente debe de ser normal. De hecho, si los grupos están bien segregados, no tiene sentido esperar que la distribución marginal (independientemente del grupo) sea normal. ¿Qué si tiene sentido? esperar que la distribución condicional (considerando los grupos) sea normal, lo que nos lleva de nuevo a los residuales. En otras palabras, la normalidad de los datos crudos, no es relevante, sino la normalidad de los residuales. Puede ser que, como en este caso, los grupos tengan distribuciones normales pero no los residuales. El caso contrario también puede darse: que cada grupo no siga una distribución normal pero sí los residuales.
+:::
+
+
+Por otra parte, al tratarse de un modelo lineal podemos aprovechar el paquete `performance` para evaluar el ajuste de nuestro modelo y verificar sus supuestos:
+
+```{r}
+# cairo_pdf("model1.pdf")
+performance::check_model(una_via)
+# dev.off()
+```
+
+Cuando lleguemos a modelo lineal vamos a explicar a más detalle cada una de estas gráficas, pero la interpretación está en el subtítulo de cada una. También podemos hacer las pruebas correspondientes utilizando este paquete. Desafortunadamente los resultados son solo la decisión (sin el valor del estadístico de prueba y los parámetros de la distribución):
+
+```{r}
+performance::check_normality(una_via)
+performance::check_homogeneity(una_via, method = "auto")
+```
+
+Dicho esto, subamos un escalón más en la escalera que es ANOVA.
 
 ### ANOVA de dos vías
 
-Si una vía es a un factor, dos vías es a dos factores. En este análisis compararemos el efecto de ambos factores simultáneamente, pero de manera independiente; es decir, aunque se hará la comparación para ambos, no se considerará la interacción entre ellos. 
+Si una vía es a un factor, dos vías es a dos factores. En este análisis compararemos el efecto de dos factores simultáneamente, pero de manera independiente; es decir, compararemos los grupos de cada factor sin considerar que tenga una interacción con el otro.
 
 ::: {.callout-note}
 ¿Qué es la interacción? Eso lo veremos más adelante, pero se resume a que el efecto de un factor dependa del efecto de otro.
@@ -665,35 +686,7 @@ Si una vía es a un factor, dos vías es a dos factores. En este análisis compa
 
 Nuestro segundo factor será la Dieta. Los pasos son exactamente los mismos que en el anterior:
 
-#### Comprobación de Supuestos
-
-Dado que ya comprobamos los supuestos para el factor Periodo, solo habrá que hacerlo para el factor Dieta:
-
-```{r}
-#Normalidad
-df$Dieta <- factor(df$Dieta, levels = c("A", "B", "C"))
-## Data.frame a llenar
-norm <- data.frame(grupo = NA, W = NA, p = NA)
-
-## Niveles a probar:
-lvls <- levels(df$Dieta)
-
-for (i in seq_along(lvls)) {
-  temp <- shapiro.test(df$PT[df$Dieta == lvls[i]])
-  norm[i,] <- c(lvls[i], temp$statistic, temp$p.value)
-}
-norm
-```
-
-Debido a que el factor dieta incluye el efecto del periodo de medición y detectamos diferencias entre ellos, es esperable que no se cumpla el supuesto de normalidad. En este caso, el diseño sería mejor analizado utilizando un ANOVA factorial que uno de dos vías pero, al igual que en el caso anterior, seguiremos únicamente para fines ilustrativos.
-
-Para la homogeneidad de varianzas la interpretación es la misma, aunque la consecuencia es la contraria. No violamos el supuesto de homogeneidad de varianzas debido a que tampoco se violó entre los periodos. Esto da un poco más de respaldo a seguir con el análisis, pues es más robusto a la violación del supuesto de normalidad que al de homogeneidad de varianzas.
-
-```{r}
-car::leveneTest(PT~Dieta, data = df)
-```
-
-#### Aplicación del ANOVA.
+#### Aplicación del ANOVA
 
 El ANOVA de dos vías es un caso especial del ANOVA factorial, en el cuál únicamente hay dos factores y NO se considera su interacción, por lo que el modo de declararlo es una fórmula en la cuál los factores se consideran de manera aditiva: `Respuesta~Factor1+Factor2`. La forma tradicional de reportar los resultados de este ANOVA sería: hubo un efecto significativo de las dietas (F(2, 153) = 11.45; p < 0.0001) y de los periodos (F(2, 153) = 560.42; p < 0.0001).
 
@@ -702,15 +695,24 @@ dos_vias <- aov(PT~Dieta+Periodo, data = df)
 summary(dos_vias)
 ```
 
-#### Prueba post-hoc. 
+#### Comprobación de Supuestos
 
-En este caso tuvimos valores de p muy pequeños para ambos factores, realicemos la prueba HSD de Tukey. Al ver la salida puedes interpretar que esta es una lista, y que podríamos acceder a los resultados de cualquier factor utilizando el operador `$` (`TukeyHSD(aov_obj)$factor`). Aquí, las diferencias se encontraron entre la dieta C y las otras dos, pero no entre A y B. 
+No es una sorpresa que al añadir un factor más los residuales tampoco sean normales, ni que las varianzas de nuestros grupos no sean homogéneas:
+
+```{r}
+performance::check_normality(dos_vias)
+performance::check_homogeneity(dos_vias, method = "auto")
+```
+
+#### Prueba post-hoc.
+
+Afortunadamente esto es solo un ejemplo (:P) y podemos seguir con la prueba post-hoc. La implementación es la misma que en el caso anterior. Algo a notar es que la salidaes una lista y que podríamos acceder a los resultados de cualquier factor utilizando el operador `$` (`TukeyHSD(aov_obj)$factor`). Aquí, las diferencias se encontraron entre la dieta C y las otras dos, pero no entre A y B. 
 
 ```{r}
 TukeyHSD(dos_vias)
 ```
 
-Considerando el diseño factorial de la base de datos, ¿cómo interpretarías estos resultados? ¿podemos confiar en ellos? La respuesta que yo esperaría es que no, pues si el experimento fue bien diseñado, al inicio todos los animales debían tener aproximadamente las mismas características y vimos tanto gráficamente como en ambos ANOVAs que hubo un crecimiento. Veamos qué pasa con las distribuciones utilizando un gráfico de interacción.
+¿Cómo interpretarías estos resultados? ¿podemos confiar en ellos? Veamos qué pasa con las distribuciones utilizando un gráfico de interacción:
 
 ```{r}
 ggplot(data = df, aes(x = Dieta, y = PT, fill = Periodo)) +
@@ -725,52 +727,50 @@ Es evidente que en los tres tratamientos hubo un crecimiento, el cual además pa
 
 ### ANOVA factorial
 
-Como te podrás imaginar a partir de lo mencionado sobre el ANOVA de dos vías, este ANOVA es la versión más generalizada en la cual podemos utilzar más de dos factores y analizar su interacción. Sigamos con la base anterior, en este caso considerando también el factor réplica:
+Como te podrás imaginar a partir de lo mencionado sobre el ANOVA de dos vías, este ANOVA es la versión más generalizada en la cual podemos utilzar más de dos factores y analizar su interacción; es decir, su interdependencia. Sigamos con la base anterior, en este caso considerando también el factor réplica:
 
 ```{r}
 df$Rep <- factor(df$Rep, levels = c("A", "B"))
 ```
 
-#### Comprobación de supuestos
-
-No hay sorpresas en ninguno de los dos casos, las interpretaciones de los resultados son las mismas que en el caso anterior; es decir, este NO es el modo correcto de comprobar la normalidad. Cuando hablemos del ANOVA de medidas repetidas veremos un ejemplo de cómo hacerlo de manera correcta (normalidad de un factor dados los niveles del otro factor).
-
-```{r}
-## Data.frame a llenar
-norm <- data.frame(grupo = NA, W = NA, p = NA)
-
-## Niveles a probar:
-lvls <- levels(df$Rep)
-
-for (i in seq_along(lvls)) {
-  temp <- shapiro.test(df$PT[df$Rep == lvls[i]])
-  norm[i,] <- c(lvls[i], temp$statistic, temp$p.value)
-}
-norm
-```
-
-```{r}
-car::leveneTest(PT~Rep, data = df)
-```
-
 #### Aplicación del ANOVA
 
-La única diferencia con el caso anterior es que esta vez utilizaremos el operador `*` para añadir los nuevos términos, en vez de hacerlo de forma aditiva. Haciendo esto la tabla del ANOVA cambia, en donde primero aparece el efecto de cada factor analizado de manera independiete (como si hubieramos hecho un ANOVA de "tres vías") y después los términos de interacción. La interacción entre dos factores representa un efecto combinado de los factores involucrados en la variable analizada; es decir, cuando hay interacción entre dos factores el efecto de uno "depende" del el nivel del otro. 
+La única diferencia con el caso anterior es que esta vez utilizaremos el operador `*` para añadir los nuevos términos, en vez de hacerlo de forma aditiva. Haciendo esto la tabla del ANOVA cambia, en donde primero aparece el efecto de cada factor analizado de manera independiete (como si hubieramos hecho un ANOVA de "tres vías") y después los términos de interacción. La interacción entre dos factores representa un efecto combinado de los factores involucrados en la variable analizada; es decir, cuando hay interacción entre dos factores el efecto de uno "depende" del el nivel del otro. Aquí no tuvimos interacciones significativas. Tal vez la interacción entre los tres factores se vea sospechosamente cerca de nuestro umbral de significancia, pero recuerda que no hay "efectos casi significativos".
 
 ```{r}
 fact <- aov(PT~Dieta*Periodo*Rep, data = df)
 summary(fact)
 ```
 
-#### Prueba post-hoc
-
-En este caso el único término de interacción con resultados significativos es la interacción entre Periodo y Réplica (`Periodo:Rep`), lo cual indica que el comportamiento de los periodos fue diferente entre réplicas. Realicemos las pruebas post-hoc correspondientes. Aunque encontramos un efecto significativo de las réplicas, este factor únicamente tiene dos niveles, por lo que realizar la prueba post-hoc es ocioso y, por tanto, la realizaremos únicamente para Periodo:Rep. Nota que debido a la presencia del operador `:` en el nombre del término es necesario utilizar comillas para poder acceder a ese atributo:
+Lo que sí llama la atención es el resultado "significativo" para las réplicas. La prueba de diferencias honestas de Tukey sugiere que rechacemos la hipótesis nula; es decir, que la media de la réplica A fue superior a la media de la réplica B en un promedio de 0.038 g. Tomando eso en cuenta, ¿son realmente diferencias significativas?
 
 ```{r}
-TukeyHSD(fact)$"Periodo:Rep"
+TukeyHSD(fact)$Rep
 ```
 
-Vemos que prácticamente todos los contrastes fueron significativos, con excepción del periodo inicial (p = 0.9). Esto sugeriría que el comportamiento de las réplicas no fue homogéneo a través del tiempo. Si regresamos brevemente a la tabla del ANOVA veremos que hubo 22 observaciones faltantes, las cuales corresponden a la mortalidad durante el experimento y podrían también explicar estos cambios. Debido a la impraciticidad/imposibilidad de marcar o identificar cada guppy no es posible aplicar un anova de medidas repetidas con estos datos; sin embargo, podemos ejemplificarlo con otros datos.
+
+Si analizamos el gráfico de interacción correspondiente podemos ver que, en efecto, la réplica B presentó menores pesos totales, especialmente en el periodo final. El problema es que las distribuciones no están ni remotamente cerca de ser normales. Recordarás que en su momento dijimos que el ANOVA es relativamente robusto a violaciones del supuesto de normalidad o, mejor dicho, que era más importante el supuesto de homogeneidad de varianzas. Esto es cierto pero tampoco debemos de olvidar que el objetivo es comparar las medias, por lo que tener distribuciones amorfas como en este caso puede sesgar nuestra inferencia:
+
+```{r}
+#| warning: false
+ggplot(data = df, aes(x = Periodo, y = PT, fill = Rep)) +
+  geom_violin(alpha = 0.5, show.legend = T) +
+  labs(title = "Distribución de PT en los tres momentos de medición",
+       x = element_blank(),
+       y = element_blank()) +
+  theme_bw() + facet_wrap(~Dieta)
+```
+
+#### Comprobación de supuestos
+
+El supuesto de normalidad, como era de esperarse, sigue sin sostenerse pero ¡sorpresa! Ahora no hay evidencia para rechazar que las varianzas de los grupos sean iguales entre sí. Esto se debe a que, a diferencia de los casos anteriores, ahora estamos capturando la variación a más niveles. La pregunta a realizarse aquí es, ¿podemos confiar en TODOS los resultados de este ANOVA?
+
+```{r}
+performance::check_normality(fact)
+performance::check_homogeneity(fact, method = "auto")
+```
+
+Aunque me encantaría seguir exprimiento estos datos, si regresamos brevemente a la tabla del ANOVA veremos que hubo 22 observaciones faltantes, correspondientes a la mortalidad durante el experimento. Debido a la impraciticidad/imposibilidad de marcar o identificar cada guppy no es posible aplicar un anova de medidas repetidas; sin embargo, podemos ejemplificarlo con otros datos.
 
 ### ANOVA de medidas repetidas
 
@@ -788,33 +788,14 @@ head(selfesteem)
 La base se encuentra en formato corto, por lo que habrá que pasarla a formato largo:
 
 ```{r}
-estima <- reshape2::melt(selfesteem, # Datos a modificar
-                         # Identificador para cada individuo
-                         id.vars = "id",
-                         # Variables en columnas
-                         measure.vars = c("t1", "t2", "t3"),
-                         # Nombre de la nueva variable de agrupamiento
-                         variable.name = "tiempo",
-                         # Nombre de la nueva variable medida
-                         value.name = "estima")
+estima <- selfesteem |>
+          gather(key = "time",
+                 value = "score",
+                 t1, t2, t3) |>
+          convert_as_factor(id, time)
 head(estima)
 ```
 
-##### Comprobación de supuestos
-
-Apliquemos entonces la prueba de Shapiro-Wilk a los datos agrupados, esta vez simplificando con `tidy`:
-
-```{r}
-# Toma el data.frame, agrúpalo por tiempo y para cada nivel
-# aplica la función shapiro_test a la columna estima:
-estima |>  group_by(tiempo) |>  shapiro_test(estima)
-```
-
-::: {.callout-warning}
-Nota que la función es `shapiro_test`, la cual está contenida en `rstatix`, y no `shapiro.test` de `R` base. Si tratas de pasar `shapiro.test` te encontrarás con un error pues no está pensada para ser utilizada con `pipe`s.
-:::
-
-Ahora la homocedasticidad o, mejor dicho, el supuesto de esfericidad. Este supuesto es una "extensión" del supuesto de homogeneidad de varianzas. Definimos esfericidad como la condición en la que las varianzas de las **diferencias** entre todas las combinaciones de los niveles de interés son iguales. La violación de este supuesto conlleva un incremento en la probabilidad de un falso positivo; es decir, vuelve a la prueba demasiado "liberal" o "crédula". Aunque este supuesto es sumamente importante, no necesitamos probarlo directamente, pues la función con la que implementaremos el análisis hace la prueba correspondiente (prueba de Mauchly para esfericidad) y, además, aplica una corrección (corrección de Greenhouse-Geisser) a los grados de libertad de aquellos factores que violen el supuesto.
 
 ##### Aplicación del ANOVA
 
@@ -822,14 +803,44 @@ Esta vez no utilizaremos la notación de fórmula ni tan siquiera la función ao
 
 ```{r}
 anova_rep1 <- rstatix::anova_test(data = estima,
-                                  dv = estima, wid = id,
-                                  within = tiempo)
+                                  dv = score,
+                                  wid = id,
+                                  within = time, type = 3)
 get_anova_table(anova_rep1)
 ```
 
-Lo primero que llama la atención es que la tabla de ANOVA reporta resultados para una prueba de tipo III. OJO! esto no tiene nada que ver con el error tipo III que mencioné en la clase de pruebas de hipótesis (ese error no es formal). El tipo de prueba hace referencia al tipo de ANOVA que se está realizando o, mejor dicho, al modo en el que se calculan las sumas de cuadrados. Si te interesa leer más al respecto, visita [este](https://www.ibm.com/docs/en/spss-statistics/29.0.0?topic=model-sum-squares) o [este](http://www.statsoft.com/textbook/) enlace. 
+::: {.callout-important}
+Los grados de libertad del numerador son k - 1, mientras que los del denominador son (k - 1)(n-1), donde k es el número de medidas repetidas y n el número de individuos.
+:::
 
-Otra cosa que debe llamar tu atención es el término `ges`. Este es el factor de corrección de Greenhouse-Geisser a los grados de libertad. El modo de reportar estos resultados sería algo como *"las medidas de autoestima a través del tiempo fueron significativamente diferentes ($F_{2,18}$ = 55.5, p < 0.0001; $\eta^2$ generalizado = 0.82)"*. El término $\eta^2$ generalizado lo puedes encontrar también como $\hat{\epsilon}$.
+Aquí, además de los resultados esperados en nuestra tabla de ANOVA, tenemos un término adicional: `ges`. Este hace referencia a una medida del tamaño del efecto conocida como $\eta^2$ (eta cuadrada) generalizada. Esta va de 0 a 1, donde 0 es nulo efecto y 1 es que toda la varianza de los datos puede ser explicada por el factor. ¿Te suena a $R^2$? Son bastante similares. Un problema es que mide la varianza en la muestra, no la población. Corolario: es mejor analizar las diferencias entre los grupos, especialmente en el contexto de la pregunta que queremos resolver. El modo de reportar estos resultados sería algo como:
+
+> *"Las medidas de autoestima a través del tiempo fueron significativamente diferentes ($F_{2,18}$ = 55.5, p < 0.0001; $\eta^2$ generalizado = 0.82)"*
+
+Como breviario, el término $\eta^2$ generalizado lo puedes encontrar también como $\hat{\epsilon}$.
+
+##### Comprobación de supuestos
+
+¿Cómo comprobamos los supuestos? Comencemos con el supuesto de homogeneidad de varianzas o, en el caso de ANOVA de medidas repetidas, el **supuesto de esfericidad**. Este supuesto es una "extensión" del supuesto de homogeneidad de varianzas. Definimos esfericidad como la condición en la que las varianzas de las **diferencias** entre todas las combinaciones de los niveles de interés son iguales. La violación de este supuesto conlleva un incremento en la probabilidad de un falso positivo; es decir, vuelve a la prueba demasiado "liberal" o "crédula". Aunque este supuesto es sumamente importante, si utilizamos `rstatix::anova_test` como arriba no necesitamos probarlo directamente, pues la función hace la prueba correspondiente (prueba de Mauchly para esfericidad) y, además, aplica una corrección (corrección de Greenhouse-Geisser) a los grados de libertad. Si te interesa ver los resultados de esta prueba puedes verla en los atributos de `anova_rep1`. En este caso no podemos rechazar la hipótesis de nulidad de la esfericidad.
+
+```{r}
+anova_rep1$`Mauchly's Test for Sphericity`
+```
+
+¿Qué pasa con el supuesto de normalidad? Se vuelve ligeramente problemático, pues la gente de `rstatix` no devuelve los residuales, entonces toca ajustar el modelo "a mano":
+
+```{r}
+anova_rep1 <- aov(score~time+Error(id), data = estima)
+summary(anova_rep1)
+```
+
+Notarás que la salida es ligeramente diferente. De entrada incluye un término para la variación a nivel individual. Ese término solo "estabiliza" la varianza tomando en cuenta la autocorrelación a nivel de individuo, por lo que no es el que nos interesa. El que interesa es el error `Within`, que corresponde al (los) factor(es) de interés. Como era de esperarse, los resultados son idénticos. Ahora comprobemos la normalidad:
+
+```{r}
+performance::check_normality(anova_rep1$Within)
+```
+
+Como buenos datos de libro, ambos supuestos se cumplen.
 
 ##### Prueba post-hoc
 
@@ -837,66 +848,82 @@ Debido a que las medidas son repetidas no podemos aplicar la prueba de diferenci
 
 ```{r}
 pwt <- pairwise_t_test(data = estima,
-                       estima~tiempo, paired = T,
+                       score~time,
+                       paired = T,
                        p.adjust.method = "bonferroni")
 pwt
 ```
 
 #### ANOVA de medidas repetidas de dos vías
+
 Al igual que en el ANOVA "normal", hablamos de dos vías cuando tenemos dos factores, en este caso son el tiempo y alguno adicional. Para ejemplificarlo utilizaremos la base de datos `selfesteem2` de `datarium`.
 
 ```{r}
 selfesteem2 <- datarium::selfesteem2
-estima2 <- reshape2::melt(selfesteem2, # Datos a modificar
-                         # Identificadores para cada individuo
-                         id.vars = c("id", "treatment"),
-                         # Variables en columnas
-                         measure.vars = c("t1", "t2", "t3"),
-                         # Nombre de la nueva variable de agrupamiento
-                         variable.name = "tiempo",
-                         # Nombre de la nueva variable medida
-                         value.name = "estima")
+estima2 <- selfesteem2 |>
+           gather(key = "time",
+                  value = "score", t1, t2, t3) |>
+           convert_as_factor(id, time)
 head(estima2)
 ```
 
-##### Comprobación de supuestos
-Al igual que en el ANOVA de medidas repetidas, únicamente comprobaremos el Supuesto de Normalidad, solo que aquí lo haremos considerando la "anidación" de los factores; es decir, que las medidas repetidas fueron para cada tratamiento:
-
-```{r}
-estima2 |> group_by(treatment, tiempo) |> shapiro_test(estima)
-```
-
-Aparentemente hubo desviaciones de la normalidad en el t1 para el grupo control. Podemos corroborarlo con un gráfico QQ. Aparentemente es culpa de de algunos puntos ligeramente fuera del resto de la tendencia ubicados en el centro. Recordemos que el ANOVA es robusto a ciertas violaciones de la normalidad, y en este caso no parecen ser especialmente serias. Sigamos con el análisis.
-
-```{r, fig.height= 7, fig.width=7/1.6}
-ggpubr::ggqqplot(estima2, "estima", ggtheme = theme_bw()) +
-  facet_grid(tiempo~treatment, labeller = "label_both")
-```
-
 ##### Aplicación del ANOVA
-Utilizaremos la misma estructura que en el caso anterior; la unica diferencia es que al argumento `within` le pasaremos un vector con dos factores:
+
+La declaración de la prueba es la misma que en el caso anterior, solamente agregaremos un factor adicional a `within`: 
 
 ```{r}
 anova_rep2 <- anova_test(data = estima2,
-                         dv = estima, wid = id,
-                         within = c(treatment, tiempo))
+                         dv = score,
+                         wid = id,
+                         within = c(treatment, time))
 get_anova_table(anova_rep2)
 ```
 
-De la tabla podemos concluir que todos los contrastes fueron significativos, lo cual indica que hubo diferencias entre los tratamientos (F(1, 11), = 15.5; p = 0.02), entre los tiempos (F(1.31, 14.37), = 27.4; p < 0.0001) y tambien un efecto combinado (F(2,22) = 30.4; p < 0.0001). Debido a que los efectos principales ("solos") no son suficientes para describir los datos, el proceso post-hoc es un poco más complicado que en el caso anterior.
+Notarás que aquí también tenemos un efecto de la interacción. Esto quiere decir que la evaluación de la autoestima depende de la combinación de tratamiento y tiempo, pero antes de interpretar comprobemos los supuestos.
+
+##### Comprobación de supuestos
+
+Primero, el de esfericidad:
+
+```{r}
+anova_rep2$`Mauchly's Test for Sphericity`
+```
+
+Tenemos una violación al supuesto de esfericidad en el tiempo, por lo que los grados de libertad fueron corregidos a un factor de 0.653 (`GGe`):
+
+```{r}
+anova_rep2$`Sphericity Corrections`
+```
+
+Al igual que en el ANOVA de medidas repetidas de una vía, para comprobar la normalidad toca declarar el modelo a mano:
+
+```{r}
+anova_rep2_ <- aov(score~treatment*time + Error(id/(time*treatment)),
+                   data = estima2)
+summary(anova_rep2_)
+```
+
+Si pones atención a la salida de `id:time` te darás cuenta del efecto de la corrección de Greenhouse-Geiser. Los grados de libertad sin corregir eran 2, después de la corrección son 2*0.653 = 1.31. Dejando ese ejemplo de lado, comprobamos la normalidad para todos los niveles:
+
+```{r}
+performance::check_normality(anova_rep2_$`id:time`)
+performance::check_normality(anova_rep2_$`id:treatment`)
+performance::check_normality(anova_rep2_$`id:time:treatment`)
+```
 
 ##### Pruebas post-hoc
 
-Debido a la significancia del término de interacción es necesario descomponerlo en:
+A diferencia del caso anterior, y debido a la significancia del término de interacción, las pruebas post-hoc se vuelven más complejas. En el sentido estricto no podemos interpretar los efectos principales (de cada variable por sí sola) *per-se*, pues dependen del otro factor. ¿Qué hacemos? Tenemos dos formas de descomponer el análisis:
 
-a) Efecto principal simple; es decir, un modelo de una vía de la primera variable para cada nivel de la segunda. Debido a que hacerlo a mano es un poco tedioso, encadenemos el proceso:
+a) Efecto principal simple; es decir, un modelo de una vía de la primera variable para cada nivel de la segunda. En otras palabras, comparamos el efecto del tratamiento en cada tiempo del experimento. Debido a que hacerlo a mano es un poco tedioso, encadenemos el proceso:
 
 ```{r}
 anova_rep2_post1 <- estima2 |> 
                     # Agrupa la base por cada nivel de tiempo
-                    group_by(tiempo) |>
+                    group_by(time) |>
                     # ANOVA de medidas repetidas para cada nivel
-                    anova_test(dv = estima, wid = id, 
+                    anova_test(dv = score,
+                               wid = id, 
                                within = treatment) |>
                     # Extrae los resultados
                     get_anova_table() |> 
@@ -910,10 +937,11 @@ b) Aplicar una prueba t de Student para datos dependientes en los términos sign
 
 ```{r}
 pwt_2 <- estima2 |>
-         group_by(tiempo) |>
-         pairwise_t_test(estima~treatment, paired = T,
+         group_by(time) |>
+         pairwise_t_test(score~treatment,
+                         paired = T,
                          p.adjust.method = "bonferroni")
 pwt_2
 ```
 
-Esto es todo para la clase de hoy. Es una clase bastante extensa y aún con ello se quedaron fuera algunas variantes de ANOVA; sin embargo, creo que estos cubren los casos más generales. ¡Nos vemos en la siguiente!
+Esto es todo para la clase de hoy. Es una clase bastante extensa y aún con ello se quedaron fuera algunas variantes de ANOVA (jerárquico, por ejemplo); sin embargo, creo que estos cubren los casos más generales. ¡Nos vemos en la siguiente!
