@@ -3,10 +3,21 @@
 ## Librerías
 
 ```{r}
+#| message: false
+#| warning: false
+
 library(ggplot2)
+library(dplyr)
 library(moments)
 library(DescTools)
 ```
+
+```{r}
+theme_set(see::theme_lucid() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()))
+```
+
 
 ## Introducción
 
@@ -19,7 +30,7 @@ Estas técnicas reciben esos nombres debido a que no están basadas en los Pará
 Una deducción rápida puede ser que, si estas pruebas no requieren de características especiales de nuestros datos, podemos utilizarlas siempre y dejar de lado las pruebas paramétricas. Esto se debe a que en general, **las técnicas paramétricas son más precisas y tienen un mayor poder estadístico**; es decir, que son mejores para encontrar un efecto realmente significativo (son más sensibles).
 
 3. **¿En qué casos aplicarlas?**
-    a) Cuando sepamos que **la distribución de la variable en la población no es normal normal**. Esta parte tiene sus bemoles porque el cubrir este único requisito dependerá de le exhaustividad de nuestro muestreo y si es realmente representativo de lo que sucede a un nivel poblacional. Dejando el tecnicismo de lado, recurriremos a estas técnicas en el mismo escenario en el que aplicaríamos alguna transformación a los datos: **cuando tengamos evidencia lo suficientemente grande de que nuestros datos (muestras) no se ajustan a una distribución normal**. Como ya habíamos comentado antes debemos sustentar nuestras conclusiones a partir de diversas evidencias y no solo un valor de p. Un análisis gráfico de la distribución de frecuencias (gráfico QQ, KDE o un gráfico de frecuencias), acompañado de una prueba de normalidad (*e.g.* Shapiro-Wilks) deberían ser lo mínimo realizable para evaluar la normalidad de nuestros datos. Adicionalmente podemos estimar la curtosis (altura de la curva) y el sesgo (simetría de la distribución) y ver qué tan diferentes son de el valor de 1 de una distribución normal. 
+    a) Cuando sepamos que **la distribución de la variable en la población no es normal**. Esta parte tiene sus bemoles porque el cubrir este único requisito dependerá de le exhaustividad de nuestro muestreo y si es realmente representativo de lo que sucede a un nivel poblacional. Dejando el tecnicismo de lado, recurriremos a estas técnicas en el mismo escenario en el que aplicaríamos alguna transformación a los datos: **cuando tengamos evidencia lo suficientemente grande de que nuestros datos (muestras) no se ajustan a una distribución normal**. Como ya habíamos comentado antes debemos sustentar nuestras conclusiones a partir de diversas evidencias y no solo un valor de p. Un análisis gráfico de la distribución de frecuencias (gráfico QQ, KDE o un gráfico de frecuencias), acompañado de una prueba de normalidad (*e.g.* Shapiro-Wilks) deberían ser lo mínimo realizable para evaluar la normalidad de nuestros datos. Adicionalmente podemos estimar la curtosis (altura de la curva) y el sesgo (simetría de la distribución) y ver qué tan diferentes son de el valor de 1 de una distribución normal. 
     b) Otros casos a tener en cuenta son:
         a) Nuestros **datos están en escala nominal u ordinal**.
         b) El **tamaño de muestra es muy pequeño** para realizar una prueba paramétrica. ¿Qué tan pequeño? menos de 10-15 datos por muestra. Ën este punto es importante mencionar que con un n<5 no es posible identificar desviaciones de una distribución normal.
@@ -39,7 +50,7 @@ En esta sesión utilizaremos los archivos `Datos1 2.csv`, `Datos_bloques.csv` y 
 guppys <- read.csv("datos/Datos1 2.csv",
                header = F,
                skip = 1,
-               sep = ",")
+               sep = ",") |> select(1:5)
 colnames(guppys) <- c("Dieta", "Periodo", "Rep", "LT", "PT")
 head(guppys)
 ```
@@ -62,8 +73,8 @@ También llamada prueba de Mann-Whitney-Wilcoxon o prueba de suma de rangos de W
 
 Antes de pasar al modo de calcular el estadístico de prueba, hablemos sobre las consideraciones que debemos de tener para aplicar esta prueba:
 
-1. La variable dependiente deberá de estar en escala ordinal o continua
-2. La variable independiente es una variable categórica con dos grupos
+1. La variable dependiente deberá de estar en escala ordinal o continua.
+2. La variable independiente es una variable categórica con dos grupos.
 3. Las muestras deberán ser independientes; es decir, no deberá de existir una relación entre o dentro de los grupos (medidas repetidas)
 4. Aunque los datos no se ajusten a una distribución normal, deberán de tener la misma forma (ambos con forma de campana y sesgo negativo, o ambos con sesgo positivo, etc.)
 
@@ -77,16 +88,18 @@ Para aplicarla en R utilizaremos la función `wilcox.test(formula)`, pero primer
 Nuestra variable de interés es la variable LT, por lo que realizaremos la evaluación de la normalidad, tanto de manera cuantitativa (prueba de Shapiro-Wilks, sesgo y curtosis), como de manera gráfica (Gráficos de densidad). Generemos una función que nos permita reunir estos datos en una sola tabla de manera rápida:
 
 ```{r}
-norms <- data.frame(Dieta = NA, w = NA, p = NA, k = NA, s = NA)
+guppys |> group_by(Dieta) |> rstatix::shapiro_test(LT)
+```
+
+
+```{r}
+norms <- data.frame(Dieta = NA, k = NA, s = NA)
 grupos <- unique(guppys$Dieta)
 
 for (i in 1:length(grupos)) {
   sub_set <- na.omit(guppys$LT[guppys$Dieta == grupos[i]])
-  st <- shapiro.test(sub_set)
 
   norms[i,] <- c(as.character(grupos[i]),
-                 round(st[["statistic"]], 2),
-                 round(st[["p.value"]], 3),
                  round(kurtosis(sub_set), 2),
                  round(skewness(sub_set), 2)
                  )
@@ -96,10 +109,11 @@ norms
 Y gráficamente:
 
 ```{r}
+#| warning: false
+#| message: false
 kde_plots <- ggplot(data = guppys, aes(LT, color = Dieta)) + 
              geom_density(show.legend = F) + 
-             facet_wrap(~Dieta, nrow = 2) + 
-             theme_bw() +
+             facet_wrap(~Dieta, nrow = 2) +
              labs(title = "Longitud Total de Guppys bajo tres dietas",
                   subtitle = "Gráficos de densidad",
                   caption = "Archivo: Datos1 2.csv",
@@ -109,7 +123,7 @@ kde_plots <- ggplot(data = guppys, aes(LT, color = Dieta)) +
 kde_plots
 ```
 
-Debido a que todas las distribuciones fueron leptocúrticas (k > 1) y con sesgo negativo (s < 1), todas las pruebas de normalidad tuvieron niveles de significancia pequeños y los gráficos KDE mostraron tendencias hacia la bimodalidad, concluimos que los datos no se ajustan a una distribución normal; en consecuencia, se justifica realizar pruebas no paramétricas.
+Debido a que todas las distribuciones fueron leptocúrticas (k > 1) y con sesgo negativo (s < 1), todas las pruebas de normalidad tuvieron niveles de significancia pequeños y los gráficos KDE mostraron tendencias hacia la bimodalidad, concluimos que los datos no se ajustan a una distribución normal, ¿no? Sí y no. En efecto la distribución de cada grupo no es normal, pero recordarás que la decisión del tipo de prueba a aplicar no está en función de la distribución de cada grupo, sino de la normalidad de los residuales del modelo ANOVA.
 
 :::{.callout-note}
 Esto era de esperarse debido a que hay una variable más de agrupamiento: el periodo; es decir, que hay información del inicio del experimento un periodo intermedio y un periodo final, solo se realiza este ejemplo con fines de enseñanza.
@@ -125,6 +139,8 @@ wilcox.test(LT~factor(Dieta), data = u_data)
 Este resultado corresponde bastante bien con lo visto en los gráficos de densidad en el sentido de falta de diferencias, aunque podemos representarlo utilizando un gráfico de violín que es más adecuado para propósitos de comparación:
 
 ```{r}
+#| warning: false
+#| message: false
 u_mann_plot <- ggplot(data = u_data, aes(x = Dieta, y = LT, fill = Dieta)) + 
                geom_violin(trim = T,
                            alpha = 0.7,
@@ -133,7 +149,6 @@ u_mann_plot <- ggplot(data = u_data, aes(x = Dieta, y = LT, fill = Dieta)) +
                             fill = "white",
                             notch = T,
                             show.legend = F) + 
-               theme_bw() +
                labs(title = "Comparación de LT de guppys bajo las dietas B y C",
                     subtitle = "Gráficos de violín",
                     caption = "Archivo: Datos1 2.csv",
@@ -182,9 +197,11 @@ Ahora apliquemos la prueba.
 wilcox.test(LT~Periodo, data = wilcox_data, paired = T)
 ```
 
- Vemos que al parecer las medianas son diferentes, lo cual se sostiene al analizar los resultados de manera gráfica:
+Al parecer las medianas son diferentes, lo cual se sostiene al analizar los resultados de manera gráfica:
  
 ```{r}
+#| warning: false
+#| message: false
 w_rank_plot <- ggplot(data = wilcox_data,
                       aes(x = Periodo, y = LT, fill = Periodo)) + 
                geom_violin(trim = T,
@@ -194,9 +211,8 @@ w_rank_plot <- ggplot(data = wilcox_data,
                             fill = "white",
                             notch = T,
                             show.legend = F) + 
-               theme_bw() +
-               labs(title = "Comparación de LT de guppys bajo las dietas B y C",
-                    subtitle = "Gráficos de violín ",
+               labs(title = "Comparación de LT de guppys en dos periodos",
+                    subtitle = "Gráficos de violín",
                     caption = "Archivo: Datos1 2.csv",
                     x = element_blank(),
                     y = element_blank()
@@ -246,12 +262,11 @@ fried_plot <- ggplot(data = bloques_molten,
                geom_boxplot(width = 0.1,
                             fill = "white",
                             notch = F,
-                            show.legend = F) + 
-              theme_bw() +
+                            show.legend = F) +
               labs(title = 
                      "Actividad proteolítica entre 4 secciones del tracto
                    digestivo de peces",
-                  subtitle = "Gráficos de violín",
+                  # subtitle = "Gráficos de violín",
                   caption = "Archivo: Datos1 2.csv",
                   x = element_blank(),
                   y = element_blank()
@@ -259,7 +274,7 @@ fried_plot <- ggplot(data = bloques_molten,
 fried_plot
 ```
 
-De estos resultados podríamos concluir que no hubo diferencias entre la actividad proteolítica entre las distintas secciones de los tractos digestivos, pero ¿qué tan diferentes entre sí fueron los peces? Utilicemos el coeficiente de acuerdo de Kendall utilizando la función `KendallW(x, correct, test, na.rm)` de la librería `DescTools` donde x representa una matriz de k grupos (columnas) y m bloques (renglones), correct es un argumento booleano si se debe de realizar la corrección por empates en los rangos y test para realizar una prueba $\chi^2$ con $H_0: W = 0$; es decir, si hubo o no un desacuerdo total entre los bloques. A partir de los resultados vemos que hubo alrededor de un 18% de similitudes entre la actividad proteolítica de los peces, por lo cual los resultados de la prueba de Friedman no son confiables.
+De estos resultados podríamos concluir que no hubo diferencias entre la actividad proteolítica entre las distintas secciones de los tractos digestivos, pero ¿qué tan diferentes entre sí fueron los peces? Utilicemos el coeficiente de acuerdo de Kendall utilizando la función `KendallW(x, correct, test, na.rm)` de la librería `DescTools` donde x representa una matriz de k grupos (columnas) y m bloques (renglones), correct es un argumento booleano si se debe de realizar la corrección por empates en los rangos y test para realizar una prueba $\chi^2$ con $H_0: W = 0$; es decir, si hubo o no un desacuerdo total entre los bloques.
 
 ```{r}
 #Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques
@@ -280,11 +295,10 @@ kendall_plot <- ggplot(data = bloques_molten,
                geom_boxplot(width = 0.1,
                             fill = "white",
                             notch = F,
-                            show.legend = F) + 
-                theme_bw() +
+                            show.legend = F) +
                 labs(title = 
-                       "Comparación de la actividad proteolítica entre 9 peces",
-                    subtitle = "Gráficos de violín",
+                       "Actividad proteolítica de 9 peces",
+                    # subtitle = "Gráficos de violín",
                     caption = "Archivo: Datos_bloques.csv",
                     x = element_blank(),
                     y = element_blank()
@@ -316,12 +330,15 @@ H
 Vemos que aparentemente no hay diferencias entre las medias; sin embargo, realicemos la prueba de Dunn para confirmar. Para ello utilizaremos la función `DunnTest(formula, data)` de la librería `DescTools`. Vemos que en efecto, pareciera no haber diferencias entre las longitudes finales de los guppys en función de las dieta con la que fueron alimentados.
 
 ```{r}
-DescTools::DunnTest(LT~factor(Dieta), data = subset(guppys, Periodo == "F"))
+DescTools::DunnTest(LT~factor(Dieta),
+                    data = subset(guppys, Periodo == "F"))
 ```
 
 Corroboremos esto de manera gráfica:
 
 ```{r}
+#| warning: false
+#| message: false
 kruskal_plot <- ggplot(data = subset(guppys, Periodo == "F"), 
                        aes(x = Dieta, y = LT, fill = Dieta)) +
                 geom_violin(trim = T,
@@ -331,14 +348,91 @@ kruskal_plot <- ggplot(data = subset(guppys, Periodo == "F"),
                             fill = "white",
                             notch = T,
                             show.legend = F) + 
-                theme_bw() +
                 labs(title = "Comparación de LT finales de Guppys",
                     subtitle = "Gráficos de violín",
                     caption = "Archivo: Datos1 2.csv",
                     x = element_blank(),
-                    y = element_blank()
-                    )
+                    y = element_blank())
 kruskal_plot
 ```
+
+## ANOVA de dos vías no paramétrico: Scheirer-Ray-Hare
+
+La última prueba que veremos en esta sesión es la versión no paramétrica para problemas en los que tenemos dos factores y muestras independientes; *i.e.*, la alternativa no paramétrica al ANOVA de dos vías. Para este caso cambiemos ligeramente los datos y utilicemos datos de concentraciones de Alanina (`Ala`) en milípedos, evaluadas por sexo y dos especies:
+
+```{r}
+mili <- read.csv("datos/milipedos.csv")
+head(mili)
+```
+
+Los datos ya se encuentran en formato largo, pero veamos primero cuántas observaciones tenemos por cada combinación de Especie:Sexo:
+
+```{r}
+mili |> group_by(Especie, Sexo) |> summarise(Ala = n())
+```
+
+El diseño es balanceado, sin embargo tenemos pocas muestras por grupo. Este problema es más de representatividad y qué tan válidas son las inferencias realizadas sobre tan pocos datos porque, si comprobamos nuestros supuestos, todo parece estar en orden:
+
+```{r}
+mili_aov <- aov(Ala~Especie*Sexo, data = mili)
+# performance::check_model(mili_aov)
+performance::check_normality(mili_aov)
+performance::check_homogeneity(mili_aov)
+```
+
+Veamos entonces el resultado de la prueba:
+
+```{r}
+summary(mili_aov)
+```
+
+Concluimos que, estadísticamente y a un $\alpha = 0.05$, parece haber diferencias significativas entre especies y entre sexos, y que la diferencia entre especies no depende del sexo (o viceversa). Podríamos confiar "ciegamente" en estos resultados y aplicar la prueba *post-hoc* correspondiente para las especies; sin embargo, veamos qué nos dice la prueba no paramétrica:
+
+```{r}
+mili_srh <- rcompanion::scheirerRayHare(Ala~Especie+Sexo, data = mili)
+mili_srh
+```
+
+Se mantienen las diferencias entre los sexos, pero las diferencias entre especies no están en conflicto con nuestra hipótesis de nulidad a un $\alpha = 0.05$. ¿Qué prueba utilizar? Veamos la distribución de nuestros datos:
+
+```{r}
+ala_sp_plot <- ggplot(data = mili,
+                      aes(x = Especie, y = Ala,
+                          fill = Especie,
+                          color = Especie)) +
+               geom_violin(alpha = 0.2) +
+               geom_boxplot(fill = NA,
+                            width = 0.1)
+ala_sx_plot <- ggplot(data = mili,
+                      aes(x = Sexo, y = Ala,
+                          fill = Sexo,
+                          color = Sexo)) +
+               geom_violin(alpha = 0.2) +
+               geom_boxplot(fill = NA,
+                            width = 0.1)
+ala_int_plot <- ggplot(data = mili,
+                       aes(x = Sexo, y = Ala,
+                           fill = Sexo,
+                           color = Sexo)) +
+                geom_violin(alpha = 0.2) +
+                geom_boxplot(fill =NA,
+                             width = 0.1) +
+                labs(y = "[Ala] (mg/L)") +
+                theme(axis.text.x = element_text(angle = 90)) +
+                facet_wrap(~Especie)
+
+# Crear gráfico compuesto utilizando Patchwork:
+# Gráfico de interacción a la izquierda
+# Efectos principales a la derecha
+(ala_int_plot|(ala_sp_plot / ala_sx_plot) &
+    # Efectos principales sin etiqueta del eje y
+    labs(y = element_blank())) &
+  theme(legend.position = "none") &
+  labs(x = element_blank())
+```
+
+Como era de esperarse, las diferencias entre sexos son las más marcadas: la concentración de alanina es consistentemente mayor en machos que en hembras, independientemente de la especie (no hay interacción). ¿Qué pasa entre las especies? Sin duda alguna estamos en la cuerda floja; sin embargo, al menos con los datos disponibles, la especie 2 tiende hacia los valores más bajos.
+
+La pregunta que debemos de hacernos aquí es: ¿biológicamente tienen relevancia las diferencias observadas? La decisión dependerá totalmente de la experiencia del investigador con el problema. Fuera de este ejemplo no he tratado con datos de concentraciones de Alanina, ni tampoco he estudiado milípedos, por lo que no puedo dar una conclusión informada. ¿Entonces? Prefiero errar de precavido y decir que las diferencias entre especies no son significativas (especialmente considerando que las diferencias entre sexos son mayores) y hacer la recomendación de **replicar el experimento con un tamaño de muestra más grande** (OJO, no incrementar el tamaño de muestra, eso se conoce como *p-hacking*).
 
 Con esto llegamos al final de esta clase. Espero que haya sido de tu agrado y nos vemos en la siguiente.
