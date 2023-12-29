@@ -87,7 +87,7 @@ Aunque esto nos lleva a un pequeño inconveniente o una consideración. Si utili
 
 ## Regresión lineal simple
 
-Antes mencioné que la regla de tres es una aplicación del modelo lineal, lo que no dije es que es, en realidad, un ejercicio de **regresión**. ¿Qué es una regresión? Es una parte del **aprendizaje automatizado supervisado**, del cual hablaremos con más lujo de detalle en la sección correspondiente, pero podemos definirla como el proceso de **estimar los parámetros de un modelo matemático a partir de ciertos datos**. En una regresión **la variable dependiente siempre es continua**. ¿Qué pasa si tenemos una variable dependiente categórica? Entonces estamos en un escenario de clasificación, pero no nos adelantemos.
+Antes mencioné que la regla de tres es una aplicación del modelo lineal, lo que no dije es que es, en realidad, un ejercicio de **regresión**. ¿Qué es una regresión? Es una parte del **aprendizaje automatizado supervisado**, del cual hablaremos con más lujo de detalle en la sección correspondiente, pero podemos definirla como el proceso de **estimar los parámetros de un modelo matemático a partir de ciertos datos**. En una regresión **la variable dependiente "siempre" es numérica**. ¿Qué pasa si tenemos una variable dependiente categórica? Entonces estamos en un escenario de clasificación, pero no nos adelantemos.
 
 ::: {.callout-note}
 ¿Qué es el aprendizaje automatizado? Por el momento entiendelo como la filosofía de "enseñar con ejemplos" llevada a modelos matemáticos y predicciones. En cualquier modelo de aprendizaje automatizado supervisado tenemos una serie de ejemplos (datos), en los cuales una o más variables sirven como predictoras de otra(s); es decir, el objetivo es generar buenas predicciones.
@@ -180,7 +180,7 @@ Describamos la salida elemento por elemento:
 - `Residual standard error`: Más información sobre los residuales, aunque en este caso es el error estándar. Este es sumamente útil para darnos una idea de qué tan preciso es el modelo, pues indica en cuántas unidades, en promedio, se desvía la predicción de los datos observados. Este valor, dividido entre el promedio de la variable predicha nos da la tasa de error del modelo.
 - `Multiple R-squared`: Es el valor del famosísimo (¿infame?) **coeficiente de determinación** ($R^2$). Si ya has llevado clases de estadística y de regresión lineal es muy posible que lo entiendas como "la varianza de los datos explicada por el modelo". ¿Por qué digo infame? Porque, al igual que el valor de p, es un valor del cuál se abusa. Nuevamente, los seres humanos somos flojos por naturaleza, por lo que nos gusta resumir las cosas en un solo número. En este sentido, el $R^2$ es una medida de **bondad de ajuste**; es decir, de qué tan bien ajustado está el modelo. Es muy práctico, pues está contenido en el intervalo $[0,1]$ y representa un porcentaje; sin embargo, para que podamos confiar en él debemos de haber cubierto con el resto de **supuestos de la RLS**. Personalmtente te sugiero mejor tomar el RSE como medida de ajuste, aunque la interpretación no sea tan directa.
 - `Adjusted R-squared`: Es un ajuste al $R^2$ que lo hace menos optimista, especialmente diseñado para escenarios de regresión múltiple (de ahí el "Multiple" del punto anterior). Por el momento lo vamos a ignorar.
-- `F-statistic`: Resultados de un ANOVA que, al igual que el punto anterior vamos a ignorar porque es informativo solo en regresiones múltiples. Es un ANOVA para comparar todo el modelo contra un modelo nulo, por lo que aquí solo es redundante con las pruebas $t$ para cada parámetro.
+- `F-statistic`: Resultados de un ANOVA que, al igual que el punto anterior vamos a ignorar porque es informativo solo en regresiones múltiples. Es un ANOVA para comparar todo el modelo contra un modelo que tiene solo un intercepto, por lo que aquí solo es redundante con la prueba $t$ para la pendiente.
 
 ::: {.callout-note}
 ¿Qué es la bondad de ajuste? Como dice el nombre, qué tan bien ajustado está el modelo, en el sentido de qué tan buenas son las predicciones.
@@ -188,14 +188,14 @@ Describamos la salida elemento por elemento:
 
 Los resultados del modelo los podemos reportar como:
 
-En el modelo de regresión lineal simple tanto el intercepto ($\beta_0 = -3.72$) como la pendiente ($\beta_1 = 1.17$) son significativamente diferentes de 0 ($\beta_0: t_{\nu = 95} = -5.09; p < 0.0001$; $\beta_1: t_{\nu = 95} = 14.47; p < 0.0001$). El valor de $R^2$ indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.
+> En el modelo de regresión lineal simple tanto el intercepto ($\beta_0 = -3.72$) como la pendiente ($\beta_1 = 1.17$) son significativamente diferentes de 0 ($\beta_0: t_{\nu = 95} = -5.09; p < 0.0001$; $\beta_1: t_{\nu = 95} = 14.47; p < 0.0001$). El valor de $R^2$ indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.
 
 Usualmente acompañaríamos este reporte de un gráfico, el cual podemos construir con la capa `geom_smooth(method = "lm", se = FALSE)`, tal que:
 
 ```{r}
 plot_reg1 <- plot_data_reg1 +
              geom_smooth(method = "lm",
-                         se = FALSE,
+                         se = F,
                          colour = rgb(118,78,144,
                                       maxColorValue = 255)) +
              labs(caption = paste("Modelo ajustado: v2 = ", 
@@ -234,14 +234,14 @@ plot_reg1 +
   geom_ribbon(data = df_reg1,
               aes(ymin = inf_int,
                   ymax = sup_int),
-              fill = "gray70",
+              fill = "gray60",
               alpha = 0.3) +
   labs(subtitle = "Intervalos de confianza para los parámetros")
 ```
 
 Pero este no es el gráfico que usualmente veremos. Si deseáramos inlcuir esta información solo añadiríamos los IC al reporte, tal que:
 
-En el modelo de regresión lineal simple tanto el intercepto ($\beta_0 = -3.72$; $IC_{95\%}: [-5.18, -2.27]$) como la pendiente ($\beta_1 = 1.17$; $IC_{95\%}: [1.02,  1.34]$) son significativamente diferentes de 0 ($\beta_0: t_{\nu = 95} = -5.09; p < 0.0001$; $\beta_1: t_{\nu = 95} = 14.47; p < 0.0001$). El valor de $R^2$ indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.
+> En el modelo de regresión lineal simple tanto el intercepto ($\beta_0 = -3.72$; $IC_{95\%}: [-5.18, -2.27]$) como la pendiente ($\beta_1 = 1.17$; $IC_{95\%}: [1.02,  1.34]$) son significativamente diferentes de 0 ($\beta_0: t_{\nu = 95} = -5.09; p < 0.0001$; $\beta_1: t_{\nu = 95} = 14.47; p < 0.0001$). El valor de $R^2$ indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.
 
 ::: {.callout-warning}
 En este caso nuestros datos son "adimensionales"; es decir, no tenemos unidades de ninguna variable. Si nuestras variables no son adimensionales debemos de incluir también las unidades correspondientes (pesos, manzanas y pesos/manzana, si volvemos a nuestro ejemplo).
@@ -260,7 +260,7 @@ plot_reg1 +
               colour = rgb(118,78,144, maxColorValue = 255))
 ```
 ::: {.callout-note}
-Estamos obteniendo dos mensajes de `geom_smooth()` porque en `plot_reg1` ya teníamos esa capa (con `se = FALSE`). Diré lo obvio, pero cuando hagas tus gráficos NO es necesario que repitas capas.
+Estamos obteniendo dos mensajes de `geom_smooth()` porque en `plot_reg1` ya teníamos esa capa (con `se = FALSE`). Pudiera llegar a sonar obvio, pero cuando hagas tus gráficos NO es necesario que repitas capas.
 :::
 
 Nuestro reporte completo quedaría entonces como:
@@ -291,9 +291,9 @@ El **supuesto de homocedasticidad**, por otra parte, es análogo al supuesto de 
 ¿Cómo evaluamos estos supuestos? Mayoritariamente con gráficos de dispersión, pero vamos uno a uno:
 
 - **Linealidad**: Con un gráfico de residuales. En este gráfico tenemos los residuales estandarizados (cada residual menos el promedio de los residuales, dividido entre la desviación estándar) en el eje $y$, y los valores ajustados por el modelo (predicciones) en el eje $x$. Se pueden añadir dos referencias: una línea de referencia horizontal en $y = 0$ y una curva LOESS (hablaremos un poco de este modelo en el @sec-nolin). Si la relación entre nuestras variables predicha y predictora es perfectamente lineal, entonces todos los puntos caerán sobre la línea de referencia y la curva LOESS será completamente horizontal en 0. Entre menos lineal sea la relación más se alejarán los puntos de la línea y mayores curvaturas tendrá el modelo LOESS. Adicionalmente, puede servir para identificar valores extremos (puntos que caigan fuera de $[-1.96, 1.96]$ si se trabaja a un 95% de confianza).
-- **Independencia**: Con un gráfico de autocorrelación. Dado que el análisis de series de tiempo está fuera del alcance de este grupo lo vamos a obivar.
+- **Independencia**: Con un gráfico de autocorrelación. Lo vamos a obviar porque el análisis de series de tiempo está fuera del alcance de este curso.
 - **Normalidad**: Una prueba de normalidad de los residuales y con un gráfico cuantil-cuantil (QQ plot). En este gráfico se grafican (valga la redundancia) los residuales en el eje $y$, y cuantiles teóricos según una distribución normal en el eje $x$. Además se traza una línea de referencia con una pendiente de 1, que representa una distribución normal perfecta. El objetivo es que la prueba de normalidad sea no significativa y que los residuales caigan lo más cercanamente posible a la línea de referencia.
-- **Homocedasticidad**: Una prueba @BreuschPagan_1979 y un gráfico de escala-locación (scale-location). La prueba, como te imaginarás, tiene la hipótesis de nulidad de que el error (residuales) está homogéneamente distribuido. En el gráfico tenemos en el eje $y$ la raíz cuadrada del absoluto de los residuales estandarizados ($\sqrt{|re|}$) y en el eje $x$ los valores ajustados. ¿Por qué la raíz del absoluto? Ese detalle ya es clavarse demasiado, y prefiero que nos adentremos bien a otro tema un poco más adelante, así que conformemonos por saber que queremos que los puntos estén distribuidos de manera aleatoria (homogénea) en todo el eje $x$. ¿Qué quiere decir esto? que no tengamos una mayor dispersión de los puntos (varianza de los residuales) en valores ajustados pequeños (a la izquierda del gráfico) que en los valores más grandes (derecha del gráfico), lo que se vería como un > imaginario, o viceversa, o algún otro patrón.
+- **Homogeneidad de varianzas**: Una prueba @BreuschPagan_1979 y un gráfico de escala-locación (scale-location). La prueba, como te imaginarás, tiene la hipótesis de nulidad de que el error (residuales) está homogéneamente distribuido. En el gráfico tenemos en el eje $y$ la raíz cuadrada del absoluto de los residuales estandarizados ($\sqrt{|re|}$) y en el eje $x$ los valores ajustados. ¿Por qué la raíz del absoluto? Ese detalle ya es clavarse demasiado, y prefiero que nos adentremos bien a otro tema un poco más adelante, así que conformemonos por saber que queremos que los puntos estén distribuidos de manera aleatoria (homogénea) en todo el eje $x$. ¿Qué quiere decir esto? que no tengamos una mayor dispersión de los puntos (varianza de los residuales) en valores ajustados pequeños (a la izquierda del gráfico) que en los valores más grandes (derecha del gráfico), lo que se vería como un > imaginario, o viceversa, o algún otro patrón.
 
 ¿Muchos gráficos? Tal vez. Podríamos hacerlo a mano, o podemos aprovechar la librería `performance` y obtenerlos todos de una vez con la función `check_model(object)`, donde `object` es el objeto con los resultados del ajuste. Esta función nos da todos los gráficos en un solo paso:
 
@@ -314,6 +314,7 @@ Pero volvamos a nuestros gráficos. En la @fig-performance se ven muy pequeños,
 plot(performance::check_predictions(reg1)) +
   see::theme_lucid()
 ```
+
 2. **Linearity**: Es el gráfico de residuales. Desafortunadamente no hay una forma de obtenerlo en una sola línea, así que tocará construirlo a mano y, de paso, modificar un par de cosas. La primera es graficar los residuales estandarizados (menos su media y divididos entre su desviación estándar) para poder darnos una idea de si tenemos valores extremos o no. La segunda es asignar una escala de colores para facilitarlo. Para poder hacer esto vamos a pasarle a `ggplot()` directamente el objeto de regresión, y en `aes()` vamos a utilizar dos atributos ocultos del objeto `reg1`: `.fitted` con los valores predichos y `.stdresid` con los residuales estandarizados. En el gráfico resultante podemos ver que hay varios valores con residuales altos (tonos rojizos), y algunos extremos (> 1.96). La curva LOESS no se ve exageradamente desviada de la línea de referencia, lo cual indica que un modelo lineal puede no ser tan mala elección.
 
 ```{r}
@@ -352,6 +353,7 @@ ggplot(data = reg1, # Objeto de regresión
        x = "Fitted values") +
   see::theme_lucid()
 ```
+
 3. **Homogeneity of variance**: Homocedasticidad/Heterocedasticidad. Con un poco de imaginación puedes trazar un >, indicando que hay una mayor varianza en los valores pequeños que en los valores grandes. La prueba @BreuschPagan_1979, por otra parte, sugiere que la varianza es homogénea. Este es un típico caso donde conviene errar en el lado de la precaución y profundizar en el análisis antes de sacar una conclusión. ¿Qué pasa con nuestro > si quitamos el punto extremo con un residual estandarizado > 4? Se vuelve mucho menos marcado, ¿no? Posiblemente sea eso lo que está viendo la prueba y que no esté siendo engañada por ese punto. Dada la estructura de los datos (muchos acumulados en valores pequeños y pocos en valores grandes), yo decidiría que no se cumple el supuesto de homogeneidad de varianzas.
 
 ```{r}
