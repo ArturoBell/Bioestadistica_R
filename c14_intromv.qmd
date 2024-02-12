@@ -433,7 +433,7 @@ cov_mat
 cor_mat
 ```
 
-Veámos la matriz de correlaciones gráficamente:
+Veamos la matriz de correlaciones gráficamente:
 
 ```{r}
 corrplot::corrplot(cor_mat, method = "ellipse", type = "upper")
@@ -468,6 +468,7 @@ Al igual que en ANOVA, si estamos haciendo una comparación entre grupos no inte
 :::
 
 ### Prueba de Mardia (1970)
+
 Consiste en analizar si los momentos de la distribución Mv de los datos difieren de los esperados de una distribución Normal Mv ([Mardia 1970](http://bit.ly/mardia_test)), las hipótesis nulas son:
 
 1. $H_0: S_{obs} = S_{NMv_{µ, \Sigma}}$
@@ -518,16 +519,16 @@ ji2_plot <- function(df){
   
   # Graficado
   library(ggplot2)
-  ji2_qq <- ggplot(data = ji2_plot_data, aes(x = d, y = ji2)) + 
-            geom_point(colour = "deepskyblue4", alpha = 0.5, 
-                       size = 4) + 
+  ji2_qq <- ggplot(data = ji2_plot_data, aes(x = d, y = ji2)) +
             geom_abline(slope = 1,
                         colour = rgb(118,78,144,
                                      maxColorValue = 255),
                         linewidth = 1) +
+            geom_point(colour = "deepskyblue4", alpha = 0.5, 
+                       size = 4) + 
             labs(title = 
                    bquote("Gráfico QQ de" ~~ {chi^2} ~~ ", g.l = "~ .(p)),
-                 subtitle = bquote("Distancia de Mahalanobis ("~{D^2}~") 
+                 subtitle = bquote("Distancia de Mahalanobis ("~~{D^2}~~") 
                                    vs. Cuantiles teóricos"),
                  x = element_blank(),
                  y = element_blank(),
@@ -544,7 +545,7 @@ qqjiplot
 
 ### Prueba de Royston
 
-Esta prueba es una extensión multivariada de la prueba por excelencia para la normalidad univariada: la prueba de Shapiro-Wilk's. Originalmente propuesta en 1983, aunque fue corregida/ampliada por el mismo autor en 1992 ([Royston vs. otras](http://bit.ly/Royston_otros)). Funciona mejor para muestras pequeñas, aunque no se recomienda emplearla con menos de 3 observaciones, ni con más de 2000.
+Esta prueba es una extensión multivariada de la prueba por excelencia para la normalidad univariada: la prueba de Shapiro-Wilk. Originalmente propuesta en 1983, aunque fue corregida/ampliada por el mismo autor en 1992 ([Royston vs. otras](http://bit.ly/Royston_otros)). Funciona mejor para muestras pequeñas, aunque no se recomienda emplearla con menos de 3 observaciones, ni con más de 2000.
 
 Su implementación sigue la misma línea que los casos anteriores. Si analizamos el valor de p, veremos que se encuentra en el límite de la significancia a un $\alpha = 0.05$; sin embargo, si consideramos también el gráfico QQ que elaboramos anteriormente, no podemos asumir que esas desviaciones sean despreciables.
 
@@ -561,18 +562,18 @@ Para su implementación en R utilizaremos la función `betadisper` de la librer�
 
 ```{r}
 library(vegan)
-dist_mat <- vegan::vegdist(mydata, method = "euclidean", type = c("median"))
+dist_mat <- vegan::vegdist(mydata, method = "euclidean", type = "median")
 groups <- as.character(mtcars$cyl)
 # Por fines prácticos no se muestra,
 # ya que calcula una distancia entre cada par de instancias o grupos,
 # resultando en matrices sumamente grandes
-#dist.mat
+# dist_mat
 ```
 
-Ahora utilizaremos la función `betadisper` para comprobar la homogeneidad de dispersiones entre los distintos cilindros. Esta prueba únicamente genera el espacio multivariado para realizar la prueba, realizando un ACP para reducir la dimensionalidad de la base de datos y estimar las distancias a la mediana de cada uno de los grupos establecidos.
+Ahora utilizaremos la función `betadisper` para comprobar la homogeneidad de dispersiones entre los distintos cilindros. Esta prueba únicamente genera el espacio multivariado para realizar la prueba, realizando un ACoP para reducir la dimensionalidad de la base de datos y estimar las distancias a la mediana de cada uno de los grupos establecidos.
 
 ```{r}
-# Realizar el procedimiento
+# Realizar PCoA
 disp_mv <- vegan::betadisper(dist_mat,
                              group = groups, type = "median")
 disp_mv
@@ -589,28 +590,21 @@ Ahora veamos las dispersiones gráficamente:
 
 ```{r}
 # Análisis gráfico
-plot(disp_mv, ellipse = T, hull = F)
-```
-
-Al analizar el gráfico vemos que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, entonces realicemos las comparaciones pareadas univariadas con la prueba Honesta de Diferencias Significativas de Tukey (`TukeyHSD`). Los resultados sugieren que la dispersión del grupo 8 es significativamente mayor a la de los otros dos, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.
-
-```{r}
-mod_HSD <- TukeyHSD(disp_mv)
-mod_HSD
-```
-
-Al igual que en el caso anterior podemos utilizar `ggplot` para personalizar el gráfico:
-
-
-```{r}
 PCoA_data <- data.frame(disp_mv$vectors, group = groups)
 ggplot(data = PCoA_data,
        aes(x = PCoA1, y = PCoA2,
            color = groups)) +
   geom_point() +
   stat_ellipse(level = 0.4) +
-  labs(title = "Dispersión Mv") +
-  theme(legend.position = "none")
+  labs(title = "Dispersión Mv",
+       color = "Group")
+```
+
+Al analizar el gráfico vemos que la dispersión del grupo 6 es más pequeña que la de los grupos 4 y 8, entonces realicemos las comparaciones univariadas con la prueba Honesta de Diferencias Significativas de Tukey (`TukeyHSD`). Los resultados sugieren que la dispersión del grupo 8 es significativamente mayor a la de los otros dos, lo cual a su vez pudiera sugerir que hay un equilibrio entre las dispersiones en el eje x con respecto a las dispersiones en el eje y.
+
+```{r}
+mod_HSD <- TukeyHSD(disp_mv)
+mod_HSD
 ```
 
 ## Implicaciones analíticas de la multidimensionalidad
@@ -639,7 +633,7 @@ kdeplots <- function(data, aes){
             theme_bw() +
             labs(title = "Conteo de peces",
                  subtitle =
-                   "Gráfico de densidad con datos y distrintas transformaciones",
+                   "Gráfico de densidad con datos y distintas transformaciones",
                  caption = "Datos: http://bit.ly/comm_transf",
                  x = element_blank(),
                  y = element_blank()) +
@@ -649,6 +643,8 @@ kdeplots <- function(data, aes){
 
 df <- data.frame(datos = c(38, 1, 13, 2, 13, 20, 150, 9, 28, 6, 4, 43),
                  transf = "originales")
+df$transf <- factor(df$transf, levels = c("originales", "Z",
+                                          "log(x)", "sqrt(x)"))
 kde_plots <- kdeplots(df, aes(datos, color = transf))
 kde_plots
 ```
@@ -668,7 +664,17 @@ kde_plots
 
 ### Transformación logarítmica
 
-Posiblemente la transformación más conocida, utilizada y, en consecuencia, abusada. Se realiza aplicando la ecuación $X_{log} = log(X)$. (OJO: si hay ceros será $X_{log} = log(X+c)$, ya que el logaritmo de 0 no existe). Esta transformación cambia notablemente la distribución de los datos, acercándolos a una forma de campana. ¿Cuándo aplicarla? Primero, los casos en los cuales puedes encontrarla aplicada:
+Posiblemente la transformación más conocida, utilizada y, en consecuencia, abusada. Se realiza aplicando la ecuación $X_{log} = log(X)$. (OJO: si hay ceros será $X_{log} = log(X+c)$, ya que el logaritmo de 0 no existe). Esta transformación cambia notablemente la distribución de los datos, acercándolos a una forma de campana:
+
+```{r}
+df2 <- rbind(df2, data.frame(datos = log(df$datos),
+                            transf = "log(x)"))
+kde_plots <- kdeplots(df2, aes(datos, color = transf)) + 
+             facet_wrap(~transf, scales = "free")
+kde_plots
+```
+
+¿Cuándo aplicarla? Primero, los casos en los cuales puedes encontrarla aplicada:
 
 1. Linealizar un modelo. Esta ya la vimos en el @sec-nolin cuando hablamos de la relación talla-peso.
 2. Enlazar la salida de un modelo lineal con una distribución del error de la familia de distribuciones exponenciales (Poisson, por ejemplo).
@@ -737,16 +743,14 @@ exp(t_log$estimate)
 unname(exp(t_log$estimate[2])-exp(t_log$estimate[1]))
 ```
 
-Esto es completamente diferente a lo que veíamos en el @sec-nls con la linealización del modelo potencial, pues ahí el modelo reconvertido quedaba perfectamente dentro de nuestros datos originales.
+Esto es completamente diferente a lo que veíamos en el @sec-nolin con la linealización del modelo potencial, pues ahí el modelo reconvertido quedaba perfectamente dentro de nuestros datos originales.
 
 En estos momentos tu podrías decirme "Ok Arturo, pero habíamos dicho que una prueba t no es la mejor manera de comparar datos de conteos" y sí, pero solamente me darías otro argumento para orillarte hacia una prueba no paramétrica y, de hecho, la posición de la mediana sí que se mantiene constante:
 
 ```{r}
 DescTools::Closest(A, median(A), which = T)
-DescTools::Closest(log(A), mean(log(A)), which = T)
+DescTools::Closest(log(A), median(log(A)), which = T)
 ```
-
-
 
 ### Raíz cuadrada
 
@@ -763,7 +767,7 @@ En este caso el cambio en la forma no es tan agresivo, y la consecuencia es úni
 
 ### Transformaciones como estabilizadoras de la varianza
 
-Cerremos el tema de las transformaciones aterrizando una de las funciones de las transformaciones: estabilizar la varianza de un modelo. ¿A qué me refiero con esto? En pocas palabras, a linealizarlo. En el modelo de relación talla-peso hicimos justamente eso: partimos de un modelo no lineal de la forma $W = aL^B$ y aplicando logaritmos llegamos al modelo $log(W) = log(a) + B* log(L)$. De manera más precisa, cuando hablamos de "estabilizar la varianza" hablamos de la **varianza del modelo**. Este tema es bastante complejo (tendríamos que hablar de las dichosas *power transformations* y la prueba Box-Cox) y no vamos a entrar en esos detalles pero quiero que te lleves algo:
+Cerremos el tema de las transformaciones aterrizando una de las funciones de las transformaciones: estabilizar la varianza de un modelo. ¿A qué me refiero con esto? En pocas palabras, a linealizarlo. En el modelo de relación talla-peso hicimos justamente eso: partimos de un modelo no lineal de la forma $W = aL^B$ y aplicando logaritmos llegamos al modelo $log(W) = log(a) + B* log(L)$. De manera más precisa, cuando hablamos de "estabilizar la varianza" hablamos de la **varianza del modelo**, y el objetivo de este tipo de transformaciones es poder aplicar una regresión lineal. Este tema es bastante complejo, tendríamos que hablar de las dichosas transformaciones de potencias (**power transformations**) y la prueba Box-Cox para determinar la transformación óptima. Por simplicidad no vamos a entrar en esos detalles, además de que veremos algunas técnicas que pueden ser más útiles, pero quiero que te lleves algo:
 
 :::{.callout-important}
 Todos los supuestos van alrededor de la distribución del error, no de los datos. En el @sec-glm vamos a hablar de, justamente, como extender el modelo lineal a errores no normales.
@@ -786,7 +790,7 @@ Dentro del aprendizaje automatizado tenemos dos categorías generales:
 ![Aprendizaje supervisado.](imgs/supervised.png){#fig-supervised}
 
 2. **Aprendizaje no supervisado**: Aquí se engloban las técnicas o algoritmos que permiten extraer patrones ocultos en los datos. En el aprendizaje automatizado no tenemos una variable dependiente/de respuesta, solamente un conjunto de observaciones multivariadas de las cuales queremos extraer información que nos sea útil. Aquí también tenemos diversas clases, pero podemos resumirlas en dos:
-    a) **Reducción de la dimensionalidad**: Aquí el objetivo es poder "resumir" nuestros datos multivariados en una menor cantidad de variables, conservando la mayor cantidad de la información original. Aquí encontramos técnicas como los Ánálisis de Componentes Principales (PCA), Análisis de Coordenadas Principales (PCoA), Escalamiento Multidimensional No Métrico (NMDS). Si ya has tenido un acercamiento previo a estas técnicas puede que esto no te cuadre del todo, pues el NMDS (por ejemplo) es una técnica de ordenación. Y no estarías mal, pero en el proceso estamos reduciendo la dimensional original de los datos para poder realizar la ordenación. **Nuestra entrada en estas técnicas es un conjunto de observaciones multivariadas, y la salida otro conjunto de observaciones compuesto por un menor número de variables**
+    a) **Reducción de dimensionalidad**: Aquí el objetivo es poder "resumir" nuestros datos multivariados en una menor cantidad de variables, conservando la mayor cantidad de la información original. Aquí encontramos técnicas como los Ánálisis de Componentes Principales (PCA), Análisis de Coordenadas Principales (PCoA), Escalamiento Multidimensional No Métrico (NMDS). Si ya has tenido un acercamiento previo a estas técnicas puede que esto no te cuadre del todo, pues el NMDS (por ejemplo) es una técnica de ordenación. Y no estarías mal, pero en el proceso estamos reduciendo la dimensional original de los datos para poder realizar la ordenación. **Nuestra entrada en estas técnicas es un conjunto de observaciones multivariadas, y la salida otro conjunto de observaciones compuesto por un menor número de variables**
     b) **Agrupamientos**: El nombre lo dice todo, su objetivo es el formar grupos. ¿Cómo? Igual a como lo haríamos nosostros: juntando las instancias que más se parecen entre sí en un solo grupo, y mandando a las que no se parecen a otro grupo. **Nuestra entrada es un conjunto de observaciones multivariadas, y la salida la agrupación a la que pertenece cada una**.
     
 ![Aprendizaje no supervisado.](imgs/unsupervised.png){#fig-unsupervised}
@@ -799,6 +803,6 @@ Dentro del aprendizaje automatizado tenemos dos categorías generales:
 Aunque en la clasificación y en los agrupamientos estemos lidiando con grupos o clases, no son lo mismo. La clasificación es aprendizaje supervisado, la agrupación es aprendizaje no supervisado.
 :::
     
-Adicional a estas dos tenemos otras dos menos conocidas: el aprendizaje por refuerzo y el aprendizaje semi-supervisado, pero esos quedan fuera del alcance de este curso.
+Adicional a estas dos tenemos otras dos: el aprendizaje por refuerzo y el aprendizaje semi-supervisado, pero esos quedan fuera del alcance de este curso.
 
 Con esto terminamos esta sesión. Sé que estuvo fuertemente cargada de teoría y matemática, pero es necesario que tengas al menos una noción de dónde surgen las cosas. No es necesario que te las aprendas de memoria, o que sepas calcular las matrices a mano, solo que entiendas la lógica detrás de los procedimientos para que no abuses de ellos. Como recompensa por llegar hasta aquí, no hay ejercicio para esta sesión ;).
