@@ -7,12 +7,19 @@
 #| message: false
 
 library(ggplot2)
+library(dplyr)
 library(vegan)
 library(ggdendro)
 library(dendextend)
 library(FactoMineR)
 library(factoextra)
 library(ggrepel)
+```
+
+```{r}
+theme_set(see::theme_lucid() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()))
 ```
 
 
@@ -30,13 +37,24 @@ Una forma de hacerlo es poner a las mariposas/polillas en un grupo, los caracole
 
 ![Artrópodos agrupados](imgs/arthrogroups.png){#fig-arthrogroups}
 
-Fue bastante sencillo, ¿no? A los seres humanos no nos resulta especialmente complicado categorizar, pero para la computadora hay un total de 115,975 combinaciones de estas imágenes. ¿Cómo saber cuáles son las agrupaciones relevantes? Hay una gran variedad de técnicas: Agrupamientos jerárquicos, máquinas de soporte vectorial, k-medias (k-medianas o k-medioides), DBSCAN, T-SNE, entre otras, cada una con sus peculiaridades, ventajas y desventajas, dadas por la lógica con la que trabajan y, en consecuencia, con diversos niveles de "éxito" según los datos con los que estemos trabajando:
+Fue bastante sencillo, ¿no? A los seres humanos no nos resulta especialmente complicado categorizar, pero para la computadora hay un total de 115,975 combinaciones de estas imágenes. ¿Cómo saber cuáles son las agrupaciones relevantes? Hay una gran variedad de técnicas, que podemos partir en dos grandes grupos:
+
+1. Métodos basados en distancias: Agrupamiento jerárquico, métodos particionales (k-medias, k-medianas o k-medioides) y espectrales.
+2. Métodos basados en densidades: OPTICS, DBSCAN, HDBSCAN, entre otros.
+
+Cada método tiene sus peculiaridades, ventajas y desventajas, dadas por la lógica con la que trabajan y, en consecuencia, con diversos niveles de "éxito" según los datos con los que estemos trabajando:
 
 ![Técnicas de agrupaciones en distintos juegos de datos sintéticos. Nota: los datos no tienen grupos "reales", solo algunas formas interesantes (Tomado de la documentación de Scikit-Learn).](https://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png){#fig-clusteringalgorithms}
 
 ### Agrupamiento jerárquico
 
-De toda esta diversidad de técnicas hay una que se ha destacado en el área de la biología: el agrupamiento jerárquico, también llamado **análisis clúster**. Esta técnica tiene una lógica muy sencilla e intuitiva (lo cual es parte de la razón por la que sea tan popular): Calcula una distancia entre todos los pares de observaciones, forma un grupo con el par con la menor distancia y repite hasta que termines con todos los datos. Veamos cómo es esto paso a paso con unos datos de ejemplo:
+De toda esta diversidad de técnicas hay una que se ha destacado en el área de la biología: el agrupamiento jerárquico, mal llamado **análisis clúster**. Esta técnica tiene una lógica muy sencilla e intuitiva (lo cual es parte de la razón por la que sea tan popular):
+
+1. Calcula las distancias entre todos los pares de observaciones.
+2. forma un grupo con el par con la menor distancia.
+3. Repite hasta que termina con todos los datos.
+
+Veamos cómo es esto paso a paso con unos datos de ejemplo:
 
 Especie | Longitud total (m)
 :-----:|:-----:
@@ -50,12 +68,12 @@ Especie | Longitud total (m)
 
 Entonces los pasos con los que agruparíamos estas especies, según su longitud total, son:
 
-1. Calcular una matriz de distancias/disimilaridades. Literalmente ver qué tanto se parecen nuestras especies entre sí. ¿Cómo hacemos esto? Utilizando alguna medida de distancia o disimilaridad, pero dejemos el tema de la selección de la medida para después y utilicemos la distancia Euclidiana:
+1. Calcular una matriz de distancias/disimilitudes Literalmente ver qué tanto se parecen nuestras especies entre sí. ¿Cómo hacemos esto? Utilizando alguna medida de distancia o disimilitud, pero dejemos el tema de la selección de la medida para después y utilicemos la distancia Euclidiana:
 
 :::{.callout-note}
-¿Qué es la distancia Euclidiana? Es una medida basada en el famosísimo teorema de Pitágoras ((¿creías que no servía para nada?):
+¿Qué es la distancia Euclidiana? Es una medida basada en el famosísimo teorema de Pitágoras (¿creías que no servía para nada?):
 
-$$D_{a,b} = \sqrt\sum_{i = 1}^n (q_i - p_i)^2$$
+$$D_{a,b} = \sqrt{\sum_{i = 1}^n (q_i - p_i)^2}$$
 
 ![Teorema de Pitágoras](imgs/pytheorem.png){#fig-pytheorem}
 
@@ -66,7 +84,7 @@ Esta medida de distancia representa también la geometría que utilizamos en el 
 
 2. Identificar el par con la menor distancia y formar un grupo con ellos. Esto corresponde al método de unión (agrupamiento o amalgamiento) simple o sencillo, en el que encontramos la menor distancia en la matriz, que corresponde a `Tt` y `Gg` ($D = 0.6$), por lo que formamos un primer grupo `[Tt, Gg]`, el cual estará representado por el promedio de `Tt` y `Gg`: `3.3`.
 
-3. Volver a calcular la matriz de distancias/disimilaridades, sustituyendo las observaciones agrupadas por su grupo; es decir, ahora ya no vamos a incluir `Tt` y `Gg` en el cálculo de la matriz, sino que incluiremos `[Tt, Gg] = 3.3`:
+3. Volver a calcular la matriz de distancias/disimilitudes, sustituyendo las observaciones agrupadas por su grupo; es decir, ahora ya no vamos a incluir `Tt` y `Gg` en el cálculo de la matriz, sino que incluiremos `[Tt, Gg] = 3.3`:
 
 ![Matriz de distancias después de formar la primera agrupación entre \[Tt, Gg\]](imgs/distmat2.png){#fig-distmat2}
 
@@ -84,7 +102,7 @@ Un **dendrograma** es una visualización de datos en la que se **muestra al mism
 
 Como ves en la figura @fig-dendro, nuestro dendrograma está compuesto por algunas estructuras:
 
-1. **Raíz**: Es la distancia a la que se unen todos nuestros grupos. En nuestro ejemplo falta porque no tenemos un "grupo hermano"; es decir, un grupo que sea cercano a nuestras especies de cetáceos, pero que no sea un cetáceo. Podríamos incluir un hipopótamo, por ejemplo. Si tenemos ese grupo hermano podemos graficar la raíz, y entonces nuestro dendrograma estará enraizado, de lo contrario tenemos un dendrograma no enraizado. El árbol comienza a "crecer" desde este punto (un solo grupo) hasta tener separados todos los puntos en el conjunto de datos.
+1. **Raíz**: Es la distancia a la que se unen todos nuestros grupos. En nuestro ejemplo hace falta porque no tenemos un "grupo hermano"; es decir, un grupo que sea cercano a nuestras especies, pero que no sea un cetáceo. Podríamos incluir un hipopótamo, por ejemplo. Si tenemos ese grupo hermano podemos graficar la raíz, y entonces nuestro dendrograma estará enraizado, de lo contrario tenemos un dendrograma no enraizado. El árbol comienza a "crecer" desde este punto (un solo grupo) hasta tener separados todos los puntos en el conjunto de datos.
 2. **Ramas**: Cada una de las líneas verticales del árbol. Indican el "flujo" de las similaridades, en el sentido de que seguirán extendiéndose hasta la distancia en la que se forme una nueva agrupación.
 3. **Nodo**: Es el punto donde se unen dos ramas; es decir, el punto en el que se forma una nueva agrupación.
 4. **Hojas**: Son las "ramas terminales", que se puede entender como un grupo de ramas que representan cada una de las **instancias** que conforman la base de datos. Las instancias más parecidas son las contiguas, y el parecido disminuye conforme nos alejamos de cada punto.
@@ -92,15 +110,15 @@ Como ves en la figura @fig-dendro, nuestro dendrograma está compuesto por algun
 
 ### Hablemos de distancias
 
-Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que **la medida de distancia/disimilaridad que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis**. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la @fig-geometries tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:
+Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilitud hay y cuál utilizar? Resulta que **la medida de distancia/disimilitud que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis**. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la @fig-geometries tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:
 
 ![Formas de los espacios geométricos definidos por las distancias Euclidiana, Manhattan y Chebyshev. Las tres son casos especiales de la distancia Minkowski, con diferentes valores de $r$](imgs/geometries.png){#fig-geometries}
 
 :::{.callout-note}
-¿Es lo mismo una medida de distancia que una de disimilaridad? Sí y no. Desde el punto de vista práctico, sí, ambas nos permiten darnos una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una **distancia** cumple con la **desigualdad triangular**, mientras que una disimilaridad no. ¿Qué es la desigualdad triangular? Que **la distancia más corta entre dos puntos es una linea recta**. En una disimilaridad esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?
+¿Es lo mismo una medida de distancia que una de disimilitud? Sí y no. Desde el punto de vista práctico ambas nos dan una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una **distancia** cumple con la **desigualdad triangular**, mientras que una disimilitud no. ¿Qué es la desigualdad triangular? Que **la distancia más corta entre dos puntos es una linea recta**. En una disimilitud esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?
 :::
 
-Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilaridades funcionen mejor en ciertos casos y peor en otros. @Shirkhorshidietal_2015 compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:
+Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilitudes funcionen mejor en ciertos casos y peor en otros. @Shirkhorshidietal_2015 compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:
 
 ![Medidas de distancia y sus peculiaridades.](imgs/distances.png){#fig-distances}
 
@@ -140,20 +158,21 @@ Nuevamente, este es un análisis no supervisado, por lo que no tenemos etiquetas
 
 ### Implementación
 
-Realizar un agrupamiento jerárquico en `R` es bastante sencillo, únicamente debemos de tener nuestro data.frame cuyos nombres de renglones sean las etiquetas de nuestras instancias a agrupar, calcular las distancias con la función `dist(x, method)` y unir los grupos con la función `hclust(dist, method)`.
+Realizar un agrupamiento jerárquico en `R` es bastante sencillo, únicamente debemos de tener un data.frame cuyos nombres de renglones sean las etiquetas de las instancias a agrupar, calcular las distancias con la función `dist(x, method)` y unir los grupos con la función `hclust(dist, method)`.
 
 ```{r}
 df1 <- data.frame(long = c(3, 3.6, 6.5, 7.5, 15, 20),
                   row.names = c("Tt", "Gg", "Gm", "Oo", "Mn", "Bp"))
 dist_mat <- dist(df1, method = "euclidean")
 hc_av <- hclust(dist_mat, method = "average")
+
+df1
 ```
 
 Este objeto podemos graficarlo con `ggplot`, utilizando la librería `ggdendro`, lo cual nos da un dendrograma bastante sencillo:
 
 ```{r}
 ggdendrogram(hc_av, labels = T) +
-  theme_bw() +
   labs(x = element_blank(),
        y = "Distancia Euclidiana")
 ```
@@ -167,6 +186,7 @@ dend <- as.dendrogram(hc_av)
 # Cambiamos el color a las ramas
 dend <- set(dend, "branches_k_color",
             value = "deepskyblue4",
+            # value = c("red", "blue"),
             k = 1)
 
 # Cambiamos el ancho de las ramas
@@ -234,10 +254,10 @@ summary(clust_scale)
 Recuerda que si trabajamos con datos estandarizados estamos escalando nuestros datos a valores de una distribución `Z`, los cuáles representan a cuántas desviaciones estándar estamos de la media.
 :::
 
-Ahora realicemso los agrupamientos utilizando la distancia Mahalanobis (que no es tan sensible a valores extremos) y el método de unión Ward.D2 (unión Ward con distancias cuadráticas) para minimizar la varianza intra-grupos:
+Ahora realicemos los agrupamientos utilizando la distancia Mahalanobis (que no es tan sensible a valores extremos y considera la correlación entre las variables) y el método de unión Ward.D2 (unión Ward con distancias cuadráticas) para minimizar la varianza intra-grupos:
 
 ```{r}
-dist_mv1 <- vegdist(clust_scale, method = "mahalanobis")
+dist_mv1 <- vegan::vegdist(clust_scale, method = "mahalanobis")
 hc_mv1 <- hclust(dist_mv1, method = "ward.D2")
 
 # Transformamos a dendrograma
@@ -342,7 +362,8 @@ n_gps <- NbClust::NbClust(data = clust_scale,
                           diss = dist_mv2,
                           distance = NULL,
                           method = "ward.D2",
-                          index = "all", max.nc = 8)
+                          index = "all",
+                          max.nc = 8)
 ```
 
 :::{.callout-note}
@@ -412,7 +433,7 @@ Si eres parte de alguna carrera de ciencias marinas es muy posible que hayas esc
 
 Durante la fase fría (condiciones "normales") los vientos alisios soplan con fuerza del este al oeste en el ecuador, arrastrando consigo la capa superficial del océano y acumulando agua en las costas del Pacífico central occidental. Como sabrás, el ecuador recibe la mayor cantidad de calor solar, por lo que el agua arrastrada es agua caliente, haciendo que la termoclina sea más profunda en el occidente que en el oriente del Pacífico. Esto permite que haya una surgencia costera (emergimiento de agua profunda, rica en nutrientes, a la superficie) muy importante que sostiene pesquerías importantísimas en la corriente de Humboldt. Además, la radiación solar también hace que haya evaporación en el ecuador, por lo que el aire que circula vaya recogiendo humedad. Conforme este aire caliente va recogiendo humedad se va enfriando, perdiendo densidad, y comienza a ascender, lo cual se ve acelerado cuando choca con el continente en el Pacífico occidental. ¿Qué pasa cuando enfriamos aire húmedo rápidamente? Se forma condensación, lo cual se traduce en lluvias abundantes en esa zona. El aire entonces pierde toda su humedad, se enfría y la circulación en la atmósfera alta se invierte, por lo que hacia América viaja aire frío y seco (denso), lo cual ocasiona que descienda en América, reiniciando el ciclo. A este proceso se le conoce como celda de circulación de Walker, y como resultado tenemos una zona de baja presión en el Indo-Pacífico (sube aire) y una zona de alta presión (baja aire) cerca de América.
 
-Durante la fase cálida ("El Niño") los vientos alisios se debilitan (en algunas zonas del Pacífico central el viento sopla en dirección contraria), por lo que el agua caliente que se había acumulado en el occidente se regresa a América, hundiendo la termoclina, lo que causa que la surgencia costera "recicle" el agua caliente superficial, en vez de subir agua fría, y que llueva en América (se "invierte" la celda de Walker).
+Durante la fase cálida ("El Niño") los vientos alisios se debilitan (en algunas zonas del Pacífico central el viento puede incluso soplar en dirección contraria), por lo que el agua caliente que se había acumulado en el occidente se regresa a América, hundiendo la termoclina, lo que causa que la surgencia costera "recicle" el agua caliente superficial, en vez de subir agua fría, y que llueva en América (se "invierte" la celda de Walker).
 
 ![Fases cálida ("El Niño") y fría ("La Niña") del ENSO.](imgs/ENSO.png){#fig-ENSO}
 
@@ -420,7 +441,7 @@ Durante la fase cálida ("El Niño") los vientos alisios se debilitan (en alguna
 Simplifiqué la explicación del ENSO lo más que pude sin dejar demasiadas cosas del proceso en el tintero, pero el costo es que haya algunas imprecisiones en la explicación. Si te interesa este tema, te recomiendo que leas más al respecto. Entre tus lecturas te encontrarás el por qué de "El Niño".
 :::
 
-Como te podrás imaginar, es un proceso sumamente complejo (de hecho comunica el Atlántico con el Pacífico, pero eso es otra historia) en el que se ven modificadas una gran cantidad de variables ambientales y cuyas consecuencias económicas son muy importantes (se modifica la pesca y la agricultura en prácticamente tres continentes). Podemos monitorear cada variable de manera individual, pero ¿no sería mejor poder resumirlas todas en un solo número? Pues eso fue lo que hicieron @WolterTimlin_1998, aplicando un Análisis de Componentes principales a seis variables (presión atmosférica a nivel del mar (P), componentes zonal (U) y meridional (V) del viento superficial, temperatura superficial del mar (S), temperatura superficial del aire (A), y la fracción total de nubes en el cielo (C)) en el Pacífico tropical, lo cual da lugar al Índice Multivariado del ENSO (@fig-MEI).
+Como te podrás imaginar, es un proceso sumamente complejo (de hecho comunica el Atlántico con el Pacífico, pero eso es otra historia) en el que se ven modificadas una gran cantidad de variables ambientales y cuyas consecuencias económicas son muy importantes (se modifica la pesca y la agricultura en prácticamente tres continentes). Podemos monitorear cada variable de manera individual, pero ¿no sería mejor poder resumirlas todas en un solo número? Pues eso fue lo que hicieron @WolterTimlin_1998, aplicando un Análisis de Componentes Principales (Análisis de Funciones Empíricas Ortogonales, EOF) a seis variables (presión atmosférica a nivel del mar (P), componentes zonal (U) y meridional (V) del viento superficial, temperatura superficial del mar (S), temperatura superficial del aire (A), y la fracción total de nubes en el cielo (C)) en el Pacífico tropical, lo cual da lugar al Índice Multivariado del ENSO (@fig-MEI).
 
 ![Índice Multivariado del ENSO (MEI) y las variables que lo construyen.](imgs/MEI.png){#fig-MEI}
 
@@ -438,7 +459,12 @@ Espero que este ejemplo te haya motivado, pues el MEI es uno de los instrumentos
 Vamos a ver un poco de los detalles matemáticos detrás del PCA. No te preocupes, solo es para expandir la noción detrás del PCA más allá de solo "buscar la mejor proyección de los datos originales". Al igual que en el @sec-rls, puedes quedarte para toda la explicación o saltar al corolario al final.
 :::
 
-Esa respuesta corta fue, tal vez, muy corta, así que entremos en más detalles. El PCA encuentra una de dos líneas: a) una línea que minimice el error promedio; b) una línea que maximice la distancia al origen (suma de cuadrados, $SS$). Curiosamente, es más fácil encontrar la segunda línea utilizando un viejo conocido: el teorema de Pitágoras. Observa la @fig-pytheom. Si hacemos la longitud de $c$ lo suficientemente grande, el valor de $b$ se hace más pequeño, ya que $a$ no se mueve.
+Esa respuesta corta fue, tal vez, muy corta, así que entremos en más detalles. El PCA encuentra una de dos líneas:
+
+1. una que minimice el error promedio, o
+2. una que maximice la distancia al origen (suma de cuadrados, $SS$).
+
+Curiosamente, es más fácil encontrar la segunda línea utilizando un viejo conocido: el teorema de Pitágoras. Observa la @fig-pytheom. Si hacemos la longitud de $c$ lo suficientemente grande, el valor de $b$ se hace más pequeño, ya que $a$ no se mueve.
 
 :::{.callout-important}
 Si lo que estamos encontrando es una línea que maximice la distancia al origen, y esta línea representa una suma de cuadrados, esa línea está capturando una **porción de la varianza** de los datos.
@@ -450,7 +476,11 @@ Esta nueva línea es nuestra proyección. En el espacio multivariado cada compon
 
 ![Variables ortogonales](imgs/orthogonal.png){#fig-orthogonal}
 
-Lo interesante es que si escalamos nuestra línea $c^2$ a que tenga una longitud de 1 tenemos un **eigenvector**, en donde las pendientes se convierten en proporciones que dan las **cargas factoriales** de cada variable a cada CP. Por otra parte, si $c^2$ es una suma de cuadrados es también el **eigenvalor** de cada CP, y la $\sqrt{SS}$ es su valor singular. Esto del valor singular es solo breviario cultural, lo que sí es importante es que tenemos una suma de cuadrados, tal y como tenemos en la definición de la varianza (@sec-intro-mv), por lo que si la dividimos entre los grados de libertad de la muestra podemos obtener la varianza capturada por ese CP. ¿Por qué por ese CP? ¿Recuerdas que mencioné en la definición de PCA que aproximamos los datos utilizando una menor cantidad de variables? Bueno, esta línea que encontramos es solo una de estas variables (llamadas CPs). El siguiente paso es trazar un nuevo eje (variable, CP) a exactamente 90º de la primera (@fig-orthogonal), y después repetir el proceso hasta haber capturado toda la varianza. Ya que hicimos esto podemos estimar la **porción de la varianza explicada por el CP** dividiendo su varianza explicada entre la varianza total:
+Lo interesante es que si escalamos nuestra línea $c^2$ a que tenga una longitud de 1 tenemos un **eigenvector**, en donde las pendientes se convierten en proporciones que indican la contribución (**carga**) de cada variable a cada CP. Por otra parte, si $c^2$ es una suma de cuadrados es también el **eigenvalor** de cada CP, y la $\sqrt{SS}$ es su valor singular.
+
+Esto del valor singular es solo breviario cultural, lo que sí es importante es que tenemos una suma de cuadrados, tal y como tenemos en la definición de la varianza (@sec-intro-mv), por lo que si la dividimos entre los grados de libertad de la muestra podemos obtener la varianza capturada por ese CP. ¿Por qué por ese CP? ¿Recuerdas que mencioné en la definición de PCA que aproximamos los datos utilizando una menor cantidad de variables? Bueno, esta línea que encontramos es solo una de estas variables (llamadas CPs). El siguiente paso es trazar un nuevo eje (variable, CP) a exactamente 90º de la primera (@fig-orthogonal), y después repetir el proceso hasta haber capturado toda la varianza.
+
+Ya que hicimos esto podemos estimar la **porción de la varianza explicada por el CP** dividiendo su varianza explicada entre la varianza total:
 
 $$
 \sigma^2_{PC_i} = \frac{SS}{n-1} \therefore \sigma^2_{T} = \sum_{i = 1}^k\sigma^2_{PC_i} \therefore \sigma^2_{exp_i} = \frac{\sigma^2_{PC_i}}{\sigma^2_T}
@@ -491,7 +521,7 @@ Apliquemos el Análisis de Componentes Principales:
 biom_pca <- FactoMineR::PCA(pca_data,
                             graph = F,
                             ncp = length(pca_data),
-                            scale.unit = T) 
+                            scale.unit = T)
 ```
 
 Recordarás que el PCA está basado en el teorema de Pitágoras, por lo que es necesario que todas las variables estén en la misma escala. Podemos utilizar la función `scale()` como hicimos para el análisis clúster, o podemos indicarle a `R` que lo haga automáticamente si utilizamos la función `FactoMineR::PCA()` con el argumento `scale.unit`. Podemos ver los resultados de manera numérica:
@@ -503,10 +533,12 @@ summary(biom_pca)
 La salida es bastante extensa, pero lo que realmente nos interesa es lo que aparece en `Eigenvalues`: La varianza de cada componente, el porcentaje de la varianza total que representa, y cuánta varianza se ha acumulado hasta ese componente, pero siempre es mejor ver los resultados de manera gráfica con algunas funciones de la librería `factoextra`:
 
 ```{r}
-factoextra::fviz_pca_var(biom_pca, col.var = "coord",
+factoextra::fviz_pca_var(biom_pca,
+                         col.var = "coord",
                          gradient.cols = c("#00AFBB",
                                            "#E7B800",
-                                           "#FC4E07"))
+                                           "#FC4E07"),
+                         legend.title = "Carga")
 ```
 
 En este gráfico tenemos representada la importancia de variables (carga factorial) para cada componente principal. Entre más larga (y naranja) sea la flecha, mayor es su importancia. Entre más horizontal esté, más contribuye al componente principal representado en el eje $x$, y entre más vertical esté, más contribuye al componente principal puesto en el eje $y$, y la dirección de la relación con el CP está dada por el signo. En nuestro ejemplo, las variables `abiert`, `boca`, `arriba`, `mandib` y `cabez` están positivamente relacionadas con el CP1, pero negativamente relacionadas con el CP2; es decir, entre más grande sea la longitud de la mandíbula, por ejemplo, más grande será la coordenada en el CP1, pero también se hará más pequeña en el CP2. Otra forma de ver estos resultados es tratarlos como si fueran una matriz de correlaciones:
@@ -537,14 +569,15 @@ Algunas personas consideran el PCA como una técnica de ordenación; sin embargo
 
 ```{r}
 fviz_pca_biplot(biom_pca, 
-                col.ind = biom$especie, palette = "jco", 
+                col.ind = biom$especie,
                 addEllipses = TRUE, label = "var",
+                palette = c("#00AFBB", "#E7B800", "#FC4E07"),
                 col.var = "black", repel = TRUE,
                 legend.title = "Especies") 
 ```
 
 :::{.callout-note}
-En el @sec-clasif vamos a ver cómo aquí estamos dejando de lado la información más valiosa de toda la base de datos: las etiquetas de los grupos. ¿La razón? Aquí las estamos utilizando solo como una ayuda visual para la interpretación, más que como datos que informen nuestros análisis.
+En el @sec-clasif vamos a ver cómo estamos dejando de lado la información más valiosa de toda la base de datos: las etiquetas de los grupos. ¿La razón? Aquí las estamos utilizando solo como una ayuda visual para la interpretación, más que como datos que informen nuestros análisis.
 :::
 
 Ahora bien, ya sabemos cómo interpretar nuestros componentes principales. La pregunta es, ¿capturan la suficiente información de la varianza?
@@ -564,38 +597,87 @@ Las primeras dos dimensiones (los primeros dos CPs) capturan menos del 50% de la
 fviz_eig(biom_pca, addlabels = T)
 ```
 
-¿Dónde considerarías que está el primer punto de inflexión? Yo en el tercer o cuarto componente, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos aquellos CPs cuya varianza explicada sea superior al valor promedio. El segundo criterio es un modelo de repartición de recursos desarrollado en la ecología de comunidades: el modelo Broken-Stick [McArthur_1957], donde el recurso compartido es la varianza total, entonces consideraremos aquellos CPs que tengan una varianza explicada superior a la esperada según el modelo. Para graficar ambos criterios a la vez utilizaremos una función personalizada (`evplot`):
+¿Dónde considerarías que está el primer punto de inflexión? Yo en el tercer o cuarto componente, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos aquellos CPs cuya varianza explicada sea superior al valor promedio. El segundo criterio es un modelo de repartición de recursos desarrollado en la ecología de comunidades: el modelo Broken-Stick [@MacArthur_1957], donde el recurso compartido es la varianza total; entonces, consideraremos aquellos CPs que tengan una varianza explicada superior a la esperada según el modelo. Para graficar ambos criterios a la vez utilizaremos una función personalizada (`evggplot`):
 
 ```{r}
-# Función para la estimación de los CP óptimos:
-evplot <- function(ev){
-    # Author:
+evggplot <- function(eigv, kind = "both"){
+  # Inspired by the `evplot` function by De La Cruz-Agüero (?)
+  #
   
-    # Broken stick model (MacArthur 1957)
-      n <- length(ev)
-      bsm <- data.frame(j=seq(1:n), p=0)
-      bsm$p[1] <- 1/n 
-      for (i in 2:n) bsm$p[i] <- bsm$p[i-1] + (1/(n + 1 - i))
-      bsm$p <- 100*bsm$p/n
-      
-    # Plot eigenvalues and % of variation for each axis
-      op <- par(mfrow=c(2,1), mar = c(1,1,1,1))
-      barplot(ev, main="Eigenvalues", col="bisque", las=2)
-        abline(h=mean(ev), col="red")
-        legend("topright", "Average eigenvalue", lwd=1, col=2, bty="n")
-      barplot(t(cbind(100*ev/sum(ev), bsm$p[n:1])), beside=TRUE, 
-              main="% variation", col=c("bisque",2), las=2)
-        legend("topright", c("% eigenvalue", "Broken stick model"), 
-               pch=15, col=c("bisque",2), bty="n")
-      par(op)
+  library(patchwork)
+  # Broken stick model (MacArthur 1957)
+  bsm <- function(n){
+    p <- 1:n
+    p[1] <- 1/n
+    for (i in 2:n) {p[i] <- p[i-1] + (1/(n+1-i))}
+    p <- 100*p/n
+    return(rev(p))
+  }
+  
+  # Number of CPs
+  n <- nrow(eigv)
+  # New df from the eigenvalue matrix
+  ev <- as.data.frame(eigv) |> 
+        mutate(CP = factor(1:n,
+                           labels = paste0("CP ", 1:n),
+                           ordered = T),
+               p = bsm(n),
+               .before = 1) |> 
+        select(CP, eigenvalue, p) |> 
+        reshape2::melt(id.vars = "CP")
+  
+  # Broken-Stick data
+  ev_bsm <- ev |>
+            mutate(value = ifelse(variable == "eigenvalue",
+                                  unname(eigv[,2]),
+                                  value))
+  
+  # Kaiser-Gutmann data
+  ev_kg <- ev |> filter(variable == "eigenvalue")
+  m_eig <- mean(ev_kg$value)
+  
+  # Plotting
+  
+  base_plot <- ggplot() +
+               theme(axis.text.x = element_text(angle = 90)) +
+               labs(x = element_blank())
+  
+  bsm_plot <- base_plot + 
+              geom_bar(data = ev_bsm,
+                       aes(x = CP, y = value, fill = variable),
+                       stat = "identity",
+                       position = "dodge") +
+              labs(y = "% Varianza",
+                   fill = element_blank()) +
+              scale_fill_manual(values = c("bisque", "red"),
+                                labels = c("Eigenvalor", "Broken-Stick")) +
+              theme(legend.position = c(0.8, 0.8))
+  
+  
+  kg_plot <- base_plot +
+             geom_bar(data = ev_kg,
+                      aes(x = CP, y = value),
+                      stat = "identity",
+                      fill = "bisque",
+                      color = NA) +
+             geom_hline(yintercept = m_eig,
+                        color = "red") +
+             labs(y = "Eigenvalor")
+  
+  ev_plot <- switch (kind,
+                     bs = bsm_plot,
+                     kg = kg_plot,
+                     both = (kg_plot +
+                               theme(axis.text.x = element_blank(),
+                                     axis.title.x = element_blank())) /
+                          bsm_plot)
+              
+  return(ev_plot)
 }
+```
 
-# Extraemos los eigenvalores
-ev <- as.data.frame(eig_val)$eigenvalue
-# Asignamos nombres a los valores
-names(ev) <- paste("CP",seq_along(ev), "")
-# Graficamos con la función personalizada
-evplot(ev)
+```{r}
+evggplot(eig_val) + plot_annotation(title = "¿Cuántos CPs?")
 ```
 
 Bajo el criterio de Kaiser-Guttman consideraríamos 8 CPs, mientras que en el modelo de Broken-Stick consideraríamos únicamente 4. De cualquier modo, ambos criterios sugieren un número mayor al que yo consideré en el gráfico de la varianza. ¿Qué pasa entonces con nuestra interpretación original con respecto a la separación de las especies? Ya no es tan robusta, pero no significa que no sea válida. El MEI (v1), por ejemplo, es el primer componente principal y representa "solo" el 31% de la varianza total, pero aún así es útil para conocer en qué fase del fenómeno ENSO (y su intensidad) se encuentra un mes/año dado.
@@ -608,13 +690,13 @@ En una ordenación el objetivo es que las observaciones (instancias) que más se
 
 ### Escalamiento Multidimensional No Métrico (NMDS)
 
-A diferencia del PCA en el cual es importante que las variables estén centradas y estandarizadas (o que las variables sean del mismo tipo; e.g., biometrías en distintas especies de peces), el Escalamiento Multidimensional No Métrico (NMDS) es una técnica más flexible al estar basada en órdenes de rangos (distancias) para la ordenación. Como resultado, puede aceptar una variedad mayor de tipos de datos. Otra diferencia es que en el ACP el objetivo primordial no es la ordenación, sino la reducción de la dimensionalidad, mientras que en NMDS sí se busca una ordenación.
+A diferencia del PCA en el cual es importante que las variables estén centradas y estandarizadas, el Escalamiento Multidimensional No Métrico (NMDS) es una técnica más flexible al estar basada en órdenes de rangos (distancias) para la ordenación. Como resultado, puede aceptar una variedad mayor de tipos de datos. Otra diferencia es que en el ACP el objetivo primordial no es la ordenación, sino la reducción de la dimensionalidad, mientras que en NMDS sí se busca una ordenación.
 
 **El NMDS ordena los objetos según sus similitudes**, y en el proceso representa el espacio en menos dimensiones. Esta técnica **minimiza la deformación de las distancias** (representada por el "estrés"). Todo eso suena muy bien, ¿hay algún bemol? Sí. Es un proceso iterativo; es decir, requiere de múltiples vueltas para llegar a una solución estable. Veamos entonces cómo funciona utilizando los siguientes datos tridimensionales:
 
 ![¿Cómo nos ordenamos?](imgs/nmds1.png){#fig-nmds1}
 
-1. Calcular la matriz de distancias y asignarles un rango, donde a la menor distancia le corresponde 1.
+1. Calcular la matriz de distancias y asignarles un rango, donde a la menor distancia le corresponde el número 1.
 
 ![Matriz de distancias y sus rangos.](imgs/rankdist.png){#fig-rankdist}
 
@@ -626,11 +708,12 @@ A diferencia del PCA en el cual es importante que las variables estén centradas
 
 ![Segundo acomodo.](imgs/nmds3.png){#fig-nmds3}
 
-4. Repetir la operación hasta que la **diferencia entre la matriz de distancias y rangos originales con la representación** sea mínima; es decir, minimizar el **estrés**. Como regla general, valores de estrés de 0-0.1 son considerados buenos; de 0.1-0.2, aceptables; de 0.2-0.3, altos; y con más de 0.3 se considera que la representación mostrada es "aleatoria"
+4. Repetir la operación hasta que la **diferencia entre la matriz de distancias y rangos originales con la representación** sea mínima; es decir, minimizar el **estrés**. Como regla general, valores de estrés de 0-0.1 son considerados buenos; de 0.1-0.2, aceptables; de 0.2-0.3, altos; y con más de 0.3 se considera que la representación mostrada es "aleatoria".
 
 Para analizar este caso utilicemos los mismos datos del caso sitios (clúster):
 
 ```{r}
+set.seed(0)
 # Matriz de distancias
 dist_nmds <- dist_mv2
 mds <- metaMDS(dist_nmds, distance = "euclidean", k = 2, trace = T)
@@ -639,18 +722,17 @@ mds_dims <- data.frame(NMDS1 = mds$points[,1], NMDS2 = mds$points[,2])
 mds_plot_data <- cbind(mds_dims, clust_scale)
 ```
 
-Dado que pasamos `metaMDS(..., trace = T)`, `R` nos mostró los resultados de cada iteración. La iteración (`Run`) 0 es el acomodo inicial, y tuvo un estrés de 0.10. A partir de ahí comienza a mover los puntos y evaluar si es menor o peor utilizando una prueba de Procrstes, que compara si dos geometrías son diferentes o no. Al final, realizó 20 iteraciones, de las cuales 7 fueron la mejor solución. Este estrés de 0.10 es aceptable, por lo que podemos seguir con la interpretación, que es similar a lo que hicimos con el PCA:
+Dado que pasamos `metaMDS(..., trace = T)`, `R` nos mostró los resultados de cada iteración. La iteración (`Run`) 0 es el acomodo inicial, y tuvo un estrés de 0.10. A partir de ahí comienza a mover los puntos y evaluar si el acomodo es mejor o peor utilizando un análisis Procrustes (un análisis para comparar geometrías). Al final, realizó 20 iteraciones, de las cuales 8 fueron la mejor solución. Este estrés de 0.10 es aceptable, por lo que podemos seguir con la interpretación, que es similar a lo que hicimos con el PCA:
 
 ```{r}
 # Extraemos los coef. de determinación de cada variable ~ NMDS (flechas)
 fit <- envfit(mds, clust_scale)
-arrow <- data.frame(fit$vectors$arrows,
-                    R = fit$vectors$r,
-                    P = fit$vectors$pvals)
+arrow <- with(fit$vectors,
+              data.frame(arrows, R = r, p = pvals))
 arrow["Variable"] <- rownames(arrow)
 
 # Extraemos aquellas que tengan una corr. significativamente diferente de 0
-arrow_p <- subset(arrow, P <= 0.05)
+arrow_p <- subset(arrow, p <= 0.05)
 
 #Ordenamos de manera descendente según su valor de R2
 arrow_p <- arrow_p[order(arrow_p$R, decreasing = T), ]
@@ -662,11 +744,10 @@ head(arrow_p)
 ```{r}
 mds_plot_data["group"] <- LETTERS[n_gps$Best.partition]
 mds_plot <- ggplot(mds_plot_data, aes(NMDS1, NMDS2)) +
-            geom_point(aes(color = group),
-                       alpha = 0.7) +
+            geom_point(alpha = 0.7) +
             geom_label_repel(aes(label = rownames(clust_scale))) +
-            stat_ellipse(aes(fill = group), 
-                         type = "t", size = 1, geom = "polygon", 
+            stat_ellipse(aes(fill = group),
+                         type = "t", linewidth = 1, geom = "polygon",
                          alpha = 0.2, show.legend = F) +
             labs(title = "Escalamiento Multidimensional no métrico (NMDS)",
                  subtitle = paste('Estrés =',round(mds$stress,3)),
@@ -676,13 +757,12 @@ mds_plot <- ggplot(mds_plot_data, aes(NMDS1, NMDS2)) +
                                values = c("firebrick", "forestgreen", "black")) +
             scale_fill_manual(name = "Grupo",
                               values = c("firebrick", "forestgreen", "black")) #+
-#             geom_segment(data = arrow_p,
-#                          aes(x=0, y=0,
-#                              xend = NMDS1, yend = NMDS2, lty = Variable),
-# 
-# #Flechas escaladas según su R^2
-#                          arrow = arrow(length = unit(.25, "cm")*arrow_p$R)
-#                         )
+            # geom_segment(data = arrow_p,
+            #              aes(x=0, y=0,
+            #                  xend = NMDS1, yend = NMDS2, lty = Variable),
+            # # Flechas escaladas según su R^2
+            #              arrow = arrow(length = unit(.25, "cm")*arrow_p$R)
+            #             )
 
 mds_plot
 ```
@@ -709,4 +789,3 @@ Aplica un ACP a esta misma base de datos.
 4. ¿Cuáles son las variables más imporantes para esos dos componentes?
 5. ¿Hay diferencias en la ordenación con respecto a los otros dos métodos?
 6. Realizar las tres técnicas con las biometrías, y comparar sus resultados. (Opcional)
-
