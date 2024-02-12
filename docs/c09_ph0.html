@@ -638,7 +638,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(v2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4428981</code></pre>
+<pre><code>[1] 0.1303177</code></pre>
 </div>
 </div>
 <p>Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas maneras de hacerlo. Comenzando con <code>R</code> base podemos utilizar la función<code>t.test(x, conf.level)</code>, donde <code>x</code> es el vector de observaciones y <code>conf.level</code> el nivel de confianza deseado:</p>
@@ -649,13 +649,13 @@ Advertencia
     One Sample t-test
 
 data:  v2
-t = 2.9845, df = 14, p-value = 0.00985
+t = 0.47038, df = 14, p-value = 0.6453
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 0.1246102 0.7611859
+ -0.4638951  0.7245305
 sample estimates:
 mean of x 
-0.4428981 </code></pre>
+0.1303177 </code></pre>
 </div>
 </div>
 <p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\overline{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
@@ -676,8 +676,8 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Rmisc<span class="sc">::</span><span class="fu">CI</span>(<span class="at">x =</span> v2, <span class="at">ci =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    upper      mean     lower 
-0.7611859 0.4428981 0.1246102 </code></pre>
+<pre><code>     upper       mean      lower 
+ 0.7245305  0.1303177 -0.4638951 </code></pre>
 </div>
 </div>
 <p>Una alternativa más es utilizar la función <code>rcompanion::groupwiseMean(formula, data, conf, R)</code>, la cual tiene dos funcionalidades interesantes: i) permite calcular los IC para varios grupos, y ii) poder estimar los intervalos a partir de remuestreos Bootstrap. En esta función: <code>formula</code> es lo que vimos en la función <code>aggregate</code>, donde indicamos al mismo tiempo la variable numérica y la variable de agrupamiento, tal que: <code>var~grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> la amplitud de los intervalos y <code>R</code> el número de réplicas Bootstrap a realizar. Sustituyendo:</p>
@@ -690,7 +690,7 @@ Tip
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.443","4":"0.95","5":"0.125","6":"0.761"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.13","4":"0.95","5":"-0.464","6":"0.725"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -814,19 +814,19 @@ Nota
 t = \frac{\overline{x}- \mu_0}{\frac{s}{\sqrt{n}}}
 \]</span> Donde: <span class="math inline">\(\overline{x}\)</span> es el promedio de nuestra muestra, <span class="math inline">\(\mu_0\)</span> es un valor de referencia con el que queremos comparar <span class="math inline">\(\overline{x}\)</span>, <span class="math inline">\(s\)</span> es la desviación estándar de la muestra y <span class="math inline">\(n\)</span> es el número de observaciones. Esta ya la aplicamos antes cuando estimamos los intervalos de confianza con la función <code>t.test</code>, pero volvamos a visitarla:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">mu =</span> <span class="dv">0</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
 
 data:  v2
-t = 2.9845, df = 14, p-value = 0.00985
+t = 0.47038, df = 14, p-value = 0.6453
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 0.1246102 0.7611859
+ -0.4638951  0.7245305
 sample estimates:
 mean of x 
-0.4428981 </code></pre>
+0.1303177 </code></pre>
 </div>
 </div>
 <p>Ahora sí podemos revisar la salida completa. La primera línea nos dice el tipo de prueba <span class="math inline">\(t\)</span> que estamos aplicando. En este caso pasamos un solo vector, por lo que la prueba a aplicar es para una sola muestra. La segunda línea nos da el nombre de los datos. La tercera nos da los resultados de la prueba: el valor del estadístico <span class="math inline">\(t\)</span>, los grados de libertad <code>d.f.</code> (degrees of freedoom) y el valor de p (<code>p-value</code>), mientras que la cuarta nos da la hipótesis alternativa que estamos evaluando (la nula no cambia, ¿o sí?) ¿Contra qué valor está contrastando? Por defecto contra 0 (podemos cambiarlo con el argumento <code>mu</code>).</p>
@@ -853,19 +853,19 @@ Importante
 <p>Lo cual me lleva a hablar de pruebas de dos o una cola. El qué hipótesis alternativa se prueba ya lo definimos, pero ¿a qué se refiere eso de una o dos colas? A qué cola(s) integramos. En la <a href="#fig-normal">Figura&nbsp;<span>9.10</span></a> vimos que sumabamos lo que estaba fuera de nuestra área de aceptación, tanto a la derecha como a la izquierda; es decir, las colas de la distribución. Si solo sumamos lo que está a la derecha estamos preguntándonos si nuestra media es menor a <span class="math inline">\(\mu_0\)</span>.</p>
 <p>Esto podemos modificarlo con el argumento <code>alternative</code>, que puede ser <code>"two.sided"</code> (por defecto), <code>"greater"</code> o <code>"less"</code>. Veamos el resultado con la hipótesis alternativa de que la media es menor a 0:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alternative =</span> <span class="st">"less"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
 
 data:  v2
-t = 2.9845, df = 14, p-value = 0.9951
-alternative hypothesis: true mean is less than 0
+t = 0.47038, df = 14, p-value = 0.3227
+alternative hypothesis: true mean is greater than 0
 95 percent confidence interval:
-      -Inf 0.7042777
+ -0.357653       Inf
 sample estimates:
 mean of x 
-0.4428981 </code></pre>
+0.1303177 </code></pre>
 </div>
 </div>
 <p>Aquí, además de la hipótesis alternativa, hay dos cambios que es importante notar: el valor de p y el intervalo de confianza. Empecemos con el segundo, donde tenemos [-Inf, 0.099]. Esto no es ningún error. Simple y sencillamente refleja nuestra hipótesis alternativa: Si la media es menor no tiene caso que consideremos la cola izquierda, por lo que el límite inferior se va a -Inf, mientras que el límite superior se reduce a 0.099. Compara ese valor de 0.099 con el resultado de la prueba de dos colas. ¿Qué notas? Es exactamente la mitad. Estos intervalos de confianza son simétricos, por lo que si solo estamos considerando un lado es lógico que la amplitud se reduzca a la mitad y eso me lleva al otro cambio: el valor de p.&nbsp;También es exactamente la mitad del que nos dio la prueba para dos colas, y es por la misma razón, estamos considerando la mitad del área bajo la curva. Pero aquí hay una advertencia muy, pero muy importante:</p>
@@ -882,7 +882,7 @@ Advertencia
 <p>La decisión de si se aplica una prueba de una o dos colas es algo que se realiza <em>a priori</em>; es decir, desde un inicio seleccionamos nuestra hipótesis alternativa. No se vale aplicar la prueba de dos colas (hay diferencias significativas), ver que nuestro valor de p &gt; 0.05, pero no es tan grande y luego aplicar una prueba de una cola para forzar un resultado significativo.</p>
 </div>
 </div>
-<p>Esta es la razón por la que hay que reportar la prueba, el valor del estadístico de prueba, los parámetros involucrados y el valor de p: podemos verificar que el resultado corresponda con la hipótesis que se dice se está probando. Me ha tocado saber de casos donde en la sección de métodos ponen la hipótesis alternativa en términos de “es diferente” (prueba de dos colas) y a la hora de presentar los resultados quieren “colar” una prueba de una cola. Pensemos que alguien nos dice en la sección de métodos: “Para evaluar si la media de la variable X fue significativamente de 0 se utilizó una prueba <span class="math inline">\(t\)</span> de Student (<span class="math inline">\(\alpha = 0.05\)</span>)”, y en los resultados: “La media fue significativamente diferente de 0 (<span class="math inline">\(\mu = 0.25; SD = 0.2\)</span>; t = -1.7, df = 14, p = 0.027). Ese valor de t es”grande”, pero no lo suficiente para dar un valor de p tan “lejano” de 0.05, por lo que nos damos a la tarea de corroborarlo:</p>
+<p>Esta es la razón por la que hay que reportar la prueba, el valor del estadístico de prueba, los parámetros involucrados y el valor de p: podemos verificar que el resultado corresponda con la hipótesis que se dice se está probando. Me ha tocado saber de casos donde en la sección de métodos ponen la hipótesis alternativa en términos de “es diferente” (prueba de dos colas) y a la hora de presentar los resultados quieren “colar” una prueba de una cola. Pensemos que alguien nos dice en la sección de métodos: “Para evaluar si la media de la variable X fue significativamente diferente de 0 se utilizó una prueba <span class="math inline">\(t\)</span> de Student (<span class="math inline">\(\alpha = 0.05\)</span>)”, y en los resultados: “La media fue significativamente diferente de 0 (<span class="math inline">\(\mu = 0.25; SD = 0.2\)</span>; t = -1.7, df = 14, p = 0.027). Ese valor de t es”grande”, pero no lo suficiente para dar un valor de p tan “lejano” de 0.05, por lo que nos damos a la tarea de corroborarlo:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pt</span>(<span class="at">q =</span> <span class="sc">-</span><span class="fl">1.7</span>, <span class="at">df =</span> <span class="dv">14</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1331,7 +1331,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 

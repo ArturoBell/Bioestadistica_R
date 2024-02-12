@@ -632,11 +632,11 @@ Advertencia
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1000</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ind</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 946</code></pre>
+<pre><code>[1] 510</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pobl<span class="sc">$</span>lt[ind]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.213015</code></pre>
+<pre><code>[1] 8.16162</code></pre>
 </div>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente “aleatoria”, en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros quienes lo hacemos):</p>
@@ -644,7 +644,7 @@ Advertencia
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">sample</span>(pobl<span class="sc">$</span>lt, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 9.557771 8.250653 9.600082 8.281435 8.183535 8.451559</code></pre>
+<pre><code>[1] 8.113322 9.480438 9.604526 8.233934 9.672523 9.573647</code></pre>
 </div>
 </div>
 <p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento <code>replace = FALSE</code>. Con esto lo que hicimos fue un <strong>muestreo sin reemplazo</strong>; es decir, una vez que un individuo fue medido se “retiró” de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. Por otra parte, el <strong>muestreo con reemplazo</strong> es útil en otro tipo de situaciones, por ejemplo cuando queremos aproximar frecuencias a largo plazo como hicimos en la sesión anterior.</p>
@@ -658,7 +658,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.817829</code></pre>
+<pre><code>[1] 8.982576</code></pre>
 </div>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para ver en dónde quedó:</p>
@@ -999,7 +999,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 

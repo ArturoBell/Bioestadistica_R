@@ -397,14 +397,14 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tidyverse<span class="sc">::</span><span class="fu">tidyverse_packages</span>(<span class="at">include_self =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "broom"         "cli"           "crayon"        "dbplyr"       
+<pre><code> [1] "broom"         "conflicted"    "cli"           "dbplyr"       
  [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
  [9] "googledrive"   "googlesheets4" "haven"         "hms"          
 [13] "httr"          "jsonlite"      "lubridate"     "magrittr"     
-[17] "modelr"        "pillar"        "purrr"         "readr"        
-[21] "readxl"        "reprex"        "rlang"         "rstudioapi"   
-[25] "rvest"         "stringr"       "tibble"        "tidyr"        
-[29] "xml2"          "tidyverse"    </code></pre>
+[17] "modelr"        "pillar"        "purrr"         "ragg"         
+[21] "readr"         "readxl"        "reprex"        "rlang"        
+[25] "rstudioapi"    "rvest"         "stringr"       "tibble"       
+[29] "tidyr"         "xml2"          "tidyverse"    </code></pre>
 </div>
 </div>
 <p>A partir de aquí, el cómo aprovecharlos depende mucho de el problema que tengas entre manos, pero la idea general es la misma: utilizar una gramática declarativa para llegar a la solución. Veamos en qué consiste con un ejemplo cotidiano: obtener el promedio de una variable para varios grupos.</p>
@@ -686,7 +686,7 @@ Levels: female male</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>datos1 <span class="sc">|&gt;</span> <span class="fu">select</span>(sex)[<span class="dv">10</span><span class="sc">:</span><span class="dv">25</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: function '[' not supported in RHS call of a pipe</code></pre>
+<pre><code>Error: function '[' not supported in RHS call of a pipe (&lt;text&gt;:1:11)</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-captioned">
@@ -1019,7 +1019,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 

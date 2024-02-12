@@ -479,7 +479,7 @@ Nota
 </section>
 <section id="regresión-lineal-simple" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">11.4</span> Regresión lineal simple</h2>
-<p>Antes mencioné que la regla de tres es una aplicación del modelo lineal, lo que no dije es que es, en realidad, un ejercicio de <strong>regresión</strong>. ¿Qué es una regresión? Es una parte del <strong>aprendizaje automatizado supervisado</strong>, del cual hablaremos con más lujo de detalle en la sección correspondiente, pero podemos definirla como el proceso de <strong>estimar los parámetros de un modelo matemático a partir de ciertos datos</strong>. En una regresión <strong>la variable dependiente siempre es continua</strong>. ¿Qué pasa si tenemos una variable dependiente categórica? Entonces estamos en un escenario de clasificación, pero no nos adelantemos.</p>
+<p>Antes mencioné que la regla de tres es una aplicación del modelo lineal, lo que no dije es que es, en realidad, un ejercicio de <strong>regresión</strong>. ¿Qué es una regresión? Es una parte del <strong>aprendizaje automatizado supervisado</strong>, del cual hablaremos con más lujo de detalle en la sección correspondiente, pero podemos definirla como el proceso de <strong>estimar los parámetros de un modelo matemático a partir de ciertos datos</strong>. En una regresión <strong>la variable dependiente “siempre” es numérica</strong>. ¿Qué pasa si tenemos una variable dependiente categórica? Entonces estamos en un escenario de clasificación, pero no nos adelantemos.</p>
 <div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -612,7 +612,7 @@ F-statistic: 209.3 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><code>Residual standard error</code>: Más información sobre los residuales, aunque en este caso es el error estándar. Este es sumamente útil para darnos una idea de qué tan preciso es el modelo, pues indica en cuántas unidades, en promedio, se desvía la predicción de los datos observados. Este valor, dividido entre el promedio de la variable predicha nos da la tasa de error del modelo.</li>
 <li><code>Multiple R-squared</code>: Es el valor del famosísimo (¿infame?) <strong>coeficiente de determinación</strong> (<span class="math inline">\(R^2\)</span>). Si ya has llevado clases de estadística y de regresión lineal es muy posible que lo entiendas como “la varianza de los datos explicada por el modelo”. ¿Por qué digo infame? Porque, al igual que el valor de p, es un valor del cuál se abusa. Nuevamente, los seres humanos somos flojos por naturaleza, por lo que nos gusta resumir las cosas en un solo número. En este sentido, el <span class="math inline">\(R^2\)</span> es una medida de <strong>bondad de ajuste</strong>; es decir, de qué tan bien ajustado está el modelo. Es muy práctico, pues está contenido en el intervalo <span class="math inline">\([0,1]\)</span> y representa un porcentaje; sin embargo, para que podamos confiar en él debemos de haber cubierto con el resto de <strong>supuestos de la RLS</strong>. Personalmtente te sugiero mejor tomar el RSE como medida de ajuste, aunque la interpretación no sea tan directa.</li>
 <li><code>Adjusted R-squared</code>: Es un ajuste al <span class="math inline">\(R^2\)</span> que lo hace menos optimista, especialmente diseñado para escenarios de regresión múltiple (de ahí el “Multiple” del punto anterior). Por el momento lo vamos a ignorar.</li>
-<li><code>F-statistic</code>: Resultados de un ANOVA que, al igual que el punto anterior vamos a ignorar porque es informativo solo en regresiones múltiples. Es un ANOVA para comparar todo el modelo contra un modelo nulo, por lo que aquí solo es redundante con las pruebas <span class="math inline">\(t\)</span> para cada parámetro.</li>
+<li><code>F-statistic</code>: Resultados de un ANOVA que, al igual que el punto anterior vamos a ignorar porque es informativo solo en regresiones múltiples. Es un ANOVA para comparar todo el modelo contra un modelo que tiene solo un intercepto, por lo que aquí solo es redundante con la prueba <span class="math inline">\(t\)</span> para la pendiente.</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -628,12 +628,14 @@ Nota
 </div>
 </div>
 <p>Los resultados del modelo los podemos reportar como:</p>
+<blockquote class="blockquote">
 <p>En el modelo de regresión lineal simple tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+</blockquote>
 <p>Usualmente acompañaríamos este reporte de un gráfico, el cual podemos construir con la capa <code>geom_smooth(method = "lm", se = FALSE)</code>, tal que:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plot_reg1 <span class="ot">&lt;-</span> plot_data_reg1 <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">se =</span> F,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> <span class="fu">rgb</span>(<span class="dv">118</span>,<span class="dv">78</span>,<span class="dv">144</span>,</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">maxColorValue =</span> <span class="dv">255</span>)) <span class="sc">+</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">caption =</span> <span class="fu">paste</span>(<span class="st">"Modelo ajustado: v2 = "</span>, </span>
@@ -676,7 +678,7 @@ v1           1.016035  1.339263</code></pre>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> df_reg1,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">ymin =</span> inf_int,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ymax =</span> sup_int),</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">"gray70"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">"gray60"</span>,</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Intervalos de confianza para los parámetros"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -687,7 +689,9 @@ v1           1.016035  1.339263</code></pre>
 </div>
 </div>
 <p>Pero este no es el gráfico que usualmente veremos. Si deseáramos inlcuir esta información solo añadiríamos los IC al reporte, tal que:</p>
+<blockquote class="blockquote">
 <p>En el modelo de regresión lineal simple tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02, 1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+</blockquote>
 <div class="callout callout-style-default callout-warning callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -733,7 +737,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Estamos obteniendo dos mensajes de <code>geom_smooth()</code> porque en <code>plot_reg1</code> ya teníamos esa capa (con <code>se = FALSE</code>). Diré lo obvio, pero cuando hagas tus gráficos NO es necesario que repitas capas.</p>
+<p>Estamos obteniendo dos mensajes de <code>geom_smooth()</code> porque en <code>plot_reg1</code> ya teníamos esa capa (con <code>se = FALSE</code>). Pudiera llegar a sonar obvio, pero cuando hagas tus gráficos NO es necesario que repitas capas.</p>
 </div>
 </div>
 <p>Nuestro reporte completo quedaría entonces como:</p>
@@ -770,9 +774,9 @@ Nota
 <p>¿Cómo evaluamos estos supuestos? Mayoritariamente con gráficos de dispersión, pero vamos uno a uno:</p>
 <ul>
 <li><strong>Linealidad</strong>: Con un gráfico de residuales. En este gráfico tenemos los residuales estandarizados (cada residual menos el promedio de los residuales, dividido entre la desviación estándar) en el eje <span class="math inline">\(y\)</span>, y los valores ajustados por el modelo (predicciones) en el eje <span class="math inline">\(x\)</span>. Se pueden añadir dos referencias: una línea de referencia horizontal en <span class="math inline">\(y = 0\)</span> y una curva LOESS (hablaremos un poco de este modelo en el <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>). Si la relación entre nuestras variables predicha y predictora es perfectamente lineal, entonces todos los puntos caerán sobre la línea de referencia y la curva LOESS será completamente horizontal en 0. Entre menos lineal sea la relación más se alejarán los puntos de la línea y mayores curvaturas tendrá el modelo LOESS. Adicionalmente, puede servir para identificar valores extremos (puntos que caigan fuera de <span class="math inline">\([-1.96, 1.96]\)</span> si se trabaja a un 95% de confianza).</li>
-<li><strong>Independencia</strong>: Con un gráfico de autocorrelación. Dado que el análisis de series de tiempo está fuera del alcance de este grupo lo vamos a obivar.</li>
+<li><strong>Independencia</strong>: Con un gráfico de autocorrelación. Lo vamos a obviar porque el análisis de series de tiempo está fuera del alcance de este curso.</li>
 <li><strong>Normalidad</strong>: Una prueba de normalidad de los residuales y con un gráfico cuantil-cuantil (QQ plot). En este gráfico se grafican (valga la redundancia) los residuales en el eje <span class="math inline">\(y\)</span>, y cuantiles teóricos según una distribución normal en el eje <span class="math inline">\(x\)</span>. Además se traza una línea de referencia con una pendiente de 1, que representa una distribución normal perfecta. El objetivo es que la prueba de normalidad sea no significativa y que los residuales caigan lo más cercanamente posible a la línea de referencia.</li>
-<li><strong>Homocedasticidad</strong>: Una prueba <span class="citation" data-cites="BreuschPagan_1979">Breusch &amp; Pagan (<a href="references.html#ref-BreuschPagan_1979" role="doc-biblioref">1979</a>)</span> y un gráfico de escala-locación (scale-location). La prueba, como te imaginarás, tiene la hipótesis de nulidad de que el error (residuales) está homogéneamente distribuido. En el gráfico tenemos en el eje <span class="math inline">\(y\)</span> la raíz cuadrada del absoluto de los residuales estandarizados (<span class="math inline">\(\sqrt{|re|}\)</span>) y en el eje <span class="math inline">\(x\)</span> los valores ajustados. ¿Por qué la raíz del absoluto? Ese detalle ya es clavarse demasiado, y prefiero que nos adentremos bien a otro tema un poco más adelante, así que conformemonos por saber que queremos que los puntos estén distribuidos de manera aleatoria (homogénea) en todo el eje <span class="math inline">\(x\)</span>. ¿Qué quiere decir esto? que no tengamos una mayor dispersión de los puntos (varianza de los residuales) en valores ajustados pequeños (a la izquierda del gráfico) que en los valores más grandes (derecha del gráfico), lo que se vería como un &gt; imaginario, o viceversa, o algún otro patrón.</li>
+<li><strong>Homogeneidad de varianzas</strong>: Una prueba <span class="citation" data-cites="BreuschPagan_1979">Breusch &amp; Pagan (<a href="references.html#ref-BreuschPagan_1979" role="doc-biblioref">1979</a>)</span> y un gráfico de escala-locación (scale-location). La prueba, como te imaginarás, tiene la hipótesis de nulidad de que el error (residuales) está homogéneamente distribuido. En el gráfico tenemos en el eje <span class="math inline">\(y\)</span> la raíz cuadrada del absoluto de los residuales estandarizados (<span class="math inline">\(\sqrt{|re|}\)</span>) y en el eje <span class="math inline">\(x\)</span> los valores ajustados. ¿Por qué la raíz del absoluto? Ese detalle ya es clavarse demasiado, y prefiero que nos adentremos bien a otro tema un poco más adelante, así que conformemonos por saber que queremos que los puntos estén distribuidos de manera aleatoria (homogénea) en todo el eje <span class="math inline">\(x\)</span>. ¿Qué quiere decir esto? que no tengamos una mayor dispersión de los puntos (varianza de los residuales) en valores ajustados pequeños (a la izquierda del gráfico) que en los valores más grandes (derecha del gráfico), lo que se vería como un &gt; imaginario, o viceversa, o algún otro patrón.</li>
 </ul>
 <p>¿Muchos gráficos? Tal vez. Podríamos hacerlo a mano, o podemos aprovechar la librería <code>performance</code> y obtenerlos todos de una vez con la función <code>check_model(object)</code>, donde <code>object</code> es el objeto con los resultados del ajuste. Esta función nos da todos los gráficos en un solo paso:</p>
 <div class="cell">
@@ -875,13 +879,10 @@ Nota
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reg1_norm <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_normality</span>(reg1)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_norm, <span class="at">type =</span> <span class="st">"qq"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>For confidence bands, please install `qqplotr`.</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="c11_rls_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>reg1_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reg1_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Warning: Non-normality of residuals detected (p &lt; .001).</code></pre>
 </div>
@@ -978,27 +979,27 @@ Importante
 <p>En este punto puedes estar en uno de estos escenarios: a) lograste seguir toda la explicación y se te hizo lógica (si fue así, ¡felicidades! Eres un tan ñoño o ñoña como yo); b) seguiste la explicación y se te hizo lógica, pero no terminaste de entender el teorema de Bayes (igualmente, ¡felicidades! Vas para ñoño/ñoña que chutas); c) lo leíste pero te perdiste solo con las ecuaciones (también ¡felicidades!, tienes la intención de convertirte en ñoño/ñoña); o d) saltaste directamente a lo importante (¡felicidades a ti también! Tienes una vida 🥲). Si estás en los casos c y d, y puede que b seguramente no estés del todo convencido de que mínimos cuadrados y máxima verosimlitud con un error normal sean equivalentes. Si estás en el caso a, te gustaría una demostración. ¿Y si no te interesa? Igual la vamos a hacer.</p>
 <p>A diferencia de la implementación de una regresión por mínimos cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan intuitivo. El primer paso es establecer manualmente nuestra función de verosimilitud, ajustando una distribución normal a los residuales:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df_reg1[<span class="fu">c</span>(<span class="st">"v1"</span>, <span class="st">"v2"</span>)]</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(b0, b1, mu, sigma){</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Encontrar los residuales. Modelo a ajustar</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> data<span class="sc">$</span>v2 <span class="sc">-</span> data<span class="sc">$</span>v1 <span class="sc">*</span> b1 <span class="sc">-</span> b0</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcular la verosimilitud. Residuales con distribución normal.</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> <span class="fu">suppressWarnings</span>(<span class="fu">dnorm</span>(R, mu, sigma))</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sumar el logaritmo de las verosimilitudes para</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># todos los puntos de datos.</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>(R))</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df_reg1[<span class="fu">c</span>(<span class="st">"v1"</span>, <span class="st">"v2"</span>)]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(b0, b1, mu, sigma){</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Encontrar los residuales. Modelo a ajustar</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> data<span class="sc">$</span>v2 <span class="sc">-</span> data<span class="sc">$</span>v1 <span class="sc">*</span> b1 <span class="sc">-</span> b0</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcular la verosimilitud. Residuales con distribución normal.</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> <span class="fu">suppressWarnings</span>(<span class="fu">dnorm</span>(R, mu, sigma))</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sumar el logaritmo de las verosimilitudes para</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># todos los puntos de datos.</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>(R))</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ahora ajustemos el modelo que acabamos de crear, utilizando la función <code>stats4::mle(fun, start = list())</code> (*maximum likelihood estimation), donde <code>fun</code> es la función de verosimilitud a ajustar y <code>start</code> son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mle_fit <span class="ot">&lt;-</span> <span class="fu">mle</span>(LL, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">b0 =</span> <span class="dv">1</span>, <span class="at">b1 =</span> <span class="dv">1</span>, <span class="at">sigma =</span> <span class="dv">1</span>), </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed =</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">0</span>), </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">nobs =</span> <span class="fu">length</span>(data<span class="sc">$</span>v2))</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mle_fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mle_fit <span class="ot">&lt;-</span> <span class="fu">mle</span>(LL, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">b0 =</span> <span class="dv">1</span>, <span class="at">b1 =</span> <span class="dv">1</span>, <span class="at">sigma =</span> <span class="dv">1</span>), </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed =</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">0</span>), </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">nobs =</span> <span class="fu">length</span>(data<span class="sc">$</span>v2))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mle_fit)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Maximum likelihood estimation
 
@@ -1036,7 +1037,7 @@ Nota
 </div>
 <p>Esta salida fue un poco más simple que la salida de la función <code>lm()</code> pero, ¿fue de diferente la estimación? Si vemos los coeficientes de nuestro ajuste por mínimos cuadrados veremos que la estimación puntual es la misma, y los errores estándares son prácticamente iguales:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)<span class="sc">$</span>coefficients</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)<span class="sc">$</span>coefficients</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Estimate Std. Error   t value     Pr(&gt;|t|)
 (Intercept) -3.726537 0.73212521 -5.090027 1.805160e-06
@@ -1045,7 +1046,7 @@ v1           1.177649 0.08140729 14.466134 9.513254e-26</code></pre>
 </div>
 <p>Además, el error estándar de la estimación por mínimos cuadrados es prácticamente igual al <code>sigma</code> de la estimación por máxima verosimilitud:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)<span class="sc">$</span>sigma</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg1)<span class="sc">$</span>sigma</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.095131</code></pre>
 </div>
@@ -1107,9 +1108,9 @@ Nota
 </div>
 <p>Primero, generemos un par de variables donde la segunda sea una función lineal de la primera:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> <span class="sc">-</span><span class="dv">20</span><span class="sc">:</span><span class="dv">20</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v2"</span>] <span class="ot">&lt;-</span> (<span class="dv">10</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>df1<span class="sc">$</span>v1)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> <span class="sc">-</span><span class="dv">20</span><span class="sc">:</span><span class="dv">20</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v2"</span>] <span class="ot">&lt;-</span> (<span class="dv">10</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>df1<span class="sc">$</span>v1)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1121,105 +1122,105 @@ Nota
 </div>
 <p>Ahora obtengamos la covarianza:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cov</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v2)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>covar</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cov</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v2)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>covar</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 287</code></pre>
 </div>
 </div>
 <p>Y el índice de correlación de <code>Pearson</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v2)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>corre</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v2)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>corre</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
 </div>
 <p>Aquí queda también demostrado por qué la covarianza es tan difícil de interpretar por sí sola, pues en este caso con una relación lineal perfecta fue de 287, pero si cambias los valores de <code>v1</code> de alguna manera vas a obtener otro valor, mientras que la correlación seguirá siendo 1. Gráficamente:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">0</span>,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">5</span>,</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">5</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c11_rls_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>¿Qué pasa cuando nos alejamos de esta relación lineal?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v3"</span>] <span class="ot">&lt;-</span> (<span class="sc">-</span>df1<span class="sc">$</span>v1<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v3)</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v3)</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v3)) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">0</span>,</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">50</span>,</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v3"</span>] <span class="ot">&lt;-</span> (<span class="sc">-</span>df1<span class="sc">$</span>v1<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v3)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v3)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v3)) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">0</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="sc">-</span><span class="dv">50</span>,</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c11_rls_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Otro ejemplo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v4"</span>] <span class="ot">&lt;-</span> <span class="fu">sin</span>(df1<span class="sc">$</span>v1)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v4)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v4)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v4)) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">3</span>,</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">2</span>,</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v4"</span>] <span class="ot">&lt;-</span> <span class="fu">sin</span>(df1<span class="sc">$</span>v1)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>corre <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v4)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>covar <span class="ot">&lt;-</span> <span class="fu">cor</span>(df1<span class="sc">$</span>v1, df1<span class="sc">$</span>v4)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df1, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v4)) <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Relación entre v2 y v1"</span>) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">3</span>,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"R = "</span>, <span class="fu">round</span>(corre, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">15</span>, <span class="at">y =</span> <span class="dv">2</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c11_rls_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Aunque todas estas relaciones pueden ser predichas, un coeficiente de correlación lineal no es capaz de capturarlas y, por definición, tampoco un modelo de regresión lineal. ¿Qué hacer en estos casos? Veremos algunas alternativas en el <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>. Ahora ejemplifiquemos el coeficiente de correlación de Spearman. Primero, y para dejar más claro el concepto, veamos la diferencia entre una relación monótona y una no monótona:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>], </span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">v2 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>]<span class="sc">^</span><span class="dv">2</span>,</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mono =</span> <span class="st">"monótona"</span>)</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">v1=</span> df1<span class="sc">$</span>v1, </span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">v2 =</span> df1<span class="sc">$</span>v3, </span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mono =</span> <span class="st">"no monótona"</span>))</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df2, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>mono, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>], </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">v2 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>]<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">mono =</span> <span class="st">"monótona"</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">v1=</span> df1<span class="sc">$</span>v1, </span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">v2 =</span> df1<span class="sc">$</span>v3, </span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mono =</span> <span class="st">"no monótona"</span>))</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> df2, <span class="fu">aes</span>(<span class="at">x =</span> v1, <span class="at">y =</span> v2)) <span class="sc">+</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"dodgerblue4"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>mono, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c11_rls_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Y ahora calculemos los coeficientes de correlación de Pearson y Spearman para la relación monótona. La diferencia fue de 0.3, lo cual no es muy grande, pero conforme nos empezamos a alejar de escenarios ideales el coeficiente de Pearson empieza a perder sensibilidad y confiabilidad.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"Pearson = "</span>,</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>((<span class="fu">cor</span>(df2<span class="sc">$</span>v1[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>],</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                 df2<span class="sc">$</span>v2[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>], </span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"pearson"</span>)), <span class="dv">2</span>)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"Pearson = "</span>,</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>((<span class="fu">cor</span>(df2<span class="sc">$</span>v1[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>],</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                 df2<span class="sc">$</span>v2[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>], </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"pearson"</span>)), <span class="dv">2</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Pearson =  0.97"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"Spearman = "</span>,</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>((<span class="fu">cor</span>(df2<span class="sc">$</span>v1[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>],</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>                 df2<span class="sc">$</span>v2[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>], </span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"spearman"</span>)), <span class="dv">2</span>)</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"Spearman = "</span>,</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">round</span>((<span class="fu">cor</span>(df2<span class="sc">$</span>v1[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>],</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                 df2<span class="sc">$</span>v2[df2<span class="sc">$</span>mono <span class="sc">==</span> <span class="st">"monótona"</span>], </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"spearman"</span>)), <span class="dv">2</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>      )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Spearman =  1"</code></pre>
 </div>
@@ -1499,7 +1500,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 

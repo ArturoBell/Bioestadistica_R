@@ -342,6 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </ul></li>
   <li><a href="#prueba-por-rangos-de-friedman-y-coeficiente-de-acuerdo-de-kendall" id="toc-prueba-por-rangos-de-friedman-y-coeficiente-de-acuerdo-de-kendall" class="nav-link" data-scroll-target="#prueba-por-rangos-de-friedman-y-coeficiente-de-acuerdo-de-kendall"><span class="toc-section-number">12.4</span>  Prueba por Rangos de Friedman y coeficiente de acuerdo de Kendall</a></li>
   <li><a href="#anova-no-paramétrico-kruskall-wallis" id="toc-anova-no-paramétrico-kruskall-wallis" class="nav-link" data-scroll-target="#anova-no-paramétrico-kruskall-wallis"><span class="toc-section-number">12.5</span>  ANOVA no paramétrico: Kruskall-Wallis:</a></li>
+  <li><a href="#anova-de-dos-vías-no-paramétrico-scheirer-ray-hare" id="toc-anova-de-dos-vías-no-paramétrico-scheirer-ray-hare" class="nav-link" data-scroll-target="#anova-de-dos-vías-no-paramétrico-scheirer-ray-hare"><span class="toc-section-number">12.6</span>  ANOVA de dos vías no paramétrico: Scheirer-Ray-Hare</a></li>
   </ul>
 </nav>
     </div>
@@ -369,8 +370,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="12.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">12.1</span> Librerías</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moments)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moments)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="introducción" class="level2" data-number="12.2">
@@ -381,7 +389,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>¿Por qué no aplicarlas siempre?</strong> Una deducción rápida puede ser que, si estas pruebas no requieren de características especiales de nuestros datos, podemos utilizarlas siempre y dejar de lado las pruebas paramétricas. Esto se debe a que en general, <strong>las técnicas paramétricas son más precisas y tienen un mayor poder estadístico</strong>; es decir, que son mejores para encontrar un efecto realmente significativo (son más sensibles).</p></li>
 <li><p><strong>¿En qué casos aplicarlas?</strong></p>
 <ol type="a">
-<li>Cuando sepamos que <strong>la distribución de la variable en la población no es normal normal</strong>. Esta parte tiene sus bemoles porque el cubrir este único requisito dependerá de le exhaustividad de nuestro muestreo y si es realmente representativo de lo que sucede a un nivel poblacional. Dejando el tecnicismo de lado, recurriremos a estas técnicas en el mismo escenario en el que aplicaríamos alguna transformación a los datos: <strong>cuando tengamos evidencia lo suficientemente grande de que nuestros datos (muestras) no se ajustan a una distribución normal</strong>. Como ya habíamos comentado antes debemos sustentar nuestras conclusiones a partir de diversas evidencias y no solo un valor de p.&nbsp;Un análisis gráfico de la distribución de frecuencias (gráfico QQ, KDE o un gráfico de frecuencias), acompañado de una prueba de normalidad (<em>e.g.</em> Shapiro-Wilks) deberían ser lo mínimo realizable para evaluar la normalidad de nuestros datos. Adicionalmente podemos estimar la curtosis (altura de la curva) y el sesgo (simetría de la distribución) y ver qué tan diferentes son de el valor de 1 de una distribución normal.</li>
+<li>Cuando sepamos que <strong>la distribución de la variable en la población no es normal</strong>. Esta parte tiene sus bemoles porque el cubrir este único requisito dependerá de le exhaustividad de nuestro muestreo y si es realmente representativo de lo que sucede a un nivel poblacional. Dejando el tecnicismo de lado, recurriremos a estas técnicas en el mismo escenario en el que aplicaríamos alguna transformación a los datos: <strong>cuando tengamos evidencia lo suficientemente grande de que nuestros datos (muestras) no se ajustan a una distribución normal</strong>. Como ya habíamos comentado antes debemos sustentar nuestras conclusiones a partir de diversas evidencias y no solo un valor de p.&nbsp;Un análisis gráfico de la distribución de frecuencias (gráfico QQ, KDE o un gráfico de frecuencias), acompañado de una prueba de normalidad (<em>e.g.</em> Shapiro-Wilks) deberían ser lo mínimo realizable para evaluar la normalidad de nuestros datos. Adicionalmente podemos estimar la curtosis (altura de la curva) y el sesgo (simetría de la distribución) y ver qué tan diferentes son de el valor de 1 de una distribución normal.</li>
 <li>Otros casos a tener en cuenta son:
 <ol type="a">
 <li>Nuestros <strong>datos están en escala nominal u ordinal</strong>.</li>
@@ -400,25 +408,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Habiendo tocado esos puntos, exploremos las alternativas no paramétricas a algunas de las pruebas que hemos visto en el curso.</p>
 <p>En esta sesión utilizaremos los archivos <code>Datos1 2.csv</code>, <code>Datos_bloques.csv</code> y <code>Abundancias.csv</code>, por lo que primero tendremos que cargarlos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de datos</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>guppys <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/Datos1 2.csv"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">header =</span> F,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">skip =</span> <span class="dv">1</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">sep =</span> <span class="st">","</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(guppys) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dieta"</span>, <span class="st">"Periodo"</span>, <span class="st">"Rep"</span>, <span class="st">"LT"</span>, <span class="st">"PT"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(guppys)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carga de datos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>guppys <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/Datos1 2.csv"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">header =</span> F,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">skip =</span> <span class="dv">1</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">sep =</span> <span class="st">","</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(guppys) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dieta"</span>, <span class="st">"Periodo"</span>, <span class="st">"Rep"</span>, <span class="st">"LT"</span>, <span class="st">"PT"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(guppys)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Periodo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Rep"],"name":[3],"type":["chr"],"align":["left"]},{"label":["LT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["PT"],"name":[5],"type":["dbl"],"align":["right"]},{"label":[null],"name":[6],"type":["int"],"align":["right"]}],"data":[{"1":"A","2":"I","3":"A","4":"0.883","5":"0.50","6":"1","_rn_":"1"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","6":"2","_rn_":"2"},{"1":"A","2":"I","3":"A","4":"1.018","5":"0.58","6":"3","_rn_":"3"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","6":"4","_rn_":"4"},{"1":"A","2":"I","3":"A","4":"1.200","5":"0.68","6":"5","_rn_":"5"},{"1":"A","2":"I","3":"A","4":"0.891","5":"0.51","6":"6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Periodo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Rep"],"name":[3],"type":["chr"],"align":["left"]},{"label":["LT"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["PT"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"I","3":"A","4":"0.883","5":"0.50","_rn_":"1"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","_rn_":"2"},{"1":"A","2":"I","3":"A","4":"1.018","5":"0.58","_rn_":"3"},{"1":"A","2":"I","3":"A","4":"0.909","5":"0.52","_rn_":"4"},{"1":"A","2":"I","3":"A","4":"1.200","5":"0.68","_rn_":"5"},{"1":"A","2":"I","3":"A","4":"0.891","5":"0.51","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bloques <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/Datos_bloques.csv"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bloques)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bloques <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/Datos_bloques.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(bloques)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -429,8 +437,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>abundancias <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/Abundancias.csv"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>abundancias</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>abundancias <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/Abundancias.csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>abundancias</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -447,8 +455,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>También llamada prueba de Mann-Whitney-Wilcoxon o prueba de suma de rangos de Wilcoxon. Esta prueba es la alternativa a la prueba T de Student para muestras independientes, en donde la comparación se realiza en términos de las medianas (<span class="math inline">\(\tilde{x}\)</span>) y por tanto la hipótesis nula será <span class="math inline">\(H_0: \tilde{X}_1 = \tilde{X}_2\)</span>.</p>
 <p>Antes de pasar al modo de calcular el estadístico de prueba, hablemos sobre las consideraciones que debemos de tener para aplicar esta prueba:</p>
 <ol type="1">
-<li>La variable dependiente deberá de estar en escala ordinal o continua</li>
-<li>La variable independiente es una variable categórica con dos grupos</li>
+<li>La variable dependiente deberá de estar en escala ordinal o continua.</li>
+<li>La variable independiente es una variable categórica con dos grupos.</li>
 <li>Las muestras deberán ser independientes; es decir, no deberá de existir una relación entre o dentro de los grupos (medidas repetidas)</li>
 <li>Aunque los datos no se ajusten a una distribución normal, deberán de tener la misma forma (ambos con forma de campana y sesgo negativo, o ambos con sesgo positivo, etc.)</li>
 </ol>
@@ -459,51 +467,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Para aplicarla en R utilizaremos la función <code>wilcox.test(formula)</code>, pero primero exploremos nuestros datos. Nuestra variable de interés es la variable LT, por lo que realizaremos la evaluación de la normalidad, tanto de manera cuantitativa (prueba de Shapiro-Wilks, sesgo y curtosis), como de manera gráfica (Gráficos de densidad). Generemos una función que nos permita reunir estos datos en una sola tabla de manera rápida:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>norms <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dieta =</span> <span class="cn">NA</span>, <span class="at">w =</span> <span class="cn">NA</span>, <span class="at">p =</span> <span class="cn">NA</span>, <span class="at">k =</span> <span class="cn">NA</span>, <span class="at">s =</span> <span class="cn">NA</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>grupos <span class="ot">&lt;-</span> <span class="fu">unique</span>(guppys<span class="sc">$</span>Dieta)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(grupos)) {</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  sub_set <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(guppys<span class="sc">$</span>LT[guppys<span class="sc">$</span>Dieta <span class="sc">==</span> grupos[i]])</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  st <span class="ot">&lt;-</span> <span class="fu">shapiro.test</span>(sub_set)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  norms[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">as.character</span>(grupos[i]),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">round</span>(st[[<span class="st">"statistic"</span>]], <span class="dv">2</span>),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">round</span>(st[[<span class="st">"p.value"</span>]], <span class="dv">3</span>),</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">round</span>(<span class="fu">kurtosis</span>(sub_set), <span class="dv">2</span>),</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">round</span>(<span class="fu">skewness</span>(sub_set), <span class="dv">2</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                 )</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>norms</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>guppys <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Dieta) <span class="sc">|&gt;</span> rstatix<span class="sc">::</span><span class="fu">shapiro_test</span>(LT)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["w"],"name":[2],"type":["chr"],"align":["left"]},{"label":["p"],"name":[3],"type":["chr"],"align":["left"]},{"label":["k"],"name":[4],"type":["chr"],"align":["left"]},{"label":["s"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"A","2":"0.93","3":"0.002","4":"1.92","5":"0.38","_rn_":"1"},{"1":"B","2":"0.96","3":"0.056","4":"2.14","5":"0.31","_rn_":"2"},{"1":"C","2":"0.93","3":"0.009","4":"2.19","5":"0.49","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["variable"],"name":[2],"type":["chr"],"align":["left"]},{"label":["statistic"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["p"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"A","2":"LT","3":"0.9257157","4":"0.001618914"},{"1":"B","2":"LT","3":"0.9593273","4":"0.056482303"},{"1":"C","2":"LT","3":"0.9285645","4":"0.009308783"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>norms <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Dieta =</span> <span class="cn">NA</span>, <span class="at">k =</span> <span class="cn">NA</span>, <span class="at">s =</span> <span class="cn">NA</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>grupos <span class="ot">&lt;-</span> <span class="fu">unique</span>(guppys<span class="sc">$</span>Dieta)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(grupos)) {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  sub_set <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(guppys<span class="sc">$</span>LT[guppys<span class="sc">$</span>Dieta <span class="sc">==</span> grupos[i]])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  norms[i,] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">as.character</span>(grupos[i]),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">round</span>(<span class="fu">kurtosis</span>(sub_set), <span class="dv">2</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">round</span>(<span class="fu">skewness</span>(sub_set), <span class="dv">2</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                 )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>norms</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Dieta"],"name":[1],"type":["chr"],"align":["left"]},{"label":["k"],"name":[2],"type":["chr"],"align":["left"]},{"label":["s"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"A","2":"1.92","3":"0.38","_rn_":"1"},{"1":"B","2":"2.14","3":"0.31","_rn_":"2"},{"1":"C","2":"2.19","3":"0.49","_rn_":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>Y gráficamente:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> guppys, <span class="fu">aes</span>(LT, <span class="at">color =</span> Dieta)) <span class="sc">+</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_density</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>Dieta, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Longitud Total de Guppys bajo tres dietas"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Gráficos de densidad"</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 22 rows containing non-finite values (`stat_density()`).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>kde_plots <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> guppys, <span class="fu">aes</span>(LT, <span class="at">color =</span> Dieta)) <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_density</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">facet_wrap</span>(<span class="sc">~</span>Dieta, <span class="at">nrow =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Longitud Total de Guppys bajo tres dietas"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Gráficos de densidad"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>kde_plots</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c12_nopar_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Debido a que todas las distribuciones fueron leptocúrticas (k &gt; 1) y con sesgo negativo (s &lt; 1), todas las pruebas de normalidad tuvieron niveles de significancia pequeños y los gráficos KDE mostraron tendencias hacia la bimodalidad, concluimos que los datos no se ajustan a una distribución normal; en consecuencia, se justifica realizar pruebas no paramétricas.</p>
+<p>Debido a que todas las distribuciones fueron leptocúrticas (k &gt; 1) y con sesgo negativo (s &lt; 1), todas las pruebas de normalidad tuvieron niveles de significancia pequeños y los gráficos KDE mostraron tendencias hacia la bimodalidad, concluimos que los datos no se ajustan a una distribución normal, ¿no? Sí y no. En efecto la distribución de cada grupo no es normal, pero recordarás que la decisión del tipo de prueba a aplicar no está en función de la distribución de cada grupo, sino de la normalidad de los residuales del modelo ANOVA.</p>
 <div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -519,8 +531,8 @@ Nota
 </div>
 <p>Imaginemos que nos interesa conocer si los organismos alimentados con la dieta B tuvieron una longitud total diferente a los alimentados con la dieta C, entonces apliquemos una prueba U-Mann-Whitney.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>u_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(guppys, Dieta <span class="sc">!=</span> <span class="st">"A"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(LT<span class="sc">~</span><span class="fu">factor</span>(Dieta), <span class="at">data =</span> u_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>u_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(guppys, Dieta <span class="sc">!=</span> <span class="st">"A"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(LT<span class="sc">~</span><span class="fu">factor</span>(Dieta), <span class="at">data =</span> u_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon rank sum test with continuity correction
@@ -532,35 +544,28 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <p>Este resultado corresponde bastante bien con lo visto en los gráficos de densidad en el sentido de falta de diferencias, aunque podemos representarlo utilizando un gráfico de violín que es más adecuado para propósitos de comparación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>u_mann_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> u_data, <span class="fu">aes</span>(<span class="at">x =</span> Dieta, <span class="at">y =</span> LT, <span class="at">fill =</span> Dieta)) <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> T,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de LT de guppys bajo las dietas B y C"</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">+</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>               <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">29</span>,<span class="dv">149</span>,<span class="dv">79</span>,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rgb</span>(<span class="dv">126</span>,<span class="dv">172</span>,<span class="dv">255</span>,</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>))</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>                                 )</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>u_mann_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 20 rows containing non-finite values (`stat_ydensity()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 20 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>u_mann_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> u_data, <span class="fu">aes</span>(<span class="at">x =</span> Dieta, <span class="at">y =</span> LT, <span class="at">fill =</span> Dieta)) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> T,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de LT de guppys bajo las dietas B y C"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">+</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>               <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">29</span>,<span class="dv">149</span>,<span class="dv">79</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rgb</span>(<span class="dv">126</span>,<span class="dv">172</span>,<span class="dv">255</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>))</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>                                 )</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>u_mann_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c12_nopar_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="comparación-de-dos-muestras-dependientes-pareadas-prueba-por-rangos-de-wilcoxon" class="level3" data-number="12.3.1">
@@ -578,11 +583,11 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <p>Donde: <span class="math inline">\(\mu = \frac{n(n+1)}{4}\)</span>, <span class="math inline">\(\sigma = \frac{\sqrt{n(n+1)(2n+1)}}{24}\)</span> y r es un factor de reducción cuando existen <em>t</em> rangos empatados: <span class="math inline">\(r = \frac{t^3-t}{48}\)</span>.</p>
 <p>En <code>R</code>, por fortuna, la implementación es mucho más sencilla, solo hay que considerar que al ser una prueba pareada, el número de datos en ambos grupos debe ser igual.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos solo los datos que nos interesan</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>wilcox_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(guppys, (Dieta <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">&amp;</span> Periodo <span class="sc">!=</span> <span class="st">"M"</span>))</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Vemos que al final tenemos un individuo menos que al inicio,</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># por lo que hay que retirarlo de la base de datos (asumamos que es el último)</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(LT<span class="sc">~</span>Periodo, <span class="at">data =</span> wilcox_data, length)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos solo los datos que nos interesan</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>wilcox_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(guppys, (Dieta <span class="sc">==</span> <span class="st">"A"</span> <span class="sc">&amp;</span> Periodo <span class="sc">!=</span> <span class="st">"M"</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Vemos que al final tenemos un individuo menos que al inicio,</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># por lo que hay que retirarlo de la base de datos (asumamos que es el último)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(LT<span class="sc">~</span>Periodo, <span class="at">data =</span> wilcox_data, length)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -591,9 +596,9 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>wilcox_data <span class="ot">&lt;-</span> wilcox_data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">20</span>),]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Ahora tenemos ns iguales, por lo que podemos aplicar la prueba pareada</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(LT<span class="sc">~</span>Periodo, <span class="at">data =</span> wilcox_data, length)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wilcox_data <span class="ot">&lt;-</span> wilcox_data[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">20</span>),]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Ahora tenemos ns iguales, por lo que podemos aplicar la prueba pareada</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(LT<span class="sc">~</span>Periodo, <span class="at">data =</span> wilcox_data, length)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -605,7 +610,7 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <p>Ahora apliquemos la prueba.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(LT<span class="sc">~</span>Periodo, <span class="at">data =</span> wilcox_data, <span class="at">paired =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(LT<span class="sc">~</span>Periodo, <span class="at">data =</span> wilcox_data, <span class="at">paired =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon signed rank exact test
@@ -615,42 +620,31 @@ V = 190, p-value = 3.815e-06
 alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 </div>
-<p>Vemos que al parecer las medianas son diferentes, lo cual se sostiene al analizar los resultados de manera gráfica:</p>
+<p>Al parecer las medianas son diferentes, lo cual se sostiene al analizar los resultados de manera gráfica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>w_rank_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> wilcox_data,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Periodo, <span class="at">y =</span> LT, <span class="at">fill =</span> Periodo)) <span class="sc">+</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> T,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de LT de guppys bajo las dietas B y C"</span>,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín "</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">+</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>               <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">29</span>,<span class="dv">149</span>,<span class="dv">79</span>,</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rgb</span>(<span class="dv">126</span>,<span class="dv">172</span>,<span class="dv">255</span>,</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>))</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>                                 )</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>w_rank_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_ydensity()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Notch went outside hinges
-ℹ Do you want `notch = FALSE`?</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>w_rank_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> wilcox_data,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Periodo, <span class="at">y =</span> LT, <span class="at">fill =</span> Periodo)) <span class="sc">+</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> T,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de LT de guppys en dos periodos"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                    ) <span class="sc">+</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>               <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">29</span>,<span class="dv">149</span>,<span class="dv">79</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>                                            <span class="fu">rgb</span>(<span class="dv">126</span>,<span class="dv">172</span>,<span class="dv">255</span>,</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">maxColorValue =</span> <span class="dv">255</span>))</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>                                 )</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>w_rank_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c12_nopar_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -668,11 +662,11 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <p>Ok, una vez que realizamos esos cálculos ya evaluamos las diferencias entre los grupos tomando en consideración a los bloques, pero ¿qué tan similares son estos bloques? o en otras palabras, ¿qué tan de acuerdo estuvieron los votantes? Para ello podemos utilizar el Coeficiente de acuerdo de Kendall (W), el cuál está en términos del error cuadrático de la asignación de rangos dentro de cada bloque y el número de bloques y grupos. W indica la magnitud del acuerdo, donde 0 representa total desacuerdo y 1 total acuerdo.</p>
 <p>Ahora vayamos a R y apliquemos estas técnicas a nuestros datos por bloques. Para ello necesitaremos cambiar el formato de la base de datos de una base de datos tabular a una base de datos codificada utilizando la función <code>melt()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bloques_molten <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(bloques,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">id.vars =</span> <span class="st">"Pez"</span>,</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">variable.name =</span> <span class="st">"Secc"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">value.name =</span> <span class="st">"Act"</span>)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>bloques_molten</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>bloques_molten <span class="ot">&lt;-</span> reshape2<span class="sc">::</span><span class="fu">melt</span>(bloques,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">id.vars =</span> <span class="st">"Pez"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">variable.name =</span> <span class="st">"Secc"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">value.name =</span> <span class="st">"Act"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>bloques_molten</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -684,7 +678,7 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <p>Ahora podemos aplicar la prueba de Friedman utilizando la función <code>friedman.test(a ~ b|c)</code>, donde <code>a</code> representa la variable de medición, <code>b</code> los grupos y <code>c</code> los bloques.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">friedman.test</span>(Act<span class="sc">~</span>Secc<span class="sc">|</span>Pez, <span class="at">data =</span> bloques_molten)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">friedman.test</span>(Act<span class="sc">~</span>Secc<span class="sc">|</span>Pez, <span class="at">data =</span> bloques_molten)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Friedman rank sum test
@@ -695,33 +689,32 @@ Friedman chi-squared = 4.7586, df = 3, p-value = 0.1903</code></pre>
 </div>
 <p>Realicemos la comparación gráficamente:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fried_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> bloques_molten,</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> Secc, <span class="at">y =</span> Act, <span class="at">fill =</span> Secc)) <span class="sc">+</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> F,</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> </span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Actividad proteolítica entre 4 secciones del tracto</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="st">                   digestivo de peces"</span>,</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>                  )</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>fried_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fried_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> bloques_molten,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> Secc, <span class="at">y =</span> Act, <span class="at">fill =</span> Secc)) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> F,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Actividad proteolítica entre 4 secciones del tracto</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="st">                   digestivo de peces"</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>                  <span class="co"># subtitle = "Gráficos de violín",</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>                  )</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>fried_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c12_nopar_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>De estos resultados podríamos concluir que no hubo diferencias entre la actividad proteolítica entre las distintas secciones de los tractos digestivos, pero ¿qué tan diferentes entre sí fueron los peces? Utilicemos el coeficiente de acuerdo de Kendall utilizando la función <code>KendallW(x, correct, test, na.rm)</code> de la librería <code>DescTools</code> donde x representa una matriz de k grupos (columnas) y m bloques (renglones), correct es un argumento booleano si se debe de realizar la corrección por empates en los rangos y test para realizar una prueba <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(H_0: W = 0\)</span>; es decir, si hubo o no un desacuerdo total entre los bloques. A partir de los resultados vemos que hubo alrededor de un 18% de similitudes entre la actividad proteolítica de los peces, por lo cual los resultados de la prueba de Friedman no son confiables.</p>
+<p>De estos resultados podríamos concluir que no hubo diferencias entre la actividad proteolítica entre las distintas secciones de los tractos digestivos, pero ¿qué tan diferentes entre sí fueron los peces? Utilicemos el coeficiente de acuerdo de Kendall utilizando la función <code>KendallW(x, correct, test, na.rm)</code> de la librería <code>DescTools</code> donde x representa una matriz de k grupos (columnas) y m bloques (renglones), correct es un argumento booleano si se debe de realizar la corrección por empates en los rangos y test para realizar una prueba <span class="math inline">\(\chi^2\)</span> con <span class="math inline">\(H_0: W = 0\)</span>; es decir, si hubo o no un desacuerdo total entre los bloques.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">KendallW</span>(bloques, <span class="at">correct =</span> T, <span class="at">test =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Esta función sí requiere los datos en forma tabular, por lo que x será nuestra variable bloques</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">KendallW</span>(bloques, <span class="at">correct =</span> T, <span class="at">test =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Kendall's coefficient of concordance Wt
@@ -737,29 +730,28 @@ sample estimates:
 </div>
 <p>Y comprobémoslo gráficamente (<strong>ojo</strong>, para graficar estamos utilizando la base codificada)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>kendall_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> bloques_molten,</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># OJO: Estamos transformando Pez a un factor</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(Pez),</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> Act,</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> <span class="fu">as.factor</span>(Pez))) <span class="sc">+</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> F,</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> </span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Comparación de la actividad proteolítica entre 9 peces"</span>,</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos_bloques.csv"</span>,</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>                    )</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>kendall_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>kendall_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> bloques_molten,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                       <span class="co"># OJO: Estamos transformando Pez a un factor</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(Pez),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">y =</span> Act,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> <span class="fu">as.factor</span>(Pez))) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> F,</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"Actividad proteolítica de 9 peces"</span>,</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>                    <span class="co"># subtitle = "Gráficos de violín",</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos_bloques.csv"</span>,</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>                    )</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>kendall_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c12_nopar_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -775,8 +767,8 @@ sample estimates:
 <p>Una vez que realizamos la prueba solo obtendremos si hubo diferencias en alguna de las medianas, pero no sabremos cuál o cuáles fueron diferentes; por lo tanto, habrá que realizar una prueba post-hoc: la prueba de comparaciones múltiples de Dunn, dada por:</p>
 <p>La implementación de ambas pruebas en <code>R</code> es sumamente sencilla. Primero, el ANOVA Kruskal-Wallis utilizando la función <code>kruskal.test(formula, data)</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(LT<span class="sc">~</span>Dieta, <span class="at">data =</span> <span class="fu">subset</span>(guppys, Periodo <span class="sc">==</span> <span class="st">"F"</span>))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>H</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>H <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(LT<span class="sc">~</span>Dieta, <span class="at">data =</span> <span class="fu">subset</span>(guppys, Periodo <span class="sc">==</span> <span class="st">"F"</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>H</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Kruskal-Wallis rank sum test
@@ -787,7 +779,8 @@ Kruskal-Wallis chi-squared = 3.975, df = 2, p-value = 0.137</code></pre>
 </div>
 <p>Vemos que aparentemente no hay diferencias entre las medias; sin embargo, realicemos la prueba de Dunn para confirmar. Para ello utilizaremos la función <code>DunnTest(formula, data)</code> de la librería <code>DescTools</code>. Vemos que en efecto, pareciera no haber diferencias entre las longitudes finales de los guppys en función de las dieta con la que fueron alimentados.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">DunnTest</span>(LT<span class="sc">~</span><span class="fu">factor</span>(Dieta), <span class="at">data =</span> <span class="fu">subset</span>(guppys, Periodo <span class="sc">==</span> <span class="st">"F"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>DescTools<span class="sc">::</span><span class="fu">DunnTest</span>(LT<span class="sc">~</span><span class="fu">factor</span>(Dieta),</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> <span class="fu">subset</span>(guppys, Periodo <span class="sc">==</span> <span class="st">"F"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  Dunn's test of multiple comparisons using rank sums : holm  
@@ -802,39 +795,144 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Corroboremos esto de manera gráfica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>kruskal_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">subset</span>(guppys, Periodo <span class="sc">==</span> <span class="st">"F"</span>), </span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> Dieta, <span class="at">y =</span> LT, <span class="at">fill =</span> Dieta)) <span class="sc">+</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> T,</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de LT finales de Guppys"</span>,</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>                    )</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>kruskal_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 14 rows containing non-finite values (`stat_ydensity()`).</code></pre>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>kruskal_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">subset</span>(guppys, Periodo <span class="sc">==</span> <span class="st">"F"</span>), </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> Dieta, <span class="at">y =</span> LT, <span class="at">fill =</span> Dieta)) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_violin</span>(<span class="at">trim =</span> T,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> <span class="st">"white"</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">notch =</span> T,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación de LT finales de Guppys"</span>,</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">subtitle =</span> <span class="st">"Gráficos de violín"</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">caption =</span> <span class="st">"Archivo: Datos1 2.csv"</span>,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>kruskal_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 14 rows containing non-finite values (`stat_boxplot()`).</code></pre>
 </div>
+</section>
+<section id="anova-de-dos-vías-no-paramétrico-scheirer-ray-hare" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="anova-de-dos-vías-no-paramétrico-scheirer-ray-hare"><span class="header-section-number">12.6</span> ANOVA de dos vías no paramétrico: Scheirer-Ray-Hare</h2>
+<p>La última prueba que veremos en esta sesión es la versión no paramétrica para problemas en los que tenemos dos factores y muestras independientes; <em>i.e.</em>, la alternativa no paramétrica al ANOVA de dos vías. Para este caso cambiemos ligeramente los datos y utilicemos datos de concentraciones de Alanina (<code>Ala</code>) en milípedos, evaluadas por sexo y dos especies:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>mili <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/milipedos.csv"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mili)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Especie"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sexo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Ala"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Especie1","2":"Machos","3":"21.5","_rn_":"1"},{"1":"Especie1","2":"Machos","3":"19.6","_rn_":"2"},{"1":"Especie1","2":"Machos","3":"20.9","_rn_":"3"},{"1":"Especie1","2":"Machos","3":"22.8","_rn_":"4"},{"1":"Especie1","2":"Hembras","3":"14.8","_rn_":"5"},{"1":"Especie1","2":"Hembras","3":"15.6","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Los datos ya se encuentran en formato largo, pero veamos primero cuántas observaciones tenemos por cada combinación de Especie:Sexo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>mili <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Especie, Sexo) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">Ala =</span> <span class="fu">n</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Notch went outside hinges
-ℹ Do you want `notch = FALSE`?
-Notch went outside hinges
-ℹ Do you want `notch = FALSE`?</code></pre>
+<pre><code>`summarise()` has grouped output by 'Especie'. You can override using the
+`.groups` argument.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="c12_nopar_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Especie"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Sexo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Ala"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Especie1","2":"Hembras","3":"4"},{"1":"Especie1","2":"Machos","3":"4"},{"1":"Especie2","2":"Hembras","3":"4"},{"1":"Especie2","2":"Machos","3":"4"},{"1":"Especie3","2":"Hembras","3":"4"},{"1":"Especie3","2":"Machos","3":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
 </div>
+</div>
+<p>El diseño es balanceado, sin embargo tenemos pocas muestras por grupo. Este problema es más de representatividad y qué tan válidas son las inferencias realizadas sobre tan pocos datos porque, si comprobamos nuestros supuestos, todo parece estar en orden:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mili_aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Ala<span class="sc">~</span>Especie<span class="sc">*</span>Sexo, <span class="at">data =</span> mili)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co"># performance::check_model(mili_aov)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_normality</span>(mili_aov)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: residuals appear as normally distributed (p = 0.240).</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_homogeneity</span>(mili_aov)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>OK: There is not clear evidence for different variances across groups (Bartlett Test, p = 0.976).</code></pre>
+</div>
+</div>
+<p>Veamos entonces el resultado de la prueba:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mili_aov)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+Especie       2  55.26   27.63  13.082  0.00031 ***
+Sexo          1 138.72  138.72  65.679 2.04e-07 ***
+Especie:Sexo  2   6.89    3.45   1.631  0.22331    
+Residuals    18  38.02    2.11                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Concluimos que, estadísticamente y a un <span class="math inline">\(\alpha = 0.05\)</span>, parece haber diferencias significativas entre especies y entre sexos, y que la diferencia entre especies no depende del sexo (o viceversa). Podríamos confiar “ciegamente” en estos resultados y aplicar la prueba <em>post-hoc</em> correspondiente para las especies; sin embargo, veamos qué nos dice la prueba no paramétrica:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mili_srh <span class="ot">&lt;-</span> rcompanion<span class="sc">::</span><span class="fu">scheirerRayHare</span>(Ala<span class="sc">~</span>Especie<span class="sc">+</span>Sexo, <span class="at">data =</span> mili)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+DV:  Ala 
+Observations:  24 
+D:  0.9995652 
+MS total:  50 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mili_srh</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["int"],"align":["right"]},{"label":["Sum Sq"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["H"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["p.value"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"249.750","3":"4.9971727","4":"0.0822011208","_rn_":"Especie"},{"1":"1","2":"693.375","3":"13.8735320","4":"0.0001955329","_rn_":"Sexo"},{"1":"2","2":"7.000","3":"0.1400609","4":"0.9323654308","_rn_":"Especie:Sexo"},{"1":"18","2":"199.375","3":"NA","4":"NA","_rn_":"Residuals"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Se mantienen las diferencias entre los sexos, pero las diferencias entre especies no están en conflicto con nuestra hipótesis de nulidad a un <span class="math inline">\(\alpha = 0.05\)</span>. ¿Qué prueba utilizar? Veamos la distribución de nuestros datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>ala_sp_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mili,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Especie, <span class="at">y =</span> Ala,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">fill =</span> Especie,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> Especie)) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">width =</span> <span class="fl">0.1</span>)</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>ala_sx_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mili,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> Sexo, <span class="at">y =</span> Ala,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                          <span class="at">fill =</span> Sexo,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>                          <span class="at">color =</span> Sexo)) <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>               <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">width =</span> <span class="fl">0.1</span>)</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>ala_int_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> mili,</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> Sexo, <span class="at">y =</span> Ala,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fill =</span> Sexo,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>                           <span class="at">color =</span> Sexo)) <span class="sc">+</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_boxplot</span>(<span class="at">fill =</span><span class="cn">NA</span>,</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>                             <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"[Ala] (mg/L)"</span>) <span class="sc">+</span></span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>                <span class="fu">facet_wrap</span>(<span class="sc">~</span>Especie)</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear gráfico compuesto utilizando Patchwork:</span></span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de interacción a la izquierda</span></span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Efectos principales a la derecha</span></span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>(ala_int_plot<span class="sc">|</span>(ala_sp_plot <span class="sc">/</span> ala_sx_plot) <span class="sc">&amp;</span></span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Efectos principales sin etiqueta del eje y</span></span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="fu">element_blank</span>())) <span class="sc">&amp;</span></span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">&amp;</span></span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c12_nopar_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Como era de esperarse, las diferencias entre sexos son las más marcadas: la concentración de alanina es consistentemente mayor en machos que en hembras, independientemente de la especie (no hay interacción). ¿Qué pasa entre las especies? Sin duda alguna estamos en la cuerda floja; sin embargo, al menos con los datos disponibles, la especie 2 tiende hacia los valores más bajos.</p>
+<p>La pregunta que debemos de hacernos aquí es: ¿biológicamente tienen relevancia las diferencias observadas? La decisión dependerá totalmente de la experiencia del investigador con el problema. Fuera de este ejemplo no he tratado con datos de concentraciones de Alanina, ni tampoco he estudiado milípedos, por lo que no puedo dar una conclusión informada. ¿Entonces? Prefiero errar de precavido y decir que las diferencias entre especies no son significativas (especialmente considerando que las diferencias entre sexos son mayores) y hacer la recomendación de <strong>replicar el experimento con un tamaño de muestra más grande</strong> (OJO, no incrementar el tamaño de muestra, eso se conoce como <em>p-hacking</em>).</p>
 <p>Con esto llegamos al final de esta clase. Espero que haya sido de tu agrado y nos vemos en la siguiente.</p>
 
 
@@ -1075,7 +1173,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 

@@ -581,7 +581,7 @@ Y \sim Binom(n = 4, p = 0.5)
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">4</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0 1 1 1</code></pre>
+<pre><code>[1] 1 1 1 0</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-captioned">
@@ -861,7 +861,7 @@ Tip
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">subset</span>(palmerpenguins<span class="sc">::</span>penguins, species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(penguins)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora veamos la distribución de la masa corporal en gramos:</p>
+<p>Ahora veamos la distribución de la longitud del pico en gramos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm)) <span class="sc">+</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour =</span> <span class="st">"deepskyblue4"</span>) <span class="sc">+</span></span>
@@ -895,9 +895,9 @@ Nota
 <p>Ahora imaginemos que estamos en campo, medimos un individuo de 44 mm, y nos interesa saber cuál es la probabilidad de encontrar un al menos tan grande como él. Pues hacemos exactamente lo mismo que en el caso anterior:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bill_lengths <span class="ot">&lt;-</span> penguins<span class="sc">$</span>bill_length_mm</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(bill_lengths[bill_lengths <span class="sc">&gt;=</span> <span class="dv">44</span>])<span class="sc">/</span><span class="fu">length</span>(bill_lengths)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(bill_lengths[bill_lengths <span class="sc">&gt;=</span> <span class="dv">36</span>])<span class="sc">/</span><span class="fu">length</span>(bill_lengths)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.03424658</code></pre>
+<pre><code>[1] 0.8561644</code></pre>
 </div>
 </div>
 <p>Lo cual nos da una probabilidad del 3.4%. Esto que hicimos aquí es el fundamento de las pruebas de significancia (pruebas de hipótesis), solo que hay una pequeña diferencia: el contraste no lo hacemos con la distribución de nuestros datos, sino con una distribución teórica (usualmente la distribución normal). En la sesión de técnicas paramétricas hablaremos duro y tendido de la distribución normal, sus características y cómo aprovecharla para probar “hipótesis” (vamos a ver también cuál hipótesis es la que estamos probando, porque posiblemente no sea la que tienes en mente). Veamos entonces, asumiendo una distribución normal, cuál es la probabilidad de encontrarnos con un idividuo de al menos 44 mm. Para esto utilizaremos la función <code>pnorm(q, mean, sd, lower.tail)</code>, la cual calcula la <strong>función de densidad acumulada</strong> para los parámetros dados. ¿Y eso con qué se come? Pues bien, es ahí donde entra la acumulación: estamos integrando (sumando, vamos) las densidades hasta un punto (cuantil, más adelante hablaremos de esto) dado, considerando o no la cola (el lado) inferior (izquierda) o superior (derecha) de la distribución. Si nos interesan preguntas de “menor a” utilizamos <code>lower.tail = TRUE</code>, pues nos interesa toda la distribución hasta ese punto. Si nos interesa “superior a” utilizamos <code>lower.tail = FALSE</code>, pues nos interesa la distribución de ese punto en adelante:</p>
@@ -1214,7 +1214,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 

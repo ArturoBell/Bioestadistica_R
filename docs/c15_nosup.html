@@ -403,12 +403,18 @@ div.csl-indent {
 <h2 data-number="15.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">15.1</span> Librerías</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dendextend)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dendextend)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FactoMineR)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="introducción" class="level2" data-number="15.2">
@@ -431,7 +437,12 @@ div.csl-indent {
 <p></p><figcaption class="figure-caption">Figura&nbsp;15.2: Artrópodos agrupados</figcaption><p></p>
 </figure>
 </div>
-<p>Fue bastante sencillo, ¿no? A los seres humanos no nos resulta especialmente complicado categorizar, pero para la computadora hay un total de 115,975 combinaciones de estas imágenes. ¿Cómo saber cuáles son las agrupaciones relevantes? Hay una gran variedad de técnicas: Agrupamientos jerárquicos, máquinas de soporte vectorial, k-medias (k-medianas o k-medioides), DBSCAN, T-SNE, entre otras, cada una con sus peculiaridades, ventajas y desventajas, dadas por la lógica con la que trabajan y, en consecuencia, con diversos niveles de “éxito” según los datos con los que estemos trabajando:</p>
+<p>Fue bastante sencillo, ¿no? A los seres humanos no nos resulta especialmente complicado categorizar, pero para la computadora hay un total de 115,975 combinaciones de estas imágenes. ¿Cómo saber cuáles son las agrupaciones relevantes? Hay una gran variedad de técnicas, que podemos partir en dos grandes grupos:</p>
+<ol type="1">
+<li>Métodos basados en distancias: Agrupamiento jerárquico, métodos particionales (k-medias, k-medianas o k-medioides) y espectrales.</li>
+<li>Métodos basados en densidades: OPTICS, DBSCAN, HDBSCAN, entre otros.</li>
+</ol>
+<p>Cada método tiene sus peculiaridades, ventajas y desventajas, dadas por la lógica con la que trabajan y, en consecuencia, con diversos niveles de “éxito” según los datos con los que estemos trabajando:</p>
 <div id="fig-clusteringalgorithms" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png" class="img-fluid figure-img"></p>
@@ -440,7 +451,13 @@ div.csl-indent {
 </div>
 <section id="agrupamiento-jerárquico" class="level3" data-number="15.3.1">
 <h3 data-number="15.3.1" class="anchored" data-anchor-id="agrupamiento-jerárquico"><span class="header-section-number">15.3.1</span> Agrupamiento jerárquico</h3>
-<p>De toda esta diversidad de técnicas hay una que se ha destacado en el área de la biología: el agrupamiento jerárquico, también llamado <strong>análisis clúster</strong>. Esta técnica tiene una lógica muy sencilla e intuitiva (lo cual es parte de la razón por la que sea tan popular): Calcula una distancia entre todos los pares de observaciones, forma un grupo con el par con la menor distancia y repite hasta que termines con todos los datos. Veamos cómo es esto paso a paso con unos datos de ejemplo:</p>
+<p>De toda esta diversidad de técnicas hay una que se ha destacado en el área de la biología: el agrupamiento jerárquico, mal llamado <strong>análisis clúster</strong>. Esta técnica tiene una lógica muy sencilla e intuitiva (lo cual es parte de la razón por la que sea tan popular):</p>
+<ol type="1">
+<li>Calcula las distancias entre todos los pares de observaciones.</li>
+<li>forma un grupo con el par con la menor distancia.</li>
+<li>Repite hasta que termina con todos los datos.</li>
+</ol>
+<p>Veamos cómo es esto paso a paso con unos datos de ejemplo:</p>
 <table class="table">
 <caption>Longitudes totales de algunas especies de cetáceos.</caption>
 <thead>
@@ -478,7 +495,7 @@ div.csl-indent {
 </table>
 <p>Entonces los pasos con los que agruparíamos estas especies, según su longitud total, son:</p>
 <ol type="1">
-<li>Calcular una matriz de distancias/disimilaridades. Literalmente ver qué tanto se parecen nuestras especies entre sí. ¿Cómo hacemos esto? Utilizando alguna medida de distancia o disimilaridad, pero dejemos el tema de la selección de la medida para después y utilicemos la distancia Euclidiana:</li>
+<li>Calcular una matriz de distancias/disimilitudes Literalmente ver qué tanto se parecen nuestras especies entre sí. ¿Cómo hacemos esto? Utilizando alguna medida de distancia o disimilitud, pero dejemos el tema de la selección de la medida para después y utilicemos la distancia Euclidiana:</li>
 </ol>
 <div class="callout callout-style-default callout-note callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -490,8 +507,8 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Qué es la distancia Euclidiana? Es una medida basada en el famosísimo teorema de Pitágoras ((¿creías que no servía para nada?):</p>
-<p><span class="math display">\[D_{a,b} = \sqrt\sum_{i = 1}^n (q_i - p_i)^2\]</span></p>
+<p>¿Qué es la distancia Euclidiana? Es una medida basada en el famosísimo teorema de Pitágoras (¿creías que no servía para nada?):</p>
+<p><span class="math display">\[D_{a,b} = \sqrt{\sum_{i = 1}^n (q_i - p_i)^2}\]</span></p>
 <div id="fig-pytheorem" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/pytheorem.png" class="img-fluid figure-img"></p>
@@ -509,7 +526,7 @@ Nota
 </div>
 <ol start="2" type="1">
 <li><p>Identificar el par con la menor distancia y formar un grupo con ellos. Esto corresponde al método de unión (agrupamiento o amalgamiento) simple o sencillo, en el que encontramos la menor distancia en la matriz, que corresponde a <code>Tt</code> y <code>Gg</code> (<span class="math inline">\(D = 0.6\)</span>), por lo que formamos un primer grupo <code>[Tt, Gg]</code>, el cual estará representado por el promedio de <code>Tt</code> y <code>Gg</code>: <code>3.3</code>.</p></li>
-<li><p>Volver a calcular la matriz de distancias/disimilaridades, sustituyendo las observaciones agrupadas por su grupo; es decir, ahora ya no vamos a incluir <code>Tt</code> y <code>Gg</code> en el cálculo de la matriz, sino que incluiremos <code>[Tt, Gg] = 3.3</code>:</p></li>
+<li><p>Volver a calcular la matriz de distancias/disimilitudes, sustituyendo las observaciones agrupadas por su grupo; es decir, ahora ya no vamos a incluir <code>Tt</code> y <code>Gg</code> en el cálculo de la matriz, sino que incluiremos <code>[Tt, Gg] = 3.3</code>:</p></li>
 </ol>
 <div id="fig-distmat2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -539,7 +556,7 @@ Nota
 </div>
 <p>Como ves en la figura <a href="#fig-dendro">Figura&nbsp;<span>15.8</span></a>, nuestro dendrograma está compuesto por algunas estructuras:</p>
 <ol type="1">
-<li><strong>Raíz</strong>: Es la distancia a la que se unen todos nuestros grupos. En nuestro ejemplo falta porque no tenemos un “grupo hermano”; es decir, un grupo que sea cercano a nuestras especies de cetáceos, pero que no sea un cetáceo. Podríamos incluir un hipopótamo, por ejemplo. Si tenemos ese grupo hermano podemos graficar la raíz, y entonces nuestro dendrograma estará enraizado, de lo contrario tenemos un dendrograma no enraizado. El árbol comienza a “crecer” desde este punto (un solo grupo) hasta tener separados todos los puntos en el conjunto de datos.</li>
+<li><strong>Raíz</strong>: Es la distancia a la que se unen todos nuestros grupos. En nuestro ejemplo hace falta porque no tenemos un “grupo hermano”; es decir, un grupo que sea cercano a nuestras especies, pero que no sea un cetáceo. Podríamos incluir un hipopótamo, por ejemplo. Si tenemos ese grupo hermano podemos graficar la raíz, y entonces nuestro dendrograma estará enraizado, de lo contrario tenemos un dendrograma no enraizado. El árbol comienza a “crecer” desde este punto (un solo grupo) hasta tener separados todos los puntos en el conjunto de datos.</li>
 <li><strong>Ramas</strong>: Cada una de las líneas verticales del árbol. Indican el “flujo” de las similaridades, en el sentido de que seguirán extendiéndose hasta la distancia en la que se forme una nueva agrupación.</li>
 <li><strong>Nodo</strong>: Es el punto donde se unen dos ramas; es decir, el punto en el que se forma una nueva agrupación.</li>
 <li><strong>Hojas</strong>: Son las “ramas terminales”, que se puede entender como un grupo de ramas que representan cada una de las <strong>instancias</strong> que conforman la base de datos. Las instancias más parecidas son las contiguas, y el parecido disminuye conforme nos alejamos de cada punto.</li>
@@ -548,7 +565,7 @@ Nota
 </section>
 <section id="hablemos-de-distancias" class="level3" data-number="15.3.3">
 <h3 data-number="15.3.3" class="anchored" data-anchor-id="hablemos-de-distancias"><span class="header-section-number">15.3.3</span> Hablemos de distancias</h3>
-<p>Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilaridad hay y cuál utilizar? Resulta que <strong>la medida de distancia/disimilaridad que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis</strong>. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la <a href="#fig-geometries">Figura&nbsp;<span>15.9</span></a> tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:</p>
+<p>Como te darás cuenta, es un proceso iterativo y que puede llevar bastante tiempo, pero también es bastante sencillo. Ahora bien, ¿qué medidas de distancia/disimilitud hay y cuál utilizar? Resulta que <strong>la medida de distancia/disimilitud que seleccionemos determina la geometría del espacio en el que estamos haciendo el análisis</strong>. ¿La qué cosa de quien? Es más fácil entenderlo si te digo que un triángulo trazado en un papel tiene una sumatoria de sus ángulos diferente a un triángulo trazado en una esfera. Un ejercicio que puedes realizar para ver las consecuencias de moverse en diferentes espacios geométricos es, justamente, trazar un triángulo sobre una naranja, después retirarle la cáscara, ponerla sobre una superficie plana, y ver qué pasa con el triángulo que trazaste originalmente. Otra forma es una representación visual. En la <a href="#fig-geometries">Figura&nbsp;<span>15.9</span></a> tienes representadas tres distancias: la distancia Euclidiana (amarillo), Manhattan (rojo) y Chebyshev (azul). En todos los casos la distancia desde cualquier punto del perímetro hacia el centro es de 4 unidades, pero la forma del perímetro resultante es diferente porque el espacio geométrico es diferente:</p>
 <div id="fig-geometries" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/geometries.png" class="img-fluid figure-img"></p>
@@ -565,10 +582,10 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Es lo mismo una medida de distancia que una de disimilaridad? Sí y no. Desde el punto de vista práctico, sí, ambas nos permiten darnos una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una <strong>distancia</strong> cumple con la <strong>desigualdad triangular</strong>, mientras que una disimilaridad no. ¿Qué es la desigualdad triangular? Que <strong>la distancia más corta entre dos puntos es una linea recta</strong>. En una disimilaridad esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?</p>
+<p>¿Es lo mismo una medida de distancia que una de disimilitud? Sí y no. Desde el punto de vista práctico ambas nos dan una idea de quién se junta con quien; sin embargo, formalmente no son lo mismo. Una <strong>distancia</strong> cumple con la <strong>desigualdad triangular</strong>, mientras que una disimilitud no. ¿Qué es la desigualdad triangular? Que <strong>la distancia más corta entre dos puntos es una linea recta</strong>. En una disimilitud esto no es el caso, pues el espacio geométrico no es Euclidiano. Pinta dos puntos sobre la superficie de una naranja y únelos con una línea. No es recta, ¿o sí?</p>
 </div>
 </div>
-<p>Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilaridades funcionen mejor en ciertos casos y peor en otros. <span class="citation" data-cites="Shirkhorshidietal_2015">Shirkhorshidi, Aghabozorgi &amp; Wah (<a href="references.html#ref-Shirkhorshidietal_2015" role="doc-biblioref">2015</a>)</span> compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:</p>
+<p>Esto, obviamente tiene consecuencias, y hace que algunas distancias o disimilitudes funcionen mejor en ciertos casos y peor en otros. <span class="citation" data-cites="Shirkhorshidietal_2015">Shirkhorshidi, Aghabozorgi &amp; Wah (<a href="references.html#ref-Shirkhorshidietal_2015" role="doc-biblioref">2015</a>)</span> compilaron la siguiente lista, con algunas distancias y detalles muy útiles sobre su aplicación:</p>
 <div id="fig-distances" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/distances.png" class="img-fluid figure-img"></p>
@@ -632,61 +649,71 @@ Nota
 </section>
 <section id="implementación" class="level3" data-number="15.3.6">
 <h3 data-number="15.3.6" class="anchored" data-anchor-id="implementación"><span class="header-section-number">15.3.6</span> Implementación</h3>
-<p>Realizar un agrupamiento jerárquico en <code>R</code> es bastante sencillo, únicamente debemos de tener nuestro data.frame cuyos nombres de renglones sean las etiquetas de nuestras instancias a agrupar, calcular las distancias con la función <code>dist(x, method)</code> y unir los grupos con la función <code>hclust(dist, method)</code>.</p>
+<p>Realizar un agrupamiento jerárquico en <code>R</code> es bastante sencillo, únicamente debemos de tener un data.frame cuyos nombres de renglones sean las etiquetas de las instancias a agrupar, calcular las distancias con la función <code>dist(x, method)</code> y unir los grupos con la función <code>hclust(dist, method)</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">long =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">3.6</span>, <span class="fl">6.5</span>, <span class="fl">7.5</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">"Tt"</span>, <span class="st">"Gg"</span>, <span class="st">"Gm"</span>, <span class="st">"Oo"</span>, <span class="st">"Mn"</span>, <span class="st">"Bp"</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">dist</span>(df1, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>hc_av <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mat, <span class="at">method =</span> <span class="st">"average"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">long =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fl">3.6</span>, <span class="fl">6.5</span>, <span class="fl">7.5</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">"Tt"</span>, <span class="st">"Gg"</span>, <span class="st">"Gm"</span>, <span class="st">"Oo"</span>, <span class="st">"Mn"</span>, <span class="st">"Bp"</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dist_mat <span class="ot">&lt;-</span> <span class="fu">dist</span>(df1, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>hc_av <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mat, <span class="at">method =</span> <span class="st">"average"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["long"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.0","_rn_":"Tt"},{"1":"3.6","_rn_":"Gg"},{"1":"6.5","_rn_":"Gm"},{"1":"7.5","_rn_":"Oo"},{"1":"15.0","_rn_":"Mn"},{"1":"20.0","_rn_":"Bp"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
 </div>
 <p>Este objeto podemos graficarlo con <code>ggplot</code>, utilizando la librería <code>ggdendro</code>, lo cual nos da un dendrograma bastante sencillo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(hc_av, <span class="at">labels =</span> T) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdendrogram</span>(hc_av, <span class="at">labels =</span> T) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Si bien es cierto que este dendrograma es “suficiente”, podemos personalizarlo utilizando la función <code>dendextend::set(object, what, value)</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos los agrupamientos a un dendrograma</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_av)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color a las ramas</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"branches_k_color"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el ancho de las ramas</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"branches_lwd"</span>, <span class="dv">1</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de las etiquetas asumiendo 4 grupos</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"labels_col"</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">118</span>, <span class="dv">186</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">123</span>, <span class="dv">118</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">255</span>, <span class="dv">147</span>, <span class="dv">0</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">181</span>, <span class="dv">23</span>, <span class="dv">0</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)), </span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos los agrupamientos a un dendrograma</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_av)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color a las ramas</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="co"># value = c("red", "blue"),</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el ancho de las ramas</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"branches_lwd"</span>, <span class="dv">1</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de las etiquetas asumiendo 4 grupos</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>dend <span class="ot">&lt;-</span> <span class="fu">set</span>(dend, <span class="st">"labels_col"</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="fu">c</span>(<span class="fu">rgb</span>(<span class="dv">0</span>,<span class="dv">118</span>, <span class="dv">186</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">0</span>, <span class="dv">123</span>, <span class="dv">118</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">255</span>, <span class="dv">147</span>, <span class="dv">0</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">rgb</span>(<span class="dv">181</span>, <span class="dv">23</span>, <span class="dv">0</span>, <span class="at">maxColorValue =</span> <span class="dv">255</span>)), </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">4</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Con estas líneas añadimos las características visuales que queremos que tenga el dendrograma, pero falta graficarlo utilizando <code>ggplot</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gg_dend <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gg_dendro <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gg_dend,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">2.4</span>, <span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend))) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de especies de cetáceos"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Agrupamientos por longitud (método: promedio)"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia euclidiana"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos de bit.ly/clust_medium"</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>gg_dendro</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gg_dend <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>gg_dendro <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gg_dend,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">2.4</span>, <span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend))) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de especies de cetáceos"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Agrupamientos por longitud (método: promedio)"</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia euclidiana"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos de bit.ly/clust_medium"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>gg_dendro</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-captioned">
@@ -708,9 +735,9 @@ Nota
 <h3 data-number="15.3.7" class="anchored" data-anchor-id="ejercicio-multivariado"><span class="header-section-number">15.3.7</span> Ejercicio multivariado</h3>
 <p>Ya sabemos cómo funciona el análisis de ahrupamientos y también cómo implementarlo en <code>R</code>. ¿Qué falta? Aplicarlo con un conjunto de datos con más observaciones y variables. Para esto utilizaremos los datos <code>cluster.txt</code>, en los cuales tenemos mediciones de variables ambientales en distitntos sitios de muestreo, y nuestro objetivo es agrupar aquellos que tengan caracterísiticas similares. Si vemos el resumen de los datos podemos ver que hay diferencias sumamente importantes en las escalas de las variables, por lo que será necesario escalar los datos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>clust_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/cluster.txt"</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>) <span class="co"># ¡OJO con row.names!</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clust_df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>clust_df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/cluster.txt"</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">header =</span> T, <span class="at">row.names =</span> <span class="dv">1</span>) <span class="co"># ¡OJO con row.names!</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clust_df)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Temp            NH4             NO3              OD             Prof    
  Min.   :16.90   Min.   :0.540   Min.   :0.400   Min.   :0.810   Min.   : 27  
@@ -737,9 +764,9 @@ Nota
 </div>
 <p>Además de las diferencias en órdenes de magnitud, tenemos otro problema no tan evidente: la distribución de <code>SST</code> se encuentra bastante sesgada, por lo que habrá que a) aplicar una transformación para “normalizar” los datos o b) retirarla del análisis. No sabemos a qué corresponde <code>SST</code>, por lo que no sabemos si las mediciones están bien o mal, por lo que es mejor errar por precavidos y retirarla del análisis.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mask <span class="ot">&lt;-</span> <span class="fu">colnames</span>(clust_df)[<span class="fu">colnames</span>(clust_df) <span class="sc">!=</span> <span class="st">"SST"</span>]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>clust_filt <span class="ot">&lt;-</span> clust_df[, mask]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(clust_filt)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mask <span class="ot">&lt;-</span> <span class="fu">colnames</span>(clust_df)[<span class="fu">colnames</span>(clust_df) <span class="sc">!=</span> <span class="st">"SST"</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>clust_filt <span class="ot">&lt;-</span> clust_df[, mask]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(clust_filt)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Temp"  "NH4"   "NO3"   "OD"    "Prof"  "Trans" "Caud"  "STD"   "PO4"  
 [10] "DBO5"  "DQO"  </code></pre>
@@ -747,8 +774,8 @@ Nota
 </div>
 <p>Ahora sí, podemos escalar todos nuestros datos. Si observamos el resumen es evidente que hay algunas otras variables que también están sesgadas; sin embargo, podemos utilizar una medida de distancia que contienda con este tipo de distribuciones para evitar una transformación más agresiva:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>clust_scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(clust_filt)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clust_scale)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>clust_scale <span class="ot">&lt;-</span> <span class="fu">scale</span>(clust_filt)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(clust_scale)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Temp             NH4               NO3                OD         
  Min.   :-1.315   Min.   :-1.8357   Min.   :-1.9515   Min.   :-1.4896  
@@ -786,106 +813,106 @@ Nota
 <p>Recuerda que si trabajamos con datos estandarizados estamos escalando nuestros datos a valores de una distribución <code>Z</code>, los cuáles representan a cuántas desviaciones estándar estamos de la media.</p>
 </div>
 </div>
-<p>Ahora realicemso los agrupamientos utilizando la distancia Mahalanobis (que no es tan sensible a valores extremos) y el método de unión Ward.D2 (unión Ward con distancias cuadráticas) para minimizar la varianza intra-grupos:</p>
+<p>Ahora realicemos los agrupamientos utilizando la distancia Mahalanobis (que no es tan sensible a valores extremos y considera la correlación entre las variables) y el método de unión Ward.D2 (unión Ward con distancias cuadráticas) para minimizar la varianza intra-grupos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dist_mv1 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"mahalanobis"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>hc_mv1 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv1, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos a dendrograma</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dend_mv1 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv1)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de las ramas</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>dend_mv1 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv1, <span class="st">"branches_k_color"</span>,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el ancho de las ramas</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>dend.mv1 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv1, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficado</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>ggd1 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv1)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>ggd1_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd1, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv1)),</span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                                      <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Mahalanobis"</span>,</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>ggd1_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>¿Puedes decirme cuántos grupos hay? Veamos qué pasa si utilizamos la distancia Euclidiana:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dist_mv2 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hc_mv2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv2, <span class="at">method =</span><span class="st">"ward.D2"</span>)</span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dist_mv1 <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"mahalanobis"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>hc_mv1 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv1, <span class="at">method =</span> <span class="st">"ward.D2"</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformemos nuestro objeto a un dendrograma:</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv2)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformamos a dendrograma</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>dend_mv1 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv1)</span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiemos el color a las ramas:</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de las ramas</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>dend_mv1 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv1, <span class="st">"branches_k_color"</span>,</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>ggd2 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv2)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>ggd2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd2, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> </span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,</span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv2)),</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>,</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el ancho de las ramas</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>dend.mv1 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv1, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficado</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>ggd1 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv1)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>ggd1_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd1, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv1)),</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                                      <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Mahalanobis"</span>,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>ggd1_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>¿Y con la distancia Manhattan? Las agrupaciones resultantes son similares; sin embargo, las medidas de distancia son muy diferentes. Entonces, arbitrariamete, nos quedaremos con la distancia Euclidiana.</p>
+<p>¿Puedes decirme cuántos grupos hay? Veamos qué pasa si utilizamos la distancia Euclidiana:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dist_mv3 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>hc_mv3 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv3, <span class="at">method =</span><span class="st">"ward.D2"</span>)</span>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dist_mv2 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"euclidean"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>hc_mv2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv2, <span class="at">method =</span><span class="st">"ward.D2"</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformemos nuestro objeto a un dendrograma:</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv3)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv2)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiemos el color a las ramas:</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv3, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_k_color"</span>,</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
 <span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv3, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ggd3 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv3)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>ggd3_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd3, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>ggd2 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv2)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>ggd2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd2, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv3)),</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                                             <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2)"</span>,</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Manhattan"</span>,</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>ggd3_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> </span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>                                      <span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv2)),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>                                      <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Y con la distancia Manhattan? Las agrupaciones resultantes son similares; sin embargo, las medidas de distancia son muy diferentes. Entonces, arbitrariamete, nos quedaremos con la distancia Euclidiana.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>dist_mv3 <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(clust_scale, <span class="at">method =</span> <span class="st">"manhattan"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>hc_mv3 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(dist_mv3, <span class="at">method =</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformemos nuestro objeto a un dendrograma:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_mv3)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiemos el color a las ramas:</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv3, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"deepskyblue4"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">1</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>dend_mv3 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv3, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>ggd3 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv3)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>ggd3_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd3, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv3)),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>                                             <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2)"</span>,</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Manhattan"</span>,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>ggd3_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -893,13 +920,14 @@ Nota
 <h3 data-number="15.3.8" class="anchored" data-anchor-id="cuántos-grupos-1"><span class="header-section-number">15.3.8</span> ¿Cuántos grupos?</h3>
 <p>Para calcular los 30 índices de los que podemos echar mano para estimar el número “óptimo” de agrupaciones utilizaremos la función <code>NbClust</code> de la librería con el mismo nombre. La salida de esta función nos dice el número de índices que proponen cada número de agrupamientos (4 propusieron 12, 11 propusieron 3, etc.) y una conclusión: “De acuerdo con la regla de la mayoría, el mejor número de clústers es 3”. Además de estos índices numéricos tenemos dos índices gráficos: Hubert y D. En ambos el número óptimo está dado por una “rodilla” (un punto de inflexión).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n_gps <span class="ot">&lt;-</span> NbClust<span class="sc">::</span><span class="fu">NbClust</span>(<span class="at">data =</span> clust_scale,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">diss =</span> dist_mv2,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">distance =</span> <span class="cn">NULL</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"ward.D2"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">index =</span> <span class="st">"all"</span>, <span class="at">max.nc =</span> <span class="dv">8</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>n_gps <span class="ot">&lt;-</span> NbClust<span class="sc">::</span><span class="fu">NbClust</span>(<span class="at">data =</span> clust_scale,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">diss =</span> dist_mv2,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">distance =</span> <span class="cn">NULL</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"ward.D2"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">index =</span> <span class="st">"all"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">max.nc =</span> <span class="dv">8</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>*** : The Hubert index is a graphical method of determining the number of clusters.
@@ -909,7 +937,7 @@ Nota
  </code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>*** : The D index is a graphical method of determining the number of clusters. 
@@ -948,46 +976,46 @@ Nota
 </div>
 <p>Ya tenemos nuesro número de grupos (<span class="math inline">\(k = 3\)</span>), pero ¿podemos confiar en nuestro dendrograma? Calculemos el coeficiente de correlación cofenético:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ccc <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(hc_mv2)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlación entre distancias reales y graficadas</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ccofen <span class="ot">&lt;-</span> <span class="fu">cor</span>(dist_mv2, ccc, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>ccofen</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ccc <span class="ot">&lt;-</span> <span class="fu">cophenetic</span>(hc_mv2)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlación entre distancias reales y graficadas</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ccofen <span class="ot">&lt;-</span> <span class="fu">cor</span>(dist_mv2, ccc, <span class="at">method =</span> <span class="st">"spearman"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>ccofen</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6868661</code></pre>
 </div>
 </div>
 <p>Fue de prácticamente el 70%, que para nuestros objetivos es suficiente. Ahora veamos nuestros grupos en el dendrograma:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de nuestr</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"labels_col"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">k =</span> <span class="dv">3</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_k_color"</span>,</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">3</span>)          </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>          </span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>ggd2 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv2)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>ggd2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd2, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv2)),<span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>,</span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cambiamos el color de nuestr</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"labels_col"</span>,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">k =</span> <span class="dv">3</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_k_color"</span>,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">k =</span> <span class="dv">3</span>)          </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>dend_mv2 <span class="ot">&lt;-</span> <span class="fu">set</span>(dend_mv2, <span class="st">"branches_lwd"</span>, <span class="fl">0.7</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>ggd2 <span class="ot">&lt;-</span> <span class="fu">as.ggdend</span>(dend_mv2)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>ggd2_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(ggd2, <span class="at">offset_labels =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">theme =</span> <span class="fu">theme_bw</span>()) <span class="sc">+</span> </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>             <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">2.4</span>) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>             <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(<span class="fu">get_branches_heights</span>(dend_mv2)),<span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Dendrograma de sitios de muestreo"</span>,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">subtitle =</span> <span class="st">"Método de agrupamiento: Ward.D2"</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="st">"Distancia Euclidiana"</span>,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">caption =</span> <span class="st">"Datos: clust.txt"</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>¿Cómo podemos interpretar este dendrograma? Hay un montón de maneras, pero todas se reducen a ver cómo se relacionan estos grupos con las variables originales; es decir, <strong>no vamos a simplemente asumir que tenemos una zona alta, intermedia y baja del río solo porque en un grupo tengamos los primerios sitios, en otro los que le siguen, y en un último los faltantes</strong>. Esos son cuentos chinos. Una forma es revisar los centroides (promedios) de cada variable por cada grupo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(clust_filt, <span class="at">by =</span> <span class="fu">list</span>(n_gps<span class="sc">$</span>Best.partition), <span class="at">FUN =</span> mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(clust_filt, <span class="at">by =</span> <span class="fu">list</span>(n_gps<span class="sc">$</span>Best.partition), <span class="at">FUN =</span> mean)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1027,7 +1055,7 @@ Nota
 <h3 data-number="15.4.1" class="anchored" data-anchor-id="índice-multivariado-del-enso"><span class="header-section-number">15.4.1</span> Índice Multivariado del ENSO</h3>
 <p>Si eres parte de alguna carrera de ciencias marinas es muy posible que hayas escuchado del fenómeno del Niño, si no, aprenderás algo interesante. Su nombre completo es <strong>“El Niño Oscilación del Sur”</strong> (El Niño Southern Oscilation, ENSO; <a href="#fig-ENSO">Figura&nbsp;<span>15.17</span></a>), y hace referencia a un fenómeno de <strong>variabilidad ambiental interanual que tiene una fase cálida (“El Niño”) y una fase fría (“La Niña”)</strong>.</p>
 <p>Durante la fase fría (condiciones “normales”) los vientos alisios soplan con fuerza del este al oeste en el ecuador, arrastrando consigo la capa superficial del océano y acumulando agua en las costas del Pacífico central occidental. Como sabrás, el ecuador recibe la mayor cantidad de calor solar, por lo que el agua arrastrada es agua caliente, haciendo que la termoclina sea más profunda en el occidente que en el oriente del Pacífico. Esto permite que haya una surgencia costera (emergimiento de agua profunda, rica en nutrientes, a la superficie) muy importante que sostiene pesquerías importantísimas en la corriente de Humboldt. Además, la radiación solar también hace que haya evaporación en el ecuador, por lo que el aire que circula vaya recogiendo humedad. Conforme este aire caliente va recogiendo humedad se va enfriando, perdiendo densidad, y comienza a ascender, lo cual se ve acelerado cuando choca con el continente en el Pacífico occidental. ¿Qué pasa cuando enfriamos aire húmedo rápidamente? Se forma condensación, lo cual se traduce en lluvias abundantes en esa zona. El aire entonces pierde toda su humedad, se enfría y la circulación en la atmósfera alta se invierte, por lo que hacia América viaja aire frío y seco (denso), lo cual ocasiona que descienda en América, reiniciando el ciclo. A este proceso se le conoce como celda de circulación de Walker, y como resultado tenemos una zona de baja presión en el Indo-Pacífico (sube aire) y una zona de alta presión (baja aire) cerca de América.</p>
-<p>Durante la fase cálida (“El Niño”) los vientos alisios se debilitan (en algunas zonas del Pacífico central el viento sopla en dirección contraria), por lo que el agua caliente que se había acumulado en el occidente se regresa a América, hundiendo la termoclina, lo que causa que la surgencia costera “recicle” el agua caliente superficial, en vez de subir agua fría, y que llueva en América (se “invierte” la celda de Walker).</p>
+<p>Durante la fase cálida (“El Niño”) los vientos alisios se debilitan (en algunas zonas del Pacífico central el viento puede incluso soplar en dirección contraria), por lo que el agua caliente que se había acumulado en el occidente se regresa a América, hundiendo la termoclina, lo que causa que la surgencia costera “recicle” el agua caliente superficial, en vez de subir agua fría, y que llueva en América (se “invierte” la celda de Walker).</p>
 <div id="fig-ENSO" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/ENSO.png" class="img-fluid figure-img"></p>
@@ -1047,7 +1075,7 @@ Advertencia
 <p>Simplifiqué la explicación del ENSO lo más que pude sin dejar demasiadas cosas del proceso en el tintero, pero el costo es que haya algunas imprecisiones en la explicación. Si te interesa este tema, te recomiendo que leas más al respecto. Entre tus lecturas te encontrarás el por qué de “El Niño”.</p>
 </div>
 </div>
-<p>Como te podrás imaginar, es un proceso sumamente complejo (de hecho comunica el Atlántico con el Pacífico, pero eso es otra historia) en el que se ven modificadas una gran cantidad de variables ambientales y cuyas consecuencias económicas son muy importantes (se modifica la pesca y la agricultura en prácticamente tres continentes). Podemos monitorear cada variable de manera individual, pero ¿no sería mejor poder resumirlas todas en un solo número? Pues eso fue lo que hicieron <span class="citation" data-cites="WolterTimlin_1998">Wolter &amp; Timlin (<a href="references.html#ref-WolterTimlin_1998" role="doc-biblioref">1998</a>)</span>, aplicando un Análisis de Componentes principales a seis variables (presión atmosférica a nivel del mar (P), componentes zonal (U) y meridional (V) del viento superficial, temperatura superficial del mar (S), temperatura superficial del aire (A), y la fracción total de nubes en el cielo (C)) en el Pacífico tropical, lo cual da lugar al Índice Multivariado del ENSO (<a href="#fig-MEI">Figura&nbsp;<span>15.18</span></a>).</p>
+<p>Como te podrás imaginar, es un proceso sumamente complejo (de hecho comunica el Atlántico con el Pacífico, pero eso es otra historia) en el que se ven modificadas una gran cantidad de variables ambientales y cuyas consecuencias económicas son muy importantes (se modifica la pesca y la agricultura en prácticamente tres continentes). Podemos monitorear cada variable de manera individual, pero ¿no sería mejor poder resumirlas todas en un solo número? Pues eso fue lo que hicieron <span class="citation" data-cites="WolterTimlin_1998">Wolter &amp; Timlin (<a href="references.html#ref-WolterTimlin_1998" role="doc-biblioref">1998</a>)</span>, aplicando un Análisis de Componentes Principales (Análisis de Funciones Empíricas Ortogonales, EOF) a seis variables (presión atmosférica a nivel del mar (P), componentes zonal (U) y meridional (V) del viento superficial, temperatura superficial del mar (S), temperatura superficial del aire (A), y la fracción total de nubes en el cielo (C)) en el Pacífico tropical, lo cual da lugar al Índice Multivariado del ENSO (<a href="#fig-MEI">Figura&nbsp;<span>15.18</span></a>).</p>
 <div id="fig-MEI" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imgs/MEI.png" class="img-fluid figure-img"></p>
@@ -1090,7 +1118,12 @@ Nota
 <p>Vamos a ver un poco de los detalles matemáticos detrás del PCA. No te preocupes, solo es para expandir la noción detrás del PCA más allá de solo “buscar la mejor proyección de los datos originales”. Al igual que en el <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a>, puedes quedarte para toda la explicación o saltar al corolario al final.</p>
 </div>
 </div>
-<p>Esa respuesta corta fue, tal vez, muy corta, así que entremos en más detalles. El PCA encuentra una de dos líneas: a) una línea que minimice el error promedio; b) una línea que maximice la distancia al origen (suma de cuadrados, <span class="math inline">\(SS\)</span>). Curiosamente, es más fácil encontrar la segunda línea utilizando un viejo conocido: el teorema de Pitágoras. Observa la <a href="#fig-pytheom">Figura&nbsp;<span>15.20</span></a>. Si hacemos la longitud de <span class="math inline">\(c\)</span> lo suficientemente grande, el valor de <span class="math inline">\(b\)</span> se hace más pequeño, ya que <span class="math inline">\(a\)</span> no se mueve.</p>
+<p>Esa respuesta corta fue, tal vez, muy corta, así que entremos en más detalles. El PCA encuentra una de dos líneas:</p>
+<ol type="1">
+<li>una que minimice el error promedio, o</li>
+<li>una que maximice la distancia al origen (suma de cuadrados, <span class="math inline">\(SS\)</span>).</li>
+</ol>
+<p>Curiosamente, es más fácil encontrar la segunda línea utilizando un viejo conocido: el teorema de Pitágoras. Observa la <a href="#fig-pytheom">Figura&nbsp;<span>15.20</span></a>. Si hacemos la longitud de <span class="math inline">\(c\)</span> lo suficientemente grande, el valor de <span class="math inline">\(b\)</span> se hace más pequeño, ya que <span class="math inline">\(a\)</span> no se mueve.</p>
 <div class="callout callout-style-default callout-important callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1117,7 +1150,9 @@ Importante
 <p></p><figcaption class="figure-caption">Figura&nbsp;15.21: Variables ortogonales</figcaption><p></p>
 </figure>
 </div>
-<p>Lo interesante es que si escalamos nuestra línea <span class="math inline">\(c^2\)</span> a que tenga una longitud de 1 tenemos un <strong>eigenvector</strong>, en donde las pendientes se convierten en proporciones que dan las <strong>cargas factoriales</strong> de cada variable a cada CP. Por otra parte, si <span class="math inline">\(c^2\)</span> es una suma de cuadrados es también el <strong>eigenvalor</strong> de cada CP, y la <span class="math inline">\(\sqrt{SS}\)</span> es su valor singular. Esto del valor singular es solo breviario cultural, lo que sí es importante es que tenemos una suma de cuadrados, tal y como tenemos en la definición de la varianza (<a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a>), por lo que si la dividimos entre los grados de libertad de la muestra podemos obtener la varianza capturada por ese CP. ¿Por qué por ese CP? ¿Recuerdas que mencioné en la definición de PCA que aproximamos los datos utilizando una menor cantidad de variables? Bueno, esta línea que encontramos es solo una de estas variables (llamadas CPs). El siguiente paso es trazar un nuevo eje (variable, CP) a exactamente 90º de la primera (<a href="#fig-orthogonal">Figura&nbsp;<span>15.21</span></a>), y después repetir el proceso hasta haber capturado toda la varianza. Ya que hicimos esto podemos estimar la <strong>porción de la varianza explicada por el CP</strong> dividiendo su varianza explicada entre la varianza total:</p>
+<p>Lo interesante es que si escalamos nuestra línea <span class="math inline">\(c^2\)</span> a que tenga una longitud de 1 tenemos un <strong>eigenvector</strong>, en donde las pendientes se convierten en proporciones que indican la contribución (<strong>carga</strong>) de cada variable a cada CP. Por otra parte, si <span class="math inline">\(c^2\)</span> es una suma de cuadrados es también el <strong>eigenvalor</strong> de cada CP, y la <span class="math inline">\(\sqrt{SS}\)</span> es su valor singular.</p>
+<p>Esto del valor singular es solo breviario cultural, lo que sí es importante es que tenemos una suma de cuadrados, tal y como tenemos en la definición de la varianza (<a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a>), por lo que si la dividimos entre los grados de libertad de la muestra podemos obtener la varianza capturada por ese CP. ¿Por qué por ese CP? ¿Recuerdas que mencioné en la definición de PCA que aproximamos los datos utilizando una menor cantidad de variables? Bueno, esta línea que encontramos es solo una de estas variables (llamadas CPs). El siguiente paso es trazar un nuevo eje (variable, CP) a exactamente 90º de la primera (<a href="#fig-orthogonal">Figura&nbsp;<span>15.21</span></a>), y después repetir el proceso hasta haber capturado toda la varianza.</p>
+<p>Ya que hicimos esto podemos estimar la <strong>porción de la varianza explicada por el CP</strong> dividiendo su varianza explicada entre la varianza total:</p>
 <p><span class="math display">\[
 \sigma^2_{PC_i} = \frac{SS}{n-1} \therefore \sigma^2_{T} = \sum_{i = 1}^k\sigma^2_{PC_i} \therefore \sigma^2_{exp_i} = \frac{\sigma^2_{PC_i}}{\sigma^2_T}
 \]</span></p>
@@ -1152,8 +1187,8 @@ Importante
 <h4 data-number="15.4.2.1" class="anchored" data-anchor-id="implementación-1"><span class="header-section-number">15.4.2.1</span> Implementación</h4>
 <p>Utilicemos una base de datos con una cantidad interesante de variables (31): <code>Medidas.txt</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>biom <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/Medidas.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biom)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>biom <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"datos/Medidas.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(biom)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1165,8 +1200,8 @@ Importante
 </div>
 <p>La primera columna tiene etiquetas de especies, las cuales no utilizaremos en este momento, por lo que podemos descartarla:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pca_data <span class="ot">&lt;-</span> biom[, <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(biom)]</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pca_data <span class="ot">&lt;-</span> biom[, <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(biom)]</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pca_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     furcal            base             radio              alto        
  Min.   :0.2527   Min.   :0.07088   Min.   :0.04408   Min.   :0.05319  
@@ -1228,15 +1263,15 @@ Importante
 </div>
 <p>Apliquemos el Análisis de Componentes Principales:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aplicamos el PCA con los datos escalados y centrados</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>biom_pca <span class="ot">&lt;-</span> FactoMineR<span class="sc">::</span><span class="fu">PCA</span>(pca_data,</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">graph =</span> F,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ncp =</span> <span class="fu">length</span>(pca_data),</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scale.unit =</span> T) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aplicamos el PCA con los datos escalados y centrados</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>biom_pca <span class="ot">&lt;-</span> FactoMineR<span class="sc">::</span><span class="fu">PCA</span>(pca_data,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">graph =</span> F,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ncp =</span> <span class="fu">length</span>(pca_data),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">scale.unit =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Recordarás que el PCA está basado en el teorema de Pitágoras, por lo que es necesario que todas las variables estén en la misma escala. Podemos utilizar la función <code>scale()</code> como hicimos para el análisis clúster, o podemos indicarle a <code>R</code> que lo haga automáticamente si utilizamos la función <code>FactoMineR::PCA()</code> con el argumento <code>scale.unit</code>. Podemos ver los resultados de manera numérica:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(biom_pca)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(biom_pca)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1306,32 +1341,34 @@ largo    | -0.650  6.870  0.422 |  0.357  2.755  0.128 |  0.220  1.720  0.048 |<
 </div>
 <p>La salida es bastante extensa, pero lo que realmente nos interesa es lo que aparece en <code>Eigenvalues</code>: La varianza de cada componente, el porcentaje de la varianza total que representa, y cuánta varianza se ha acumulado hasta ese componente, pero siempre es mejor ver los resultados de manera gráfica con algunas funciones de la librería <code>factoextra</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>factoextra<span class="sc">::</span><span class="fu">fviz_pca_var</span>(biom_pca, <span class="at">col.var =</span> <span class="st">"coord"</span>,</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>,</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#E7B800"</span>,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#FC4E07"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>En este gráfico tenemos representada la importancia de variables (carga factorial) para cada componente principal. Entre más larga (y naranja) sea la flecha, mayor es su importancia. Entre más horizontal esté, más contribuye al componente principal representado en el eje <span class="math inline">\(x\)</span>, y entre más vertical esté, más contribuye al componente principal puesto en el eje <span class="math inline">\(y\)</span>, y la dirección de la relación con el CP está dada por el signo. En nuestro ejemplo, las variables <code>abiert</code>, <code>boca</code>, <code>arriba</code>, <code>mandib</code> y <code>cabez</code> están positivamente relacionadas con el CP1, pero negativamente relacionadas con el CP2; es decir, entre más grande sea la longitud de la mandíbula, por ejemplo, más grande será la coordenada en el CP1, pero también se hará más pequeña en el CP2. Otra forma de ver estos resultados es tratarlos como si fueran una matriz de correlaciones:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>biom_pca_vars <span class="ot">&lt;-</span> factoextra<span class="sc">::</span><span class="fu">get_pca_var</span>(biom_pca)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>corrplot<span class="sc">::</span><span class="fu">corrplot</span>(biom_pca_vars<span class="sc">$</span>coord)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>factoextra<span class="sc">::</span><span class="fu">fviz_pca_var</span>(biom_pca,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">col.var =</span> <span class="st">"coord"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#E7B800"</span>,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                                           <span class="st">"#FC4E07"</span>),</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">legend.title =</span> <span class="st">"Carga"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>¿Por qué es esto importante? El PCA reduce las dimensiones tratando de preservar la mayor cantidad de varianza (covarianza) posible en cada PC. Una consecuencia es que los puntos más parecidos se acercarán más entre sí, mientras que los más alejados se alejarán más. A lo que esto nos lleva es a una forma de <strong>ordenación</strong>, entonces podemos graficar este nuevo espacio reducido y ver cómo quedan distribuidos nuestros datos:</p>
+<p>En este gráfico tenemos representada la importancia de variables (carga factorial) para cada componente principal. Entre más larga (y naranja) sea la flecha, mayor es su importancia. Entre más horizontal esté, más contribuye al componente principal representado en el eje <span class="math inline">\(x\)</span>, y entre más vertical esté, más contribuye al componente principal puesto en el eje <span class="math inline">\(y\)</span>, y la dirección de la relación con el CP está dada por el signo. En nuestro ejemplo, las variables <code>abiert</code>, <code>boca</code>, <code>arriba</code>, <code>mandib</code> y <code>cabez</code> están positivamente relacionadas con el CP1, pero negativamente relacionadas con el CP2; es decir, entre más grande sea la longitud de la mandíbula, por ejemplo, más grande será la coordenada en el CP1, pero también se hará más pequeña en el CP2. Otra forma de ver estos resultados es tratarlos como si fueran una matriz de correlaciones:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(biom_pca,</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom.ind =</span> <span class="st">"point"</span>, <span class="co"># Mostrar solo puntos (sin textos)</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.ind =</span> biom[,<span class="dv">1</span>], <span class="co"># Variable de agrupamiento</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="co"># Colores a utilizar</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="co"># Elipses de concentración</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">"Especies"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>biom_pca_vars <span class="ot">&lt;-</span> factoextra<span class="sc">::</span><span class="fu">get_pca_var</span>(biom_pca)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>corrplot<span class="sc">::</span><span class="fu">corrplot</span>(biom_pca_vars<span class="sc">$</span>coord)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Por qué es esto importante? El PCA reduce las dimensiones tratando de preservar la mayor cantidad de varianza (covarianza) posible en cada PC. Una consecuencia es que los puntos más parecidos se acercarán más entre sí, mientras que los más alejados se alejarán más. A lo que esto nos lleva es a una forma de <strong>ordenación</strong>, entonces podemos graficar este nuevo espacio reducido y ver cómo quedan distribuidos nuestros datos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(biom_pca,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">geom.ind =</span> <span class="st">"point"</span>, <span class="co"># Mostrar solo puntos (sin textos)</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">col.ind =</span> biom[,<span class="dv">1</span>], <span class="co"># Variable de agrupamiento</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>), <span class="co"># Colores a utilizar</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="co"># Elipses de concentración</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">"Especies"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Aquí podemos ver que las especies <code>jordani</code> y <code>labarcae</code> se encuentran bien diferenciadas en el espacio multivariado, mientras que <code>consocium</code> tiene mediciones intermedias.</p>
@@ -1350,13 +1387,14 @@ Advertencia
 </div>
 <p>¿Cómo están dadas las diferencias? Puedes volver al gráfico de variables del PCA y ver cómo apuntan las flechas. Por ejemplo, <code>labarcae</code> tiene medidas más grandes en <code>abiert</code>, <code>boca</code>, <code>arriba</code>, <code>mandib</code> y <code>cabez</code> que las otras dos. Una forma más directa sería graficar ambas cosas a la vez:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(biom_pca, </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.ind =</span> biom<span class="sc">$</span>especie, <span class="at">palette =</span> <span class="st">"jco"</span>, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="at">label =</span> <span class="st">"var"</span>,</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"black"</span>, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">legend.title =</span> <span class="st">"Especies"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(biom_pca, </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.ind =</span> biom<span class="sc">$</span>especie,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="at">label =</span> <span class="st">"var"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>),</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"black"</span>, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">legend.title =</span> <span class="st">"Especies"</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-captioned">
@@ -1369,7 +1407,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a> vamos a ver cómo aquí estamos dejando de lado la información más valiosa de toda la base de datos: las etiquetas de los grupos. ¿La razón? Aquí las estamos utilizando solo como una ayuda visual para la interpretación, más que como datos que informen nuestros análisis.</p>
+<p>En el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a> vamos a ver cómo estamos dejando de lado la información más valiosa de toda la base de datos: las etiquetas de los grupos. ¿La razón? Aquí las estamos utilizando solo como una ayuda visual para la interpretación, más que como datos que informen nuestros análisis.</p>
 </div>
 </div>
 <p>Ahora bien, ya sabemos cómo interpretar nuestros componentes principales. La pregunta es, ¿capturan la suficiente información de la varianza?</p>
@@ -1378,8 +1416,8 @@ Nota
 <h4 data-number="15.4.2.2" class="anchored" data-anchor-id="evaluación-de-los-componentes-principales"><span class="header-section-number">15.4.2.2</span> Evaluación de los componentes principales</h4>
 <p>Regresemos a las varianzas explicadas por cada componente:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>eig_val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(biom_pca)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>eig_val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>eig_val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(biom_pca)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>eig_val</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       eigenvalue variance.percent cumulative.variance.percent
 Dim.1  6.14608922       19.8260942                    19.82609
@@ -1417,44 +1455,92 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 </div>
 <p>Las primeras dos dimensiones (los primeros dos CPs) capturan menos del 50% de la varianza total; por lo tanto, es prudente preguntarse cuántos CPs debemos de considerar. Una alternativa es el <strong>análisis gráfico de la varianza</strong> con un <strong>scree-plot</strong>. En este gráfico buscamos un punto de inflexión, el cuál indicaría el límite de los PCs representativos:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(biom_pca, <span class="at">addlabels =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>¿Dónde considerarías que está el primer punto de inflexión? Yo en el tercer o cuarto componente, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos aquellos CPs cuya varianza explicada sea superior al valor promedio. El segundo criterio es un modelo de repartición de recursos desarrollado en la ecología de comunidades: el modelo Broken-Stick [McArthur_1957], donde el recurso compartido es la varianza total, entonces consideraremos aquellos CPs que tengan una varianza explicada superior a la esperada según el modelo. Para graficar ambos criterios a la vez utilizaremos una función personalizada (<code>evplot</code>):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para la estimación de los CP óptimos:</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>evplot <span class="ot">&lt;-</span> <span class="cf">function</span>(ev){</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Author:</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Broken stick model (MacArthur 1957)</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>      n <span class="ot">&lt;-</span> <span class="fu">length</span>(ev)</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>      bsm <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">j=</span><span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>n), <span class="at">p=</span><span class="dv">0</span>)</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>n </span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) bsm<span class="sc">$</span>p[i] <span class="ot">&lt;-</span> bsm<span class="sc">$</span>p[i<span class="dv">-1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>(n <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> i))</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      bsm<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>bsm<span class="sc">$</span>p<span class="sc">/</span>n</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot eigenvalues and % of variation for each axis</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>      op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(ev, <span class="at">main=</span><span class="st">"Eigenvalues"</span>, <span class="at">col=</span><span class="st">"bisque"</span>, <span class="at">las=</span><span class="dv">2</span>)</span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">abline</span>(<span class="at">h=</span><span class="fu">mean</span>(ev), <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="st">"Average eigenvalue"</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">barplot</span>(<span class="fu">t</span>(<span class="fu">cbind</span>(<span class="dv">100</span><span class="sc">*</span>ev<span class="sc">/</span><span class="fu">sum</span>(ev), bsm<span class="sc">$</span>p[n<span class="sc">:</span><span class="dv">1</span>])), <span class="at">beside=</span><span class="cn">TRUE</span>, </span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">main=</span><span class="st">"% variation"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">las=</span><span class="dv">2</span>)</span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"% eigenvalue"</span>, <span class="st">"Broken stick model"</span>), </span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">pch=</span><span class="dv">15</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"bisque"</span>,<span class="dv">2</span>), <span class="at">bty=</span><span class="st">"n"</span>)</span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">par</span>(op)</span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los eigenvalores</span></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>ev <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(eig_val)<span class="sc">$</span>eigenvalue</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignamos nombres a los valores</span></span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ev) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"CP"</span>,<span class="fu">seq_along</span>(ev), <span class="st">""</span>)</span>
-<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficamos con la función personalizada</span></span>
-<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a><span class="fu">evplot</span>(ev)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(biom_pca, <span class="at">addlabels =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="c15_nosup_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>¿Dónde considerarías que está el primer punto de inflexión? Yo en el tercer o cuarto componente, pero veamos otros dos criterios. El primero es el criterio de Kaiser-Guttman, en el cual consideraremos aquellos CPs cuya varianza explicada sea superior al valor promedio. El segundo criterio es un modelo de repartición de recursos desarrollado en la ecología de comunidades: el modelo Broken-Stick <span class="citation" data-cites="MacArthur_1957">(<a href="references.html#ref-MacArthur_1957" role="doc-biblioref">MacArthur, 1957</a>)</span>, donde el recurso compartido es la varianza total; entonces, consideraremos aquellos CPs que tengan una varianza explicada superior a la esperada según el modelo. Para graficar ambos criterios a la vez utilizaremos una función personalizada (<code>evggplot</code>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>evggplot <span class="ot">&lt;-</span> <span class="cf">function</span>(eigv, <span class="at">kind =</span> <span class="st">"both"</span>){</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Inspired by the `evplot` function by De La Cruz-Agüero (?)</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(patchwork)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Broken stick model (MacArthur 1957)</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  bsm <span class="ot">&lt;-</span> <span class="cf">function</span>(n){</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    p[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>n</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {p[i] <span class="ot">&lt;-</span> p[i<span class="dv">-1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">/</span>(n<span class="sc">+</span><span class="dv">1</span><span class="sc">-</span>i))}</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    p <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>p<span class="sc">/</span>n</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">rev</span>(p))</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Number of CPs</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(eigv)</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># New df from the eigenvalue matrix</span></span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>  ev <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(eigv) <span class="sc">|&gt;</span> </span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">CP =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span>n,</span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">paste0</span>(<span class="st">"CP "</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>                           <span class="at">ordered =</span> T),</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">p =</span> <span class="fu">bsm</span>(n),</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(CP, eigenvalue, p) <span class="sc">|&gt;</span> </span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>        reshape2<span class="sc">::</span><span class="fu">melt</span>(<span class="at">id.vars =</span> <span class="st">"CP"</span>)</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Broken-Stick data</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>  ev_bsm <span class="ot">&lt;-</span> ev <span class="sc">|&gt;</span></span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">ifelse</span>(variable <span class="sc">==</span> <span class="st">"eigenvalue"</span>,</span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>                                  <span class="fu">unname</span>(eigv[,<span class="dv">2</span>]),</span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>                                  value))</span>
+<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-33"><a href="#cb36-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Kaiser-Gutmann data</span></span>
+<span id="cb36-34"><a href="#cb36-34" aria-hidden="true" tabindex="-1"></a>  ev_kg <span class="ot">&lt;-</span> ev <span class="sc">|&gt;</span> <span class="fu">filter</span>(variable <span class="sc">==</span> <span class="st">"eigenvalue"</span>)</span>
+<span id="cb36-35"><a href="#cb36-35" aria-hidden="true" tabindex="-1"></a>  m_eig <span class="ot">&lt;-</span> <span class="fu">mean</span>(ev_kg<span class="sc">$</span>value)</span>
+<span id="cb36-36"><a href="#cb36-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-37"><a href="#cb36-37" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plotting</span></span>
+<span id="cb36-38"><a href="#cb36-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-39"><a href="#cb36-39" aria-hidden="true" tabindex="-1"></a>  base_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb36-40"><a href="#cb36-40" aria-hidden="true" tabindex="-1"></a>               <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb36-41"><a href="#cb36-41" aria-hidden="true" tabindex="-1"></a>               <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb36-42"><a href="#cb36-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-43"><a href="#cb36-43" aria-hidden="true" tabindex="-1"></a>  bsm_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span> </span>
+<span id="cb36-44"><a href="#cb36-44" aria-hidden="true" tabindex="-1"></a>              <span class="fu">geom_bar</span>(<span class="at">data =</span> ev_bsm,</span>
+<span id="cb36-45"><a href="#cb36-45" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">aes</span>(<span class="at">x =</span> CP, <span class="at">y =</span> value, <span class="at">fill =</span> variable),</span>
+<span id="cb36-46"><a href="#cb36-46" aria-hidden="true" tabindex="-1"></a>                       <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb36-47"><a href="#cb36-47" aria-hidden="true" tabindex="-1"></a>                       <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb36-48"><a href="#cb36-48" aria-hidden="true" tabindex="-1"></a>              <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"% Varianza"</span>,</span>
+<span id="cb36-49"><a href="#cb36-49" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb36-50"><a href="#cb36-50" aria-hidden="true" tabindex="-1"></a>              <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"bisque"</span>, <span class="st">"red"</span>),</span>
+<span id="cb36-51"><a href="#cb36-51" aria-hidden="true" tabindex="-1"></a>                                <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Eigenvalor"</span>, <span class="st">"Broken-Stick"</span>)) <span class="sc">+</span></span>
+<span id="cb36-52"><a href="#cb36-52" aria-hidden="true" tabindex="-1"></a>              <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.8</span>))</span>
+<span id="cb36-53"><a href="#cb36-53" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-54"><a href="#cb36-54" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-55"><a href="#cb36-55" aria-hidden="true" tabindex="-1"></a>  kg_plot <span class="ot">&lt;-</span> base_plot <span class="sc">+</span></span>
+<span id="cb36-56"><a href="#cb36-56" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_bar</span>(<span class="at">data =</span> ev_kg,</span>
+<span id="cb36-57"><a href="#cb36-57" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">aes</span>(<span class="at">x =</span> CP, <span class="at">y =</span> value),</span>
+<span id="cb36-58"><a href="#cb36-58" aria-hidden="true" tabindex="-1"></a>                      <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb36-59"><a href="#cb36-59" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fill =</span> <span class="st">"bisque"</span>,</span>
+<span id="cb36-60"><a href="#cb36-60" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb36-61"><a href="#cb36-61" aria-hidden="true" tabindex="-1"></a>             <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> m_eig,</span>
+<span id="cb36-62"><a href="#cb36-62" aria-hidden="true" tabindex="-1"></a>                        <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb36-63"><a href="#cb36-63" aria-hidden="true" tabindex="-1"></a>             <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Eigenvalor"</span>)</span>
+<span id="cb36-64"><a href="#cb36-64" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-65"><a href="#cb36-65" aria-hidden="true" tabindex="-1"></a>  ev_plot <span class="ot">&lt;-</span> <span class="cf">switch</span> (kind,</span>
+<span id="cb36-66"><a href="#cb36-66" aria-hidden="true" tabindex="-1"></a>                     <span class="at">bs =</span> bsm_plot,</span>
+<span id="cb36-67"><a href="#cb36-67" aria-hidden="true" tabindex="-1"></a>                     <span class="at">kg =</span> kg_plot,</span>
+<span id="cb36-68"><a href="#cb36-68" aria-hidden="true" tabindex="-1"></a>                     <span class="at">both =</span> (kg_plot <span class="sc">+</span></span>
+<span id="cb36-69"><a href="#cb36-69" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb36-70"><a href="#cb36-70" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())) <span class="sc">/</span></span>
+<span id="cb36-71"><a href="#cb36-71" aria-hidden="true" tabindex="-1"></a>                          bsm_plot)</span>
+<span id="cb36-72"><a href="#cb36-72" aria-hidden="true" tabindex="-1"></a>              </span>
+<span id="cb36-73"><a href="#cb36-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ev_plot)</span>
+<span id="cb36-74"><a href="#cb36-74" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evggplot</span>(eig_val) <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"¿Cuántos CPs?"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Bajo el criterio de Kaiser-Guttman consideraríamos 8 CPs, mientras que en el modelo de Broken-Stick consideraríamos únicamente 4. De cualquier modo, ambos criterios sugieren un número mayor al que yo consideré en el gráfico de la varianza. ¿Qué pasa entonces con nuestra interpretación original con respecto a la separación de las especies? Ya no es tan robusta, pero no significa que no sea válida. El MEI (v1), por ejemplo, es el primer componente principal y representa “solo” el 31% de la varianza total, pero aún así es útil para conocer en qué fase del fenómeno ENSO (y su intensidad) se encuentra un mes/año dado.</p>
@@ -1467,7 +1553,7 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 <p>En una ordenación el objetivo es que las observaciones (instancias) que más se parezcan entre sí se mantengan lo más cercanas posible. Un ejemplo de esto, análogo al PCA, es el Escalamiento multidimensional no métrico (NMDS).</p>
 <section id="escalamiento-multidimensional-no-métrico-nmds" class="level3" data-number="15.5.1">
 <h3 data-number="15.5.1" class="anchored" data-anchor-id="escalamiento-multidimensional-no-métrico-nmds"><span class="header-section-number">15.5.1</span> Escalamiento Multidimensional No Métrico (NMDS)</h3>
-<p>A diferencia del PCA en el cual es importante que las variables estén centradas y estandarizadas (o que las variables sean del mismo tipo; e.g., biometrías en distintas especies de peces), el Escalamiento Multidimensional No Métrico (NMDS) es una técnica más flexible al estar basada en órdenes de rangos (distancias) para la ordenación. Como resultado, puede aceptar una variedad mayor de tipos de datos. Otra diferencia es que en el ACP el objetivo primordial no es la ordenación, sino la reducción de la dimensionalidad, mientras que en NMDS sí se busca una ordenación.</p>
+<p>A diferencia del PCA en el cual es importante que las variables estén centradas y estandarizadas, el Escalamiento Multidimensional No Métrico (NMDS) es una técnica más flexible al estar basada en órdenes de rangos (distancias) para la ordenación. Como resultado, puede aceptar una variedad mayor de tipos de datos. Otra diferencia es que en el ACP el objetivo primordial no es la ordenación, sino la reducción de la dimensionalidad, mientras que en NMDS sí se busca una ordenación.</p>
 <p><strong>El NMDS ordena los objetos según sus similitudes</strong>, y en el proceso representa el espacio en menos dimensiones. Esta técnica <strong>minimiza la deformación de las distancias</strong> (representada por el “estrés”). Todo eso suena muy bien, ¿hay algún bemol? Sí. Es un proceso iterativo; es decir, requiere de múltiples vueltas para llegar a una solución estable. Veamos entonces cómo funciona utilizando los siguientes datos tridimensionales:</p>
 <div id="fig-nmds1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1476,7 +1562,7 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 </figure>
 </div>
 <ol type="1">
-<li>Calcular la matriz de distancias y asignarles un rango, donde a la menor distancia le corresponde 1.</li>
+<li>Calcular la matriz de distancias y asignarles un rango, donde a la menor distancia le corresponde el número 1.</li>
 </ol>
 <div id="fig-rankdist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1503,134 +1589,119 @@ Dim.31 0.05028750        0.1622177                   100.00000</code></pre>
 </figure>
 </div>
 <ol start="4" type="1">
-<li>Repetir la operación hasta que la <strong>diferencia entre la matriz de distancias y rangos originales con la representación</strong> sea mínima; es decir, minimizar el <strong>estrés</strong>. Como regla general, valores de estrés de 0-0.1 son considerados buenos; de 0.1-0.2, aceptables; de 0.2-0.3, altos; y con más de 0.3 se considera que la representación mostrada es “aleatoria”</li>
+<li>Repetir la operación hasta que la <strong>diferencia entre la matriz de distancias y rangos originales con la representación</strong> sea mínima; es decir, minimizar el <strong>estrés</strong>. Como regla general, valores de estrés de 0-0.1 son considerados buenos; de 0.1-0.2, aceptables; de 0.2-0.3, altos; y con más de 0.3 se considera que la representación mostrada es “aleatoria”.</li>
 </ol>
 <p>Para analizar este caso utilicemos los mismos datos del caso sitios (clúster):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de distancias</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dist_nmds <span class="ot">&lt;-</span> dist_mv2</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dist_nmds, <span class="at">distance =</span> <span class="st">"euclidean"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">0</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de distancias</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>dist_nmds <span class="ot">&lt;-</span> dist_mv2</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dist_nmds, <span class="at">distance =</span> <span class="st">"euclidean"</span>, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">trace =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Run 0 stress 0.1033851 
-Run 1 stress 0.1033851 
-... New best solution
-... Procrustes: rmse 6.588062e-06  max resid 1.947087e-05 
+Run 1 stress 0.1188198 
+Run 2 stress 0.1033851 
+... Procrustes: rmse 5.544036e-05  max resid 0.0001722519 
 ... Similar to previous best
-Run 2 stress 0.1642917 
-Run 3 stress 0.1033851 
-... Procrustes: rmse 1.264775e-05  max resid 4.015068e-05 
-... Similar to previous best
-Run 4 stress 0.1033851 
-... Procrustes: rmse 0.0001042703  max resid 0.0003315828 
-... Similar to previous best
-Run 5 stress 0.1033851 
-... Procrustes: rmse 4.868785e-05  max resid 0.0001545266 
-... Similar to previous best
+Run 3 stress 0.2137544 
+Run 4 stress 0.2207749 
+Run 5 stress 0.1642917 
 Run 6 stress 0.1033851 
-... Procrustes: rmse 8.119853e-06  max resid 2.557934e-05 
+... Procrustes: rmse 4.677317e-06  max resid 1.339618e-05 
 ... Similar to previous best
-Run 7 stress 0.1033851 
-... Procrustes: rmse 7.77695e-05  max resid 0.0002461179 
-... Similar to previous best
+Run 7 stress 0.1188198 
 Run 8 stress 0.1033851 
-... Procrustes: rmse 7.493443e-05  max resid 0.0002355277 
+... New best solution
+... Procrustes: rmse 1.651991e-05  max resid 5.167188e-05 
 ... Similar to previous best
 Run 9 stress 0.1033851 
-... Procrustes: rmse 5.715187e-05  max resid 0.0001757881 
+... Procrustes: rmse 2.428306e-05  max resid 7.760812e-05 
 ... Similar to previous best
 Run 10 stress 0.1033851 
-... Procrustes: rmse 3.293999e-05  max resid 0.0001047099 
+... New best solution
+... Procrustes: rmse 1.357454e-05  max resid 4.294826e-05 
 ... Similar to previous best
-Run 11 stress 0.1033851 
-... Procrustes: rmse 9.590213e-06  max resid 3.039387e-05 
+Run 11 stress 0.1188198 
+Run 12 stress 0.1033851 
+... Procrustes: rmse 1.236052e-06  max resid 3.575611e-06 
 ... Similar to previous best
-Run 12 stress 0.2137546 
-Run 13 stress 0.1188198 
+Run 13 stress 0.1932816 
 Run 14 stress 0.1033851 
-... Procrustes: rmse 1.806431e-05  max resid 5.592903e-05 
+... Procrustes: rmse 1.306206e-05  max resid 4.136513e-05 
 ... Similar to previous best
-Run 15 stress 0.1033851 
-... Procrustes: rmse 3.315422e-05  max resid 0.0001037751 
-... Similar to previous best
-Run 16 stress 0.1964917 
+Run 15 stress 0.1642917 
+Run 16 stress 0.2027265 
 Run 17 stress 0.1033851 
-... Procrustes: rmse 1.07691e-05  max resid 2.645284e-05 
+... Procrustes: rmse 2.953983e-05  max resid 9.352906e-05 
 ... Similar to previous best
 Run 18 stress 0.1188198 
-Run 19 stress 0.1033851 
-... Procrustes: rmse 9.816098e-06  max resid 2.494783e-05 
+Run 19 stress 0.2202381 
+Run 20 stress 0.1033851 
+... Procrustes: rmse 3.998356e-06  max resid 1.257446e-05 
 ... Similar to previous best
-Run 20 stress 0.1891689 
-*** Best solution repeated 14 times</code></pre>
+*** Best solution repeated 5 times</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>mds_dims <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">NMDS1 =</span> mds<span class="sc">$</span>points[,<span class="dv">1</span>], <span class="at">NMDS2 =</span> mds<span class="sc">$</span>points[,<span class="dv">2</span>])</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>mds_plot_data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mds_dims, clust_scale)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mds_dims <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">NMDS1 =</span> mds<span class="sc">$</span>points[,<span class="dv">1</span>], <span class="at">NMDS2 =</span> mds<span class="sc">$</span>points[,<span class="dv">2</span>])</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>mds_plot_data <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mds_dims, clust_scale)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Dado que pasamos <code>metaMDS(..., trace = T)</code>, <code>R</code> nos mostró los resultados de cada iteración. La iteración (<code>Run</code>) 0 es el acomodo inicial, y tuvo un estrés de 0.10. A partir de ahí comienza a mover los puntos y evaluar si es menor o peor utilizando una prueba de Procrstes, que compara si dos geometrías son diferentes o no. Al final, realizó 20 iteraciones, de las cuales 7 fueron la mejor solución. Este estrés de 0.10 es aceptable, por lo que podemos seguir con la interpretación, que es similar a lo que hicimos con el PCA:</p>
+<p>Dado que pasamos <code>metaMDS(..., trace = T)</code>, <code>R</code> nos mostró los resultados de cada iteración. La iteración (<code>Run</code>) 0 es el acomodo inicial, y tuvo un estrés de 0.10. A partir de ahí comienza a mover los puntos y evaluar si el acomodo es mejor o peor utilizando un análisis Procrustes (un análisis para comparar geometrías). Al final, realizó 20 iteraciones, de las cuales 8 fueron la mejor solución. Este estrés de 0.10 es aceptable, por lo que podemos seguir con la interpretación, que es similar a lo que hicimos con el PCA:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los coef. de determinación de cada variable ~ NMDS (flechas)</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds, clust_scale)</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>arrow <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(fit<span class="sc">$</span>vectors<span class="sc">$</span>arrows,</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">R =</span> fit<span class="sc">$</span>vectors<span class="sc">$</span>r,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">P =</span> fit<span class="sc">$</span>vectors<span class="sc">$</span>pvals)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>arrow[<span class="st">"Variable"</span>] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(arrow)</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos aquellas que tengan una corr. significativamente diferente de 0</span></span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>arrow_p <span class="ot">&lt;-</span> <span class="fu">subset</span>(arrow, P <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Ordenamos de manera descendente según su valor de R2</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>arrow_p <span class="ot">&lt;-</span> arrow_p[<span class="fu">order</span>(arrow_p<span class="sc">$</span>R, <span class="at">decreasing =</span> T), ]</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(arrow_p)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos los coef. de determinación de cada variable ~ NMDS (flechas)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds, clust_scale)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>arrow <span class="ot">&lt;-</span> <span class="fu">with</span>(fit<span class="sc">$</span>vectors,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">data.frame</span>(arrows, <span class="at">R =</span> r, <span class="at">p =</span> pvals))</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>arrow[<span class="st">"Variable"</span>] <span class="ot">&lt;-</span> <span class="fu">rownames</span>(arrow)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraemos aquellas que tengan una corr. significativamente diferente de 0</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>arrow_p <span class="ot">&lt;-</span> <span class="fu">subset</span>(arrow, p <span class="sc">&lt;=</span> <span class="fl">0.05</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Ordenamos de manera descendente según su valor de R2</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>arrow_p <span class="ot">&lt;-</span> arrow_p[<span class="fu">order</span>(arrow_p<span class="sc">$</span>R, <span class="at">decreasing =</span> T), ]</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(arrow_p)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["P"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293745","2":"0.5586931","3":"0.9128746","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471216","2":"-0.3208750","3":"0.8744883","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293895","2":"-0.5586708","3":"0.7176464","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517437","2":"-0.3068941","3":"0.6989939","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045887","2":"0.4262855","3":"0.6989210","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862201","2":"-0.6179466","3":"0.6977669","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["NMDS1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["NMDS2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["p"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Variable"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"-0.8293800","2":"0.5586849","3":"0.9128731","4":"0.001","5":"OD","_rn_":"OD"},{"1":"0.9471249","2":"-0.3208652","3":"0.8744864","4":"0.001","5":"STD","_rn_":"STD"},{"1":"0.8293957","2":"-0.5586616","3":"0.7176445","4":"0.001","5":"Temp","_rn_":"Temp"},{"1":"0.9517452","2":"-0.3068895","3":"0.6989920","4":"0.001","5":"NH4","_rn_":"NH4"},{"1":"0.9045836","2":"0.4262964","3":"0.6989259","4":"0.001","5":"Caud","_rn_":"Caud"},{"1":"-0.7862184","2":"-0.6179488","3":"0.6977595","4":"0.001","5":"Trans","_rn_":"Trans"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>¿Cuál fue la variable más importante? Ahora veamos el NMDS resultante:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>mds_plot_data[<span class="st">"group"</span>] <span class="ot">&lt;-</span> LETTERS[n_gps<span class="sc">$</span>Best.partition]</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>mds_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mds_plot_data, <span class="fu">aes</span>(NMDS1, NMDS2)) <span class="sc">+</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> group),</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_label_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">rownames</span>(clust_scale))) <span class="sc">+</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_ellipse</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group), </span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">type =</span> <span class="st">"t"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">geom =</span> <span class="st">"polygon"</span>, </span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Escalamiento Multidimensional no métrico (NMDS)"</span>,</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">'Estrés ='</span>,<span class="fu">round</span>(mds<span class="sc">$</span>stress,<span class="dv">3</span>)),</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos: cluster.txt"</span>) <span class="sc">+</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Grupo"</span>,</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"forestgreen"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"Grupo"</span>,</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>                              <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"forestgreen"</span>, <span class="st">"black"</span>)) <span class="co">#+</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#             geom_segment(data = arrow_p,</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                          aes(x=0, y=0,</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                              xend = NMDS1, yend = NMDS2, lty = Variable),</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #Flechas escaladas según su R^2</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                          arrow = arrow(length = unit(.25, "cm")*arrow_p$R)</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                         )</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>mds_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>mds_plot_data[<span class="st">"group"</span>] <span class="ot">&lt;-</span> LETTERS[n_gps<span class="sc">$</span>Best.partition]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>mds_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mds_plot_data, <span class="fu">aes</span>(NMDS1, NMDS2)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_label_repel</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">rownames</span>(clust_scale))) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_ellipse</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group),</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">type =</span> <span class="st">"t"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">geom =</span> <span class="st">"polygon"</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Escalamiento Multidimensional no métrico (NMDS)"</span>,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">'Estrés ='</span>,<span class="fu">round</span>(mds<span class="sc">$</span>stress,<span class="dv">3</span>)),</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">caption =</span> <span class="st">"Datos: cluster.txt"</span>) <span class="sc">+</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_color_manual</span>(<span class="at">name =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>                               <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"forestgreen"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_fill_manual</span>(<span class="at">name =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>                              <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"firebrick"</span>, <span class="st">"forestgreen"</span>, <span class="st">"black"</span>)) <span class="co">#+</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>            <span class="co"># geom_segment(data = arrow_p,</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>            <span class="co">#              aes(x=0, y=0,</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>            <span class="co">#                  xend = NMDS1, yend = NMDS2, lty = Variable),</span></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># # Flechas escaladas según su R^2</span></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>            <span class="co">#              arrow = arrow(length = unit(.25, "cm")*arrow_p$R)</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>            <span class="co">#             )</span></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>mds_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Si lo comparas con el dendrograma te darás cuenta de que, efectivamente, los puntos de cada grupo son más cercanos entre sí que con los demás grupos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ggd2_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c15_nosup_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid" width="672"></p>
+<p><img src="c15_nosup_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-captioned">
@@ -1663,6 +1734,9 @@ Advertencia
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
+<div id="ref-MacArthur_1957" class="csl-entry" role="doc-biblioentry">
+MacArthur RH. 1957. On the relative abundance of bird species. <em>Proceedings of the National Academy of Sciences USA</em> 43:293-295. DOI: <a href="https://doi.org/10.1073/pnas.43.3.293">10.1073/pnas.43.3.293</a>.
+</div>
 <div id="ref-Shirkhorshidietal_2015" class="csl-entry" role="doc-biblioentry">
 Shirkhorshidi AS, Aghabozorgi S, Wah TY. 2015. A comparison study on similarity and dissimilarity measusres in clustering continuous data. <em>PLoS ONE</em> 10:e0144059. DOI: <a href="https://doi.org/10.1371/journal.pone.0144059">10.1371/journal.pone.0144059</a>.
 </div>
@@ -1907,7 +1981,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Copyright 2022, Dr.&nbsp;Plancton</div>
+      <div class="nav-footer-center">Arturo Bell</div>
   </div>
 </footer>
 
