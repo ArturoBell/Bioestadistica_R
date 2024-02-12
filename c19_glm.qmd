@@ -14,47 +14,51 @@ library(MuMIn)
 library(tidymodels)
 ```
 
+```{r}
+theme_set(see::theme_lucid() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()))
+```
+
 ## Problemas familiares
 
-En la sesión [anterior](https://arturobell.github.io/Bioestadistica_R/c15_regs_mv.html) mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en la sesión de [RLS](https://arturobell.github.io/Bioestadistica_R/c08_rls.html) hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual conforma una parte fundamental de los **modelos lineales generalizados** (GLMs).
+En el @sec-rlm mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en el @sec-rls hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual forma una parte fundamental de los **modelos lineales generalizados** (GLMs).
 
-La modificación puede ser tan "simple" (al menos en términos de intuición) como relajar el supuesto de normalidad, pero podemos también utilizar otras distribuciones que nos permitan modelar otro tipo de información. Bueno, hoy aterrizaremos esa última idea: **La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra *familia* de distribuciones, enlazada a nuestros datos con alguna función**. En la sesión de hoy revisaremos:
+La modificación puede ser tan "simple" (al menos en términos prácticos) como "relajar" el supuesto de normalidad, pero podemos también utilizar distribuciones que nos permitan modelar otro tipo de información. Bueno, hoy aterrizaremos esa última idea: **La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra *familia* de distribuciones, enlazada a nuestros datos con alguna función**. En la sesión de hoy revisaremos:
 
 - **Regresiones robustas**, expandiendo un poco la distribución *t* como distribución de errores y revisando una alternativa.
 - **Funciones de enlace** y enlace inverso.
 - **Regresiones para conteos**: Poisson, Binomial Negativa y sus variantes infladas en zeros.
-- **Selección de modelos**; *i.e.*, cómo seleccionar el mejor de un conjunto de modelos candidatos.
+- **Selección de modelos**, *i.e.*, cómo seleccionar el mejor de un conjunto de modelos candidatos.
 - **Regresiones para clases**: Regresión logística binomial y multinomial.
 
-:::{.callout.important}
+:::{.callout-important}
 :::{.callout-warning}
-**OJO: Por practicidad vamos a aplicar los GLMs con `R` base. Puedes también aplicar GLMs penalizados utilizando básicamente la misma estructura que vimos en el @sec-rlm**. ¿Por qué no utilizar `tidymodels`? Podría verme elegante y decirte que porque ya conocemos el flujo básico de trabajo de `tidymodels` y las ventajas que nos ofrece, pero la realidad es otra: la implementación de GLMs en `tidymodels` es bastante limitada aún. Prefiero que entonces nos enfoquemos hoy en la intuición de los GLMs y cómo interpretarlos adecuadamente, más que enfocarnos en la parte técnica. Si tienes dudas sobre el uso de `tidymodels` te recomiendo que revises @KuhnSilge_2022. Es un [libro web](https://www.tmwr.org) que habla justo sobre los detalles del uso de `tidymodels`. Recuerda también revisar la propia documentación de [`tidymodels`](https://www.tidymodels.org/).
+**OJO: Por practicidad vamos a aplicar los GLMs con `R` base. Puedes también aplicar GLMs penalizados utilizando básicamente la misma estructura que vimos en el @sec-rlm**. ¿Por qué no utilizar `tidymodels`? Podría verme elegante y decirte que porque ya conocemos el flujo básico de trabajo de `tidymodels` y las ventajas que nos ofrece, pero la realidad es otra: la implementación de GLMs en `tidymodels` es bastante limitada aún (aunque se puede hacer utilizando `glmnet` con mixture = 0 y penalty = 0). Prefiero que entonces nos enfoquemos hoy en la intuición de los GLMs y cómo interpretarlos adecuadamente, más que enfocarnos en la parte técnica. Si tienes dudas sobre el uso de `tidymodels` te recomiendo que revises @KuhnSilge_2022. Es un [libro web](https://www.tmwr.org) que habla justo sobre los detalles del uso de `tidymodels`. Recuerda también revisar [su documentación](https://www.tidymodels.org/).
 :::
 :::
 
 ## Regresiones robustas
 
-La idea de una regresión robusta la revisamos en el @sec-rls; es decir, utilizar una distribución con colas más altas que una distribución normal para poder contender con el efecto de puntos extremos, pero expandamos esa idea. ¿Qué significa el "peso" de las colas de una distribución? Qué tanta densidad (o masa, para distribuciones discretas) de probabilidad está acumulada lejos de la tendencia central. En palabras más sencillas, una distribución con colas ligeras como la normal *piensa* que la **probabilidad** de tener **valores lejos** de la tendencia **central** es **muy baja**; por lo tanto, **consiidera "todos" los datos** como **igual** de importantes y *reacciona* moviendo la estimación. ¿No me crees? Veamos un caso extremo, utilizando el tercer conjunto de datos de el [*cuarteto de Anscombe*](https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe):
+La idea de una regresión robusta la revisamos en el @sec-rls; es decir, utilizar una distribución con colas más altas que una distribución normal para poder contender con el efecto de puntos extremos, pero expandamos esa idea. ¿Qué significa el "peso" de las colas de una distribución? Qué tanta densidad (o masa, para distribuciones discretas) de probabilidad está acumulada lejos de la tendencia central. En palabras más sencillas, una distribución con colas ligeras como la normal *piensa* que la **probabilidad** de tener **valores alejados** de la tendencia **central** es **muy baja**; por lo tanto, **considera "todos" los datos** como **igual** de importantes y *reacciona* moviendo la estimación. ¿No me crees? Veamos un caso extremo, utilizando el tercer conjunto de datos del [*cuarteto de Anscombe*](https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe):
 
 ```{r}
 # Almacenados en R como anscombe
 ansc <- read.csv("datos/anscombe.csv")
 ansc$x <- scale(ansc$x, center = TRUE, scale = FALSE)
 ggplot(data = ansc, aes(x = x, y = y, color = conjunto)) +
-  geom_point() +
+  geom_point(show.legend = F) +
   facet_wrap(~conjunto) +
-  theme_bw() +
   labs(title = "Cuarteto de Anscombe") +
   scale_color_manual(values = c("gray70", "gray70", "#1f77b4", "gray70"))
 ```
 
-Si vemos su distribución de `y` notaremos que no es *exactamente* normal, debido a ese punto extremo en 12.5:
+Si vemos la distribución de `y` notaremos que no es *exactamente* normal, debido a ese punto extremo en 12.5:
 
 ```{r}
 ansc_iii = ansc[ansc$conjunto == "III",]
 ggplot(data = ansc_iii, aes(x = y)) +
   geom_density(color = "#1f77b4", fill = NA) +
-  theme_bw() +
   labs(title = "Densidad de y del conjunto III de Anscombe")
 ```
 
@@ -68,17 +72,17 @@ summary(ansciii_lm)
 Gráficamente:
 
 ```{r}
+#| message: false
 ggplot(data = ansc_iii,
        aes(x = x, y = y)) +
   geom_point(color = "#1f77b4") +
   geom_smooth(method = "lm",
               color = "gray50",
               fill = NA) +
-  theme_bw() +
   labs(title = "RLS con supuesto de normalidad")
 ```
 
-No se ve mal; sin embargo, es claro que el punto extremo está influenciando la estimación.Podemos aplicar algún criterio de detección de valores extremos (o deformar nuestros datos) para cumplir con el supuesto de normalidad; sin embargo, **más que parchar nuestros datos, es preferible modificar nuestro modelo**. Cambiemos entonces a una regresión con una verosimilitud *t* de Student:
+No se ve mal; sin embargo, es claro que el punto extremo está influenciando la estimación. Podemos aplicar algún criterio de detección de valores extremos (o deformar nuestros datos) para cumplir con el supuesto de normalidad; sin embargo, **más que parchar nuestros datos, es preferible modificar nuestro modelo**. Cambiemos entonces a una regresión con una verosimilitud *t* de Student:
 
 ```{r}
 LLt <- function(b0, b1, df, sigma){
@@ -106,23 +110,23 @@ summary(mlet_fit)
 Ahora empatemos ambas regresiones en un mismo gráfico:
 
 ```{r}
+#| message: false
 coefs_t <- coef(mlet_fit)
 fitted <- coefs_t[1] + coefs_t[2]*ansc_iii$x
 ggplot(data = ansc_iii,
        aes(x = x, y = y)) +
   geom_line(aes(x = x, y = fitted),
             color = "#ff7f0e",
-            size = 1, alpha = 0.7) +
+            linewidth = 1, alpha = 0.7) +
   geom_smooth(method = "lm",
               color = "gray50",
               fill = NA) +
   geom_point(color = "#1f77b4") +
   labs(title = "Regresión robusta",
-       subtitle = "OLS (gris) vs. t de Student (naranja)") +
-  theme_bw()
+       subtitle = "OLS (gris) vs. t de Student (naranja)")
 ```
 
-En este caso el punto extremo ya no influenció la estimación de la regresión, lo cual en la mayoría de los casos es algo deseable. Aunque esta es una forma de realizar una regresión robusta, existen otras. Una de ellas es modificar la función de pérdida, como por ejemplo con la Regresión con pérdida Huber. Los detalles matemáticos los dejaré para tu investigación, lo realmente importante es entender que los errores (residuales) son ponderados diferencialmente en función de su magnitud; es decir, se resta importancia a aquellos residuales que sean grandes y, de hecho, si están por encima de cierto límite, son descartados por completo. Su implementación es sumamente sencilla, pues lo único que tenemos que hacer es modificar `lm` por la función `rlm` de la librería `MASS`:
+En este caso el punto extremo ya no influenció la estimación de la regresión, lo cual en la mayoría de los casos es algo deseable. Aunque esta es una forma de realizar una regresión robusta, existen otras. Una de ellas es modificar la función de pérdida, como por ejemplo con la Regresión con pérdida Huber. Los detalles matemáticos los dejaré para tu investigación, lo realmente importante es entender que los errores (residuales) son ponderados según su magnitud; es decir, se resta importancia a aquellos residuales que sean grandes y, de hecho, si están por encima de cierto límite, son descartados por completo. Su implementación es sumamente sencilla, pues lo único que tenemos que hacer es modificar `lm` por la función `rlm` de la librería `MASS`:
 
 ```{r}
 rr_huber <- MASS::rlm(y~x, data = ansc_iii)
@@ -141,6 +145,8 @@ h_weights
 Gráficamente:
 
 ```{r}
+#| message: false
+#| warning: false
 ggplot(data = ansc_iii,
        aes(x = x, y = y)) +
   geom_smooth(method = MASS::rlm,
@@ -155,8 +161,8 @@ ggplot(data = ansc_iii,
        subtitle = "OLS (gris) vs. Huber (naranja)") +
   scale_color_gradient(name = "Peso",
                        low = "firebrick",
-                       high = "#1f77b4") +
-  theme_bw()
+                       high = "#1f77b4",
+                       limits = c(0,1))
 ```
 
 Como era de esperarse, los resultados son los mismos que los de la regresión *t* de Student. ¿Qué tiene que ver esto con los modelos lineales generalizados? Veamos primero los tres elementos clave que definen un GLM:
@@ -165,13 +171,13 @@ Como era de esperarse, los resultados son los mismos que los de la regresión *t
 2. Una familia para el error, que no modificamos en la regresión Huber; sin embargo la familia sería Gaussiana (Normal).
 3. Una función de enlace (o enlace inverso), que en ambos casos sería una función de identidad; es decir, ninguna modificación para pasar de nuestros datos a la distribución del error.
 
-Es decir, en un sentido amplio, ambas aproximaciones son GLMs, aunque usualmente nos referimos a GLMs cuando la distribución del error es diferente a una distribución normal. ¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
+Es decir, en un sentido amplio, ambas aproximaciones son GLMs, aunque usualmente nos referimos a GLMs cuando la distribución del error es diferente a una distribución normal (hablar de un glm con error Gaussiano es volver a una regresión lineal ajustada por mínimos cuadrados). ¿Cuál aplicar? Ya que el resultado es el mismo, puedes escoger una u otra, solo ten en cuenta que la implementación por máxima verosimilitud de un modelo *t* de Student puede tener muchos bemoles al momento de optimizarse, además de que su salida es incompatible con algunas otras funciones, incluyendo el cálculo de los intervalos de confianza (para los coeficientes de la regresión Huber puedes utilizar la función `confint.default(rr.huber)`).
 
 ## Funciones de enlace
 
 Este es un buen momento para hablar de un tema que a veces causa bastante confusión: las funciones de enlace o las funciones de enlace inverso. Estas son funciones "arbitrarias" (ojo a las comillas) que tienen una sola función (valga la redundancia): poner la salida de nuestro modelo lineal en los "requerimientos" de la familia de nuestro error. En el caso anterior, la distribución *t* es una distribución continua de probabilidad que está centrada en 0, como esperaríamos de nuestros residuales, por lo que la función de enlace es una **función de identidad**; es decir, no hacemos nada a la salida del modelo para poder obtener residuales continuos centrados en 0. Pero este no siempre es el caso; de hecho, las aplicaciones más comunes de GLM siempre requieren de algún enlace. ¿Y los enlaces inversos? Son simple y sencillamente el inverso de la función de enlace aplicados al lado contrario de la igualdad. Matemáticamente es más claro:
 
-En un GLM con una función de enlace tendríamos la siguiente estructura para nuestro modelo lineal:
+En un GLM con una función $f$ de enlace tendríamos la siguiente estructura para nuestro modelo lineal:
 
 $$
 f(y) = \beta_0 + \beta_1*x
@@ -195,7 +201,7 @@ El apelativo "inversa" es simplemente para indicar el lado dónde se está aplic
 
 ## Regresiones para conteos
 
-Te preguntarás qué tienen de especial los conteos, y la respuesta es muy simple: son valores enteros mayores o iguales a 0. Esto quiere decir que una distribución normal (*t*, o cualquier otra distribución continua) NO es adecuada para modelar los datos. ¿Qué hacemos? Utilizamos alguna distribución discreta que nos permita tratar con el número de veces en que algo sucede.
+Te preguntarás qué tienen de especial los conteos, y la respuesta es muy simple: son valores enteros mayores o iguales a 0. Esto quiere decir que una distribución continua en el intervalo $(-\infty, \infty)$ NO es adecuada para modelar los datos. ¿Qué hacemos? Utilizamos alguna distribución discreta que nos permita tratar con el número de veces en que algo sucede.
 
 ### Regresión Poisson
 
@@ -213,12 +219,12 @@ csvurl <- "https://stats.idre.ucla.edu/stat/data/fish.csv"
 fish <- read.csv(csvurl)[,c("child", "camper", "count")]
 head(fish)
 ```
+
 Exploremos nuestros datos. Al tratarse de una variable discreta podemos, sin ningún problema, utilizar un gráfico de frecuencias (¿cuál otro utilizarías?):
 
 ```{r}
 ggplot(aes(x = count), data = fish) +
   geom_bar(stat = "count", color = NA, fill = "dodgerblue4") +
-  theme_bw() +
   labs(title = "Frecuencia de peces capturados en un lago",
        x = element_blank(),
        y = element_blank())
@@ -265,7 +271,7 @@ zi_poiss <- pscl::zeroinfl(count~child+camper, data = fish)
 summary(zi_poiss)
 ```
 
-La salida es similar al caso anterior, solo tenemos coeficientes para la regresión logística para clasificar ceros verdaderos de falsos y los coeficientes del modelo Poisson sin el exceso de ceros; sin embargo, notarás que no hay ningún indicativo sobre si este modelo es mejor a nuestro modelo Poisson, por lo que podemos compararlos. Para ello podemos utilizar distintas alternativas: una prueba de Vuong (función `vuong(mod_1, mod_2)` de `pscl`) o utilizar una aproximación multi-modelo para la selección de modelos. Optaremos por esa última vía, la cual exploraremos a detalle más adelante. Por lo pronto, es suficiente que sepas que utilizaremos una medida llamada Criterio de Información de Akaike (AIC), y el mejor modelo será aquel que tenga el menor valor de AIC:
+La salida es similar al caso anterior, solo tenemos coeficientes para la regresión logística para clasificar ceros verdaderos de falsos y los coeficientes del modelo Poisson sin el exceso de ceros; sin embargo, notarás que no hay ningún indicativo sobre si este modelo es mejor a nuestro modelo Poisson, por lo que podemos compararlos. Para ello podemos utilizar distintas alternativas: una prueba de Vuong (función `pscl::vuong(mod_1, mod_2)`) o utilizar una aproximación multi-modelo. Optaremos por esa última vía, la cual exploraremos a detalle más adelante. Por lo pronto, es suficiente que sepas que utilizaremos una medida llamada Criterio de Información de Akaike (AIC), y el mejor modelo será aquel que tenga el menor valor de AIC:
 
 ```{r}
 AIC(poiss, zi_poiss)
@@ -275,7 +281,7 @@ Como era de esperarse, el modelo inflado en cero es un mejor candidato; sin emba
 
 ### Sobre-dispersión: Regresión Binomial Negativa
 
-Esos pescadores muy suertudos pueden hacer lo mismo que nuestro punto extremo en el ejemplo de regresión robusta; es decir, jalar nuestras estimaciones hacia ellas y alejarlas de la estimación "real", solo que aquí es un tanto diferente y tiene que ver con el supuesto de nuestra distribución Poisson: la media y la varianza son iguales. Este supuesto, evidentemente, no se sostiene cuando tenemos una dispersión muy grande de nuestros datos (varianza > media), lo cual genera el problema de la **sobre dispersión** de nuestro **modelo** (no de los datos). Una estrategia es cambiar nuestra verosimilitud a una distribución Binomial Negativa, la cual tiene un parámetro adicional a la distribución Poisson. Este parámetro modela, justamente, la dispersión de nuestros datos. Apliquemos entonces nuestra regresión binomial negativa:
+Esos pescadores muy suertudos pueden hacer lo mismo que nuestro punto extremo en el ejemplo de regresión robusta; es decir, jalar nuestras estimaciones hacia ellas y alejarlas de la estimación "real", solo que aquí es un tanto diferente y tiene que ver con el supuesto de nuestra distribución Poisson: la media y la varianza son iguales. Este supuesto, evidentemente, no se sostiene cuando tenemos una dispersión muy grande de nuestros datos (varianza > media), lo cual genera el problema de la **sobre dispersión** de nuestro **modelo** (no de los datos). Una estrategia es cambiar nuestra verosimilitud a una distribución Binomial Negativa, la cual tiene un (híper) parámetro adicional a la distribución Poisson. Este parámetro controla, justamente, la dispersión del modelo. Apliquemos entonces nuestra regresión binomial negativa:
 
 ```{r}
 bineg <- MASS::glm.nb(count~., data = fish, trace = F)
@@ -288,17 +294,24 @@ Notarás que esta salida es prácticamente la misma que la que tuvimos en nuestr
 pscl::odTest(bineg)
 ```
 
-A ojo de buen cubero era más que evidente que nuestro modelo estaba sobre disperso, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es "si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?" Y la respuesta es, por supuesto:
+Otra alternativa es una que ya conocemos (`performance`):
+
+```{r}
+od_bineg <- performance::check_overdispersion(bineg)
+plot(od_bineg)
+```
+
+A ojo de buen cubero era más que evidente que nuestro modelo iba a estar sobre disperso, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es "si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?" Y la respuesta es, claro que sí:
 
 ```{r}
 AIC(poiss, zi_poiss, bineg)
 ```
 
-Y los resultados son, como debe de ser, consistentes. Llegados a este punto podrías preguntarme: "Ok, Arturo, ya corregimos para el exceso de ceros y para la sobre dispersión, pero lo hicimos de manera independiente. ¿Hay alguna manera de hacer ambas cosas al mismo tiempo?" En efecto, y es justo lo siguiente que vamos a revisar.
+Y los resultados son, como debe de ser, consistentes. Llegados a este punto podrías preguntarme: "Ok, Arturo, ya corregimos para el exceso de ceros y para la sobre dispersión pero lo hicimos de manera independiente. ¿Hay alguna manera de hacer ambas cosas al mismo tiempo?" En efecto, y es justo lo siguiente que vamos a revisar.
 
 ### Exceso de ceros y sobre dispersión: Regresión Binomial Negativa Inflada en Cero
 
-Y, justamente, es una combinación de ambas; es decir, utilizaremos una distribución de error binomial negativa inflada en cero. La lógica es, entonces, una combinación de ambas aproximaciones; es decir, modelaremos a los ceros verdaderos y luego construiremos el modelo de regresión binomial negativa. Para hacerlo utilizaremos la función `zeroinfl()` que vimos antes, solo que cambiaremos la familia a `negbin`:
+La respuesta es una combinación de ambas; es decir, utilizaremos una distribución de error binomial negativa inflada en cero. La lógica es, entonces, modelar a los ceros verdaderos y luego construir el modelo de regresión binomial negativa. Para hacerlo utilizaremos la función `zeroinfl()` que vimos antes, solo que cambiaremos la familia a `negbin`:
 
 ```{r}
 zi_bineg <- pscl::zeroinfl(count~., data = fish, dist = "negbin")
@@ -311,13 +324,17 @@ Finalmente, podemos comparar nuestros cuatro modelos candidatos para encontrar e
 AIC(poiss, zi_poiss, bineg, zi_bineg)
 ```
 
-Vemos que los AIC de los modelos con distribución de error binomial negativa tienen los menores valores; por lo tanto seleccionaremos a alguno de los dos. ¿Cuál? En la siguiente sección hablaremos de las peculiaridades. Por lo pronto, sigamos con nuestro criterio de seleccionar el que tenga el menor AIC, que corresponde a la distribución binomial negativa inflada en cero. Ahora sí, podemos interpretar nuestros coeficientes. 
+Vemos que los AIC de los modelos con distribución de error binomial negativa tienen los menores valores; por lo tanto seleccionaremos a alguno de los dos. ¿Cuál? En la siguiente sección hablaremos de las peculiaridades. Por lo pronto, sigamos con nuestro criterio de seleccionar el que tenga el menor AIC, que corresponde a la distribución binomial negativa inflada en cero. En este punto pasaríamos a interpretar nuestros coeficientes, pero antes es necesario que hablemos de los no supuestos de normalidad y homogeneidad de varianzas (homocedasticidad):
+
+:::{.callout-important}
+Notarás que hasta este momento no hemos ni siquiera mencionado los supuestos de normalidad y homocedasticidad/homogeneidad de varianzas.Esto no es casualidad: si la familia del error que estamos utilizando no es normal, ¿por qué deberíamos de buscar normalidad? Recuerda: **el supuesto de normalidad del modelo lineal gira en torno a la distribución del error**. Si en un GLM estamos cambiando explícitamente la distribución de ese error, buscar normalidad es un sinsentido. Un caso similar ocurre con el supuesto de homogeneidad de varianzas/homocedasticidad: en una distribución Poisson, por ejemplo, la media es igual a la varianza y, si en una regresión estimamos el valor promedio de $y$ para cada valor de $x$, no tiene ningún sentido que el error sea homogéneo: entre más grande sea $y$, más grande es la varianza en ese punto. ¿Qué supuestos sí son importantes? Los que probamos indirectamente al crear nuestros modelos candidatos: sobredispersión e inflación en ceros.
+:::
+
+Ahora sí, ¿qué nos dicen nuestros coeficientes?
 
 ### Interpretación
 
-Desafortunadamente, la interpretación no es tan simple como en la RLM o RLS, debido a la función de enlace que utilizamos.
-
-Para facilitarnos la existencia, planteemos un modelo Poisson con un solo predictor, y la función de enlace logarítmica:
+Desafortunadamente, la interpretación no es tan simple como en la RLM o RLS debido a la función de enlace que utilizamos. Para facilitarnos la existencia, pensemos en un modelo Poisson con un solo predictor y una función de enlace logarítmica:
 
 $$
 Y \sim Poisson(\theta) \\
@@ -331,13 +348,14 @@ Pero, por las leyes de los exponentes, podemos reescribir la última ecuación c
 $$
 \theta = e^{a}e^{\beta x}
 $$
+
 Esto quiere decir que los coeficientes no son aditivos, sino multiplicativos:
 
 1. Intercepto: $e^\alpha$, valor de $\theta$ cuando $x = 0$. Si este parámetro es o no de interés depende totalmente del problema.
 2. Pendiente(s): $e^\beta$.
   - Si $\beta = 0$, entonces $e^\beta = 1$; es decir, no hay un efecto del predictor.
   - Si $\beta > 0$, entonces $e^\beta > 1$; es decir, el predictor incrementa el valor de $\theta$ a una **tasa** de $e^\beta$ por cada incremento unitario en $x$
-  - Si $\beta < 0$, entonces $e^\beta < 1$; es decir, el predictor disminuye el valor de $\theta$ a una **tasa** de $e^\beta$ por cada incremento unitario en $x$.
+  - Si $\beta < 0$, entonces $0 \leq e^\beta < 1$; es decir, el predictor disminuye el valor de $\theta$ a una **tasa** de $e^\beta$ por cada incremento unitario en $x$.
 
 Recuperemos los coeficientes de nuestra regresión binomial negativa inflada en cero y exponenciémoslos:
 
@@ -349,11 +367,11 @@ Pongamos atención solo a aquellos coeficientes con `count_`, pues son los que r
 
 1. Intercepto: Cuando el pescador no tiene hijos y no lleva un camper, el promedio de peces capturados es de 2.86
 2. Pendientes:
-  - Child: El promedio de peces capturados disminuye 1-0.4 veces por cada hijo adicional.
+  - Child: El promedio de peces capturados disminuye un 60% (1->0.4) veces por cada hijo adicional.
   - Camper: Si el pescador tiene un camper, el promedio de peces capturados incrementa 2.2 veces.
 
 :::{.callout-important}
-**Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario aplicar el enlace para poder interpretarlos.**
+**Corolario: La interpretación depende totalmente de la función de enlace que utilicemos, y siempre es necesario considerarla para poder interpretarlos.**
 :::
 
 Para construir un gráfico podemos generar una línea con valores predichos o, mejor dicho, dos líneas: una para cada nivel de `camper`:
@@ -365,16 +383,16 @@ fish$pred <- predict(zi_bineg, type = "response")
 
 ggplot(data = fish, aes(x = child, y = count,
                         color = factor(camper))) +
-  geom_point() +
+  geom_jitter(width = 0.1) +
   geom_line(aes(y = pred)) +
   labs(title = "GLM Binomial negativo",
        x = "Número de hijos",
        y = "Peces capturados") +
-  scale_color_discrete(name = "Camper",
-                       labels = c("NO", "SI")) +
+  scale_color_manual(name = "Camper",
+                     labels = c("NO", "SI"),
+                     values = c("#1f77b4", "#ff7f0e")) +
   scale_y_continuous(limits = c(0, 12),
-                     label = scales::label_comma(accuracy = 1)) +
-  theme_bw()
+                     label = scales::label_comma(accuracy = 1))
 ```
 
 O utilizando `visreg`:
@@ -387,16 +405,12 @@ partial_plots <- visreg::visreg(bineg,
                                 ylab = "Capturas",
                                 gg = TRUE)
 
-for (plt in partial_plots) {
-  plot(plt + theme_bw() +
-         scale_y_continuous(limits = c(0, 12),
-                            label = scales::label_comma(accuracy = 1)) +
-         scale_x_discrete(limits = c(0, max(plt$data$x))) +
-         labs(x = plt$labels$x))
-}
+patchwork::wrap_plots(partial_plots) & 
+  scale_y_continuous(limits = c(0, 12),
+                     label = scales::label_comma(accuracy = 1)) &
+  # OJO: Los "breaks" del eje x se definieron así porque son pocos valores discretos!
+  scale_x_continuous(breaks = function(x){unique(floor(pretty(seq(min(x), (max(x))))))})
 ```
-
-Antes de cambiar la hoja, es necesario aclarar que aquí NO hay supuesto de normalidad. ¿Cuál es el punto de cambiar la distribución del error si vamos a seguir casados buscando normalidad estadística?
 
 Y ahora podemos hablar de la selección de modelos.
 
@@ -442,7 +456,7 @@ En el @sec-clasif hablamos sobre los problemas de clasificación, y aplicamos un
 
 ### Regresión logística binaria
 
-La **regresión logística** es un **modelo lineal** al cual aplicamos una **función logística**, lo que nos **permite** restringir nuestra salida al intervalo $[0,1]$ y, por lo tanto, **predecir la probabilidad de pertenencia a una clase dada**. Esa definición es correcta para resumir lo más posible la técnica; sin embargo, los detalles son un poco más complejos.
+La **regresión logística** es un **modelo lineal** al cual aplicamos una **función logística**, lo que nos **permite restringir nuestra salida al intervalo** $[0,1]$ y, por lo tanto, **predecir la probabilidad de pertenencia a una clase dada**. Esa definición es correcta para resumir lo más posible la técnica; sin embargo, los detalles son un poco más complejos.
 
 La regresión logística forma parte de los GLMs; por lo tanto, consta de un predictor lineal, una familia de distribución del error y una función de enlace. La familia de distribución del error es **binomial**; es decir, está en términos de la **probabilidad de éxitos** vs. la probabilidad de fracasos. Es por esto que la regresión logística tradicional solo nos permite clasificar entre dos clases. Su función de enlace es la **función logit**:
 
@@ -450,14 +464,14 @@ $$
 logit(z) = \frac{1}{1 + e^{-z}}
 $$
 
-Esta función tiene la peculiaridad de que, independientemente de los valores de $z$ (el predictor lineal), el resultado siempre estará contenido entre 0 y 1, el cual es, convenientemente, el mismo que el dominio del parámetro $p$ de la distribución binomial (la probabilidad de éxito). Expresado matemáticamente:
+Esta función tiene la peculiaridad de que, independientemente de los valores de $z$ (el predictor lineal), el resultado siempre estará contenido entre 0 y 1, el cual es, convenientemente, el mismo que el dominio del parámetro $p$ de la distribución binomial (la probabilidad de éxito). Expresado en notación probabilística:
 
 \begin{align*}
 \theta = logistic(\alpha + \beta x) \\
 y \sim Binom(\theta)
 \end{align*}
 
-Apliquemos entonces una regresión logística para clasificar entre `Adelie` y `Gentoo` de los pingüinos de Palmer, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:
+Apliquemos entonces una regresión logística para clasificar entre `Biscoe` y `Dream` de los pingüinos de Palmer, solo para ilustrar cómo interpretar los coeficientes. Primero, filtremos los datos:
 
 ```{r}
 # Copia de los datos originales
@@ -489,22 +503,21 @@ partial_plots <- visreg::visreg(logit_reg, scale = "response",
                                 fill.par = c(fill = "gray90"),
                                 gg = TRUE)
 
-for (plt in partial_plots) {
-  plot(plt +
-         scale_y_continuous(n.breaks = 3,
-                            labels = c("Biscoe", 0.5, "Dream")) +
-         theme_bw())
-}
+patchwork::wrap_plots(partial_plots) & 
+  scale_y_continuous(breaks = c(0, 0.5, 1),
+                     limits = c(0,1),
+                     labels = c("Biscoe", 0.5, "Dream"))
 ```
 
 ¿Cómo interpretamos los coeficientes? Antes de pasar a eso, es necesario que pongamos atención al argumento `scale` de `visreg`, el cual indicamos como `response`. Esto lo que hizo fue poner nuestra salida en lo que nos interesa: la probabilidad de pertenencia a una especie, dadas las medidas de cada variable. Veamos qué pasa si retiramos ese argumento:
 
 ```{r}
-partial_plots <- visreg::visreg(logit_reg, ylab = "log-odds(Isla)", gg = TRUE)
+partial_plots <- visreg::visreg(logit_reg,
+                                ylab = "log-odds(Isla)",
+                                gg = TRUE,
+                                line.par = c(col = "dodgerblue4"))
 
-for (plt in partial_plots) {
-  plot(plt + theme_bw())
-}
+patchwork::wrap_plots(partial_plots)
 ```
 
 Ahora nuestros gráficos están en la escala de nuestro modelo lineal; es decir, con `response` estamos introduciendo la función de enlace y graficando el GLM completo; sin embargo, esto no está presente en los coeficientes "crudos" arrojados por la función GLM, por lo que toca aplicar el álgebra correspondiente.
@@ -533,17 +546,22 @@ $$
 log \left( \frac{\theta}{1-\theta} \right) = \alpha + \beta x
 $$
 
-Ahora, recordemos que $\theta$ en nuestro modelo es $p(y = 1)$ (la probabilidad de "éxito", o de ser `virginica`):
+Ahora, recordemos que $\theta$ en nuestro modelo es $p(y = 1)$ (la probabilidad de "éxito", o de ser `Dream`):
 
 $$
 log \left(\frac{p(y = 1)}{1 - p(y = 1)} \right) = \alpha + \beta x
 $$
 
-La cantidad $\frac{p(y = 1)}{1 - p(y = 1)}$ se conoce como los *odds*, que representan la probabilidad de éxito sobre la probabilidad de fracaso. Mientras que la probabilidad de obtener 2 al lanzar un dado es de 1/6, los *odds* para el mismo evento son $\frac{1/6}{5/6} \approx 0.2$, o un éxito a cinco fracasos. En una regresión logística, $\beta$ representa el incremento en *log-odds* por incremento unitario en $x$, no en la probabilidad de pertenencia a una clase, aunque la relación entre *odds* y probabilidad es monótona; es decir, conforme incrementa una, la otra también.
+La cantidad $\frac{p(y = 1)}{1 - p(y = 1)}$ se conoce como los *odds* o razones de probabilidad, que representan la probabilidad de éxito sobre la probabilidad de fracaso. Mientras que la probabilidad de obtener 2 al lanzar un dado es de 1/6, los *odds* para el mismo evento son $\frac{1/6}{5/6} \approx 0.2$, o un éxito a cinco fracasos. En una regresión logística, $\beta$ representa el incremento en *log-odds* por incremento unitario en $x$, no en la probabilidad de pertenencia a una clase, aunque la relación entre *odds* y probabilidad es monótona; es decir, conforme incrementa una, la otra también.
 
 :::{.callout-tip}
 Si te interesa ver directamente el cambio en probabilidad por incremento unitario de las variables, puedes utilizar una pariente cercana: la regresión probit.
 :::
+
+```{r}
+exp(coef(logit_reg))
+```
+
 
 ### Regresión multinomial
 
@@ -597,20 +615,27 @@ mnom_wf <- workflow() |>
 mnom_fit <- mnom_wf |> fit(data = penguins_na)
 
 mnom_res <- mnom_fit |> extract_fit_parsnip()
-mnom_res |> tidy() |>
+mnom_res |>
+  tidy() |>
   pivot_wider(names_from = term,
               values_from = estimate)
 ```
 
-Algo importante a tener en cuenta es que al ajustar este modelo tomamos una clase como referencia (igual que con un predictor categórico en @sec-rlm) y entonces esa no tiene coeficientes. ¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son "más diferentes" entre nuestras clases, para lo cual podemos utilizar `vip` como ya habíamos visto en el @sec-clasif:
+Algo importante a tener en cuenta es que al ajustar este modelo tomamos una clase como referencia (igual que con un predictor categórico como vimos en el @sec-rlm) y entonces esa no tiene coeficientes. ¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son "más diferentes" entre nuestras clases, para lo cual podemos utilizar `vip` como igual que en el @sec-clasif:
 
 ```{r}
 #| warning: false
-mnom_res |> vip::vip(geom = "point") +
-             geom_point(color = "deepskyblue3") +
-             theme_bw() +
-             labs(title = "Importancia de variables",
-                  y = element_blank())
+mnom_res |> vip::vip(geom = "col") +
+            labs(title = "Importancia de variables",
+                 y = element_blank())
 ```
 
 Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los únicos. Si te interesa modelar el tiempo entre eventos puedes utilizar un modelo Gamma, puedes cambiar la relación entre la media y la varianza de la regresión para conteos utilizando un modelo Quasi-Poisson en vez de un modelo con distribución binomial negativa (ver lecturas recomendadas), entre otros. Puedes también, como vimos en el último ejemplo, aplicar GLMs penalizados utilizando `glmnet`, solo hay que especificar la familia correspondiente.
+
+## Ejercicio
+
+No podíamos terminar sin un ejercicio, entonces esta vez considera utilizar un GLM para predecir las edades de los abulones que utilizamos en el @sec-rlm y responde:
+
+1. ¿Qué familia del error utilizarías? ¿Hay opciones? ¿Considerarías un modelo penalizado/regularizado? Justifica tu respuesta.
+2. Construye el/los GLM(s) que propusiste. ¿Cuál es el mejor modelo?
+3. Compara el ajuste del modelo final con la RLM que construimos en el @sec-rlm. ¿Mejoró?
