@@ -195,7 +195,7 @@ Primero, ¿qué es Bootstrap y con qué se come? Mencionamos algo de esto en el 
 plot(profile(vb_jaws, "t"))
 ```
 
-¿Qué nos dice este gráfico? En pocas palabras, la forma de la distribución de la verosimilitud de nuestro parámetro, en términos de $\tau$, que representa el valor del estadístico $t$ a cada punto, donde el valor de $t$ se calcula como la raiz cuadrada del cambio en la suma de cuadrados, dividido por el error estándar residual. ¿En Español? Entre más grande sea $\tau$, más nos alejamos del punto con máxima verosimilitud ($\tau = 0$). Piensa en este gráfico como un gráfico de densidad invertido.
+¿Qué nos dice este gráfico? En pocas palabras, la forma de la distribución de la verosimilitud de nuestro parámetro, en términos de $\tau$, que representa el valor del estadístico $t$ a cada punto, donde el valor de $t$ se calcula como la raiz cuadrada del cambio en la suma de cuadrados, dividido por el error estándar residual. ¿En Español? Entre más grande sea $\tau$, más nos alejamos del punto con máxima verosimilitud ($\tau = 0$). **Piensa en este gráfico como un gráfico de densidad invertido**.
 
 Utilicemos entonces la función `boot_nls` de la librería `nlraa` para hacer el muestreo de nuestros parámetros, y utilicemos la función `car::Confint` para obtener sus intervalos de confianza:
 
@@ -335,7 +335,7 @@ performance::check_normality(ruffe_lm)
 performance::check_heteroscedasticity(ruffe_lm)
 ```
 
-Y es aquí donde tenemos algunos "problemas", los cuales se eliminan en la regresión no lineal. La RNL tiene únicamente dos requerimientos:
+Y es aquí donde tenemos algunos "problemas", los cuales se "eliminan" en la regresión no lineal. La RNL tiene únicamente dos requerimientos:
 
 1. Haber especificado una función que describa **adecuadamente** la relación entre las variables.
 2. Seleccionar puntos de inicio correctos. Aún con un modelo adecuado, si los puntos de inicio no son los correctos, puedes mandar la estimación a un "óptimo local" en vez el "óptimo global"; es decir, llegar a un "falso positivo".
@@ -435,7 +435,7 @@ lm_plot + vb_plot + poly_plot +
                   caption = "Datos: JAWS")
 ```
 
-El ajuste es "mejor" que el modelo lineal, pero no tiene absolutamente ningún sentido biológico que la longitud de la mandíbula disminuya después de que los animales cumplan 35 años (¿tal vez menguan?). ¿Qué pasa con un polinomio de tercer orden? Veámoslo:
+El ajuste es "mejor" que el modelo lineal pero no tiene absolutamente ningún sentido biológico que la longitud de la mandíbula disminuya después de que los animales cumplan 35 años (¿tal vez menguan?). ¿Qué pasa con un polinomio de tercer orden? Veámoslo:
 
 ```{r}
 #| message: false
@@ -454,7 +454,7 @@ lm_plot + vb_plot + poly_plot +
 
 Como ya habíamos mencionado, se añade una curva más, ahora tenemos un cambio alrededor de los 25 años y un aumento después de los 45. Y así podríamos irnos hasta llegar a un polinomio de orden $u-1$ ($u$: número de valores únicos), pero eso no tiene ningún caso porque la interpretación se vuelve extremadamente compleja con más de dos o tres términos. En una regresión polinomial los coeficientes ya no son pendientes como las que vimos en la regresión lineal simple. Si quisiéramos saber cuántas unidades nos movemos en $y$ por cambio unitario en $x$ ya no podemos simplemente revisar $\beta_1$, pues la presencia de $\beta_2$ o más términos tienen un efecto en esa cantidad. En nuestro ejemplo de orden 2 el primer coeficiente es positivo, que indica el crecimiento en la primera parte de la curva, mientras que el segundo es negativo, e indica el decremento a partir de los 35 años. 
 
-Desafortunadamente, el problema de la interpretación de los parámetros no es solo matemático. Si fuera el caso, con una inspección cuidadosa y entendimiento del modelo podríamos interpretarlo. El problema es que, en muchos casos, los parámetros no se traducen a cantidades relevantes para nuestra área del conocimiento. ¿Qué nos dice la pendiente $\beta_2 = -118.95$? Definitivamente el decremento subsecuente no es de 118.95 cm por año. **Los parámetros de una regresión polinomial son solo perillas para ajustar el modelo, sin un significado "real" que sea claro**. Luego tenemos el problema de seleccionar el orden adecuado. Una alternativa es ir construyendo regresiones polinomiales incrementando el orden y parando cuando el último coeficiente deje de ser significativamente distinto de 0, o empezar del orden máximo e ir disminuyendo. De cualquier manera, creo que estarás de acuerdo conmigo en que es innecesario pero, ¿qué pasa si sé que la relación de mis datos no es lineal, pero no tengo el modelo teórico que la describa? En ese caso te recomendaría probar un modelo aditivo generalizado (GAM) o una regresión LOESS, que es de lo que vamos a hablar ahora.
+Desafortunadamente, el problema de la interpretación de los parámetros no es solo matemático. Si fuera el caso, con una inspección cuidadosa y entendimiento del modelo podríamos interpretarlo. El problema es que, en muchos casos, los parámetros no se traducen a cantidades relevantes para nuestra área del conocimiento. ¿Qué nos dice la pendiente $\beta_2 = -118.95$? Definitivamente el decremento subsecuente no es de 118.95 cm por año. **Los parámetros de una regresión polinomial son solo perillas para ajustar el modelo, sin un significado "real" que sea claro**. Luego tenemos el problema de seleccionar el orden adecuado. Una alternativa es ir construyendo regresiones polinomiales incrementando el orden y parando cuando el último coeficiente deje de ser significativamente distinto de 0, o empezar del orden máximo e ir disminuyendo. De cualquier manera, creo que estarás de acuerdo conmigo en que es innecesario pero, ¿qué pasa si sé que la relación de mis datos no es lineal, pero no tengo el modelo teórico que la describa? En ese caso te recomendaría probar un modelo aditivo generalizado (GAM) o, de lo que vamos a hablar ahora, una regresión LOESS.
 
 ## Regresión LOESS
 
@@ -467,7 +467,7 @@ jaws_loess <- loess(bone~age, data = jaws)
 summary(jaws_loess)
 ```
 
-¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, `degree`) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. El error siguió una distribución normal (`family: gaussian`, más de esto en el @sec-glm), los datos fueron "normalizados" (más de esto en el @sec-intro-mv). Tenemos un "número equivalente de parámetros", que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más "bronco":
+¿Qué podemos extraer de este resumen? Que el modelo es un modelo cuadrático (segundo orden, `degree`) con una ventana del 75% de los datos, y tuvo un RSE de 13.41. Se asumió una distribución normal (`family: gaussian`, más de esto en el @sec-glm), los datos fueron "normalizados" (más de esto en el @sec-intro-mv). Tenemos un "número equivalente de parámetros", que sería análogo al orden en una regresión polinomial, y algunos otros detalles en los que no vamos a entrar. Gráficamente se ve muy cercano al modelo VB, aunque un poco más "bronco":
 
 ```{r}
 #| message: false
@@ -482,7 +482,7 @@ lm_plot + vb_plot + loess_plot +
                   caption = "Datos: JAWS")
 ```
 
-Mi sugerencia es que, si no hay una ecuación que describa la relación no lineal, pienses antes en LOESS que en una regresión polinomial, pero ten en cuenta que esto aplica solo para ciertos casos en los que tiene sentido asumir el error como normal. En el @sec-glm vamos a ver cómo podemos generalizar el modelo lineal para contender con otro tipo de variables dependientes, conteos, por ejemplo, y capturar tendencias no lineales en el proceso.
+Mi sugerencia es que, si no hay una ecuación que describa la relación no lineal, pienses antes en LOESS que en una regresión polinomial, pero ten en cuenta que esto aplica solo para ciertos casos en los que tiene sentido asumir el error como normal. En el @sec-glm vamos a ver cómo podemos generalizar el modelo lineal para contender con otro tipo de variables dependientes, conteos, por ejemplo, y capturar tendencias no lineales en el proceso. Una vez tengas ese conocimiento, puedes volver a ver el argumento `family` dentro de `loess()`.
 
 Con esto terminamos esta sesión. Espero que haya sido de tu agrado, y nos vemos en la siguiente, donde ya vamos a entrar al tema de técnicas multivariadas.
 
