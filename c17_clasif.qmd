@@ -10,6 +10,13 @@ library(palmerpenguins)
 library(tidyverse)
 library(tidymodels)
 library(vip)
+# library(ranger)
+```
+
+```{r}
+theme_set(see::theme_lucid() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()))
 ```
 
 ## Introducción
@@ -114,6 +121,7 @@ La matriz de confusión no es otra cosa mas que una **tabla de contingencia que 
 :-----:|:-----:|:-----:
 $\hat{A}$ | VP | FP
 $\hat{B}$ | FN | VN
+
 : Matriz de confusión para un clasificador binario. V: verdadero; F, falso; P: positivo; N: negativo; es decir, en la diagonal tenemos las clasificaciones correctas (verdaderos positivo y negativo), y encima y debajo los errores (falsos positivo y negativo).
 
 Si lo piensas con atención, esto es todo lo que necesitamos: en qué acertó y en qué se equivocó, aunque esto se vuelve muy impráctico cuando tenemos más de dos clases, y no nos permite evaluar rápidamente nuestro clasificador. Es aquí donde entran las medidas derivadas de esta matríz. Expliquémoslas todas con la siguiente matriz de confusión:
@@ -122,6 +130,7 @@ Si lo piensas con atención, esto es todo lo que necesitamos: en qué acertó y 
 :-----:|:-----:|:-----:
 $\hat{A}$ | 4 | 1
 $\hat{B}$ | 2 | 5
+
 : Ejemplo de matriz de confusión.
 
 1. **Exactitud** (Accuracy): Representa el **porcentaje de clasificaciones correctas**, independientemente de si fueron verdaderos positivos o verdaderos negativos. Es decir, la suma de los elementos en la diagonal dividida entre el número total de observaciones. En nuestro ejemplo el clasificador tuvo una exactitud del 75%.
@@ -222,7 +231,7 @@ Como todo lo demás en esta vida, si hay ventajas también hay **desventajas**:
 2. Son **estimadores con alta varianza**, de modo que pequeñas variaciones dentro de los datos pueden producir árboles muy diferentes.
 3. **Alto costo computacional**, derivado de la aproximación "codiciosa" (greedy) tomada durante su construcción (entiendelo como evaluar todo al mismo tiempo). Entre más datos y clases con límites complejos tengamos, más tiempo o poder computacional (o ambos) vamos a necesitar para entrenar el modelo.
 
-La tercer desventaja la podemos "obviar", pues para fines de investigación no vamos a necesitar entrenar y obtener el modelo prácticamente en tiempo real, pero las primeras dos sí que son importantes, y nos llevan a hablar de los ensambles de árboles, particularmente los bosques aleatorios.
+La tercer desventaja la podemos "obviar", pues para la mayoría de los fines de investigación no vamos a necesitar entrenar y obtener el modelo en tiempo real, pero las primeras dos sí que son importantes, y nos llevan a hablar de los ensambles de árboles, particularmente los bosques aleatorios.
 
 ### Bosques aleatorios
 
@@ -235,7 +244,7 @@ Para empezar, ¿qué es un **ensamble**? Es **juntar múltiples modelos de apren
 Ahora bien, **¿cómo funcionan los bosques aleatorios?** No puedo construir diferentes árboles de decisión si tengo los mismos datos de entrenamiento, entonces hay que cambiar eso. La forma en que lo hacemos deriva de dos conceptos [@Pal_2017]:
 
 1. **Agregación Bootstrap** ("Bagging"): Se genera un conjunto de entrenamiento diferente para cada árbol, utilizando muestreos con reemplazo del conjunto original de datos de entrenamiento
-2. **Selección aleatoria de atributos**: Puedes entenderla como una agregación Bootstrap para los predictores , en la que los atributos (variables) considerados en cada nodo son un subconjunto aleatorio de las variables originales.
+2. **Selección aleatoria de atributos**: Puedes entenderla como una agregación Bootstrap para los predictores en la que los atributos (variables) considerados en cada nodo son un subconjunto aleatorio de las variables originales.
 
 Es decir, cada árbol en el bosque va a trabajar con su propio subconjunto de observaciones, y en cada partición va a poder seleccionar solo de un subconjunto aleatorio de variables. El resultado es un modelo de aprendizaje supervisado que se considera como uno de los más eficientes [@Carvajaletal_2018], pero básta de cháchara y pongámonos manos a la obra.
 
@@ -248,15 +257,17 @@ Utilicemos esta vez los datos `palmerpenguins::penguins_raw`, y aprovechemos tam
     2. Profundidad del culmen
     3. Longitud de la aleta
     4. Masa corporal
-    5. Delta 15 N (o/oo)
-    6. Delta 13 C (o/oo)
+    5. $\delta^{15}N$ (‰)
+    6. $\delta^{13}C$ (‰)
     7. Species, que contiene las etiquetas que queremos predecir
-
+    
 ```{r}
 peng_data <- penguins_raw |>
              # Seleccionar solo las columnas numéricas y "Species"
              select(where(is.numeric) |
                     contains("Species")) |>
+             # Retirar el identificador de la muestra
+             select(-`Sample Number`) |> 
              # Extraer la primera palabra de la columna `Species`
              mutate(Species = str_extract(Species,
                                           pattern = "\\w*")) |>
@@ -265,14 +276,21 @@ peng_data <- penguins_raw |>
 head(peng_data)
 ```
 
-Ahora optimicemos e interpretemos el modelo de bosques 
+Solo hay que tener presente que hay un desbalance importante en el número de observaciones por especie:
 
-1. **Dividir los datos en datos de entrenamiento y prueba**. Para esto utilizaremos las funciones `rsample::initial_split()` y `rsample::training()`. Además, remuestrearemos los datos de entrenamiento para realizar la validación cruzada y optimizar los hiper-parámetros del modelo con la función `rsample::vfold_cv()`
+```{r}
+peng_data |> count(Species)
+```
+
+Ahora optimicemos e interpretemos el modelo de bosques aleatorios.
+
+1. **Dividir los datos en datos de entrenamiento y prueba**. Para esto utilizaremos las funciones `rsample::initial_split(data, strata)` y `rsample::training(split)`. Además, remuestrearemos los datos de entrenamiento para realizar la validación cruzada y optimizar los hiper-parámetros del modelo con la función `rsample::vfold_cv()`
 
 ```{r}
 set.seed(0)
 # Dividimos los datos
-peng_split <- rsample::initial_split(peng_data)
+peng_split <- rsample::initial_split(peng_data,
+                                     strata = Species)
 
 # Extraemos los datos de entrenamiento
 peng_train <- rsample::training(peng_split)
@@ -294,9 +312,12 @@ Una lista completa de todos los pasos de pre-procesamiento la puedes encontrar e
 ```{r}
 # Formación de la receta
 peng_rec <- recipe(Species~., data = peng_train) |>
-            update_role(contains("Sample"),
-                        new_role = "id vars") |> 
+            #update_role(`Sample Number`,
+            #            new_role = "id vars") |>
+            #update_role_requirements(role = "id vars", bake = FALSE) |> 
+            update_role(Species, new_role = "outcome") |> 
             step_center(all_numeric())
+            
 # Obtener parámetros para preprocesar
 peng_prep <- peng_rec |> prep()
 
@@ -311,10 +332,6 @@ peng_juiced <- peng_prep |> juice()
         - `trees` (el número de árboles en el ensemble). 
     - Después especificamos que es un bosque para clasificación con `set_mode`, y por último le indicamos en `set_engine` que utilice la librería `ranger` para construir el bosque:
     
-:::{.callout-note}
-Una lista completa de todos los tipos de modelos la puedes encontrar en la [documentación correspondiente](https://www.tidymodels.org/find/parsnip/) de `tidymodels`.
-:::
-
 ```{r}
 # Especificar el modelo
 # Los hiperparámetros van a ser ajustados
@@ -352,9 +369,9 @@ En este punto no hemos entrenado el modelo, solo le hemos dicho a `tidymodels` c
     
 ```{r}
 set.seed(123)
-# Asignar 8 núcleos para la computación en paralelo
-# Revisa cuántos puedes disponer tú (más o menos)
-doParallel::registerDoParallel(cores = 8)
+# Asignar núcleos para la computación en paralelo
+doParallel::registerDoParallel(cores = parallel::detectCores(logical = F))
+
 # Buscar los mejores hiperparámetros de entre 20 valores
 tune_res <- tune_grid(tune_wf,
                       resamples = peng_cv,
@@ -379,16 +396,14 @@ plot_rf_cv <- function(tune_res){
               pivot_longer(min_n:trees,
                            values_to = "value",
                            names_to = "parameter") |>
-              # Graficar con `ggplot`
+              # Graficar con `ggplot2`
               ggplot(aes(value, mean, color = parameter)) +
               geom_point(show.legend = F) +
               facet_wrap(~parameter, scales = "free_x") +
-              labs(y = "AUC") +
-              theme_bw()
+              labs(y = "AUC")
 }
 
 plot_rf_cv(tune_res)
-
 ```
 
 :::{.callout-note}
@@ -432,7 +447,7 @@ final_rf <- finalize_model(x = tune_spec,
 final_rf
 ```
 
-9. **Revisar importancia de variables**. ¿Qué podemos aprender de este modelo? Las variables más importante para la clasificación son la longitud del culmen, seguida de la longitud de la aleta. ¿Tienen sentido biológico estos resultados? Esa es una discusión para otro momento, pues solo tomamos estos datos para ejemplificar la implementación de los bosques aleatorios.
+9. **Revisar importancia de variables**. ¿Qué podemos aprender de este modelo? Las variables más importantes para la clasificación son la longitud del culmen, seguida de la longitud de la aleta. ¿Tienen sentido biológico estos resultados? Esa es una discusión para otro momento, pues solo tomamos estos datos para ejemplificar la implementación de los bosques aleatorios.
 
 ```{r}
 #| fig-cap: Importancia de variables del bosque aleatorio
@@ -445,17 +460,18 @@ final_rf |>
   set_engine("ranger", importance = "permutation") |>
   # Estimada desde los datos de entrenamiento (- el identificador)
   fit(Species ~.,
-      data = juice(peng_prep) |> select(-contains("Sample"))) |>
+      data = juice(peng_prep) |> select(-contains("Sample"))) |> 
   # Calcula y grafica la importancia de variables
-  vip(geom = "point") +
-  geom_point(color = "deepskyblue3") +
-  see::theme_lucid() +
+  vip() +
+  # geom_point(color = "deepskyblue3") +
   labs(title = "Importancia de variables",
        y = element_blank())
 ```
 
 :::{.callout-note}
-Si pones atención te darás cuenta de que estamos obteniendo la importancia de variables utilizando permutaciones, esto es porque es una manera más robusta de obtenerlas que solo utilizando Gini; sin embargo, estas no son las únicas. Tenemos algunas alternativas como valores Shapely, explicaciones SHAP o LIME que tienen algunas ventajas importantes. Desafortunadamente, SHAP y LIME no están implementados en `R`, solo en `Python`
+Si pones atención te darás cuenta de que estamos obteniendo la importancia de variables utilizando permutaciones, esto es porque es una manera más robusta de obtenerlas que solo utilizando Gini. ¿Cómo se calculan? Permutando los valores y viendo qué tanto incrementa el error después de esa permutación; i.e., entre más importante sea una variable, mayor va a ser el impacto si la permutamos.
+
+Tenemos algunas alternativas como valores Shapely/explicaciones SHAP o LIME que son agnósticas al modelo, entre otras, cada una con sus ventajas y desventajas. Una de las ventajas de SHAP, por ejemplo, es que se puede obtener la importancia de cada variable para cada grupo.
 :::
 
 10. Muy importante, **verificar que el modelo no esté sobreajustado**. Para esto vamos a crear un último flujo de trabajo, y después ajustar una última vez. ¿Por qué? Porque nuestros modelos hasta ahora se entrenaron en 10 subconjuntos de nuestros datos de entrenamiento (validación cruzada). Para este último ajuste usaremos la función `last_fit()`, la cual ajusta el modelo final en todos los datos de entrenamiento y evalúa en los datos de prueba. Los valores de ROC-AUC y de exactitud son muy buenos, pero además en línea con lo que esperábamos de la optimización (AUC > 0.995), lo cual quiere decir que el modelo no está sobre-ajustado, sino que es muy bueno.
@@ -483,17 +499,56 @@ rf_auc <- final_res |>
           mutate(model = "Random Forest")
 
 autoplot(rf_auc) +
-  labs(title = "Curvas ROC") +
-  theme_bw()
+  labs(title = "Curvas ROC")
 ```
 
 :::{.callout-important}
 En la función `roc_curve` del objeto `rf_auc` estamos pasando un vector con tres objetos ocultos: `.pred_Adelie`, `.pred_Chinstrap`, `.pred_Gentoo`. Estos contienen la probabilidad de pertenencia de cada observación a cada especie, y es con los que se obtiene la curva ROC que le corresponde a cada especie, pues la curva es solo para clasificaciones binarias. ¿Cómo funciona en este caso? La clase positiva es la clase predicha en cada curva, y la negativa es lo demás, básicamente representando un clasificador clase + vs. resto.
 :::
 
-11. **Elaborar el reporte** ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a @EnriquezGarciaetal_2022 para ver cómo describir el método, pero los resultados podemos resumirlos como:
+11. **Elaborar el reporte** ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a la [GitHub Pages](https://arturobell.github.io/01072022/) de @EnríquezGarcíaetal_2023 para ver cómo describir el método, pero los resultados podemos resumirlos como:
 
-> El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 0.99 en los datos de entrenamiento). Las variables más importantes para la clasificación fueron la longitud del culmen ($\approx 17\%$), seguida de la longitud de la aleta ($\approx 12.5\%$; @fig-varimp). El bosque aleatorio optimizado estuvo compuesto por 800 árboles, cada uno formado con un predictor (`mtry`), considerando al menos 5 observaciones para poder hacer una división (`n_min`).
+> El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 1 en los datos de prueba). Las variables más importantes para la clasificación fueron la longitud del culmen ($\approx 17\%$), seguida de la longitud de la aleta ($\approx 12.5\%$; @fig-varimp). El bosque aleatorio optimizado estuvo compuesto por 800 árboles, cada uno formado con un predictor (`mtry`), considerando al menos 5 observaciones para poder hacer una división (`n_min`).
+
+#### Predicción
+
+Antes vimos como podemos pasarle datos de validación a nuestro modelo para, valga la redundancia, validar su desempeño. Aunque aquí lo estamos haciendo para darnos una idea de qué tanto podemos confiar en nuestras inferencias, en realidad el objetivo es ver si podemos predecir adecuadamente nuevos datos, i.e., extrapolar. Si no generaliza bien, los resultados siguen siendo válidos para la muestra con la que entrenamos el modelo. Esto tiene sus bemoles y el qué tanto valga la pena interpretar los resultados de un modelo sobre ajustado es una decisión propia. Personalmente, no le veo mucho caso, pero lo cierto es que si no generaliza bien no podemos confiar, en absoluto, en las predicciones que nos de.
+
+Con esto lo que quiero decir es que, si tienes un modelo que generaliza bien y observaciones para las cuales no tienes su clase, puedes utilizar el modelo entrenado para obtener a qué clase es más probable que pertenezcan. Imagina que alguien curioso quiso hacer su buena acción y midió un pingüino, pero no le tomó una foto y no sabes a qué especie pertenece. Las medidas que este buen samaritano te dio son:
+
+```{r}
+var_names <- colnames(peng_train)[1:6]
+new_peng <- data.frame(v1 = 45.15, v2 = 17.30, v3 = 197.0,
+                       v4 = 4062, v5 = 8.657, v6 = -25.83) |>
+            rename_at(vars(starts_with("v")),
+                      ~ var_names)
+
+new_peng
+```
+
+Puedes entonces asignar la especie con el modelo entrenado. Lo primero es, entonces, recuperar todo el flujo de trabajo:
+
+```{r}
+rf_parsnip <- final_res |> extract_workflow()
+```
+
+:::{.callout-tip}
+Al extraer el flujo de trabajo nos ahorramos tener que pre-procesar los datos a mano, podemos simplemente pasar los datos crudos y se aplicará todo el procesamiento que hayamos definido en nuestra receta antes de pasar los datos al modelo *per-se*.
+:::
+
+Luego puedes utilizar la función `predict()` para hacer tus predicciones. En este caso, lo más probable es que sea Adelie:
+
+```{r}
+rf_parsnip |> predict(new_peng, type = "class")
+```
+
+¿Qué tan probable? Solo cambia `"class"` por `"prob"`:
+
+```{r}
+rf_parsnip |>  predict(new_peng, type = "prob")
+```
+
+Ahora te pregunto, ¿qué tanto confías en esta predicción?
 
 Esto fue todo para este (espero) motivante capítulo, donde entramos de lleno al mundo del aprendizaje supervisado. Me hubiera gustado darte un poco menos de teoría, pero aplicar modelos de aprendizaje automatizado es algo que requiere que pongamos muchísima atención a qué es lo que hacemos en cada paso y por qué, pues es muy fácil que resbalemos y que terminemos presumiendo un modelo sobreajustado. Voy a confirmar tus sospechas: también hay que verificar que nuestras regresiones no estén sobreajustadas, pero eso lo dejamos para la siguiente sesión.
 
