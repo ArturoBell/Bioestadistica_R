@@ -12,12 +12,19 @@ library(dplyr)
 library(tidymodels)
 library(performance)
 library(vip)
+# library(glmnet)
+```
+
+```{r}
+theme_set(see::theme_lucid() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()))
 ```
 
 
 ## Introducción
 
-En el @sec-rls vimos una bastante extensiva introducción al modelo lineal, y en el @sec-nolin vimos que la regresión polinomial era una extensión de este donde añadíamos "nuevas" pendientes que correspondían con potencias de nuestra variable independiente. Bueno, hoy vamos a introducir pendientes para otros predictores, y hablar de lo que eso implica. También veremos cómo podemos controlar la complejidad de nuestros modelos lineales, y ver cómo juzgar/evaluar adecuadamente un modelo de regresión múltiple, pues es más complejo que solo revisar sus supuestos.
+En el @sec-rls vimos una bastante extensa introducción al modelo lineal, y en el @sec-nolin vimos que la regresión polinomial era una extensión de este donde añadíamos "nuevas" pendientes que correspondían con potencias de nuestra variable independiente. Bueno, hoy vamos a introducir pendientes para otros predictores, y hablar de lo que eso implica. También veremos cómo podemos controlar la complejidad de nuestros modelos lineales, y ver cómo juzgar/evaluar adecuadamente un modelo de regresión múltiple, pues es más complejo que solo revisar sus supuestos.
 
 ### Regresión Lineal Múltiple
 
@@ -34,10 +41,10 @@ Y = \alpha + X\cdot\beta + \epsilon
 $$
 
 :::{.callout-note}
-Tanto en la RLS como en la RLM las variables independientes pueden ser categóricas, ordinales y, por supuesto continuas, pero el cómo las integremos al modelo y su interpretación tienen bemoles que veremos más adelante.
+Tanto en la RLS como en la RLM las variables independientes pueden ser categóricas, ordinales y (por supuesto) continuas, pero el cómo las integremos al modelo y su interpretación tienen bemoles que veremos más adelante.
 :::
 
-No vamos a entrar en los detalles del álgebra lineal correspondientes porque los vimos en el @sec-intro-mv, lo que sí es "importante" saber es que, mientras en la RLS encontramos una línea que "mapea" los valores de $x$ hacia $y$, en la RLM encontramos un hiper-plano (una sábana) de $m$ dimensiones. Nuestra intución como criaturas tridimensionales solo nos permite ver hasta tres dimensiones, y tendríamos algo como esto:
+No vamos a entrar en los detalles del álgebra lineal correspondientes porque los vimos en el @sec-intro-mv, lo que sí es "importante" saber es que, mientras en la RLS encontramos una línea que "mapea" los valores de $x$ hacia $y$, en la RLM encontramos un hiper-plano (una sábana) de $m$ dimensiones. Nuestra intución como criaturas tridimensionales solo nos permite ver hasta tres dimensiones, donde tendríamos algo como esto:
 
 ![La regresión lineal múltiple genera un hiperplano que explica la relación $Z\sim X+Y$ ($Y \sim X_1 + X_2$).](https://i.stack.imgur.com/DYW44.jpg){#fig-hyperplane}
 
@@ -85,15 +92,15 @@ Si ponemos atención al último renglon es claro que hay una relación entre `Ed
 1. Dos individuos que tienen valores de `A_o` que se alejan considerablemente del resto.
 2. Como era de esperarse dados los nombres de las variables, algunas están altamente correlacionadas.
 
-Por el momento ignoremos ambas cosas y ajustemos nuestro modelo. Los pasos a seguir son básicamente los mismos que seguimos en el @sec-clasif con el bosque aleatorio, salvo peculiaridades propias de la regresión lineal. También entonces vamos a aprovechar para introducir formalmente el uso de `tidymodels`
+Por el momento ignoremos ambas cosas y ajustemos nuestro modelo. 
 
 #### Implementación
 
-Los pasos a seguir son prácticamente los mismos qu
+Los pasos a seguir son básicamente los mismos que seguimos en el @sec-clasif con el bosque aleatorio, salvo peculiaridades propias de la regresión lineal:
 
 1. **Dividir los datos en datos de entrenamiento y prueba**. Si pusiste atención al enlace te darás cuenta de que los datos que descargamos son datos de prueba, por lo que esta vez nos saltaremos este paso.
 
-2. **Preprocesar los datos**. En este caso no es "necesario" que nuestras variables estén en la misma escala, por lo que también vamos a saltarnos este paso; sin embargo, más adelate veremos que es recomendable y que cuando queremos controlar la complejidad del modelo sí se vuelve necesario. De cualquier manera (y para hacernos el hábito) vamos a especificar la receta, aunque no tenga ningún paso más que la fórmula:
+2. **Preprocesar los datos**. En este caso no es "necesario" que nuestras variables estén en la misma escala, por lo que también vamos a saltarnos este paso; sin embargo, más adelate veremos que es recomendable y que cuando querramos controlar la complejidad del modelo se vuelve necesario. De cualquier manera (y para hacernos el hábito) vamos a especificar la receta, aunque no tenga ningún paso más que la fórmula:
 
 ```{r}
 # Formación de la receta
@@ -116,7 +123,7 @@ lm_spec <- linear_reg() |>
 ```
 
 :::{.callout-note}
-Si te das cuenta las únicas diferencias entre la especificación del bosque aleatorio que construimos en el @sec-clasif y esta regresión múltiple es que como "motor" estamos utilizando `lm`, y que el "modo" del modelo es una regresión. En `tidymodels` solo hay que cambiar estos dos argumentos para aplicar cualquiera de los modelos que tienen una interface, los cuales puedes ver [aquí]().
+Si te das cuenta las únicas diferencias entre la especificación del bosque aleatorio que construimos en el @sec-clasif y esta regresión múltiple es que como "motor" estamos utilizando `lm`, y que el "modo" del modelo es una regresión. En `tidymodels` solo hay que cambiar estos dos argumentos para aplicar cualquiera de los modelos que tienen una interface en `parsnip`, los cuales puedes ver [aquí](https://www.tidymodels.org/find/parsnip/).
 :::
 
 4. **Formar un flujo de trabajo** que aplique la receta de preprocesamiento de los datos y se la pase a la especificación del modelo:
@@ -137,7 +144,7 @@ lm_fit <- lm_wf |> fit(data = abulon_data)
 
 ```{r}
 # Extraer la salida de la función lm
-lm_form <- lm_fit$fit$fit$fit
+lm_form <- extract_fit_engine(lm_fit)
 summary(lm_form)
 ```
 
@@ -147,15 +154,15 @@ summary(lm_form)
 performance::check_model(lm_form)
 ```
 
-8. **Revisar la importancia de variables**: A diferencia de lo que vimos en el @sec-clasif sobre la importancia de variables en bosques aleatorios, en modelos lineales qué variable es más importante usualmente se define por el valor absoluto del estadístico $t$, de modo que entre más grande sea, más importante es la variable:
+8. **Revisar la importancia de variables**: A diferencia de lo que vimos en el @sec-clasif sobre la importancia de variables en bosques aleatorios, en modelos lineales qué variable es más importante usualmente se define por el valor absoluto del estadístico $t$ (entre más grande sea, más importante es la variable):
 
 ```{r}
 lm_spec |>
   set_engine("lm") |> 
   fit(Edad~.,
       data = juice(abulon_prep)) |> 
-  vip(geom = "point") +
-  geom_point(color = "dodgerblue4") +
+  vip(geom = "col") +
+  # geom_point(color = "dodgerblue4") +
   labs(title = "Importancia de variables",
        subtitle = "Modelo: RLM") +
   theme_bw()
@@ -187,10 +194,10 @@ abulon_test |> yardstick::rsq(truth = Edad,
 )
 ```
 
-El RMSE es mayor en los datos de prueba que en los de entrenamiento (2.35 vs. 2.18), mientras que el $R^2$ es mayor en los datos de entrenamiento (0.53 vs. 0.48). En cualquiera de los casos no tenemos una diferencia particularmente grande, por lo que no podemos asegurar que el modelo se encuentre sobreajustado (la diferencia es del 5-7% con respecto a los datos de entrenamiento) y podemos decir que el modelo generaliza "bien". ¿Por qué "bien"? Porque el valor de $R^2$ no es precisamente alentador, pero no hay una diferencia grande entre los datos entre los que fue entrenado y datos que nunca vio; es decir, el modelo está sub ajustado y utilizarlo para predicciones sería arriesgado.
+El RMSE es mayor en los datos de prueba que en los de entrenamiento (2.35 vs. 2.18), mientras que el $R^2$ es mayor en los datos de entrenamiento (0.53 vs. 0.48). En cualquiera de los casos no tenemos una diferencia particularmente grande, por lo que no podemos asegurar que el modelo se encuentre sobreajustado (la diferencia es del 5-7% con respecto a los datos de entrenamiento) y podemos decir que el modelo generaliza "bien". ¿Por qué "bien"? Porque el valor de $R^2$ no es precisamente alentador, pero no hay una diferencia grande entre los datos entre los que fue entrenado y datos que nunca vio; es decir, el modelo está sub-ajustado y utilizarlo para predicciones sería arriesgado.
 
 :::{.callout-note}
-Para variar, ¿qué tanto es tantito? Pues resulta que si hacemos una partición entrenamiento prueba, hacemos validación cruzada, etc., etc., nuestro valor para los datos de prueba depende de cómo se haya hecho esa partición. Si tenemos mala suerte podemos terminar con pésimas métricas de evaluación, mientras que si tenemos suerte pueden ser excelentes, solo por un proceso aleatorio. Es por eso que es importante realizar validación cruzada, o tener datos que sean realmente de prueba. De cualquier manera, una diferencia hacia arriba o hacia abajo del 5-10% puede ser dada por "buena". Qué tan estricto tenga que ser el criterio dependerá, para variar, de tu problema, tus objetivos, y qué consecuencias tenga para ti el cometer un error.
+Para variar, ¿qué tanto es tantito? Pues resulta que si hacemos una partición entrenamiento prueba, hacemos validación cruzada, etc., etc., nuestro valor para los datos de prueba depende de cómo se haya hecho esa partición. Si tenemos mala suerte podemos terminar con pésimas métricas de evaluación. Si tenemos buena suerte, pueden ser excelentes. Todo solo por un proceso aleatorio. Es por eso que es importante o realizar validación cruzada o tener datos que sean realmente de prueba. De cualquier manera, una diferencia hacia arriba o hacia abajo del 5-10% puede ser dada por "buena". ¿Qué tan estricto tiene que ser el criterio? Depende, para variar, de tu problema, tus objetivos, y qué consecuencias tenga para ti el cometer un error.
 :::
 
 ¿Y para interpretación? Pues si no podemos hacer buenas predicciones no tiene caso hacer interpretaciones; sin embargo, veamos por qué, aún si tuviera un buen poder predictivo, no podemos hacer una buena interpretación. Volvamos a ver los gráficos diagnósticos:
@@ -258,7 +265,7 @@ Ahora sí podemos interpretar adecuadamente nuestro modelo, el problema es la ca
 
 Pero antes, ¿qué diablos representa una interacción? En el @sec-param hablábamos que indicaban que un factor dependía de otro, y aquí es exactamente eso: una interacción representa una relación de dependencia/correlación/moderación entre los predictores. **En una RLM sin interacciones un cambio unitario en $X_i$ resulta en un cambio constante ($\beta$) en $Y$ al mantener fijos los valores del resto de variables**. En casos con multicolinealidad vimos que esto no es el caso, y que puede ser que los cambios en en $X_1$ que afectan a $y$ están siendo modulados por $X_2$. Un ejemplo cotidiano es la ingesta de medicamentos y el consumo de bebidas alcohólicas (no lo hagas). El medicamento puede no tener reaccciones adversas tomado solo, pero tomar bebidas alcoholicas puede hacer que su efecto se reduzca dramáticamente o, incluso, comprometer la salud del paciente.
 
-Hasta el momento en nuestro ejemplo de los abulontes todos nuestros predictores contribuyen de forma **aditiva** (independiente) a la predicción de la variable dependiente. Si queremos reflejar casos como el ejemplo de los medicamentos y las bebidas alcohólicas es necesario, entonces, incluir términos que no sean aditivos. Usualmente la interacción se incluye con términos multiplicativos (en el @sec-glm veremos algunas otras formas de hacerlo), que en un caso con dos variables se vería de la siguiente manera:
+Hasta el momento en nuestro ejemplo de los abulontes todos nuestros predictores contribuyen de forma **aditiva** (independiente) a la predicción de la variable dependiente. Si queremos reflejar casos como el ejemplo de los medicamentos y las bebidas alcohólicas es necesario, entonces, incluir términos que no sean aditivos. Usualmente la interacción se incluye con términos multiplicativos, que en un caso con dos variables se vería de la siguiente manera:
 
 $$
 Y = \alpha + \beta_1*x_1 + \beta_2*x_2 + \beta_3*(x_1*x_2) + \epsilon
@@ -297,7 +304,7 @@ lm_inter <- lm(Edad~L_o*D_o*A_o*P_e*P_sc*P_v*P_c, data = abulon_data)
 summary(lm_inter)
 ```
 
-¡Tenemos un montón de parámetros! No solo eso, sino que coeficientes que antes eran significativos ya no lo son. Pensemos por un momento en lo que hicimos. Si estos términos de interacción corresponden con los productos de las variables involucradas son, entonces, altamente colineales con las variables originales. ¿Importa esto para la predicción? Para nada. Si pones atención, tanto el $R^2$ como el RSE son mejores que en el modelo de efectos de primer orden (principales).
+¡Tenemos un ch...orro de parámetros! No solo eso, sino que coeficientes que antes eran significativos ya no lo son. Pensemos por un momento en lo que hicimos. Si estos términos de interacción corresponden con los productos de las variables involucradas son, entonces, altamente colineales con las variables originales. ¿Importa esto para la predicción? Para nada. Si pones atención, tanto el $R^2$ como el RSE son mejores que en el modelo de efectos de primer orden (principales).
 
 :::{.callout-tip}
 **Te recomiendo incluir en tu modelo solo interacciones relevantes y no interpretar los efectos de primer orden de las que sean significativas**. Si la interacción es significativamente diferente de 0 no podemos interpretar los coeficientes "individuales". Las razones teóricas de esto las vimos arriba.
@@ -314,7 +321,7 @@ No porque "podamos" incluir tantas variables querramos (y sus interacciones) qui
 En nuestro ejemplo tenemos `P_e`, `P_sc`, `P_v`, `P_c`, que todas indican lo mismo: la masa del individuo, solo que vista de distintas materas. Con la longitud y el diámetro tenemos una historia similar, y tenemos además la correlación inherente entre todas por que representan la talla de un organismo: un abulón más largo seguramente tendrá valores más altos en casi todas las demás variables.
 
 :::{.callout-important}
-Menos usualmente es más en modelos multivariados (como en muchas otras cosas); es decir, **buscamos modelos parsimoniosos**.
+Menos usualmente es más en modelos multivariados (como en muchas otras cosas); es decir, **buscamos modelos parsimoniosos**. OJO: cuando hablamos de modelos parsimoniosos no hablamos necesariamente de los modelos matemáticamente más simples, sino de aquellos en los que no incluimos información "basura".
 :::
 
 En el @sec-glm vamos a hablar más a profundidad de cómo encontrar el modelo más parsimonioso de entre un conjunto de posibilidades, pero antes de eso veamos cómo podemos penalizar nuestros coeficientes según qué tan importantes sean.
@@ -324,6 +331,7 @@ En el @sec-glm vamos a hablar más a profundidad de cómo encontrar el modelo m�
 Arriba vimos un modelo lineal que tiene todo lo que no debería de tener, especialmente en el departamento de variables correlacionadas y no informativas. Imaginemos que nuestra teoría justifica que las incluyamos todas, ¿cómo podemos asignarle menos peso a las que no sean tan relevantes? Penalizando nuestros modelos. ¿Cómo hacemos esto? Ajustamos nuestro modelo y luego penalizamos los coeficientes que sean pequeños utilizando un término que puedes encontrar como $\alpha$ o $\lambda$, cuya función es **minimizar** (para variar):
 
 1. La **suma de cuadrados de nuestras pendientes**. Esto hace que los coeficientes se vuelvan más cercanos hacia 0 y hacia los demás. A este tipo de regresión se le conoce como **Regresión Ridge**, y a su penalización como **penalización L2** (L de *loss*; es decir, pérdida y el 2 hace referencia al cuadrado de la suma). Esta regresión podemos aplicarla cuando tengamos muchos efectos pequeños o medianos, o cuando debamos de forzar la inclusión de todos los términos. Matemáticamente:
+
 $$
 RSS_{Ridge}(\beta_j, \beta_0) = \sum_{i=1}^n(y_i-(\beta_j*x_i+\beta_0))^2+\alpha*\sum_{j=1}^p\beta_j^2    
 $$
@@ -338,7 +346,7 @@ $$
 Es extremadamente importante que, si vamos a aplicar alguno de estos modelos, escalemos los datos adecuadamente. De no hacerlo, la diferencia en escalas hará que cambien las escalas de los coeficientes y que la regularización no se aplique homogéneamente.
 :::
 
-Evidentemente, aquí añadimos un hiper-parámetro a nuestro modelo de RLM, el cual hay que optimizar. En `R` esto está implementado en la librería `glmnet`, pero podemos seguir utilizando `tidymodels` para homogeneizar los procesos, pero antes de eso hablemos de cómo podemos escalar nuestras variables y qué efectos tienen esas transformaciones sobre la interpretación de nuestros coeficientes.
+Evidentemente, aquí añadimos un híper-parámetro a nuestro modelo de RLM, el cual hay que optimizar. En `R` esto está implementado en la librería `glmnet`, (aunque podemos seguir utilizando `tidymodels`) pero hablemos de cómo podemos escalar nuestras variables y qué efectos tienen esas transformaciones sobre la interpretación de nuestros coeficientes.
 
 #### Re-visitando las transformaciones
 
@@ -360,7 +368,7 @@ y = \alpha' - \beta' \overline{x} + \beta'x + \epsilon
 
 Esto también implica que $\beta = \beta'$, lo cual tiene todo el sentido del mundo, solo estamos desplazando la distribución de $x$ a tener media 0, no estamos modificando su escala de ninguna manera.
 
-En la estandarización la historia es un poco diferente, pues aquí sí que cambiamos la escala tanto de $x$ como de $y$, que ahora tendrán valores $Z$ que representan a cuántas desviaciones estándar está cada valor de la media. La ventaja es que el intercepto siempre está alrededor de 0, y las pendientes en el intervalo $[-1, 1]$. La interpretación de la pendiente aquí sí cambia. Si tienes una pendiente de 0.9 en escala $Z$, autamáticamente sé que me voy a mover 0.9 desviaciones estándares en $y$, independientemente de su media o de su desviación estándar. Como ves, la interpretación no es tan simple como en el caso anterior, así que si es importante interpretar las pendientes vamos a preferir el centrado.
+En la estandarización la historia es un poco diferente, pues aquí sí que cambiamos la escala tanto de $x$ como de $y$, que ahora tendrán valores $Z$ que representan a cuántas desviaciones estándar está cada valor de la media. La ventaja es que el intercepto siempre está alrededor de 0, y las pendientes en el intervalo $[-1, 1]$. La interpretación de la pendiente aquí sí cambia. Si tienes una pendiente de 0.9 en escala $Z$, autamáticamente sé que me voy a mover 0.9 desviaciones estándares en $y$, independientemente de su media o de su desviación estándar. Como ves, la interpretación no es tan simple como en el caso anterior, pero la reconversión tampoco es tan engorrosa: solamente hay que multiplicar la pendiente por la desviación estándar de $y$. El intercepto es otra historia.
 
 Ahora sí, podemos ir a aplicar los modelos de regresión penalizados.
 
@@ -412,9 +420,8 @@ tune_wf <- workflow() |>
 
 ```{r}
 set.seed(123)
-# Asignar 8 núcleos para la computación en paralelo
-# Revisa cuántos puedes disponer tú (más o menos)
-doParallel::registerDoParallel(cores = 8)
+# Asignar núcleos para la computación en paralelo
+doParallel::registerDoParallel(cores = parallel::detectCores(logical = F))
 
 # Buscar los mejores hiperparámetros
 tune_ridge <- tune_grid(tune_wf,
@@ -429,7 +436,7 @@ plot_optim_res <- function(tune_res, cv_order){
   tune_res |> collect_metrics() |>
               select(mean, std_err, penalty, .metric) |> 
               ggplot(aes(penalty, mean, color = .metric)) +
-              geom_line(size = 1.5) +
+              geom_line(linewidth = 1.5) +
               geom_errorbar(aes(ymin = mean - std_err,
                                 ymax = mean + std_err),
                             alpha = 0.5) +
@@ -468,8 +475,7 @@ final_fit <- final_ridge |>
 
 final_res <- final_fit |> extract_fit_parsnip()
 
-final_res |> vip(geom = "point") +
-             geom_point(color = "deepskyblue3") +
+final_res |> vip(geom = "col") +
              theme_bw() +
              labs(title = "Importancia de variables",
                   y = element_blank())
@@ -514,7 +520,7 @@ tune_wf <- workflow() |>
            add_model(lasso_spec)
 
 # Ajuste de hiperparámetros
-doParallel::registerDoParallel(cores = 8)
+doParallel::registerDoParallel(cores = parallel::detectCores(logical = F))
 tune_lasso <- tune_grid(tune_wf,
                         resamples = abulon_cv,
                         grid = 50)
@@ -552,7 +558,7 @@ tune_wf <- workflow() |>
            add_model(lasso_spec)
 
 # Ajuste de hiperparámetros
-doParallel::registerDoParallel(cores = 8)
+doParallel::registerDoParallel(cores = parallel::detectCores(logical = F))
 tune_lasso <- tune_grid(tune_wf,
                         resamples = abulon_cv,
                         grid = 50)
@@ -579,9 +585,9 @@ fit_res |> tidy() |> filter(estimate == 0) |> select(term)
 
 #### Consideraciones
 
-1. Esta propiedad de que algunos términos se hagan exactamente 0 y, por lo tanto, sean eliminados del modelo es lo que hace que la regresión Lasso sea utilizada como un método de selección de variables, mientras que la regresión Ridge es solo una forma de controlar el grado de influencia de todas las variables en el modelo. En este sentido, la regresión Lasso brilla en problemas altamente dimensionales como nuestro modelo con interacciones, mientras que la regresión Ridge tiene más sentido cuando tenemos problemas con menos variables.
+1. Esta propiedad de que algunos términos se hagan exactamente 0 y, por lo tanto, sean eliminados del modelo es lo que hace que la regresión Lasso sea utilizada como un método de selección de variables, mientras que la regresión Ridge es solo una forma de controlar el grado de influencia de todas las variables en el modelo. En este sentido, **la regresión Lasso brilla en problemas altamente dimensionales como nuestro modelo con interacciones, mientras que la regresión Ridge tiene más sentido cuando tenemos problemas con menos variables**.
 
-2. Habrás notado que en estas regresiones penalizadas no hemos hablado de intervalos de confianza o de valores de p. Esto no es porque me de flojera hablar de ellos, no. En realidad, aunque podemos calcular los errores estándares para los coeficientes de manera muy sencilla con Bootstrap, por ejemplo, estos no son muy informativos para estimaciones altamente sesgadas como las que resultan de la implementación de estos modelos penalizados. ¿Por qué? Porque da la casualdidad de que la estimación penalizada reduce la varianza de los estimadores introduciendo un sesgo sustancial, de modo que este se vuelve una parte muy importante de su error cuadrático medio, mientras qeu la varianza puede contribuir solo en una pequeña parte. ¿La qué cosa de quién? En pocas palabras, el error estándar de cada coeficiente ya no representa solo qué tan seguros estamos de la estimación, sino también incluye el cómo fue penalizado; por lo tanto, no podemos confiar ciegamente en lo que nos dicen.
+2. Habrás notado que en estas regresiones penalizadas **no hemos hablado de intervalos de confianza o de valores de p**. Esto no es porque me de flojera hablar de ellos, no. En realidad, aunque podemos calcular los errores estándares para los coeficientes de manera muy sencilla con Bootstrap, por ejemplo, estos no son muy informativos para estimaciones altamente sesgadas como las que resultan de la implementación de estos modelos penalizados. ¿Por qué? Porque da la casualdidad de que la estimación penalizada reduce la varianza de los estimadores introduciendo un sesgo sustancial, de modo que este se vuelve una parte muy importante de su error cuadrático medio, mientras que la varianza puede contribuir solo en una pequeña parte. ¿La qué cosa de quién? En pocas palabras, **el error estándar de cada coeficiente ya no representa solo qué tan seguros estamos de la estimación, sino también incluye el cómo fue penalizado**; por lo tanto, no podemos confiar ciegamente en lo que nos dicen.
 
 3. ¿Esto quiere decir que no debo de aplicar estos modelos de regresión? En absoluto, simplemente sé consciente de que no puedes reportar valores de p, que a algunos revisores eso puede no agradarles, y que entonces la recomendación es utilizar una regresión Ridge solo cuando estemos interesados en temas de predicción, y la regresión Lasso solo como un paso previo para seleccionar qué variables eliminar del análisis cuando tengamos demasiadas variables jugando al mismo tiempo.
 
@@ -619,8 +625,7 @@ Tenemos nuestro intercepto, que sabemos que es la ordenada al origen, y tenemos 
 
 ```{r}
 ggplot(data = na.omit(penguins), aes(x = sex, y = body_mass_g)) +
-  geom_point(color = "dodgerblue4", alpha = 0.5) +
-  theme_bw()
+  geom_point(color = "dodgerblue4", alpha = 0.5)
 ```
 
 Si imaginas una línea que conecte el centro de ambas columnas de puntos salta que **la pendiente representa la diferencia en la variable dependiente entre ambas categorías**. ¿Recuerdas que dije que era arbitrario el cómo asignamos la codificación? En este caso `R` la realiza de forma alfabética: `female` va antes que `male`, por lo tanto son 0 y 1. ¿Y el intercepto? Este no es tan evidente, pero representa la media del grupo 0. ¿Por qué representan eso? Recuerda las definiciones que dimos en el @sec-rls:
@@ -645,7 +650,7 @@ male_mass - female_mass
 
 ¡MAGIA NEGRA! En absoluto, solo es una consecuencia de cómo introdujimos la variable `sex` al modelo. 
 
-Algo importante a notar es que la pendiente es independiente de nuestros grupos, en el sentido de que no importa si les asignamos 0 y 1, 15 y 16, o 100 y 101, siempre que la diferencia entre ellos sea de una unidad. El intercepto, por el contrario, sí que depende del valor de nuestros grupos, pues la recta debe de *estirarse* para cortar al eje $y$. Es por esto el hincapié en codificar con 0 y 1. Este proceso se denomina en el área de ingenieria de variables como **codificación de variables**, particularmente como crear ***dummy variables***. Ahora que ya tienes la prueba empírica déjame ser feliz con una demostración matemática muy sencilla, sustituyendo los valores de nuestros grupos en nuestro modelo lineal:
+Algo importante a notar es que la pendiente es independiente de nuestros grupos, en el sentido de que no importa si les asignamos 0 y 1, 15 y 16, o 100 y 101, siempre que la diferencia entre los valores codificados sea de una unidad. El intercepto, por el contrario, sí que depende del valor de nuestros grupos, pues la recta debe de *estirarse* para cortar al eje $y$. Es por esto el hincapié en codificar con 0 y 1. Este proceso se denomina en el área de ingenieria de variables como **codificación de variables**, particularmente como crear ***dummy variables***. Ahora que ya tienes la prueba empírica déjame ser feliz con una demostración matemática muy sencilla, sustituyendo los valores de nuestros grupos en nuestro modelo lineal:
 
 \begin{align*}
 masa = \alpha + \beta * sexo + \epsilon \\
@@ -681,10 +686,10 @@ $$
 La variable "Especie" es categórica nominal con tres niveles. Nuevamente, siguiendo la lógica anterior podemos codificarla de la siguiente manera, ¿no?
 
 0. Adelie
-2. Chinstrap
-3. Gentoo
+1. Chinstrap
+2. Gentoo
 
-¡NO! Si hacemos eso estamos indicando que la variable Isla es categórica ordinal, de modo que Adelie < Chinstrap < Gentoo. Aunque en el caso binario en cierta forma hicimos lo mismo, no importa, pues ya vimos que solamente estamos describiendo la diferencia entre ambos niveles y en realidad se mantiene que ambas categorías tienen la misma importancia (por ello es una variable nominal). ¿Cómo lo hacemos entonces cuando tenemos más de dos predictores? Al igual que en el caso anterior ajustemos el modelo lineal:
+¡NO! Si hacemos eso estamos indicando que la variable Especie es categórica ordinal, de modo que Adelie < Chinstrap < Gentoo. Aunque en el caso binario en cierta forma hicimos lo mismo, no importa, pues ya vimos que solamente estamos describiendo la diferencia entre ambos niveles y en realidad se mantiene que ambas categorías tienen la misma importancia (por ello es una variable nominal). ¿Cómo lo hacemos entonces cuando tenemos más de dos predictores? Al igual que en el caso anterior ajustemos el modelo lineal:
 
 ```{r}
 lm_m_sp <- lm(body_mass_g~species, data = penguins)
@@ -697,7 +702,7 @@ Como era de esperarse, ahora no tenemos solo una pendiente, sino dos. Espera, ¿
 - `speciesChinstrap`: 1 si es `Chinstrap`, 0 en caso contrario.
 - `speciesGentoo`: 1 si es `Gentoo`, 0 en caso contrario.
 
-Al igual que en el caso anterior, una de ellas sirve de "referencia". Igual que en el caso anterior, `R` toma como referencia la primera en orden alfabético. Es decir, el intercepto es el promedio de Adelie:
+Al igual que en el caso anterior, una de ellas sirve de "referencia". Como en el caso anterior, `R` toma como referencia la primera en orden alfabético. Es decir, el intercepto es el promedio de Adelie:
 
 ```{r}
 mean_Adelie <- mean(penguins$body_mass_g[penguins$species == "Adelie"],
@@ -723,7 +728,7 @@ mean_Gentoo - mean_Adelie
 
 
 :::{.callout-tip}
-En `tidymodels` puedes especificar el uso de *dummy variables* añadiendo el paso `step_dummy(var1, var2, ...)` a nuestra receta, donde las `var` son las variables categóricas.
+En `tidymodels` puedes especificar el uso de *dummy variables* añadiendo el paso `step_dummy(var1, var2, ...)` a tu receta, donde las `var` son las variables categóricas.
 :::
 
 ## Corolario
