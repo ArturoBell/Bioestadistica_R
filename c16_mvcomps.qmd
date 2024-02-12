@@ -10,10 +10,16 @@ library(ggplot2)
 library(palmerpenguins)
 library(dplyr)
 # library(Hotelling)
-# library(GridExtra)
 library(GGally)
 library(vegan)
+# devtools::install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis")
 library(pairwiseAdonis)
+```
+
+```{r}
+theme_set(see::theme_lucid() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()))
 ```
 
 
@@ -82,7 +88,7 @@ robs_plot <- ggplot(data = robs, aes(z)) +
              theme_bw() + 
              labs(title = 
                     "Observaciones aleatorias a un alpha de 0.05",
-                  subtitle = "Bandas indican límites del LS   ",
+                  subtitle = "Bandas indican el límite de \"significancia\"",
                   caption = paste(n, " datos simulados"),
                   x = "Z",
                   y = element_blank()
@@ -271,22 +277,18 @@ La función `hotelling.test` puede recibir una fórmula, pero hay un error y tan
 El valor de p no es exactamente 0, solo es extremadamente pequeño (del orden $\times10^{-16}$ o aún más pequeño) y la función lo muestra como 0.
 :::
 
-:::{.callout-tip}
-¿Cómo diferenciar entre dónde utilizar `filter` y dónde `select`? `filter` extrae renglones, mientras que `select` extrae columnas.
-:::
-
 Si la distribución del estadístico de prueba es la distribución $F$, entonces los resultados se interpretan como los resultados de un ANOVA: Hay diferencias en al menos una de las medias ($F_{4,269} = 4586.7; p < 0.0001$).
 
 #### Comparaciones univariadas
 
-Realizaremos 4 comparaciones univariadas. ¿tiene sentido aplicar una corrección de Bonferroni? 
+Realizaremos 4 comparaciones univariadas. ¿tiene sentido aplicar una corrección de Bonferroni?
 
 ```{r}
 # Formamos un objeto para la aplicación de la prueba t
 t2_data <- num_data |>
            filter(species == "Adelie" | species == "Gentoo")
 
-# Prueba t para lcada variable
+# Prueba t para cada variable
 t.test(bill_length_mm~species, data = t2_data)
 t.test(bill_depth_mm~species, data = t2_data)
 t.test(flipper_length_mm~species, data = t2_data)
@@ -295,11 +297,16 @@ t.test(body_mass_g~species, data = t2_data)
 
 En todos los casos rechazamos la hipótesis de nulidad ($p < 0.0001$), lo cual no es de sorprender: los pingüinos Adelie son más pequeños que los Gentoo (aunque sorprende el resultado de la profundidad del pico). Aquí normalmente haríamos un gráfico de acompañamiento, pero mejor escalemos al caso para más de dos grupos.
 
+```{r}
+p.adjust(c(0.04, 0.05, 0.0001, 0.02), method = "bonferroni")
+```
+
+
 ## Análisis Multivariado de la Varianza
 
 Es, como te imaginarás, una extensión multivariada del ANOVA factorial. Aquí ya no entraré en los detalles de la prueba, pues vimos los fundamentos del ANOVA en el @sec-param, y cómo comprobar los supuestos básicos en @sec-intro-mv. Solo es importante conocer que se puede realizar con diversos estadísticos de prueba, entre los que destacan
 
-1. La traza de Pillai: Contenida en el intervalo $[0,1]$, donde valores cercanos a 1 sugieren diferencias en al menos uno de los grupos en el espacio multivariado. Este es el estadístico más robusto a la violación de los supuestos del MANOVA (normalidad multivariada y homogeneidad de las matrices de covarianza).
+1. La traza de Pillai: Contenida en el intervalo $[0,1]$, donde valores cercanos a 1 sugieren diferencias en al menos uno de los grupos en el espacio multivariado. Este es el estadístico más robusto a la violación de los supuestos del MANOVA (normalidad multivariada del error y homogeneidad de las matrices de covarianza).
 2. La $\lambda$ de Wilk. También contenida en el intervalo $[0,1]$, aunque aquí son los valores más cercanos a 0 los que sugieren las diferencias. Si se cumplen todos los supuestos, esta es la prueba más relacionada con el criterio de la razón de verosimilitud (más sobre esto en @sec-glm).
 
 Y que el procedimiento $post-hoc$ tiene dos pasos:
@@ -331,6 +338,14 @@ res_manova <- manova(cbind(bill_length_mm,
 summary(res_manova)
 ```
 
+:::{.callout-important}
+Al igual que el supuesto de normalidad del ANOVA, el supuesto de normalidad multivariada está en términos del error, por lo tanto, debemos de realizarla con los **residuales** del MANOVA. Otro supuesto es el de no multicolinealidad, pero hablaremos más adelante de cómo verificarlo y por qué es importante.
+:::
+
+```{r}
+MVN::mvn(manova_model$residuals, mvnTest = "royston")
+```
+
 Posteriormente podemos utilizar este objeto para realizar un ANOVA por variable. Nuevamente, ¿es necesario corregir los valores de p?
 
 ```{r}
@@ -357,6 +372,8 @@ base_plot <- ggplot(data = num_data,
                     aes(x = species,
                         colour = species)) +
              theme_bw() 
+
+base_plot
 ```
 
 Luego aplicamos el ciclo `for`. Como en este caso tenemos los nombres de columnas en un vector de cadenas de caracter necesitamos de dos pasos: convertir la cadena de caracteres a un símboo con la función `sym()` y luego quitarle las comillas con el operador `!!` dentro de `aes`:
@@ -365,7 +382,9 @@ Luego aplicamos el ciclo `for`. Como en este caso tenemos los nombres de columna
 # Para cada variable:
 
 for (variable in var_names){
+  # Asigna el nombre de la variable como símbolo (sin comillas)
   plot_var <- sym(variable)
+  # Genera el gráfico para la variable
   plot_list[[variable]] <- base_plot +
     geom_violin(aes(y = !!plot_var),
                 show.legend = F) +
@@ -378,13 +397,17 @@ for (variable in var_names){
 }
 ```
 
-Luego podemos graficarlas todas juntas con la función `GridExtra::grid.arrange()`, solo que hay que "forzarla" utilizando la función `do.call(FUN, args)` para evitar un error:
+:::{.callout-tip}
+El operador `!!` es una ayuda de `tidy` para poder pasar los nombres de las variables de forma que sean reconocidas por las funciones del `tidyverse`. Forma parte de los "Tidy eval helpers". Si quieres ver más información puedes revisar [su documentación](https://ggplot2.tidyverse.org/reference/tidyeval.html). 
+:::
+
+Luego podemos juntarlas utilizando `patchwork`:
 
 ```{r}
-do.call(gridExtra::grid.arrange, args = plot_list)
+patchwork::wrap_plots(plot_list, ncol = 2, nrow = 2)
 ```
 
-Otra forma sería con `facet_wrap`, tratando las variables como si fueran variables de agrupamiento (¿te animas a programarlo?), pero otra manera, tal vez más sencilla de representar toda esta información en un solo panel es un gráfico de coordenadas paralelas:
+Otra forma sería con `facet_wrap`, tratando las variables como si fueran variables de agrupamiento (¿te animas a programarlo?). Una forma tal vez más simple de representar toda esta información en un solo panel es un gráfico de coordenadas paralelas:
 
 ```{r}
 #| message: false
@@ -397,13 +420,11 @@ parcoord_plot <- ggparcoord(data = num_data,
                             scale = "std",
                             order = "anyClass",
                             alphaLines = 0.5) +
-                 theme_bw() +
                  labs(title = "Gráfico de coordenadas paralelas",
-                      subtitle = "Valores estandarizados",
                       y = element_blank(),
                       x = element_blank(),
-                      caption = "Datos: Iris") +
-                 scale_color_discrete(name = "Especie")
+                      caption = "Datos: Palmerpenguins") +
+                 scale_color_discrete(name = "Especie") 
 parcoord_plot
 ```
 
@@ -417,7 +438,7 @@ Te recomiendo visitar [este sitio web](bit.ly/permutation_analysis) para que te 
 
 La prueba trabaja en tres pasos:
 
-1. Calcula un valor de $F = \frac{SS_A}{SS_R}\cdot \left[\frac{N-g}{g-1} \right]$ para el acomodo original de los datos.
+1. Calcula un valor de $F = \frac{SS_A}{SS_R} \cdot \left[\frac{N-g}{g-1} \right]$ para el acomodo original de los datos.
 
 2. Permuta las etiquetas de la matriz de distancias $k$ veces, calculando un valor de $F$ para cada permutación. Esto permite "crear" una distribución empírica con todas las $F$.
 
@@ -457,7 +478,7 @@ dist_pca <- FactoMineR::PCA(scaled_data,
                             graph = F,
                             ncp = length(num_data),
                             scale.unit = F)
-factoextra::fviz_pca_ind(dist_pca,
+factoextra::fviz_pca_biplot(dist_pca,
                          geom.ind = "point",
                          col.ind = species,
                          addEllipses = T,
@@ -465,7 +486,7 @@ factoextra::fviz_pca_ind(dist_pca,
                          legend.title = "Especies")
 ```
 
-Como era de esperarse hubo diferencias muy marcadas, principalmente en los pingüinos Gentoo pero ¿en qué variables? No existe una prueba *post-hoc* como tal para el PERMANOVA, pero podemos hacer un PERMANOVA para cada par de especies (por último, ¿es necesario corregir los valores de p de estos PERMANOVAs?) con la función `pairwiseAdonis::pairwise.adonis2`:
+Como era de esperarse hubo diferencias muy marcadas, principalmente en los pingüinos Gentoo pero ¿en qué variables? No existe una prueba *post-hoc* como tal para el PERMANOVA, pero podemos hacer un PERMANOVA para cada par de especies (nuevamente, ¿es necesario corregir los valores de p de estos PERMANOVAs?) con la función `pairwiseAdonis::pairwise.adonis2`:
 
 ```{r}
 pw_adonis <- pairwise.adonis2(x = dist_mat~species,
@@ -473,6 +494,6 @@ pw_adonis <- pairwise.adonis2(x = dist_mat~species,
 pw_adonis
 ```
 
-Y luego iríamos por cada par de especies viendo entre qué variables están las diferencias. ¿Engorroso? Lo que le sigue, pero hay que hacerlo si te interesa saber en qué variables están las diferencias, caso contrario puedes saltarte esta útlima parte y solo reportar los resultados de los PERMANOVAs para cada par de especies.
+Y luego iríamos por cada par de especies con "diferencias significativas" viendo entre qué variables están las diferencias. ¿Engorroso? Lo que le sigue, pero hay que hacerlo si te interesa saber en qué variables están las diferencias, caso contrario puedes saltarte esta útlima parte y solo reportar los resultados de los PERMANOVAs para cada par de especies.
 
-Esto es todo para esta sesión. Espero que haya sido de tu agrado y que te sea útil en algún momento. En la siguiente sesión volveremos al aprendizaje automatizado, esta vez para hablar de algo que podemos aplicar en vez de los MANOVAs: la clasificación.
+Esto es todo para esta sesión. Espero que haya sido de tu agrado y que te sea útil en algún momento. En la siguiente sesión volveremos al aprendizaje automatizado, esta vez para hablar de algo que, dependiendo del problema, podemos aplicar en vez de los MANOVAs: la clasificación.
