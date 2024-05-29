@@ -506,7 +506,7 @@ autoplot(rf_auc) +
 En la función `roc_curve` del objeto `rf_auc` estamos pasando un vector con tres objetos ocultos: `.pred_Adelie`, `.pred_Chinstrap`, `.pred_Gentoo`. Estos contienen la probabilidad de pertenencia de cada observación a cada especie, y es con los que se obtiene la curva ROC que le corresponde a cada especie, pues la curva es solo para clasificaciones binarias. ¿Cómo funciona en este caso? La clase positiva es la clase predicha en cada curva, y la negativa es lo demás, básicamente representando un clasificador clase + vs. resto.
 :::
 
-11. **Elaborar el reporte** ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a la [GitHub Pages](https://arturobell.github.io/01072022/) de @EnríquezGarcíaetal_2023 para ver cómo describir el método, pero los resultados podemos resumirlos como:
+11. **Elaborar el reporte** ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a la [GitHub Pages](https://arturobell.github.io/01072022/) de @EnriquezGarciaetal_2023 para ver cómo describir el método, pero los resultados podemos resumirlos como:
 
 > El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 1 en los datos de prueba). Las variables más importantes para la clasificación fueron la longitud del culmen ($\approx 17\%$), seguida de la longitud de la aleta ($\approx 12.5\%$; @fig-varimp). El bosque aleatorio optimizado estuvo compuesto por 800 árboles, cada uno formado con un predictor (`mtry`), considerando al menos 5 observaciones para poder hacer una división (`n_min`).
 
