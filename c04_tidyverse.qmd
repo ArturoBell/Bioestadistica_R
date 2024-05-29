@@ -18,6 +18,7 @@ Veamos un ejemplo en el cual calcularemos la longitud de pico promedio para cada
 
 ```{r}
 datos1 <- palmerpenguins::penguins
+head(datos1)
 ```
 
 Ahora, obtengamos los promedios con la función `aggregate`, tal y como vimos en la sesión anterior:
@@ -35,7 +36,8 @@ library(dplyr)
 
 datos1 |>
   group_by(species) |>
-  summarise(mbill_l = mean(bill_length_mm, na.rm = T))
+  summarise(mbill_l = mean(bill_length_mm, na.rm = T),
+            mbill_d = mean(bill_depth_mm, na.rm = T))
 ```
 
 Notarás que el resultado es exactamente el mismo, aunque la forma de hacerlo es diferente. Descompongámosla paso a paso para ver qué es lo que está pasando:
@@ -102,6 +104,12 @@ Con `tidy`:
 
 ```{r}
 datos1 |> filter(species == "Adelie" & island == "Biscoe")
+```
+
+Ejercicio: Obtén todos los individuos de las especies Adelie y Gentoo:
+
+```{r}
+
 ```
 
 ¿Por qué empezar con un ejemplo tan "complejo" como el caso anterior? Para dejar "lo peor" al inicio, y a partir de ahí las cosas puedan fluir un poco mejor.
