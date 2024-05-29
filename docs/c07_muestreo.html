@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -46,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -138,15 +116,44 @@ div.csl-indent {
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -154,11 +161,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s02_fundan.html">Fundamentos del análisis de datos</a></li><li class="breadcrumb-item"><a href="./c07_muestreo.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -166,209 +178,238 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biología, Ciencia de Datos y `R`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos del análisis de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas básicas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas no paramétricas y modelación no lineal</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas Multivariadas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link active" data-scroll-target="#datos-y-variables"><span class="toc-section-number">7.1</span>  Datos y variables</a></li>
-  <li><a href="#qué-datos-obtener" id="toc-qué-datos-obtener" class="nav-link" data-scroll-target="#qué-datos-obtener"><span class="toc-section-number">7.2</span>  ¿Qué datos obtener?</a>
+  <li><a href="#datos-y-variables" id="toc-datos-y-variables" class="nav-link active" data-scroll-target="#datos-y-variables"><span class="header-section-number">7.1</span> Datos y variables</a></li>
+  <li><a href="#qué-datos-obtener" id="toc-qué-datos-obtener" class="nav-link" data-scroll-target="#qué-datos-obtener"><span class="header-section-number">7.2</span> ¿Qué datos obtener?</a>
   <ul class="collapse">
-  <li><a href="#coincidencias" id="toc-coincidencias" class="nav-link" data-scroll-target="#coincidencias"><span class="toc-section-number">7.2.1</span>  Coincidencias</a></li>
-  <li><a href="#contradicciones" id="toc-contradicciones" class="nav-link" data-scroll-target="#contradicciones"><span class="toc-section-number">7.2.2</span>  Contradicciones</a></li>
+  <li><a href="#coincidencias" id="toc-coincidencias" class="nav-link" data-scroll-target="#coincidencias"><span class="header-section-number">7.2.1</span> Coincidencias</a></li>
+  <li><a href="#contradicciones" id="toc-contradicciones" class="nav-link" data-scroll-target="#contradicciones"><span class="header-section-number">7.2.2</span> Contradicciones</a></li>
   </ul></li>
-  <li><a href="#un-último-paréntesis" id="toc-un-último-paréntesis" class="nav-link" data-scroll-target="#un-último-paréntesis"><span class="toc-section-number">7.3</span>  Un último paréntesis</a></li>
-  <li><a href="#muestreemos-orcas" id="toc-muestreemos-orcas" class="nav-link" data-scroll-target="#muestreemos-orcas"><span class="toc-section-number">7.4</span>  Muestreemos orcas</a></li>
-  <li><a href="#un-buen-muestreo" id="toc-un-buen-muestreo" class="nav-link" data-scroll-target="#un-buen-muestreo"><span class="toc-section-number">7.5</span>  Un buen muestreo</a>
+  <li><a href="#un-último-paréntesis" id="toc-un-último-paréntesis" class="nav-link" data-scroll-target="#un-último-paréntesis"><span class="header-section-number">7.3</span> Un último paréntesis</a></li>
+  <li><a href="#muestreemos-orcas" id="toc-muestreemos-orcas" class="nav-link" data-scroll-target="#muestreemos-orcas"><span class="header-section-number">7.4</span> Muestreemos orcas</a></li>
+  <li><a href="#un-buen-muestreo" id="toc-un-buen-muestreo" class="nav-link" data-scroll-target="#un-buen-muestreo"><span class="header-section-number">7.5</span> Un buen muestreo</a>
   <ul class="collapse">
-  <li><a href="#errores-de-muestreomedición" id="toc-errores-de-muestreomedición" class="nav-link" data-scroll-target="#errores-de-muestreomedición"><span class="toc-section-number">7.5.1</span>  Errores de muestreo/medición</a></li>
+  <li><a href="#errores-de-muestreomedición" id="toc-errores-de-muestreomedición" class="nav-link" data-scroll-target="#errores-de-muestreomedición"><span class="header-section-number">7.5.1</span> Errores de muestreo/medición</a></li>
   </ul></li>
-  <li><a href="#tipos-de-muestreo-y-representatividad" id="toc-tipos-de-muestreo-y-representatividad" class="nav-link" data-scroll-target="#tipos-de-muestreo-y-representatividad"><span class="toc-section-number">7.6</span>  Tipos de muestreo y representatividad</a>
+  <li><a href="#tipos-de-muestreo-y-representatividad" id="toc-tipos-de-muestreo-y-representatividad" class="nav-link" data-scroll-target="#tipos-de-muestreo-y-representatividad"><span class="header-section-number">7.6</span> Tipos de muestreo y representatividad</a>
   <ul class="collapse">
-  <li><a href="#muestreo-aleatorio-simple" id="toc-muestreo-aleatorio-simple" class="nav-link" data-scroll-target="#muestreo-aleatorio-simple"><span class="toc-section-number">7.6.1</span>  Muestreo Aleatorio Simple</a></li>
-  <li><a href="#muestreo-aleatorio-estratificado" id="toc-muestreo-aleatorio-estratificado" class="nav-link" data-scroll-target="#muestreo-aleatorio-estratificado"><span class="toc-section-number">7.6.2</span>  Muestreo Aleatorio Estratificado</a></li>
+  <li><a href="#muestreo-aleatorio-simple" id="toc-muestreo-aleatorio-simple" class="nav-link" data-scroll-target="#muestreo-aleatorio-simple"><span class="header-section-number">7.6.1</span> Muestreo Aleatorio Simple</a></li>
+  <li><a href="#muestreo-aleatorio-estratificado" id="toc-muestreo-aleatorio-estratificado" class="nav-link" data-scroll-target="#muestreo-aleatorio-estratificado"><span class="header-section-number">7.6.2</span> Muestreo Aleatorio Estratificado</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -376,9 +417,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s02_fundan.html">Fundamentos del análisis de datos</a></li><li class="breadcrumb-item"><a href="./c07_muestreo.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-muestreo" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></h1>
+<h1 class="title"><span id="sec-muestreo" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></h1>
 </div>
 
 
@@ -391,7 +432,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="datos-y-variables" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="datos-y-variables"><span class="header-section-number">7.1</span> Datos y variables</h2>
@@ -416,10 +459,14 @@ div.csl-indent {
 </ul></li>
 </ul></li>
 </ol>
-<div id="fig-datavars" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/datavars.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.1: Tipos y escalas de variables</figcaption><p></p>
+<div id="fig-datavars" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-datavars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/datavars.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-datavars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.1: Tipos y escalas de variables
+</figcaption>
 </figure>
 </div>
 </section>
@@ -429,19 +476,23 @@ div.csl-indent {
 <section id="coincidencias" class="level3" data-number="7.2.1">
 <h3 data-number="7.2.1" class="anchored" data-anchor-id="coincidencias"><span class="header-section-number">7.2.1</span> Coincidencias</h3>
 <p>Situémonos en la Alemania de 1960-1980, cuando estaban pasando por una crisis de natalidad. <span class="citation" data-cites="Sies_1988">Sies (<a href="references.html#ref-Sies_1988" role="doc-biblioref">1988</a>)</span> quiso encontrar una medida que permitiera entender el problema y salió a buscar respuestas. En esta búsqueda se encontró con algo que le pareció sumamente interesante: había una relación notablemente alta entre la cantidad de pares de cigüeñas reproductoras y la cantidad de bebés nacidos.</p>
-<div id="fig-stork" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/siestork.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.2: Bebes, cigüeñas y casualidad</figcaption><p></p>
+<div id="fig-stork" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/siestork.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.2: Bebes, cigüeñas y casualidad
+</figcaption>
 </figure>
 </div>
 <p>Por muy inverosímil que esto pueda parecernos, lo cierto es que este tipo de relaciones altas entre variables que no están relacionadas existen y en ocasiones puede ser muy difícil identificar si en efecto la relación es causal, casual, o si obedece a que ambas dependen de una tercera variable latente (no observada). Sobre este tema te recomiendo el artículo de <span class="citation" data-cites="Hoferetal_2004">Höfer, Przyrembel &amp; Verleger (<a href="references.html#ref-Hoferetal_2004" role="doc-biblioref">2004</a>)</span> sobre la <a href="https://bit.ly/t_stork">“teoría de la cigüeña”</a>, el de <span class="citation" data-cites="Haig_2010">Haig (<a href="references.html#ref-Haig_2010" role="doc-biblioref">2010</a>)</span> sobre <a href="https://bit.ly/spur_det">qué es una correlación espuria</a> y también revisar esta página de internet <a href="https://bit.ly/spur_corrs">con otras correlaciones curiosas</a>.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -453,10 +504,14 @@ Nota
 <section id="contradicciones" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="contradicciones"><span class="header-section-number">7.2.2</span> Contradicciones</h3>
 <p>Otro ejemplo de la importancia de la selección de variables es el “Sesgo de supervivencia”. Situémonos ahora en la Segunda Guerra Mundial, en los cuarteles de la Fuerza Aérea de Estados Unidos. A un grupo de matemáticos le fue dada la tarea de designar qué partes de los aviones debían ser reforzadas para incrementar la tasa de supervivencia. El grupo entonces analizó los aviones que volvían a la base y generaron un diagrama como este, en el cual los puntos rojos representan las áreas con mayores daños balísticos.</p>
-<div id="fig-survival" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/survival.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.3: ¿Dónde reforzamos?</figcaption><p></p>
+<div id="fig-survival" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-survival-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/survival.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survival-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.3: ¿Dónde reforzamos?
+</figcaption>
 </figure>
 </div>
 <p>La primera aproximación que viene a la cabeza es reforzar esas zonas, pero Abraham Wald tuvo la suficiente visión para darse cuenta de un problema fundamental con lo que estaban midiendo: los aviones que volvían; es decir, aquellos que no habían sido derribados. Entonces propuso que en su lugar se reforzaran aquellas zonas donde NO había daños, ya que esos aviones fueron los que no volvieron a su base. El resultado: se incrementó la supervivencia como se había solicitado.</p>
@@ -468,12 +523,12 @@ Nota
 </section>
 <section id="muestreemos-orcas" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="muestreemos-orcas"><span class="header-section-number">7.4</span> Muestreemos orcas</h2>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -488,41 +543,53 @@ Nota
 <li><p><strong>Individuo</strong>: Objeto, ente, planta, animal, quimera, célula o cualquier <strong>unidad</strong> sobre la cual se realiza la observación y que, consecuentemente, tiene el atributo que queremos medir.</p></li>
 </ol>
 <div id="fig-indpop" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
-<div id="fig-individual" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/individual.png" class="img-fluid figure-img" data-ref-parent="fig-indpop"></p>
-<p></p><figcaption class="figure-caption">(a) Individuo</figcaption><p></p>
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-indpop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-indpop" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-individual" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-individual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/individual.png" class="img-fluid figure-img" data-ref-parent="fig-indpop">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-individual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Individuo
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
-<div id="fig-population" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/population.png" class="img-fluid figure-img" data-ref-parent="fig-indpop"></p>
-<p></p><figcaption class="figure-caption">(b) Población estadística y población biológica</figcaption><p></p>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-indpop" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-population" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/population.png" class="img-fluid figure-img" data-ref-parent="fig-indpop">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-population-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Población estadística y población biológica
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.4: De individuo a población.</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-indpop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.4: De individuo a población.
+</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La <a href="#fig-population">Figura&nbsp;<span>7.4 (b)</span></a> tiene algunos símbolos que no hemos mencionado, todos referentes a la simbología/notación de conjuntos:</p>
+<p>La <a href="#fig-population" class="quarto-xref">Figura&nbsp;<span>7.4 (b)</span></a> tiene algunos símbolos que no hemos mencionado, todos referentes a la simbología/notación de conjuntos:</p>
 <ul>
 <li><span class="math inline">\(\{\}\)</span> Indican que es un conjunto<br>
 </li>
@@ -535,7 +602,7 @@ Tip
 <ul>
 <li><strong>Marco de muestreo</strong>: Lista de todas las unidades de muestreo, donde una <strong>unidad de muestreo</strong> es la unidad básica para la captación de información de la población de interés. En palabras menos rebuscadas: el conjunto de qué vamos a medir y a quién (o a qué) se lo vamos a medir.</li>
 </ul>
-<p>Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo ideal tendríamos acceso a la <strong>población</strong> completa, por lo que la estimación de la longitud promedio que realizaramos sería correcta pra ese momento. ¿Por qué solo en ese momento? Puede que los individuos juveniles crezcan, que los más viejos mueran, que nazcan nuevos, que se vayan algunos, etc., y que, entonces el <strong>parámetro poblacional</strong> (la longitud promedio) que queremos medir cambie. Esto complica un poco las cosas, pues es logísticamente imposible acceder a todas las orcas de la CCO. Si lo hiciéramos tendríamos un <strong>censo</strong>, de lo contrario tenemos un <strong>muestreo</strong>; es decir, vamos a medir únicamente una <strong>fracción de la población estadística</strong>, la cual va a conformar nuestra <strong>muestra</strong> y cuyos <strong>estadísticos</strong> van a ser nuestros estimadores de los <strong>parámetros poblacionales</strong>. Formalmente (<a href="#fig-parstats">Figura&nbsp;<span>7.5</span></a>):</p>
+<p>Una vez definimos nuestro marco de muestreo podemos salir a campo. En un mundo ideal tendríamos acceso a la <strong>población</strong> completa, por lo que la estimación de la longitud promedio que realizaramos sería correcta pra ese momento. ¿Por qué solo en ese momento? Puede que los individuos juveniles crezcan, que los más viejos mueran, que nazcan nuevos, que se vayan algunos, etc., y que, entonces el <strong>parámetro poblacional</strong> (la longitud promedio) que queremos medir cambie. Esto complica un poco las cosas, pues es logísticamente imposible acceder a todas las orcas de la CCO. Si lo hiciéramos tendríamos un <strong>censo</strong>, de lo contrario tenemos un <strong>muestreo</strong>; es decir, vamos a medir únicamente una <strong>fracción de la población estadística</strong>, la cual va a conformar nuestra <strong>muestra</strong> y cuyos <strong>estadísticos</strong> van a ser nuestros estimadores de los <strong>parámetros poblacionales</strong>. Formalmente (<a href="#fig-parstats" class="quarto-xref">Figura&nbsp;<span>7.5</span></a>):</p>
 <ol type="1">
 <li><p><strong>Parámetro poblacional</strong>: Función definida sobre los valores de las características medibles de una población. En palabras ménos técnicas: el valor real de lo que queremos saber de la <strong>población</strong>. Representados usualmente con letras griegas o mayúsculas (<span class="math inline">\(\mu\)</span> o <span class="math inline">\(M\)</span>, <span class="math inline">\(\sigma\)</span> o S, por ejemplo).</p></li>
 <li><p><strong>Censo</strong>: Medición de <strong>toda la población</strong>. En otras palabras: un muestreo de toda la población en un momento determinado en el tiempo.</p></li>
@@ -543,10 +610,14 @@ Tip
 <li><p><strong>Muestra</strong>: Conjunto de individuos de la población que son medidos (formalmente hace referencia a las mediciones en sí mismas).</p></li>
 <li><p><strong>Estadístico</strong>: Función definida sobre los valores medibles de una muestra. En otras palabras, la estimación del atributo de interés a partir de la muestra. Representados con letras latinas minúsculas (<span class="math inline">\(\bar{x}\)</span>, <span class="math inline">\(s\)</span>).</p></li>
 </ol>
-<div id="fig-parstats" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/parstats.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.5: Estadístico es a muestra como parámetro es a población.</figcaption><p></p>
+<div id="fig-parstats" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-parstats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/parstats.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-parstats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.5: Estadístico es a muestra como parámetro es a población.
+</figcaption>
 </figure>
 </div>
 </section>
@@ -565,24 +636,28 @@ Tip
 </ol>
 <section id="errores-de-muestreomedición" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="errores-de-muestreomedición"><span class="header-section-number">7.5.1</span> Errores de muestreo/medición</h3>
-<p>Esa “mejor descripción” me lleva también a hablar sobre el tema de los errores de muestreo o medición. Por más que querramos evitarlo, siempre habrá errores dentro de nuestro muestreo o dentro de nuestra medición. Tal vez utilizamos una regla de 30 cm para medir organismos que miden más de 30 cm, o tal vez utilizamos una regla de metal que se contrae si hace frío y se expande si hace calor. De cualquier manera, siempre vamos a ser “víctimas” de alguno de dos tipos de errores (<a href="#fig-dianas">Figura&nbsp;<span>7.6</span></a>):</p>
+<p>Esa “mejor descripción” me lleva también a hablar sobre el tema de los errores de muestreo o medición. Por más que querramos evitarlo, siempre habrá errores dentro de nuestro muestreo o dentro de nuestra medición. Tal vez utilizamos una regla de 30 cm para medir organismos que miden más de 30 cm, o tal vez utilizamos una regla de metal que se contrae si hace frío y se expande si hace calor. De cualquier manera, siempre vamos a ser “víctimas” de alguno de dos tipos de errores (<a href="#fig-dianas" class="quarto-xref">Figura&nbsp;<span>7.6</span></a>):</p>
 <ol type="1">
 <li><strong>Error sistemático</strong>: Un error que ocurre cada que realizamos la medición. Es constante y consistente. Si no somos conscientes de este error, nuestros resultados son inválidos. Pensemos en nuestras orcas, y que estamos utilizando fotogrametría aérea (fotos de dron) para hacer nuestros registros. Si calibramos nuestra medición al ángulo de visión que obtenemos a 10 m de altura y tomamos todas nuestras fotos a 11 m, el error va a ser constante y podemos corregirlo con una re-calibración. El problema está cuando no sabemos que este error está sucediendo; es decir, asumir que nuestras fotos se tomaron a 10 m y hacer la estimación con esa calibración.</li>
 <li><strong>Error aleatorio</strong>: Un error que no es constante. Volviendo a la fotogrametría, pensemos que obtuvimos un dron cuyo altímetro salió defectuoso, que no lo sabemos y que aunque marque 10 m de altura puede estar a ± 1m de ahí. Ese error es aleatorio. No podemos predecir si en un momento dado va a sobre o subestimar la altura. En este caso, los resultados son no confiables.</li>
 </ol>
-<div id="fig-dianas" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/dianas.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.6: Tipos de errores representados con dianas de tiro.</figcaption><p></p>
+<div id="fig-dianas" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dianas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/dianas.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dianas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.6: Tipos de errores representados con dianas de tiro.
+</figcaption>
 </figure>
 </div>
 <p>Posiblemente esos términos de <em>no confiable</em> o <em>inválido</em> te suenen alarmantes. La clave para poder contender con ellos es a) saber que existen y b) ser conscientes de su magnitud. Si sabemos qué tanto estamos subestimando por la diferencia de alturas de 10 a 11 m, podemos corregir el valor. Si sabemos cuál es la distribución del error de medición del altímetro, podemos modelarlo (la inferencia Bayesiana se presta muy bien para eso). ¿Con eso quiero decir que entonces no hay que cuidar estos detalles? PARA NADA, por el contrario, hay que cuidarlos tanto que hay que saber cómo remediarlos o incluirlos en nuestros análisis de datos.</p>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -615,7 +690,11 @@ Advertencia
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>pobl_dens</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Y ahora hablemos de los diseños <strong>probabilísticos</strong> de muestreo, partiendo de este ejemplo.</p>
@@ -632,11 +711,11 @@ Advertencia
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(<span class="dv">1</span>, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">1000</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ind</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 510</code></pre>
+<pre><code>[1] 110</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pobl<span class="sc">$</span>lt[ind]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.16162</code></pre>
+<pre><code>[1] 9.786141</code></pre>
 </div>
 </div>
 <p>Aquí lo que hicimos fue tomar un individuo de nuestra población de manera uniformemente “aleatoria”, en este caso el número 267 y medirlo. Ahora tenemos que repetir esa acción otras 49 veces, una a una, o podemos decirle a R que lo haga en un solo paso (imaginemos que somos nosotros quienes lo hacemos):</p>
@@ -644,21 +723,25 @@ Advertencia
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>muestras <span class="ot">&lt;-</span> <span class="fu">sample</span>(pobl<span class="sc">$</span>lt, <span class="at">size =</span> <span class="dv">50</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.113322 9.480438 9.604526 8.233934 9.672523 9.573647</code></pre>
+<pre><code>[1] 8.121116 9.777177 8.106572 8.293091 8.206649 8.103461</code></pre>
 </div>
 </div>
 <p>Notarás dos cosas: 1) no sabemos a qué individuos corresponden esas muestras, lo cual sería problemático si no tuviéramos 2) el argumento <code>replace = FALSE</code>. Con esto lo que hicimos fue un <strong>muestreo sin reemplazo</strong>; es decir, una vez que un individuo fue medido se “retiró” de la población, en el sentido de que no puede ser vuelto a medir. Este tipo de muestreo es más preciso, pues no tenemos <strong>duplicados</strong> o <em>pseudo-réplicas</em>. Por otra parte, el <strong>muestreo con reemplazo</strong> es útil en otro tipo de situaciones, por ejemplo cuando queremos aproximar frecuencias a largo plazo como hicimos en la sesión anterior.</p>
-<div id="fig-mreemp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/mreemp.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7.7: ¿Con o sin reemplazo?</figcaption><p></p>
+<div id="fig-mreemp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mreemp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/mreemp.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mreemp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.7: ¿Con o sin reemplazo?
+</figcaption>
 </figure>
 </div>
 <p>En nuestro ejemplo de las orcas es correcto asumir que esto puede ser así, pues podemos saber quién es quien con fotos de sus aletas dorsales y, con ello, descartar las mediciones duplicadas. Desafortunadamente, esto no siempre es así, y es algo que debemos de considerar al diseñar nuestro muestreo. Dicho esto, ya tenemos nuestras 50 muestras, entonces podemos realizar la estimación de nuestro promedio (media):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(muestras)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8.982576</code></pre>
+<pre><code>[1] 8.781358</code></pre>
 </div>
 </div>
 <p>Pongámosla en nuestro gráfico inicial como una línea vertical para ver en dónde quedó:</p>
@@ -666,7 +749,11 @@ Advertencia
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pobl_dens <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(muestras),</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>No está exactamente donde debería de estar. Para complicar más las cosas, añadamos un pequeño sesgo a nuestro muestreo: No es completamente aleatorio, sino que hubo algún factor que hiciera que muestreáramos preferencialmente a los machos. Tal vez eran más curiosos y era más fácil tomar una foto con la embarcación como referencia. Simulemos ese escenario. Nuestra muestra seguirá siendo de 50, pero esta vez tendremos 35 machos y 15 hembras:</p>
@@ -676,7 +763,11 @@ Advertencia
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pobl_dens <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(muestras),</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"Firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Aquí la estimación ya se aleja mucho más de nuestra media “real”. La razón es, sin duda, el sesgo que añadimos hacia los machos.</p>
@@ -689,7 +780,11 @@ Advertencia
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">mean</span>(muestras[<span class="dv">36</span><span class="sc">:</span><span class="dv">50</span>]))),</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Matemáticamente la ecuación es más complicada, primero obtendríamos el peso de cada estrato (<span class="math inline">\(W_s\)</span>), donde <span class="math inline">\(n_s\)</span> es el tamaño del estrato <span class="math inline">\(s\)</span> y <span class="math inline">\(N\)</span> es el tamaño poblacional total:</p>
@@ -710,7 +805,11 @@ W_s = \frac{n_s}{N}
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>pobl_dens <span class="sc">+</span> <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">sum</span>(w<span class="sc">*</span>m), <span class="at">color =</span> <span class="st">"Firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>La igualdad podría demostrarse matemáticamente (solo aplica con estratos de igual tamaño), pero eso queda como ejercicio si te da curiosidad. OJO: Hacer esta estimación de la media total solo es válida si a) tiene sentido recuperarla o estimarla, lo cual depende totalmente de la pregunta de investigación (puede que tenga más sentido estimar la media para cada grupo) y b) si el muestreo es <strong>representativo</strong>. Veamos qué pasa si muestreamos únicamente 10 y 5 individuos:</p>
@@ -722,7 +821,11 @@ W_s = \frac{n_s}{N}
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                                           muestras[<span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>])),</span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">color =</span> <span class="st">"Firebrick"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c07_muestreo_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Como era de esperarse, la estimación está sumamente sesgada. Esto es por el problema de la <strong>representatividad</strong>; es decir, nuestra muestra es muy pequeña (especialmente para las hembras) y, por lo tanto, no es una buena imagen de lo que pasa a nivel población. Como ejercicio, estima la media de la población estratificada con las ecuaciones que vimos arriba. ¿Cambió el resultado?</p>
@@ -750,14 +853,14 @@ n = \frac{1.96^2 S^2}{d^2}
 <p>Esto sería todo para esta sesión. Espero que haya sido de tu agrado y, sobre todo, que aunque no haya podido resolver todas tus incertidumbres, te haya motivado a reflexionar sobre la importancia de un buen muestreo. La inferencia estadística NO es magia negra que pueda resolver nuestros problemas, simplemente nos ayuda a tomar decisiones en situaciones de incertidumbre pero, que esas decisiones sean buenas (o no) depende totalmente de los datos que tengamos disponibles (y un poco de suerte).</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
-<div id="ref-Haig_2010" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Haig_2010" class="csl-entry" role="listitem">
 Haig BD. 2010. What Is a Spurious Corelation? <em>Understanding Statistics</em> 2:125-132. DOI: <a href="https://doi.org/10.1207/S15328031US0202_03">10.1207/S15328031US0202_03</a>.
 </div>
-<div id="ref-Hoferetal_2004" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hoferetal_2004" class="csl-entry" role="listitem">
 Höfer T, Przyrembel H, Verleger S. 2004. <a href="">New evidence for the Theory of the Stork</a>. <em>Paediatric and Perinatal Epidemiology</em> 18:88-92.
 </div>
-<div id="ref-Sies_1988" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Sies_1988" class="csl-entry" role="listitem">
 Sies H. 1988. <a href="">A new parameter for sex education</a>. <em>Nature</em> 332:495.
 </div>
 </div>
@@ -792,9 +895,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -830,10 +947,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -843,8 +959,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -857,6 +982,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -900,6 +1144,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -925,6 +1170,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -986,12 +1257,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./c06_prob.html" class="pagination-link">
+      <a href="./c06_prob.html" class="pagination-link" aria-label="Probabilidad">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./s03_basics.html" class="pagination-link">
+      <a href="./s03_basics.html" class="pagination-link" aria-label="Técnicas básicas">
         <span class="nav-page-text">Técnicas básicas</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -999,9 +1270,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Arturo Bell</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Arturo Bell</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+
 
 
 

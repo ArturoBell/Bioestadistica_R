@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -46,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -138,15 +116,44 @@ div.csl-indent {
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -154,11 +161,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s04_mv.html">Técnicas Multivariadas</a></li><li class="breadcrumb-item"><a href="./c16_mvcomps.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -166,207 +178,236 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biología, Ciencia de Datos y `R`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos del análisis de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas básicas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas no paramétricas y modelación no lineal</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas Multivariadas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">16.1</span>  Librerías</a></li>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">16.2</span>  Introducción</a></li>
-  <li><a href="#controlando-el-error" id="toc-controlando-el-error" class="nav-link" data-scroll-target="#controlando-el-error"><span class="toc-section-number">16.3</span>  Controlando el error</a></li>
-  <li><a href="#t2-de-hotelling" id="toc-t2-de-hotelling" class="nav-link" data-scroll-target="#t2-de-hotelling"><span class="toc-section-number">16.4</span>  <span class="math inline">\(T^2\)</span> de Hotelling</a>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="header-section-number">16.1</span> Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">16.2</span> Introducción</a></li>
+  <li><a href="#controlando-el-error" id="toc-controlando-el-error" class="nav-link" data-scroll-target="#controlando-el-error"><span class="header-section-number">16.3</span> Controlando el error</a></li>
+  <li><a href="#t2-de-hotelling" id="toc-t2-de-hotelling" class="nav-link" data-scroll-target="#t2-de-hotelling"><span class="header-section-number">16.4</span> <span class="math inline">\(T^2\)</span> de Hotelling</a>
   <ul class="collapse">
-  <li><a href="#implementación-en-r" id="toc-implementación-en-r" class="nav-link" data-scroll-target="#implementación-en-r"><span class="toc-section-number">16.4.1</span>  Implementación en <code>R</code></a></li>
+  <li><a href="#implementación-en-r" id="toc-implementación-en-r" class="nav-link" data-scroll-target="#implementación-en-r"><span class="header-section-number">16.4.1</span> Implementación en <code>R</code></a></li>
   </ul></li>
-  <li><a href="#análisis-multivariado-de-la-varianza" id="toc-análisis-multivariado-de-la-varianza" class="nav-link" data-scroll-target="#análisis-multivariado-de-la-varianza"><span class="toc-section-number">16.5</span>  Análisis Multivariado de la Varianza</a>
+  <li><a href="#análisis-multivariado-de-la-varianza" id="toc-análisis-multivariado-de-la-varianza" class="nav-link" data-scroll-target="#análisis-multivariado-de-la-varianza"><span class="header-section-number">16.5</span> Análisis Multivariado de la Varianza</a>
   <ul class="collapse">
-  <li><a href="#implementación" id="toc-implementación" class="nav-link" data-scroll-target="#implementación"><span class="toc-section-number">16.5.1</span>  Implementación</a></li>
+  <li><a href="#implementación" id="toc-implementación" class="nav-link" data-scroll-target="#implementación"><span class="header-section-number">16.5.1</span> Implementación</a></li>
   </ul></li>
-  <li><a href="#análisis-permutacional-multivariado-de-la-varianza" id="toc-análisis-permutacional-multivariado-de-la-varianza" class="nav-link" data-scroll-target="#análisis-permutacional-multivariado-de-la-varianza"><span class="toc-section-number">16.6</span>  Análisis Permutacional Multivariado de la Varianza</a>
+  <li><a href="#análisis-permutacional-multivariado-de-la-varianza" id="toc-análisis-permutacional-multivariado-de-la-varianza" class="nav-link" data-scroll-target="#análisis-permutacional-multivariado-de-la-varianza"><span class="header-section-number">16.6</span> Análisis Permutacional Multivariado de la Varianza</a>
   <ul class="collapse">
-  <li><a href="#implementación-1" id="toc-implementación-1" class="nav-link" data-scroll-target="#implementación-1"><span class="toc-section-number">16.6.1</span>  Implementación</a></li>
+  <li><a href="#implementación-1" id="toc-implementación-1" class="nav-link" data-scroll-target="#implementación-1"><span class="header-section-number">16.6.1</span> Implementación</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -374,9 +415,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s04_mv.html">Técnicas Multivariadas</a></li><li class="breadcrumb-item"><a href="./c16_mvcomps.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-mvcomps" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></h1>
+<h1 class="title"><span id="sec-mvcomps" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></h1>
 </div>
 
 
@@ -389,7 +430,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="librerías" class="level2" data-number="16.1">
 <h2 data-number="16.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">16.1</span> Librerías</h2>
@@ -411,11 +454,11 @@ div.csl-indent {
 </section>
 <section id="introducción" class="level2" data-number="16.2">
 <h2 data-number="16.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">16.2</span> Introducción</h2>
-<p>Vamos a dejar por un momento el tema del aprendizaje automatizado para hablar sobre pruebas de significancia multivariadas, pero es necesario que antes retomemos un tema que dejé pendiente en la <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a>: el problema de las múltiples hipótesis.</p>
+<p>Vamos a dejar por un momento el tema del aprendizaje automatizado para hablar sobre pruebas de significancia multivariadas, pero es necesario que antes retomemos un tema que dejé pendiente en la <a href="c10_param.html" class="quarto-xref"><span>Capítulo 10</span></a>: el problema de las múltiples hipótesis.</p>
 </section>
 <section id="controlando-el-error" class="level2" data-number="16.3">
 <h2 data-number="16.3" class="anchored" data-anchor-id="controlando-el-error"><span class="header-section-number">16.3</span> Controlando el error</h2>
-<p>Hasta antes de esta sección de multivariado habíamos abordado problemas en donde respondíamos preguntas individuales a nuestros datos, principalmente en términos de pruebas de significancia; sin embargo, en el <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a> vimos que había que utilizar un ANOVA seguido de una prueba <em>post-hoc</em> al comparar las medias una variable numérica entre más de dos dos grupos para evitar inflar nuestro valor de <span class="math inline">\(\alpha\)</span>, pero no entramos en más detalles.</p>
+<p>Hasta antes de esta sección de multivariado habíamos abordado problemas en donde respondíamos preguntas individuales a nuestros datos, principalmente en términos de pruebas de significancia; sin embargo, en el <a href="c10_param.html" class="quarto-xref"><span>Capítulo 10</span></a> vimos que había que utilizar un ANOVA seguido de una prueba <em>post-hoc</em> al comparar las medias una variable numérica entre más de dos dos grupos para evitar inflar nuestro valor de <span class="math inline">\(\alpha\)</span>, pero no entramos en más detalles.</p>
 <p>¿Qué pasa cuando contrastamos simultáneamente más de una hipótesis? Conforme incrementamos la cantidad de preguntas incrementamos la probabilidad de obtener respuestas incorrectas. ¿Por qué? Porque tenemos un error por cada tipo de pregunta. Esto hace que sea necesario corregir de alguna manera para que la tasa de error a nivel de la familia (<em>Family-wise Error Rate</em>) se mantenga constante. es decir que nuestro valor de <span class="math inline">\(\alpha\)</span> represente la probabilidad de que tengamos <strong>al menos un error de tipo I</strong>.</p>
 <p>Esta probabilidad de encontrar al menos un falso positivo al realizar múltiples comparaciones independientes incrementa a una tasa de <span class="math inline">\(1-(1-\alpha)^m\)</span>, donde <span class="math inline">\(m\)</span> es el número de comparaciones que estamos realizando <span class="citation" data-cites="KingEckersley_2019">(<a href="references.html#ref-KingEckersley_2019" role="doc-biblioref">King &amp; Eckersley, 2019</a>)</span>:</p>
 <div class="cell">
@@ -454,7 +497,11 @@ div.csl-indent {
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>error_rate</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Notarás que con <span class="math inline">\(m = 10\)</span> ya nos acercamos peligrosamente a tener un 50% de probabilidad de encontrarnos al menos un falso positivo. Creo que estarás conmigo que eso es una apuesta bastante arriesgada cuando originalmente pensabas que la probabilidad era del 5%.</p>
@@ -501,7 +548,11 @@ div.csl-indent {
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>robs_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>¡Tuvimos un efecto significativo en 58! Hacemos el reporte correspondiente a nuestra jefa e inmediatamente la empresa se dispone a vender el producto. ¿Te hace algún tipo de ruido ese valor de 58/1000? Es sospechosamente cercano a nuestra probabilidad de <span class="math inline">\(\alpha\)</span> de 0.05, ¿no? Eso quiere decir que cuando menos una parte de esos efectos significativos son productos del azar. ¿La consecuencia de haber hecho así el análisis? La empresa fue demandada por publicidad engañosa porque el medicamento no cumplió con lo prometido.</p>
@@ -541,7 +592,11 @@ div.csl-indent {
 <span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>error_corr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Apliquemos entonces esta simple corrección a nuestro ensayo clínico y veamos cómo se distribuyen nuestros efectos:</p>
@@ -587,7 +642,11 @@ div.csl-indent {
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>rcor_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ahora no tuvimos ningún efecto significativo. Básicamente le dimos un placebo a todos nuestros sujetos experimentales. Vamos con nuestra jefa, le damos el reporte correspondiente, se pone furiosa porque la empresa perdió dinero y le va a tocar una llamada de atención, pero preferible eso a tener pérdidas millonarias derivadas de la fabricación en masa de un producto que no sirve, y la subsecuente lluvia de demandas.</p>
@@ -596,14 +655,18 @@ div.csl-indent {
 </section>
 <section id="t2-de-hotelling" class="level2" data-number="16.4">
 <h2 data-number="16.4" class="anchored" data-anchor-id="t2-de-hotelling"><span class="header-section-number">16.4</span> <span class="math inline">\(T^2\)</span> de Hotelling</h2>
-<p>Hasta el momento hemos visto que los análisis multivariados son abstractos. Podemos, sin ningún problema visualizar una distribución normal bivariada, solo hay que graficar una variable contra la otra (<a href="#fig-bivnorm">Figura&nbsp;<span>16.1</span></a>), ¿pero con veinte variables? Nuestra imaginación de seres tridimensionales no llega hasta allá.</p>
-<div id="fig-bivnorm" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/bivnorm.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;16.1: Distribuciones normales bivariadas</figcaption><p></p>
+<p>Hasta el momento hemos visto que los análisis multivariados son abstractos. Podemos, sin ningún problema visualizar una distribución normal bivariada, solo hay que graficar una variable contra la otra (<a href="#fig-bivnorm" class="quarto-xref">Figura&nbsp;<span>16.1</span></a>), ¿pero con veinte variables? Nuestra imaginación de seres tridimensionales no llega hasta allá.</p>
+<div id="fig-bivnorm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bivnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/bivnorm.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bivnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;16.1: Distribuciones normales bivariadas
+</figcaption>
 </figure>
 </div>
-<p>La solución es hacer una prueba multivariada (para mantener nuestro error controlado), y acompañarla de pruebas univariadas. La primera de estas prueba es la prueba <span class="math inline">\(T^2\)</span> de Hotelling, que es una generalización multivariada de la prueba <span class="math inline">\(t\)</span> de Student. Como tal, es una prueba paramétrica, por lo que existen los supuestos de normalidad multivariada y de igualdad de matrices de covarianza (en el <a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a> ya revisamos esos temas, así que obviaré el procedimiento). Las ecuaciones son una adaptación de la prueba <span class="math inline">\(t\)</span> hacia el espacio multivariado, pasando de trabajar con una o dos medias a trabajar con uno o dos vectores de medias:</p>
+<p>La solución es hacer una prueba multivariada (para mantener nuestro error controlado), y acompañarla de pruebas univariadas. La primera de estas prueba es la prueba <span class="math inline">\(T^2\)</span> de Hotelling, que es una generalización multivariada de la prueba <span class="math inline">\(t\)</span> de Student. Como tal, es una prueba paramétrica, por lo que existen los supuestos de normalidad multivariada y de igualdad de matrices de covarianza (en el <a href="c14_intromv.html" class="quarto-xref"><span>Capítulo 14</span></a> ya revisamos esos temas, así que obviaré el procedimiento). Las ecuaciones son una adaptación de la prueba <span class="math inline">\(t\)</span> hacia el espacio multivariado, pasando de trabajar con una o dos medias a trabajar con uno o dos vectores de medias:</p>
 <ol type="1">
 <li>Para una muestra o muestras pareadas:</li>
 </ol>
@@ -627,12 +690,12 @@ C =
 <p><span class="math display">\[
 F = \frac{n - p}{p(n-1)}T^2
 \]</span></p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -642,14 +705,13 @@ Nota
 </div>
 <section id="implementación-en-r" class="level3" data-number="16.4.1">
 <h3 data-number="16.4.1" class="anchored" data-anchor-id="implementación-en-r"><span class="header-section-number">16.4.1</span> Implementación en <code>R</code></h3>
-<p>Para todas las pruebas que revisaremos el día de hoy vamos a utilizar los datos de <code>palmerpenguins</code> que utilizamos para los gráficos del <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, por lo que vamos a filtrar la base <code>penguins</code> para quedarnos solo con las variables numéricas sobre peso o longitud. Tiene mucho que no vemos algo de <code>tidyverse</code>, así que pongámoslo en práctica:</p>
+<p>Para todas las pruebas que revisaremos el día de hoy vamos a utilizar los datos de <code>palmerpenguins</code> que utilizamos para los gráficos del <a href="c08_descriptiva.html" class="quarto-xref"><span>Capítulo 8</span></a>, por lo que vamos a filtrar la base <code>penguins</code> para quedarnos solo con las variables numéricas sobre peso o longitud. Tiene mucho que no vemos algo de <code>tidyverse</code>, así que pongámoslo en práctica:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>num_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(<span class="fu">contains</span>(<span class="fu">c</span>(<span class="st">"mm"</span>, <span class="st">"g"</span>, <span class="st">"species"</span>))) <span class="sc">|&gt;</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">na.omit</span>()</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(num_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["bill_length_mm"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[3],"type":["int"],"align":["right"]},{"label":["body_mass_g"],"name":[4],"type":["int"],"align":["right"]},{"label":["species"],"name":[5],"type":["fct"],"align":["left"]}],"data":[{"1":"39.1","2":"18.7","3":"181","4":"3750","5":"Adelie"},{"1":"39.5","2":"17.4","3":"186","4":"3800","5":"Adelie"},{"1":"40.3","2":"18.0","3":"195","4":"3250","5":"Adelie"},{"1":"36.7","2":"19.3","3":"193","4":"3450","5":"Adelie"},{"1":"39.3","2":"20.6","3":"190","4":"3650","5":"Adelie"},{"1":"38.9","2":"17.8","3":"181","4":"3625","5":"Adelie"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -671,12 +733,12 @@ Denominator df:  269
 P-value:  0 </code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -684,12 +746,12 @@ Advertencia
 <p>La función <code>hotelling.test</code> puede recibir una fórmula, pero hay un error y tanto el estadístico de prueba como el valor de p resultan en <code>NaN</code> (“Not a Number).</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -776,10 +838,10 @@ mean in group Adelie mean in group Gentoo
 </section>
 <section id="análisis-multivariado-de-la-varianza" class="level2" data-number="16.5">
 <h2 data-number="16.5" class="anchored" data-anchor-id="análisis-multivariado-de-la-varianza"><span class="header-section-number">16.5</span> Análisis Multivariado de la Varianza</h2>
-<p>Es, como te imaginarás, una extensión multivariada del ANOVA factorial. Aquí ya no entraré en los detalles de la prueba, pues vimos los fundamentos del ANOVA en el <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a>, y cómo comprobar los supuestos básicos en <a href="c14_intromv.html"><span>Capítulo&nbsp;14</span></a>. Solo es importante conocer que se puede realizar con diversos estadísticos de prueba, entre los que destacan</p>
+<p>Es, como te imaginarás, una extensión multivariada del ANOVA factorial. Aquí ya no entraré en los detalles de la prueba, pues vimos los fundamentos del ANOVA en el <a href="c10_param.html" class="quarto-xref"><span>Capítulo 10</span></a>, y cómo comprobar los supuestos básicos en <a href="c14_intromv.html" class="quarto-xref"><span>Capítulo 14</span></a>. Solo es importante conocer que se puede realizar con diversos estadísticos de prueba, entre los que destacan</p>
 <ol type="1">
 <li>La traza de Pillai: Contenida en el intervalo <span class="math inline">\([0,1]\)</span>, donde valores cercanos a 1 sugieren diferencias en al menos uno de los grupos en el espacio multivariado. Este es el estadístico más robusto a la violación de los supuestos del MANOVA (normalidad multivariada del error y homogeneidad de las matrices de covarianza).</li>
-<li>La <span class="math inline">\(\lambda\)</span> de Wilk. También contenida en el intervalo <span class="math inline">\([0,1]\)</span>, aunque aquí son los valores más cercanos a 0 los que sugieren las diferencias. Si se cumplen todos los supuestos, esta es la prueba más relacionada con el criterio de la razón de verosimilitud (más sobre esto en <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>).</li>
+<li>La <span class="math inline">\(\lambda\)</span> de Wilk. También contenida en el intervalo <span class="math inline">\([0,1]\)</span>, aunque aquí son los valores más cercanos a 0 los que sugieren las diferencias. Si se cumplen todos los supuestos, esta es la prueba más relacionada con el criterio de la razón de verosimilitud (más sobre esto en <a href="c19_glm.html" class="quarto-xref"><span>Capítulo 19</span></a>).</li>
 </ol>
 <p>Y que el procedimiento <span class="math inline">\(post-hoc\)</span> tiene dos pasos:</p>
 <ol type="1">
@@ -821,12 +883,12 @@ Residuals 339
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -928,7 +990,11 @@ Gentoo-Chinstrap -1.328945 -2.381868 -0.2760231 0.0088993</code></pre>
 <span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>base_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Luego aplicamos el ciclo <code>for</code>. Como en este caso tenemos los nombres de columnas en un vector de cadenas de caracter necesitamos de dos pasos: convertir la cadena de caracteres a un símboo con la función <code>sym()</code> y luego quitarle las comillas con el operador <code>!!</code> dentro de <code>aes</code>:</p>
@@ -950,12 +1016,12 @@ Gentoo-Chinstrap -1.328945 -2.381868 -0.2760231 0.0088993</code></pre>
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> variable)</span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -967,7 +1033,11 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(plot_list, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Otra forma sería con <code>facet_wrap</code>, tratando las variables como si fueran variables de agrupamiento (¿te animas a programarlo?). Una forma tal vez más simple de representar toda esta información en un solo panel es un gráfico de coordenadas paralelas:</p>
@@ -986,7 +1056,11 @@ Tip
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Especie"</span>) </span>
 <span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>parcoord_plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -994,12 +1068,12 @@ Tip
 <section id="análisis-permutacional-multivariado-de-la-varianza" class="level2" data-number="16.6">
 <h2 data-number="16.6" class="anchored" data-anchor-id="análisis-permutacional-multivariado-de-la-varianza"><span class="header-section-number">16.6</span> Análisis Permutacional Multivariado de la Varianza</h2>
 <p>Vamos a cerrar este capítulo con la alternativa no paramétrica al MANOVA: el Análisis Permutacional Multivariado de la Varianza (MANOVA). En este análisis se hace una partición geométrica del espacio multivariado; es decir, es una prueba basada en distancias. Además, es una prueba basada en un análisis permutacional, donde “revuelve” las etiquetas de la matriz de distancias.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -1035,7 +1109,6 @@ Nota
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">permutations =</span> <span class="dv">999</span>)</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>perm_res</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["SumOfSqs"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["R2"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["F"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Pr(>F)"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"966.895","3":"0.7088673","4":"412.7087","5":"0.001","_rn_":"species"},{"1":"339","2":"397.105","3":"0.2911327","4":"NA","5":"NA","_rn_":"Residual"},{"1":"341","2":"1364.000","3":"1.0000000","4":"NA","5":"NA","_rn_":"Total"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1056,7 +1129,11 @@ Nota
 <span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>),</span>
 <span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">legend.title =</span> <span class="st">"Especies"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c16_mvcomps_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Como era de esperarse hubo diferencias muy marcadas, principalmente en los pingüinos Gentoo pero ¿en qué variables? No existe una prueba <em>post-hoc</em> como tal para el PERMANOVA, pero podemos hacer un PERMANOVA para cada par de especies (nuevamente, ¿es necesario corregir los valores de p de estos PERMANOVAs?) con la función <code>pairwiseAdonis::pairwise.adonis2</code>:</p>
@@ -1100,11 +1177,11 @@ attr(,"class")
 <p>Esto es todo para esta sesión. Espero que haya sido de tu agrado y que te sea útil en algún momento. En la siguiente sesión volveremos al aprendizaje automatizado, esta vez para hablar de algo que, dependiendo del problema, podemos aplicar en vez de los MANOVAs: la clasificación.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
-<div id="ref-KingEckersley_2019" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-KingEckersley_2019" class="csl-entry" role="listitem">
 King AP, Eckersley RJ. 2019. Chapter 8 - Inferential Statistics V: Multiple and Multivariate Hypothesis Testing. In: King AP, Eckersley RJ eds. <em>Statistics for Biomedical Engineers and Scientists</em>. Academic Press, 173-199. DOI: <a href="https://doi.org/10.1016/B978-0-08-102939-8.00017-7">https://doi.org/10.1016/B978-0-08-102939-8.00017-7</a>.
 </div>
-<div id="ref-Perneger_1998" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Perneger_1998" class="csl-entry" role="listitem">
 Perneger TV. 1998. What’s wrong with Bonferroni adjustments. <em>BMJ</em> 316:1236-1238. DOI: <a href="https://doi.org/10.1136/bmj.316.7139.1236">10.1136/bmj.316.7139.1236</a>.
 </div>
 </div>
@@ -1139,9 +1216,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1177,10 +1268,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1190,8 +1280,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1204,6 +1303,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1247,6 +1465,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1272,6 +1491,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1333,12 +1578,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./c15_nosup.html" class="pagination-link">
+      <a href="./c15_nosup.html" class="pagination-link" aria-label="Aprendizaje No Supervisado">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./c17_clasif.html" class="pagination-link">
+      <a href="./c17_clasif.html" class="pagination-link" aria-label="Aprendizaje supervisado: Clasificación">
         <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1346,9 +1591,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Arturo Bell</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Arturo Bell</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+
 
 
 

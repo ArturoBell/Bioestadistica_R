@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -46,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -138,15 +116,44 @@ div.csl-indent {
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -154,11 +161,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s03_basics.html">Técnicas básicas</a></li><li class="breadcrumb-item"><a href="./c09_ph0.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -166,218 +178,247 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biología, Ciencia de Datos y `R`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos del análisis de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas básicas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas no paramétricas y modelación no lineal</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas Multivariadas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#hipótesis" id="toc-hipótesis" class="nav-link active" data-scroll-target="#hipótesis"><span class="toc-section-number">9.1</span>  Hipótesis</a></li>
-  <li><a href="#pruebas-de-hipótesis-de-nulidad" id="toc-pruebas-de-hipótesis-de-nulidad" class="nav-link" data-scroll-target="#pruebas-de-hipótesis-de-nulidad"><span class="toc-section-number">9.2</span>  Pruebas de hipótesis de nulidad</a></li>
-  <li><a href="#tipos-de-errores" id="toc-tipos-de-errores" class="nav-link" data-scroll-target="#tipos-de-errores"><span class="toc-section-number">9.3</span>  Tipos de errores</a></li>
-  <li><a href="#nivel-de-significancia" id="toc-nivel-de-significancia" class="nav-link" data-scroll-target="#nivel-de-significancia"><span class="toc-section-number">9.4</span>  Nivel de significancia</a></li>
-  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza"><span class="toc-section-number">9.5</span>  Intervalos de confianza</a>
+  <li><a href="#hipótesis" id="toc-hipótesis" class="nav-link active" data-scroll-target="#hipótesis"><span class="header-section-number">9.1</span> Hipótesis</a></li>
+  <li><a href="#pruebas-de-hipótesis-de-nulidad" id="toc-pruebas-de-hipótesis-de-nulidad" class="nav-link" data-scroll-target="#pruebas-de-hipótesis-de-nulidad"><span class="header-section-number">9.2</span> Pruebas de hipótesis de nulidad</a></li>
+  <li><a href="#tipos-de-errores" id="toc-tipos-de-errores" class="nav-link" data-scroll-target="#tipos-de-errores"><span class="header-section-number">9.3</span> Tipos de errores</a></li>
+  <li><a href="#nivel-de-significancia" id="toc-nivel-de-significancia" class="nav-link" data-scroll-target="#nivel-de-significancia"><span class="header-section-number">9.4</span> Nivel de significancia</a></li>
+  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza"><span class="header-section-number">9.5</span> Intervalos de confianza</a>
   <ul class="collapse">
-  <li><a href="#cálculo-de-los-intervalos-de-confianza" id="toc-cálculo-de-los-intervalos-de-confianza" class="nav-link" data-scroll-target="#cálculo-de-los-intervalos-de-confianza"><span class="toc-section-number">9.5.1</span>  Cálculo de los intervalos de confianza</a></li>
+  <li><a href="#cálculo-de-los-intervalos-de-confianza" id="toc-cálculo-de-los-intervalos-de-confianza" class="nav-link" data-scroll-target="#cálculo-de-los-intervalos-de-confianza"><span class="header-section-number">9.5.1</span> Cálculo de los intervalos de confianza</a></li>
   </ul></li>
-  <li><a href="#valores-de-p-usos-y-abusos" id="toc-valores-de-p-usos-y-abusos" class="nav-link" data-scroll-target="#valores-de-p-usos-y-abusos"><span class="toc-section-number">9.6</span>  Valores de p: usos y abusos</a></li>
-  <li><a href="#prueba-básica-t-de-student" id="toc-prueba-básica-t-de-student" class="nav-link" data-scroll-target="#prueba-básica-t-de-student"><span class="toc-section-number">9.7</span>  Prueba básica: <span class="math inline">\(t\)</span> de Student</a>
+  <li><a href="#valores-de-p-usos-y-abusos" id="toc-valores-de-p-usos-y-abusos" class="nav-link" data-scroll-target="#valores-de-p-usos-y-abusos"><span class="header-section-number">9.6</span> Valores de p: usos y abusos</a></li>
+  <li><a href="#prueba-básica-t-de-student" id="toc-prueba-básica-t-de-student" class="nav-link" data-scroll-target="#prueba-básica-t-de-student"><span class="header-section-number">9.7</span> Prueba básica: <span class="math inline">\(t\)</span> de Student</a>
   <ul class="collapse">
-  <li><a href="#prueba-t-para-una-muestra" id="toc-prueba-t-para-una-muestra" class="nav-link" data-scroll-target="#prueba-t-para-una-muestra"><span class="toc-section-number">9.7.1</span>  Prueba <span class="math inline">\(t\)</span> para una muestra</a></li>
-  <li><a href="#prueba-para-muestras-independientes" id="toc-prueba-para-muestras-independientes" class="nav-link" data-scroll-target="#prueba-para-muestras-independientes"><span class="toc-section-number">9.7.2</span>  Prueba para muestras independientes</a></li>
-  <li><a href="#prueba-para-muestras-pareadas" id="toc-prueba-para-muestras-pareadas" class="nav-link" data-scroll-target="#prueba-para-muestras-pareadas"><span class="toc-section-number">9.7.3</span>  Prueba para muestras pareadas</a></li>
+  <li><a href="#prueba-t-para-una-muestra" id="toc-prueba-t-para-una-muestra" class="nav-link" data-scroll-target="#prueba-t-para-una-muestra"><span class="header-section-number">9.7.1</span> Prueba <span class="math inline">\(t\)</span> para una muestra</a></li>
+  <li><a href="#prueba-para-muestras-independientes" id="toc-prueba-para-muestras-independientes" class="nav-link" data-scroll-target="#prueba-para-muestras-independientes"><span class="header-section-number">9.7.2</span> Prueba para muestras independientes</a></li>
+  <li><a href="#prueba-para-muestras-pareadas" id="toc-prueba-para-muestras-pareadas" class="nav-link" data-scroll-target="#prueba-para-muestras-pareadas"><span class="header-section-number">9.7.3</span> Prueba para muestras pareadas</a></li>
   </ul></li>
-  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">9.8</span>  Ejercicio</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="header-section-number">9.8</span> Ejercicio</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s03_basics.html">Técnicas básicas</a></li><li class="breadcrumb-item"><a href="./c09_ph0.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-ph0" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></h1>
+<h1 class="title"><span id="sec-ph0" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></h1>
 </div>
 
 
@@ -390,7 +431,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <p>Aunque me gustaría entrar directamente al tema de pruebas de hipótesis, es necesario que empecemos por entender qué hipótesis es la que estamos probando, y lo que es la <strong>inferencia estadística</strong>.</p>
 <section id="hipótesis" class="level2" data-number="9.1">
@@ -402,12 +445,12 @@ div.csl-indent {
 <li><span class="math inline">\(H_1: \mu_2 ≠ \mu_2; \overline{X_A} ≠ \overline{X_C}\)</span></li>
 </ul>
 <p>Entonces, es un juego porque hay más de una, y representan un <strong>escenario de igualdad o de diferencia</strong>. Por cada juego de hipótesis hay <strong>al menos una hipótesis de nulidad (<span class="math inline">\(H_0\)</span>) y una hipótesis alternativa (<span class="math inline">\(H_1\)</span>)</strong>. ¿Cómo llegamos a estas hipótesis y qué representan? Bien, es ahí donde debemos de hablar de las <strong>pruebas de significancia estadística</strong>.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -418,26 +461,38 @@ Nota
 </section>
 <section id="pruebas-de-hipótesis-de-nulidad" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="pruebas-de-hipótesis-de-nulidad"><span class="header-section-number">9.2</span> Pruebas de hipótesis de nulidad</h2>
-<p>En el <a href="c01_biolcdatos.html"><span>Capítulo&nbsp;1</span></a> dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por <span class="citation" data-cites="Savage_1954">Savage (<a href="references.html#ref-Savage_1954" role="doc-biblioref">1954</a>)</span>: “[La estadística] es la ciencia de tomar <strong>decisiones</strong> bajo situaciones de <strong>incertidumbre</strong>.</p>
+<p>En el <a href="c01_biolcdatos.html" class="quarto-xref"><span>Capítulo 1</span></a> dimos algunas definiciones de estadística, pero hay una que, toma mucho sentido en el tema que vamos a abordar hoy. Esta fue propuesta por <span class="citation" data-cites="Savage_1954">Savage (<a href="references.html#ref-Savage_1954" role="doc-biblioref">1954</a>)</span>: “[La estadística] es la ciencia de tomar <strong>decisiones</strong> bajo situaciones de <strong>incertidumbre</strong>.</p>
 <p>Partiendo de esa definición, entendamos qué es la inferencia estadística y las pruebas de hipótesis, utilizando una analogía propuesta por Cassie Kozyrkov (científica jefa de decisión en Google). Pensemos que logramos contratarnos en una empresa de exploración espacial, y que nuestra actividad principal es salir al espacio en una nave espacial, visitar planetas y reportar si hay vida o no.</p>
-<div id="fig-planetas" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.1: A buscar planetas.</figcaption><p></p>
+<div id="fig-planetas" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-planetas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-planetas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.1: A buscar planetas.
+</figcaption>
 </figure>
 </div>
 <p>¿Bonito? Tal vez demasiado para ser verdad y, como era de esperarse, lo es. Tenemos un jefe con una actitud bastante mejorable, pero dejando eso de lado, tenemos algunas limitaciones logísticas:la primera es que nuestro reporte es a través de un aparatito que cuenta con <strong>dos botones</strong> uno para decir que <strong>sí hay vida</strong> y otro para decir que <strong>no hay vida</strong> en un planeta dado, otra limitación es que tenemos <strong>recursos limitados</strong> y que únicamente podemos hacer caminatas de dos horas. Esto se traduce en que estamos en una situación de <strong>incertidumbre</strong>.</p>
-<div id="fig-incert" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.2: Exploración espacial e incertidumbre.</figcaption><p></p>
+<div id="fig-incert" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-incert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-incert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.2: Exploración espacial e incertidumbre.
+</figcaption>
 </figure>
 </div>
 <p>Un desafío más es que NO podemos ver un planeta y no dar un reporte. Debemos, sí o sí, decir si hay vida en el planeta o no. Esto lleva a que necesitemos establecer una <strong>decisión por defecto</strong>. ¿Por defecto para qué? Para aquellos casos en los que NO podamos aterrizar en el planeta y explorarlo (tal vez hay una tormenta eléctrica, o alguna otra situación). Estarás de acuerdo conmigo en que decir que NO hay vida en el planeta tiene más sentido que decir que sí, y no por la situación del planeta en si misma, sino porque de lo contrario no tiene caso hacer una exploración espacial. Me explico. Si la acción por defecto fuera decir que sí hay vida en el planeta no necesitariamos ni siquiera hacer exploraciones, simple y sencillamente presionaríamos el botón correspondiente cada que nos avisaran de un nuevo planeta.</p>
-<div id="fig-decision" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_3.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.3: Decisiones por defecto y alternativa.</figcaption><p></p>
+<div id="fig-decision" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-decision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-decision-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.3: Decisiones por defecto y alternativa.
+</figcaption>
 </figure>
 </div>
 <p>Una vez planteadas nuestras decisiones por defecto, podemos pensar en probar si hay vida en el planeta o no. Esto es un escenario típico de una <strong>prueba de hipótesis de nulidad</strong>, lo que nos lleva a definir una hipótesis nula y una alternativa. Para nuestra <strong>hipótesis nula</strong> nos podemos preguntar:</p>
@@ -448,44 +503,64 @@ Nota
 <li><strong>Nula (<span class="math inline">\(H_0\)</span>)</strong>: No hay vida en el planeta.</li>
 <li><strong>Alternativa(<span class="math inline">\(H_A\)</span>)</strong>: Sí la hay.</li>
 </ul>
-<div id="fig-H0" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_4.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.4: Hipótesis de nulidad e hipótesis alternativa.</figcaption><p></p>
+<div id="fig-H0" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-H0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_4.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-H0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.4: Hipótesis de nulidad e hipótesis alternativa.
+</figcaption>
 </figure>
 </div>
 <p>Salimos entonces a explorar el universo, encontramos un planeta, aterrizamos y damos nuestra caminata. El resultado: 0 organismos en las dos horas que caminamos. Te pregunto: ¿qué aprendimos que sea de interés? Y aquí espero que tu respuesta sea <strong>Nada</strong>. Me explico, tuvimos una muestra de 0 organismos, no sabemos de qué tamaño es la población (si es que la hay). ¿Explicaciones para el resultado? Bastantes, pero todo se reduce a que tuvimos que tomar nuestra decisión por defecto y, por lo tanto, no aprendimos nada del planeta. Literalmente obtuvimos el mismo resultado que si hubieramos pasado de largo y eso está bien. No entraré en la discusión de por qué el buscar siempre aprender algo es un sinsentido, solo diré que quien quiera hacerlo es porque tiene demasiada energía, pero sigamos con nuestro ejemplo.</p>
-<div id="fig-nolearn" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_5.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.5: No sabes nada, Jon Snow.</figcaption><p></p>
+<div id="fig-nolearn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nolearn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_5.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nolearn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.5: No sabes nada, Jon Snow.
+</figcaption>
 </figure>
 </div>
 <p>Recordemos la definición de Savage y tomemos una decisión. Para ello cambiemos nuestra pregunta a lo que debería de ser el mantra detrás de todas las pruebas de hipótesis: <strong>¿Mi evidencia deja en ridículo a mi hipótesis de nulidad?</strong> La respuesta debería de ser no, pues no encontramos nada que la contradijera y, por lo tanto, presionaremos nuestro botón de no hay vida en el planeta.</p>
-<div id="fig-ridic" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_6.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.6: ¿Nuestra evidencia hace quedar en ridículo a nuestra <span class="math inline">\(H_0\)</span>?</figcaption><p></p>
+<div id="fig-ridic" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ridic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_6.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ridic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.6: ¿Nuestra evidencia hace quedar en ridículo a nuestra <span class="math inline">\(H_0\)</span>?
+</figcaption>
 </figure>
 </div>
 <p>Salimos del planeta y llegamos a otro. Repetimos el proceso, solo que aquí sí nos encontramos una forma de vida alienígena en forma de exactamente un individuo. Recordemos nuestro marco de decisión. Nuestra acción por defecto es presionar el botón X si no hay vida (hipótesis nula) y acabamos de encontrar un individuo (solo uno). ¿El tamaño de la población? No lo sabemos. <strong>¿Nuestra evidencia deja en ridículo a nuestra hipótesis nula?</strong> Por supuesto que sí, entonces la rechazamos y tomamos nuestra acción alternativa: presionar el botón con la palomita verde. ¿Qué aprendimos que sea de interés? Que hay vida en el planeta.</p>
-<div id="fig-learn" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_7.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.7: ¡Aprendimos algo!</figcaption><p></p>
+<div id="fig-learn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-learn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_7.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-learn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.7: ¡Aprendimos algo!
+</figcaption>
 </figure>
 </div>
 <p>Este ejemplo es lo que hacemos o deberíamos de hacer al aplicar una prueba de hipótesis de nulidad. Establecer nuestra acción por defecto y la alternativa, definir nuestra hipótesis de nulidad, ir a tomar datos y luego preguntarnos si esa evidencia deja en ridículo a nuestra hipótesis nula. ¿Cómo definimos la acción por defecto? Eso es tarea del tomador de decisiones, y en la academia muy pocas veces las tenemos definidas. ¿Cómo concluimos? Si nuestra evidencia ridiculiza a nuestra hipótesis nula, tendremos una conclusión a favor de la hipótesis alternativa. ¿Si no? No aprendimos nada y tomamos la decisión por defecto. ¿Es la correcta? No lo sabemos, pero tampoco nos interesa… o al menos hasta cierto punto. Es aquí donde entran los <strong>tipos de errores</strong> y los <strong>valores de p</strong>, solo recuerda: buscar tus llaves antes de salir de casa y no encontrarlas después de 5 minutos NO indica que no estén, solo no sabes dónde están.</p>
-<div id="fig-alimento" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_8.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.8: Alimento experimental vs.&nbsp;control</figcaption><p></p>
+<div id="fig-alimento" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-alimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_8.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-alimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.8: Alimento experimental vs.&nbsp;control
+</figcaption>
 </figure>
 </div>
 </section>
 <section id="tipos-de-errores" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="tipos-de-errores"><span class="header-section-number">9.3</span> Tipos de errores</h2>
-<p>Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los <strong>tipos de errores estadísticos</strong>. En el <a href="c07_muestreo.html"><span>Capítulo&nbsp;7</span></a> hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy “obvio” que parezca, <strong>probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad</strong>. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:</p>
+<p>Ahora bien, el no poder responder inequívocamente a si nuestra decisión fue la correcta o no es lo que nos lleva a hablar de los <strong>tipos de errores estadísticos</strong>. En el <a href="c07_muestreo.html" class="quarto-xref"><span>Capítulo 7</span></a> hablamos de algunos errores de muestreo (sistemático y aleatorio), pero estos son diferentes a los errores que podemos cometer al momento de realizar nuestras pruebas de significancia. Estos errores los vamos a expresar en términos de probabilidades. ¿Probabilidades de qué? Por muy “obvio” que parezca, <strong>probabilidades de equivocarnos al tomar una decisión sobre nuestra hipótesis de nulidad</strong>. Te voy a presentar estos errores de dos maneras: una formal, otra que pudiera resultarte más intuitiva, y una analogía. Formalmente:</p>
 <ul>
 <li>Error de tipo I (<span class="math inline">\(\alpha\)</span>): Probabilidad de rechazar la hipótesis nula cuando es verdadera.</li>
 <li>Error de tipo II (<span class="math inline">\(\beta\)</span>): Probabilidad de NO rechazar la hipótesis nula cuando es falsa.</li>
@@ -495,12 +570,12 @@ Nota
 <li>Error de tipo I (<span class="math inline">\(\alpha\)</span>): Probabilidad de aceptar la hipótesis aternativa siendo falsa.</li>
 <li>Error de tipo II (<span class="math inline">\(\beta\)</span>): Probabilidad de aceptar la hipótesis nula siendo falsa.</li>
 </ul>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -509,10 +584,14 @@ Advertencia
 </div>
 </div>
 <p>Ahora bien, hay una tercera forma de entender estos errores, la cual simplifica mucho las cosas. Imagina un escenario en el que van una mujer evidentemente embarazada y, por alguna extraña razón, un hombre a hacerse una prueba de embarazo. El doctor puede, entonces, dar dos veredictos por caso: la persona está embarazada o no está embarazada. Gráficamente esto podemos ponerlo de la siguiente manera:</p>
-<div id="fig-errores" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ph0_errores.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.9: Errores y falsedades.</figcaption><p></p>
+<div id="fig-errores" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-errores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ph0_errores.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-errores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.9: Errores y falsedades.
+</figcaption>
 </figure>
 </div>
 <p>Que un hombre esté embarazado es imposible, por lo que decirle a nuestro curioso paciente que lo está es un <strong>falso positivo</strong> o un <strong>error de tipo I</strong>. Por otra parte, decirle a la mujer que está embarazada que no lo está es un <strong>falso negativo</strong>, o un <strong>error de tipo II</strong>.</p>
@@ -521,7 +600,7 @@ Advertencia
 <li>Error Tipo III: Rechazar correctamente la hipótesis nula equivocada.</li>
 </ul>
 <p>¿A qué me refiero con esto? A utilizar la matemática correcta para responder una pregunta equivocada; es decir, utilizar pruebas que no responden o atacan directamente nuestro problema. Un ejemplo de esto puede ser utilizar un modelo lineal simple para describir una relación exponencial, pero hablaremos de estos problemas más adelante.</p>
-<p>Ahora bien, hablamos de <strong>probabilidades</strong>, mientras que en el ejemplo de la <a href="#fig-errores">Figura&nbsp;<span>9.9</span></a> vimos errores particulares. Pues es aquí donde entra el famosísimo (¿infame?) valor de p.</p>
+<p>Ahora bien, hablamos de <strong>probabilidades</strong>, mientras que en el ejemplo de la <a href="#fig-errores" class="quarto-xref">Figura&nbsp;<span>9.9</span></a> vimos errores particulares. Pues es aquí donde entra el famosísimo (¿infame?) valor de p.</p>
 </section>
 <section id="nivel-de-significancia" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="nivel-de-significancia"><span class="header-section-number">9.4</span> Nivel de significancia</h2>
@@ -529,12 +608,12 @@ Advertencia
 <p>¿Qué es entonces? Retrocedamos un poco a nuestro ejemplo de la exploración espacial. Partíamos del supuesto (decisión por defecto) de que no hay vida en ningún planeta, y que nuestra evidencia debe de ridiculizar a nuestra hipótesis de nulidad para que presionemos el botón de que sí hay vida en el planeta. En nuestras <strong>pruebas de significancia</strong> es exactamente lo mismo. <strong>Partimos del supuesto de que no hay un efecto (o diferencia) significativa</strong>. Esto lo representamos con un <strong>modelo teórico de distribución de probabilidades</strong>, el cuál representa <strong>un universo donde la hipótesis nula siempre es verdadera</strong>. Es decir, esta distribución teórica de probabilidades son todos los casos en los cuales NO existe ningún efecto o diferencia entre nada. Un mundo gris y aburrido, vamos.</p>
 <p>En este escenario entonces nosotros buscamos evidencia que nos haga cambiar de opinión, y lo evaluamos en términos probabilísticos lo evaluamos como la <strong>probabilidad de que el modelo teórico haya generado los datos</strong> que estamos viendo. ¿A que esto tiene más sentido que solo la regla de decisión?</p>
 <p>Ahora puede que te preguntes: ¿de dónde sale esta probabilidad? Pues está definida por un <strong>estadístico de prueba</strong>. Tomando nuestros datos vamos a calcular el valor que les corresponde según la función del modelo teórico. Luego, vamos a obtener la <strong>probabildiad de encontrar, de forma aleatoria, ese valor, o uno con la misma probabilidad, o una menor</strong>. Ahora bien, si recuerdas algo de la sesión de probabilidad puede que esta última definición no te cuadre, y es que si tenemos una distribución continua no podemos buscar la probabilidad individual de un valor, por lo que la reformulamos como <strong>la probabilidad de encontrar otro valor al menos igual de grande</strong>, y esto es lo que conocemos como el <strong>nivel de significancia</strong>.</p>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -589,10 +668,14 @@ Importante
 <span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            </span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>uni_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-normal" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="c09_ph0_files/figure-html/fig-normal-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.10: Áreas bajo la curva (AUC) para tres valores de Z de referencia. Estas representan las zonas de aceptación, con su amplitud (confianza) dada por el valor de AUC.</figcaption><p></p>
+<div id="fig-normal" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="c09_ph0_files/figure-html/fig-normal-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.10: Áreas bajo la curva (AUC) para tres valores de Z de referencia. Estas representan las zonas de aceptación, con su amplitud (confianza) dada por el valor de AUC.
+</figcaption>
 </figure>
 </div>
 </div>
@@ -604,26 +687,30 @@ Importante
 </section>
 <section id="intervalos-de-confianza" class="level2" data-number="9.5">
 <h2 data-number="9.5" class="anchored" data-anchor-id="intervalos-de-confianza"><span class="header-section-number">9.5</span> Intervalos de confianza</h2>
-<p>Los intervalos de confianza, como recordarás que mencionamos someramente en el <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de “certeza” alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.</p>
+<p>Los intervalos de confianza, como recordarás que mencionamos someramente en el <a href="c08_descriptiva.html" class="quarto-xref"><span>Capítulo 8</span></a>, representan una medida de incertidumbre en alguna estimación, pero vayamos más a fondo. Estos intervalos, al igual que el valor de p, abordan el mismo problema: las estimaciones puntuales no son infalibles ni siempre son verídicas, por lo que necesitamos una referencia de “certeza” alrededor de ellas. Si lo piensas detenidamente eso justamente es lo que hacemos con el valor de p y, de hecho, podemos pensar en los intervalos de confianza como el valor de p visto desde otra perspectiva.</p>
 <p>Entonces, ¿qué son los intervalos de confianza? Son una referencia de la “certeza” que tenemos alrededor de una estimación. Es muy posible que te hayas encontrado con la notación <span class="math inline">\(\overline{x} ± SD\)</span>, en la cual resumimos nuestros datos con el promedio y la desviación estándar de los datos. Esto está bien siempre y cuando solo nos interese describir todos nuestros datos. Si nos interesa dar información sobre nuestra estimación, entonces haríamos algo tal que <span class="math inline">\(\overline{x}; [IC_i, IC_s]\)</span>, donde <span class="math inline">\(IC_i\)</span> representa el límite inferior del intervalo de confianza e <span class="math inline">\(IC_s\)</span> el límite superior.</p>
 <p>Estos límites indican entre dónde y dónde (o, mejor dicho, entre qué valores) se puede encontrar la estimación. Si son equivalentes al valor de p, entonces siguen también un modelo teórico de distribución de probabilidades, y su amplitud está dada por un porcentaje de esa distribución (igual que en la zona de no rechazo de una hipótesis de nulidad).</p>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Dada esta descripción, es muy posible que quieras interpretarlos como “hay X% de probabilidad de que la estimación se encuentre en este intervalo”. <strong>NO SE INTERPRETAN DE ESA MANERA</strong>. La forma adecuada es, si realizo <span class="math inline">\(N\)</span> muestreos independientes, cada uno con tamaño de muestra <span class="math inline">\(n\)</span>, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real” (poblacional; <a href="#fig-ICs">Figura&nbsp;<span>9.11</span></a>).</p>
+<p>Dada esta descripción, es muy posible que quieras interpretarlos como “hay X% de probabilidad de que la estimación se encuentre en este intervalo”. <strong>NO SE INTERPRETAN DE ESA MANERA</strong>. La forma adecuada es, si realizo <span class="math inline">\(N\)</span> muestreos independientes, cada uno con tamaño de muestra <span class="math inline">\(n\)</span>, y para cada uno estimo la media y sus intervalos de confianza, ≈ 95% de estas estimaciones incluirán la media “real” (poblacional; <a href="#fig-ICs" class="quarto-xref">Figura&nbsp;<span>9.11</span></a>).</p>
 </div>
 </div>
-<div id="fig-ICs" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/IC.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.11: Representación gráfica de la interpretación de los intervalos de confianza: 100 muestreos independientes con tamaño de muestra 20. Para cada uno se estima la media (x) y sus intervalos de confianza (líneas verticales). Solo seis (rojo) no incluyeron la media real (línea azul):</figcaption><p></p>
+<div id="fig-ICs" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ICs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/IC.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ICs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.11: Representación gráfica de la interpretación de los intervalos de confianza: 100 muestreos independientes con tamaño de muestra 20. Para cada uno se estima la media (x) y sus intervalos de confianza (líneas verticales). Solo seis (rojo) no incluyeron la media real (línea azul):
+</figcaption>
 </figure>
 </div>
 <section id="cálculo-de-los-intervalos-de-confianza" class="level3" data-number="9.5.1">
@@ -638,7 +725,7 @@ Advertencia
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(v2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1303177</code></pre>
+<pre><code>[1] 0.3629882</code></pre>
 </div>
 </div>
 <p>Pero para calcularlos, posiblemente sin que sea sorpresa, tenemos distintas maneras de hacerlo. Comenzando con <code>R</code> base podemos utilizar la función<code>t.test(x, conf.level)</code>, donde <code>x</code> es el vector de observaciones y <code>conf.level</code> el nivel de confianza deseado:</p>
@@ -649,22 +736,22 @@ Advertencia
     One Sample t-test
 
 data:  v2
-t = 0.47038, df = 14, p-value = 0.6453
+t = 1.3242, df = 14, p-value = 0.2067
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.4638951  0.7245305
+ -0.2249449  0.9509213
 sample estimates:
 mean of x 
-0.1303177 </code></pre>
+0.3629882 </code></pre>
 </div>
 </div>
 <p>Esta función aplica una prueba <span class="math inline">\(t\)</span> de Student para una sola muestra, por lo que da un valor del estadístico de prueba <span class="math inline">\(t\)</span>, los grados de libertad <code>df</code> y un valor de p.&nbsp;Por el momento olvidemos eso y quedémonos con el intervalo de confianza al 95%: <span class="math inline">\([-0.73, 0.18]\)</span>. Este intervalo es grande en relación a nuestra media (<span class="math inline">\(|IC_s - IC_i| = |0.18-0.73| = 0.55 &gt; |\overline{x}| = 0.27\)</span>), lo cual nos dice que no “confiamos” mucho en ese valor promedio, lo cual tiene sentido porque la distribución poblacional es una normal estandar (<span class="math inline">\(\mu = 0; \sigma = 1\)</span>). Ahora bien, no podemos descartar que esa media sea diferente de 0, pues el IC incluye al 0 (ojo también al valor de p).</p>
-<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -677,7 +764,7 @@ Tip
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Rmisc<span class="sc">::</span><span class="fu">CI</span>(<span class="at">x =</span> v2, <span class="at">ci =</span> <span class="fl">0.95</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     upper       mean      lower 
- 0.7245305  0.1303177 -0.4638951 </code></pre>
+ 0.9509213  0.3629882 -0.2249449 </code></pre>
 </div>
 </div>
 <p>Una alternativa más es utilizar la función <code>rcompanion::groupwiseMean(formula, data, conf, R)</code>, la cual tiene dos funcionalidades interesantes: i) permite calcular los IC para varios grupos, y ii) poder estimar los intervalos a partir de remuestreos Bootstrap. En esta función: <code>formula</code> es lo que vimos en la función <code>aggregate</code>, donde indicamos al mismo tiempo la variable numérica y la variable de agrupamiento, tal que: <code>var~grupo</code>; <code>data</code> indica el <code>data.frame</code> que contiene la información, <code>conf</code> la amplitud de los intervalos y <code>R</code> el número de réplicas Bootstrap a realizar. Sustituyendo:</p>
@@ -687,10 +774,9 @@ Tip
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">conf =</span> <span class="fl">0.95</span>,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">R =</span> <span class="cn">NA</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.13","4":"0.95","5":"-0.464","6":"0.725"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":[".id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Conf.level"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Trad.lower"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Trad.upper"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"NA","2":"15","3":"0.363","4":"0.95","5":"-0.225","6":"0.951"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -701,12 +787,12 @@ Tip
 <li>En <code>data</code> pasamos nuestro vector como un <code>data.frame</code> utilizando <code>as.data.frame(v2)</code>.</li>
 <li>En <code>R</code> pasamos <code>NA</code> para indicar que NO queremos que los IC se estimen utilizando réplicas Bootstrap.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -727,19 +813,23 @@ Nota
 </ol>
 <p>Y las tres respuestas tienen algo de razón, pero también ambas están equivocadas. Me explico. Si bien es cierto que en el área de ecología y biología en general un <span class="math inline">\(\alpha\)</span> de 0.05 se ha considerado como “suficiente”, justo porque estamos dispuestos a aceptar 1/20 falsos positivos, en otras áreas se requiere de mayor certeza para tomar una decisión. En el área de investigación médica y farmacéutica, por ejemplo, usualmente toman valores de 0.01 e, incluso, 0.001. La razón es que <strong>el nivel de <span class="math inline">\(\alpha\)</span> debe de decidirse <em>a priori</em>, según el problema</strong> que tengamos entre manos y cuántos falsos positivos estemos dispuestos a aceptar.</p>
 <p>Veamos el caso de la siguiente figura <span class="citation" data-cites="Armheinetal_2019">(<a href="references.html#ref-Armheinetal_2019" role="doc-biblioref">Armhein, Greenland &amp; McShane, 2019</a>)</span>:</p>
-<div id="fig-fconc" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/false_conclusions.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.12: Valores de p, intervalos de confianza y conclusiones erróneas.</figcaption><p></p>
+<div id="fig-fconc" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fconc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/false_conclusions.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fconc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.12: Valores de p, intervalos de confianza y conclusiones erróneas.
+</figcaption>
 </figure>
 </div>
 <p>Aquí tenemos dos estudios que, en realidad, dieron resultados equivalentes o, cuando menos, que no están en conflicto uno con el otro. El estudio azul tuvo el mismo efecto positivo promedio que el rojo, aunque con un IC mucho más angosto y, en consecuencia, un valor de p “signficativo” (pequeño). El estudio rojo, por el contrario tiene un intervalo de confianza mucho más amplios que incluyeron el 0 y, consecuentemente, un valor de p “no significativo”. ¿Cuál sería la forma correcta de interpretar estos resultados? Primero, no descartar al estudio rojo o tacharlo de “no significativo”. Mejor, pensemos en los IC como intervalos de compatibilidad, describamos los resultados en función de las consecuencias de estos intervalos, con especial énfasis en la estimación puntual, pues es la más compatible con los datos. La razón de esto es que, por puro efecto del azar, el estudio azul podría replicar exactamente el mismo estudio y esta vez obteer un IC similar al rojo o viceversa.</p>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -752,10 +842,14 @@ Advertencia
 <section id="prueba-básica-t-de-student" class="level2" data-number="9.7">
 <h2 data-number="9.7" class="anchored" data-anchor-id="prueba-básica-t-de-student"><span class="header-section-number">9.7</span> Prueba básica: <span class="math inline">\(t\)</span> de Student</h2>
 <p>La prueba de hipótesis más conocida es la prueba <span class="math inline">\(t\)</span> de Student, y con justa razón. Esta prueba se construye a partir de una distribución <span class="math inline">\(t\)</span> de Student, la cual tiene tres parámetros: i) <span class="math inline">\(\mu\)</span>: media o centro de la distribución (posición del punto de mayor densidad en el eje x), ii) <span class="math inline">\(\sigma\)</span>: escala de la distribución (desviación estándar) y iii) <span class="math inline">\(\nu\)</span>: grados de libertad. Recordarás que los parámetros de una distribución afectan su forma. En este caso, el parámetro “más importante” son los grados de libertad, pues conforme estos se acerquen a infinito más se acercará la distribución a una normal. De hecho, con <span class="math inline">\(n \geq 30\)</span> se considera que la distribución es prácticamente normal. ¿Qué es lo que cambia? La altura o el peso de las colas:</p>
-<div id="fig-studentt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/tstudent.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9.13: Distribución <span class="math inline">\(t\)</span> de Student con diferentes grados de libertad <span class="math inline">\(k\)</span> (<span class="math inline">\(\nu\)</span>).</figcaption><p></p>
+<div id="fig-studentt" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-studentt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/tstudent.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-studentt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9.13: Distribución <span class="math inline">\(t\)</span> de Student con diferentes grados de libertad <span class="math inline">\(k\)</span> (<span class="math inline">\(\nu\)</span>).
+</figcaption>
 </figure>
 </div>
 <p>Este cambio en la altura de las colas es sumamente importante, y es lo que hace que la distribución <span class="math inline">\(t\)</span> sea uno de los “caballitos de batalla” de la estadística, pues literalmente estamos siendo conscientes que, conforme disminuye el tamaño de muestra (grados de libertad, pero ahorita los definimos), incrementa la probabilidad de tener valores extremos (el peso de las colas). Con esto también establecemos que no queremos que esos valores extremos desvíen nuestras estimaciones.</p>
@@ -774,12 +868,12 @@ Advertencia
 </div>
 </div>
 <p>Obtenemos exactamente el mismo resultado que antes, pues retiramos la media del conjunto de datos original. Eso son los <strong>grados de libertad</strong>: <strong>el número de observaciones independientes de la media</strong>, tal que <span class="math inline">\(\nu = n - 1\)</span>. Es sumamente importante que tengas presente este concepto, pues un montón de pruebas involucran grados de libertad.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -793,12 +887,12 @@ Nota
 <li>Muestras independientes; es decir que la observación <span class="math inline">\(x_i\)</span> sea independiente de la observación <span class="math inline">\(x_j\)</span>, que es diferente de tener muestras pareadas.</li>
 <li>Homogeneidad de varianzas.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -820,23 +914,23 @@ t = \frac{\overline{x}- \mu_0}{\frac{s}{\sqrt{n}}}
     One Sample t-test
 
 data:  v2
-t = 0.47038, df = 14, p-value = 0.6453
+t = 1.3242, df = 14, p-value = 0.2067
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -0.4638951  0.7245305
+ -0.2249449  0.9509213
 sample estimates:
 mean of x 
-0.1303177 </code></pre>
+0.3629882 </code></pre>
 </div>
 </div>
 <p>Ahora sí podemos revisar la salida completa. La primera línea nos dice el tipo de prueba <span class="math inline">\(t\)</span> que estamos aplicando. En este caso pasamos un solo vector, por lo que la prueba a aplicar es para una sola muestra. La segunda línea nos da el nombre de los datos. La tercera nos da los resultados de la prueba: el valor del estadístico <span class="math inline">\(t\)</span>, los grados de libertad <code>d.f.</code> (degrees of freedoom) y el valor de p (<code>p-value</code>), mientras que la cuarta nos da la hipótesis alternativa que estamos evaluando (la nula no cambia, ¿o sí?) ¿Contra qué valor está contrastando? Por defecto contra 0 (podemos cambiarlo con el argumento <code>mu</code>).</p>
 <p>¿Cómo reportamos estos resultados? “La media no fue signficativamente diferente de 0 (<span class="math inline">\(t = -1.29\)</span>, <span class="math inline">\(d.f. = 14\)</span>, <span class="math inline">\(p = 0.21 &gt; \alpha = 0.05\)</span>).</p>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -850,7 +944,7 @@ Importante
 <li>La media es menor a <span class="math inline">\(\mu_0\)</span>, en donde se aplica una prueba de una sola cola (considera la cola derecha).</li>
 <li>La media es mayor a <span class="math inline">\(\mu_0\)</span>, en donde se aplica también una prueba de una cola (la cola izquierda)</li>
 </ul>
-<p>Lo cual me lleva a hablar de pruebas de dos o una cola. El qué hipótesis alternativa se prueba ya lo definimos, pero ¿a qué se refiere eso de una o dos colas? A qué cola(s) integramos. En la <a href="#fig-normal">Figura&nbsp;<span>9.10</span></a> vimos que sumabamos lo que estaba fuera de nuestra área de aceptación, tanto a la derecha como a la izquierda; es decir, las colas de la distribución. Si solo sumamos lo que está a la derecha estamos preguntándonos si nuestra media es menor a <span class="math inline">\(\mu_0\)</span>.</p>
+<p>Lo cual me lleva a hablar de pruebas de dos o una cola. El qué hipótesis alternativa se prueba ya lo definimos, pero ¿a qué se refiere eso de una o dos colas? A qué cola(s) integramos. En la <a href="#fig-normal" class="quarto-xref">Figura&nbsp;<span>9.10</span></a> vimos que sumabamos lo que estaba fuera de nuestra área de aceptación, tanto a la derecha como a la izquierda; es decir, las colas de la distribución. Si solo sumamos lo que está a la derecha estamos preguntándonos si nuestra media es menor a <span class="math inline">\(\mu_0\)</span>.</p>
 <p>Esto podemos modificarlo con el argumento <code>alternative</code>, que puede ser <code>"two.sided"</code> (por defecto), <code>"greater"</code> o <code>"less"</code>. Veamos el resultado con la hipótesis alternativa de que la media es menor a 0:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(v2, <span class="at">conf.level =</span> <span class="fl">0.95</span>, <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -859,22 +953,22 @@ Importante
     One Sample t-test
 
 data:  v2
-t = 0.47038, df = 14, p-value = 0.3227
+t = 1.3242, df = 14, p-value = 0.1033
 alternative hypothesis: true mean is greater than 0
 95 percent confidence interval:
- -0.357653       Inf
+ -0.1198256        Inf
 sample estimates:
 mean of x 
-0.1303177 </code></pre>
+0.3629882 </code></pre>
 </div>
 </div>
 <p>Aquí, además de la hipótesis alternativa, hay dos cambios que es importante notar: el valor de p y el intervalo de confianza. Empecemos con el segundo, donde tenemos [-Inf, 0.099]. Esto no es ningún error. Simple y sencillamente refleja nuestra hipótesis alternativa: Si la media es menor no tiene caso que consideremos la cola izquierda, por lo que el límite inferior se va a -Inf, mientras que el límite superior se reduce a 0.099. Compara ese valor de 0.099 con el resultado de la prueba de dos colas. ¿Qué notas? Es exactamente la mitad. Estos intervalos de confianza son simétricos, por lo que si solo estamos considerando un lado es lógico que la amplitud se reduzca a la mitad y eso me lleva al otro cambio: el valor de p.&nbsp;También es exactamente la mitad del que nos dio la prueba para dos colas, y es por la misma razón, estamos considerando la mitad del área bajo la curva. Pero aquí hay una advertencia muy, pero muy importante:</p>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -909,12 +1003,12 @@ t = \frac{\overline{x_1} - \overline{x_2}}{sp\cdot\sqrt{\frac{1}{n_1}+\frac{1}{n
 sp = \sqrt{\frac{(n_1 - 1)s_{x_1}^2 + (n_2 - 1)s_{x_2}^2}{n_1 + n_2 -2}}
 \]</span></p>
 <p>Afortunadamente para implementarla en <code>R</code> solo vamos a utilizar la función <code>t.test(formula, data)</code> que ya conocíamos, solo que añadiremos dos argumentos adicionales: <code>var.equal = T</code> y <code>paired = F</code>. <code>var.equal</code> hace referencia al supuesto de homogeneidad de varianzas que mencionamos antes. Si no se cumple podemos pasar <code>var.equal = F</code> y entonces se aplicará la prueba <span class="math inline">\(t\)</span> de Welch, la cual modifica el modo en el que se estima la varianza mancomunada y permite contender con varianzas desiguales. <code>paired</code>, por otra parte, define si es una prueba para muestras independientes (<code>F</code>) o muestras dependientes (pareadas, <code>T</code>). Esto último lo veremos más adelante.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -997,7 +1091,11 @@ mean in group A mean in group B
 <span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>              </span>
 <span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>error.plot</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c09_ph0_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c09_ph0_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1012,7 +1110,6 @@ t = \frac{\overline{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dependientes <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">"datos/datos_t.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>dependientes</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Antes"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Después"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"60","2":"90","_rn_":"1"},{"1":"65","2":"99","_rn_":"2"},{"1":"72","2":"78","_rn_":"3"},{"1":"66","2":"77","_rn_":"4"},{"1":"65","2":"80","_rn_":"5"},{"1":"68","2":"75","_rn_":"6"},{"1":"66","2":"80","_rn_":"7"},{"1":"80","2":"99","_rn_":"8"},{"1":"78","2":"98","_rn_":"9"},{"1":"60","2":"80","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1029,7 +1126,6 @@ t = \frac{\overline{X}_D - \mu_o}{\frac{S_D}{\sqrt n}}
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dependientes_m</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["periodo"],"name":[1],"type":["fct"],"align":["left"]},{"label":["FC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Antes","2":"60","_rn_":"1"},{"1":"Antes","2":"65","_rn_":"2"},{"1":"Antes","2":"72","_rn_":"3"},{"1":"Antes","2":"66","_rn_":"4"},{"1":"Antes","2":"65","_rn_":"5"},{"1":"Antes","2":"68","_rn_":"6"},{"1":"Antes","2":"66","_rn_":"7"},{"1":"Antes","2":"80","_rn_":"8"},{"1":"Antes","2":"78","_rn_":"9"},{"1":"Antes","2":"60","_rn_":"10"},{"1":"Después","2":"90","_rn_":"11"},{"1":"Después","2":"99","_rn_":"12"},{"1":"Después","2":"78","_rn_":"13"},{"1":"Después","2":"77","_rn_":"14"},{"1":"Después","2":"80","_rn_":"15"},{"1":"Después","2":"75","_rn_":"16"},{"1":"Después","2":"80","_rn_":"17"},{"1":"Después","2":"99","_rn_":"18"},{"1":"Después","2":"98","_rn_":"19"},{"1":"Después","2":"80","_rn_":"20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1083,14 +1179,14 @@ mean of x
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
-<div id="ref-Armheinetal_2019" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Armheinetal_2019" class="csl-entry" role="listitem">
 Armhein V, Greenland S, McShane B. 2019. Scientists rise up against statistical significance. <em>Nature</em> 567:305-307. DOI: <a href="https://doi.org/10.1038/d41586-019-00857-9.">10.1038/d41586-019-00857-9.</a>
 </div>
-<div id="ref-Savage_1954" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Savage_1954" class="csl-entry" role="listitem">
 Savage LJ. 1954. <em>The Foundations of Statistics</em>. John Wiley &amp; Sons.
 </div>
-<div id="ref-Zar_2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Zar_2010" class="csl-entry" role="listitem">
 Zar JH. 2010. <em><span>Biostatistical Analysis</span></em>. Prentice Hall.
 </div>
 </div>
@@ -1124,9 +1220,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1162,10 +1272,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1175,8 +1284,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1189,6 +1307,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1232,6 +1469,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1257,6 +1495,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1318,12 +1582,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./c08_descriptiva.html" class="pagination-link">
+      <a href="./c08_descriptiva.html" class="pagination-link" aria-label="Estadística descriptiva">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./c10_param.html" class="pagination-link">
+      <a href="./c10_param.html" class="pagination-link" aria-label="Técnicas paramétricas">
         <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1331,9 +1595,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Arturo Bell</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Arturo Bell</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+
 
 
 

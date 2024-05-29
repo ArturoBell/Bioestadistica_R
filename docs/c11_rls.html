@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -46,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -138,15 +116,44 @@ div.csl-indent {
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -154,11 +161,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s03_basics.html">Técnicas básicas</a></li><li class="breadcrumb-item"><a href="./c11_rls.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -166,214 +178,243 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biología, Ciencia de Datos y `R`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos del análisis de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas básicas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas no paramétricas y modelación no lineal</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas Multivariadas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">11.1</span>  Librerías</a></li>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">11.2</span>  Introducción</a></li>
-  <li><a href="#regla-de-tres-y-el-modelo-lineal" id="toc-regla-de-tres-y-el-modelo-lineal" class="nav-link" data-scroll-target="#regla-de-tres-y-el-modelo-lineal"><span class="toc-section-number">11.3</span>  Regla de tres y el modelo lineal</a></li>
-  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="toc-section-number">11.4</span>  Regresión lineal simple</a>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="header-section-number">11.1</span> Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">11.2</span> Introducción</a></li>
+  <li><a href="#regla-de-tres-y-el-modelo-lineal" id="toc-regla-de-tres-y-el-modelo-lineal" class="nav-link" data-scroll-target="#regla-de-tres-y-el-modelo-lineal"><span class="header-section-number">11.3</span> Regla de tres y el modelo lineal</a></li>
+  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="header-section-number">11.4</span> Regresión lineal simple</a>
   <ul class="collapse">
-  <li><a href="#mínimos-cuadrados" id="toc-mínimos-cuadrados" class="nav-link" data-scroll-target="#mínimos-cuadrados"><span class="toc-section-number">11.4.1</span>  Mínimos cuadrados</a></li>
-  <li><a href="#supuestos-de-la-regresión-lineal" id="toc-supuestos-de-la-regresión-lineal" class="nav-link" data-scroll-target="#supuestos-de-la-regresión-lineal"><span class="toc-section-number">11.4.2</span>  Supuestos de la Regresión Lineal</a></li>
-  <li><a href="#predicción-vs.-interpretación" id="toc-predicción-vs.-interpretación" class="nav-link" data-scroll-target="#predicción-vs.-interpretación"><span class="toc-section-number">11.4.3</span>  Predicción vs.&nbsp;Interpretación</a></li>
-  <li><a href="#máxima-verosimilitud" id="toc-máxima-verosimilitud" class="nav-link" data-scroll-target="#máxima-verosimilitud"><span class="toc-section-number">11.4.4</span>  Máxima verosimilitud</a></li>
+  <li><a href="#mínimos-cuadrados" id="toc-mínimos-cuadrados" class="nav-link" data-scroll-target="#mínimos-cuadrados"><span class="header-section-number">11.4.1</span> Mínimos cuadrados</a></li>
+  <li><a href="#supuestos-de-la-regresión-lineal" id="toc-supuestos-de-la-regresión-lineal" class="nav-link" data-scroll-target="#supuestos-de-la-regresión-lineal"><span class="header-section-number">11.4.2</span> Supuestos de la Regresión Lineal</a></li>
+  <li><a href="#predicción-vs.-interpretación" id="toc-predicción-vs.-interpretación" class="nav-link" data-scroll-target="#predicción-vs.-interpretación"><span class="header-section-number">11.4.3</span> Predicción vs.&nbsp;Interpretación</a></li>
+  <li><a href="#máxima-verosimilitud" id="toc-máxima-verosimilitud" class="nav-link" data-scroll-target="#máxima-verosimilitud"><span class="header-section-number">11.4.4</span> Máxima verosimilitud</a></li>
   </ul></li>
-  <li><a href="#correlación-y-covarianza" id="toc-correlación-y-covarianza" class="nav-link" data-scroll-target="#correlación-y-covarianza"><span class="toc-section-number">11.5</span>  Correlación y covarianza</a></li>
-  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">11.6</span>  Ejercicio</a></li>
+  <li><a href="#correlación-y-covarianza" id="toc-correlación-y-covarianza" class="nav-link" data-scroll-target="#correlación-y-covarianza"><span class="header-section-number">11.5</span> Correlación y covarianza</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="header-section-number">11.6</span> Ejercicio</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s03_basics.html">Técnicas básicas</a></li><li class="breadcrumb-item"><a href="./c11_rls.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-rls" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></h1>
+<h1 class="title"><span id="sec-rls" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></h1>
 </div>
 
 
@@ -386,7 +427,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="librerías" class="level2" data-number="11.1">
 <h2 data-number="11.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">11.1</span> Librerías</h2>
@@ -431,10 +474,14 @@ Si \\
 <li><span class="math inline">\(a\)</span> es la <strong>ordenada al origen</strong> o <strong>intercepto</strong>, representada como <span class="math inline">\(\beta_0\)</span> o <span class="math inline">\(\alpha\)</span>, indica el precio de 0 manzanas. Matemáticamente esto lo definimos como el punto donde la recta corta a la ordenada (eje y) o, en palabras más sencillas, el punto donde x = 0.</li>
 <li><span class="math inline">\(b\)</span> es la <strong>pendiente</strong>, representada como <span class="math inline">\(\beta_1\)</span> o <span class="math inline">\(\beta\)</span>, e indica el precio de una manzana. Formalmente es la <strong>tasa de cambio</strong> que existe del eje <span class="math inline">\(x\)</span> al eje <span class="math inline">\(y\)</span>; es decir, “cuántas unidades nos vamos a mover en el eje y por una unidad en el eje x”.</li>
 </ol>
-<div id="fig-ruleofthree" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/ruleofthree.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11.1: De la regla de tres al modelo lineal</figcaption><p></p>
+<div id="fig-ruleofthree" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ruleofthree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/ruleofthree.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ruleofthree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.1: De la regla de tres al modelo lineal
+</figcaption>
 </figure>
 </div>
 <p>¿Por qué se le denomina lineal? Porque si lo graficamos tendremos una línea recta:</p>
@@ -454,21 +501,25 @@ Si \\
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-linmod" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="c11_rls_files/figure-html/fig-linmod-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11.2: Modelo lineal con el precio por cantidad de manzanas.</figcaption><p></p>
+<div id="fig-linmod" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-linmod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="c11_rls_files/figure-html/fig-linmod-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linmod-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.2: Modelo lineal con el precio por cantidad de manzanas.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Aunque esto nos lleva a un pequeño inconveniente o una consideración. Si utilizamos un modelo lineal estamos asumiendo explícitamente (aunque a veces inconscientemente) que el <strong>cambio entre nuestras variables es constante</strong>, determinado por <span class="math inline">\(\beta\)</span>. Reflexiona: ¿en la naturaleza cuántos procesos crees que sean realmente lineales? Con esto no quiero decir que debamos de olvidarnos del modelo lineal y que, entonces, esta sesión es una pérdida de tiempo, no. Quiero decir que debemos de ser consciente del <strong>supuesto</strong> bajo el cual estamos trabajando, muchas veces para simplificarnos la existencia.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -480,12 +531,12 @@ Nota
 <section id="regresión-lineal-simple" class="level2" data-number="11.4">
 <h2 data-number="11.4" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">11.4</span> Regresión lineal simple</h2>
 <p>Antes mencioné que la regla de tres es una aplicación del modelo lineal, lo que no dije es que es, en realidad, un ejercicio de <strong>regresión</strong>. ¿Qué es una regresión? Es una parte del <strong>aprendizaje automatizado supervisado</strong>, del cual hablaremos con más lujo de detalle en la sección correspondiente, pero podemos definirla como el proceso de <strong>estimar los parámetros de un modelo matemático a partir de ciertos datos</strong>. En una regresión <strong>la variable dependiente “siempre” es numérica</strong>. ¿Qué pasa si tenemos una variable dependiente categórica? Entonces estamos en un escenario de clasificación, pero no nos adelantemos.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -493,12 +544,12 @@ Nota
 <p>¿Qué es el aprendizaje automatizado? Por el momento entiendelo como la filosofía de “enseñar con ejemplos” llevada a modelos matemáticos y predicciones. En cualquier modelo de aprendizaje automatizado supervisado tenemos una serie de ejemplos (datos), en los cuales una o más variables sirven como predictoras de otra(s); es decir, el objetivo es generar buenas predicciones.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -506,13 +557,13 @@ Nota
 <p>¿Qué es un parámetro en este contexto? Una manera fácil de entender los parámetros de un modelo es verlos como perillas que regulan cómo se transforma lo que está a la derecha del símbolo de igualdad para llegar a lo que está a la izquierda. Si te das cuenta es básicamente lo que sucede con las distribuciones de probabilidad, y con justa razón: las distribuciones de probabilidad son, en sí mismas, modelos. No confundas esta definición con la definición de parámetro poblacional.</p>
 </div>
 </div>
-<p>Ahora bien, hay una gran cantidad de <strong>métodos de auste</strong> de una regresión, pero todos se reducen a una cosa: <strong>minimizar una función de pérdida</strong>. ¿Qué es una función de pérdida y con qué se come? Es una forma rebuscada de llamarle a la <strong>distancia que existe entre nuestros valores observados y los valores predichos por el modelo</strong> o, en palabras más sencillas, qué tan lejos quedó la flecha del blanco; es decir, <strong>al ajustar un modelo estamos minimizando su error</strong>. ¿Cuáles valores predichos? Aaaah, que bueno que preguntaste. Si vuelves a la <a href="#fig-linmod">Figura&nbsp;<span>11.2</span></a> te darás cuenta que, utilizando los <strong>parámetros</strong> estimados con nuestra regla de tres (<span class="math inline">\(a\)</span> = 0 y <span class="math inline">\(b\)</span> = 5) calculamos cuánto gastaríamos si compraramos desde 1 hasta 10 manzanas. De esos costos solo teníamos el dato de que <span class="math inline">\(10 🍎 = \$50\)</span>, todo lo demás es una predicción.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<p>Ahora bien, hay una gran cantidad de <strong>métodos de auste</strong> de una regresión, pero todos se reducen a una cosa: <strong>minimizar una función de pérdida</strong>. ¿Qué es una función de pérdida y con qué se come? Es una forma rebuscada de llamarle a la <strong>distancia que existe entre nuestros valores observados y los valores predichos por el modelo</strong> o, en palabras más sencillas, qué tan lejos quedó la flecha del blanco; es decir, <strong>al ajustar un modelo estamos minimizando su error</strong>. ¿Cuáles valores predichos? Aaaah, que bueno que preguntaste. Si vuelves a la <a href="#fig-linmod" class="quarto-xref">Figura&nbsp;<span>11.2</span></a> te darás cuenta que, utilizando los <strong>parámetros</strong> estimados con nuestra regla de tres (<span class="math inline">\(a\)</span> = 0 y <span class="math inline">\(b\)</span> = 5) calculamos cuánto gastaríamos si compraramos desde 1 hasta 10 manzanas. De esos costos solo teníamos el dato de que <span class="math inline">\(10 🍎 = \$50\)</span>, todo lo demás es una predicción.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -547,17 +598,17 @@ D(y_i - \hat{y_i}) = \sum_{i=1}^n(y_i - \hat{y_i})^2 = \sum_{i=1}^n \epsilon^2
 \beta_0 = \overline{y}- \beta_1*\overline{x}
 \]</span></p>
 <p>¿Por qué solo como referencia? Porque (afortunadamente para nosotros) <code>R</code> ya tiene codificado todo el proceso en la función <code>lm(formula, data)</code> y no tenemos que preocuparnos por nada de eso.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Recordarás que en el <a href="c04_tidyverse.html"><span>Capítulo&nbsp;4</span></a> hablé (y ejemplifiqué) sobre cómo ajustar una regresión lineal simple, tanto con <code>R</code> como con <code>tidymodels</code>. En esta sesión <code>tidymodels</code> aún nos queda “un poco grande”, en el sentido de que aún no podemos aprovechar todo lo que ofrece, por lo que me voy a limitar a utilizar la forma de <code>R</code> base.</p>
+<p>Recordarás que en el <a href="c04_tidyverse.html" class="quarto-xref"><span>Capítulo 4</span></a> hablé (y ejemplifiqué) sobre cómo ajustar una regresión lineal simple, tanto con <code>R</code> como con <code>tidymodels</code>. En esta sesión <code>tidymodels</code> aún nos queda “un poco grande”, en el sentido de que aún no podemos aprovechar todo lo que ofrece, por lo que me voy a limitar a utilizar la forma de <code>R</code> base.</p>
 </div>
 </div>
 <p>Para ejemplificarlo carguemos los datos contenidos en <code>example_data.csv</code>:</p>
@@ -575,7 +626,11 @@ Nota
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>plot_data_reg1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <section id="ajuste-y-bondad-de-ajuste" class="level4" data-number="11.4.1.1">
@@ -614,12 +669,12 @@ F-statistic: 209.3 on 1 and 95 DF,  p-value: &lt; 2.2e-16</code></pre>
 <li><code>Adjusted R-squared</code>: Es un ajuste al <span class="math inline">\(R^2\)</span> que lo hace menos optimista, especialmente diseñado para escenarios de regresión múltiple (de ahí el “Multiple” del punto anterior). Por el momento lo vamos a ignorar.</li>
 <li><code>F-statistic</code>: Resultados de un ANOVA que, al igual que el punto anterior vamos a ignorar porque es informativo solo en regresiones múltiples. Es un ANOVA para comparar todo el modelo contra un modelo que tiene solo un intercepto, por lo que aquí solo es redundante con la prueba <span class="math inline">\(t\)</span> para la pendiente.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -649,13 +704,17 @@ Nota
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ahora bien, recordarás que ninguna estimación es infalible, por lo que tanto el reporte como el gráfico están incompletos. Hablemos entonces de los intervalos de confianza.</p>
 <section id="intervalos-de-confianza-para-los-parámetros" class="level5" data-number="11.4.1.1.1">
 <h5 data-number="11.4.1.1.1" class="anchored" data-anchor-id="intervalos-de-confianza-para-los-parámetros"><span class="header-section-number">11.4.1.1.1</span> Intervalos de confianza para los parámetros</h5>
-<p>En un modelo de regresión lineal tenemos “dos” intervalos de confianza: los intervalos de confianza para la estimación de los parámetros y el intervalo de confianza para la regresión. Los primeros, como te imaginarás, representan la incertidumbre alrededor de la estimación de nuestros parámetros de regresión. Como recordarás de lo que mencioné en el capítulo <a href="c08_descriptiva.html"><span>Capítulo&nbsp;8</span></a>, estos se construyen a partir de su error estándar (<span class="math inline">\(IC_{95\%} = \beta ± 1.96*EE\)</span>) y, a diferencia de lo que vimos en el <a href="c09_ph0.html"><span>Capítulo&nbsp;9</span></a>, ahora los obtenemos con la función <code>confint()</code>:</p>
+<p>En un modelo de regresión lineal tenemos “dos” intervalos de confianza: los intervalos de confianza para la estimación de los parámetros y el intervalo de confianza para la regresión. Los primeros, como te imaginarás, representan la incertidumbre alrededor de la estimación de nuestros parámetros de regresión. Como recordarás de lo que mencioné en el capítulo <a href="c08_descriptiva.html" class="quarto-xref"><span>Capítulo 8</span></a>, estos se construyen a partir de su error estándar (<span class="math inline">\(IC_{95\%} = \beta ± 1.96*EE\)</span>) y, a diferencia de lo que vimos en el <a href="c09_ph0.html" class="quarto-xref"><span>Capítulo 9</span></a>, ahora los obtenemos con la función <code>confint()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>confint_reg1 <span class="ot">&lt;-</span> <span class="fu">confint</span>(reg1, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>confint_reg1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -685,19 +744,23 @@ v1           1.016035  1.339263</code></pre>
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Pero este no es el gráfico que usualmente veremos. Si deseáramos inlcuir esta información solo añadiríamos los IC al reporte, tal que:</p>
 <blockquote class="blockquote">
-<p>En el modelo de regresión lineal simple tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02, 1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+<p>En el modelo de regresión lineal simple tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02,  1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
 </blockquote>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -719,20 +782,24 @@ Advertencia
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-rls1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="c11_rls_files/figure-html/fig-rls1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11.3: Modelo de regresión lineal simple de <code>v2</code> y <code>v1</code>. La línea morada representa el ajuste lineal, y el área sombreada el intervalo de confianza para la regresión</figcaption><p></p>
+<div id="fig-rls1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rls1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="c11_rls_files/figure-html/fig-rls1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rls1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.3: Modelo de regresión lineal simple de <code>v2</code> y <code>v1</code>. La línea morada representa el ajuste lineal, y el área sombreada el intervalo de confianza para la regresión
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -741,7 +808,9 @@ Nota
 </div>
 </div>
 <p>Nuestro reporte completo quedaría entonces como:</p>
-<p>En el modelo de regresión lineal simple (<a href="#fig-rls1">Figura&nbsp;<span>11.3</span></a>) tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02, 1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+<blockquote class="blockquote">
+<p>En el modelo de regresión lineal simple (<a href="#fig-rls1" class="quarto-xref">Figura&nbsp;<span>11.3</span></a>) tanto el intercepto (<span class="math inline">\(\beta_0 = -3.72\)</span>; <span class="math inline">\(IC_{95\%}: [-5.18, -2.27]\)</span>) como la pendiente (<span class="math inline">\(\beta_1 = 1.17\)</span>; <span class="math inline">\(IC_{95\%}: [1.02,  1.34]\)</span>) son significativamente diferentes de 0 (<span class="math inline">\(\beta_0: t_{\nu = 95} = -5.09; p &lt; 0.0001\)</span>; <span class="math inline">\(\beta_1: t_{\nu = 95} = 14.47; p &lt; 0.0001\)</span>). El valor de <span class="math inline">\(R^2\)</span> indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.</p>
+</blockquote>
 <p>Y ahora toca abordar el “elefante en el cuarto” y comprobar que nuestra regresión sea confiable.</p>
 </section>
 </section>
@@ -755,17 +824,17 @@ Nota
 <li><strong>Normalidad</strong>: El error sigue una distribución normal.</li>
 <li><strong>Homocedasticidad</strong>: El error tiene una varianza constante para cada valor de <span class="math inline">\(X\)</span>.</li>
 </ul>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Te darás cuenta de que todo está en términos del “error”, tal y como hablábamos de distribuciones muestrales de la media en el capítulo <a href="c10_param.html"><span>Capítulo&nbsp;10</span></a>. Siguiendo la misma lógica, nuestras inferencias para comprobar los supuestos las haremos sobre los residuales.</p>
+<p>Te darás cuenta de que todo está en términos del “error”, tal y como hablábamos de distribuciones muestrales de la media en el capítulo <a href="c10_param.html" class="quarto-xref"><span>Capítulo 10</span></a>. Siguiendo la misma lógica, nuestras inferencias para comprobar los supuestos las haremos sobre los residuales.</p>
 </div>
 </div>
 <p>Si no cumplimos con uno, varios, o ninguno, la confiabilidad de nuestro modelo de regresión para fines de interpretación va disminuyendo. Los primeros dos son bastante lógicos. El primero es auto-explicativo: si la relación no es lineal, el modelo lineal no es suficiente para describirla. El segundo tiene que ver con datos de series de tiempo y algo que se conoce como <strong>autocorrelación</strong>, pero esto se reduce a que el error del punto <span class="math inline">\(t_i\)</span> no dependa del punto <span class="math inline">\(t_{i-1}\)</span>.</p>
@@ -773,7 +842,7 @@ Nota
 <p>El <strong>supuesto de homocedasticidad</strong>, por otra parte, es análogo al supuesto de homogeneidad de varianzas pero, nuevamente, nos interesa qué pasa con el error, no con las variables originales (por favor, no hagas una prueba de Levene con tus variables como grupos). En este caso lo importante es que el error sea parejo, independientemente de si tenemos valores pequeños o grandes del predictor.</p>
 <p>¿Cómo evaluamos estos supuestos? Mayoritariamente con gráficos de dispersión, pero vamos uno a uno:</p>
 <ul>
-<li><strong>Linealidad</strong>: Con un gráfico de residuales. En este gráfico tenemos los residuales estandarizados (cada residual menos el promedio de los residuales, dividido entre la desviación estándar) en el eje <span class="math inline">\(y\)</span>, y los valores ajustados por el modelo (predicciones) en el eje <span class="math inline">\(x\)</span>. Se pueden añadir dos referencias: una línea de referencia horizontal en <span class="math inline">\(y = 0\)</span> y una curva LOESS (hablaremos un poco de este modelo en el <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>). Si la relación entre nuestras variables predicha y predictora es perfectamente lineal, entonces todos los puntos caerán sobre la línea de referencia y la curva LOESS será completamente horizontal en 0. Entre menos lineal sea la relación más se alejarán los puntos de la línea y mayores curvaturas tendrá el modelo LOESS. Adicionalmente, puede servir para identificar valores extremos (puntos que caigan fuera de <span class="math inline">\([-1.96, 1.96]\)</span> si se trabaja a un 95% de confianza).</li>
+<li><strong>Linealidad</strong>: Con un gráfico de residuales. En este gráfico tenemos los residuales estandarizados (cada residual menos el promedio de los residuales, dividido entre la desviación estándar) en el eje <span class="math inline">\(y\)</span>, y los valores ajustados por el modelo (predicciones) en el eje <span class="math inline">\(x\)</span>. Se pueden añadir dos referencias: una línea de referencia horizontal en <span class="math inline">\(y = 0\)</span> y una curva LOESS (hablaremos un poco de este modelo en el <a href="c13_nolin.html" class="quarto-xref"><span>Capítulo 13</span></a>). Si la relación entre nuestras variables predicha y predictora es perfectamente lineal, entonces todos los puntos caerán sobre la línea de referencia y la curva LOESS será completamente horizontal en 0. Entre menos lineal sea la relación más se alejarán los puntos de la línea y mayores curvaturas tendrá el modelo LOESS. Adicionalmente, puede servir para identificar valores extremos (puntos que caigan fuera de <span class="math inline">\([-1.96, 1.96]\)</span> si se trabaja a un 95% de confianza).</li>
 <li><strong>Independencia</strong>: Con un gráfico de autocorrelación. Lo vamos a obviar porque el análisis de series de tiempo está fuera del alcance de este curso.</li>
 <li><strong>Normalidad</strong>: Una prueba de normalidad de los residuales y con un gráfico cuantil-cuantil (QQ plot). En este gráfico se grafican (valga la redundancia) los residuales en el eje <span class="math inline">\(y\)</span>, y cuantiles teóricos según una distribución normal en el eje <span class="math inline">\(x\)</span>. Además se traza una línea de referencia con una pendiente de 1, que representa una distribución normal perfecta. El objetivo es que la prueba de normalidad sea no significativa y que los residuales caigan lo más cercanamente posible a la línea de referencia.</li>
 <li><strong>Homogeneidad de varianzas</strong>: Una prueba <span class="citation" data-cites="BreuschPagan_1979">Breusch &amp; Pagan (<a href="references.html#ref-BreuschPagan_1979" role="doc-biblioref">1979</a>)</span> y un gráfico de escala-locación (scale-location). La prueba, como te imaginarás, tiene la hipótesis de nulidad de que el error (residuales) está homogéneamente distribuido. En el gráfico tenemos en el eje <span class="math inline">\(y\)</span> la raíz cuadrada del absoluto de los residuales estandarizados (<span class="math inline">\(\sqrt{|re|}\)</span>) y en el eje <span class="math inline">\(x\)</span> los valores ajustados. ¿Por qué la raíz del absoluto? Ese detalle ya es clavarse demasiado, y prefiero que nos adentremos bien a otro tema un poco más adelante, así que conformemonos por saber que queremos que los puntos estén distribuidos de manera aleatoria (homogénea) en todo el eje <span class="math inline">\(x\)</span>. ¿Qué quiere decir esto? que no tengamos una mayor dispersión de los puntos (varianza de los residuales) en valores ajustados pequeños (a la izquierda del gráfico) que en los valores más grandes (derecha del gráfico), lo que se vería como un &gt; imaginario, o viceversa, o algún otro patrón.</li>
@@ -783,16 +852,20 @@ Nota
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>reg1_diags <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_model</span>(reg1)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>reg1_diags</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-performance" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="c11_rls_files/figure-html/fig-performance-1.png" class="img-fluid figure-img" width="576"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11.4: Gráficos diagnósticos de la regresión.</figcaption><p></p>
+<div id="fig-performance" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="c11_rls_files/figure-html/fig-performance-1.png" class="img-fluid figure-img" width="576">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-performance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.4: Gráficos diagnósticos de la regresión.
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Y se acabó el encanto. Resulta que no cumplimos con ninguno de los supuestos, y entonces nuestro <span class="math inline">\(R^2 \approx 0.7\)</span> nos mintió vilmente. Cada quien reacciona de forma diferente a cuándo alguien le miente, pero lo que es seguro que pase es que desconfiará, al menos un poco, de todo lo que esa persona le diga en un futuro. En defensa del <span class="math inline">\(R^2\)</span>, no es su culpa y, de hecho, estoy siendo demasiado duro con él. Me explico: el <span class="math inline">\(R^2\)</span> es confiable como medida de ajuste sí y solo si se cumplen los mismos supuestos de la regresión lineal simple, lo cual no es el caso; <em>ergo</em>, no podíamos confiar en él desde un principio porque nuestros datos no lo permiten. El problema es que se ha malversado su uso, y muchas personas lo utilizan como si fuera el único sello de garantía, cuando en realidad es el último.</p>
-<p>Pero volvamos a nuestros gráficos. En la <a href="#fig-performance">Figura&nbsp;<span>11.4</span></a> se ven muy pequeños, y hay un par que no hemos explicado:</p>
+<p>Pero volvamos a nuestros gráficos. En la <a href="#fig-performance" class="quarto-xref">Figura&nbsp;<span>11.4</span></a> se ven muy pequeños, y hay un par que no hemos explicado:</p>
 <ol type="1">
 <li><strong>Posterior predictive check</strong>: Este tipo de gráficos es uno de los más socorridos en inferencia Bayesiana, para comprobar que la distribución posterior obtenida por el modelo sea consistente con los datos observados. Aquí no tenemos un modelo Bayesiano, pero sí que podemos utilizar la información de la distribución de los parámetros (estimación y error estándar) para simular datos aleatorios. Si el modelo tiene una buena capacidad predictiva, entonces los datos observados <span class="math inline">\(Y\)</span> deben de caer dentro del área comprendida por las líneas de los datos predichos <span class="math inline">\(\hat{Y}\)</span>. En este caso, la capacidad predictiva del modelo no es del todo mala, solamente tenemos una sobre-estimación notable en valores cercanos a 10. Esto nos habla de la robustez del modelo lineal, pero no por ello hay que abusar de él.</li>
 </ol>
@@ -800,7 +873,11 @@ Nota
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(performance<span class="sc">::</span><span class="fu">check_predictions</span>(reg1)) <span class="sc">+</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <ol start="2" type="1">
@@ -845,7 +922,11 @@ Nota
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <ol start="3" type="1">
@@ -856,7 +937,11 @@ Nota
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_homoced) <span class="sc">+</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>reg1_homoced</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -870,7 +955,11 @@ Nota
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>reg1_outliers <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_outliers</span>(reg1)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_outliers)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <ol start="5" type="1">
@@ -880,7 +969,11 @@ Nota
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reg1_norm <span class="ot">&lt;-</span> performance<span class="sc">::</span><span class="fu">check_normality</span>(reg1)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(reg1_norm, <span class="at">type =</span> <span class="st">"qq"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>reg1_norm</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -891,13 +984,13 @@ Nota
 </section>
 <section id="predicción-vs.-interpretación" class="level3" data-number="11.4.3">
 <h3 data-number="11.4.3" class="anchored" data-anchor-id="predicción-vs.-interpretación"><span class="header-section-number">11.4.3</span> Predicción vs.&nbsp;Interpretación</h3>
-<p>Ahora bien, mencioné en varias ocasiones cosas relacionadas con la “predicción” y la “interpretación”. Pues resulta que, como vimos arriba, para fines predictivos no importan demasiado los supuestos, y antes de que agarres un trinche y una antorcha escucha lo que tengo que decir. Antes te dije que la regresión forma parte del aprendizaje automatizado supervisado y, como tal, su principal (por no decir único) objetivo es la predicción. Un modelo de regresión exitoso es un modelo que pueda predecir adecuadamente, punto. ¿Y la interpretación? Esa es otra cara de la moneda. De hecho, están inversamente correlacionadas, en el sentido de que entre más poderosa es una técnica, menos interpretable es. De todos estos detalles vamos a hablar más adelante en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>, pero por el momento quiero que te quedes con lo siguiente:</p>
-<div class="callout callout-style-default callout-important callout-captioned">
+<p>Ahora bien, mencioné en varias ocasiones cosas relacionadas con la “predicción” y la “interpretación”. Pues resulta que, como vimos arriba, para fines predictivos no importan demasiado los supuestos, y antes de que agarres un trinche y una antorcha escucha lo que tengo que decir. Antes te dije que la regresión forma parte del aprendizaje automatizado supervisado y, como tal, su principal (por no decir único) objetivo es la predicción. Un modelo de regresión exitoso es un modelo que pueda predecir adecuadamente, punto. ¿Y la interpretación? Esa es otra cara de la moneda. De hecho, están inversamente correlacionadas, en el sentido de que entre más poderosa es una técnica, menos interpretable es. De todos estos detalles vamos a hablar más adelante en el <a href="c17_clasif.html" class="quarto-xref"><span>Capítulo 17</span></a>, pero por el momento quiero que te quedes con lo siguiente:</p>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -906,18 +999,18 @@ Importante
 </div>
 </div>
 <p>Sin ir demasiado lejos, el modelo que construimos arriba no cumple con el supuesto de normalidad (los demás están en la cuerda floja) y aún así las predicciones posteriores (en el <em>posterior predictive check</em>) se ven bastante aceptables. Desafortunadamente para nostros, usualmente nos interesa la interpretación, así que hay que hacer la tarea completa.</p>
-<p>¿Y si solo me interesan las predicciones? Bueno, igual hay que verificar algunas cosas, pero eso lo veremos en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>.</p>
+<p>¿Y si solo me interesan las predicciones? Bueno, igual hay que verificar algunas cosas, pero eso lo veremos en el <a href="c17_clasif.html" class="quarto-xref"><span>Capítulo 17</span></a>.</p>
 </section>
 <section id="máxima-verosimilitud" class="level3" data-number="11.4.4">
 <h3 data-number="11.4.4" class="anchored" data-anchor-id="máxima-verosimilitud"><span class="header-section-number">11.4.4</span> Máxima verosimilitud</h3>
 <p>Bueno, ya sabemos cómo aplicar, interpretar, y validar los supuestos de una regresión lineal en <code>R</code> utilizando el método de mínimos cuadrados, pero antes te mencioné que también había otros métodos entre los que se encuentra el <strong>ajuste por máxima verosimilitud</strong>. Entonces es necesario explicar qué es la verosimilitud para luego ver cómo maximizarla, ¿no crees?</p>
-<p>Recordemos por un momento lo que revisamos en el <a href="c06_prob.html"><span>Capítulo&nbsp;6</span></a> sobre la probabilidad. Dijimos que, cuando tenemos resultados mutuamente excluyentes y exhaustivos (todos los resultados), la suma de todas sus probabilidades es exactamente 1, tal que:</p>
+<p>Recordemos por un momento lo que revisamos en el <a href="c06_prob.html" class="quarto-xref"><span>Capítulo 6</span></a> sobre la probabilidad. Dijimos que, cuando tenemos resultados mutuamente excluyentes y exhaustivos (todos los resultados), la suma de todas sus probabilidades es exactamente 1, tal que:</p>
 <p><span class="math display">\[
 \sum_i^n p_i == 1
 \]</span></p>
 <p>Hasta aquí todo bien, pero ¿dónde entra la <strong>verosimilitud</strong>? Si buscas en el diccionario de la Real Academia Española te vas a encontrar con una de sus siempre útiles definiciones: “Cualidad de verosímil”, por lo que hay que definir verosímil: “<strong>que tiene apariencia de verdadero</strong>”. Eso ya tiene más sentido. En un escenario de investigación nosotros podemos plantear múltiples hipótesis, que no son necesariamente excluyentes entre sí, entonces no podemos simplemente utilizar la probabilidad. Entendamos la verosimilitud con un ejemplo:</p>
-<p>Imagina que alguien a quien conoces te dice que uno de sus amigos tiene poderes psíquicos. Tú, como persona de ciencia, decides ponerlo a prueba. Acuerdan una reunión y le pones un “desafío” simple: vas a lanzar diez volados, y el debe de adivinar el resultado. Al final, él adivina correctamente 7/10 volados. Sin dejarte llevar por tu escepticismo planteas algunas hipótesis: i) simple coincidencia, el tamaño de muestra no es lo suficientemente grande; ii) la moneda no es del todo “justa”, sino que tiende a caer más hacia cierto lado; iii) esta persona tiene una visión cinética sobre-humana y puede ver qué es lo que está arriba antes de que atrapes la moneda, iv) esta persona realmente tiene algo de clarividente. ¿Cuál crees que sea más verosímil? Espero que me digas que la primera hipótesis, especialmente después de lo que vimos en el <a href="c06_prob.html"><span>Capítulo&nbsp;6</span></a>. Si por el contrario hubieran sido 1000 lanzamientos y hubiera adivinado 700, la historia sería otra, pero con 7/10 puede ser un capricho del mundo. Eso que hicimos fue, justamente, un ajuste por <strong>máxima verosimilitud</strong>: <strong>seleccionar la hipótesis más verosímil de entre un conjunto dado</strong>, solo que vamos a cambiar hipótesis por valores de parámetros.</p>
-<p>¿Formalmente? Un ajuste por máxima verosimilitud consiste en <strong>estimar parámetros</strong> de un modelo, dado un conjunto de observaciones, en donde se encuentra <strong>valores que maximicen la verosimilitud de las observaciones dados los valores de los parámetros</strong>. Puesto de otra manera, buscamos el conjunto de valores que maximicen la probabilidad de que nos hayamos encontrado nuestros datos, según el modelo que escogimos. Esto se parece mucho a lo que vimos en el <a href="c09_ph0.html"><span>Capítulo&nbsp;9</span></a> sobre el nivel de significancia, solo que nuestro modelo “deja de ser una distribución de probabilidades” para ser un modelo de regresión. ¿Por qué las comillas? Porque nuestro error no puede quedar “suelto”, pero en máxima verosimilitud podemos trabajar con <strong>cualquier distribución de probabilidad que se ajuste a nuestro problema</strong>; de hecho, esto es lo que da lugar a los <strong>modelos lineales generalizados</strong>, pero eso lo veremos en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>.</p>
+<p>Imagina que alguien a quien conoces te dice que uno de sus amigos tiene poderes psíquicos. Tú, como persona de ciencia, decides ponerlo a prueba. Acuerdan una reunión y le pones un “desafío” simple: vas a lanzar diez volados, y el debe de adivinar el resultado. Al final, él adivina correctamente 7/10 volados. Sin dejarte llevar por tu escepticismo planteas algunas hipótesis: i) simple coincidencia, el tamaño de muestra no es lo suficientemente grande; ii) la moneda no es del todo “justa”, sino que tiende a caer más hacia cierto lado; iii) esta persona tiene una visión cinética sobre-humana y puede ver qué es lo que está arriba antes de que atrapes la moneda, iv) esta persona realmente tiene algo de clarividente. ¿Cuál crees que sea más verosímil? Espero que me digas que la primera hipótesis, especialmente después de lo que vimos en el <a href="c06_prob.html" class="quarto-xref"><span>Capítulo 6</span></a>. Si por el contrario hubieran sido 1000 lanzamientos y hubiera adivinado 700, la historia sería otra, pero con 7/10 puede ser un capricho del mundo. Eso que hicimos fue, justamente, un ajuste por <strong>máxima verosimilitud</strong>: <strong>seleccionar la hipótesis más verosímil de entre un conjunto dado</strong>, solo que vamos a cambiar hipótesis por valores de parámetros.</p>
+<p>¿Formalmente? Un ajuste por máxima verosimilitud consiste en <strong>estimar parámetros</strong> de un modelo, dado un conjunto de observaciones, en donde se encuentra <strong>valores que maximicen la verosimilitud de las observaciones dados los valores de los parámetros</strong>. Puesto de otra manera, buscamos el conjunto de valores que maximicen la probabilidad de que nos hayamos encontrado nuestros datos, según el modelo que escogimos. Esto se parece mucho a lo que vimos en el <a href="c09_ph0.html" class="quarto-xref"><span>Capítulo 9</span></a> sobre el nivel de significancia, solo que nuestro modelo “deja de ser una distribución de probabilidades” para ser un modelo de regresión. ¿Por qué las comillas? Porque nuestro error no puede quedar “suelto”, pero en máxima verosimilitud podemos trabajar con <strong>cualquier distribución de probabilidad que se ajuste a nuestro problema</strong>; de hecho, esto es lo que da lugar a los <strong>modelos lineales generalizados</strong>, pero eso lo veremos en el <a href="c19_glm.html" class="quarto-xref"><span>Capítulo 19</span></a>.</p>
 <p>¿Cómo lo llevamos a la práctica? Primero quiero que te des la oportunidad de ver una relación interesante que puede ahorrarte mucho trabajo, o que puede abrirte la puerta a otro tipo de análisis.</p>
 <section id="mínimos-cuadrados-máxima-verosimilitud-e-inferencia-bayesiana" class="level4" data-number="11.4.4.1">
 <h4 data-number="11.4.4.1" class="anchored" data-anchor-id="mínimos-cuadrados-máxima-verosimilitud-e-inferencia-bayesiana"><span class="header-section-number">11.4.4.1</span> Mínimos cuadrados, máxima verosimilitud e inferencia Bayesiana</h4>
@@ -960,12 +1053,12 @@ L(\theta|x_1, x_2, ..., x_n) \equiv p(x_1|\theta)p(x_2|\theta),...,p(x_n|\theta)
 \left\{ \sum_i^n log(p(x_i|\theta)) \right\}
 \]</span></p>
 <p>Esta última parte era un poco innecesaria, nada más que un breviario cultural para que conocieras por qué utilizamos logaritmos de verosimilitud, cosa que haremos más adelante, pero ahora vayamos al meollo del asunto:</p>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -980,20 +1073,21 @@ Importante
 <p>A diferencia de la implementación de una regresión por mínimos cuadrados, ajustar el modelo mediante máxima verosimilitud no es tan intuitivo. El primer paso es establecer manualmente nuestra función de verosimilitud, ajustando una distribución normal a los residuales:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> df_reg1[<span class="fu">c</span>(<span class="st">"v1"</span>, <span class="st">"v2"</span>)]</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(b0, b1, mu, sigma){</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Encontrar los residuales. Modelo a ajustar</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> data<span class="sc">$</span>v2 <span class="sc">-</span> data<span class="sc">$</span>v1 <span class="sc">*</span> b1 <span class="sc">-</span> b0</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcular la verosimilitud. Residuales con distribución normal.</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> <span class="fu">suppressWarnings</span>(<span class="fu">dnorm</span>(R, mu, sigma))</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sumar el logaritmo de las verosimilitudes para</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># todos los puntos de datos.</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>(R))</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(b0, b1,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>               mu, sigma){</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Encontrar los residuales. Modelo a ajustar</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> data<span class="sc">$</span>v2 <span class="sc">-</span> data<span class="sc">$</span>v1 <span class="sc">*</span> b1 <span class="sc">-</span> b0</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calcular la verosimilitud. Residuales con distribución normal.</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  R <span class="ot">=</span> <span class="fu">suppressWarnings</span>(<span class="fu">dnorm</span>(R, mu, sigma))</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sumar el logaritmo de las verosimilitudes para</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># todos los puntos de datos.</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fu">sum</span>(<span class="fu">log</span>(R))</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora ajustemos el modelo que acabamos de crear, utilizando la función <code>stats4::mle(fun, start = list())</code> (*maximum likelihood estimation), donde <code>fun</code> es la función de verosimilitud a ajustar y <code>start</code> son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:</p>
+<p>Ahora ajustemos el modelo que acabamos de crear, utilizando la función <code>stats4::mle(fun, start = list())</code> (*maximum likelihood estimation”), donde <code>fun</code> es la función de verosimilitud a ajustar y <code>start</code> son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>mle_fit <span class="ot">&lt;-</span> <span class="fu">mle</span>(LL, <span class="at">start =</span> <span class="fu">list</span>(<span class="at">b0 =</span> <span class="dv">1</span>, <span class="at">b1 =</span> <span class="dv">1</span>, <span class="at">sigma =</span> <span class="dv">1</span>), </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">fixed =</span> <span class="fu">list</span>(<span class="at">mu =</span> <span class="dv">0</span>), </span>
@@ -1016,21 +1110,25 @@ sigma  3.063056 0.21991454
 -2 log L: 492.4402 </code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Hay que definir valores iniciales para los parámetros porque, a diferencia de por mínimos cuadrados, el proceso de minimización del negativo de la suma del logaritmo de la verosimilitud es <strong>iterativo</strong> mediante un algoritmo de búsqueda. El más común es el algoritmo de búsqueda de Newton-Raphson (o Newton-Fourier). ¿A qué me refiero con iterativo? A que la computadora variará los parámetros hasta llegar a la solución “optima”:</p>
-<div id="fig-iterative" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/iterative.gif" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11.5: Ajuste iterativo de parámetros</figcaption><p></p>
+<div id="fig-iterative" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iterative-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/iterative.gif" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iterative-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.5: Ajuste iterativo de parámetros
+</figcaption>
 </figure>
 </div>
 </div>
@@ -1051,7 +1149,7 @@ v1           1.177649 0.08140729 14.466134 9.513254e-26</code></pre>
 <pre><code>[1] 3.095131</code></pre>
 </div>
 </div>
-<p>Moraleja: no utilices estimación por máxima verosimilitud si vas a utilizar una distribución normal. Lo único que ganas es hacer pasos adicionales. ¿Cómo utilizar otras distribuciones? Eso lo veremos a detalle en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a>.</p>
+<p>Moraleja: no utilices estimación por máxima verosimilitud si vas a utilizar una distribución normal. Lo único que ganas es hacer pasos adicionales. ¿Cómo utilizar otras distribuciones? Eso lo veremos a detalle en el <a href="c19_glm.html" class="quarto-xref"><span>Capítulo 19</span></a>.</p>
 </section>
 </section>
 </section>
@@ -1079,26 +1177,26 @@ cor(X,Y) = \frac{cov(X,Y)}{\sigma_x * \sigma_y}
 <li>Cada observación debe de tener el par de datos <span class="math inline">\((v1, v2)\)</span></li>
 </ol>
 <p>Bastante más relajado, ¿no? Pero esto no quiere decir que solo debas de utilizar este coeficiente, utiliza el que más se ajuste a tus datos particulares.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En el <a href="c12_nopar.html"><span>Capítulo&nbsp;12</span></a> vamos a hablar de las técnicas no paramétricas y sus ventajas y desventajas con respecto a las técnicas paramétricas.</p>
+<p>En el <a href="c12_nopar.html" class="quarto-xref"><span>Capítulo 12</span></a> vamos a hablar de las técnicas no paramétricas y sus ventajas y desventajas con respecto a las técnicas paramétricas.</p>
 </div>
 </div>
 <p>Ahora bien, ¿cómo obtenemos estos coeficientes en <code>R</code>? Muy sencillo, con las funciones <code>cor(X, Y)</code> y <code>cov(X, Y)</code>:</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -1112,7 +1210,6 @@ Nota
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df1[<span class="st">"v2"</span>] <span class="ot">&lt;-</span> (<span class="dv">10</span><span class="sc">+</span><span class="dv">2</span><span class="sc">*</span>df1<span class="sc">$</span>v1)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["v1"],"name":[1],"type":["int"],"align":["right"]},{"label":["v2"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-20","2":"-30"},{"1":"-19","2":"-28"},{"1":"-18","2":"-26"},{"1":"-17","2":"-24"},{"1":"-16","2":"-22"},{"1":"-15","2":"-20"},{"1":"-14","2":"-18"},{"1":"-13","2":"-16"},{"1":"-12","2":"-14"},{"1":"-11","2":"-12"},{"1":"-10","2":"-10"},{"1":"-9","2":"-8"},{"1":"-8","2":"-6"},{"1":"-7","2":"-4"},{"1":"-6","2":"-2"},{"1":"-5","2":"0"},{"1":"-4","2":"2"},{"1":"-3","2":"4"},{"1":"-2","2":"6"},{"1":"-1","2":"8"},{"1":"0","2":"10"},{"1":"1","2":"12"},{"1":"2","2":"14"},{"1":"3","2":"16"},{"1":"4","2":"18"},{"1":"5","2":"20"},{"1":"6","2":"22"},{"1":"7","2":"24"},{"1":"8","2":"26"},{"1":"9","2":"28"},{"1":"10","2":"30"},{"1":"11","2":"32"},{"1":"12","2":"34"},{"1":"13","2":"36"},{"1":"14","2":"38"},{"1":"15","2":"40"},{"1":"16","2":"42"},{"1":"17","2":"44"},{"1":"18","2":"46"},{"1":"19","2":"48"},{"1":"20","2":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1147,7 +1244,11 @@ Nota
 <span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
 <span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>¿Qué pasa cuando nos alejamos de esta relación lineal?</p>
@@ -1165,7 +1266,11 @@ Nota
 <span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Cov. = "</span>, <span class="fu">round</span>(covar, <span class="dv">2</span>))) <span class="sc">+</span></span>
 <span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Otro ejemplo:</p>
@@ -1184,10 +1289,14 @@ Nota
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>)) <span class="sc">+</span></span>
 <span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p>Aunque todas estas relaciones pueden ser predichas, un coeficiente de correlación lineal no es capaz de capturarlas y, por definición, tampoco un modelo de regresión lineal. ¿Qué hacer en estos casos? Veremos algunas alternativas en el <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>. Ahora ejemplifiquemos el coeficiente de correlación de Spearman. Primero, y para dejar más claro el concepto, veamos la diferencia entre una relación monótona y una no monótona:</p>
+</div>
+<p>Aunque todas estas relaciones pueden ser predichas, un coeficiente de correlación lineal no es capaz de capturarlas y, por definición, tampoco un modelo de regresión lineal. ¿Qué hacer en estos casos? Veremos algunas alternativas en el <a href="c13_nolin.html" class="quarto-xref"><span>Capítulo 13</span></a>. Ahora ejemplifiquemos el coeficiente de correlación de Spearman. Primero, y para dejar más claro el concepto, veamos la diferencia entre una relación monótona y una no monótona:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">v1 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>], </span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">v2 =</span> df1<span class="sc">$</span>v1[df1<span class="sc">$</span>v1 <span class="sc">&gt;</span> <span class="dv">0</span>]<span class="sc">^</span><span class="dv">2</span>,</span>
@@ -1203,7 +1312,11 @@ Nota
 <span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  see<span class="sc">::</span><span class="fu">theme_lucid</span>() <span class="sc">+</span></span>
 <span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span><span class="sc">/</span><span class="fl">1.61</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c11_rls_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c11_rls_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Y ahora calculemos los coeficientes de correlación de Pearson y Spearman para la relación monótona. La diferencia fue de 0.3, lo cual no es muy grande, pero conforme nos empezamos a alejar de escenarios ideales el coeficiente de Pearson empieza a perder sensibilidad y confiabilidad.</p>
@@ -1225,11 +1338,15 @@ Nota
 <pre><code>[1] "Spearman =  1"</code></pre>
 </div>
 </div>
-<p>Ya para cerrar, ¿son estos los únicos coeficientes de correlación? Para nada, tenemos también: <span class="math inline">\(\tau\)</span> de Kendall, <span class="math inline">\(\phi k\)</span> (<span class="citation" data-cites="Baaketal_2019">Baak et&nbsp;al. (<a href="references.html#ref-Baaketal_2019" role="doc-biblioref">2019</a>)</span>), V de Cramer, <a href="https://bit.ly/PPS_medium">Predictive Power Score</a> y el coeficiente de Máxima Información (<span class="citation" data-cites="Reshefetal_2011">Reshef et&nbsp;al. (<a href="references.html#ref-Reshefetal_2011" role="doc-biblioref">2011</a>)</span>). Te invito a que leas más sobre ellos, sus ventajas y sus desventajas. Predictive Power Score no es direccional, por ejemplo (<a href="#fig-pps">Figura&nbsp;<span>11.6</span></a>).</p>
-<div id="fig-pps" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/pps.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11.6: Predictive Power Score en una relación parabólica</figcaption><p></p>
+<p>Ya para cerrar, ¿son estos los únicos coeficientes de correlación? Para nada, tenemos también: <span class="math inline">\(\tau\)</span> de Kendall, <span class="math inline">\(\phi k\)</span> (<span class="citation" data-cites="Baaketal_2019">Baak et&nbsp;al. (<a href="references.html#ref-Baaketal_2019" role="doc-biblioref">2019</a>)</span>), V de Cramer, <a href="https://bit.ly/PPS_medium">Predictive Power Score</a> y el coeficiente de Máxima Información (<span class="citation" data-cites="Reshefetal_2011">Reshef et&nbsp;al. (<a href="references.html#ref-Reshefetal_2011" role="doc-biblioref">2011</a>)</span>). Te invito a que leas más sobre ellos, sus ventajas y sus desventajas. Predictive Power Score no es direccional, por ejemplo (<a href="#fig-pps" class="quarto-xref">Figura&nbsp;<span>11.6</span></a>).</p>
+<div id="fig-pps" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/pps.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.6: Predictive Power Score en una relación parabólica
+</figcaption>
 </figure>
 </div>
 <p>Por fin llegamos al final de esta extensa (pero espero no aburrida) sesión. Espero que la hayas encontrado útil, y que te motive a hacer toda la chamba detrás de un modelo de predicción como lo es la regresión lineal simple.</p>
@@ -1246,20 +1363,20 @@ Nota
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
-<div id="ref-Baaketal_2019" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Baaketal_2019" class="csl-entry" role="listitem">
 Baak M, Koopman R, Snoek H, Klous S. 2019. A new correlation coefficient between categorical, ordinal and interval variables with <span>Pearson</span> characteristics. <em>ArXiV</em>. DOI: <a href="https://doi.org/10.48550/arxiv.1811.11440">10.48550/arxiv.1811.11440</a>.
 </div>
-<div id="ref-Box_1976" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Box_1976" class="csl-entry" role="listitem">
 Box GE. 1976. Science and Statistics. <em>Journal of the American Statistical Association</em> 71:791-799. DOI: <a href="https://doi.org/10.1080/01621459.1976.10480949">10.1080/01621459.1976.10480949</a>.
 </div>
-<div id="ref-BreuschPagan_1979" class="csl-entry" role="doc-biblioentry">
+<div id="ref-BreuschPagan_1979" class="csl-entry" role="listitem">
 Breusch TS, Pagan AR. 1979. <a href="">A simple test for heteroscedasticity and random coefficient variation</a>. <em>Econometrica</em> 47:1287-1294.
 </div>
-<div id="ref-Gerrodette_2011" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gerrodette_2011" class="csl-entry" role="listitem">
 Gerrodette T. 2011. Inference without significance: measuring support for hypotheses rather than rejecting them. <em>Marine Ecology</em> 32:404-418. DOI: <a href="https://doi.org/10.1111/j.1439-0485.2011.00466.x">10.1111/j.1439-0485.2011.00466.x</a>.
 </div>
-<div id="ref-Reshefetal_2011" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Reshefetal_2011" class="csl-entry" role="listitem">
 Reshef DN, Reshef YA, Finucane HK, Grossman SR, McVean G, Turnbaugh PJ, Lander ES, Mitzenmacher M, Sabeti PC. 2011. Detecting Novel Associations in Large Datasets. <em>Science</em> 334:1518-1524. DOI: <a href="https://doi.org/10.1126/science.1205438">10.1126/science.1205438</a>.
 </div>
 </div>
@@ -1293,9 +1410,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1331,10 +1462,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1344,8 +1474,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1358,6 +1497,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1401,6 +1659,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1426,6 +1685,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1487,12 +1772,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./c10_param.html" class="pagination-link">
+      <a href="./c10_param.html" class="pagination-link" aria-label="Técnicas paramétricas">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./s03_noparnolin.html" class="pagination-link">
+      <a href="./s03_noparnolin.html" class="pagination-link" aria-label="Técnicas no paramétricas y modelación no lineal">
         <span class="nav-page-text">Técnicas no paramétricas y modelación no lineal</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1500,9 +1785,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Arturo Bell</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Arturo Bell</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+
 
 
 

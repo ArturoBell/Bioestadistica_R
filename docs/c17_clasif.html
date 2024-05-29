@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -46,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -138,15 +116,44 @@ div.csl-indent {
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -154,11 +161,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s04_mv.html">Técnicas Multivariadas</a></li><li class="breadcrumb-item"><a href="./c17_clasif.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -166,222 +178,251 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biología, Ciencia de Datos y `R`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos del análisis de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas básicas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas no paramétricas y modelación no lineal</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas Multivariadas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">17.1</span>  Librerías</a></li>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="toc-section-number">17.2</span>  Introducción</a></li>
-  <li><a href="#clasificación-y-clasificadores" id="toc-clasificación-y-clasificadores" class="nav-link" data-scroll-target="#clasificación-y-clasificadores"><span class="toc-section-number">17.3</span>  Clasificación y clasificadores</a></li>
-  <li><a href="#consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" id="toc-consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" class="nav-link" data-scroll-target="#consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado"><span class="toc-section-number">17.4</span>  Consideraciones al construir un modelo de aprendizaje automatizado</a>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="header-section-number">17.1</span> Librerías</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">17.2</span> Introducción</a></li>
+  <li><a href="#clasificación-y-clasificadores" id="toc-clasificación-y-clasificadores" class="nav-link" data-scroll-target="#clasificación-y-clasificadores"><span class="header-section-number">17.3</span> Clasificación y clasificadores</a></li>
+  <li><a href="#consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" id="toc-consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado" class="nav-link" data-scroll-target="#consideraciones-al-construir-un-modelo-de-aprendizaje-automatizado"><span class="header-section-number">17.4</span> Consideraciones al construir un modelo de aprendizaje automatizado</a>
   <ul class="collapse">
-  <li><a href="#ajuste-sub-y-sobre" id="toc-ajuste-sub-y-sobre" class="nav-link" data-scroll-target="#ajuste-sub-y-sobre"><span class="toc-section-number">17.4.1</span>  Ajuste (sub y sobre)</a></li>
-  <li><a href="#fuga-de-información" id="toc-fuga-de-información" class="nav-link" data-scroll-target="#fuga-de-información"><span class="toc-section-number">17.4.2</span>  Fuga de información</a></li>
+  <li><a href="#ajuste-sub-y-sobre" id="toc-ajuste-sub-y-sobre" class="nav-link" data-scroll-target="#ajuste-sub-y-sobre"><span class="header-section-number">17.4.1</span> Ajuste (sub y sobre)</a></li>
+  <li><a href="#fuga-de-información" id="toc-fuga-de-información" class="nav-link" data-scroll-target="#fuga-de-información"><span class="header-section-number">17.4.2</span> Fuga de información</a></li>
   </ul></li>
-  <li><a href="#evaluación-de-un-clasificador" id="toc-evaluación-de-un-clasificador" class="nav-link" data-scroll-target="#evaluación-de-un-clasificador"><span class="toc-section-number">17.5</span>  Evaluación de un clasificador</a>
+  <li><a href="#evaluación-de-un-clasificador" id="toc-evaluación-de-un-clasificador" class="nav-link" data-scroll-target="#evaluación-de-un-clasificador"><span class="header-section-number">17.5</span> Evaluación de un clasificador</a>
   <ul class="collapse">
-  <li><a href="#matriz-de-confusión" id="toc-matriz-de-confusión" class="nav-link" data-scroll-target="#matriz-de-confusión"><span class="toc-section-number">17.5.1</span>  Matriz de confusión</a></li>
-  <li><a href="#curva-de-características-del-operador-receptor-roc" id="toc-curva-de-características-del-operador-receptor-roc" class="nav-link" data-scroll-target="#curva-de-características-del-operador-receptor-roc"><span class="toc-section-number">17.5.2</span>  Curva de Características del Operador Receptor (ROC)</a></li>
-  <li><a href="#área-bajo-la-curva-roc-roc-auc" id="toc-área-bajo-la-curva-roc-roc-auc" class="nav-link" data-scroll-target="#área-bajo-la-curva-roc-roc-auc"><span class="toc-section-number">17.5.3</span>  Área bajo la curva ROC (ROC-AUC)</a></li>
+  <li><a href="#matriz-de-confusión" id="toc-matriz-de-confusión" class="nav-link" data-scroll-target="#matriz-de-confusión"><span class="header-section-number">17.5.1</span> Matriz de confusión</a></li>
+  <li><a href="#curva-de-características-del-operador-receptor-roc" id="toc-curva-de-características-del-operador-receptor-roc" class="nav-link" data-scroll-target="#curva-de-características-del-operador-receptor-roc"><span class="header-section-number">17.5.2</span> Curva de Características del Operador Receptor (ROC)</a></li>
+  <li><a href="#área-bajo-la-curva-roc-roc-auc" id="toc-área-bajo-la-curva-roc-roc-auc" class="nav-link" data-scroll-target="#área-bajo-la-curva-roc-roc-auc"><span class="header-section-number">17.5.3</span> Área bajo la curva ROC (ROC-AUC)</a></li>
   </ul></li>
-  <li><a href="#árboles-de-decisión-y-ensambles" id="toc-árboles-de-decisión-y-ensambles" class="nav-link" data-scroll-target="#árboles-de-decisión-y-ensambles"><span class="toc-section-number">17.6</span>  Árboles de decisión y ensambles</a>
+  <li><a href="#árboles-de-decisión-y-ensambles" id="toc-árboles-de-decisión-y-ensambles" class="nav-link" data-scroll-target="#árboles-de-decisión-y-ensambles"><span class="header-section-number">17.6</span> Árboles de decisión y ensambles</a>
   <ul class="collapse">
-  <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión"><span class="toc-section-number">17.6.1</span>  Árboles de decisión</a></li>
-  <li><a href="#bosques-aleatorios" id="toc-bosques-aleatorios" class="nav-link" data-scroll-target="#bosques-aleatorios"><span class="toc-section-number">17.6.2</span>  Bosques aleatorios</a></li>
+  <li><a href="#árboles-de-decisión" id="toc-árboles-de-decisión" class="nav-link" data-scroll-target="#árboles-de-decisión"><span class="header-section-number">17.6.1</span> Árboles de decisión</a></li>
+  <li><a href="#bosques-aleatorios" id="toc-bosques-aleatorios" class="nav-link" data-scroll-target="#bosques-aleatorios"><span class="header-section-number">17.6.2</span> Bosques aleatorios</a></li>
   </ul></li>
-  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">17.7</span>  Ejercicio</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="header-section-number">17.7</span> Ejercicio</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s04_mv.html">Técnicas Multivariadas</a></li><li class="breadcrumb-item"><a href="./c17_clasif.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-clasif" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></h1>
+<h1 class="title"><span id="sec-clasif" class="quarto-section-identifier"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></h1>
 </div>
 
 
@@ -394,7 +435,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="librerías" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">17.1</span> Librerías</h2>
@@ -413,29 +456,37 @@ div.csl-indent {
 </section>
 <section id="introducción" class="level2" data-number="17.2">
 <h2 data-number="17.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">17.2</span> Introducción</h2>
-<p>Hasta el momento hemos visto dos formas de involucrar respuestas categóricas: crearlas con alguna técnica de agrupamientos, o utilizarlas para hacer comparaciones con pruebas de significancia. En este capítulo vamos a hablar de (en mi opinión) una mejor alternativa (dependiendo de tu objetivo): la <strong>clasificación</strong>. La clasificación es una <strong>técnica de aprendizaje supervisado</strong> en la que el <strong>objetivo es predecir clases</strong> (etiquetas) a partir de los valores de los predictores. Al ser aprendizaje supervisado podemos evaluar su desempeño; es decir, qué tan bien estamos prediciendo nuestras etiquetas. Si tenemos un buen desempeño, podemos utilizar alguna medida de importancia de variables para explicar el modelo. Si no, toca volear mesas, jalarnos los cabellos, y regresar a pensar qué es lo que está fallando: ¿el modelo seleccionado no es el óptimo? ¿Debíamos de utilizar algún preprocesamiento? ¿el modelo no está optimizado adecuadamente? Al terminar este capítulo deberías de ser capaz de responder adecuadamente a todas estas preguntas. En la <a href="#fig-catresp">Figura&nbsp;<span>17.1</span></a> tienes una pequeña comparación entre los agrupamientos, la comparación y la clasificación.</p>
-<div id="fig-catresp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/catresp.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.1: Comparación entre agrupamientos, comparación y clasificación</figcaption><p></p>
+<p>Hasta el momento hemos visto dos formas de involucrar respuestas categóricas: crearlas con alguna técnica de agrupamientos, o utilizarlas para hacer comparaciones con pruebas de significancia. En este capítulo vamos a hablar de (en mi opinión) una mejor alternativa (dependiendo de tu objetivo): la <strong>clasificación</strong>. La clasificación es una <strong>técnica de aprendizaje supervisado</strong> en la que el <strong>objetivo es predecir clases</strong> (etiquetas) a partir de los valores de los predictores. Al ser aprendizaje supervisado podemos evaluar su desempeño; es decir, qué tan bien estamos prediciendo nuestras etiquetas. Si tenemos un buen desempeño, podemos utilizar alguna medida de importancia de variables para explicar el modelo. Si no, toca volear mesas, jalarnos los cabellos, y regresar a pensar qué es lo que está fallando: ¿el modelo seleccionado no es el óptimo? ¿Debíamos de utilizar algún preprocesamiento? ¿el modelo no está optimizado adecuadamente? Al terminar este capítulo deberías de ser capaz de responder adecuadamente a todas estas preguntas. En la <a href="#fig-catresp" class="quarto-xref">Figura&nbsp;<span>17.1</span></a> tienes una pequeña comparación entre los agrupamientos, la comparación y la clasificación.</p>
+<div id="fig-catresp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-catresp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/catresp.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-catresp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.1: Comparación entre agrupamientos, comparación y clasificación
+</figcaption>
 </figure>
 </div>
 </section>
 <section id="clasificación-y-clasificadores" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="clasificación-y-clasificadores"><span class="header-section-number">17.3</span> Clasificación y clasificadores</h2>
 <p>Ya sabemos en qué consiste la clasificación, ahora veamos el fundamento detrás de todos los modelos de clasificación (clasificadores). Hoy en día uno de los temas que está muy de moda es la visión por computadora. Aunque se puede hacer un modelo no supervisado para la identificación de objetos, en muchos casos tenemos algo como lo siguiente: un conjunto de imágenes de un objeto (elefantes) y otro conjunto de imágenes de otro (jirafas). Le damos este par de etiquetas e imágenes a la computadora para entrenar un clasificador; es decir, para ajustar los parámetros del modelo. Posteriormente verificamos que el modelo funcione bien pasándole una imagen sin etiquetar y que sea el clasificador quien le asigne una etiqueta. Si el modelo aprendió lo que tenía que aprender debería de ser capaz de decirnos que una imagen de una jirafa es una jirafa, y no un elefante.</p>
-<div id="fig-traintest" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/traintest.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.2: Clasificación de imágenes de elefantes y jirafas.</figcaption><p></p>
+<div id="fig-traintest" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-traintest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/traintest.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-traintest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.2: Clasificación de imágenes de elefantes y jirafas.
+</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -443,19 +494,23 @@ Importante
 <p><strong>Este proceso de entrenamiento y prueba debemos de aplicarlo con todos los modelos de aprendizaje supervisado, independientemente de si son regresiones o clasificaciones</strong>.</p>
 </div>
 </div>
-<p>Ya tenemos una idea del qué hace la clasificación, pero nos falta el cómo. Para regresión hemos hablado de distintos modelos (lineales, <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> o no lineales, <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a>), y en clasificación es lo mismo, tenemos una gran cantidad de métodos, cada uno con sus supuestos, fortalezas, y debilidades. En los renglones de la <a href="#fig-clasifcomp">Figura&nbsp;<span>17.3</span></a> tenemos tres conjuntos de datos bivariados con dos clases (roja y azul) cada uno, y en las columnas los <strong>márgenes de decisión</strong> de los clasificadores; es decir, el <strong>límite entre ambas clases que aprendió cada clasificador</strong>. Esta es la gran diferencia entre los clasificadores: la complejidad de los límites que son capaces de aprender. En la tercera columna tenemos una máquina de soporte vectorial con un kernel lineal (linear SVM); es decir, que solamente puede aprender un límite lineal entre las clases. La consecuencia es que tiene un desempeño muy pobre en el segundo conjunto de datos, pero uno bastante aceptable el tercero. A su derecha tenemos también una máquina de soporte vectorial, solo que esta vez con un kernel RBF (RBF SVM) que puede aprender un límite más complejo. Como resultado el desempeño es mejor en todos los casos que en su contraparte lineal. Y así podríamos ir analizando caso por caso, viendo quién funciona mejor en qué tipo de casos, pero verás una tendencia clara: <strong>los clasificadores con límites de decisión más flexibles son los que tienen un mejor desempeño, independientemente del problema</strong>.</p>
-<div id="fig-clasifcomp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_classifier_comparison_001.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.3: Comparación de clasificadores</figcaption><p></p>
+<p>Ya tenemos una idea del qué hace la clasificación, pero nos falta el cómo. Para regresión hemos hablado de distintos modelos (lineales, <a href="c11_rls.html" class="quarto-xref"><span>Capítulo 11</span></a> o no lineales, <a href="c13_nolin.html" class="quarto-xref"><span>Capítulo 13</span></a>), y en clasificación es lo mismo, tenemos una gran cantidad de métodos, cada uno con sus supuestos, fortalezas, y debilidades. En los renglones de la <a href="#fig-clasifcomp" class="quarto-xref">Figura&nbsp;<span>17.3</span></a> tenemos tres conjuntos de datos bivariados con dos clases (roja y azul) cada uno, y en las columnas los <strong>márgenes de decisión</strong> de los clasificadores; es decir, el <strong>límite entre ambas clases que aprendió cada clasificador</strong>. Esta es la gran diferencia entre los clasificadores: la complejidad de los límites que son capaces de aprender. En la tercera columna tenemos una máquina de soporte vectorial con un kernel lineal (linear SVM); es decir, que solamente puede aprender un límite lineal entre las clases. La consecuencia es que tiene un desempeño muy pobre en el segundo conjunto de datos, pero uno bastante aceptable el tercero. A su derecha tenemos también una máquina de soporte vectorial, solo que esta vez con un kernel RBF (RBF SVM) que puede aprender un límite más complejo. Como resultado el desempeño es mejor en todos los casos que en su contraparte lineal. Y así podríamos ir analizando caso por caso, viendo quién funciona mejor en qué tipo de casos, pero verás una tendencia clara: <strong>los clasificadores con límites de decisión más flexibles son los que tienen un mejor desempeño, independientemente del problema</strong>.</p>
+<div id="fig-clasifcomp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clasifcomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_classifier_comparison_001.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clasifcomp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.3: Comparación de clasificadores
+</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -469,34 +524,46 @@ Advertencia
 <p>Esto último me lleva a hablar sobre con qué cosas debemos de tener cuidado al generar un modelo de aprendizaje automatizado, pues va mucho más allá de solo utilizar <code>lm()</code> y reportar un <span class="math inline">\(R^2\)</span>.</p>
 <section id="ajuste-sub-y-sobre" class="level3" data-number="17.4.1">
 <h3 data-number="17.4.1" class="anchored" data-anchor-id="ajuste-sub-y-sobre"><span class="header-section-number">17.4.1</span> Ajuste (sub y sobre)</h3>
-<p>En los <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> y <a href="c13_nolin.html"><span>Capítulo&nbsp;13</span></a> vimos cómo entrenar y “evaluar” un modelo de regresión, pero no pusimos demasiada atención a la parte de la bondad de ajuste. ¿Por qué? Porque <strong>evaluar un modelo PREDICTIVO a partir de los datos que lo entrenaron es un SINSENTIDO</strong>. Es el equivalente a que yo te diga que al final del curso va a haber un examen, que te proporcione una guía de estudio, que tú como estudiante diligente la resuelvas y la estudies, y que el examen tenga exactamente las mismas preguntas. ¿Qué representaría tu calificación? ¿Lo que aprendiste sobre el curso o qué tan bien memorizaste la guía de estudio? Evidentemente lo segundo. En el caso de los modelos de aprendizaje supervisado pasa lo mismo: “aprenden” la información contenida en los datos, pero en el peor de los casos solo “memorizan” los datos que se les dieron (<a href="#fig-obama">Figura&nbsp;<span>17.4</span></a>).</p>
-<div id="fig-obama" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/obama.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.4: Probar un modelo de ML con datos de entrenamiento es ponerse una medalla a uno mismo por su buen desempeño: no es una evaluación objetiva.</figcaption><p></p>
+<p>En los <a href="c11_rls.html" class="quarto-xref"><span>Capítulo 11</span></a> y <a href="c13_nolin.html" class="quarto-xref"><span>Capítulo 13</span></a> vimos cómo entrenar y “evaluar” un modelo de regresión, pero no pusimos demasiada atención a la parte de la bondad de ajuste. ¿Por qué? Porque <strong>evaluar un modelo PREDICTIVO a partir de los datos que lo entrenaron es un SINSENTIDO</strong>. Es el equivalente a que yo te diga que al final del curso va a haber un examen, que te proporcione una guía de estudio, que tú como estudiante diligente la resuelvas y la estudies, y que el examen tenga exactamente las mismas preguntas. ¿Qué representaría tu calificación? ¿Lo que aprendiste sobre el curso o qué tan bien memorizaste la guía de estudio? Evidentemente lo segundo. En el caso de los modelos de aprendizaje supervisado pasa lo mismo: “aprenden” la información contenida en los datos, pero en el peor de los casos solo “memorizan” los datos que se les dieron (<a href="#fig-obama" class="quarto-xref">Figura&nbsp;<span>17.4</span></a>).</p>
+<div id="fig-obama" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-obama-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/obama.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-obama-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.4: Probar un modelo de ML con datos de entrenamiento es ponerse una medalla a uno mismo por su buen desempeño: no es una evaluación objetiva.
+</figcaption>
 </figure>
 </div>
 <p>¿Cómo contendemos con esto? Hacemos una división de nuestros datos: la mayor parte de los datos (usualmente alrededor del 75%) se utiliza para entrenamiento, mientras que los datos restantes se utilizan para probar el modelo final:</p>
-<div id="fig-traintesdtiv" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/traintestdiv.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.5: División entrenamiento/prueba.</figcaption><p></p>
+<div id="fig-traintesdtiv" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-traintesdtiv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/traintestdiv.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-traintesdtiv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.5: División entrenamiento/prueba.
+</figcaption>
 </figure>
 </div>
 <p>Esto lo que nos permite es evaluar objetivamente el desempeño de nuestro modelo, pues nunca ha visto los datos de prueba. Volviendo a la analogía del examen final y la guía de estudio, sería como si yo esta vez te diera un examen que abarque los mismos temas que en la guía, pero con problemas que te hagan pensar o abordarlos desde otra perspectiva para que realmente demuestres tu dominio sobre el temario, y no solo que resolviste la guía.</p>
-<p>Esta “memorización” tiene un nombre: <strong>sobreajuste</strong>, que se define formalmente como <strong>una poca capacidad de generalización del modelo</strong>; es decir, que vamos a tener medidas de bondad de ajuste (o medidas de evaluación) mucho mejores en los datos de entrenamiento que en los datos de prueba. En todo escenario de aprendizaje supervisado buscamos un modelo que sea capaz de extraer la mayor cantidad de información posible de los datos, sin llegar a memorizar cada dato (sobreajuste), pero tampoco pasarnos de simples (subajuste; <a href="#fig-overunderfit">Figura&nbsp;<span>17.6</span></a>)</p>
-<div id="fig-overunderfit" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/overunderfit.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.6: Tres modelos ajustados a un conjunto de datos: a) un modelo cuadrático que captura adecuadamente la relación entre las variables, no predice exactamente ningún punto, pero tampoco hay casos que estén extremadamente lejos (ajuste óptimo); b) un modelo lineal que no es suficiente para capturar adecuadamente la relación entre las variables (subajustado); y c) un modelo polinomial de orden n-1 que memorizó a la perfección los datos de entrenamiento, pero al que si se le da un dato fuera de ellos no podrá predecir adecuadamente (sobreajustado).</figcaption><p></p>
+<p>Esta “memorización” tiene un nombre: <strong>sobreajuste</strong>, que se define formalmente como <strong>una poca capacidad de generalización del modelo</strong>; es decir, que vamos a tener medidas de bondad de ajuste (o medidas de evaluación) mucho mejores en los datos de entrenamiento que en los datos de prueba. En todo escenario de aprendizaje supervisado buscamos un modelo que sea capaz de extraer la mayor cantidad de información posible de los datos, sin llegar a memorizar cada dato (sobreajuste), pero tampoco pasarnos de simples (subajuste; <a href="#fig-overunderfit" class="quarto-xref">Figura&nbsp;<span>17.6</span></a>)</p>
+<div id="fig-overunderfit" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-overunderfit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/overunderfit.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-overunderfit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.6: Tres modelos ajustados a un conjunto de datos: a) un modelo cuadrático que captura adecuadamente la relación entre las variables, no predice exactamente ningún punto, pero tampoco hay casos que estén extremadamente lejos (ajuste óptimo); b) un modelo lineal que no es suficiente para capturar adecuadamente la relación entre las variables (subajustado); y c) un modelo polinomial de orden n-1 que memorizó a la perfección los datos de entrenamiento, pero al que si se le da un dato fuera de ellos no podrá predecir adecuadamente (sobreajustado).
+</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -505,18 +572,22 @@ Nota
 </div>
 </div>
 <p>Además de la parte práctica/filosófica tenemos otro problema que resolver: la <strong>compensación/balance de sesgo-varianza</strong>. El sesgo lo entendemos como la diferencia entre la predicción promedio de nuestro modelo y el valor real que queremos predecir (nuestro error), de manera que modelos con un alto sesgo no le prestan demasiada atención a los datos (error grande) y en consecuencia están sobre-simplificados. La varianza en este contexto la entendemos como la variabilidad del modelo de predicción para un punto dado, de modo que un modelo con una alta varianza le presta demasiada atención a los datos de entrenamiento y no generaliza bien a datos que nunca ha visto. ¿Por qué compensación? Porque, como ya había mencionado superficialmente antes, <strong>entre más complejo sea el modelo, mayor es la probabilidad del sobreajuste</strong>. ¿Qué tan severo puede ser? Tan severo como en la siguiente figura:</p>
-<div id="fig-modcomplex" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/modcomplex.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.7: Relación entre el desempeño de un modelo en realción a su complejidad, evaluado en datos de entrenamiento y en datos de prueba. A mayor complejidad incrementa el desempeño en los datos de entrenamiento, pero no es así con datos que no ha visto.</figcaption><p></p>
+<div id="fig-modcomplex" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-modcomplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/modcomplex.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-modcomplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.7: Relación entre el desempeño de un modelo en realción a su complejidad, evaluado en datos de entrenamiento y en datos de prueba. A mayor complejidad incrementa el desempeño en los datos de entrenamiento, pero no es así con datos que no ha visto.
+</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
@@ -526,20 +597,24 @@ Advertencia
 </div>
 <section id="validación-cruzada-y-optimización" class="level4" data-number="17.4.1.1">
 <h4 data-number="17.4.1.1" class="anchored" data-anchor-id="validación-cruzada-y-optimización"><span class="header-section-number">17.4.1.1</span> Validación cruzada y optimización</h4>
-<p>Con esto llegamos a la validación cruzada y la optimización de hiper-parámetros. La <strong>validación cruzada</strong> consiste en <strong>partir los datos de entrenamiento en <span class="math inline">\(k\)</span> conjuntos de entrenamiento/prueba, evaluar el desempeño para cada uno, y promediarlos</strong> (<a href="#fig-crossval">Figura&nbsp;<span>17.8</span></a>)</p>
-<div id="fig-crossval" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.8: Validación cruzada y cómo repartir los datos para entrenar, optimizar y validar un modelo de aprendizaje supervisado.</figcaption><p></p>
+<p>Con esto llegamos a la validación cruzada y la optimización de hiper-parámetros. La <strong>validación cruzada</strong> consiste en <strong>partir los datos de entrenamiento en <span class="math inline">\(k\)</span> conjuntos de entrenamiento/prueba, evaluar el desempeño para cada uno, y promediarlos</strong> (<a href="#fig-crossval" class="quarto-xref">Figura&nbsp;<span>17.8</span></a>)</p>
+<div id="fig-crossval" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crossval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crossval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.8: Validación cruzada y cómo repartir los datos para entrenar, optimizar y validar un modelo de aprendizaje supervisado.
+</figcaption>
 </figure>
 </div>
 <p>Lo que conseguimos con esto es una evaluación más robusta del desempeño de nuestro modelo, pues ya estamos viendo qué pasa con distintas combinaciones de datos vistos/no vistos. Pudiera llegar a suceder que tenemos mucha suerte y que la partición original se preste para obtener buenas métricas, o tener muy mala suerte y que se preste para tener malas métricas. Y para acabar de “redondear” lo escépticos que somos con nuestro modelo, después de haber probado con distintos <span class="math inline">\(k\)</span> sub-conjuntos (k-folds), lo volvemos a probar con los datos de prueba originales (hay quien los denomina en este contexto datos de validación).</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -547,12 +622,12 @@ Nota
 <p>Así como no muestreamos solo un individuo para hacer inferencias, tampoco consideramos una sola partición entrenamiento prueba. ¿Cuántas sub-divisiones debemos de hacer? Pueden ser tan pocas como 5, o tantas como n-1, pero un “estándar” (más bien una convención por comodidad) es que la validación cruzada sea de orden 10 (10 k-folds).</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -560,26 +635,30 @@ Importante
 <p>El tamaño de la partición entrenamiento-prueba original y el orden de la validación cruzada dependen del número de datos que tengas. Si tu conjunto de prueba queda con un tamaño muy reducido (pensemos menos de diez observaciones), mejor solo quédate con la validación cruzada en todos tus datos.</p>
 </div>
 </div>
-<p>¿Y qué pinta la “optimización de hiperparámetros” aquí? Para empezar, ¿qué es la optimización de hiperparámetros? Pues bien, resulta que muchos <strong>modelos de aprendizaje supervisado</strong> tienen no solo los parámetros que queremos ajustar (por ejemplo las pendientes en la regresión lineal), sino que también tienen otros <strong>parámetros que controlan su complejidad</strong>. Esto puede ser el valor de <span class="math inline">\(\alpha\)</span> o <span class="math inline">\(\lambda\)</span> en una regresión regularizada como las que veremos en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a>, o el número máximo de predictores que considera un árbol de decisión. Es importante <strong>optimizar esos hiperparámetros</strong>, para no terminar con un modelo innecesariamente complejo que no va a tener una buena capacidad predictiva, y la mejor manera de hacerlo es utilizando <strong>validación cruzada</strong>.</p>
+<p>¿Y qué pinta la “optimización de hiperparámetros” aquí? Para empezar, ¿qué es la optimización de hiperparámetros? Pues bien, resulta que muchos <strong>modelos de aprendizaje supervisado</strong> tienen no solo los parámetros que queremos ajustar (por ejemplo las pendientes en la regresión lineal), sino que también tienen otros <strong>parámetros que controlan su complejidad</strong>. Esto puede ser el valor de <span class="math inline">\(\alpha\)</span> o <span class="math inline">\(\lambda\)</span> en una regresión regularizada como las que veremos en el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a>, o el número máximo de predictores que considera un árbol de decisión. Es importante <strong>optimizar esos hiperparámetros</strong>, para no terminar con un modelo innecesariamente complejo que no va a tener una buena capacidad predictiva, y la mejor manera de hacerlo es utilizando <strong>validación cruzada</strong>.</p>
 </section>
 </section>
 <section id="fuga-de-información" class="level3" data-number="17.4.2">
 <h3 data-number="17.4.2" class="anchored" data-anchor-id="fuga-de-información"><span class="header-section-number">17.4.2</span> Fuga de información</h3>
 <p>Hay otra cosa con la que debemos de tener muchísimo cuidado al construir cualquier modelo de aprendizaje automatizado: la <strong>fuga de información</strong>. Volviendo a nuestra analogía del examen sería el equivalente a que alguien te soplara las respuestas del examen, o a que sacaras un acordeón. ¿Cómo pasa esto? No prestando atención a la información que le damos al modelo. <strong>El conjunto de prueba debe de aislarse completamente del de entrenamiento</strong>. ¿Necesitas pre-procesar los datos de una manera (escalarlos, por ejemplo)? Escala los datos de entrenamiento y utiliza esos parámetros para escalar los datos de prueba. Si vas a centrar y estandarizar, separa tus datos, calcula las medias y desviaciones de cada variable con los datos de entrenamiento y con esas medias y desviaciones centra y estandariza ambos conjuntos de datos; es decir, <strong>no escales la base completa</strong>, de lo contrario le estás dando al <strong>modelo información sobre datos que no debería de ver en ningún momento antes de la evaluación</strong>. Tampoco las escales por separado, pues eso te introducirá un sesgo aleatorio derivado de la división.</p>
 <p>Otro caso de fuga de información, aún menos evidente que el anterior, es tener casos en los que tengamos algo tipo “la variable <span class="math inline">\(A\)</span> lógicamente implica la respuesta <span class="math inline">\(Y\)</span>”. ¿Cómo es esto? Imagina que una tienda departamental que vende únicamente joyas, películas y electrónica (raro, lo sé) nos contrata para saber cuánto va a gastar un cliente en joyería (el segmento con mayores utilidades) a partir de lo que gasta en las otras dos cosas, por lo que nos da los registros cliente a cliente en la siguiente tabla:</p>
-<div id="fig-dataleak" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/dataleak.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.9: Registro de ventas de una tienda departamental imaginaria. ¿Qué cliente no da información útil para predecir el gasto en joyería a partir de lo gastado en películas y electrónica?</figcaption><p></p>
+<div id="fig-dataleak" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dataleak-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/dataleak.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dataleak-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.9: Registro de ventas de una tienda departamental imaginaria. ¿Qué cliente no da información útil para predecir el gasto en joyería a partir de lo gastado en películas y electrónica?
+</figcaption>
 </figure>
 </div>
 <p>¿Qué cliente salta a la vista? Espero que me digas que el 11125, pues la única razón por la que el cliente está en el registro es porque compró algo de joyería. Nada más. <strong>Esto hace que nuestro modelo aprenda algo, pero ese algo es una peculiaridad y no algo relevante sobre lo modelado</strong>.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -676,10 +755,14 @@ Nota
 <h3 data-number="17.5.2" class="anchored" data-anchor-id="curva-de-características-del-operador-receptor-roc"><span class="header-section-number">17.5.2</span> Curva de Características del Operador Receptor (ROC)</h3>
 <p>Si has escuchado algo sobre los <strong>modelos de distribución de especies</strong> (MAXENT o similares), seguramente también hayas escuchado sobre la curva ROC. Esto es porque esos modelos son, en realidad, <strong>clasificadores que predicen si una especie puede estar (positivo) o no (falso) en un lugar determinado</strong>, pero eso es salirnos del tema.</p>
 <p>La <strong>curva ROC</strong> muestra la relación entre la TPR y la FPR (que es el complemento de la TPR: 1-TPR) a distintos niveles, lo cual da una <strong>evaluación más confiable de la capacidad predictiva del modelo</strong> <span class="citation" data-cites="MeyerBaese_2014">(<a href="references.html#ref-MeyerBaese_2014" role="doc-biblioref">Meyer-Baese &amp; Schmid, 2014</a>)</span> donde el mejor modelo llevará la “curva” hacia la esquina superior izquierda (una tasa de verdaderos positivos perfecta en todos los casos), y un modelo bobo estará cercano a una línea central de referencia con pendiente de 1, lo que representa una clasificación al azar:</p>
-<div id="fig-roccurve" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/roccurve.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.10: Curva ROC y sus partes. Entre mejor sea el modelo más se acercará a la esquina superior izquierda. Un modelo que solo haga predicciones al azar (bobo) estará en la línea amarilla. Si la curva se va debajo de esa línea solo quiere decir que el modelo está prediciendo la clase positiva como negativa.</figcaption><p></p>
+<div id="fig-roccurve" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-roccurve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/roccurve.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-roccurve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.10: Curva ROC y sus partes. Entre mejor sea el modelo más se acercará a la esquina superior izquierda. Un modelo que solo haga predicciones al azar (bobo) estará en la línea amarilla. Si la curva se va debajo de esa línea solo quiere decir que el modelo está prediciendo la clase positiva como negativa.
+</figcaption>
 </figure>
 </div>
 </section>
@@ -710,40 +793,44 @@ Nota
 <section id="árboles-de-decisión-y-ensambles" class="level2" data-number="17.6">
 <h2 data-number="17.6" class="anchored" data-anchor-id="árboles-de-decisión-y-ensambles"><span class="header-section-number">17.6</span> Árboles de decisión y ensambles</h2>
 <p>En la primera versión del curso hablé sobre clasificadores “tradicionales” que se han empleado en el área de la biología (regresión logística y análisis de funciones discriminantes lineales), pero creo que vale la pena hablar de algunas alternativas con márgenes de decisión más flexibles y que son casi igual de interpretables.</p>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La regresión logística la vamos a retomar en el <a href="c19_glm.html"><span>Capítulo&nbsp;19</span></a> porque es un modelo lineal con un error binomial.</p>
+<p>La regresión logística la vamos a retomar en el <a href="c19_glm.html" class="quarto-xref"><span>Capítulo 19</span></a> porque es un modelo lineal con un error binomial.</p>
 </div>
 </div>
 <p>¿Por qué “casi” igual de interpretables? Porque usualmente entre más flexible es un modelo, más complejo es su funcionamiento, menos simple es explicar cómo hace las predicciones y, por lo tanto, sacar conclusiones sobre cómo influyen las variables. Pero empecemos por lo sencillo.</p>
 <section id="árboles-de-decisión" class="level3" data-number="17.6.1">
 <h3 data-number="17.6.1" class="anchored" data-anchor-id="árboles-de-decisión"><span class="header-section-number">17.6.1</span> Árboles de decisión</h3>
 <p>Los <strong>árboles de decisión</strong> son un modelo que “clasifica según el principio de partición recursiva, donde el espacio de atributos se parte recursivamente en regiones que contienen observaciones con valores de respuesta similares” <span class="citation" data-cites="Strobletal_2009">(<a href="references.html#ref-Strobletal_2009" role="doc-biblioref">Strobl, Malley &amp; Tutz, 2009</a>)</span>. A veces me pregunto porque los matemáticos hacen definiciones tan agresivas, pero tiene mucho sentido. No explicaré qué es la recursividad porque sería desviarnos del tema, pero podemos simplificar la definición de un árbol de decisión como un <strong>modelo que clasifica a partir de decisiones binarias sobre nuestros datos, como si fuera un diagrama de flujo</strong>. Imagina que queremos decidir si vamos a surfear o no (asume que sabemos), entonces seguiríamos un diagrama de flujo como el siguiente:</p>
-<div id="fig-dectree" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imgs/dectree.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.11: ¿Surfear o no? He ahí el dilema</figcaption><p></p>
+<div id="fig-dectree" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dectree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imgs/dectree.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dectree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.11: ¿Surfear o no? He ahí el dilema
+</figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Las partes del árbol de decisión son básicamente las mismas que las del dendrograma (<a href="c15_nosup.html"><span>Capítulo&nbsp;15</span></a>). La diferencia es que no tenemos una raíz, cada nodo (punto de decisión) involucra una sola variable, y al final no tenemos hojas, sino nodos terminales.</p>
+<p>Las partes del árbol de decisión son básicamente las mismas que las del dendrograma (<a href="c15_nosup.html" class="quarto-xref"><span>Capítulo 15</span></a>). La diferencia es que no tenemos una raíz, cada nodo (punto de decisión) involucra una sola variable, y al final no tenemos hojas, sino nodos terminales.</p>
 </div>
 </div>
 <p>Aplicado a nuestros datos la <strong>lógica</strong> es la misma: <strong>encontrar límites en cada variable que permitan llevar la decisión hacia una clase u otra</strong>. El algoritmo <span class="citation" data-cites="Breiman_2001">(<a href="references.html#ref-Breiman_2001" role="doc-biblioref">Breiman, 2001</a>)</span> tiene un objetivo: que después de cada decisión incremente la “pureza” de los nodos que le siguen; es decir, que con cada decisión se abarque la mayor cantidad de datos posible hasta lograr una clasificación perfecta. Esto se logra <strong>minimizando la impureza Gini</strong>. Este índice tiene bastante teoría detrás, pero podemos simplificarlo como la <strong>tasa de error que obtendríamos si retiramos una variable</strong>, de modo que un buen predictor minimizará ese error y dará como resultado nodos más puros [ShogaRangswamy_2018]. En pocas palabras: vamos a seleccionar la variable con la que nos equivoquemos menos al hacer las decisiones.</p>
@@ -804,7 +891,6 @@ Nota
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>             <span class="fu">drop_na</span>()</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(peng_data)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["Culmen Length (mm)"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Culmen Depth (mm)"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Flipper Length (mm)"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Body Mass (g)"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Delta 15 N (o/oo)"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Delta 13 C (o/oo)"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Species"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"39.5","2":"17.4","3":"186","4":"3800","5":"8.94956","6":"-24.69454","7":"Adelie"},{"1":"40.3","2":"18.0","3":"195","4":"3250","5":"8.36821","6":"-25.33302","7":"Adelie"},{"1":"36.7","2":"19.3","3":"193","4":"3450","5":"8.76651","6":"-25.32426","7":"Adelie"},{"1":"39.3","2":"20.6","3":"190","4":"3650","5":"8.66496","6":"-25.29805","7":"Adelie"},{"1":"38.9","2":"17.8","3":"181","4":"3625","5":"9.18718","6":"-25.21799","7":"Adelie"},{"1":"39.2","2":"19.6","3":"195","4":"4675","5":"9.46060","6":"-24.89958","7":"Adelie"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -816,7 +902,6 @@ Nota
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>peng_data <span class="sc">|&gt;</span> <span class="fu">count</span>(Species)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["Species"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Adelie","2":"141"},{"1":"Chinstrap","2":"67"},{"1":"Gentoo","2":"122"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -851,12 +936,12 @@ Nota
 <li>El objeto <code>peng_prep</code> sigue los pasos que definimos para el procesamiento de los datos (por eso receta) y obtiene los parámetros que se van a utilizar, mientras que <code>peng_juiced</code> contiene los datos ya procesados.</li>
 </ul></li>
 </ol>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -902,12 +987,12 @@ Nota
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>             <span class="co"># Se va a resolver con la librería ranger</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">set_engine</span>(<span class="st">"ranger"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -926,12 +1011,12 @@ Nota
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Entrena el modelo</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>           <span class="fu">add_model</span>(tune_spec)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -989,15 +1074,19 @@ Nota
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_rf_cv</span>(tune_res)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c17_clasif_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c17_clasif_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -1027,7 +1116,11 @@ Nota
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Obtener y graficar los resultados</span></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_rf_cv</span>(tune2_res)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c17_clasif_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c17_clasif_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <ol start="8" type="1">
@@ -1078,20 +1171,24 @@ Computational engine: ranger </code></pre>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Importancia de variables"</span>,</span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-varimp" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="c17_clasif_files/figure-html/fig-varimp-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17.12: Importancia de variables del bosque aleatorio</figcaption><p></p>
+<div id="fig-varimp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-varimp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="c17_clasif_files/figure-html/fig-varimp-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-varimp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;17.12: Importancia de variables del bosque aleatorio
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -1117,7 +1214,6 @@ Nota
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>final_res <span class="sc">|&gt;</span> </span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[".metric"],"name":[1],"type":["chr"],"align":["left"]},{"label":[".estimator"],"name":[2],"type":["chr"],"align":["left"]},{"label":[".estimate"],"name":[3],"type":["dbl"],"align":["right"]},{"label":[".config"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"accuracy","2":"multiclass","3":"0.9880952","4":"Preprocessor1_Model1"},{"1":"roc_auc","2":"hand_till","3":"1.0000000","4":"Preprocessor1_Model1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1135,15 +1231,19 @@ Nota
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(rf_auc) <span class="sc">+</span></span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Curvas ROC"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c17_clasif_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c17_clasif_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-captioned">
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -1152,10 +1252,10 @@ Importante
 </div>
 </div>
 <ol start="11" type="1">
-<li><strong>Elaborar el reporte</strong> ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a la <a href="https://arturobell.github.io/01072022/">GitHub Pages</a> de <span class="citation" data-cites="EnríquezGarcíaetal_2023">(<a href="references.html#ref-EnríquezGarcíaetal_2023" role="doc-biblioref"><strong>EnríquezGarcíaetal_2023?</strong></a>)</span> para ver cómo describir el método, pero los resultados podemos resumirlos como:</li>
+<li><strong>Elaborar el reporte</strong> ¿Cómo reportamos todo esto? Te recomiendo que le eches un ojo a la <a href="https://arturobell.github.io/01072022/">GitHub Pages</a> de <span class="citation" data-cites="EnriquezGarciaetal_2023">Enríquez-García et&nbsp;al. (<a href="references.html#ref-EnriquezGarciaetal_2023" role="doc-biblioref">2023</a>)</span> para ver cómo describir el método, pero los resultados podemos resumirlos como:</li>
 </ol>
 <blockquote class="blockquote">
-<p>El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 1 en los datos de prueba). Las variables más importantes para la clasificación fueron la longitud del culmen (<span class="math inline">\(\approx 17\%\)</span>), seguida de la longitud de la aleta (<span class="math inline">\(\approx 12.5\%\)</span>; <a href="#fig-varimp">Figura&nbsp;<span>17.12</span></a>). El bosque aleatorio optimizado estuvo compuesto por 800 árboles, cada uno formado con un predictor (<code>mtry</code>), considerando al menos 5 observaciones para poder hacer una división (<code>n_min</code>).</p>
+<p>El bosque aleatorio tuvo un excelente desempeño sin sobreajustar (AUC-ROC = 1 en los datos de prueba). Las variables más importantes para la clasificación fueron la longitud del culmen (<span class="math inline">\(\approx 17\%\)</span>), seguida de la longitud de la aleta (<span class="math inline">\(\approx 12.5\%\)</span>; <a href="#fig-varimp" class="quarto-xref">Figura&nbsp;<span>17.12</span></a>). El bosque aleatorio optimizado estuvo compuesto por 800 árboles, cada uno formado con un predictor (<code>mtry</code>), considerando al menos 5 observaciones para poder hacer una división (<code>n_min</code>).</p>
 </blockquote>
 </section>
 <section id="predicción" class="level4" data-number="17.6.2.2">
@@ -1171,7 +1271,6 @@ Importante
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>new_peng</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["Culmen Length (mm)"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Culmen Depth (mm)"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Flipper Length (mm)"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Body Mass (g)"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Delta 15 N (o/oo)"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Delta 13 C (o/oo)"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"45.15","2":"17.3","3":"197","4":"4062","5":"8.657","6":"-25.83"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1183,12 +1282,12 @@ Importante
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rf_parsnip <span class="ot">&lt;-</span> final_res <span class="sc">|&gt;</span> <span class="fu">extract_workflow</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -1200,7 +1299,6 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rf_parsnip <span class="sc">|&gt;</span> <span class="fu">predict</span>(new_peng, <span class="at">type =</span> <span class="st">"class"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[".pred_class"],"name":[1],"type":["fct"],"align":["left"]}],"data":[{"1":"Adelie"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1212,7 +1310,6 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>rf_parsnip <span class="sc">|&gt;</span>  <span class="fu">predict</span>(new_peng, <span class="at">type =</span> <span class="st">"prob"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[".pred_Adelie"],"name":[1],"type":["dbl"],"align":["right"]},{"label":[".pred_Chinstrap"],"name":[2],"type":["dbl"],"align":["right"]},{"label":[".pred_Gentoo"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.677881","2":"0.2195476","3":"0.1025714"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1227,29 +1324,32 @@ Tip
 </section>
 <section id="ejercicio" class="level2" data-number="17.7">
 <h2 data-number="17.7" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">17.7</span> Ejercicio</h2>
-<p>Aplica un clasificador de bosques aleatorios a los datos <code>Medidas.txt</code> que utilizamos en el <a href="c15_nosup.html"><span>Capítulo&nbsp;15</span></a>. Compara la importancia de variables con las cargas factoriales del ACP y con las variables significativas para la ordenación del NMDS. ¿Hay diferencias?</p>
+<p>Aplica un clasificador de bosques aleatorios a los datos <code>Medidas.txt</code> que utilizamos en el <a href="c15_nosup.html" class="quarto-xref"><span>Capítulo 15</span></a>. Compara la importancia de variables con las cargas factoriales del ACP y con las variables significativas para la ordenación del NMDS. ¿Hay diferencias?</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
-<div id="ref-Breiman_2001" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Breiman_2001" class="csl-entry" role="listitem">
 Breiman L. 2001. Random Forests. <em>Machine Learning</em> 45:5-32. DOI: <a href="https://doi.org/10.1023/A:1010933404324">10.1023/A:1010933404324</a>.
 </div>
-<div id="ref-Carvajaletal_2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Carvajaletal_2018" class="csl-entry" role="listitem">
 Carvajal G, Maucec M, Cullick S. 2018. <span>Components of artificial intelligence and data analytics</span>. In: <em>Intelligent Digital Oil and Gas Fields. Concepts, Collaboration, and Right-Time Decisions</em>. Cambridge, Massachusetts, USA: Gulf Professional Publishing, 101-148. DOI: <a href="https://doi.org/10.1016/B978-0-12-804642-5.00004-9">10.1016/B978-0-12-804642-5.00004-9</a>.
 </div>
-<div id="ref-Hosmeretal_2013" class="csl-entry" role="doc-biblioentry">
+<div id="ref-EnriquezGarciaetal_2023" class="csl-entry" role="listitem">
+Enríquez-García AB, Cruz-Escalona V, Carriquiry JD, Ehemann NR, Mejía-Falla PA, Marín-Enríquez E, Treinen-Crespo C, Vélez-Tacuri JR, Navia AF. 2023. Trophic assessment of three sympatric batoid species in the southern <span>Gulf of California</span>. <em>PeerJ</em> 11:e16117. DOI: <a href="https://doi.org/10.7717/peerj.16117">10.7717/peerj.16117</a>.
+</div>
+<div id="ref-Hosmeretal_2013" class="csl-entry" role="listitem">
 Hosmer DWJr, Lemeshow S, Sturdivant RX. 2013. <em>Applied Logistic Regression</em>. John Wiley &amp; Sons, Inc. DOI: <a href="https://doi.org/10.1002/9781118548387">10.1002/9781118548387</a>.
 </div>
-<div id="ref-Kaufmanetal_2012" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Kaufmanetal_2012" class="csl-entry" role="listitem">
 Kaufman S, Rosset S, Perlich C, Stitelman O. 2012. Leakage in Data Mining: Formulation, Detection, and Avoidance. <em>ACM Transactions on Knowledge Discovery from Data</em> 6. DOI: <a href="https://doi.org/10.1145/2382577.2382579">10.1145/2382577.2382579</a>.
 </div>
-<div id="ref-MeyerBaese_2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-MeyerBaese_2014" class="csl-entry" role="listitem">
 Meyer-Baese A, Schmid V. 2014. Chapter 7 - <span>Foundations</span> of neural networks. In: Meyer-Baese A, Schmid V eds. <em>Pattern recognition and signal analysis in medical imaging</em>. Oxford: Academic Press, 197-243. DOI: <a href="https://doi.org/10.1016/B978-0-12-409545-8.00007-8">10.1016/B978-0-12-409545-8.00007-8</a>.
 </div>
-<div id="ref-Pal_2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Pal_2017" class="csl-entry" role="listitem">
 Pal R. 2017. Regression trees, Random Forests, Probabilistic trees, Stacked generalization, Probabilistic Random Forests, Weight optimization. In: Pal R ed. <em>Predictive Modeling of Drug Sensitivity</em>. Academic Press, 149-188. DOI: <a href="https://doi.org/10.1016/B978-0-12-805274-7.00007-5">10.1016/B978-0-12-805274-7.00007-5</a>.
 </div>
-<div id="ref-Strobletal_2009" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Strobletal_2009" class="csl-entry" role="listitem">
 Strobl C, Malley J, Tutz G. 2009. An Introduction to Recursive Partitioning: Rationale, Aplication and Characteristics of Classification and Regression Trees, Bagging and Random Forests. <em>Physiological Methods</em> 14:323-348. DOI: <a href="https://doi.org/10.1037/a0016973">10.1037/a0016973</a>.
 </div>
 </div>
@@ -1283,9 +1383,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1321,10 +1435,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1334,8 +1447,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1348,6 +1470,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1391,6 +1632,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1416,6 +1658,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1477,12 +1745,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./c16_mvcomps.html" class="pagination-link">
+      <a href="./c16_mvcomps.html" class="pagination-link" aria-label="Hipótesis Multivariadas">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./c18_mvregs.html" class="pagination-link">
+      <a href="./c18_mvregs.html" class="pagination-link" aria-label="Regresiones múltiples">
         <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1490,9 +1758,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Arturo Bell</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Arturo Bell</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+
 
 
 

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-99.9.9">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -46,48 +47,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -101,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sin resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -138,15 +116,44 @@ div.csl-indent {
     "search-more-match-text": "resultado adicional en este documento",
     "search-more-matches-text": "resultados adicionales en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar"
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
   }
 }</script>
-
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -154,11 +161,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s04_mv.html">Técnicas Multivariadas</a></li><li class="breadcrumb-item"><a href="./c19_glm.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -166,224 +178,253 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bioestadística Aplicada con R y RStudio</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
+        <div id="quarto-search" class="" title="Buscar"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Prefacio</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">Preparación</a>
+  <a href="./s0_preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preparación</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">Biología, Ciencia de Datos y `R`</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a href="./s01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Biología, Ciencia de Datos y `R`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></a>
+  <a href="./c01_biolcdatos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Ciencia de datos y biología</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></a>
+  <a href="./c02_intro_rs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a <code>RStudio</code> y <code>Quarto</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></a>
+  <a href="./c03_bases_r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Bases de R</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></a>
+  <a href="./c04_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introducción a <code>tidyverse</code></span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">Fundamentos del análisis de datos</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a href="./s02_fundan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos del análisis de datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></a>
+  <a href="./c05_ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Principios de visualización de datos y <code>ggplot2</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></a>
+  <a href="./c06_prob.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Probabilidad</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></a>
+  <a href="./c07_muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introducción al muestreo</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">Técnicas básicas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a href="./s03_basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas básicas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></a>
+  <a href="./c08_descriptiva.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Estadística descriptiva</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></a>
+  <a href="./c09_ph0.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pruebas de significancia estadística</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c10_param.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></a>
+  <a href="./c10_param.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Técnicas paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></a>
+  <a href="./c11_rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modelo lineal</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">Técnicas no paramétricas y modelación no lineal</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a href="./s03_noparnolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas no paramétricas y modelación no lineal</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></a>
+  <a href="./c12_nopar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Técnicas no paramétricas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></a>
+  <a href="./c13_nolin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Modelos no lineales</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">Técnicas Multivariadas</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a href="./s04_mv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Técnicas Multivariadas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></a>
+  <a href="./c14_intromv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Técnicas multivariadas: Introducción</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></a>
+  <a href="./c15_nosup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Aprendizaje No Supervisado</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></a>
+  <a href="./c16_mvcomps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Hipótesis Multivariadas</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></a>
+  <a href="./c17_clasif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Aprendizaje supervisado: Clasificación</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></a>
+  <a href="./c18_mvregs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a>
+  <a href="./c19_glm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></a>
+  <a href="./s06_despedida.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">Referencias</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="toc-section-number">19.1</span>  Librerías</a></li>
-  <li><a href="#problemas-familiares" id="toc-problemas-familiares" class="nav-link" data-scroll-target="#problemas-familiares"><span class="toc-section-number">19.2</span>  Problemas familiares</a></li>
-  <li><a href="#regresiones-robustas" id="toc-regresiones-robustas" class="nav-link" data-scroll-target="#regresiones-robustas"><span class="toc-section-number">19.3</span>  Regresiones robustas</a></li>
-  <li><a href="#funciones-de-enlace" id="toc-funciones-de-enlace" class="nav-link" data-scroll-target="#funciones-de-enlace"><span class="toc-section-number">19.4</span>  Funciones de enlace</a></li>
-  <li><a href="#regresiones-para-conteos" id="toc-regresiones-para-conteos" class="nav-link" data-scroll-target="#regresiones-para-conteos"><span class="toc-section-number">19.5</span>  Regresiones para conteos</a>
+  <li><a href="#librerías" id="toc-librerías" class="nav-link active" data-scroll-target="#librerías"><span class="header-section-number">19.1</span> Librerías</a></li>
+  <li><a href="#problemas-familiares" id="toc-problemas-familiares" class="nav-link" data-scroll-target="#problemas-familiares"><span class="header-section-number">19.2</span> Problemas familiares</a></li>
+  <li><a href="#regresiones-robustas" id="toc-regresiones-robustas" class="nav-link" data-scroll-target="#regresiones-robustas"><span class="header-section-number">19.3</span> Regresiones robustas</a></li>
+  <li><a href="#funciones-de-enlace" id="toc-funciones-de-enlace" class="nav-link" data-scroll-target="#funciones-de-enlace"><span class="header-section-number">19.4</span> Funciones de enlace</a></li>
+  <li><a href="#regresiones-para-conteos" id="toc-regresiones-para-conteos" class="nav-link" data-scroll-target="#regresiones-para-conteos"><span class="header-section-number">19.5</span> Regresiones para conteos</a>
   <ul class="collapse">
-  <li><a href="#regresión-poisson" id="toc-regresión-poisson" class="nav-link" data-scroll-target="#regresión-poisson"><span class="toc-section-number">19.5.1</span>  Regresión Poisson</a></li>
-  <li><a href="#exceso-de-ceros-regresión-poisson-inflada-en-cero" id="toc-exceso-de-ceros-regresión-poisson-inflada-en-cero" class="nav-link" data-scroll-target="#exceso-de-ceros-regresión-poisson-inflada-en-cero"><span class="toc-section-number">19.5.2</span>  Exceso de ceros: Regresión Poisson Inflada en Cero</a></li>
-  <li><a href="#sobre-dispersión-regresión-binomial-negativa" id="toc-sobre-dispersión-regresión-binomial-negativa" class="nav-link" data-scroll-target="#sobre-dispersión-regresión-binomial-negativa"><span class="toc-section-number">19.5.3</span>  Sobre-dispersión: Regresión Binomial Negativa</a></li>
-  <li><a href="#exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero" id="toc-exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero" class="nav-link" data-scroll-target="#exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero"><span class="toc-section-number">19.5.4</span>  Exceso de ceros y sobre dispersión: Regresión Binomial Negativa Inflada en Cero</a></li>
-  <li><a href="#interpretación" id="toc-interpretación" class="nav-link" data-scroll-target="#interpretación"><span class="toc-section-number">19.5.5</span>  Interpretación</a></li>
+  <li><a href="#regresión-poisson" id="toc-regresión-poisson" class="nav-link" data-scroll-target="#regresión-poisson"><span class="header-section-number">19.5.1</span> Regresión Poisson</a></li>
+  <li><a href="#exceso-de-ceros-regresión-poisson-inflada-en-cero" id="toc-exceso-de-ceros-regresión-poisson-inflada-en-cero" class="nav-link" data-scroll-target="#exceso-de-ceros-regresión-poisson-inflada-en-cero"><span class="header-section-number">19.5.2</span> Exceso de ceros: Regresión Poisson Inflada en Cero</a></li>
+  <li><a href="#sobre-dispersión-regresión-binomial-negativa" id="toc-sobre-dispersión-regresión-binomial-negativa" class="nav-link" data-scroll-target="#sobre-dispersión-regresión-binomial-negativa"><span class="header-section-number">19.5.3</span> Sobre-dispersión: Regresión Binomial Negativa</a></li>
+  <li><a href="#exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero" id="toc-exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero" class="nav-link" data-scroll-target="#exceso-de-ceros-y-sobre-dispersión-regresión-binomial-negativa-inflada-en-cero"><span class="header-section-number">19.5.4</span> Exceso de ceros y sobre dispersión: Regresión Binomial Negativa Inflada en Cero</a></li>
+  <li><a href="#interpretación" id="toc-interpretación" class="nav-link" data-scroll-target="#interpretación"><span class="header-section-number">19.5.5</span> Interpretación</a></li>
   </ul></li>
-  <li><a href="#selección-de-modelos" id="toc-selección-de-modelos" class="nav-link" data-scroll-target="#selección-de-modelos"><span class="toc-section-number">19.6</span>  Selección de modelos</a>
+  <li><a href="#selección-de-modelos" id="toc-selección-de-modelos" class="nav-link" data-scroll-target="#selección-de-modelos"><span class="header-section-number">19.6</span> Selección de modelos</a>
   <ul class="collapse">
-  <li><a href="#criterio-de-información-de-akaike" id="toc-criterio-de-información-de-akaike" class="nav-link" data-scroll-target="#criterio-de-información-de-akaike"><span class="toc-section-number">19.6.1</span>  Criterio de Información de Akaike</a></li>
+  <li><a href="#criterio-de-información-de-akaike" id="toc-criterio-de-información-de-akaike" class="nav-link" data-scroll-target="#criterio-de-información-de-akaike"><span class="header-section-number">19.6.1</span> Criterio de Información de Akaike</a></li>
   </ul></li>
-  <li><a href="#regresiones-para-clases" id="toc-regresiones-para-clases" class="nav-link" data-scroll-target="#regresiones-para-clases"><span class="toc-section-number">19.7</span>  Regresiones para clases</a>
+  <li><a href="#regresiones-para-clases" id="toc-regresiones-para-clases" class="nav-link" data-scroll-target="#regresiones-para-clases"><span class="header-section-number">19.7</span> Regresiones para clases</a>
   <ul class="collapse">
-  <li><a href="#regresión-logística-binaria" id="toc-regresión-logística-binaria" class="nav-link" data-scroll-target="#regresión-logística-binaria"><span class="toc-section-number">19.7.1</span>  Regresión logística binaria</a></li>
-  <li><a href="#regresión-multinomial" id="toc-regresión-multinomial" class="nav-link" data-scroll-target="#regresión-multinomial"><span class="toc-section-number">19.7.2</span>  Regresión multinomial</a></li>
+  <li><a href="#regresión-logística-binaria" id="toc-regresión-logística-binaria" class="nav-link" data-scroll-target="#regresión-logística-binaria"><span class="header-section-number">19.7.1</span> Regresión logística binaria</a></li>
+  <li><a href="#regresión-multinomial" id="toc-regresión-multinomial" class="nav-link" data-scroll-target="#regresión-multinomial"><span class="header-section-number">19.7.2</span> Regresión multinomial</a></li>
   </ul></li>
-  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="toc-section-number">19.8</span>  Ejercicio</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="header-section-number">19.8</span> Ejercicio</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s04_mv.html">Técnicas Multivariadas</a></li><li class="breadcrumb-item"><a href="./c19_glm.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-glm" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></h1>
+<h1 class="title"><span id="sec-glm" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelos Lineales Generalizados</span></span></h1>
 </div>
 
 
@@ -396,7 +437,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="librerías" class="level2" data-number="19.1">
 <h2 data-number="19.1" class="anchored" data-anchor-id="librerías"><span class="header-section-number">19.1</span> Librerías</h2>
@@ -418,7 +461,7 @@ div.csl-indent {
 </section>
 <section id="problemas-familiares" class="level2" data-number="19.2">
 <h2 data-number="19.2" class="anchored" data-anchor-id="problemas-familiares"><span class="header-section-number">19.2</span> Problemas familiares</h2>
-<p>En el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a> mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en el <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a> hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual forma una parte fundamental de los <strong>modelos lineales generalizados</strong> (GLMs).</p>
+<p>En el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a> mencionamos cómo utilizar combinaciones lineales de variables para predecir una variable continua, pero también recordarás que en el <a href="c11_rls.html" class="quarto-xref"><span>Capítulo 11</span></a> hablamos de modificar el supuesto de la distribución de nuestros errores para obtener una mejor estimación, lo cual forma una parte fundamental de los <strong>modelos lineales generalizados</strong> (GLMs).</p>
 <p>La modificación puede ser tan “simple” (al menos en términos prácticos) como “relajar” el supuesto de normalidad, pero podemos también utilizar distribuciones que nos permitan modelar otro tipo de información. Bueno, hoy aterrizaremos esa última idea: <strong>La estructura principal de un GLM sigue siendo un modelo lineal, aunque nuestro supuesto de la distribución de errores no será exclusivamente normal, sino que puede tomar alguna otra <em>familia</em> de distribuciones, enlazada a nuestros datos con alguna función</strong>. En la sesión de hoy revisaremos:</p>
 <ul>
 <li><strong>Regresiones robustas</strong>, expandiendo un poco la distribución <em>t</em> como distribución de errores y revisando una alternativa.</li>
@@ -427,27 +470,27 @@ div.csl-indent {
 <li><strong>Selección de modelos</strong>, <em>i.e.</em>, cómo seleccionar el mejor de un conjunto de modelos candidatos.</li>
 <li><strong>Regresiones para clases</strong>: Regresión logística binomial y multinomial.</li>
 </ul>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="callout callout-style-default callout-warning callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Advertencia
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>OJO: Por practicidad vamos a aplicar los GLMs con <code>R</code> base. Puedes también aplicar GLMs penalizados utilizando básicamente la misma estructura que vimos en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a></strong>. ¿Por qué no utilizar <code>tidymodels</code>? Podría verme elegante y decirte que porque ya conocemos el flujo básico de trabajo de <code>tidymodels</code> y las ventajas que nos ofrece, pero la realidad es otra: la implementación de GLMs en <code>tidymodels</code> es bastante limitada aún (aunque se puede hacer utilizando <code>glmnet</code> con mixture = 0 y penalty = 0). Prefiero que entonces nos enfoquemos hoy en la intuición de los GLMs y cómo interpretarlos adecuadamente, más que enfocarnos en la parte técnica. Si tienes dudas sobre el uso de <code>tidymodels</code> te recomiendo que revises <span class="citation" data-cites="KuhnSilge_2022">Kuhn &amp; Silge (<a href="references.html#ref-KuhnSilge_2022" role="doc-biblioref">2022</a>)</span>. Es un <a href="https://www.tmwr.org">libro web</a> que habla justo sobre los detalles del uso de <code>tidymodels</code>. Recuerda también revisar <a href="https://www.tidymodels.org/">su documentación</a>.</p>
+<p><strong>OJO: Por practicidad vamos a aplicar los GLMs con <code>R</code> base. Puedes también aplicar GLMs penalizados utilizando básicamente la misma estructura que vimos en el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a></strong>. ¿Por qué no utilizar <code>tidymodels</code>? Podría verme elegante y decirte que porque ya conocemos el flujo básico de trabajo de <code>tidymodels</code> y las ventajas que nos ofrece, pero la realidad es otra: la implementación de GLMs en <code>tidymodels</code> es bastante limitada aún (aunque se puede hacer utilizando <code>glmnet</code> con mixture = 0 y penalty = 0). Prefiero que entonces nos enfoquemos hoy en la intuición de los GLMs y cómo interpretarlos adecuadamente, más que enfocarnos en la parte técnica. Si tienes dudas sobre el uso de <code>tidymodels</code> te recomiendo que revises <span class="citation" data-cites="KuhnSilge_2022">Kuhn &amp; Silge (<a href="references.html#ref-KuhnSilge_2022" role="doc-biblioref">2022</a>)</span>. Es un <a href="https://www.tmwr.org">libro web</a> que habla justo sobre los detalles del uso de <code>tidymodels</code>. Recuerda también revisar <a href="https://www.tidymodels.org/">su documentación</a>.</p>
 </div>
 </div>
 </div>
@@ -455,7 +498,7 @@ Advertencia
 </section>
 <section id="regresiones-robustas" class="level2" data-number="19.3">
 <h2 data-number="19.3" class="anchored" data-anchor-id="regresiones-robustas"><span class="header-section-number">19.3</span> Regresiones robustas</h2>
-<p>La idea de una regresión robusta la revisamos en el <a href="c11_rls.html"><span>Capítulo&nbsp;11</span></a>; es decir, utilizar una distribución con colas más altas que una distribución normal para poder contender con el efecto de puntos extremos, pero expandamos esa idea. ¿Qué significa el “peso” de las colas de una distribución? Qué tanta densidad (o masa, para distribuciones discretas) de probabilidad está acumulada lejos de la tendencia central. En palabras más sencillas, una distribución con colas ligeras como la normal <em>piensa</em> que la <strong>probabilidad</strong> de tener <strong>valores alejados</strong> de la tendencia <strong>central</strong> es <strong>muy baja</strong>; por lo tanto, <strong>considera “todos” los datos</strong> como <strong>igual</strong> de importantes y <em>reacciona</em> moviendo la estimación. ¿No me crees? Veamos un caso extremo, utilizando el tercer conjunto de datos del <a href="https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe"><em>cuarteto de Anscombe</em></a>:</p>
+<p>La idea de una regresión robusta la revisamos en el <a href="c11_rls.html" class="quarto-xref"><span>Capítulo 11</span></a>; es decir, utilizar una distribución con colas más altas que una distribución normal para poder contender con el efecto de puntos extremos, pero expandamos esa idea. ¿Qué significa el “peso” de las colas de una distribución? Qué tanta densidad (o masa, para distribuciones discretas) de probabilidad está acumulada lejos de la tendencia central. En palabras más sencillas, una distribución con colas ligeras como la normal <em>piensa</em> que la <strong>probabilidad</strong> de tener <strong>valores alejados</strong> de la tendencia <strong>central</strong> es <strong>muy baja</strong>; por lo tanto, <strong>considera “todos” los datos</strong> como <strong>igual</strong> de importantes y <em>reacciona</em> moviendo la estimación. ¿No me crees? Veamos un caso extremo, utilizando el tercer conjunto de datos del <a href="https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe"><em>cuarteto de Anscombe</em></a>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Almacenados en R como anscombe</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ansc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/anscombe.csv"</span>)</span>
@@ -466,7 +509,11 @@ Advertencia
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cuarteto de Anscombe"</span>) <span class="sc">+</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"gray70"</span>, <span class="st">"gray70"</span>, <span class="st">"#1f77b4"</span>, <span class="st">"gray70"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Si vemos la distribución de <code>y</code> notaremos que no es <em>exactamente</em> normal, debido a ese punto extremo en 12.5:</p>
@@ -476,7 +523,11 @@ Advertencia
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"#1f77b4"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Densidad de y del conjunto III de Anscombe"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ajustemos entonces nuestra regresión lineal simple:</p>
@@ -514,7 +565,11 @@ F-statistic: 17.97 on 1 and 9 DF,  p-value: 0.002176</code></pre>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"RLS con supuesto de normalidad"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>No se ve mal; sin embargo, es claro que el punto extremo está influenciando la estimación. Podemos aplicar algún criterio de detección de valores extremos (o deformar nuestros datos) para cumplir con el supuesto de normalidad; sin embargo, <strong>más que parchar nuestros datos, es preferible modificar nuestro modelo</strong>. Cambiemos entonces a una regresión con una verosimilitud <em>t</em> de Student:</p>
@@ -577,7 +632,11 @@ sigma  0.1000000          NaN
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Regresión robusta"</span>,</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"OLS (gris) vs. t de Student (naranja)"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>En este caso el punto extremo ya no influenció la estimación de la regresión, lo cual en la mayoría de los casos es algo deseable. Aunque esta es una forma de realizar una regresión robusta, existen otras. Una de ellas es modificar la función de pérdida, como por ejemplo con la Regresión con pérdida Huber. Los detalles matemáticos los dejaré para tu investigación, lo realmente importante es entender que los errores (residuales) son ponderados según su magnitud; es decir, se resta importancia a aquellos residuales que sean grandes y, de hecho, si están por encima de cierto límite, son descartados por completo. Su implementación es sumamente sencilla, pues lo único que tenemos que hacer es modificar <code>lm</code> por la función <code>rlm</code> de la librería <code>MASS</code>:</p>
@@ -606,7 +665,6 @@ Residual standard error: 0.005248 on 9 degrees of freedom</code></pre>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">weight =</span> rr_huber<span class="sc">$</span>w)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>h_weights</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["resid"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["weight"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"-0.0007219353","3":"1.000000000","_rn_":"23"},{"1":"-1","2":"0.0007295602","3":"1.000000000","_rn_":"24"},{"1":"4","2":"4.2421008214","3":"0.001664007","_rn_":"25"},{"1":"0","2":"-0.0049961876","3":"1.000000000","_rn_":"26"},{"1":"2","2":"0.0035523169","3":"1.000000000","_rn_":"27"},{"1":"5","2":"-0.0036249263","3":"1.000000000","_rn_":"28"},{"1":"-3","2":"0.0021810557","3":"1.000000000","_rn_":"29"},{"1":"-5","2":"0.0036325512","3":"1.000000000","_rn_":"30"},{"1":"3","2":"-0.0021734308","3":"1.000000000","_rn_":"31"},{"1":"-2","2":"-0.0035446921","3":"1.000000000","_rn_":"32"},{"1":"-4","2":"-0.0020931966","3":"1.000000000","_rn_":"33"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -633,7 +691,11 @@ Residual standard error: 0.005248 on 9 degrees of freedom</code></pre>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">high =</span> <span class="st">"#1f77b4"</span>,</span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Como era de esperarse, los resultados son los mismos que los de la regresión <em>t</em> de Student. ¿Qué tiene que ver esto con los modelos lineales generalizados? Veamos primero los tres elementos clave que definen un GLM:</p>
@@ -679,7 +741,6 @@ y \sim Poisson(\lambda)
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fish <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(csvurl)[,<span class="fu">c</span>(<span class="st">"child"</span>, <span class="st">"camper"</span>, <span class="st">"count"</span>)]</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(fish)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["child"],"name":[1],"type":["int"],"align":["right"]},{"label":["camper"],"name":[2],"type":["int"],"align":["right"]},{"label":["count"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"0","2":"0","3":"0","_rn_":"1"},{"1":"0","2":"1","3":"0","_rn_":"2"},{"1":"0","2":"0","3":"0","_rn_":"3"},{"1":"1","2":"1","3":"0","_rn_":"4"},{"1":"0","2":"0","3":"1","_rn_":"5"},{"1":"2","2":"1","3":"0","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -695,7 +756,11 @@ y \sim Poisson(\lambda)
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Por otra parte, habrás notado un par de cosas: a) hay una gran cantidad de ceros y b) tenemos algunos puntos “extremos”; <em>i.e.</em>, algunos pescadores que tuvieron demasiada suerte y que capturaron demasiados peces en comparación con el resto. Este tipo de distribuciones no son extrañas en la naturaleza, y tienen un par de bemoles de los cuales hablaremos después. Por lo pronto, construyamos nuestro GLM. Podemos construirlo con la función <code>glm</code> de R base, cuyo uso es sumamente similar al de la función <code>lm</code>, salvo que indicaremos la familia como un argumento adicional:</p>
@@ -736,12 +801,12 @@ Number of Fisher Scoring iterations: 6</code></pre>
 [1,]      2380.12 247 0</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Nota
 </div>
 </div>
@@ -804,7 +869,6 @@ Log-likelihood: -1025 on 6 Df</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(poiss, zi_poiss)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2723.186","_rn_":"poiss"},{"1":"6","2":"2062.199","_rn_":"zi_poiss"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -869,14 +933,17 @@ Chi-Square Test Statistic =  1837.7652 p-value = &lt; 2.2e-16 </code></pre>
 `geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>A ojo de buen cubero era más que evidente que nuestro modelo iba a estar sobre disperso, por lo que estos resultados no son sorprendentes. Algo que puedes pensar es “si estoy comparando qué modelo está mejor ajustado, ¿puedo entonces utilizar el AIC?” Y la respuesta es, claro que sí:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(poiss, zi_poiss, bineg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2723.1858","_rn_":"poiss"},{"1":"6","2":"2062.1989","_rn_":"zi_poiss"},{"1":"4","2":"887.4206","_rn_":"bineg"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -925,7 +992,6 @@ Log-likelihood: -434.9 on 7 Df</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(poiss, zi_poiss, bineg, zi_bineg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2723.1858","_rn_":"poiss"},{"1":"6","2":"2062.1989","_rn_":"zi_poiss"},{"1":"4","2":"887.4206","_rn_":"bineg"},{"1":"7","2":"883.8137","_rn_":"zi_bineg"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -934,12 +1000,12 @@ Log-likelihood: -434.9 on 7 Df</code></pre>
 </div>
 </div>
 <p>Vemos que los AIC de los modelos con distribución de error binomial negativa tienen los menores valores; por lo tanto seleccionaremos a alguno de los dos. ¿Cuál? En la siguiente sección hablaremos de las peculiaridades. Por lo pronto, sigamos con nuestro criterio de seleccionar el que tenga el menor AIC, que corresponde a la distribución binomial negativa inflada en cero. En este punto pasaríamos a interpretar nuestros coeficientes, pero antes es necesario que hablemos de los no supuestos de normalidad y homogeneidad de varianzas (homocedasticidad):</p>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -989,12 +1055,12 @@ log(\theta) = \alpha + \beta x \\
 <li>Child: El promedio de peces capturados disminuye un 60% (1-&gt;0.4) veces por cada hijo adicional.</li>
 <li>Camper: Si el pescador tiene un camper, el promedio de peces capturados incrementa 2.2 veces.</li>
 </ul>
-<div class="callout callout-style-default callout-important callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Importante
 </div>
 </div>
@@ -1019,7 +1085,11 @@ Importante
 <span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>),</span>
 <span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">label_comma</span>(<span class="at">accuracy =</span> <span class="dv">1</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>O utilizando <code>visreg</code>:</p>
@@ -1035,7 +1105,11 @@ Importante
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># OJO: Los "breaks" del eje x se definieron así porque son pocos valores discretos!</span></span>
 <span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="cf">function</span>(x){<span class="fu">unique</span>(<span class="fu">floor</span>(<span class="fu">pretty</span>(<span class="fu">seq</span>(<span class="fu">min</span>(x), (<span class="fu">max</span>(x))))))})</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Y ahora podemos hablar de la selección de modelos.</p>
@@ -1076,7 +1150,6 @@ AIC = -2ln(L) + 2k
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>AICs<span class="sc">$</span>Delta <span class="ot">&lt;-</span> AICs<span class="sc">$</span>AIC <span class="sc">-</span> <span class="fu">min</span>(AICs<span class="sc">$</span>AIC)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>AICs</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AICc"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Delta"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"2723.2834","3":"1839.006869","_rn_":"poiss"},{"1":"6","2":"2062.5446","3":"1178.268111","_rn_":"zi_poiss"},{"1":"4","2":"887.5839","3":"3.307367","_rn_":"bineg"},{"1":"7","2":"884.2765","3":"0.000000","_rn_":"zi_bineg"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1088,7 +1161,7 @@ AIC = -2ln(L) + 2k
 </section>
 <section id="regresiones-para-clases" class="level2" data-number="19.7">
 <h2 data-number="19.7" class="anchored" data-anchor-id="regresiones-para-clases"><span class="header-section-number">19.7</span> Regresiones para clases</h2>
-<p>En el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a> hablamos sobre los problemas de clasificación, y aplicamos un bosque aleatorio, pero mencionamos que había otro clasificador llamado <strong>regresión logística</strong>, sin dar más detalles. Aprovechemos, entonces, para revisar un poco más a profundidad la intuición detrás de ella.</p>
+<p>En el <a href="c17_clasif.html" class="quarto-xref"><span>Capítulo 17</span></a> hablamos sobre los problemas de clasificación, y aplicamos un bosque aleatorio, pero mencionamos que había otro clasificador llamado <strong>regresión logística</strong>, sin dar más detalles. Aprovechemos, entonces, para revisar un poco más a profundidad la intuición detrás de ella.</p>
 <section id="regresión-logística-binaria" class="level3" data-number="19.7.1">
 <h3 data-number="19.7.1" class="anchored" data-anchor-id="regresión-logística-binaria"><span class="header-section-number">19.7.1</span> Regresión logística binaria</h3>
 <p>La <strong>regresión logística</strong> es un <strong>modelo lineal</strong> al cual aplicamos una <strong>función logística</strong>, lo que nos <strong>permite restringir nuestra salida al intervalo</strong> <span class="math inline">\([0,1]\)</span> y, por lo tanto, <strong>predecir la probabilidad de pertenencia a una clase dada</strong>. Esa definición es correcta para resumir lo más posible la técnica; sin embargo, los detalles son un poco más complejos.</p>
@@ -1115,7 +1188,7 @@ y \sim Binom(\theta)
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Eliminar covariables inútiles para la clasificación</span></span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>            dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">!</span><span class="fu">c</span>(species, sex, year))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y todos los demás pasos que vimos en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>:</p>
+<p>Ahora ajustemos el modelo. No te olvides de dividir en entrenamiento-prueba (o, mejor aún, realizar validación cruzada), considerar si es necesario escalar los datos, y todos los demás pasos que vimos en el <a href="c17_clasif.html" class="quarto-xref"><span>Capítulo 17</span></a>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>logit_reg <span class="ot">&lt;-</span> <span class="fu">glm</span>(island<span class="sc">~</span>., <span class="at">data =</span> peng_dat, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_reg)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1156,7 +1229,11 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),</span>
 <span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Biscoe"</span>, <span class="fl">0.5</span>, <span class="st">"Dream"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>¿Cómo interpretamos los coeficientes? Antes de pasar a eso, es necesario que pongamos atención al argumento <code>scale</code> de <code>visreg</code>, el cual indicamos como <code>response</code>. Esto lo que hizo fue poner nuestra salida en lo que nos interesa: la probabilidad de pertenencia a una especie, dadas las medidas de cada variable. Veamos qué pasa si retiramos ese argumento:</p>
@@ -1168,7 +1245,11 @@ Number of Fisher Scoring iterations: 6</code></pre>
 <span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>(partial_plots)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ahora nuestros gráficos están en la escala de nuestro modelo lineal; es decir, con <code>response</code> estamos introduciendo la función de enlace y graficando el GLM completo; sin embargo, esto no está presente en los coeficientes “crudos” arrojados por la función GLM, por lo que toca aplicar el álgebra correspondiente.</p>
@@ -1193,12 +1274,12 @@ log \left( \frac{\theta}{1-\theta} \right) = \alpha + \beta x
 log \left(\frac{p(y = 1)}{1 - p(y = 1)} \right) = \alpha + \beta x
 \]</span></p>
 <p>La cantidad <span class="math inline">\(\frac{p(y = 1)}{1 - p(y = 1)}\)</span> se conoce como los <em>odds</em> o razones de probabilidad, que representan la probabilidad de éxito sobre la probabilidad de fracaso. Mientras que la probabilidad de obtener 2 al lanzar un dado es de 1/6, los <em>odds</em> para el mismo evento son <span class="math inline">\(\frac{1/6}{5/6} \approx 0.2\)</span>, o un éxito a cinco fracasos. En una regresión logística, <span class="math inline">\(\beta\)</span> representa el incremento en <em>log-odds</em> por incremento unitario en <span class="math inline">\(x\)</span>, no en la probabilidad de pertenencia a una clase, aunque la relación entre <em>odds</em> y probabilidad es monótona; es decir, conforme incrementa una, la otra también.</p>
-<div class="callout callout-style-default callout-tip callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -1222,7 +1303,7 @@ Tip
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://miro.medium.com/max/585/1*lk7bbg9gbYKpDYSHABaDOg.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Red neuronal</figcaption><p></p>
+<figcaption>Red neuronal</figcaption>
 </figure>
 </div>
 <p>Tenemos una capa de entrada, correspondiente a nuestros valores, seguida de una o más capas ocultas, compuestas por neuronas (perceptrones) que tienen funciones de activación, las cuales están conectadas por constantes multiplicadoras (pesos o <em>weights</em>) a las cuales se les añade una constante (sesgo o <em>bias</em>), cuyo resultado, finalmente, se envía a la capa de salida <span class="math inline">\(y\)</span> (nuestras clases objetivo), resultando en la siguiente forma:</p>
@@ -1233,7 +1314,7 @@ y = f(bias + \sum(weight*input))
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="https://miro.medium.com/max/346/1*dyeq4DKbXlNqPN6mnfN0vw.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Neurona</figcaption><p></p>
+<figcaption>Neurona</figcaption>
 </figure>
 </div>
 <p>¿Suena familiar? Con solo una capa oculta y una función (<span class="math inline">\(f\)</span>) de identidad tendríamos un modelo lineal cualquiera, solo que se ajusta mediante descenso estocástico de gradiente (fuera de esta discusión) en vez de mínimos cuadrados o máxima verosimilitud. Si esa función <span class="math inline">\(f\)</span> la hacemos una función sigmoide (logística), tenemos entonces una regresión logística para más de dos clases. En un sentido estricto, esta aproximación no es un GLM (no tenemos una familia de distribución del error <em>per-se</em>), pero se puede considerar una generalización a más de dos clases. Desafortunadamente aquí tendré que romper la homogeneidad de la sesión e introducir <code>tidymodels</code>, porque hay un par de hiperparámetros a ajustar, pero no te preocupes, voy a asignar valores fijos para saltarnos el proceso de validación cruzada y optimización que ya conoces. Primero, hagamos una receta para preprocesar los datos:</p>
@@ -1253,7 +1334,7 @@ y = f(bias + \sum(weight*input))
 <span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Preprocesar los datos</span></span>
 <span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>peng_juiced <span class="ot">&lt;-</span> peng_prep <span class="sc">|&gt;</span> <span class="fu">juice</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Ahora especifiquemos el modelo. Aquí el argumento <code>penalty</code> especifica el grado de penalización del modelo, y <code>mixture</code> el tipo de penalización (Ridge o Lasso), tal y como vimos en las regresiones penalizadas en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a>. De hecho, también utilizaremos la librería <code>glmnet</code>. Algo que no mencioné en ese capítulo fue que mixture puede tomar cualquier valor entre 0 y 1, y que cuando 0 &lt; <code>mixture</code> &lt; 1 tenemos un modelo de “red elástica”. ¿Qué es eso? Simplemente una mezcla entre ambas penalizaciones donde, evidentemente, entre más nos acerquemos a 1 más “Lasso” será el modelo. Obviamente debemos de optimizar al menos uno de los dos, pero eso ya vimos como hacerlo ;).</p>
+<p>Ahora especifiquemos el modelo. Aquí el argumento <code>penalty</code> especifica el grado de penalización del modelo, y <code>mixture</code> el tipo de penalización (Ridge o Lasso), tal y como vimos en las regresiones penalizadas en el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a>. De hecho, también utilizaremos la librería <code>glmnet</code>. Algo que no mencioné en ese capítulo fue que mixture puede tomar cualquier valor entre 0 y 1, y que cuando 0 &lt; <code>mixture</code> &lt; 1 tenemos un modelo de “red elástica”. ¿Qué es eso? Simplemente una mezcla entre ambas penalizaciones donde, evidentemente, entre más nos acerquemos a 1 más “Lasso” será el modelo. Obviamente debemos de optimizar al menos uno de los dos, pero eso ya vimos como hacerlo ;).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>mnom_reg <span class="ot">&lt;-</span> <span class="fu">multinom_reg</span>(<span class="at">penalty =</span> <span class="dv">1</span>,</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">mixture =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
@@ -1271,7 +1352,6 @@ y = f(bias + \sum(weight*input))
 <span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> term,</span>
 <span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> estimate)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
 {"columns":[{"label":["class"],"name":[1],"type":["chr"],"align":["left"]},{"label":["penalty"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["(Intercept)"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["bill_length_mm"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["bill_depth_mm"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["flipper_length_mm"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["body_mass_g"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"Biscoe","2":"1","3":"0.5136621","4":"0.02408505","5":"-0.1829058","6":"0.15093861","7":"0.16866318"},{"1":"Dream","2":"1","3":"0.2179539","4":"0.06933217","5":"0.1201280","6":"-0.09588915","7":"-0.11853767"},{"1":"Torgersen","2":"1","3":"-0.7316160","4":"-0.09341722","5":"0.0627779","6":"-0.05504945","7":"-0.05012552"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -1279,13 +1359,17 @@ y = f(bias + \sum(weight*input))
 </div>
 </div>
 </div>
-<p>Algo importante a tener en cuenta es que al ajustar este modelo tomamos una clase como referencia (igual que con un predictor categórico como vimos en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a>) y entonces esa no tiene coeficientes. ¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son “más diferentes” entre nuestras clases, para lo cual podemos utilizar <code>vip</code> como igual que en el <a href="c17_clasif.html"><span>Capítulo&nbsp;17</span></a>:</p>
+<p>Algo importante a tener en cuenta es que al ajustar este modelo tomamos una clase como referencia (igual que con un predictor categórico como vimos en el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a>) y entonces esa no tiene coeficientes. ¿Es un problema? Sí y no. Usualmente solo nos interesa saber qué variables son más importantes para la clasificación; es decir, qué variables son “más diferentes” entre nuestras clases, para lo cual podemos utilizar <code>vip</code> como igual que en el <a href="c17_clasif.html" class="quarto-xref"><span>Capítulo 17</span></a>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>mnom_res <span class="sc">|&gt;</span> vip<span class="sc">::</span><span class="fu">vip</span>(<span class="at">geom =</span> <span class="st">"col"</span>) <span class="sc">+</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Importancia de variables"</span>,</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">element_blank</span>())</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="c19_glm_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="c19_glm_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Esto sería todo para esta clase de GLM, aunque no quiere decir que sean los únicos. Si te interesa modelar el tiempo entre eventos puedes utilizar un modelo Gamma, puedes cambiar la relación entre la media y la varianza de la regresión para conteos utilizando un modelo Quasi-Poisson en vez de un modelo con distribución binomial negativa (ver lecturas recomendadas), entre otros. Puedes también, como vimos en el último ejemplo, aplicar GLMs penalizados utilizando <code>glmnet</code>, solo hay que especificar la familia correspondiente.</p>
@@ -1293,16 +1377,16 @@ y = f(bias + \sum(weight*input))
 </section>
 <section id="ejercicio" class="level2" data-number="19.8">
 <h2 data-number="19.8" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">19.8</span> Ejercicio</h2>
-<p>No podíamos terminar sin un ejercicio, entonces esta vez considera utilizar un GLM para predecir las edades de los abulones que utilizamos en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a> y responde:</p>
+<p>No podíamos terminar sin un ejercicio, entonces esta vez considera utilizar un GLM para predecir las edades de los abulones que utilizamos en el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a> y responde:</p>
 <ol type="1">
 <li>¿Qué familia del error utilizarías? ¿Hay opciones? ¿Considerarías un modelo penalizado/regularizado? Justifica tu respuesta.</li>
 <li>Construye el/los GLM(s) que propusiste. ¿Cuál es el mejor modelo?</li>
-<li>Compara el ajuste del modelo final con la RLM que construimos en el <a href="c18_mvregs.html"><span>Capítulo&nbsp;18</span></a>. ¿Mejoró?</li>
+<li>Compara el ajuste del modelo final con la RLM que construimos en el <a href="c18_mvregs.html" class="quarto-xref"><span>Capítulo 18</span></a>. ¿Mejoró?</li>
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography" style="display: none">
-<div id="ref-KuhnSilge_2022" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-KuhnSilge_2022" class="csl-entry" role="listitem">
 Kuhn M, Silge J. 2022. <em><a href="https://tmwr.org/">Tidy Modeling with R</a></em>. O’Reilly.
 </div>
 </div>
@@ -1336,9 +1420,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1374,10 +1472,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1387,8 +1484,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1401,6 +1507,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1444,6 +1669,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1469,6 +1695,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1530,12 +1782,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./c18_mvregs.html" class="pagination-link">
+      <a href="./c18_mvregs.html" class="pagination-link" aria-label="Regresiones múltiples">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Regresiones múltiples</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./s06_despedida.html" class="pagination-link">
+      <a href="./s06_despedida.html" class="pagination-link" aria-label="Despedida">
         <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Despedida</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1543,9 +1795,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">Arturo Bell</div>
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Arturo Bell</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
   </div>
 </footer>
+
 
 
 
