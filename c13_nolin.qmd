@@ -27,7 +27,7 @@ Tenemos dos razones básicas que nos pueden llevar a pensar en un modelo no line
 jaws <- read.csv("datos/jaws.csv")
 lm_jaws <- lm(bone~age, data = jaws)
 performance::check_model(lm_jaws)
-ggsave("jaws_check.pdf", height = 10, width = 6)
+# ggsave("jaws_check.pdf", height = 10, width = 6)
 ```
 Podemos ver que el supuesto de linealidad no se sostiene, y en consecuencia tenemos una pobre capacidad predictiva en el *posterior predictive check*. Si vemos nuestros datos:
 
@@ -192,7 +192,7 @@ Una pregunta que muy seguramente tendrás es "¿qué pasa con los intervalos de 
 Primero, ¿qué es Bootstrap y con qué se come? Mencionamos algo de esto en el @sec-ph0, pero no dimos mayores detalles más que podemos utilizarlo para calcular los intervalos de confianza. El muestreo Bootstrap (o bootstraping) consiste en **remuestrear** los datos, con el objetivo de crear una **distribución empírica** de algún estadístico. Es decir, NO utilizaremos ni asumiremos una distribución para nuestros residuales, sino que utilizaremos directamente nuestros datos para describir su distribución. Un escenario en el cual esto es útil es cuando el perfil de verosimilitud de nuestros parámetros no es simétrico, como es el caso de $t_0$ en nuestro modelo:
 
 ```{r}
-plot(profile(vb_jaws, "t"))
+plot(profile(vb_jaws, "L"))
 ```
 
 ¿Qué nos dice este gráfico? En pocas palabras, la forma de la distribución de la verosimilitud de nuestro parámetro, en términos de $\tau$, que representa el valor del estadístico $t$ a cada punto, donde el valor de $t$ se calcula como la raiz cuadrada del cambio en la suma de cuadrados, dividido por el error estándar residual. ¿En Español? Entre más grande sea $\tau$, más nos alejamos del punto con máxima verosimilitud ($\tau = 0$). **Piensa en este gráfico como un gráfico de densidad invertido**.
