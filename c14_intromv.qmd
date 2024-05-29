@@ -457,6 +457,11 @@ Otra alternativa es utilizar la función `chart.Correlation(data, histogram)` de
 PerformanceAnalytics::chart.Correlation(mydata, histogram = T, pch = 19)
 ```
 
+```{r}
+GGally::ggpairs(mydata, progress = F)
+```
+
+
 Un comentario final al respecto de estas matrices es que, además de ser la base de las técnicas multivariadas, nos permiten evaluar la asociación entre nuestras variables sin comprometer un modelo predictivo, a la vez que nos permiten hacer un filtrado de nuestras variables para evitar autocorrelaciones o incluir variables poco informativas, aunque de esto hablaremos más adelante.
 
 ## Normalidad multivariada
