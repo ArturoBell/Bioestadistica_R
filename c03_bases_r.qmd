@@ -168,14 +168,29 @@ print(vect_1[4])
 print(vect_1[2:3])
 ```
 
+Ejercicio: Genera un vector donde cada elemento sea una letra de tu primer nombre, luego extrae los elementos último, primero y segundo.
+
+```{r}
+
+```
+
+
 #### Factor
 
 Representan variables categoricas. Contienen los valores de la variable así como los valores posibles que puede tomar (niveles). Se crean con la función `factor(x, levels, labels)`, donde x representa los valores de la variable, `levels` representa los posibles niveles y `labels` (opcional) representan etiquetas de cada nivel:
 
 ```{r}
-fact.1 <- factor(x = c('a', 'b', 'c'), 
+fact_1 <- factor(x = c('a', 'b', 'c'), 
                  levels = c('a', 'b', 'c', 'd', 'e'))
-fact.1
+fact_1
+```
+
+Ejercicio:
+1. Genera un factor con 5 categorías de acuerdo, con 4 observaciones que representen 2 de esas 5 categorías. Las categorías tienen orden.
+2. Extrae los elementos 2 y 4 de ese factor.
+
+```{r}
+
 ```
 
 #### Matrix 
@@ -203,10 +218,19 @@ print(mat_1[1,])
 
 OJO: `print(mat_1[c(1,1)])` NO da la diagonal de la matriz, esa la obtenemos con `diag(mat1)`, sino que repite 2 veces el primer elemento de la matriz
 
+Ejercicio:
+
+1. Extrae los elementos `F` de `mat_1`:
+
 ```{r}
-mat_1[c(2,1),1]
+
 ```
 
+2. Extrae los elementos de la diagonal de `mat_1`:
+
+```{r}
+
+```
 
 #### DataFrame
 
@@ -226,13 +250,6 @@ Existen distintos modos de indexar un DataFrame. El primero de ellos `var$col_na
 df_1$col_a
 ```
 
-Ejercicio renglones 1 y 4 de la columna c:
-
-```{r}
-df_1$col_c[c(1,4)]
-```
-
-
 Como vemos, este modo de indexación extrae la columna completa en forma de un vector, por lo que si queremos accesar un valor en particular solo habrá que utilizar ese método de indexación:
 
 ```{r}
@@ -243,6 +260,20 @@ Finalmente, también podemos utilizar el método de indexación de matrices, rec
 
 ```{r}
 df_1[4,2]
+```
+
+Ejercicio:
+
+1. Extrae los elementos 1, 3 y 5 de la columna c:
+
+```{r}
+
+```
+
+2. Extrae los elementos 1, 3 y 5 de las columnas a y c:
+
+```{r}
+
 ```
 
 Esta es la estructura con la que más debemos de familiarizarnos, pues la mayor parte de nuestros datos los representamos en ella. ¿Siempre debemos de ingresar los datos manualmente? Para nada, tenemos todo un abanico de funciones que nos permiten cargar datos directamente de archivos, pero eso lo veremos más adelante.
@@ -262,17 +293,33 @@ En la salida de arriba vemos el método de indexación: `var[[i]][j,k]`, donde `
 l_1[[1]]$col_a[6]
 ```
 
-Ahora que hemos hablado de todos los tipos de estructuras, y antes de encaminarnos hacia los procesos de automatización, hablemos de cómo cargar nuestros datos en R.
+Ejercicios: Desde la lista:
 
-Ejercicios:
+1. Extrae el segundo elemento de la segunda columna de `mat_1`:
 
 ```{r}
-l_1[[2]][2,2]
-l_1[[3]][5]
-l_1[[1]]$col_b[3:4]
-l_1[[1]]$col_a[c(6,1)]
+
 ```
 
+2. Extrae el quinto elemento de `vect_1`:
+
+```{r}
+
+```
+
+3. Extrae los elementos 3 y 4 de la columna b de `df_1`:
+
+```{r}
+
+```
+
+4. Extrae los elementos 6 y 1 de las columnas a y c de `df_1`:
+
+```{r}
+
+```
+
+Ahora que hemos hablado de todos los tipos de estructuras, y antes de encaminarnos hacia los procesos de automatización, hablemos de cómo cargar nuestros datos en R.
 
 ## Carga de datos
 
@@ -294,7 +341,6 @@ Los archivos separados por comas son uno de los formatos más comunes, por lo qu
 datos1 <- read.csv("datos/datos1.csv")
 head(datos1)
 ```
-
 
 Aquí todo se cargó sin ningún problema porque el archivo estaba listo para ser leído, pero esto no siempre es el caso. Por ejemplo, los datos pueden estar en la segunda hoja de un archivo Excel, la cuál tiene 5 renglones de encabezado dando una descripción de los datos y en el renglón 6 están dispuestos los nombres de las variables. Además, sabemos que vamos a realizar un análisis de agrupamientos jerárquicos (clúster), el cuál requiere que los nombres de los individuos estén marcados en los nombres de los renglones (Ver archivo `datos2.xlsx`):
 
@@ -346,10 +392,10 @@ head(datos3)
 
 ### Transposición
 
-En estos datos las presas están en los renglones, y los individuos de los depredadores en las columnas. Aunque esta disposición no tiene fundamentalmente nada de malo, normalmente las instancias (observaciones individuales/réplicas) están en los renglones, y las variables (presas) en las columnas. Es necesario entonces **tranponer** los datos. Esto lo podemos hacer de manera sencilla con la función `t()`:
+En estos datos las presas están en los renglones, y los individuos de los depredadores en las columnas. Aunque esta disposición no tiene fundamentalmente nada de malo, normalmente las instancias (observaciones individuales/réplicas) están en los renglones, y las variables (presas) en las columnas. Es necesario entonces **transponer** los datos. Esto lo podemos hacer de manera sencilla con la función `t()`:
 
 ```{r}
-head(t(datos3))[, 3]
+head(t(datos3))[,3]
 ```
 
 Esto logró nuestro objetivo, aunque con un pequeño gran problema: toda la información es texto. ¿Por qué? Resulta que las columnas solo pueden contener datos de un solo tipo, por lo que al tener el texto de las especies presa todas las columnas son transformadas a cadenas de caracter. ¿Qué podemos hacer? Transponer los datos en tres pasos.
@@ -368,8 +414,8 @@ head(counts)
 Transponer la matriz de conteos:
 
 ```{r}
-countst <- t(counts)
-head(countst)[,10]
+countst <- as.data.frame(t(counts))
+head(countst)
 ```
 
 ### Cambiar nombres de columnas
@@ -378,7 +424,7 @@ Para acceder o asignar los nombres de las columnas o renglones de arreglos bidim
 
 ```{r}
 colnames(countst) <- prey
-head(countst)[,3]
+head(countst)
 ```
 
 ### Transformaciones
@@ -403,6 +449,7 @@ head(countst)
 ## Operadores lógicos
 
 Los operadores lógicos nos sirven para hacer comparaciones y obtener un resultado booleano (T o F). Los más comunes son:
+
 1. cond1**|**cond2: Condicional "O". T si se cumple **alguna** de las dos condiciones
 
 ```{r}
@@ -429,7 +476,6 @@ print(c>5)
 ```{r}
 c!=5
 ```
-
 
 ## Automatización
 
@@ -489,7 +535,7 @@ Esta es la función "madre" de las demás, la cual opera sobre arreglos. Para si
 Podemos pensar en obtener la suma o el promedio de cada columna de nuestro data.frame con las presas utilizando un ciclo, o podemos utilizar `apply`, tal que:
 
 ```{r}
-sums <- apply(datos2[,2:ncol(datos2)], 2, sum)
+sums <- apply(X = datos2[,2:ncol(datos2)], MARGIN = 2, FUN = sum)
 head(sums)
 ```
 
@@ -499,9 +545,8 @@ Otra función extremadamente útil es la función `aggregate()`. Esta función n
 
 
 ```{r}
-aggregate(Prey_28~sp, data = datos1, FUN = mean)
+aggregate(Prey_28~sp, data = datos1, FUN = sum)
 ```
-
 
 ### Condicionales
 
@@ -551,10 +596,12 @@ x <- 4
 if (x > 5) {
   print("x es mayor a 5")
 }
-
 if (x == 5) {
   print("x es 5")
-}else{print("x es menor a 5")}
+}
+if (x < 5){
+  print("x es menor a 5")
+  }
 ```
 
 Ahora sí cubrimos todas nuestras bases para este problema de comparación. Como te imaginarás, el siguiente paso lógico es mezclar `for` e `if` o, mejor dicho, anidarlos:
@@ -568,7 +615,7 @@ for (i in x) {
   }
   if (i == 5) {
     print("x es 5")
-  }else{print("x es menor a 5")}
+  }else if (i < 5) {print("x es menor a 5")}
 }
 ```
 
