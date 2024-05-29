@@ -137,7 +137,7 @@ Estas son algunas de las consideraciones más básicas que debemos de tener al r
 Recordarás de las primeras sesiones que un componente muy importante de `R` es la realización de gráficos, lo cual quiere decir que `R` base nos permite realizar visualizaciones de datos. De hecho, el graficador por defecto es sumamente potente, pero desafortunadamente no es precisamente intuitivo. En este sentido, la librería `ggplot2` es una (¿mejor?) alternativa en la que los gráficos se crean de manera declarativa, y está basada en el libro "Grammar of Graphics" [@Wilkinson_2005]. Digo "¿mejor?" porque, como en todo, es una cuestión de gustos y costumbre; sin embargo, pedagógicamente es bastante amable. La creación de gráficos se realiza mediante capas, donde tenemos nuestros datos, en un data.frame, luego indicamos qué queremos que grafique y en dónde, luego cómo queremos que lo grafique, y luego cómo queremos los demás elementos. En código tendríamos algo así:
 
 ```{{r}}
-ggplot(data = datos, aes(x, y)) + geom_*() + ...
+ggplot(data = datos, mapping = aes(x, y)) + geom_*() + ...
 ```
 
 Podría explicarte qué es cada cosa aquí, o podemos mejor aprender haciendo y crear una visualización. Antes de comenzar una visualización es necesario saber qué queremos responder con ella. En este caso, utilizaremos la base de datos `mpg` incluída en `ggplot2`. El primer paso es, entonces, conocer la información que contiene. Para ello guardaremos la base en una variable que llamaremos `df1`:
@@ -193,7 +193,7 @@ plot2
 Ahora que está claro cuáles son las variables que estamos mostrando podemos empezar a modificar la estética. Recordemos que debemos mantener la relación datos/tinta lo más alta posible, y uno de los elementos más prevalentes del gráfico es el fondo gris con todo y cuadrículas. Para modificar esos elementos tenemos que modificar el "tema" de la gráfica, que no es otra cosa mas que utilizar una función que nos permita modificar en una sola línea la estética general del gráfico. Los temas se encuentran señalados con el nombre `theme_*`. Probemos con `theme_minimal()`:
 
 ```{r}
-plot2 + theme_light()
+plot2 + theme_minimal()
 ```
 
 Logramos eliminar el fondo gris y de paso las "espinas" (líneas de los ejes) y ahora el gráfico está en mucho mejor condición para ser presentado; sin embargo aún podemos ir más lejos. El objetivo de esta gráfica no es ver los detalles precisos de la información, si no extraer la información más relevante, por lo que la cuadrícula es un elemento que no aporta nada a la visualización. Para retirarla utilizaremos la función `theme()`, la cual permite modificar el aspecto de todos los elementos del gráfico. En realidad, las funciones `theme_*()` son aplicaciones de `theme()` con diferentes valores por defecto, por lo que podemos replicar el efecto de `theme_minimal()` e incluir otras modificaciones. Otra función muy útil para este procedimiento es la función `element_blank()`, la cual le indica a `ggplot2` que no debe mostrar ese elemento. Otra cuestión importante que debemos de considerar es la relación de aspecto. Debido a que esta puede modificar enormemente la percepción de los datos, su selección no es algo trivial. En general, la proporción áurea (1:1.61) es un buen punto de partida y en series de tiempo es la proporción que menos deforma los datos. Una proporción cuadrada tiene sentido únicamente en aquellos casos en los que ambos ejes tengan la misma magnitud de variación y procuraremos que el eje más largo sea aquel con la variación más pequeña. En este caso, la variación del eje $y$ (5 a 45) es mucho mayor que la del eje x (1.5 a 7), por lo cual una proporción cuadrada no sería una buena alternativa. En su lugar, utilicemos la proporción áurea. El último elemento que eliminaremos aquí son las marcas de los ejes, ya que realmente no aportan demasiada información.
@@ -365,7 +365,7 @@ final.plot <- ggplot(data = df1, aes(x = displ, y = hwy,
               
 final.plot
 
-# ggsave("final.pdf", height = 4, width = 3)
+# ggsave("final.pdf", height = 4, width = 3, family = "Arial")
 ```
 
 ### Extras
@@ -384,7 +384,7 @@ final.plot + scale_color_manual(name = "Clase", values = aleat)
 Podemos también especificar una paleta predefinida, utilizando la capa `scale_color_brewer()`:
 
 ```{r}
-final.plot + scale_color_brewer(type = "seq", palette = "Blues")
+final.plot + scale_color_brewer(type = "spe", palette = "RdYlGn")
 ```
 
 Otra opción es directamente pasar un vector con los nombres de los colores que sean de nuestro interés:
@@ -425,7 +425,7 @@ Finalmente lo agregaremos a la gráfica. ¡OJO! Es necesario modificar el tema p
 ```{r}
 # if(!require(ggtext)) {install.packages("ggtext", dependencies = T)}
 
-final.plot + scale_color_discrete(name = "Clase",labels = clases) +
+final.plot + scale_color_discrete(name = "Clase", labels = clases) +
              theme(legend.text = ggtext::element_markdown())
 ```
 
