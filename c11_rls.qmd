@@ -265,7 +265,7 @@ Estamos obteniendo dos mensajes de `geom_smooth()` porque en `plot_reg1` ya ten�
 
 Nuestro reporte completo quedaría entonces como:
 
-En el modelo de regresión lineal simple (@fig-rls1) tanto el intercepto ($\beta_0 = -3.72$; $IC_{95\%}: [-5.18, -2.27]$) como la pendiente ($\beta_1 = 1.17$; $IC_{95\%}: [1.02,  1.34]$) son significativamente diferentes de 0 ($\beta_0: t_{\nu = 95} = -5.09; p < 0.0001$; $\beta_1: t_{\nu = 95} = 14.47; p < 0.0001$). El valor de $R^2$ indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.
+> En el modelo de regresión lineal simple (@fig-rls1) tanto el intercepto ($\beta_0 = -3.72$; $IC_{95\%}: [-5.18, -2.27]$) como la pendiente ($\beta_1 = 1.17$; $IC_{95\%}: [1.02,  1.34]$) son significativamente diferentes de 0 ($\beta_0: t_{\nu = 95} = -5.09; p < 0.0001$; $\beta_1: t_{\nu = 95} = 14.47; p < 0.0001$). El valor de $R^2$ indica que el modelo explica alrededor del 70% de la varianza de los datos, lo cual sugiere un ajuste aceptable, con un error estándar de los residuales de 3.095 unidades.
 
 Y ahora toca abordar el "elefante en el cuarto" y comprobar que nuestra regresión sea confiable.
 
@@ -481,7 +481,8 @@ A diferencia de la implementación de una regresión por mínimos cuadrados, aju
 
 ```{r}
 data <- df_reg1[c("v1", "v2")]
-LL <- function(b0, b1, mu, sigma){
+LL <- function(b0, b1,
+               mu, sigma){
   # Encontrar los residuales. Modelo a ajustar
   R = data$v2 - data$v1 * b1 - b0
   
@@ -495,7 +496,7 @@ LL <- function(b0, b1, mu, sigma){
 }
 ```
 
-Ahora ajustemos el modelo que acabamos de crear, utilizando la función `stats4::mle(fun, start = list())` (*maximum likelihood estimation), donde `fun` es la función de verosimilitud a ajustar y `start` son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:
+Ahora ajustemos el modelo que acabamos de crear, utilizando la función `stats4::mle(fun, start = list())` (*maximum likelihood estimation"), donde `fun` es la función de verosimilitud a ajustar y `start` son los valores iniciales de los parámetros. En este paso lo que estamos haciendo es estimar los dos parámetros (media y desviación estándar) que mejor describen los datos:
 
 ```{r}
 mle_fit <- mle(LL, start = list(b0 = 1, b1 = 1, sigma = 1), 
